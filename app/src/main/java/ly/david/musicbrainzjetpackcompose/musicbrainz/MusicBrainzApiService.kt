@@ -52,8 +52,9 @@ internal interface MusicBrainzApiService {
 }
 
 internal data class Artists(
+    @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "artists") val artists: List<Artist>
+    @Json(name = "artists") val artists: List<Artist> // Max of 25 at a time
 )
 
 internal data class Artist(
@@ -72,5 +73,5 @@ internal data class Artist(
 
 internal data class LifeSpan(
     @Json(name = "begin") val begin: String? = null,
-    @Json(name = "ended") val ended: String? = null
+    @Json(name = "ended") val ended: Boolean? = null
 )

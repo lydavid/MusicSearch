@@ -20,6 +20,7 @@ internal class MainViewModel : ViewModel() {
         viewModelScope.launch {
             val foundArtists = musicBrainzApiService.queryArtists(queryString)
             Log.d("debug", "queryArtists: $foundArtists")
+            Log.d("debug", "count=${foundArtists.count} .size=${foundArtists.artists.size}")
             artists.clear()
             artists.addAll(foundArtists.artists)
         }
