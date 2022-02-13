@@ -2,7 +2,7 @@ package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,21 +25,27 @@ internal fun ArtistCard(
     onClick: (String) -> Unit = {}
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         onClick = { onClick(artist.id) },
         border = BorderStroke(1.dp, Color.LightGray)
     ) {
-        Row(
+        Column(
             modifier = Modifier.padding(16.dp),
         ) {
-            Text(text = artist.name)
 
-            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text = artist.name,
+                modifier = Modifier.fillMaxWidth()
+            )
 
             if (artist.disambiguation != null) {
+                Spacer(modifier = Modifier.padding(top = 4.dp))
                 Text(
                     text = "(${artist.disambiguation})",
-                    color = Color.Gray
+                    color = Color.Gray,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -51,7 +57,7 @@ private val testArtist = Artist(
     type = "Group",
     typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
     score = 77,
-    name = "月詠み",
+    name = "Paracoccidioidomicosisproctitissarcomucosis paracoccidioidomicosisproctitissarcomucosisevenlonger",
     sortName = "Tsukuyomi",
     disambiguation = "blah, some really long text that forces wrapping",
     country = "JP",
