@@ -15,7 +15,8 @@ import androidx.compose.ui.Modifier
 import ly.david.musicbrainzjetpackcompose.QueryResources
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
-@ExperimentalMaterialApi
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ExposedDropdownMenuBoxExample(
     modifier: Modifier = Modifier,

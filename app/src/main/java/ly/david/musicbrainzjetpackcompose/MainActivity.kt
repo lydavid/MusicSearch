@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -29,7 +28,6 @@ import androidx.compose.ui.text.input.ImeAction
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.musicbrainzjetpackcompose.ui.trial.ExposedDropdownMenuBoxExample
 
-@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
@@ -59,7 +57,6 @@ enum class QueryResources(val displayText: String, val queryText: String) {
     URL("URL", "url")
 }
 
-@ExperimentalMaterialApi
 @Composable
 internal fun MainApp(viewModel: MainViewModel) {
     MusicBrainzJetpackComposeTheme {
@@ -81,9 +78,7 @@ internal fun MainApp(viewModel: MainViewModel) {
                 )
             }
         ) {
-            Row(
-//                modifier = Modifier.fillMaxWidth()
-            ) {
+            Row {
                 TextField(
                     modifier = Modifier.weight(1f),
                     value = text,
@@ -114,10 +109,6 @@ internal fun MainApp(viewModel: MainViewModel) {
             }
 
         }
-
-        // A surface container using the 'background' color from the theme
-//        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-//        }
     }
 }
 
