@@ -1,18 +1,48 @@
 package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
 import ly.david.musicbrainzjetpackcompose.musicbrainz.LifeSpan
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-internal fun ArtistCard(artist: Artist) {
-    Card {
-        Text(text = artist.name)
+internal fun ArtistCard(
+    artist: Artist,
+    onClick: (String) -> Unit = {}
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        onClick = { onClick(artist.id) },
+        border = BorderStroke(1.dp, Color.LightGray)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+        ) {
+            Text(text = artist.name)
+
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            if (artist.disambiguation != null) {
+                Text(
+                    text = "(${artist.disambiguation})",
+                    color = Color.Gray
+                )
+            }
+        }
     }
 }
 
@@ -23,6 +53,7 @@ private val testArtist = Artist(
     score = 77,
     name = "月詠み",
     sortName = "Tsukuyomi",
+    disambiguation = "blah, some really long text that forces wrapping",
     country = "JP",
     lifeSpan = LifeSpan(
         begin = "2020-10-10"

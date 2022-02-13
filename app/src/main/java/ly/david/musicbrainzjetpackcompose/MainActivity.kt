@@ -1,10 +1,10 @@
 package ly.david.musicbrainzjetpackcompose
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,18 +29,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.ui.discovery.ArtistCard
 import ly.david.musicbrainzjetpackcompose.ui.discovery.ExposedDropdownMenuBoxExample
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+//    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainApp(viewModel)
+            MainApp()
         }
     }
 }
@@ -63,14 +65,16 @@ enum class QueryResources(val displayText: String, val queryText: String) {
 }
 
 @Composable
-internal fun MainApp(viewModel: MainViewModel) {
+internal fun MainApp(
+    // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
+    viewModel: MainViewModel = viewModel()
+) {
     MusicBrainzJetpackComposeTheme {
 
         var text by rememberSaveable { mutableStateOf("") }
 
         var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
 
-//        val keyboardController = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current
 
         Scaffold(
@@ -120,8 +124,17 @@ internal fun MainApp(viewModel: MainViewModel) {
                 }
 
                 LazyColumn {
+                    item {
+                        val results = viewModel.totalFoundResults.value
+                        if (results != 0) {
+                            Text(text = "Found $results results for \"$text\"")
+                        }
+                    }
+
                     items(viewModel.artists) { artist ->
-                        ArtistCard(artist = artist)
+                        ArtistCard(artist = artist) {
+                            Log.d("Remove This", "MainApp: clicked on artist with id=$it")
+                        }
                     }
                 }
             }
@@ -132,16 +145,14 @@ internal fun MainApp(viewModel: MainViewModel) {
 
 // TODO: we should be previewing specific components, rather than the entire app
 //  these components should not have reference to the viewmodel
-//@ExperimentalMaterialApi
-//@Preview(showBackground = true)
-//@Composable
-//internal fun DefaultPreview() {
-//    MainApp("Android")
-//}
-//
-//@ExperimentalMaterialApi
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//internal fun DarkPreview() {
-//    MainApp("Android")
-//}
+@Preview(showBackground = true)
+@Composable
+internal fun DefaultPreview() {
+    MainApp()
+}
+
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+internal fun DarkPreview() {
+    MainApp()
+}

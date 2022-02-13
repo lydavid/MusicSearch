@@ -25,13 +25,9 @@ fun ExposedDropdownMenuBoxExample(
     onSelectOption: (QueryResources) -> Unit
 ) {
 
-
-
     var expanded by remember { mutableStateOf(false) }
 
-
-
-// We want to react on tap/press on TextField to show menu
+    // We want to react on tap/press on TextField to show menu
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
