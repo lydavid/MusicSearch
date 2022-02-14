@@ -11,12 +11,15 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroups
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 // TODO: should have tabs for Overview (release groups),  releases, recordings, ...
@@ -31,26 +34,48 @@ fun ArtistScreen(
 
 }
 
+// TODO: rename? will we need something like this for every api return type? Can generalize
+private data class ArtistUiState(
+    val releaseGroups: ReleaseGroups? = null,
+    val isLoading: Boolean = false,
+    val isError: Boolean = false
+)
+
 @Composable
 fun ArtistReleaseGroupsScreen(
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
     viewModel: ArtistViewModel = viewModel()
 ) {
-    viewModel.getReleaseGroupsByArtist(artistId)
+    val uiState by produceState(initialValue = ArtistUiState(isLoading = true)) {
+        value = ArtistUiState(viewModel.getReleaseGroupsByArtist(artistId))
+    }
 
-    LazyColumn {
-        item {
-            val results = viewModel.totalFoundResults.value
-            if (results == 0) {
-                Text("No release groups found for this artist.")
-            } else {
-                Text("Found $results release groups for this artist.")
+    when {
+        uiState.releaseGroups != null -> {
+            uiState.releaseGroups?.let { releaseGroups ->
+                LazyColumn {
+                    item {
+                        val results = releaseGroups.releaseGroupCount
+                        if (results == 0) {
+                            Text("No release groups found for this artist.")
+                        } else {
+                            Text("Found $results release groups for this artist.")
+                        }
+                    }
+
+                    items(releaseGroups.releaseGroups) { releaseGroup ->
+                        ReleaseGroupCard(releaseGroup = releaseGroup)
+                    }
+                }
             }
+
         }
-        
-        items(viewModel.releaseGroups) { releaseGroup ->
-            ReleaseGroupCard(releaseGroup = releaseGroup)
+        uiState.isLoading -> {
+            Text(text = "Loading...")
+        }
+        else -> {
+            Text(text = "error...")
         }
     }
 }
