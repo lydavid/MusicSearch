@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose
+package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
 import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService
 
-internal class MainViewModel : ViewModel() {
+internal class SearchViewModel : ViewModel() {
 
     private val musicBrainzApiService by lazy {
         MusicBrainzApiService.create()

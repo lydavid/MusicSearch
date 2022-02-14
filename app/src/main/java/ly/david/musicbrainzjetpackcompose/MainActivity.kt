@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import ly.david.musicbrainzjetpackcompose.ui.discovery.ArtistScreen
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreen
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -113,7 +114,9 @@ internal fun MainNavHost(
             // TODO: debug is printed twice, despite only adding this screen to backstack once
             Log.d("Remove This", "MainNavHost: congrats, we passed $artistId")
 //            SingleAccountBody(account = account)
-            Text(artistId.toString())
+            if (artistId != null) {
+                ArtistScreen(artistId)
+            }
         }
     }
 }

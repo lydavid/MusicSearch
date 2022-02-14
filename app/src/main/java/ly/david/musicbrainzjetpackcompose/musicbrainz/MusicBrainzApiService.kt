@@ -16,6 +16,9 @@ internal interface MusicBrainzApiService {
     @GET("artist")
     suspend fun queryArtists(@Query("query") query: String): Artists
 
+    @GET("release-group")
+    suspend fun getReleaseGroupsByArtist(@Query("artist") artistId: String): ReleaseGroups
+
     companion object {
 
         private val interceptor = Interceptor { chain ->
