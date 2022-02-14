@@ -22,7 +22,7 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 @Composable
 internal fun ArtistCard(
     artist: Artist,
-    onClick: (String) -> Unit = {}
+    onClick: (id: String) -> Unit = {}
 ) {
     Card(
         modifier = Modifier

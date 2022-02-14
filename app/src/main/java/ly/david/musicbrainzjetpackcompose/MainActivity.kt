@@ -1,38 +1,26 @@
 package ly.david.musicbrainzjetpackcompose
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ControlCamera
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.ui.discovery.ArtistCard
-import ly.david.musicbrainzjetpackcompose.ui.discovery.ExposedDropdownMenuBoxExample
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreen
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -67,15 +55,10 @@ enum class QueryResources(val displayText: String, val queryText: String) {
 @Composable
 internal fun MainApp(
     // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
-    viewModel: MainViewModel = viewModel()
 ) {
     MusicBrainzJetpackComposeTheme {
 
-        var text by rememberSaveable { mutableStateOf("") }
-
-        var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
-
-        val focusManager = LocalFocusManager.current
+        val navController = rememberNavController()
 
         Scaffold(
             topBar = {
@@ -90,69 +73,47 @@ internal fun MainApp(
                 )
             }
         ) {
-            Column {
-
-                Row {
-                    TextField(
-                        modifier = Modifier.weight(1f),
-                        value = text,
-                        label = { Text("Search") },
-                        placeholder = { Text("Search") },
-                        maxLines = 1, // TODO: Seems like this is currently broken
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                viewModel.queryArtists(text)
-                                Log.d("debug", "MainApp: querying /${selectedOption.queryText} for $text")
-                                focusManager.clearFocus()
-                            }
-                        ),
-                        onValueChange = { newText ->
-                            text = newText
-                        }
-                    )
-
-                    ExposedDropdownMenuBoxExample(
-                        modifier = Modifier.weight(1f),
-                        options = QueryResources.values().toList(),
-                        selectedOption = selectedOption,
-                        onSelectOption = {
-                            selectedOption = it
-                        }
-                    )
-                }
-
-                LazyColumn {
-                    item {
-                        val results = viewModel.totalFoundResults.value
-                        if (results != 0) {
-                            Text(text = "Found $results results for \"$text\"")
-                        }
-                    }
-
-                    items(viewModel.artists) { artist ->
-                        ArtistCard(artist = artist) {
-                            Log.d("Remove This", "MainApp: clicked on artist with id=$it")
-                        }
-                    }
-                }
-            }
-
+            MainNavHost(navController = navController)
         }
     }
 }
 
-// TODO: we should be previewing specific components, rather than the entire app
-//  these components should not have reference to the viewmodel
-@Preview(showBackground = true)
 @Composable
-internal fun DefaultPreview() {
-    MainApp()
-}
+internal fun MainNavHost(
+    navController: NavHostController
+) {
+    NavHost(
+        navController = navController,
+        startDestination = "main",
+    ) {
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-internal fun DarkPreview() {
-    MainApp()
+        val onArtistClick: (String) -> Unit = { id ->
+            navController.navigate("artist/$id")
+        }
+
+        composable("main") {
+            SearchScreen(onClickArtist = onArtistClick)
+        }
+
+        composable(
+            "artist/{id}",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            // Test deeplink: adb shell am start -d "mbjc://artist/6825ace2-3563-4ac5-8d85-c7bf1334bd2c" -a android.intent.action.VIEW
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "mbjc://artist/{id}"
+                }
+            )
+        ) { entry ->
+            val artistId = entry.arguments?.getString("id")
+            // TODO: debug is printed twice, despite only adding this screen to backstack once
+            Log.d("Remove This", "MainNavHost: congrats, we passed $artistId")
+//            SingleAccountBody(account = account)
+            Text(artistId.toString())
+        }
+    }
 }
