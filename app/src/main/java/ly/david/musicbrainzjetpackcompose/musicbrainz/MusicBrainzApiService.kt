@@ -13,10 +13,10 @@ private const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org/ws/2/"
 internal interface MusicBrainzApiService {
 
     @GET("artist")
-    suspend fun queryArtists(@Query("query") query: String): Artists
+    suspend fun queryArtists(@Query("query") query: String): ArtistsQueryResponse
 
     @GET("release-group")
-    suspend fun getReleaseGroupsByArtist(@Query("artist") artistId: String): ReleaseGroups
+    suspend fun getReleaseGroupsByArtist(@Query("artist") artistId: String): ReleaseGroupsQueryResponse
 
     companion object {
 

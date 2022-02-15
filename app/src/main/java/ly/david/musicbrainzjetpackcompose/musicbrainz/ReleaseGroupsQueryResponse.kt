@@ -38,7 +38,7 @@ import com.squareup.moshi.Json
 //    ],
 //    "release-group-offset": 0
 //}
-data class ReleaseGroups(
+data class ReleaseGroupsQueryResponse(
     @Json(name = "release-group-count") val releaseGroupCount: Int,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroup>
 )

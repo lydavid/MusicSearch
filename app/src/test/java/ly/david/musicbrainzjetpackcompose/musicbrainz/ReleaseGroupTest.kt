@@ -5,7 +5,7 @@ import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ReleaseGroupsTest {
+class ReleaseGroupTest {
 
     private val releaseGroup: ReleaseGroup = mockk()
 
