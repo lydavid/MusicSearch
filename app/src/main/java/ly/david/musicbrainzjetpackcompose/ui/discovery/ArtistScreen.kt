@@ -2,24 +2,29 @@ package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroups
+import ly.david.musicbrainzjetpackcompose.musicbrainz.getYear
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 // TODO: should have tabs for Overview (release groups),  releases, recordings, ...
@@ -41,6 +46,7 @@ private data class ArtistUiState(
     val isError: Boolean = false
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArtistReleaseGroupsScreen(
     artistId: String,
@@ -64,9 +70,17 @@ fun ArtistReleaseGroupsScreen(
                         }
                     }
 
-                    items(releaseGroups.releaseGroups) { releaseGroup ->
-                        ReleaseGroupCard(releaseGroup = releaseGroup)
+                    val grouped = releaseGroups.releaseGroups.groupBy { it.primaryType }
+                    grouped.forEach { (type, releaseGroupsForType) ->
+                        stickyHeader {
+                            StickyHeader(text = type)
+                        }
+                        items(releaseGroupsForType) { releaseGroup ->
+                            ReleaseGroupCard(releaseGroup = releaseGroup)
+                            // TODO: on click should go to screen will all releases part of a releaseGroup
+                        }
                     }
+
                 }
             }
 
@@ -79,6 +93,180 @@ fun ArtistReleaseGroupsScreen(
         }
     }
 }
+
+@Composable
+fun StickyHeader(text: String) {
+    Surface(color = Color.LightGray) {
+        Text(
+            text = text,
+            modifier = Modifier
+                .padding(4.dp)
+                .fillMaxWidth()
+        )
+    }
+}
+
+// lookup for a specific release group
+// https://musicbrainz.org/ws/2/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756?inc=releases
+//{
+//    "disambiguation": "",
+//    "first-release-date": "2021-09-08",
+//    "primary-type-id": "6d0c5bf6-7a33-3420-a519-44fc63eedebf",
+//    "secondary-type-ids": [],
+//    "releases": [
+//    {
+//        "packaging": null,
+//        "quality": "normal",
+//        "title": "欠けた心象、世のよすが",
+//        "id": "f171e0ae-bea8-41e6-bb41-4c7af7977f50",
+//        "status": "Official",
+//        "text-representation": {
+//        "language": "jpn",
+//        "script": "Jpan"
+//    },
+//        "country": "JP",
+//        "barcode": "4988002911981",
+//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+//        "disambiguation": "初回限定盤",
+//        "packaging-id": null,
+//        "release-events": [
+//        {
+//            "date": "2021-09-08",
+//            "area": {
+//            "iso-3166-1-codes": [
+//            "JP"
+//            ],
+//            "type": null,
+//            "name": "Japan",
+//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+//            "sort-name": "Japan",
+//            "disambiguation": "",
+//            "type-id": null
+//        }
+//        }
+//        ],
+//        "date": "2021-09-08"
+//    },
+//    {
+//        "packaging-id": null,
+//        "release-events": [
+//        {
+//            "date": "2021-09-08",
+//            "area": {
+//            "disambiguation": "",
+//            "type-id": null,
+//            "iso-3166-1-codes": [
+//            "JP"
+//            ],
+//            "type": null,
+//            "name": "Japan",
+//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+//            "sort-name": "Japan"
+//        }
+//        }
+//        ],
+//        "date": "2021-09-08",
+//        "text-representation": {
+//        "script": "Jpan",
+//        "language": "jpn"
+//    },
+//        "country": "JP",
+//        "barcode": "4988002911998",
+//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+//        "disambiguation": "",
+//        "quality": "normal",
+//        "title": "欠けた心象、世のよすが",
+//        "id": "165f6643-2edb-4795-9abe-26bd0533e59d",
+//        "status": "Official",
+//        "packaging": null
+//    },
+//    {
+//        "packaging": null,
+//        "title": "欠けた心象、世のよすが",
+//        "quality": "normal",
+//        "status": "Official",
+//        "id": "f81cbdf9-4390-4738-b6b2-124f5bceafe3",
+//        "country": "JP",
+//        "text-representation": {
+//        "script": "Jpan",
+//        "language": "jpn"
+//    },
+//        "disambiguation": "アニメイト Ver.",
+//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+//        "barcode": "4988002911998",
+//        "packaging-id": null,
+//        "date": "2021-09-08",
+//        "release-events": [
+//        {
+//            "area": {
+//            "disambiguation": "",
+//            "type-id": null,
+//            "iso-3166-1-codes": [
+//            "JP"
+//            ],
+//            "type": null,
+//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
+//            "name": "Japan",
+//            "sort-name": "Japan"
+//        },
+//            "date": "2021-09-08"
+//        }
+//        ]
+//    },
+//    {
+//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
+//        "disambiguation": "",
+//        "barcode": "4988002911998",
+//        "country": "XW",
+//        "text-representation": {
+//        "language": "jpn",
+//        "script": "Jpan"
+//    },
+//        "date": "2021-09-08",
+//        "release-events": [
+//        {
+//            "area": {
+//            "id": "525d4e18-3d00-31b9-a58b-a146a916de8f",
+//            "name": "[Worldwide]",
+//            "sort-name": "[Worldwide]",
+//            "iso-3166-1-codes": [
+//            "XW"
+//            ],
+//            "type": null,
+//            "type-id": null,
+//            "disambiguation": ""
+//        },
+//            "date": "2021-09-08"
+//        }
+//        ],
+//        "packaging-id": "119eba76-b343-3e02-a292-f0f00644bb9b",
+//        "packaging": "None",
+//        "status": "Official",
+//        "id": "a3e0f12c-331a-4082-a244-baed958e78b8",
+//        "quality": "normal",
+//        "title": "欠けた心象、世のよすが"
+//    },
+//    {
+//        "text-representation": {
+//        "script": null,
+//        "language": null
+//    },
+//        "barcode": null,
+//        "status-id": "41121bb9-3413-3818-8a9a-9742318349aa",
+//        "disambiguation": "",
+//        "packaging-id": null,
+//        "packaging": null,
+//        "title": "Crescent",
+//        "quality": "normal",
+//        "id": "d7c52617-8976-484d-af73-dc76116ca131",
+//        "status": "Pseudo-Release"
+//    }
+//    ],
+//    "id": "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+//    "title": "欠けた心象、世のよすが",
+//    "secondary-types": [],
+//    "primary-type": "EP"
+//}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -93,23 +281,19 @@ private fun ReleaseGroupCard(
         onClick = { onClick(releaseGroup.id) },
         border = BorderStroke(1.dp, Color.LightGray)
     ) {
-        Column(
+        Row(
             modifier = Modifier.padding(16.dp),
         ) {
-
             Text(
                 text = releaseGroup.title,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.weight(3f)
             )
-
-//            if (artist.disambiguation != null) {
-//                Spacer(modifier = Modifier.padding(top = 4.dp))
-//                Text(
-//                    text = "(${artist.disambiguation})",
-//                    color = Color.Gray,
-//                    modifier = Modifier.fillMaxWidth()
-//                )
-//            }
+            Spacer(modifier = Modifier.padding(4.dp))
+            Text(
+                text = releaseGroup.getYear(),
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.End
+            )
         }
     }
 }

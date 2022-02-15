@@ -51,3 +51,13 @@ data class ReleaseGroup(
     @Json(name = "primary-type") val primaryType: String,
     @Json(name = "primary-type-id") val primaryTypeId: String,
 )
+
+private const val YEAR_FIRST_INDEX = 0
+private const val YEAR_LAST_INDEX = 4
+
+fun ReleaseGroup.getYear(): String =
+    if (firstReleaseDate.length < YEAR_LAST_INDEX) {
+        ""
+    } else {
+        firstReleaseDate.substring(YEAR_FIRST_INDEX, YEAR_LAST_INDEX)
+    }
