@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.ui.discovery
+package ly.david.musicbrainzjetpackcompose.ui.artist
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
@@ -30,7 +30,7 @@ import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroups
 import ly.david.musicbrainzjetpackcompose.musicbrainz.getYear
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
-// TODO: should have tabs for Overview (release groups),  releases, recordings, ...
+// TODO:
 @Composable
 fun ArtistScreenScaffold(
     artist: Artist,
@@ -42,9 +42,26 @@ fun ArtistScreenScaffold(
                 title = { Text(text = artist.name) },
                 backgroundColor = Color.White
             )
-        }
-    ) {
-        ArtistReleaseGroupsScreen(artistId = artist.id, onReleaseGroupClick = onReleaseGroupClick)
+        },
+//        bottomBar = {
+            // TODO: meant for main navigation in app, so this nested screen shouldn't use it
+            //  instead, it should use tabs, which don't belong in topbar
+            //  however, it won't fit too many
+            // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color)
+            // TODO: apparently, we can get scrolling, so maybe we can fit everything
+            // https://material.io/components/tabs#usage
+//            BottomNavigation(
+//                backgroundColor = Color.White
+//            ) {
+                // TODO:  should have tabs for Overview (release groups),  releases, recordings, ...
+//            }
+//        }
+    ) { innerPadding ->
+        ArtistReleaseGroupsScreen(
+            modifier = Modifier.padding(innerPadding),
+            artistId = artist.id,
+            onReleaseGroupClick = onReleaseGroupClick
+        )
     }
 }
 
@@ -58,6 +75,7 @@ private data class ArtistUiState(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArtistReleaseGroupsScreen(
+    modifier: Modifier,
     artistId: String,
     onReleaseGroupClick: (ReleaseGroup) -> Unit = {},
     // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
@@ -70,7 +88,9 @@ fun ArtistReleaseGroupsScreen(
     when {
         uiState.releaseGroups != null -> {
             uiState.releaseGroups?.let { releaseGroups ->
-                LazyColumn {
+                LazyColumn(
+                    modifier = modifier
+                ) {
                     item {
                         val results = releaseGroups.releaseGroupCount
                         if (results == 0) {

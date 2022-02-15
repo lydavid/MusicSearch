@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.ui.discovery
+package ly.david.musicbrainzjetpackcompose.ui.artist
 
 import androidx.lifecycle.ViewModel
 import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService

@@ -6,6 +6,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+// TODO: make sure of these to have consistent fonts throughout app in the right places
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(

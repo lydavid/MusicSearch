@@ -12,11 +12,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import ly.david.musicbrainzjetpackcompose.common.fromJson
+import ly.david.musicbrainzjetpackcompose.common.toJson
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
-import ly.david.musicbrainzjetpackcompose.ui.common.fromJson
-import ly.david.musicbrainzjetpackcompose.ui.common.toJson
-import ly.david.musicbrainzjetpackcompose.ui.discovery.ArtistScreenScaffold
+import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 

@@ -1,6 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.musicbrainz
 
-import ly.david.musicbrainzjetpackcompose.ui.common.JsonUtils
+import ly.david.musicbrainzjetpackcompose.common.JsonUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
