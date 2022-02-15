@@ -11,8 +11,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroups
 import ly.david.musicbrainzjetpackcompose.musicbrainz.getYear
@@ -29,14 +32,20 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 
 // TODO: should have tabs for Overview (release groups),  releases, recordings, ...
 @Composable
-fun ArtistScreen(
-    artistId: String,
-//    onReleaseGroupClick: (String) -> Unit = {},
-//    viewModel: ArtistViewModel = viewModel()
+fun ArtistScreenScaffold(
+    artist: Artist,
+    onReleaseGroupClick: (ReleaseGroup) -> Unit = {},
 ) {
-
-    ArtistReleaseGroupsScreen(artistId = artistId)
-
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = artist.name) },
+                backgroundColor = Color.White
+            )
+        }
+    ) {
+        ArtistReleaseGroupsScreen(artistId = artist.id, onReleaseGroupClick = onReleaseGroupClick)
+    }
 }
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
@@ -50,7 +59,8 @@ private data class ArtistUiState(
 @Composable
 fun ArtistReleaseGroupsScreen(
     artistId: String,
-    onReleaseGroupClick: (String) -> Unit = {},
+    onReleaseGroupClick: (ReleaseGroup) -> Unit = {},
+    // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
     viewModel: ArtistViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = ArtistUiState(isLoading = true)) {
@@ -70,14 +80,16 @@ fun ArtistReleaseGroupsScreen(
                         }
                     }
 
-                    val grouped = releaseGroups.releaseGroups.groupBy { it.primaryType }
+                    val grouped = releaseGroups.releaseGroups.groupBy { it.primaryType ?: "(no type)" }
                     grouped.forEach { (type, releaseGroupsForType) ->
                         stickyHeader {
                             StickyHeader(text = type)
                         }
                         items(releaseGroupsForType) { releaseGroup ->
-                            ReleaseGroupCard(releaseGroup = releaseGroup)
-                            // TODO: on click should go to screen will all releases part of a releaseGroup
+                            // TODO: sort by date ascending
+                            ReleaseGroupCard(releaseGroup = releaseGroup) {
+                                onReleaseGroupClick(it)
+                            }
                         }
                     }
 
@@ -272,13 +284,13 @@ fun StickyHeader(text: String) {
 @Composable
 private fun ReleaseGroupCard(
     releaseGroup: ReleaseGroup,
-    onClick: (id: String) -> Unit = {}
+    onClick: (ReleaseGroup) -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        onClick = { onClick(releaseGroup.id) },
+        onClick = { onClick(releaseGroup) },
         border = BorderStroke(1.dp, Color.LightGray)
     ) {
         Row(

@@ -2,13 +2,13 @@ package ly.david.musicbrainzjetpackcompose.musicbrainz
 
 import com.squareup.moshi.Json
 
-internal data class Artists(
+data class Artists(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "artists") val artists: List<Artist> // Max of 25 at a time
 )
 
-internal data class Artist(
+data class Artist(
     @Json(name = "id") val id: String,
     @Json(name = "name") val name: String,
     @Json(name = "sort-name") val sortName: String,
@@ -22,7 +22,7 @@ internal data class Artist(
     @Json(name = "life-span") val lifeSpan: LifeSpan,
 )
 
-internal data class LifeSpan(
+data class LifeSpan(
     @Json(name = "begin") val begin: String? = null,
     @Json(name = "ended") val ended: Boolean? = null
 )

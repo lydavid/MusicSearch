@@ -48,8 +48,8 @@ data class ReleaseGroup(
     @Json(name = "title") val title: String,
     @Json(name = "first-release-date") val firstReleaseDate: String,
     @Json(name = "disambiguation") val disambiguation: String = "",
-    @Json(name = "primary-type") val primaryType: String,
-    @Json(name = "primary-type-id") val primaryTypeId: String,
+    @Json(name = "primary-type") val primaryType: String? = null,
+    @Json(name = "primary-type-id") val primaryTypeId: String? = null,
 )
 
 private const val YEAR_FIRST_INDEX = 0

@@ -4,15 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ControlCamera
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -20,8 +12,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import ly.david.musicbrainzjetpackcompose.ui.discovery.ArtistScreen
-import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreen
+import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
+import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.ui.common.fromJson
+import ly.david.musicbrainzjetpackcompose.ui.common.toJson
+import ly.david.musicbrainzjetpackcompose.ui.discovery.ArtistScreenScaffold
+import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,28 +50,10 @@ enum class QueryResources(val displayText: String, val queryText: String) {
 }
 
 @Composable
-internal fun MainApp(
-    // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
-) {
+internal fun MainApp() {
     MusicBrainzJetpackComposeTheme {
-
         val navController = rememberNavController()
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Search Artists") },
-                    actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(imageVector = Icons.Default.ControlCamera, contentDescription = "Query for artists")
-                        }
-                    },
-                    backgroundColor = Color.White
-                )
-            }
-        ) {
-            MainNavHost(navController = navController)
-        }
+        MainNavHost(navController = navController)
     }
 }
 
@@ -88,34 +66,40 @@ internal fun MainNavHost(
         startDestination = "main",
     ) {
 
-        val onArtistClick: (String) -> Unit = { id ->
-            navController.navigate("artist/$id")
+        val onArtistClick: (Artist) -> Unit = { artist ->
+            val artistJson = artist.toJson()
+            navController.navigate("artist/$artistJson")
         }
 
         composable("main") {
-            SearchScreen(onClickArtist = onArtistClick)
+            SearchScreenScaffold(onArtistClick = onArtistClick)
+        }
+
+        val onReleaseGroupClick: (ReleaseGroup) -> Unit = { releaseGroup ->
+            val releaseGroupJson = releaseGroup.toJson()
+//            navController.navigate("release-group/$releaseGroupJson")
+            Log.d("Remove This", "MainNavHost: releaseGroup=$releaseGroup")
         }
 
         composable(
-            "artist/{id}",
+            "artist/{artistJson}",
             arguments = listOf(
-                navArgument("id") {
+                navArgument("artistJson") {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             // Test deeplink: adb shell am start -d "mbjc://artist/6825ace2-3563-4ac5-8d85-c7bf1334bd2c" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "mbjc://artist/{id}"
+                    uriPattern = "mbjc://artist/{artistJson}"
                 }
             )
         ) { entry ->
-            val artistId = entry.arguments?.getString("id")
-            // TODO: debug is printed twice, despite only adding this screen to backstack once
-            Log.d("Remove This", "MainNavHost: congrats, we passed $artistId")
-//            SingleAccountBody(account = account)
-            if (artistId != null) {
-                ArtistScreen(artistId)
+            val artistJson = entry.arguments?.getString("artistJson") ?: return@composable
+            val artist = artistJson.fromJson(Artist::class.java)
+            if (artist != null) {
+                ArtistScreenScaffold(artist, onReleaseGroupClick)
+                // TODO: on click should go to screen will all releases part of a releaseGroup
             }
         }
     }

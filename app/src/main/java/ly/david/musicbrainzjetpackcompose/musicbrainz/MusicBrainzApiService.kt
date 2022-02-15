@@ -1,7 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.musicbrainz
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import ly.david.musicbrainzjetpackcompose.ui.common.JsonUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -37,13 +36,7 @@ internal interface MusicBrainzApiService {
 
         fun create(): MusicBrainzApiService {
             val retrofit = Retrofit.Builder()
-                .addConverterFactory(
-                    MoshiConverterFactory.create(
-                        Moshi.Builder()
-                            .add(KotlinJsonAdapterFactory())
-                            .build()
-                    )
-                )
+                .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
                 .client(client)
                 .baseUrl(MUSIC_BRAINZ_BASE_URL)
                 .build()

@@ -14,8 +14,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,11 +37,27 @@ import ly.david.musicbrainzjetpackcompose.musicbrainz.LifeSpan
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 @Composable
-internal fun SearchScreen(
-    onClickArtist: (String) -> Unit = {},
+internal fun SearchScreenScaffold(
+    onArtistClick: (Artist) -> Unit = {}
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Search Artists") },
+                backgroundColor = Color.White
+            )
+        }
+    ) {
+        SearchScreen(onArtistClick)
+    }
+}
+
+@Composable
+private fun SearchScreen(
+    onArtistClick: (Artist) -> Unit = {},
     viewModel: SearchViewModel = viewModel()
 ) {
-
+    // TODO: this updates live after a successful search result...
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
 
@@ -87,27 +105,24 @@ internal fun SearchScreen(
 
             items(viewModel.artists) { artist ->
                 ArtistCard(artist = artist) {
-                    // TODO: could pass entire artist data if necessary
-                    Log.d("Remove This", "MainApp: clicked on artist with id=$it")
-                    onClickArtist(it)
+                    onArtistClick(it)
                 }
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ArtistCard(
     artist: Artist,
-    onClick: (id: String) -> Unit = {}
+    onArtistClick: (Artist) -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        onClick = { onClick(artist.id) },
+        onClick = { onArtistClick(artist) },
         border = BorderStroke(1.dp, Color.LightGray)
     ) {
         Column(
@@ -165,7 +180,7 @@ internal fun ArtistCardDarkPreview() {
 @Composable
 internal fun SearchScreenPreview() {
     MusicBrainzJetpackComposeTheme {
-        SearchScreen()
+        SearchScreenScaffold()
     }
 }
 
@@ -173,6 +188,6 @@ internal fun SearchScreenPreview() {
 @Composable
 internal fun SearchScreenDarkPreview() {
     MusicBrainzJetpackComposeTheme {
-        SearchScreen()
+        SearchScreenScaffold()
     }
 }
