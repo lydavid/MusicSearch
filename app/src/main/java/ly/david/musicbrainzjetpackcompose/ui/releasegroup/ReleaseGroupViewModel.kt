@@ -1,8 +1,8 @@
 package ly.david.musicbrainzjetpackcompose.ui.releasegroup
 
 import androidx.lifecycle.ViewModel
-import ly.david.musicbrainzjetpackcompose.musicbrainz.BrowseReleasesResponse
 import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService
+import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
 
 class ReleaseGroupViewModel : ViewModel() {
 
@@ -10,6 +10,6 @@ class ReleaseGroupViewModel : ViewModel() {
         MusicBrainzApiService.create()
     }
 
-    suspend fun getReleasesByReleaseGroup(releaseGroupId: String): BrowseReleasesResponse =
-        musicBrainzApiService.browseReleasesByReleaseGroup(releaseGroupId)
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroup =
+        musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
 }

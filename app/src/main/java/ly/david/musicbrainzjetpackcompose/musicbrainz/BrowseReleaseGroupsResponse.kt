@@ -51,4 +51,10 @@ data class ReleaseGroup(
     @Json(name = "disambiguation") val disambiguation: String = "",
     @Json(name = "primary-type") val primaryType: String? = null,
     @Json(name = "primary-type-id") val primaryTypeId: String? = null,
+
+    // lookup inc=releases
+    @Json(name = "releases") val releases: List<Release>? = null,
+
+    // lookup inc=artists
+    @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null
 )

@@ -24,8 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.common.getYear
-import ly.david.musicbrainzjetpackcompose.musicbrainz.BrowseReleasesResponse
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Release
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
@@ -58,7 +56,7 @@ fun ReleaseGroupScreenScaffold(
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ReleaseGroupUiState(
-    val response: BrowseReleasesResponse? = null,
+    val response: ReleaseGroup? = null,
     val isLoading: Boolean = false,
     val isError: Boolean = false
 )
@@ -72,7 +70,7 @@ fun ReleaseGroupReleasesScreen(
     viewModel: ReleaseGroupViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = ReleaseGroupUiState(isLoading = true)) {
-        value = ReleaseGroupUiState(response = viewModel.getReleasesByReleaseGroup(releaseGroupId))
+        value = ReleaseGroupUiState(response = viewModel.lookupReleaseGroup(releaseGroupId))
     }
 
     when {
@@ -81,17 +79,17 @@ fun ReleaseGroupReleasesScreen(
                 LazyColumn(
                     modifier = modifier
                 ) {
-                    item {
-                        val results = response.releaseCount
-                        if (results == 0) {
-                            Text("No releases found for this release group.")
-                        } else {
-                            Text("Found $results releases for this release group.")
-                        }
-                    }
+//                    item {
+//                        val results = response.releaseCount
+//                        if (results == 0) {
+//                            Text("No releases found for this release group.")
+//                        } else {
+//                            Text("Found $results releases for this release group.")
+//                        }
+//                    }
 
-                    val grouped = response.releases.groupBy { it.status ?: "(No status)" }
-                    grouped.forEach { (status, releasesForStatus) ->
+                    val grouped = response.releases?.groupBy { it.status ?: "(No status)" }
+                    grouped?.forEach { (status, releasesForStatus) ->
                         stickyHeader {
                             StickyHeader(text = status)
                         }
@@ -150,7 +148,7 @@ private fun ReleaseCard(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = release.date?.getYear().orEmpty(),
+                text = release.media?.first()?.trackCount.toString(),//release.date?.getYear().orEmpty(),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
             )
