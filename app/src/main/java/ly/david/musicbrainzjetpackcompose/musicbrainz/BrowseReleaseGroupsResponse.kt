@@ -38,8 +38,9 @@ import com.squareup.moshi.Json
 //    ],
 //    "release-group-offset": 0
 //}
-data class ReleaseGroupsQueryResponse(
+data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") val releaseGroupCount: Int,
+    @Json(name = "release-group-offset") val releaseGroupOffset: Int,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroup>
 )
 
@@ -51,13 +52,3 @@ data class ReleaseGroup(
     @Json(name = "primary-type") val primaryType: String? = null,
     @Json(name = "primary-type-id") val primaryTypeId: String? = null,
 )
-
-private const val YEAR_FIRST_INDEX = 0
-private const val YEAR_LAST_INDEX = 4
-
-fun ReleaseGroup.getYear(): String =
-    if (firstReleaseDate.length < YEAR_LAST_INDEX) {
-        ""
-    } else {
-        firstReleaseDate.substring(YEAR_FIRST_INDEX, YEAR_LAST_INDEX)
-    }

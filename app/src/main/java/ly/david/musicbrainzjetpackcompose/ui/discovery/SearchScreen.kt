@@ -72,9 +72,9 @@ private fun SearchScreen(
                 placeholder = { Text("Search") },
                 maxLines = 1, // TODO: Seems like this is currently broken
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
-                    onDone = {
+                    onSearch = {
                         viewModel.queryArtists(text)
                         Log.d("debug", "MainApp: querying /${selectedOption.queryText} for $text")
                         focusManager.clearFocus()

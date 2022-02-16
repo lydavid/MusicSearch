@@ -1,7 +1,6 @@
 package ly.david.musicbrainzjetpackcompose
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
+import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -77,8 +77,7 @@ internal fun MainNavHost(
 
         val onReleaseGroupClick: (ReleaseGroup) -> Unit = { releaseGroup ->
             val releaseGroupJson = releaseGroup.toJson()
-//            navController.navigate("release-group/$releaseGroupJson")
-            Log.d("Remove This", "MainNavHost: releaseGroup=$releaseGroup")
+            navController.navigate("release-group/$releaseGroupJson")
         }
 
         composable(
@@ -99,7 +98,26 @@ internal fun MainNavHost(
             val artist = artistJson.fromJson(Artist::class.java)
             if (artist != null) {
                 ArtistScreenScaffold(artist, onReleaseGroupClick)
-                // TODO: on click should go to screen will all releases part of a releaseGroup
+            }
+        }
+
+        composable(
+            "release-group/{releaseGroupJson}",
+            arguments = listOf(
+                navArgument("releaseGroupJson") {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "mbjc://release-group/{releaseGroupJson}"
+                }
+            )
+        ) { entry ->
+            val releaseGroupJson = entry.arguments?.getString("releaseGroupJson") ?: return@composable
+            val releaseGroup = releaseGroupJson.fromJson(ReleaseGroup::class.java)
+            if (releaseGroup != null) {
+                ReleaseGroupScreenScaffold(releaseGroup)
             }
         }
     }

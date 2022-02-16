@@ -24,10 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
+import ly.david.musicbrainzjetpackcompose.musicbrainz.BrowseReleaseGroupsResponse
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
-import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroupsQueryResponse
-import ly.david.musicbrainzjetpackcompose.musicbrainz.getYear
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 // TODO:
@@ -69,7 +69,7 @@ fun ArtistScreenScaffold(
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ArtistUiState(
-    val response: ReleaseGroupsQueryResponse? = null,
+    val response: BrowseReleaseGroupsResponse? = null,
     val isLoading: Boolean = false,
     val isError: Boolean = false
 )
@@ -324,7 +324,7 @@ private fun ReleaseGroupCard(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = releaseGroup.getYear(),
+                text = releaseGroup.firstReleaseDate.getYear(),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
             )

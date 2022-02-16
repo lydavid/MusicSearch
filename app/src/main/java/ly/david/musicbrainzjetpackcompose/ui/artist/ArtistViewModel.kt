@@ -1,8 +1,8 @@
 package ly.david.musicbrainzjetpackcompose.ui.artist
 
 import androidx.lifecycle.ViewModel
+import ly.david.musicbrainzjetpackcompose.musicbrainz.BrowseReleaseGroupsResponse
 import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService
-import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroupsQueryResponse
 
 class ArtistViewModel : ViewModel() {
 
@@ -10,6 +10,6 @@ class ArtistViewModel : ViewModel() {
         MusicBrainzApiService.create()
     }
 
-    suspend fun getReleaseGroupsByArtist(artistId: String): ReleaseGroupsQueryResponse =
-        musicBrainzApiService.getReleaseGroupsByArtist(artistId)
+    suspend fun getReleaseGroupsByArtist(artistId: String): BrowseReleaseGroupsResponse =
+        musicBrainzApiService.browseReleaseGroupsByArtist(artistId)
 }
