@@ -1,7 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.musicbrainz
 
 import ly.david.musicbrainzjetpackcompose.common.JsonUtils
-import okhttp3.Interceptor
+import ly.david.musicbrainzjetpackcompose.common.ServiceUtils
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -22,8 +22,8 @@ internal interface MusicBrainzApiService {
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(@Query("artist") artistId: String): BrowseReleaseGroupsResponse
 
-    @GET("release")
-    suspend fun browseReleasesByReleaseGroup(@Query("release-group") releaseGroupId: String): ReleaseGroupResponse
+//    @GET("release")
+//    suspend fun browseReleasesByReleaseGroup(@Query("release-group") releaseGroupId: String): ReleaseGroupResponse
     // endregion
 
     // region lookup
@@ -37,18 +37,8 @@ internal interface MusicBrainzApiService {
     // endregion
 
     companion object {
-
-        private val interceptor = Interceptor { chain ->
-            val request = chain.request().newBuilder()
-                .addHeader("User-Agent", "MusicBrainzJetpackCompose/0.1.0")
-                .addHeader("Accept", "application/json")
-                // TODO: response in App Inspection is gibberish, is there a header we need to add?
-                .build()
-            chain.proceed(request)
-        }
-
         private val client = OkHttpClient().newBuilder()
-            .addInterceptor(interceptor)
+            .addInterceptor(ServiceUtils.interceptor)
             // TODO: should process 503 errors, then we should display alert saying we ran into it (rate limited etc)
             .build()
 

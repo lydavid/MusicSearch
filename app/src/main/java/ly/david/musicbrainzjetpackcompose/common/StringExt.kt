@@ -13,3 +13,11 @@ fun String.getYear(): String =
     } else {
         substring(YEAR_FIRST_INDEX, YEAR_LAST_INDEX)
     }
+
+// TODO: good idea to use but it doesn't seem like this is the only issue with coil
+//  maybe we need to edit user-agent?
+/**
+ * Ensure we use https because Coil doesn't accept it otherwise.
+ * Cover Art Archive gives us urls with http.
+ */
+fun String.useHttps(): String = replace("http://", "https://")

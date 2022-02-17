@@ -79,15 +79,6 @@ fun ReleaseGroupReleasesScreen(
                 LazyColumn(
                     modifier = modifier
                 ) {
-//                    item {
-//                        val results = response.releaseCount
-//                        if (results == 0) {
-//                            Text("No releases found for this release group.")
-//                        } else {
-//                            Text("Found $results releases for this release group.")
-//                        }
-//                    }
-
                     val grouped = response.releases?.groupBy { it.status ?: "(No status)" }
                     grouped?.forEach { (status, releasesForStatus) ->
                         stickyHeader {
@@ -126,6 +117,10 @@ fun StickyHeader(text: String) {
     }
 }
 
+// TODO: card only needs: title/disamb/format/tracks/country/date
+//  rest of details in go inside the release itself
+//  inside release, we will have a list of tracks as default screen
+//  but we should also have a tab for rest of details for that release such as barcode
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ReleaseCard(
@@ -200,6 +195,7 @@ private val testRelease = Release(
     title = "欠けた心象、世のよすが",
     disambiguation = "初回限定盤",
     date = "2021-09-08",
+    country = "JP"
 )
 
 @Preview(showBackground = true)

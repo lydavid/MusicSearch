@@ -1,6 +1,5 @@
-package ly.david.musicbrainzjetpackcompose.musicbrainz
+package ly.david.musicbrainzjetpackcompose.common
 
-import ly.david.musicbrainzjetpackcompose.common.getYear
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -19,5 +18,13 @@ class StringExtTest {
     @Test
     fun `get year too short`() {
         assertEquals("", "202".getYear())
+    }
+
+    @Test
+    fun `convert http to https`() {
+        assertEquals(
+            "https://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185.jpg",
+            "http://coverartarchive.org/release/f81cbdf9-4390-4738-b6b2-124f5bceafe3/30440812185.jpg".useHttps()
+        )
     }
 }
