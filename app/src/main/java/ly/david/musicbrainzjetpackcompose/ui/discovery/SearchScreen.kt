@@ -44,7 +44,6 @@ internal fun SearchScreenScaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Search Artists") },
-                backgroundColor = Color.White
             )
         }
     ) {

@@ -45,7 +45,6 @@ fun ArtistScreenScaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = artist.name) },
-                backgroundColor = Color.White
             )
         },
 //        bottomBar = {
@@ -97,6 +96,11 @@ fun ArtistReleaseGroupsScreen(
             uiState.response?.let { response ->
                 LazyColumn(
                     modifier = modifier
+                    // rememberLazyListState() currently not working for possibly one of many reasons:
+                    //  - not working for lists that have headers/footers
+                    //  - not working for lazy lists in NavHost
+                    //  - not working for lazy lists at all
+                    // https://issuetracker.google.com/issues/177245496
                 ) {
                     item {
                         val results = response.size

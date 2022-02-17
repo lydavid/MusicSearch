@@ -42,7 +42,6 @@ fun ReleaseGroupScreenScaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = releaseGroup.title) },
-                backgroundColor = Color.White
             )
         },
     ) { innerPadding ->
