@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
+import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
 import ly.david.musicbrainzjetpackcompose.musicbrainz.BrowseReleaseGroupsResponse
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
@@ -102,13 +103,15 @@ fun ArtistReleaseGroupsScreen(
                         }
                     }
 
+                    // TODO: also need to group by secondary types
                     val grouped = response.releaseGroups.groupBy { it.primaryType ?: "(no type)" }
                     grouped.forEach { (type, releaseGroupsForType) ->
                         stickyHeader {
-                            StickyHeader(text = type)
+                            StickyHeader(text = "$type (${releaseGroupsForType.size})")
                         }
-                        items(releaseGroupsForType) { releaseGroup ->
-                            // TODO: sort by date ascending
+                        items(releaseGroupsForType.sortedBy {
+                            it.firstReleaseDate.toDate()
+                        }) { releaseGroup ->
                             ReleaseGroupCard(releaseGroup = releaseGroup) {
                                 onReleaseGroupClick(it)
                             }

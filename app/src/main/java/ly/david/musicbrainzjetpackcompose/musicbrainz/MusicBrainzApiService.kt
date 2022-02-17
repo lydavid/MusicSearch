@@ -18,9 +18,13 @@ internal interface MusicBrainzApiService {
     suspend fun queryArtists(@Query("query") query: String): SearchArtistsResponse
     // endregion
 
+    // TODO: need pagination beyond 100
     // region browse
     @GET("release-group")
-    suspend fun browseReleaseGroupsByArtist(@Query("artist") artistId: String): BrowseReleaseGroupsResponse
+    suspend fun browseReleaseGroupsByArtist(
+        @Query("artist") artistId: String,
+        @Query("limit") limit: Int = 100
+    ): BrowseReleaseGroupsResponse
 
 //    @GET("release")
 //    suspend fun browseReleasesByReleaseGroup(@Query("release-group") releaseGroupId: String): ReleaseGroupResponse
