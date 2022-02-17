@@ -11,6 +11,9 @@ import retrofit2.http.Query
 
 private const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org/ws/2/"
 
+const val DEFAULT_BROWSE_LIMIT = 100
+
+
 internal interface MusicBrainzApiService {
 
     // region search
@@ -23,7 +26,8 @@ internal interface MusicBrainzApiService {
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
         @Query("artist") artistId: String,
-        @Query("limit") limit: Int = 100
+        @Query("limit") limit: Int = DEFAULT_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0
     ): BrowseReleaseGroupsResponse
 
 //    @GET("release")

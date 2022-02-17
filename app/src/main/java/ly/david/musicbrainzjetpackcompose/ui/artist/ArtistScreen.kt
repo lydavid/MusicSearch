@@ -27,7 +27,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
-import ly.david.musicbrainzjetpackcompose.musicbrainz.BrowseReleaseGroupsResponse
 import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -37,6 +36,11 @@ fun ArtistScreenScaffold(
     artist: Artist,
     onReleaseGroupClick: (ReleaseGroup) -> Unit = {},
 ) {
+
+    // TODO: setting to show more options. By default, we can keep it as just title/year,
+    //  but we should be able to see all the relevant info from this screen too like we do from web
+    //  each row will probably just be label: data
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -45,18 +49,18 @@ fun ArtistScreenScaffold(
             )
         },
 //        bottomBar = {
-            // TODO: meant for main navigation in app, so this nested screen shouldn't use it
-            //  instead, it should use tabs, which don't belong in topbar
-            //  however, it won't fit too many
-            // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color)
-            // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ScrollableTabRow(kotlin.Int,androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,kotlin.Function1,kotlin.Function0,kotlin.Function0)
-            // TODO: apparently, we can get scrolling, so maybe we can fit everything
-            // See Reddit is Fun app: check out the behaviour to hide top bar and tabs on scroll
-            // https://material.io/components/tabs#usage
+        // TODO: meant for main navigation in app, so this nested screen shouldn't use it
+        //  instead, it should use tabs, which don't belong in topbar
+        //  however, it won't fit too many
+        // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#Tab(kotlin.Boolean,kotlin.Function0,androidx.compose.ui.Modifier,kotlin.Boolean,kotlin.Function0,kotlin.Function0,androidx.compose.foundation.interaction.MutableInteractionSource,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color)
+        // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ScrollableTabRow(kotlin.Int,androidx.compose.ui.Modifier,androidx.compose.ui.graphics.Color,androidx.compose.ui.graphics.Color,androidx.compose.ui.unit.Dp,kotlin.Function1,kotlin.Function0,kotlin.Function0)
+        // TODO: apparently, we can get scrolling, so maybe we can fit everything
+        // See Reddit is Fun app: check out the behaviour to hide top bar and tabs on scroll
+        // https://material.io/components/tabs#usage
 //            BottomNavigation(
 //                backgroundColor = Color.White
 //            ) {
-                // TODO:  should have tabs for Overview (release groups),  releases, recordings, ...
+        // TODO:  should have tabs for Overview (release groups),  releases, recordings, ...
 //            }
 //        }
     ) { innerPadding ->
@@ -70,7 +74,7 @@ fun ArtistScreenScaffold(
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ArtistUiState(
-    val response: BrowseReleaseGroupsResponse? = null,
+    val response: List<ReleaseGroup>? = null,
     val isLoading: Boolean = false,
     val isError: Boolean = false
 )
@@ -85,7 +89,7 @@ fun ArtistReleaseGroupsScreen(
     viewModel: ArtistViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = ArtistUiState(isLoading = true)) {
-        value = ArtistUiState(response = viewModel.getReleaseGroupsByArtist(artistId))
+        value = ArtistUiState(response = viewModel.getReleaseGroupsByArtist(artistId = artistId))
     }
 
     when {
@@ -95,7 +99,7 @@ fun ArtistReleaseGroupsScreen(
                     modifier = modifier
                 ) {
                     item {
-                        val results = response.releaseGroupCount
+                        val results = response.size
                         if (results == 0) {
                             Text("No release groups found for this artist.")
                         } else {
@@ -103,8 +107,11 @@ fun ArtistReleaseGroupsScreen(
                         }
                     }
 
-                    // TODO: also need to group by secondary types
-                    val grouped = response.releaseGroups.groupBy { it.primaryType ?: "(no type)" }
+                    // TODO: primary type can be null, if so, turn to empty string
+                    //  flatten list, concat types with +
+                    val grouped = response.groupBy {
+                        Pair(it.primaryType, it.secondaryTypes) ?: "(no type)"
+                    }
                     grouped.forEach { (type, releaseGroupsForType) ->
                         stickyHeader {
                             StickyHeader(text = "$type (${releaseGroupsForType.size})")
