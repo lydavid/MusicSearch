@@ -13,8 +13,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.musicbrainzjetpackcompose.common.fromJson
 import ly.david.musicbrainzjetpackcompose.common.toJson
-import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
-import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.Artist
+import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold

@@ -1,9 +1,9 @@
 package ly.david.musicbrainzjetpackcompose.ui.artist
 
 import androidx.lifecycle.ViewModel
-import ly.david.musicbrainzjetpackcompose.musicbrainz.DEFAULT_BROWSE_LIMIT
-import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService
-import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
+import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.browse.DEFAULT_BROWSE_LIMIT
 
 class ArtistViewModel : ViewModel() {
 

@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.coverartarchive
+package ly.david.musicbrainzjetpackcompose.data.coverart
 
 import ly.david.musicbrainzjetpackcompose.common.JsonUtils
 import ly.david.musicbrainzjetpackcompose.common.ServiceUtils

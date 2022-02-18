@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
-import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService
+import ly.david.musicbrainzjetpackcompose.data.Artist
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
 
 internal class SearchViewModel : ViewModel() {
 
@@ -15,6 +15,8 @@ internal class SearchViewModel : ViewModel() {
         MusicBrainzApiService.create()
     }
 
+    // TODO: not that useful, could just use artists.count, unless we have it track the total number including ones not in current paging
+    // right now it's max 25
     val totalFoundResults = mutableStateOf(0)
 
     val artists = mutableStateListOf<Artist>()

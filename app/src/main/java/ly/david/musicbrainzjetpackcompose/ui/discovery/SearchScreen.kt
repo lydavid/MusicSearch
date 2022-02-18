@@ -32,8 +32,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.QueryResources
-import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
-import ly.david.musicbrainzjetpackcompose.musicbrainz.LifeSpan
+import ly.david.musicbrainzjetpackcompose.data.Artist
+import ly.david.musicbrainzjetpackcompose.data.LifeSpan
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 @Composable

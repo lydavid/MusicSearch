@@ -1,12 +1,6 @@
-package ly.david.musicbrainzjetpackcompose.musicbrainz
+package ly.david.musicbrainzjetpackcompose.data
 
 import com.squareup.moshi.Json
-
-data class SearchArtistsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "artists") val artists: List<Artist> // Max of 25 at a time
-)
 
 data class Artist(
     @Json(name = "id") val id: String,

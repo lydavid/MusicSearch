@@ -1,10 +1,10 @@
 package ly.david.musicbrainzjetpackcompose.ui.releasegroup
 
 import androidx.lifecycle.ViewModel
-import ly.david.musicbrainzjetpackcompose.coverartarchive.CoverArtArchiveApiService
-import ly.david.musicbrainzjetpackcompose.coverartarchive.CoverArtsResponse
-import ly.david.musicbrainzjetpackcompose.musicbrainz.MusicBrainzApiService
-import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
+import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.coverart.CoverArtArchiveApiService
+import ly.david.musicbrainzjetpackcompose.data.coverart.CoverArtsResponse
 
 class ReleaseGroupViewModel : ViewModel() {
 

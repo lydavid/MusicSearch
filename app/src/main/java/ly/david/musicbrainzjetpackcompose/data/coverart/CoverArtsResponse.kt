@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.coverartarchive
+package ly.david.musicbrainzjetpackcompose.data.coverart
 
 import com.squareup.moshi.Json
 

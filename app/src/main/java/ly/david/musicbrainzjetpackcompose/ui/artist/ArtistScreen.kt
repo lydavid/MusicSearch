@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
-import ly.david.musicbrainzjetpackcompose.musicbrainz.Artist
-import ly.david.musicbrainzjetpackcompose.musicbrainz.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.Artist
+import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 // TODO:
