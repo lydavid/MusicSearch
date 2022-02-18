@@ -20,8 +20,8 @@ fun StickyHeader(text: String) {
             text = text,
             style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .padding(start = 16.dp)
-                .padding(vertical = 8.dp)
+                .padding(start = 8.dp)
+                .padding(vertical = 4.dp)
                 .fillMaxWidth()
         )
     }

@@ -13,7 +13,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
@@ -27,6 +26,7 @@ import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -42,11 +42,7 @@ fun ArtistScreenScaffold(
     //  each row will probably just be label: data
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = artist.name) },
-            )
-        },
+        topBar = { ScrollableTopAppBar(artist.name) },
 //        bottomBar = {
         // TODO: meant for main navigation in app, so this nested screen shouldn't use it
         //  instead, it should use tabs, which don't belong in topbar

@@ -18,7 +18,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +36,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.QueryResources
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
+import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 @Composable
@@ -47,11 +47,7 @@ internal fun SearchScreenScaffold(
     val lazyListState: LazyListState = rememberLazyListState()
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Search Artists") },
-            )
-        }
+        topBar = { ScrollableTopAppBar(title = "Search Artists") }
     ) {
         SearchScreen(onArtistClick, lazyListState)
     }
@@ -63,7 +59,7 @@ private fun SearchScreen(
     state: LazyListState,
     viewModel: SearchViewModel = viewModel()
 ) {
-    // TODO: this updates live after a successful search result...
+    // TODO: this updates live after a successful search result... shouldn't do that
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
 
