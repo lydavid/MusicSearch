@@ -3,17 +3,18 @@ package ly.david.musicbrainzjetpackcompose.ui.releasegroup
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -33,8 +34,8 @@ import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
-import ly.david.musicbrainzjetpackcompose.ui.theme.getListHeaderBackground
 
 /**
  * Equivalent of a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
@@ -47,12 +48,19 @@ fun ReleaseGroupScreenScaffold(
     onReleaseClick: (Release) -> Unit = {},
 ) {
 
+    // TODO: generalize scaffold for app
     var title by rememberSaveable { mutableStateOf("") }
+    val titleScroll = rememberScrollState()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = title) },
+                title = {
+                    Text(
+                        text = title,
+                        modifier = Modifier.horizontalScroll(titleScroll)
+                    )
+                },
             )
         },
     ) { innerPadding ->
@@ -117,18 +125,6 @@ fun ReleaseGroupReleasesScreen(
         else -> {
             Text(text = "error...")
         }
-    }
-}
-
-@Composable
-fun StickyHeader(text: String) {
-    Surface(color = getListHeaderBackground()) {
-        Text(
-            text = text,
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-        )
     }
 }
 

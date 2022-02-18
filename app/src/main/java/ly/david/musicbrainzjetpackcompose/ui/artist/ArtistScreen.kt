@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -28,6 +27,7 @@ import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 // TODO:
@@ -121,7 +121,7 @@ fun ArtistReleaseGroupsScreen(
                             StickyHeader(text = "$type (${releaseGroupsForType.size})")
                         }
                         items(releaseGroupsForType.sortedBy {
-                            it.firstReleaseDate?.toDate()
+                            it.firstReleaseDate.toDate()
                         }) { releaseGroup ->
                             ReleaseGroupCard(releaseGroup = releaseGroup) {
                                 onReleaseGroupClick(it.id)
@@ -139,18 +139,6 @@ fun ArtistReleaseGroupsScreen(
         else -> {
             Text(text = "error...")
         }
-    }
-}
-
-@Composable
-fun StickyHeader(text: String) {
-    Surface(color = Color.LightGray) {
-        Text(
-            text = text,
-            modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-        )
     }
 }
 

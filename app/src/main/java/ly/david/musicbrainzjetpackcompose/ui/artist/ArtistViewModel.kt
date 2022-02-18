@@ -24,6 +24,8 @@ class ArtistViewModel : ViewModel() {
             offset = offset
         )
 
+        if (offset == 0) allReleaseGroups.clear()
+
         val newReleaseGroups = response.releaseGroups
         allReleaseGroups.addAll(newReleaseGroups)
         return if (newReleaseGroups.size >= limit) {
