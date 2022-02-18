@@ -14,7 +14,6 @@ import androidx.navigation.navDeepLink
 import ly.david.musicbrainzjetpackcompose.common.fromJson
 import ly.david.musicbrainzjetpackcompose.common.toJson
 import ly.david.musicbrainzjetpackcompose.data.Artist
-import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
@@ -75,9 +74,9 @@ internal fun MainNavHost(
             SearchScreenScaffold(onArtistClick = onArtistClick)
         }
 
-        val onReleaseGroupClick: (ReleaseGroup) -> Unit = { releaseGroup ->
-            val releaseGroupJson = releaseGroup.toJson()
-            navController.navigate("release-group/$releaseGroupJson")
+        val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
+//            val releaseGroupJson = releaseGroup.toJson()
+            navController.navigate("release-group/$releaseGroupId")
         }
 
         composable(
@@ -87,7 +86,6 @@ internal fun MainNavHost(
                     type = NavType.StringType // Make argument type safe
                 }
             ),
-            // Test deeplink: adb shell am start -d "mbjc://artist/6825ace2-3563-4ac5-8d85-c7bf1334bd2c" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "mbjc://artist/{artistJson}"
@@ -101,24 +99,26 @@ internal fun MainNavHost(
             }
         }
 
+        // TODO: let's prefer to pass an id, and let the screen query the data itself
         composable(
-            "release-group/{releaseGroupJson}",
+            "release-group/{releaseGroupId}",
             arguments = listOf(
-                navArgument("releaseGroupJson") {
+                navArgument("releaseGroupId") {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
+            // Test deeplink: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "mbjc://release-group/{releaseGroupJson}"
+                    uriPattern = "mbjc://release-group/{releaseGroupId}"
                 }
             )
         ) { entry ->
-            val releaseGroupJson = entry.arguments?.getString("releaseGroupJson") ?: return@composable
-            val releaseGroup = releaseGroupJson.fromJson(ReleaseGroup::class.java)
-            if (releaseGroup != null) {
-                ReleaseGroupScreenScaffold(releaseGroup)
-            }
+            val releaseGroupId = entry.arguments?.getString("releaseGroupId") ?: return@composable
+//            val releaseGroup = releaseGroupJson.fromJson(ReleaseGroup::class.java)
+//            if (releaseGroup != null) {
+            ReleaseGroupScreenScaffold(releaseGroupId)
+//            }
         }
     }
 }

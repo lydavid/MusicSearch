@@ -34,7 +34,7 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 @Composable
 fun ArtistScreenScaffold(
     artist: Artist,
-    onReleaseGroupClick: (ReleaseGroup) -> Unit = {},
+    onReleaseGroupClick: (String) -> Unit = {},
 ) {
 
     // TODO: setting to show more options. By default, we can keep it as just title/year,
@@ -83,7 +83,7 @@ private data class ArtistUiState(
 fun ArtistReleaseGroupsScreen(
     modifier: Modifier,
     artistId: String,
-    onReleaseGroupClick: (ReleaseGroup) -> Unit = {},
+    onReleaseGroupClick: (String) -> Unit = {},
     // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
     viewModel: ArtistViewModel = viewModel()
 ) {
@@ -121,10 +121,10 @@ fun ArtistReleaseGroupsScreen(
                             StickyHeader(text = "$type (${releaseGroupsForType.size})")
                         }
                         items(releaseGroupsForType.sortedBy {
-                            it.firstReleaseDate.toDate()
+                            it.firstReleaseDate?.toDate()
                         }) { releaseGroup ->
                             ReleaseGroupCard(releaseGroup = releaseGroup) {
-                                onReleaseGroupClick(it)
+                                onReleaseGroupClick(it.id)
                             }
                         }
                     }
@@ -154,168 +154,6 @@ fun StickyHeader(text: String) {
     }
 }
 
-// lookup for a specific release group
-// https://musicbrainz.org/ws/2/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756?inc=releases
-//{
-//    "disambiguation": "",
-//    "first-release-date": "2021-09-08",
-//    "primary-type-id": "6d0c5bf6-7a33-3420-a519-44fc63eedebf",
-//    "secondary-type-ids": [],
-//    "releases": [
-//    {
-//        "packaging": null,
-//        "quality": "normal",
-//        "title": "欠けた心象、世のよすが",
-//        "id": "f171e0ae-bea8-41e6-bb41-4c7af7977f50",
-//        "status": "Official",
-//        "text-representation": {
-//        "language": "jpn",
-//        "script": "Jpan"
-//    },
-//        "country": "JP",
-//        "barcode": "4988002911981",
-//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
-//        "disambiguation": "初回限定盤",
-//        "packaging-id": null,
-//        "release-events": [
-//        {
-//            "date": "2021-09-08",
-//            "area": {
-//            "iso-3166-1-codes": [
-//            "JP"
-//            ],
-//            "type": null,
-//            "name": "Japan",
-//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
-//            "sort-name": "Japan",
-//            "disambiguation": "",
-//            "type-id": null
-//        }
-//        }
-//        ],
-//        "date": "2021-09-08"
-//    },
-//    {
-//        "packaging-id": null,
-//        "release-events": [
-//        {
-//            "date": "2021-09-08",
-//            "area": {
-//            "disambiguation": "",
-//            "type-id": null,
-//            "iso-3166-1-codes": [
-//            "JP"
-//            ],
-//            "type": null,
-//            "name": "Japan",
-//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
-//            "sort-name": "Japan"
-//        }
-//        }
-//        ],
-//        "date": "2021-09-08",
-//        "text-representation": {
-//        "script": "Jpan",
-//        "language": "jpn"
-//    },
-//        "country": "JP",
-//        "barcode": "4988002911998",
-//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
-//        "disambiguation": "",
-//        "quality": "normal",
-//        "title": "欠けた心象、世のよすが",
-//        "id": "165f6643-2edb-4795-9abe-26bd0533e59d",
-//        "status": "Official",
-//        "packaging": null
-//    },
-//    {
-//        "packaging": null,
-//        "title": "欠けた心象、世のよすが",
-//        "quality": "normal",
-//        "status": "Official",
-//        "id": "f81cbdf9-4390-4738-b6b2-124f5bceafe3",
-//        "country": "JP",
-//        "text-representation": {
-//        "script": "Jpan",
-//        "language": "jpn"
-//    },
-//        "disambiguation": "アニメイト Ver.",
-//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
-//        "barcode": "4988002911998",
-//        "packaging-id": null,
-//        "date": "2021-09-08",
-//        "release-events": [
-//        {
-//            "area": {
-//            "disambiguation": "",
-//            "type-id": null,
-//            "iso-3166-1-codes": [
-//            "JP"
-//            ],
-//            "type": null,
-//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
-//            "name": "Japan",
-//            "sort-name": "Japan"
-//        },
-//            "date": "2021-09-08"
-//        }
-//        ]
-//    },
-//    {
-//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
-//        "disambiguation": "",
-//        "barcode": "4988002911998",
-//        "country": "XW",
-//        "text-representation": {
-//        "language": "jpn",
-//        "script": "Jpan"
-//    },
-//        "date": "2021-09-08",
-//        "release-events": [
-//        {
-//            "area": {
-//            "id": "525d4e18-3d00-31b9-a58b-a146a916de8f",
-//            "name": "[Worldwide]",
-//            "sort-name": "[Worldwide]",
-//            "iso-3166-1-codes": [
-//            "XW"
-//            ],
-//            "type": null,
-//            "type-id": null,
-//            "disambiguation": ""
-//        },
-//            "date": "2021-09-08"
-//        }
-//        ],
-//        "packaging-id": "119eba76-b343-3e02-a292-f0f00644bb9b",
-//        "packaging": "None",
-//        "status": "Official",
-//        "id": "a3e0f12c-331a-4082-a244-baed958e78b8",
-//        "quality": "normal",
-//        "title": "欠けた心象、世のよすが"
-//    },
-//    {
-//        "text-representation": {
-//        "script": null,
-//        "language": null
-//    },
-//        "barcode": null,
-//        "status-id": "41121bb9-3413-3818-8a9a-9742318349aa",
-//        "disambiguation": "",
-//        "packaging-id": null,
-//        "packaging": null,
-//        "title": "Crescent",
-//        "quality": "normal",
-//        "id": "d7c52617-8976-484d-af73-dc76116ca131",
-//        "status": "Pseudo-Release"
-//    }
-//    ],
-//    "id": "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-//    "title": "欠けた心象、世のよすが",
-//    "secondary-types": [],
-//    "primary-type": "EP"
-//}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ReleaseGroupCard(
@@ -338,7 +176,7 @@ private fun ReleaseGroupCard(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = releaseGroup.firstReleaseDate.getYear(),
+                text = releaseGroup.firstReleaseDate?.getYear().orEmpty(),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
             )
@@ -346,16 +184,6 @@ private fun ReleaseGroupCard(
     }
 }
 
-//    {
-//        "primary-type-id": "6d0c5bf6-7a33-3420-a519-44fc63eedebf",
-//        "primary-type": "EP",
-//        "disambiguation": "",
-//        "id": "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-//        "secondary-types": [],
-//        "secondary-type-ids": [],
-//        "title": "欠けた心象、世のよすが",
-//        "first-release-date": "2021-09-08"
-//    }
 private val testReleaseGroup = ReleaseGroup(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     title = "欠けた心象、世のよすが",

@@ -11,22 +11,30 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ly.david.musicbrainzjetpackcompose.common.getYear
+import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.musicbrainzjetpackcompose.ui.theme.getListHeaderBackground
 
 /**
  * Equivalent of a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
@@ -35,19 +43,23 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
  */
 @Composable
 fun ReleaseGroupScreenScaffold(
-    releaseGroup: ReleaseGroup,
+    releaseGroupId: String,
     onReleaseClick: (Release) -> Unit = {},
 ) {
+
+    var title by rememberSaveable { mutableStateOf("") }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = releaseGroup.title) },
+                title = { Text(text = title) },
             )
         },
     ) { innerPadding ->
         ReleaseGroupReleasesScreen(
             modifier = Modifier.padding(innerPadding),
-            releaseGroupId = releaseGroup.id,
+            releaseGroupId = releaseGroupId,
+            onTitleUpdate = { title = it },
             onReleaseClick = onReleaseClick
         )
     }
@@ -65,6 +77,7 @@ private data class ReleaseGroupUiState(
 fun ReleaseGroupReleasesScreen(
     modifier: Modifier,
     releaseGroupId: String,
+    onTitleUpdate: (String) -> Unit = {},
     onReleaseClick: (Release) -> Unit = {},
     viewModel: ReleaseGroupViewModel = viewModel()
 ) {
@@ -75,6 +88,9 @@ fun ReleaseGroupReleasesScreen(
     when {
         uiState.response != null -> {
             uiState.response?.let { response ->
+
+                onTitleUpdate(response.title)
+
                 LazyColumn(
                     modifier = modifier
                 ) {
@@ -106,7 +122,7 @@ fun ReleaseGroupReleasesScreen(
 
 @Composable
 fun StickyHeader(text: String) {
-    Surface(color = Color.LightGray) {
+    Surface(color = getListHeaderBackground()) {
         Text(
             text = text,
             modifier = Modifier
@@ -135,17 +151,22 @@ private fun ReleaseCard(
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = release.title,
-                modifier = Modifier.weight(3f)
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.weight(7f)
             )
-            Spacer(modifier = Modifier.padding(4.dp))
-            Text(
-                text = release.media?.first()?.trackCount.toString(),//release.date?.getYear().orEmpty(),
-                modifier = Modifier.weight(1f),
-                textAlign = TextAlign.End
-            )
+            release.date?.getYear().ifNotNullOrEmpty {
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.End
+                )
+            }
         }
     }
 }
@@ -199,7 +220,7 @@ private val testRelease = Release(
 
 @Preview(showBackground = true)
 @Composable
-internal fun ReleaseGroupCardPreview() {
+internal fun ReleaseCardPreview() {
     MusicBrainzJetpackComposeTheme {
         ReleaseCard(testRelease)
     }
@@ -207,8 +228,23 @@ internal fun ReleaseGroupCardPreview() {
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-internal fun ReleaseGroupCardDarkPreview() {
+internal fun ReleaseCardDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         ReleaseCard(testRelease)
+    }
+}
+
+private val testRelease2 = Release(
+    id = "f171e0ae-bea8-41e6-bb41-4c7af7977f50",
+    title = "欠けた心象、世のよすが",
+    disambiguation = "初回限定盤",
+    country = "JP"
+)
+
+@Preview(showBackground = true)
+@Composable
+internal fun ReleaseCardWithoutYearPreview() {
+    MusicBrainzJetpackComposeTheme {
+        ReleaseCard(testRelease2)
     }
 }

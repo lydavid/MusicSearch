@@ -21,6 +21,6 @@ data class ReleaseGroup(
 
 data class ArtistCredit(
     @Json(name = "artist") val artist: Artist,
-    @Json(name = "joinphrase") val joinPhrase: String,
+    @Json(name = "joinphrase") val joinPhrase: String, // How to join the artist names: "", " / "
     @Json(name = "name") val name: String,
 )

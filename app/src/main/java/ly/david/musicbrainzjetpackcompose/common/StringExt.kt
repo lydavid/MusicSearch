@@ -45,3 +45,9 @@ fun String.toDate(): Date? {
         }
     }
 }
+
+inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
+    if (!this.isNullOrEmpty()) {
+        block(this)
+    }
+}
