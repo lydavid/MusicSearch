@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
 
@@ -21,15 +19,13 @@ internal class SearchViewModel : ViewModel() {
 
     val artists = mutableStateListOf<Artist>()
 
-    fun queryArtists(queryString: String) {
-        viewModelScope.launch {
-            val foundArtists = musicBrainzApiService.queryArtists(queryString)
+    suspend fun queryArtists(queryString: String) {
+        val foundArtists = musicBrainzApiService.queryArtists(queryString)
 
-            totalFoundResults.value = foundArtists.count
-            Log.d("debug", "queryArtists: $foundArtists")
-            Log.d("debug", "count=${foundArtists.count} .size=${foundArtists.artists.size}")
-            artists.clear()
-            artists.addAll(foundArtists.artists)
-        }
+        totalFoundResults.value = foundArtists.count
+        Log.d("debug", "queryArtists: $foundArtists")
+        Log.d("debug", "count=${foundArtists.count} .size=${foundArtists.artists.size}")
+        artists.clear()
+        artists.addAll(foundArtists.artists)
     }
 }

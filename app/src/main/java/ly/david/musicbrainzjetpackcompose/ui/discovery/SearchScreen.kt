@@ -1,7 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +8,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
@@ -22,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.QueryResources
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
@@ -40,6 +43,9 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 internal fun SearchScreenScaffold(
     onArtistClick: (Artist) -> Unit = {}
 ) {
+
+    val lazyListState: LazyListState = rememberLazyListState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -47,13 +53,14 @@ internal fun SearchScreenScaffold(
             )
         }
     ) {
-        SearchScreen(onArtistClick)
+        SearchScreen(onArtistClick, lazyListState)
     }
 }
 
 @Composable
 private fun SearchScreen(
     onArtistClick: (Artist) -> Unit = {},
+    state: LazyListState,
     viewModel: SearchViewModel = viewModel()
 ) {
     // TODO: this updates live after a successful search result...
@@ -61,6 +68,8 @@ private fun SearchScreen(
     var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
 
     val focusManager = LocalFocusManager.current
+
+    val coroutineScope = rememberCoroutineScope()
 
     Column {
         Row {
@@ -74,9 +83,11 @@ private fun SearchScreen(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
                     onSearch = {
-                        viewModel.queryArtists(text)
-                        Log.d("debug", "MainApp: querying /${selectedOption.queryText} for $text")
-                        focusManager.clearFocus()
+                        coroutineScope.launch {
+                            viewModel.queryArtists(text)
+                            state.scrollToItem(0)
+                            focusManager.clearFocus()
+                        }
                     }
                 ),
                 onValueChange = { newText ->
@@ -94,7 +105,9 @@ private fun SearchScreen(
             )
         }
 
-        LazyColumn {
+        LazyColumn(
+            state = state
+        ) {
             item {
                 val results = viewModel.totalFoundResults.value
                 if (results != 0) {
