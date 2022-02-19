@@ -68,13 +68,28 @@ fun ReleaseGroupsByArtistScreen(
                         }
                     }
 
-                    val grouped = response.groupBy {
-                        it.getDisplayTypes()
-                    }
-                    // TODO: reorder to make sure types like "Album" only appears first
-                    // Ordering seems to be Demo > Album > Single > EP
+                    // TODO: extract, and consider enum
+                    // TODO: ordering actually has null first
+                    val primaryPrecedence = listOf("Album", "Single", "EP", "Broadcast", "Other")
+
+                    val secondaryPrecedence = listOf(
+                        listOf(), listOf("Compilation")
+                    )
+
+                    fun Int.moveNotFoundToEnd() = if (this == -1) Int.MAX_VALUE else this
+
+                    val grouped = response
+                        .sortedWith(
+                            compareBy<ReleaseGroup> {
+                                primaryPrecedence.indexOf(it.primaryType).moveNotFoundToEnd()
+                            }.thenBy {
+                                secondaryPrecedence.indexOf(it.secondaryTypes).moveNotFoundToEnd()
+                            }
+                        )
+                        .groupBy { it.getDisplayTypes() }
                     grouped.forEach { (type, releaseGroupsForType) ->
 
+                        // TODO: clicking on header should collapse the group
                         stickyHeader {
                             StickyHeader(text = "$type (${releaseGroupsForType.size})")
                         }
