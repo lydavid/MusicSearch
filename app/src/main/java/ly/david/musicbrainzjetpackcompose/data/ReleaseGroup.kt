@@ -24,3 +24,18 @@ data class ArtistCredit(
     @Json(name = "joinphrase") val joinPhrase: String, // How to join the artist names: "", " / "
     @Json(name = "name") val name: String,
 )
+
+/**
+ * Returns [ReleaseGroup]'s primary type concatenated with all secondary types for display.
+ */
+fun ReleaseGroup.getDisplayTypes(): String {
+
+    var displayTypes = primaryType.orEmpty()
+
+    if (displayTypes.isNotEmpty() && !secondaryTypes.isNullOrEmpty()) {
+        displayTypes += " + "
+    }
+    displayTypes += secondaryTypes?.joinToString(separator = " + ").orEmpty()
+
+    return displayTypes.ifEmpty { "(No type)" }
+}

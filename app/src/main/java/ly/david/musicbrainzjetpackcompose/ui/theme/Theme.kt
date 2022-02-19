@@ -7,6 +7,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+// TODO: pick new colors for both palettes
 private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,

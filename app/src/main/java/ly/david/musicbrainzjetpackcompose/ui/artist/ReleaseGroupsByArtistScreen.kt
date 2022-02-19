@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.data.getDisplayTypes
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -67,15 +68,13 @@ fun ReleaseGroupsByArtistScreen(
                         }
                     }
 
-                    // TODO: primary type can be null, if so, turn to empty string
-                    //  flatten list, concat types with +
                     val grouped = response.groupBy {
-                        // TODO: write ext fun to turn (Album, []) -> Album, (null, []) -> (No Type)
-                        //  write unit test
-                        Pair(it.primaryType, it.secondaryTypes) ?: "(no type)"
+                        it.getDisplayTypes()
                     }
                     // TODO: reorder to make sure types like "Album" only appears first
+                    // Ordering seems to be Demo > Album > Single > EP
                     grouped.forEach { (type, releaseGroupsForType) ->
+
                         stickyHeader {
                             StickyHeader(text = "$type (${releaseGroupsForType.size})")
                         }
