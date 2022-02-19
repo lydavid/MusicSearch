@@ -51,3 +51,11 @@ inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
         block(this)
     }
 }
+
+inline fun String?.returnIfNotNullOrEmpty(block: (String) -> String): String {
+    return if (!this.isNullOrEmpty()) {
+        block(this)
+    } else {
+        ""
+    }
+}

@@ -2,6 +2,8 @@ package ly.david.musicbrainzjetpackcompose.data
 
 import com.squareup.moshi.Json
 
+// browse inc: artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
+// lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
 class Release(
     @Json(name = "id") val id: String,
     @Json(name = "title") val title: String,
@@ -19,8 +21,16 @@ class Release(
     @Json(name = "text-representation") val textRepresentation: TextRepresentation? = null,
     @Json(name = "release-events") val releaseEvents: List<ReleaseEvent>? = null,
 
-    // lookup inc=media
-    @Json(name = "media") val media: List<Media>? = null
+    //   "relations": [],
+
+    // inc=media
+    @Json(name = "media") val media: List<Media>? = null,
+
+    // inc=artist-credits
+    @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null,
+
+    // inc=label
+    @Json(name = "label-info") val labelInfos: List<LabelInfo>? = null,
 )
 
 data class CoverArtArchive(
@@ -46,15 +56,12 @@ data class ReleaseEvent(
     @Json(name = "disambiguation") val disambiguation: String? = null,
 )
 
-data class Area(
-    @Json(name = "id") val id: String,
-    @Json(name = "iso-3166-1-codes") val isoCodes: List<String>,
-)
-
 data class Media(
-    @Json(name = "title") val title: String? = null,
-    @Json(name = "track-count") val trackCount: Int,
     @Json(name = "position") val position: Int,
+    @Json(name = "track-count") val trackCount: Int,
+    @Json(name = "title") val title: String? = null,
+//    @Json(name = "track-offset") val trackOffset: Int = 0, // currently doesn't seem like we need to use
     @Json(name = "format") val format: String? = null,
-    @Json(name = "format-id") val formatId: String? = null
+    @Json(name = "format-id") val formatId: String? = null,
+    @Json(name = "tracks") val tracks: List<Track>? = null,
 )

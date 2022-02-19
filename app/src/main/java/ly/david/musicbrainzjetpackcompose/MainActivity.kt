@@ -16,6 +16,7 @@ import ly.david.musicbrainzjetpackcompose.common.toJson
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
+import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -75,7 +76,6 @@ internal fun MainNavHost(
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-//            val releaseGroupJson = releaseGroup.toJson()
             navController.navigate("release-group/$releaseGroupId")
         }
 
@@ -99,7 +99,10 @@ internal fun MainNavHost(
             }
         }
 
-        // TODO: let's prefer to pass an id, and let the screen query the data itself
+        val onReleaseClick: (String) -> Unit = { releaseId ->
+            navController.navigate("release/$releaseId")
+        }
+
         composable(
             "release-group/{releaseGroupId}",
             arguments = listOf(
@@ -115,10 +118,24 @@ internal fun MainNavHost(
             )
         ) { entry ->
             val releaseGroupId = entry.arguments?.getString("releaseGroupId") ?: return@composable
-//            val releaseGroup = releaseGroupJson.fromJson(ReleaseGroup::class.java)
-//            if (releaseGroup != null) {
-            ReleaseGroupScreenScaffold(releaseGroupId)
-//            }
+            ReleaseGroupScreenScaffold(releaseGroupId, onReleaseClick)
+        }
+
+        composable(
+            "release/{releaseId}",
+            arguments = listOf(
+                navArgument("releaseId") {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "mbjc://release/{releaseId}"
+                }
+            )
+        ) { entry ->
+            val releaseId = entry.arguments?.getString("releaseId") ?: return@composable
+            ReleaseScreenScaffold(releaseId)
         }
     }
 }

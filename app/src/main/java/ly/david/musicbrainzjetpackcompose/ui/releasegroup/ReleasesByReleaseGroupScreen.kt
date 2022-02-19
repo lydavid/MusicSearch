@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
+import ly.david.musicbrainzjetpackcompose.common.returnIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
@@ -42,7 +43,7 @@ fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
     releaseGroupId: String,
     onTitleUpdate: (String) -> Unit = {},
-    onReleaseClick: (Release) -> Unit = {},
+    onReleaseClick: (String) -> Unit = {},
     viewModel: ReleaseGroupViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = ReleasesByReleaseGroupUiState(isLoading = true)) {
@@ -53,7 +54,7 @@ fun ReleasesByReleaseGroupScreen(
         uiState.response != null -> {
             uiState.response?.let { response ->
 
-                onTitleUpdate(response.first().title)
+                onTitleUpdate("Release Group: ${response.first().title}")
 
                 LazyColumn(
                     modifier = modifier
@@ -66,7 +67,7 @@ fun ReleasesByReleaseGroupScreen(
                         items(releasesForStatus) { release ->
                             // TODO: sort by date ascending
                             ReleaseCard(release = release) {
-                                onReleaseClick(it)
+                                onReleaseClick(it.id)
                             }
                         }
                     }
@@ -106,7 +107,10 @@ private fun ReleaseCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = release.title,
+                text = release.title +
+                    release.disambiguation.returnIfNotNullOrEmpty {
+                        "\n($it)"
+                    },
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.weight(7f)
             )

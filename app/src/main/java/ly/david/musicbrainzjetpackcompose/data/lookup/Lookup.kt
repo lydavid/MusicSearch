@@ -1,5 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.data.lookup
 
+import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,13 +14,16 @@ import retrofit2.http.Query
  */
 interface Lookup {
 
-    // As of right now, we don't have a use case for lookup.
-
-    // TODO: we don't want this, we want to browse for all releases part of a release-group, inc=
-    // TODO: watch out for: Note that the number of linked entities returned is always limited to 25. If you need the remaining results, you will have to perform a browse request.
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
         @Query("inc") include: String = "releases+artists+media"
     ): ReleaseGroup
+
+    // TODO: screen should have information similar to: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
+    @GET("release/{releaseId}")
+    suspend fun lookupRelease(
+        @Path("releaseId") releaseId: String,
+        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels"
+    ): Release
 }
