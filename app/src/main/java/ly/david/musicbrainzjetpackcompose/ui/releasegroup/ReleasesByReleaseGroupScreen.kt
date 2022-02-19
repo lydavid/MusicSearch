@@ -34,7 +34,7 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 private data class ReleasesByReleaseGroupUiState(
     val response: ReleaseGroup? = null,
     val isLoading: Boolean = false,
-    val isError: Boolean = false
+    val isError: Boolean = false // TODO: deal with errors
 )
 
 @OptIn(ExperimentalFoundationApi::class)

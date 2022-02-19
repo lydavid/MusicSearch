@@ -74,6 +74,7 @@ fun ReleaseGroupsByArtistScreen(
                         //  write unit test
                         Pair(it.primaryType, it.secondaryTypes) ?: "(no type)"
                     }
+                    // TODO: reorder to make sure types like "Album" only appears first
                     grouped.forEach { (type, releaseGroupsForType) ->
                         stickyHeader {
                             StickyHeader(text = "$type (${releaseGroupsForType.size})")
