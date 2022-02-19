@@ -26,13 +26,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Release
-import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ReleasesByReleaseGroupUiState(
-    val response: ReleaseGroup? = null,
+    val response: List<Release>? = null,
     val isLoading: Boolean = false,
     val isError: Boolean = false // TODO: deal with errors
 )
@@ -47,20 +46,20 @@ fun ReleasesByReleaseGroupScreen(
     viewModel: ReleaseGroupViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = ReleasesByReleaseGroupUiState(isLoading = true)) {
-        value = ReleasesByReleaseGroupUiState(response = viewModel.lookupReleaseGroup(releaseGroupId))
+        value = ReleasesByReleaseGroupUiState(response = viewModel.getReleasesByReleaseGroup(releaseGroupId))
     }
 
     when {
         uiState.response != null -> {
             uiState.response?.let { response ->
 
-                onTitleUpdate(response.title)
+                onTitleUpdate(response.first().title)
 
                 LazyColumn(
                     modifier = modifier
                 ) {
-                    val grouped = response.releases?.groupBy { it.status ?: "(No status)" }
-                    grouped?.forEach { (status, releasesForStatus) ->
+                    val grouped = response.groupBy { it.status ?: "(No status)" }
+                    grouped.forEach { (status, releasesForStatus) ->
                         stickyHeader {
                             StickyHeader(text = status)
                         }
