@@ -18,7 +18,7 @@ data class Relation(
     @Json(name = "target-type") val targetType: String, // artist, place, work, label
     @Json(name = "target-credit") val targetCredit: String? = null, // prefer this credit over object's name
     @Json(name = "artist") val artist: Artist? = null, // could be composer, arranger, etc
-    @Json(name = "artist") val label: Label? = null,
+    @Json(name = "label") val label: Label? = null,
     // Place
     // Work
     @Json(name = "attributes") val attributes: List<String>? = null, // strings

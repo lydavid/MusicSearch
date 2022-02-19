@@ -24,6 +24,6 @@ interface Lookup {
     @GET("release/{releaseId}")
     suspend fun lookupRelease(
         @Path("releaseId") releaseId: String,
-        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels"
+        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels+place-rels+label-rels"
     ): Release
 }

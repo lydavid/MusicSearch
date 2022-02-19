@@ -123,7 +123,7 @@ private fun ReleaseGroupCard(
             )
             Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = releaseGroup.firstReleaseDate?.getYear().orEmpty(),
+                text = releaseGroup.firstReleaseDate.getYear(),
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.End
             )
