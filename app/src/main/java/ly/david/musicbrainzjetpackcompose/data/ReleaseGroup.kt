@@ -7,8 +7,12 @@ data class ReleaseGroup(
     @Json(name = "title") val title: String,
     @Json(name = "first-release-date") val firstReleaseDate: String,
     @Json(name = "disambiguation") val disambiguation: String = "",
+
+    // album, single, ep, other
     @Json(name = "primary-type") val primaryType: String? = null,
     @Json(name = "primary-type-id") val primaryTypeId: String? = null,
+
+    // audio drama, audiobook, broadcast, compilation, dj-mix, interview, live, mixtape/street, remix, soundtrack, spokenword
     @Json(name = "secondary-types") val secondaryTypes: List<String>? = null,
     @Json(name = "secondary-type-ids") val secondaryTypeIds: List<String>? = null,
 
@@ -39,3 +43,23 @@ fun ReleaseGroup.getDisplayTypes(): String {
 
     return displayTypes.ifEmpty { "(No type)" }
 }
+
+// TODO: ordering actually has null first. Right now, that would push bootlegs to the top, so we're not doing it.
+private val primaryPrecedence = listOf("Album", "Single", "EP", "Broadcast", "Other")
+
+// TODO: Album + Compilation would be followed by Album + Compilation + Live + Remix, etc
+private val secondaryPrecedence = listOf(
+    listOf(), listOf("Compilation")
+)
+
+private fun Int.moveNotFoundToEnd() = if (this == -1) Int.MAX_VALUE else this
+
+fun List<ReleaseGroup>.sortAndGroupByTypes(): Map<String, List<ReleaseGroup>> =
+    this.sortedWith(
+        compareBy<ReleaseGroup> {
+            primaryPrecedence.indexOf(it.primaryType).moveNotFoundToEnd()
+        }.thenBy {
+            secondaryPrecedence.indexOf(it.secondaryTypes).moveNotFoundToEnd()
+        }
+    )
+        .groupBy { it.getDisplayTypes() }

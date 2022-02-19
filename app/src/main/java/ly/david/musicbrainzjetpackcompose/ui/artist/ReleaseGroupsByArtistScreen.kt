@@ -24,7 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
-import ly.david.musicbrainzjetpackcompose.data.getDisplayTypes
+import ly.david.musicbrainzjetpackcompose.data.sortAndGroupByTypes
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -68,26 +68,7 @@ fun ReleaseGroupsByArtistScreen(
                         }
                     }
 
-                    // TODO: extract, and consider enum
-                    // TODO: ordering actually has null first
-                    val primaryPrecedence = listOf("Album", "Single", "EP", "Broadcast", "Other")
-
-                    val secondaryPrecedence = listOf(
-                        listOf(), listOf("Compilation")
-                    )
-
-                    fun Int.moveNotFoundToEnd() = if (this == -1) Int.MAX_VALUE else this
-
-                    val grouped = response
-                        .sortedWith(
-                            compareBy<ReleaseGroup> {
-                                primaryPrecedence.indexOf(it.primaryType).moveNotFoundToEnd()
-                            }.thenBy {
-                                secondaryPrecedence.indexOf(it.secondaryTypes).moveNotFoundToEnd()
-                            }
-                        )
-                        .groupBy { it.getDisplayTypes() }
-                    grouped.forEach { (type, releaseGroupsForType) ->
+                    response.sortAndGroupByTypes().forEach { (type, releaseGroupsForType) ->
 
                         // TODO: clicking on header should collapse the group
                         stickyHeader {

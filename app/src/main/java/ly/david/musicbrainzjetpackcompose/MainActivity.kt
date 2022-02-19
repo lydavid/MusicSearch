@@ -79,6 +79,7 @@ internal fun MainNavHost(
             navController.navigate("release-group/$releaseGroupId")
         }
 
+        // TODO: use id, and update title from response
         composable(
             "artist/{artistJson}",
             arguments = listOf(

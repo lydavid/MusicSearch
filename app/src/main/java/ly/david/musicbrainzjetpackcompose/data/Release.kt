@@ -24,7 +24,7 @@ class Release(
     //   "relations": [],
 
     // inc=media
-    @Json(name = "media") val media: List<Media>? = null,
+    @Json(name = "media") val media: List<Medium>? = null,
 
     // inc=artist-credits
     @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null,
@@ -56,12 +56,13 @@ data class ReleaseEvent(
     @Json(name = "disambiguation") val disambiguation: String? = null,
 )
 
-data class Media(
+data class Medium(
     @Json(name = "position") val position: Int,
-    @Json(name = "track-count") val trackCount: Int,
-    @Json(name = "title") val title: String? = null,
-//    @Json(name = "track-offset") val trackOffset: Int = 0, // currently doesn't seem like we need to use
     @Json(name = "format") val format: String? = null,
     @Json(name = "format-id") val formatId: String? = null,
+    @Json(name = "title") val title: String,
+    @Json(name = "track-count") val trackCount: Int,
+//    @Json(name = "track-offset") val trackOffset: Int = 0, // currently doesn't seem like we need to use
+
     @Json(name = "tracks") val tracks: List<Track>? = null,
 )
