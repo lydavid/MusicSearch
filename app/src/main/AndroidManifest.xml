@@ -24,9 +24,13 @@
             <!-- Support deep-linking into a release group -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="mbjc" android:host="release-group" />
+
+                <data
+                    android:host="release-group"
+                    android:scheme="mbjc" />
             </intent-filter>
         </activity>
     </application>
