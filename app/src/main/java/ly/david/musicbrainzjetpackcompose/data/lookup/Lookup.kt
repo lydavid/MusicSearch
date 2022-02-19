@@ -13,6 +13,9 @@ import retrofit2.http.Query
  */
 interface Lookup {
 
+    // As of right now, we don't have a use case for lookup.
+
+    // TODO: we don't want this, we want to browse for all releases part of a release-group, inc=
     // TODO: watch out for: Note that the number of linked entities returned is always limited to 25. If you need the remaining results, you will have to perform a browse request.
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(

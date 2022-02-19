@@ -1,11 +1,11 @@
 package ly.david.musicbrainzjetpackcompose.data.browse
 
 import com.squareup.moshi.Json
+import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
+import ly.david.musicbrainzjetpackcompose.preferences.MAX_BROWSE_LIMIT
 import retrofit2.http.GET
 import retrofit2.http.Query
-
-const val DEFAULT_BROWSE_LIMIT = 100
 
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
@@ -15,16 +15,30 @@ const val DEFAULT_BROWSE_LIMIT = 100
  */
 interface Browse {
 
+    // TODO: inc=artist-credits so that we can update title of screen with artist name
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
         @Query("artist") artistId: String,
-        @Query("limit") limit: Int = DEFAULT_BROWSE_LIMIT,
+        @Query("limit") limit: Int = MAX_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
     ): BrowseReleaseGroupsResponse
+
+    @GET("release")
+    suspend fun browseReleasesByReleaseGroup(
+        @Query("release-group") releaseGroupId: String,
+        @Query("limit") limit: Int = MAX_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0
+    ): BrowseReleasesResponse
 }
 
 data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") val releaseGroupCount: Int,
     @Json(name = "release-group-offset") val releaseGroupOffset: Int,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroup>
+)
+
+data class BrowseReleasesResponse(
+    @Json(name = "release-count") val releaseCount: Int,
+    @Json(name = "release-offset") val releaseOffset: Int,
+    @Json(name = "releases") val releases: List<Release>
 )
