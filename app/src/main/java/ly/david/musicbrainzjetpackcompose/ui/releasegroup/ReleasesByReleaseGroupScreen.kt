@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
-import ly.david.musicbrainzjetpackcompose.common.returnIfNotNullOrEmpty
+import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
@@ -60,11 +60,11 @@ fun ReleasesByReleaseGroupScreen(
                     modifier = modifier
                 ) {
                     val grouped = response.groupBy { it.status ?: "(No status)" }
-                    grouped.forEach { (status, releasesForStatus) ->
+                    grouped.forEach { (status, releasesWithStatus) ->
                         stickyHeader {
                             StickyHeader(text = status)
                         }
-                        items(releasesForStatus) { release ->
+                        items(releasesWithStatus) { release ->
                             // TODO: sort by date ascending
                             ReleaseCard(release = release) {
                                 onReleaseClick(it.id)
@@ -108,7 +108,7 @@ private fun ReleaseCard(
         ) {
             Text(
                 text = release.title +
-                    release.disambiguation.returnIfNotNullOrEmpty {
+                    release.disambiguation.transformThisIfNotNullOrEmpty {
                         "\n($it)"
                     },
                 style = MaterialTheme.typography.h6,

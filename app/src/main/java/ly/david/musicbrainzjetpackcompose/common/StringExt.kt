@@ -52,7 +52,7 @@ inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
     }
 }
 
-inline fun String?.returnIfNotNullOrEmpty(block: (String) -> String): String {
+inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): String {
     return if (!this.isNullOrEmpty()) {
         block(this)
     } else {

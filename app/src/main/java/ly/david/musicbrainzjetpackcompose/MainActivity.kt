@@ -111,7 +111,7 @@ internal fun MainNavHost(
                     type = NavType.StringType // Make argument type safe
                 }
             ),
-            // Test deeplink: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
+            // Example: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "mbjc://release-group/{releaseGroupId}"
@@ -129,6 +129,7 @@ internal fun MainNavHost(
                     type = NavType.StringType // Make argument type safe
                 }
             ),
+            // Example: adb shell am start -d "mbjc://release/165f6643-2edb-4795-9abe-26bd0533e59d" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "mbjc://release/{releaseId}"
