@@ -37,8 +37,10 @@ import ly.david.musicbrainzjetpackcompose.data.Recording
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.Track
 import ly.david.musicbrainzjetpackcompose.data.Work
+import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.musicbrainzjetpackcompose.ui.theme.getSubtitleColor
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ReleaseUiState(
@@ -52,7 +54,7 @@ private data class ReleaseUiState(
 fun TracksInReleaseScreen(
     modifier: Modifier,
     releaseId: String,
-    onTitleUpdate: (String) -> Unit = {},
+    onTitleUpdate: (title: String, subtitle: String) -> Unit,
     onRecordingClick: (Recording) -> Unit = {},
     viewModel: ReleaseViewModel = viewModel()
 ) {
@@ -60,16 +62,18 @@ fun TracksInReleaseScreen(
         value = ReleaseUiState(response = viewModel.lookupRelease(releaseId))
     }
 
+    var shouldShowTrackArtists by rememberSaveable { mutableStateOf(false) }
+
     when {
         uiState.response != null -> {
-            uiState.response?.let { response ->
+            uiState.response?.let { release ->
 
-                onTitleUpdate("Release: ${response.title}")
+                onTitleUpdate(release.title, "Release by ${release.artistCredit.getDisplayNames()}")
 
                 LazyColumn(
                     modifier = modifier
                 ) {
-                    response.media?.forEach { medium ->
+                    release.media?.forEach { medium ->
                         if (medium.tracks == null) return@forEach
 
                         stickyHeader {
@@ -80,7 +84,16 @@ fun TracksInReleaseScreen(
                         }
 
                         items(medium.tracks) { track ->
-                            TrackCard(track = track, onRecordingClick = onRecordingClick)
+                            // Only show tracks' artists if there are any tracks in this release
+                            // with artists different from the release's artists
+                            if (track.artistCredit != release.artistCredit) {
+                                shouldShowTrackArtists = true
+                            }
+                            TrackCard(
+                                track = track,
+                                showTrackArtists = shouldShowTrackArtists,
+                                onRecordingClick = onRecordingClick
+                            )
                         }
                     }
 
@@ -104,6 +117,7 @@ fun TracksInReleaseScreen(
 @Composable
 private fun TrackCard(
     track: Track,
+    showTrackArtists: Boolean = false,
     onRecordingClick: (Recording) -> Unit = {},
     onWorkClick: (Work) -> Unit = {},
     // no onTrackClick needed since Tracks exists in the context of a Release
@@ -154,17 +168,21 @@ private fun TrackCard(
                 }
             }
 
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = track.length.toDisplayTime(),
                     style = MaterialTheme.typography.body2,
-                    modifier = Modifier.weight(1f)
+                    color = getSubtitleColor()
                 )
+
+                if (showTrackArtists) {
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Text(text = track.artistCredit.getDisplayNames())
+                }
             }
-
         }
-
-        // TODO: if recording has artists not part of the release's artist, list them underneath with joinphrase
 
         // TODO: more content
     }

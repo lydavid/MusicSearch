@@ -21,15 +21,19 @@ fun ReleaseScreenScaffold(
 //    onReleaseClick: (Release) -> Unit = {},
 ) {
 
-    var title by rememberSaveable { mutableStateOf("") }
+    var titleState by rememberSaveable { mutableStateOf("") }
+    var subtitleState by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
-        topBar = { ScrollableTopAppBar(title = title) },
+        topBar = { ScrollableTopAppBar(title = titleState, subtitle = subtitleState) },
     ) { innerPadding ->
         TracksInReleaseScreen(
             modifier = Modifier.padding(innerPadding),
             releaseId = releaseId,
-            onTitleUpdate = { title = it },
+            onTitleUpdate = { title, subtitle ->
+                titleState = title
+                subtitleState = subtitle
+                            },
 //            onReleaseClick = onReleaseClick
         )
     }

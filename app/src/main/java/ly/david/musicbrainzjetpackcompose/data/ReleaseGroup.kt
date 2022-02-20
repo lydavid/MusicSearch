@@ -24,12 +24,6 @@ data class ReleaseGroup(
     @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null
 )
 
-data class ArtistCredit(
-    @Json(name = "artist") val artist: Artist,
-    @Json(name = "joinphrase") val joinPhrase: String, // How to join the artist names: "", " / "
-    @Json(name = "name") val name: String,
-)
-
 /**
  * Returns [ReleaseGroup]'s primary type concatenated with all secondary types for display.
  */

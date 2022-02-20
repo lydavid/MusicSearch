@@ -1,24 +1,56 @@
 package ly.david.musicbrainzjetpackcompose.ui.common
 
+import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 @Composable
 fun ScrollableTopAppBar(
-    title: String
+    title: String,
+    subtitle: String = ""
 ) {
     TopAppBar(
         title = {
-            Text(
-                text = title,
-                modifier = Modifier.horizontalScroll(rememberScrollState())
-            )
+            Column {
+                Text(
+                    text = title,
+                    modifier = Modifier.horizontalScroll(rememberScrollState())
+                )
+                if (subtitle.isNotEmpty()) {
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.horizontalScroll(rememberScrollState())
+                    )
+                }
+            }
+
         },
         backgroundColor = MaterialTheme.colors.background
     )
+}
+
+
+@Preview(showBackground = true)
+@Composable
+internal fun ReleaseCardPreview() {
+    MusicBrainzJetpackComposeTheme {
+        ScrollableTopAppBar("A title", "A subtitle")
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+internal fun ReleaseCardDarkPreview() {
+    MusicBrainzJetpackComposeTheme {
+        ScrollableTopAppBar("A title", "A subtitle")
+    }
 }
