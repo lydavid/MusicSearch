@@ -1,22 +1,17 @@
 package ly.david.musicbrainzjetpackcompose.ui.artist
 
 import android.content.res.Configuration
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +20,7 @@ import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.data.sortAndGroupByTypes
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -96,18 +92,13 @@ fun ReleaseGroupsByArtistScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ReleaseGroupCard(
     releaseGroup: ReleaseGroup,
     onClick: (ReleaseGroup) -> Unit = {}
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+    ClickableCard(
         onClick = { onClick(releaseGroup) },
-        border = BorderStroke(1.dp, Color.LightGray)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),

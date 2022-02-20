@@ -1,7 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.content.res.Configuration
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,8 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -26,7 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +32,7 @@ import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.QueryResources
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
@@ -121,18 +118,13 @@ private fun SearchScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ArtistCard(
     artist: Artist,
     onArtistClick: (Artist) -> Unit = {}
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+    ClickableCard(
         onClick = { onArtistClick(artist) },
-        border = BorderStroke(1.dp, Color.LightGray)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

@@ -1,17 +1,13 @@
 package ly.david.musicbrainzjetpackcompose.ui.release
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
@@ -27,7 +23,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,6 +33,7 @@ import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.Track
 import ly.david.musicbrainzjetpackcompose.data.Work
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
@@ -113,7 +109,6 @@ fun TracksInReleaseScreen(
 // TODO: Should have similar data to each table row in: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
 
 // TODO: Track includes Recording in it
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun TrackCard(
     track: Track,
@@ -125,14 +120,8 @@ private fun TrackCard(
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        onClick = {
-            onRecordingClick(track.recording)
-        },
-        border = BorderStroke(1.dp, Color.LightGray)
+    ClickableCard(
+        onClick = { onRecordingClick(track.recording) },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

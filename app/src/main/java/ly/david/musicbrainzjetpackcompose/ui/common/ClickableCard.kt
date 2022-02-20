@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubBackgroundColor
 
+/**
+ * Generic card with preset modifiers.
+ */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ClickableCard(
@@ -26,3 +29,5 @@ fun ClickableCard(
         content()
     }
 }
+
+// TODO: ExpandableCard: has two content sections, one for always-show, one for expandable/collapsible
