@@ -17,11 +17,17 @@ data class ReleaseGroup(
     @Json(name = "secondary-types") val secondaryTypes: List<String>? = null,
     @Json(name = "secondary-type-ids") val secondaryTypeIds: List<String>? = null,
 
-    // lookup inc=releases
-    @Json(name = "releases") val releases: List<Release>? = null,
+    // inc=artists
+    @Json(name = "artist-credit") val artistCredits: List<ArtistCredit>? = null,
 
-    // lookup inc=artists
-    @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null
+    // inc=label
+    @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
+
+    // inc=media
+    @Json(name = "media") val media: List<Medium>? = null,
+
+    // lookup only, inc=releases
+    @Json(name = "releases") val releases: List<Release>? = null,
 )
 
 /**

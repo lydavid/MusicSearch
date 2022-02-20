@@ -27,10 +27,10 @@ class Release(
     @Json(name = "media") val media: List<Medium>? = null,
 
     // inc=artist-credits
-    @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null,
+    @Json(name = "artist-credit") val artistCredits: List<ArtistCredit>? = null,
 
     // inc=label
-    @Json(name = "label-info") val labelInfos: List<LabelInfo>? = null,
+    @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
 )
 
 data class CoverArtArchive(

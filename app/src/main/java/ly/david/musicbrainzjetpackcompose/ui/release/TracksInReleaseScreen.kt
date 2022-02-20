@@ -68,7 +68,7 @@ fun TracksInReleaseScreen(
         uiState.response != null -> {
             uiState.response?.let { release ->
 
-                onTitleUpdate(release.title, "Release by ${release.artistCredit.getDisplayNames()}")
+                onTitleUpdate(release.title, "Release by ${release.artistCredits.getDisplayNames()}")
 
                 LazyColumn(
                     modifier = modifier
@@ -86,7 +86,7 @@ fun TracksInReleaseScreen(
                         items(medium.tracks) { track ->
                             // Only show tracks' artists if there are any tracks in this release
                             // with artists different from the release's artists
-                            if (track.artistCredit != release.artistCredit) {
+                            if (track.artistCredits != release.artistCredits) {
                                 shouldShowTrackArtists = true
                             }
                             TrackCard(
@@ -179,7 +179,7 @@ private fun TrackCard(
 
                 if (showTrackArtists) {
                     Spacer(modifier = Modifier.padding(4.dp))
-                    Text(text = track.artistCredit.getDisplayNames())
+                    Text(text = track.artistCredits.getDisplayNames())
                 }
             }
         }

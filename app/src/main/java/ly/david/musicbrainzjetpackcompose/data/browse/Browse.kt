@@ -24,12 +24,12 @@ interface Browse {
         @Query("offset") offset: Int = 0
     ): BrowseReleaseGroupsResponse
 
-    // TODO: inc
     @GET("release")
     suspend fun browseReleasesByReleaseGroup(
         @Query("release-group") releaseGroupId: String,
         @Query("limit") limit: Int = MAX_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = "artist-credits+labels+media"
     ): BrowseReleasesResponse
 
     @GET("recording")

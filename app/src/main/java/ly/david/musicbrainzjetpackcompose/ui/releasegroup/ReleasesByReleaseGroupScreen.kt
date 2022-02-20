@@ -27,6 +27,7 @@ import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Release
+import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -42,7 +43,7 @@ private data class ReleasesByReleaseGroupUiState(
 fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
     releaseGroupId: String,
-    onTitleUpdate: (String) -> Unit = {},
+    onTitleUpdate: (title: String, subtitle: String) -> Unit,
     onReleaseClick: (String) -> Unit = {},
     viewModel: ReleaseGroupViewModel = viewModel()
 ) {
@@ -52,14 +53,14 @@ fun ReleasesByReleaseGroupScreen(
 
     when {
         uiState.response != null -> {
-            uiState.response?.let { response ->
+            uiState.response?.let { releases ->
 
-                onTitleUpdate("Release Group: ${response.first().title}")
+                onTitleUpdate(releases.first().title, "Release Group by ${releases.first().artistCredits.getDisplayNames()}")
 
                 LazyColumn(
                     modifier = modifier
                 ) {
-                    val grouped = response.groupBy { it.status ?: "(No status)" }
+                    val grouped = releases.groupBy { it.status ?: "(No status)" }
                     grouped.forEach { (status, releasesWithStatus) ->
                         stickyHeader {
                             StickyHeader(text = status)
@@ -127,49 +128,10 @@ private fun ReleaseCard(
     }
 }
 
-//    {
-//        "barcode": "4988002911981",
-//        "status": "Official",
-//        "cover-art-archive": {
-//        "darkened": false,
-//        "artwork": false,
-//        "back": false,
-//        "front": false,
-//        "count": 0
-//    },
-//        "date": "2021-09-08",
-//        "country": "JP",
-//        "release-events": [
-//        {
-//            "date": "2021-09-08",
-//            "area": {
-//            "id": "2db42837-c832-3c27-b4a3-08198f75693c",
-//            "iso-3166-1-codes": [
-//            "JP"
-//            ],
-//            "type": null,
-//            "type-id": null,
-//            "sort-name": "Japan",
-//            "name": "Japan",
-//            "disambiguation": ""
-//        }
-//        }
-//        ],
-//        "status-id": "4e304316-386d-3409-af2e-78857eec5cfe",
-//        "packaging": null,
-//        "asin": "B098VJNDLC",
-//        "text-representation": {
-//        "script": "Jpan",
-//        "language": "jpn"
-//    },
-//        "quality": "normal",
-//        "packaging-id": null
-//    },
-
 private val testRelease = Release(
-    id = "f171e0ae-bea8-41e6-bb41-4c7af7977f50",
-    title = "欠けた心象、世のよすが",
-    disambiguation = "初回限定盤",
+    id = "1",
+    title = "Release title",
+    disambiguation = "Disambiguation text",
     date = "2021-09-08",
     country = "JP"
 )
@@ -191,9 +153,9 @@ internal fun ReleaseCardDarkPreview() {
 }
 
 private val testRelease2 = Release(
-    id = "f171e0ae-bea8-41e6-bb41-4c7af7977f50",
-    title = "欠けた心象、世のよすが",
-    disambiguation = "初回限定盤",
+    id = "1",
+    title = "Release title",
+    disambiguation = "Disambiguation text",
     country = "JP"
 )
 

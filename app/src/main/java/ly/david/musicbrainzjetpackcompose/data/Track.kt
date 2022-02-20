@@ -8,7 +8,7 @@ data class Track(
     @Json(name = "position") val position: Int,
     @Json(name = "number") val number: String, // Usually a string of `position`, but could be things like `A1`
     @Json(name = "title") val title: String,
-    @Json(name = "artist-credit") val artistCredit: List<ArtistCredit>? = null,
+    @Json(name = "artist-credit") val artistCredits: List<ArtistCredit>? = null,
     @Json(name = "length") val length: Int? = null,
 
     @Json(name = "relations") val relations: List<Relation>? = null,

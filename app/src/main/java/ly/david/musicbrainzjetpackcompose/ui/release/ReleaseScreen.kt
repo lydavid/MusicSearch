@@ -33,7 +33,7 @@ fun ReleaseScreenScaffold(
             onTitleUpdate = { title, subtitle ->
                 titleState = title
                 subtitleState = subtitle
-                            },
+            },
 //            onReleaseClick = onReleaseClick
         )
     }
