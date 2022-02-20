@@ -1,6 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.data
 
 import com.squareup.moshi.Json
+import ly.david.musicbrainzjetpackcompose.preferences.NO_TYPE
 
 data class ReleaseGroup(
     @Json(name = "id") val id: String,
@@ -41,7 +42,7 @@ fun ReleaseGroup.getDisplayTypes(): String {
     }
     displayTypes += secondaryTypes?.joinToString(separator = " + ").orEmpty()
 
-    return displayTypes.ifEmpty { "(No type)" }
+    return displayTypes.ifEmpty { NO_TYPE }
 }
 
 // TODO: ordering actually has null first. Right now, that would push bootlegs to the top, so we're not doing it.

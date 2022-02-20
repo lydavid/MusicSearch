@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.common.toTimeString
+import ly.david.musicbrainzjetpackcompose.common.toDisplayTime
 import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Recording
 import ly.david.musicbrainzjetpackcompose.data.Release
@@ -156,7 +156,7 @@ private fun TrackCard(
 
             Row {
                 Text(
-                    text = track.length.toTimeString(),
+                    text = track.length.toDisplayTime(),
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.weight(1f)
                 )

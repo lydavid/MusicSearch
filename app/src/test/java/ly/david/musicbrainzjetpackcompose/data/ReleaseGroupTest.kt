@@ -2,6 +2,7 @@ package ly.david.musicbrainzjetpackcompose.data
 
 import io.mockk.every
 import io.mockk.mockk
+import ly.david.musicbrainzjetpackcompose.preferences.NO_TYPE
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -13,21 +14,21 @@ class ReleaseGroupTest {
     fun `null primary type, null secondary types`() {
         every { releaseGroup.primaryType } returns null
         every { releaseGroup.secondaryTypes } returns null
-        assertEquals("(No type)", releaseGroup.getDisplayTypes())
+        assertEquals(NO_TYPE, releaseGroup.getDisplayTypes())
     }
 
     @Test
     fun `null primary type, empty secondary types`() {
         every { releaseGroup.primaryType } returns null
         every { releaseGroup.secondaryTypes } returns listOf()
-        assertEquals("(No type)", releaseGroup.getDisplayTypes())
+        assertEquals(NO_TYPE, releaseGroup.getDisplayTypes())
     }
 
     @Test
     fun `empty primary type, empty secondary types`() {
         every { releaseGroup.primaryType } returns ""
         every { releaseGroup.secondaryTypes } returns listOf()
-        assertEquals("(No type)", releaseGroup.getDisplayTypes())
+        assertEquals(NO_TYPE, releaseGroup.getDisplayTypes())
     }
 
     @Test

@@ -11,4 +11,6 @@ const val DELAY_RECURSIVE_API_CALLS_MS = 1000L
  * Max limit for browse requests.
  */
 const val MAX_BROWSE_LIMIT = 100
+
+const val NO_TYPE = "Unspecified type"
 // endregion

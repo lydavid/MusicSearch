@@ -6,7 +6,7 @@ private const val MINUTES_IN_HOUR = 60
 
 // todo: valid formats: 0:12, 59:59, 1:23:15, ?:??, 0:01
 // TODO: test
-fun Int?.toTimeString(): String {
+fun Int?.toDisplayTime(): String {
 
     if (this == null) return "?:??"
 

@@ -2,6 +2,7 @@ package ly.david.musicbrainzjetpackcompose.ui.common
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ fun ScrollableTopAppBar(
                 text = title,
                 modifier = Modifier.horizontalScroll(rememberScrollState())
             )
-        }
+        },
+        backgroundColor = MaterialTheme.colors.background
     )
 }
