@@ -38,6 +38,7 @@ import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 
 @Composable
 internal fun SearchScreenScaffold(
@@ -146,7 +147,7 @@ private fun ArtistCard(
                 Spacer(modifier = Modifier.padding(top = 4.dp))
                 Text(
                     text = "(${artist.disambiguation})",
-                    color = Color.Gray,
+                    color = getSubTextColor(),
                     modifier = Modifier.fillMaxWidth()
                 )
             }

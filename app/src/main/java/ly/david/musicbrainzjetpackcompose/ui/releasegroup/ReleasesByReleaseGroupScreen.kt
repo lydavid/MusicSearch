@@ -3,6 +3,7 @@ package ly.david.musicbrainzjetpackcompose.ui.releasegroup
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,13 +24,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.common.getYear
-import ly.david.musicbrainzjetpackcompose.common.ifNotNullOrEmpty
-import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
+import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ReleasesByReleaseGroupUiState(
@@ -55,7 +55,10 @@ fun ReleasesByReleaseGroupScreen(
         uiState.response != null -> {
             uiState.response?.let { releases ->
 
-                onTitleUpdate(releases.first().title, "Release Group by ${releases.first().artistCredits.getDisplayNames()}")
+                onTitleUpdate(
+                    releases.first().title,
+                    "Release Group by ${releases.first().artistCredits.getDisplayNames()}"
+                )
 
                 LazyColumn(
                     modifier = modifier
@@ -65,7 +68,9 @@ fun ReleasesByReleaseGroupScreen(
                         stickyHeader {
                             StickyHeader(text = status)
                         }
-                        items(releasesWithStatus) { release ->
+                        items(releasesWithStatus.sortedBy {
+                            it.date?.toDate()
+                        }) { release ->
                             // TODO: sort by date ascending
                             ReleaseCard(release = release) {
                                 onReleaseClick(it.id)
@@ -107,20 +112,36 @@ private fun ReleaseCard(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = release.title +
-                    release.disambiguation.transformThisIfNotNullOrEmpty {
-                        "\n($it)"
-                    },
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.weight(7f)
-            )
-            release.date?.getYear().ifNotNullOrEmpty {
-                Spacer(modifier = Modifier.padding(4.dp))
+
+            Column(
+                modifier = Modifier.weight(8f),
+            ) {
+                Row {
+                    Text(
+                        text = release.title,
+                        style = MaterialTheme.typography.h6,
+                    )
+                }
+
+                val disambiguation = release.disambiguation
+                if (disambiguation.isNotEmpty()) {
+                    Row {
+                        Text(
+                            text = "($disambiguation)",
+                            color = getSubTextColor(),
+                            style = MaterialTheme.typography.body1,
+                        )
+                    }
+                }
+            }
+
+            val date = release.date
+            if (!date.isNullOrEmpty()) {
+                Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = it,
+                    modifier = Modifier.weight(3f),
+                    text = date,
                     style = MaterialTheme.typography.body1,
-                    modifier = Modifier.weight(1f),
                     textAlign = TextAlign.End
                 )
             }
@@ -130,8 +151,8 @@ private fun ReleaseCard(
 
 private val testRelease = Release(
     id = "1",
-    title = "Release title",
-    disambiguation = "Disambiguation text",
+    title = "Release title that is long and wraps",
+    disambiguation = "Disambiguation text that is also long",
     date = "2021-09-08",
     country = "JP"
 )

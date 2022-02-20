@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun getListHeaderBackground(): Color = if (isSystemInDarkTheme()) Color.DarkGray else Color.LightGray
+fun getSubBackgroundColor(): Color = if (isSystemInDarkTheme()) Color.DarkGray else Color.LightGray
 
 @Composable
-fun getSubtitleColor(): Color = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
+fun getSubTextColor(): Color = if (isSystemInDarkTheme()) Color.White else Color.Gray

@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
-import ly.david.musicbrainzjetpackcompose.ui.theme.getListHeaderBackground
+import ly.david.musicbrainzjetpackcompose.ui.theme.getSubBackgroundColor
 
 @Composable
 fun StickyHeader(text: String) {
-    Surface(color = getListHeaderBackground()) {
+    Surface(color = getSubBackgroundColor()) {
         Text(
             text = text,
             style = MaterialTheme.typography.body1,

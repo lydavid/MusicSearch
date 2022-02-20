@@ -40,7 +40,7 @@ import ly.david.musicbrainzjetpackcompose.data.Work
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
-import ly.david.musicbrainzjetpackcompose.ui.theme.getSubtitleColor
+import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 
 // TODO: rename? will we need something like this for every api return type? Can generalize
 private data class ReleaseUiState(
@@ -174,7 +174,7 @@ private fun TrackCard(
                 Text(
                     text = track.length.toDisplayTime(),
                     style = MaterialTheme.typography.body2,
-                    color = getSubtitleColor()
+                    color = getSubTextColor()
                 )
 
                 if (showTrackArtists) {
@@ -190,7 +190,7 @@ private fun TrackCard(
 
 private val testTrack = Track(
     id = "1",
-    title = "Track title",
+    title = "Track title that is long and wraps",
     recording = Recording(
         id = "2",
         title = "Recording title",
