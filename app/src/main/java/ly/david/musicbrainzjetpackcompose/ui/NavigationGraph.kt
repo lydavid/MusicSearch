@@ -23,7 +23,7 @@ object Routes {
 }
 
 @Composable
-internal fun MainNavHost(
+internal fun NavigationGraph(
     navController: NavHostController
 ) {
     NavHost(
@@ -33,7 +33,10 @@ internal fun MainNavHost(
 
         val onArtistClick: (Artist) -> Unit = { artist ->
             val artistJson = artist.toJson()
-            navController.navigate("${Routes.ARTIST}/$artistJson")
+            navController.navigate("${Routes.ARTIST}/$artistJson") {
+                // Top-level screens should use this to prevent selecting the same screen
+                launchSingleTop = true
+            }
         }
 
         composable(Routes.MAIN) {
@@ -41,7 +44,11 @@ internal fun MainNavHost(
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("${Routes.RELEASE_GROUP}/$releaseGroupId")
+            navController.navigate("${Routes.RELEASE_GROUP}/$releaseGroupId") {
+                // TODO: This let us return to this screen in the same position, but doesn't prevent another api all
+                //  since we're always calling at start
+                restoreState = true
+            }
         }
 
         // TODO: use id, and update title from response
@@ -66,7 +73,9 @@ internal fun MainNavHost(
         }
 
         val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("${Routes.RELEASE}/$releaseId")
+            navController.navigate("${Routes.RELEASE}/$releaseId") {
+                restoreState = true
+            }
         }
 
         composable(
