@@ -34,6 +34,7 @@ import ly.david.musicbrainzjetpackcompose.data.Track
 import ly.david.musicbrainzjetpackcompose.data.Work
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -97,7 +98,7 @@ fun TracksInReleaseScreen(
 
         }
         uiState.isLoading -> {
-            Text(text = "Loading...")
+            FullScreenLoadingIndicator()
         }
         else -> {
             Text(text = "error...")

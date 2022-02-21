@@ -23,6 +23,7 @@ import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
@@ -79,7 +80,7 @@ fun ReleasesByReleaseGroupScreen(
 
         }
         uiState.isLoading -> {
-            Text(text = "Loading...")
+            FullScreenLoadingIndicator()
         }
         else -> {
             Text(text = "error...")

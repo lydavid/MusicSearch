@@ -21,6 +21,7 @@ import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.data.sortAndGroupByTypes
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -81,10 +82,9 @@ fun ReleaseGroupsByArtistScreen(
 
                 }
             }
-
         }
         uiState.isLoading -> {
-            Text(text = "Loading...")
+            FullScreenLoadingIndicator()
         }
         else -> {
             Text(text = "error...")
