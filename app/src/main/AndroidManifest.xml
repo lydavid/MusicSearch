@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicBrainzJetpackCompose">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.MusicBrainzJetpackCompose">
             <intent-filter>
