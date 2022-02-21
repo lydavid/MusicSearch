@@ -1,6 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.ui
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -32,12 +33,24 @@ internal fun NavigationGraph(
         startDestination = Routes.MAIN,
     ) {
 
-        val onArtistClick: (Artist) -> Unit = { artist ->
-            val artistJson = artist.toJson()
-            navController.navigate("${Routes.ARTIST}/$artistJson") {
+        val onHomeClick: () -> Unit = {
+            navController.navigate(Routes.MAIN) {
                 // Top-level screens should use this to prevent selecting the same screen
                 launchSingleTop = true
+
+                // Selecting a top-level screen should remove all backstack
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
             }
+        }
+
+        val onArtistClick: (Artist) -> Unit = { artist ->
+            val artistJson = artist.toJson()
+            navController.navigate("${Routes.ARTIST}/$artistJson")
+            // TODO: seems like even without restoreState = true here, we keep the search results
+            //  also, it looks like we don't need another api call! Well, that's because we don't call viewmodel until
+            //  user hits search
         }
 
         composable(Routes.MAIN) {

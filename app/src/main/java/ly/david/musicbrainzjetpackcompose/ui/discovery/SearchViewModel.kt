@@ -19,8 +19,11 @@ internal class SearchViewModel : ViewModel() {
 
     val artists = mutableStateListOf<Artist>()
 
+    var queryString = ""
+
     suspend fun queryArtists(queryString: String) {
         val foundArtists = musicBrainzApiService.queryArtists(queryString)
+        this.queryString = queryString
 
         totalFoundResults.value = foundArtists.count
         Log.d("debug", "queryArtists: $foundArtists")

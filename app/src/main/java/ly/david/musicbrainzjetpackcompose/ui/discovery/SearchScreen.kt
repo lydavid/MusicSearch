@@ -12,9 +12,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,7 +51,7 @@ internal fun SearchScreenScaffold(
     Scaffold(
         topBar = { ScrollableTopAppBar(title = "Search Artists", openDrawer = openDrawer) },
 
-    ) {
+        ) {
         SearchScreen(onArtistClick, lazyListState)
     }
 }
@@ -58,7 +62,6 @@ private fun SearchScreen(
     state: LazyListState,
     viewModel: SearchViewModel = viewModel()
 ) {
-    // TODO: this updates live after a successful search result... shouldn't do that
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
 
@@ -85,6 +88,12 @@ private fun SearchScreen(
                         }
                     }
                 ),
+                trailingIcon = {
+                    if (text.isEmpty()) return@TextField
+                    IconButton(onClick = { text = "" }) {
+                        Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
+                    }
+                },
                 onValueChange = { newText ->
                     text = newText
                 }
@@ -106,7 +115,7 @@ private fun SearchScreen(
             item {
                 val results = viewModel.totalFoundResults.value
                 if (results != 0) {
-                    Text(text = "Found $results results for \"$text\"")
+                    Text(text = "Found $results results for \"${viewModel.queryString}\"")
                 }
             }
 
