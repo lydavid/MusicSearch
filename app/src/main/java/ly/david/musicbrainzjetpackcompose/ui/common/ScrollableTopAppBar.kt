@@ -22,8 +22,9 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 fun ScrollableTopAppBar(
     title: String,
     subtitle: String = "",
+    onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
-) {
+    ) {
     TopAppBar(
         title = {
             Column {
@@ -43,7 +44,11 @@ fun ScrollableTopAppBar(
         navigationIcon = {
             IconButton(onClick = {
                 Log.d("Remove This", "ScrollableTopAppBar: clicked menu")
-                openDrawer?.invoke()
+                if (openDrawer == null) {
+                    onBack()
+                } else {
+                    openDrawer.invoke()
+                }
             }) {
                 if (openDrawer == null) {
                     Icon(Icons.Default.ArrowBack, contentDescription = "Go back to previous screen.")

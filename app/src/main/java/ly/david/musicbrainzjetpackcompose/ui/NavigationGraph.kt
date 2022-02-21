@@ -33,6 +33,11 @@ internal fun NavigationGraph(
         startDestination = Routes.MAIN,
     ) {
 
+        val onBack = {
+            // Consume return value so that we don't have to specify Boolean return type when passing this function
+            val consumed = navController.popBackStack()
+        }
+
         val onHomeClick: () -> Unit = {
             navController.navigate(Routes.MAIN) {
                 // Top-level screens should use this to prevent selecting the same screen
@@ -82,7 +87,7 @@ internal fun NavigationGraph(
             val artistJson = entry.arguments?.getString("artistJson") ?: return@composable
             val artist = artistJson.fromJson(Artist::class.java)
             if (artist != null) {
-                ArtistScreenScaffold(artist, onReleaseGroupClick)
+                ArtistScreenScaffold(artist, onReleaseGroupClick, onBack = onBack)
             }
         }
 
