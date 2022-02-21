@@ -46,22 +46,11 @@ fun NavigationDrawer(
 
         Divider(modifier = Modifier.padding(bottom = 8.dp))
 
-        // TODO: in order to keep this item highlighted after selecting an artist,
-        //  we would need all of those flows to actually be under "Main".
-        //  However, we expect History to let us deeplink to those screens.
-        //  If we came from History, then History should be selected?
-        //  - This would mean both Main and History has similar sub-screens
-        //  A possible solution:
-        //  - discover/artist (if it includes discover in it, highlight this)
-        //    - history would deeplink into discover/..., so discover would be highlighted
-        //    - clicking on discover when not in top-level will return to top-level
-        //      - this isn't standard. In gmail app, you can't navigate to top-level within nested screens
-        //      - however, since our discover flow can go deep, we probably want a fast way to return
         NavigationDrawerItem(
             icon = Icons.Default.Search,
             iconDescription = "Navigate to search Music Brainz screen.",
             label = "Search MusicBrainz",
-            isSelected = selectedRoute == Routes.DISCOVER
+            isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.DISCOVER
         ) {
             Log.d("Remove This", "NavigationDrawer: clicked discover")
             closeDrawer()
@@ -70,7 +59,7 @@ fun NavigationDrawer(
             icon = Icons.Default.History,
             iconDescription = "Navigate to search history screen.",
             label = "Search History",
-            isSelected = selectedRoute == Routes.HISTORY
+            isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.HISTORY
         ) {
             Log.d("Remove This", "NavigationDrawer: clicked history")
             closeDrawer()

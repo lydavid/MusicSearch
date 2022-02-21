@@ -17,12 +17,43 @@ import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
 
 object Routes {
-    const val DISCOVER = "discover"
-    const val ARTIST = "artist"
-    const val RELEASE_GROUP = "release-group"
-    const val RELEASE = "release"
+    // Not a route. Just used to split sub-routes.
+    private const val DIVIDER = "/"
 
+    private const val ARTIST = "artist"
+    private const val RELEASE_GROUP = "release-group"
+    private const val RELEASE = "release"
+
+    /**
+     * Search MusicBrainz for resources with a string query.
+     * Right now, we only support searching artists.
+     */
+    const val DISCOVER = "discover"
+
+    /**
+     * Information about an artist.
+     * Currently, we only show a list of their release groups.
+     */
+    const val DISCOVER_ARTIST = "$DISCOVER$DIVIDER$ARTIST"
+
+    /**
+     * Information about a release group.
+     * Currently, we only show a list of its releases.
+     */
+    const val DISCOVER_RELEASE_GROUP = "$DISCOVER$DIVIDER$RELEASE_GROUP"
+
+    /**
+     * Information about a release.
+     * Currently, we only show a list of its tracks.
+     */
+    const val DISCOVER_RELEASE = "$DISCOVER$DIVIDER$RELEASE"
+
+    /**
+     * Shows a the user's most recently visited screens.
+     */
     const val HISTORY = "history"
+
+    fun getTopLevelRoute(route: String): String = route.split(DIVIDER).first()
 }
 
 @Composable
@@ -54,7 +85,7 @@ internal fun NavigationGraph(
 
         val onArtistClick: (Artist) -> Unit = { artist ->
             val artistJson = artist.toJson()
-            navController.navigate("${Routes.ARTIST}/$artistJson")
+            navController.navigate("${Routes.DISCOVER_ARTIST}/$artistJson")
             // TODO: seems like even without restoreState = true here, we keep the search results
             //  also, it looks like we don't need another api call! Well, that's because we don't call viewmodel until
             //  user hits search
@@ -68,7 +99,7 @@ internal fun NavigationGraph(
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("${Routes.RELEASE_GROUP}/$releaseGroupId") {
+            navController.navigate("${Routes.DISCOVER_RELEASE_GROUP}/$releaseGroupId") {
                 // TODO: This let us return to this screen in the same position, but doesn't prevent another api all
                 //  since we're always calling at start
                 restoreState = true
@@ -77,7 +108,7 @@ internal fun NavigationGraph(
 
         // TODO: use id, and update title from response
         composable(
-            route = "${Routes.ARTIST}/{artistJson}",
+            route = "${Routes.DISCOVER_ARTIST}/{artistJson}",
             arguments = listOf(
                 navArgument("artistJson") {
                     type = NavType.StringType // Make argument type safe
@@ -101,13 +132,13 @@ internal fun NavigationGraph(
         }
 
         val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("${Routes.RELEASE}/$releaseId") {
+            navController.navigate("${Routes.DISCOVER_RELEASE}/$releaseId") {
                 restoreState = true
             }
         }
 
         composable(
-            route = "${Routes.RELEASE_GROUP}/{releaseGroupId}",
+            route = "${Routes.DISCOVER_RELEASE_GROUP}/{releaseGroupId}",
             arguments = listOf(
                 navArgument("releaseGroupId") {
                     type = NavType.StringType // Make argument type safe
@@ -129,7 +160,7 @@ internal fun NavigationGraph(
         }
 
         composable(
-            "${Routes.RELEASE}/{releaseId}",
+            "${Routes.DISCOVER_RELEASE}/{releaseId}",
             arguments = listOf(
                 navArgument("releaseId") {
                     type = NavType.StringType // Make argument type safe
