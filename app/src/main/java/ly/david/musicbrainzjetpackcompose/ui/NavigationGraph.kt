@@ -1,14 +1,10 @@
-package ly.david.musicbrainzjetpackcompose
+package ly.david.musicbrainzjetpackcompose.ui
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.musicbrainzjetpackcompose.common.fromJson
@@ -18,43 +14,12 @@ import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
-import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
-class MainActivity : ComponentActivity() {
-
-//    private val viewModel: MainViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MainApp()
-        }
-    }
-}
-
-// area, artist, event, genre, instrument, label, place, recording, release, release-group, series, work, url
-enum class QueryResources(val displayText: String, val queryText: String) {
-    AREA("Area", "area"),
-    ARTIST("Artist", "artist"),
-    EVENT("Event", "event"),
-    GENRE("Genre", "genre"),
-    INSTRUMENT("Instrument", "instrument"),
-    LABEL("Label", "label"),
-    PLACE("Place", "place"),
-    RECORDING("Recording", "recording"),
-    RELEASE("Release", "release"),
-    RELEASE_GROUP("Release Group", "release_group"),
-    SERIES("Series", "series"),
-    WORK("Work", "work"),
-    URL("URL", "url")
-}
-
-@Composable
-internal fun MainApp() {
-    MusicBrainzJetpackComposeTheme {
-        val navController = rememberNavController()
-        MainNavHost(navController = navController)
-    }
+object Routes {
+    const val MAIN = "main"
+    const val ARTIST = "artist"
+    const val RELEASE_GROUP = "release-group"
+    const val RELEASE = "release"
 }
 
 @Composable
@@ -63,25 +28,25 @@ internal fun MainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "main",
+        startDestination = Routes.MAIN,
     ) {
 
         val onArtistClick: (Artist) -> Unit = { artist ->
             val artistJson = artist.toJson()
-            navController.navigate("artist/$artistJson")
+            navController.navigate("${Routes.ARTIST}/$artistJson")
         }
 
-        composable("main") {
+        composable(Routes.MAIN) {
             SearchScreenScaffold(onArtistClick = onArtistClick)
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("release-group/$releaseGroupId")
+            navController.navigate("${Routes.RELEASE_GROUP}/$releaseGroupId")
         }
 
         // TODO: use id, and update title from response
         composable(
-            "artist/{artistJson}",
+            route = "${Routes.ARTIST}/{artistJson}",
             arguments = listOf(
                 navArgument("artistJson") {
                     type = NavType.StringType // Make argument type safe
@@ -101,11 +66,11 @@ internal fun MainNavHost(
         }
 
         val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("release/$releaseId")
+            navController.navigate("${Routes.RELEASE}/$releaseId")
         }
 
         composable(
-            "release-group/{releaseGroupId}",
+            route = "${Routes.RELEASE_GROUP}/{releaseGroupId}",
             arguments = listOf(
                 navArgument("releaseGroupId") {
                     type = NavType.StringType // Make argument type safe
@@ -123,7 +88,7 @@ internal fun MainNavHost(
         }
 
         composable(
-            "release/{releaseId}",
+            "${Routes.RELEASE}/{releaseId}",
             arguments = listOf(
                 navArgument("releaseId") {
                     type = NavType.StringType // Make argument type safe
