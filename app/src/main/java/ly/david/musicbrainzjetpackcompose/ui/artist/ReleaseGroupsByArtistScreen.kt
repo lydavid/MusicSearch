@@ -125,17 +125,10 @@ private val testReleaseGroup = ReleaseGroup(
     firstReleaseDate = "2021-09-08"
 )
 
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ReleaseGroupCardPreview() {
-    MusicBrainzJetpackComposeTheme {
-        ReleaseGroupCard(testReleaseGroup)
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun ReleaseGroupCardDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         ReleaseGroupCard(testReleaseGroup)
     }

@@ -145,17 +145,10 @@ private val testRelease = Release(
     country = "JP"
 )
 
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ReleaseCardPreview() {
-    MusicBrainzJetpackComposeTheme {
-        ReleaseCard(testRelease)
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun ReleaseCardDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         ReleaseCard(testRelease)
     }
@@ -168,7 +161,7 @@ private val testRelease2 = Release(
     country = "JP"
 )
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 internal fun ReleaseCardWithoutYearPreview() {
     MusicBrainzJetpackComposeTheme {

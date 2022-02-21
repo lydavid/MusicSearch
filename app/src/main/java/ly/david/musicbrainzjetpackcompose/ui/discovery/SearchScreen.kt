@@ -161,7 +161,8 @@ private val testArtist = Artist(
     )
 )
 
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ArtistCardPreview() {
     MusicBrainzJetpackComposeTheme {
@@ -169,25 +170,10 @@ internal fun ArtistCardPreview() {
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun ArtistCardDarkPreview() {
-    MusicBrainzJetpackComposeTheme {
-        ArtistCard(testArtist)
-    }
-}
-
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun SearchScreenPreview() {
-    MusicBrainzJetpackComposeTheme {
-        SearchScreenScaffold()
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun SearchScreenDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         SearchScreenScaffold()
     }

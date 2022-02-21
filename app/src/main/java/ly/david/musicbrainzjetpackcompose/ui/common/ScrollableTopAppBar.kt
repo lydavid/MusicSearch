@@ -38,18 +38,10 @@ fun ScrollableTopAppBar(
     )
 }
 
-
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ReleaseCardPreview() {
-    MusicBrainzJetpackComposeTheme {
-        ScrollableTopAppBar("A title", "A subtitle")
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun ReleaseCardDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         ScrollableTopAppBar("A title", "A subtitle")
     }

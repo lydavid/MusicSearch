@@ -27,17 +27,10 @@ fun StickyHeader(text: String) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ArtistCardPreview() {
-    MusicBrainzJetpackComposeTheme {
-        StickyHeader("Album + Compilation")
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun ArtistCardDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         StickyHeader("Album + Compilation")
     }

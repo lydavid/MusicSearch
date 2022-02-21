@@ -1,6 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.ui.release
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -189,17 +189,10 @@ private val testTrack = Track(
     length = 253000
 )
 
-@Preview(showBackground = true)
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ReleaseCardPreview() {
-    MusicBrainzJetpackComposeTheme {
-        TrackCard(testTrack)
-    }
-}
-
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-internal fun ReleaseCardDarkPreview() {
     MusicBrainzJetpackComposeTheme {
         TrackCard(testTrack)
     }
