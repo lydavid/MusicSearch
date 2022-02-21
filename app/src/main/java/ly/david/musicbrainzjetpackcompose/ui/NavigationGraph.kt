@@ -59,7 +59,10 @@ internal fun NavigationGraph(
         }
 
         composable(Routes.MAIN) {
-            SearchScreenScaffold(onArtistClick = onArtistClick, openDrawer = openDrawer)
+            SearchScreenScaffold(
+                onArtistClick = onArtistClick,
+                openDrawer = openDrawer
+            )
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
@@ -87,7 +90,11 @@ internal fun NavigationGraph(
             val artistJson = entry.arguments?.getString("artistJson") ?: return@composable
             val artist = artistJson.fromJson(Artist::class.java)
             if (artist != null) {
-                ArtistScreenScaffold(artist, onReleaseGroupClick, onBack = onBack)
+                ArtistScreenScaffold(
+                    artist = artist,
+                    onReleaseGroupClick = onReleaseGroupClick,
+                    onBack = onBack
+                )
             }
         }
 
@@ -112,7 +119,11 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val releaseGroupId = entry.arguments?.getString("releaseGroupId") ?: return@composable
-            ReleaseGroupScreenScaffold(releaseGroupId, onReleaseClick)
+            ReleaseGroupScreenScaffold(
+                releaseGroupId = releaseGroupId,
+                onReleaseClick = onReleaseClick,
+                onBack = onBack
+            )
         }
 
         composable(
@@ -130,7 +141,10 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val releaseId = entry.arguments?.getString("releaseId") ?: return@composable
-            ReleaseScreenScaffold(releaseId)
+            ReleaseScreenScaffold(
+                releaseId = releaseId,
+                onBack = onBack
+            )
         }
     }
 }

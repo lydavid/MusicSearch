@@ -13,14 +13,14 @@ fun ArtistScreenScaffold(
     artist: Artist,
     onReleaseGroupClick: (String) -> Unit = {},
     onBack: () -> Unit
-    ) {
+) {
 
     // TODO: setting to show more options. By default, we can keep it as just title/year,
     //  but we should be able to see all the relevant info from this screen too like we do from web
     //  each row will probably just be label: data
 
     Scaffold(
-        topBar = { ScrollableTopAppBar(artist.name, onBack = onBack) },
+        topBar = { ScrollableTopAppBar(title = artist.name, onBack = onBack) },
 //        bottomBar = {
         // TODO: meant for main navigation in app, so this nested screen shouldn't use it
         //  instead, it should use tabs, which don't belong in topbar

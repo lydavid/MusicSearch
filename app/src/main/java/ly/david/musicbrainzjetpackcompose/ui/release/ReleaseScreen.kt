@@ -19,13 +19,20 @@ import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 fun ReleaseScreenScaffold(
     releaseId: String,
 //    onReleaseClick: (Release) -> Unit = {},
+    onBack: () -> Unit
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
-        topBar = { ScrollableTopAppBar(title = titleState, subtitle = subtitleState) },
+        topBar = {
+            ScrollableTopAppBar(
+                title = titleState,
+                subtitle = subtitleState,
+                onBack = onBack
+            )
+        },
     ) { innerPadding ->
         TracksInReleaseScreen(
             modifier = Modifier.padding(innerPadding),
