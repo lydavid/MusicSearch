@@ -38,7 +38,6 @@ fun ReleaseGroupsByArtistScreen(
     modifier: Modifier,
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
-    // This only works if our ViewModel has no parameters. Otherwise we will need Hilt. Or by viewModels() from Activity.
     viewModel: ArtistViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = ReleaseGroupsByArtistUiState(isLoading = true)) {

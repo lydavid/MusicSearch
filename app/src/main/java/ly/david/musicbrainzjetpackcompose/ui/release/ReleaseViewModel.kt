@@ -10,9 +10,11 @@ class ReleaseViewModel : ViewModel() {
         MusicBrainzApiService.create()
     }
 
+    private var release: Release? = null
+
     suspend fun lookupRelease(
         releaseId: String,
     ): Release {
-        return musicBrainzApiService.lookupRelease(releaseId)
+        return release ?: musicBrainzApiService.lookupRelease(releaseId).also { release = it }
     }
 }

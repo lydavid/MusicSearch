@@ -13,12 +13,18 @@ class ReleaseGroupViewModel : ViewModel() {
         MusicBrainzApiService.create()
     }
 
+    private var initialized = false
+
+    private val allReleases = mutableListOf<Release>()
+
     suspend fun getReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int = MAX_BROWSE_LIMIT,
-        offset: Int = 0,
-        currentReleases: List<Release> = listOf()
+        offset: Int = 0
     ): List<Release> {
+        if (initialized) {
+            return allReleases
+        }
         if (offset != 0) {
             delay(DELAY_RECURSIVE_API_CALLS_MS)
         }
@@ -29,15 +35,15 @@ class ReleaseGroupViewModel : ViewModel() {
         )
 
         val newReleases = response.releases
-        val mergedReleases = currentReleases + newReleases
-        return if (mergedReleases.size < response.releaseCount) {
+        allReleases.addAll(newReleases)
+        return if (allReleases.size < response.releaseCount) {
             getReleasesByReleaseGroup(
                 releaseGroupId = releaseGroupId,
-                offset = offset + newReleases.size,
-                currentReleases = mergedReleases
+                offset = offset + newReleases.size
             )
         } else {
-            mergedReleases
+            initialized = true
+            allReleases
         }
     }
 }
