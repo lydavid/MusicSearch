@@ -11,17 +11,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
-// TODO: pass in drawerclick
 @Composable
 fun ScrollableTopAppBar(
     title: String,
-    subtitle: String = ""
+    subtitle: String = "",
+    openDrawer: (() -> Unit)? = null,
 ) {
     TopAppBar(
         title = {
@@ -42,8 +43,13 @@ fun ScrollableTopAppBar(
         navigationIcon = {
             IconButton(onClick = {
                 Log.d("Remove This", "ScrollableTopAppBar: clicked menu")
+                openDrawer?.invoke()
             }) {
-                Icon(Icons.Default.Menu, contentDescription = "Click to open navigation drawer.")
+                if (openDrawer == null) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Go back to previous screen.")
+                } else {
+                    Icon(Icons.Default.Menu, contentDescription = "Open navigation drawer.")
+                }
             }
         },
         backgroundColor = MaterialTheme.colors.background

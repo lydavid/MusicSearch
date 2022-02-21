@@ -47,11 +47,11 @@ private data class ReleaseUiState(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TracksInReleaseScreen(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     releaseId: String,
-    onTitleUpdate: (title: String, subtitle: String) -> Unit,
+    onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
     onRecordingClick: (Recording) -> Unit = {},
-    viewModel: ReleaseViewModel = viewModel()
+    viewModel: ReleaseViewModel = viewModel() // TODO: can we make this previewable by accepting an interface, and creating a mock viewmodel that just returns fake data with lookupRelease?
 ) {
     val uiState by produceState(initialValue = ReleaseUiState(isLoading = true)) {
         value = ReleaseUiState(response = viewModel.lookupRelease(releaseId))
@@ -74,7 +74,7 @@ fun TracksInReleaseScreen(
                         stickyHeader {
                             StickyHeader(
                                 text = "${medium.format.orEmpty()} ${medium.position}" +
-                                    medium.title.transformThisIfNotNullOrEmpty { " (${it})" }
+                                    medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
                             )
                         }
 

@@ -24,7 +24,8 @@ object Routes {
 
 @Composable
 internal fun NavigationGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    openDrawer: () -> Unit = {}
 ) {
     NavHost(
         navController = navController,
@@ -40,7 +41,7 @@ internal fun NavigationGraph(
         }
 
         composable(Routes.MAIN) {
-            SearchScreenScaffold(onArtistClick = onArtistClick)
+            SearchScreenScaffold(onArtistClick = onArtistClick, openDrawer = openDrawer)
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->

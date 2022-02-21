@@ -38,13 +38,15 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 
 @Composable
 internal fun SearchScreenScaffold(
-    onArtistClick: (Artist) -> Unit = {}
+    onArtistClick: (Artist) -> Unit = {},
+    openDrawer: () -> Unit = {},
 ) {
 
     val lazyListState: LazyListState = rememberLazyListState()
 
     Scaffold(
-        topBar = { ScrollableTopAppBar(title = "Search Artists") }
+        topBar = { ScrollableTopAppBar(title = "Search Artists", openDrawer = openDrawer) },
+
     ) {
         SearchScreen(onArtistClick, lazyListState)
     }

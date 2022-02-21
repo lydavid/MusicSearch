@@ -15,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,7 +48,10 @@ internal fun MainApp() {
             },
             drawerState = drawerState
         ) {
-            NavigationGraph(navController = navController)
+            NavigationGraph(
+                navController = navController,
+                openDrawer = { coroutineScope.launch { drawerState.open() }}
+            )
         }
     }
 }
