@@ -17,10 +17,12 @@ import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
 
 object Routes {
-    const val MAIN = "main"
+    const val DISCOVER = "discover"
     const val ARTIST = "artist"
     const val RELEASE_GROUP = "release-group"
     const val RELEASE = "release"
+
+    const val HISTORY = "history"
 }
 
 @Composable
@@ -30,7 +32,7 @@ internal fun NavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.MAIN,
+        startDestination = Routes.DISCOVER,
     ) {
 
         val onBack = {
@@ -39,7 +41,7 @@ internal fun NavigationGraph(
         }
 
         val onHomeClick: () -> Unit = {
-            navController.navigate(Routes.MAIN) {
+            navController.navigate(Routes.DISCOVER) {
                 // Top-level screens should use this to prevent selecting the same screen
                 launchSingleTop = true
 
@@ -58,7 +60,7 @@ internal fun NavigationGraph(
             //  user hits search
         }
 
-        composable(Routes.MAIN) {
+        composable(Routes.DISCOVER) {
             SearchScreenScaffold(
                 onArtistClick = onArtistClick,
                 openDrawer = openDrawer

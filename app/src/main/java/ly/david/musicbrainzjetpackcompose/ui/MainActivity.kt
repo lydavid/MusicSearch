@@ -32,13 +32,16 @@ internal fun MainApp() {
 
         val coroutineScope = rememberCoroutineScope()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: Routes.MAIN
+        val currentRoute = navBackStackEntry?.destination?.route ?: Routes.DISCOVER
 
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
         ModalDrawer(
             drawerContent = {
-                NavigationDrawer()
+                NavigationDrawer(
+                    selectedRoute = currentRoute,
+                    closeDrawer = { coroutineScope.launch { drawerState.close() } }
+                )
             },
             drawerState = drawerState
         ) {
