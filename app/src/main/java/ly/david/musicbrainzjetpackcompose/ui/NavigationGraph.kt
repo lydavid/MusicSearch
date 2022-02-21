@@ -1,6 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -8,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import ly.david.musicbrainzjetpackcompose.R
 import ly.david.musicbrainzjetpackcompose.common.fromJson
 import ly.david.musicbrainzjetpackcompose.common.toJson
 import ly.david.musicbrainzjetpackcompose.data.Artist
@@ -61,6 +63,10 @@ internal fun NavigationGraph(
     navController: NavHostController,
     openDrawer: () -> Unit = {}
 ) {
+    val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
+    val releaseGroupDeeplink = stringResource(id = R.string.route_release_group)
+    val releaseDeeplink = stringResource(id = R.string.route_release)
+
     NavHost(
         navController = navController,
         startDestination = Routes.DISCOVER,
@@ -116,7 +122,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "mbjc://artist/{artistJson}"
+                    uriPattern = "$deeplinkSchema://artist/{artistJson}"
                 }
             )
         ) { entry ->
@@ -147,7 +153,7 @@ internal fun NavigationGraph(
             // Example: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "mbjc://release-group/{releaseGroupId}"
+                    uriPattern = "$deeplinkSchema://$releaseGroupDeeplink/{releaseGroupId}"
                 }
             )
         ) { entry ->
@@ -169,7 +175,7 @@ internal fun NavigationGraph(
             // Example: adb shell am start -d "mbjc://release/165f6643-2edb-4795-9abe-26bd0533e59d" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "mbjc://release/{releaseId}"
+                    uriPattern = "$deeplinkSchema://$releaseDeeplink/{releaseId}"
                 }
             )
         ) { entry ->

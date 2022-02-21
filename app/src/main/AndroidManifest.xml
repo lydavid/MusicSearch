@@ -29,8 +29,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="release-group"
-                    android:scheme="mbjc" />
+                    android:host="@string/route_release_group"
+                    android:scheme="@string/deeplink_schema" />
             </intent-filter>
 
             <!-- Support deep-linking into a release -->
@@ -41,8 +41,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="release"
-                    android:scheme="mbjc" />
+                    android:host="@string/route_release"
+                    android:scheme="@string/deeplink_schema" />
             </intent-filter>
         </activity>
     </application>
