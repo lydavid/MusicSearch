@@ -99,7 +99,7 @@ private fun SearchScreen(
                 }
             )
 
-            ExposedDropdownMenuBoxExample(
+            ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
                 options = QueryResources.values().toList(),
                 selectedOption = selectedOption,
@@ -128,6 +128,7 @@ private fun SearchScreen(
     }
 }
 
+// TODO: include Group/Person etc
 @Composable
 private fun ArtistCard(
     artist: Artist,

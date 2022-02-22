@@ -53,7 +53,10 @@ fun ReleasesByReleaseGroupScreen(
             uiState.response?.let { releases ->
 
                 onTitleUpdate(
-                    releases.first().title,
+                    releases.first().title, // TODO: include disambiguation, will need lookup though...
+                    // We can have this screen first just do a lookup of the release group with some info
+                    //  maybe have a button at the bottom to view all releases in the release group (if there are 25 releases, we will show it)
+                    //  we can get some info for some of the other tabs too
                     "Release Group by ${releases.first().artistCredits.getDisplayNames()}"
                 )
 

@@ -1,5 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.ui
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -183,7 +184,9 @@ internal fun NavigationGraph(
             ReleaseScreenScaffold(
                 releaseId = releaseId,
                 onBack = onBack
-            )
+            ) {
+                Log.d("Remove This", "NavigationGraph: Clicked recording with id=${it}")
+            }
         }
     }
 }

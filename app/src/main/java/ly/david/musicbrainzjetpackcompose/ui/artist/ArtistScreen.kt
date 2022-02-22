@@ -7,7 +7,11 @@ import androidx.compose.ui.Modifier
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 
-// TODO:
+// TODO: string
+
+// TODO: use lookup on artist first
+// TODO: get all release group for artist in second tab? don't make api call until user swipes to it for the first time
+//  experience is slightly different from web though, where their list of release groups is the main focus
 @Composable
 fun ArtistScreenScaffold(
     artist: Artist,

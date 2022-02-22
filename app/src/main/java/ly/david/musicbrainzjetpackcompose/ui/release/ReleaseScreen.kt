@@ -18,8 +18,8 @@ import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 @Composable
 fun ReleaseScreenScaffold(
     releaseId: String,
-//    onReleaseClick: (Release) -> Unit = {},
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onRecordingClick: (String) -> Unit = {}
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
@@ -41,7 +41,7 @@ fun ReleaseScreenScaffold(
                 titleState = title
                 subtitleState = subtitle
             },
-//            onReleaseClick = onReleaseClick
+            onRecordingClick = onRecordingClick
         )
     }
 }

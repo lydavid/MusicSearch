@@ -51,7 +51,7 @@ fun TracksInReleaseScreen(
     modifier: Modifier = Modifier,
     releaseId: String,
     onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
-    onRecordingClick: (Recording) -> Unit = {},
+    onRecordingClick: (String) -> Unit = {},
     viewModel: ReleaseViewModel = viewModel() // TODO: can we make this previewable by accepting an interface, and creating a mock viewmodel that just returns fake data with lookupRelease?
 ) {
     val uiState by produceState(initialValue = ReleaseUiState(isLoading = true)) {
@@ -64,7 +64,10 @@ fun TracksInReleaseScreen(
         uiState.response != null -> {
             uiState.response?.let { release ->
 
-                onTitleUpdate(release.title, "Release by ${release.artistCredits.getDisplayNames()}")
+                onTitleUpdate(
+                    release.title + release.disambiguation.transformThisIfNotNullOrEmpty { " ($it)" },
+                    "Release by ${release.artistCredits.getDisplayNames()}"
+                )
 
                 LazyColumn(
                     modifier = modifier
@@ -108,12 +111,11 @@ fun TracksInReleaseScreen(
 
 // TODO: Should have similar data to each table row in: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
 
-// TODO: Track includes Recording in it
 @Composable
 private fun TrackCard(
     track: Track,
     showTrackArtists: Boolean = false,
-    onRecordingClick: (Recording) -> Unit = {},
+    onRecordingClick: (String) -> Unit = {},
     onWorkClick: (Work) -> Unit = {},
     // no onTrackClick needed since Tracks exists in the context of a Release
 ) {
@@ -121,7 +123,7 @@ private fun TrackCard(
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     ClickableCard(
-        onClick = { onRecordingClick(track.recording) },
+        onClick = { onRecordingClick(track.recording.id) },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

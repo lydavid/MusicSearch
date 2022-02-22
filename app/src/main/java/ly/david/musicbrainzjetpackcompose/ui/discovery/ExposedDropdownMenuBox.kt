@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ExposedDropdownMenuBoxExample(
+fun ExposedDropdownMenuBox(
     modifier: Modifier = Modifier,
     options: List<QueryResources>,
     selectedOption: QueryResources,

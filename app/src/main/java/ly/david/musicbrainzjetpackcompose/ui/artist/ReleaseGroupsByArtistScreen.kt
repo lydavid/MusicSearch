@@ -47,6 +47,9 @@ fun ReleaseGroupsByArtistScreen(
     when {
         uiState.response != null -> {
             uiState.response?.let { response ->
+
+                // TODO: update title with artist name, disam, and type such as Group, Person
+
                 LazyColumn(
                     modifier = modifier
                     // rememberLazyListState() currently not working for possibly one of many reasons:
