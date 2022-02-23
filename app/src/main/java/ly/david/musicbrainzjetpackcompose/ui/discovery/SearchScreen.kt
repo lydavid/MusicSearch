@@ -135,6 +135,7 @@ private fun SearchScreen(
                     onArtistClick(it)
                 }
             }
+            // TODO: if we're at the end of the list, can we show a message saying so?
         }
     }
 }

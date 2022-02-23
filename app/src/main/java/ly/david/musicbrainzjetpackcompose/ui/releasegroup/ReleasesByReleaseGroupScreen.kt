@@ -106,7 +106,7 @@ private fun ReleaseCard(
         ) {
 
             Column(
-                modifier = Modifier.weight(8f),
+                modifier = Modifier.weight(2f),
             ) {
                 Row {
                     Text(
@@ -129,9 +129,11 @@ private fun ReleaseCard(
 
             val date = release.date
             if (!date.isNullOrEmpty()) {
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.padding(start = 8.dp))
                 Text(
-                    modifier = Modifier.weight(3f),
+                    // TODO: Is there a way to ensure a composable that comes after another
+                    //  is given enough space to fit its text?
+                    modifier = Modifier.weight(1f),
                     text = date,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.End
