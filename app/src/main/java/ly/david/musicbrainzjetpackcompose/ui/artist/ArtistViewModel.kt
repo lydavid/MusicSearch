@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
-import ly.david.musicbrainzjetpackcompose.preferences.DELAY_RECURSIVE_API_CALLS_MS
+import ly.david.musicbrainzjetpackcompose.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicbrainzjetpackcompose.preferences.MAX_BROWSE_LIMIT
 
 // TODO: will we have this one viewmodel for all the tabs in Artist screen?
@@ -17,6 +17,10 @@ class ArtistViewModel : ViewModel() {
 
     private var initialized = false
 
+    // TODO: Would be nice if view can listen to this
+    //  and we would emit data every time one api is complete, meaning user doesn't have to wait for all api to complete
+    //  to start viewing data
+    //  and when new data is emitted, we don't force scroll to the top
     private val allReleaseGroups = mutableListOf<ReleaseGroup>()
 
     suspend fun getReleaseGroupsByArtist(
@@ -28,7 +32,7 @@ class ArtistViewModel : ViewModel() {
             return allReleaseGroups
         }
         if (offset != 0) {
-            delay(DELAY_RECURSIVE_API_CALLS_MS)
+            delay(DELAY_PAGED_API_CALLS_MS)
         }
         val response = musicBrainzApiService.browseReleaseGroupsByArtist(
             artistId = artistId,

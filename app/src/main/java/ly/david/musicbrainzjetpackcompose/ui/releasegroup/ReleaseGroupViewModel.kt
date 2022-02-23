@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
 import ly.david.musicbrainzjetpackcompose.data.Release
-import ly.david.musicbrainzjetpackcompose.preferences.DELAY_RECURSIVE_API_CALLS_MS
+import ly.david.musicbrainzjetpackcompose.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicbrainzjetpackcompose.preferences.MAX_BROWSE_LIMIT
 
 class ReleaseGroupViewModel : ViewModel() {
@@ -26,7 +26,7 @@ class ReleaseGroupViewModel : ViewModel() {
             return allReleases
         }
         if (offset != 0) {
-            delay(DELAY_RECURSIVE_API_CALLS_MS)
+            delay(DELAY_PAGED_API_CALLS_MS)
         }
         val response = musicBrainzApiService.browseReleasesByReleaseGroup(
             releaseGroupId = releaseGroupId,

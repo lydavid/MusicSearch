@@ -2,10 +2,9 @@ package ly.david.musicbrainzjetpackcompose.data.search
 
 import com.squareup.moshi.Json
 import ly.david.musicbrainzjetpackcompose.data.Artist
+import ly.david.musicbrainzjetpackcompose.preferences.SEARCH_LIMIT
 import retrofit2.http.GET
 import retrofit2.http.Query
-
-private const val DEFAULT_SEARCH_LIMIT = 25
 
 /**
  * Search for MusicBrainz entities using text.
@@ -15,7 +14,8 @@ interface Search {
     @GET("artist")
     suspend fun queryArtists(
         @Query("query") query: String,
-        @Query("limit") limit: Int = DEFAULT_SEARCH_LIMIT
+        @Query("limit") limit: Int = SEARCH_LIMIT,
+        @Query("offset") offset: Int = 0,
     ): SearchArtistsResponse
 }
 

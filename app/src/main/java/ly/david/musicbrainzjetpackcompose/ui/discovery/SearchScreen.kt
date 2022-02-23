@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -32,6 +31,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
@@ -69,6 +71,8 @@ private fun SearchScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
+    val pagingItems: LazyPagingItems<Artist> = viewModel.artists.collectAsLazyPagingItems()
+
     Column {
         Row {
             TextField(
@@ -82,7 +86,7 @@ private fun SearchScreen(
                 keyboardActions = KeyboardActions(
                     onSearch = {
                         coroutineScope.launch {
-                            viewModel.queryArtists(text)
+                            viewModel.query.value = text
                             state.scrollToItem(0)
                             focusManager.clearFocus()
                         }
@@ -109,17 +113,24 @@ private fun SearchScreen(
             )
         }
 
+
         LazyColumn(
             state = state
         ) {
-            item {
-                val results = viewModel.totalFoundResults.value
-                if (results != 0) {
-                    Text(text = "Found $results results for \"${viewModel.queryString}\"")
-                }
-            }
-
-            items(viewModel.artists) { artist ->
+//            item {
+//                val results = viewModel.totalFoundResults.value
+//                if (results != 0) {
+//                    Text(text = "Found $results results for \"${viewModel.queryString}\"")
+//                }
+//            }
+//
+//            items(viewModel.artists) { artist ->
+//                ArtistCard(artist = artist) {
+//                    onArtistClick(it)
+//                }
+//            }
+            itemsIndexed(pagingItems) { _, artist ->
+                if (artist == null) return@itemsIndexed
                 ArtistCard(artist = artist) {
                     onArtistClick(it)
                 }
