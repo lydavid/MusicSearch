@@ -14,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.MusicBrainzApiService
@@ -71,9 +72,9 @@ class ArtistsPagingSource(
                 nextKey = nextOffset
             )
         } catch (exception: IOException) {
-            return LoadResult.Error(exception)
+            LoadResult.Error(exception)
         } catch (exception: HttpException) {
-            return LoadResult.Error(exception)
+            LoadResult.Error(exception)
         }
     }
 }
@@ -83,15 +84,17 @@ internal class SearchViewModel : ViewModel() {
     val query: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val artists: Flow<PagingData<Artist>> = query.flatMapLatest { query ->
-        Pager(
-            config = PagingConfig(
-                pageSize = SEARCH_LIMIT,
-                initialLoadSize = INITIAL_SEARCH_LIMIT
-            ),
-            pagingSourceFactory = {
-                ArtistsPagingSource(queryString = query)
-            }
-        ).flow.cachedIn(viewModelScope)
-    }
+    val artists: Flow<PagingData<Artist>> =
+        query.filterNot { it.isEmpty() }
+            .flatMapLatest { query ->
+                Pager(
+                    config = PagingConfig(
+                        pageSize = SEARCH_LIMIT,
+                        initialLoadSize = INITIAL_SEARCH_LIMIT
+                    ),
+                    pagingSourceFactory = {
+                        ArtistsPagingSource(queryString = query)
+                    }
+                ).flow
+            }.cachedIn(viewModelScope)
 }

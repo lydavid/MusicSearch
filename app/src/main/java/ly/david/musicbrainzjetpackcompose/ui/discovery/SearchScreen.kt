@@ -1,6 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.ui.discovery
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -74,7 +75,9 @@ private fun SearchScreen(
     val pagingItems: LazyPagingItems<Artist> = viewModel.artists.collectAsLazyPagingItems()
 
     Column {
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             TextField(
                 modifier = Modifier.weight(1f),
                 value = text,
@@ -86,9 +89,14 @@ private fun SearchScreen(
                 keyboardActions = KeyboardActions(
                     onSearch = {
                         coroutineScope.launch {
-                            viewModel.query.value = text
-                            state.scrollToItem(0)
-                            focusManager.clearFocus()
+                            if (text.isEmpty()) {
+                                // TODO: error
+                                Log.d("Remove This", "SearchScreen: can't be empty!!")
+                            } else {
+                                viewModel.query.value = text
+                                state.scrollToItem(0)
+                                focusManager.clearFocus()
+                            }
                         }
                     }
                 ),
@@ -103,6 +111,7 @@ private fun SearchScreen(
                 }
             )
 
+            // TODO: this doesn't fill rest of screen despite weight 1f
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
                 options = QueryResources.values().toList(),
