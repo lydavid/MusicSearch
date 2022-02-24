@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,6 +41,7 @@ private data class ReleaseGroupsByArtistUiState(
 fun ReleaseGroupsByArtistScreen(
     modifier: Modifier,
     artistId: String,
+    state: LazyListState,
     onReleaseGroupClick: (String) -> Unit = {},
     viewModel: ArtistViewModel = viewModel()
 ) {
@@ -53,6 +56,7 @@ fun ReleaseGroupsByArtistScreen(
                 // TODO: update title with artist name, disam, and type such as Group, Person
 
                 LazyColumn(
+                    state = state,
                     modifier = modifier
                     // rememberLazyListState() currently not working for possibly one of many reasons:
                     //  - not working for lists that have headers/footers
@@ -137,6 +141,8 @@ private val testReleaseGroup = ReleaseGroup(
 @Composable
 internal fun ReleaseGroupCardPreview() {
     MusicBrainzJetpackComposeTheme {
-        ReleaseGroupCard(testReleaseGroup)
+        Surface {
+            ReleaseGroupCard(testReleaseGroup)
+        }
     }
 }

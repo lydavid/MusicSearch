@@ -8,7 +8,7 @@ import ly.david.musicbrainzjetpackcompose.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicbrainzjetpackcompose.preferences.MAX_BROWSE_LIMIT
 
 // TODO: will we have this one viewmodel for all the tabs in Artist screen?
-//  or should each tab have its own?
+//  or should each tab have its own? As long as this can remain alive when switching tabs, then we should use different viewmodels for clarity
 class ArtistViewModel : ViewModel() {
 
     private val musicBrainzApiService by lazy {
