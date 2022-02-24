@@ -1,14 +1,11 @@
 package ly.david.musicbrainzjetpackcompose.ui.common
 
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import ly.david.musicbrainzjetpackcompose.ui.theme.getSubBackgroundColor
 
 /**
  * Generic card with preset modifiers.
@@ -19,12 +16,21 @@ fun ClickableCard(
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    Card(
+//    Card(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(8.dp),
+//        shape = RoundedCornerShape(0.dp),
+//        onClick = onClick,
+//        elevation = 4.dp
+////        border = BorderStroke(1.dp, getSubBackgroundColor())
+//    ) {
+//        content()
+//    }
+    ListItem(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        onClick = onClick,
-        border = BorderStroke(1.dp, getSubBackgroundColor())
+            .clickable { onClick() }
+            .fillMaxWidth(),
     ) {
         content()
     }

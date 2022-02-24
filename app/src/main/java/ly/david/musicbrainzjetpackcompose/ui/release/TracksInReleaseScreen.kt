@@ -8,13 +8,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.toDisplayTime
 import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
+import ly.david.musicbrainzjetpackcompose.data.Artist
+import ly.david.musicbrainzjetpackcompose.data.ArtistCredit
 import ly.david.musicbrainzjetpackcompose.data.Recording
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.Track
@@ -126,7 +124,7 @@ private fun TrackCard(
         onClick = { onRecordingClick(track.recording.id) },
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(vertical = 16.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -138,40 +136,53 @@ private fun TrackCard(
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                Text(
-                    text = track.title,
-                    style = MaterialTheme.typography.h6,
+                Column(
                     modifier = Modifier.weight(10f)
-                )
+                ) {
+                    Text(
+                        text = track.title,
+                        style = MaterialTheme.typography.h6,
+
+                    )
+                    if (showTrackArtists) {
+//                    Spacer(modifier = Modifier.padding(4.dp))
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            style = MaterialTheme.typography.body1,
+                            text = track.artistCredits.getDisplayNames()
+                        )
+                    }
+                }
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                IconToggleButton(
-                    checked = expanded,
-                    onCheckedChange = {
-                        expanded = it
-                    }
-                ) {
-                    Icon(
-                        if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                        contentDescription = if (expanded) "Click to collapse" else "click to expand",
-                    )
-                }
-            }
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
                 Text(
                     text = track.length.toDisplayTime(),
                     style = MaterialTheme.typography.body2
                 )
-
-                if (showTrackArtists) {
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    Text(text = track.artistCredits.getDisplayNames())
-                }
             }
+
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//
+//
+//
+////                Spacer(modifier = Modifier.weight(1f))
+////
+////
+////                IconToggleButton(
+////                    checked = expanded,
+////                    onCheckedChange = {
+////                        expanded = it
+////                    }
+////                ) {
+////                    Icon(
+////                        if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+////                        contentDescription = if (expanded) "Click to collapse" else "click to expand",
+////                    )
+////                }
+//            }
         }
 
         // TODO: more content
@@ -189,7 +200,18 @@ private val testTrack = Track(
     ),
     position = 1,
     number = "A1",
-    length = 253000
+    length = 253000,
+    artistCredits = listOf(
+        ArtistCredit(
+            Artist(
+                "3",
+                name = "actual name",
+                sortName = "sort name"
+            ),
+            joinPhrase = "",
+            name = "name on track"
+        )
+    )
 )
 
 @Preview
@@ -197,6 +219,11 @@ private val testTrack = Track(
 @Composable
 internal fun ReleaseCardPreview() {
     MusicBrainzJetpackComposeTheme {
-        TrackCard(testTrack)
+        Surface {
+            TrackCard(
+                track = testTrack,
+                showTrackArtists = true
+            )
+        }
     }
 }
