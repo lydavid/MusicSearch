@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 @Composable
 fun ExposedDropdownMenuBox(
     modifier: Modifier = Modifier,
-    options: List<QueryResources>,
-    selectedOption: QueryResources,
-    onSelectOption: (QueryResources) -> Unit
+    options: List<QueryResource>,
+    selectedOption: QueryResource,
+    onSelectOption: (QueryResource) -> Unit
 ) {
 
     var expanded by remember { mutableStateOf(false) }

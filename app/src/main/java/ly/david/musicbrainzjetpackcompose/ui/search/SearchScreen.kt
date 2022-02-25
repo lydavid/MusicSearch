@@ -66,7 +66,7 @@ private fun SearchScreen(
     viewModel: SearchViewModel = viewModel()
 ) {
     var text by rememberSaveable { mutableStateOf("") }
-    var selectedOption by remember { mutableStateOf(QueryResources.ARTIST) }
+    var selectedOption by remember { mutableStateOf(QueryResource.ARTIST) }
 
     val focusManager = LocalFocusManager.current
 
@@ -114,7 +114,7 @@ private fun SearchScreen(
             // TODO: this doesn't fill rest of screen despite weight 1f
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
-                options = QueryResources.values().toList(),
+                options = QueryResource.values().toList(),
                 selectedOption = selectedOption,
                 onSelectOption = {
                     selectedOption = it

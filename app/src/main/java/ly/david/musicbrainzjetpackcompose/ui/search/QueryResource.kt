@@ -1,7 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.ui.search
 
 // area, artist, event, genre, instrument, label, place, recording, release, release-group, series, work, url
-enum class QueryResources(val displayText: String, val queryText: String) {
+enum class QueryResource(val displayText: String, val queryText: String) {
     AREA("Area", "area"),
     ARTIST("Artist", "artist"),
     EVENT("Event", "event"),

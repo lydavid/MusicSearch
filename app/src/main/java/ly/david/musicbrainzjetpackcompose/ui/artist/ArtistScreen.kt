@@ -14,7 +14,7 @@ import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
-enum class ArtistTabs(val title: String) {
+enum class ArtistTab(val title: String) {
     OVERVIEW("Overview"),
     RELEASE_GROUPS("Release Groups"),
     RELEASES("Releases"),
@@ -33,7 +33,7 @@ fun ArtistScreenScaffold(
     onBack: () -> Unit
 ) {
 
-    var selectedTab by rememberSaveable { mutableStateOf(ArtistTabs.OVERVIEW) }
+    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.OVERVIEW) }
 
     val browseReleaseGroupsState = rememberLazyListState()
 
@@ -42,18 +42,18 @@ fun ArtistScreenScaffold(
             ScrollableTopAppBar(
                 title = artist.name,
                 onBack = onBack,
-                tabsTitle = ArtistTabs.values().map { it.title },
+                tabsTitle = ArtistTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { selectedTab = ArtistTabs.values()[it] }
+                onSelectTabIndex = { selectedTab = ArtistTab.values()[it] }
             )
         },
     ) { innerPadding ->
 
         when(selectedTab) {
-            ArtistTabs.OVERVIEW -> {
+            ArtistTab.OVERVIEW -> {
                 Text("just me")
             }
-            ArtistTabs.RELEASE_GROUPS -> {
+            ArtistTab.RELEASE_GROUPS -> {
                 ReleaseGroupsByArtistScreen(
                     modifier = Modifier.padding(innerPadding),
                     artistId = artist.id,
@@ -61,7 +61,7 @@ fun ArtistScreenScaffold(
                     onReleaseGroupClick = onReleaseGroupClick
                 )
             }
-            ArtistTabs.RELEASES -> {
+            ArtistTab.RELEASES -> {
                 Text(text = "Nothing yet!")
             }
         }
