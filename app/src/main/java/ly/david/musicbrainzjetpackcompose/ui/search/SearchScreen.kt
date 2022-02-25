@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -45,25 +46,34 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 
 @Composable
 internal fun SearchScreenScaffold(
-    onArtistClick: (Artist) -> Unit = {},
     openDrawer: () -> Unit = {},
+    onArtistClick: (Artist) -> Unit = {},
+    viewModel: SearchViewModel = viewModel()
 ) {
 
     val lazyListState: LazyListState = rememberLazyListState()
+    val pagingItems: LazyPagingItems<Artist> = viewModel.artists.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = { ScrollableTopAppBar(title = "Search Artists", openDrawer = openDrawer) },
-
-        ) {
-        SearchScreen(onArtistClick, lazyListState)
+    ) {
+        SearchScreen(
+            state = lazyListState,
+            pagingItems = pagingItems,
+            onSearch = { query ->
+                viewModel.query.value = query
+            },
+            onArtistClick = onArtistClick,
+        )
     }
 }
 
 @Composable
 private fun SearchScreen(
-    onArtistClick: (Artist) -> Unit = {},
     state: LazyListState,
-    viewModel: SearchViewModel = viewModel()
+    pagingItems: LazyPagingItems<Artist>,
+    onSearch: (String) -> Unit = {},
+    onArtistClick: (Artist) -> Unit = {}
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf(QueryResource.ARTIST) }
@@ -71,8 +81,6 @@ private fun SearchScreen(
     val focusManager = LocalFocusManager.current
 
     val coroutineScope = rememberCoroutineScope()
-
-    val pagingItems: LazyPagingItems<Artist> = viewModel.artists.collectAsLazyPagingItems()
 
     Column {
         Row(
@@ -93,7 +101,8 @@ private fun SearchScreen(
                                 // TODO: error
                                 Log.d("Remove This", "SearchScreen: can't be empty!!")
                             } else {
-                                viewModel.query.value = text
+//                                viewModel.query.value = text
+                                onSearch(text)
                                 state.scrollToItem(0)
                                 focusManager.clearFocus()
                             }
@@ -186,7 +195,7 @@ private val testArtist = Artist(
     score = 77,
     name = "Paracoccidioidomicosisproctitissarcomucosis paracoccidioidomicosisproctitissarcomucosisevenlonger",
     sortName = "Tsukuyomi",
-    disambiguation = "blah, some really long text that forces wrapping",
+    disambiguation = "blah, blah, blah, some really long text that forces wrapping",
     country = "JP",
     lifeSpan = LifeSpan(
         begin = "2020-10-10"
@@ -198,7 +207,9 @@ private val testArtist = Artist(
 @Composable
 internal fun ArtistCardPreview() {
     MusicBrainzJetpackComposeTheme {
-        ArtistCard(testArtist)
+        Surface {
+            ArtistCard(testArtist)
+        }
     }
 }
 

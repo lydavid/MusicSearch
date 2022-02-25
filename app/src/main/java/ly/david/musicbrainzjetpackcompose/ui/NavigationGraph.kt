@@ -60,8 +60,8 @@ internal fun NavigationGraph(
 
         composable(Routes.SEARCH) {
             SearchScreenScaffold(
-                onArtistClick = onArtistClick,
-                openDrawer = openDrawer
+                openDrawer = openDrawer,
+                onArtistClick = onArtistClick
             )
         }
 
