@@ -22,8 +22,9 @@ internal fun NavigationGraph(
     openDrawer: () -> Unit = {}
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
-    val releaseGroupDeeplink = stringResource(id = R.string.route_release_group)
-    val releaseDeeplink = stringResource(id = R.string.route_release)
+    val artistDeeplink = stringResource(id = R.string.deeplink_artist)
+    val releaseGroupDeeplink = stringResource(id = R.string.deeplink_release_group)
+    val releaseDeeplink = stringResource(id = R.string.deeplink_release)
 
     NavHost(
         navController = navController,
@@ -48,11 +49,9 @@ internal fun NavigationGraph(
         }
 
         val onArtistClick: (String) -> Unit = { artistId ->
-//            val artistJson = artist.toJson()
-            navController.navigate("${Routes.LOOKUP_ARTIST}/$artistId")
-            // TODO: seems like even without restoreState = true here, we keep the search results
-            //  also, it looks like we don't need another api call! Well, that's because we don't call viewmodel until
-            //  user hits search
+            navController.navigate("${Routes.LOOKUP_ARTIST}/$artistId") {
+                restoreState = true
+            }
         }
 
         composable(Routes.SEARCH) {
@@ -80,7 +79,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://artist/{artistId}"
+                    uriPattern = "$deeplinkSchema://$artistDeeplink/{artistId}"
                 }
             )
         ) { entry ->

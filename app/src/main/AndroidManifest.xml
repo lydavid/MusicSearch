@@ -21,6 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- Support deep-linking into an artist's screen -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/deeplink_artist"
+                    android:scheme="@string/deeplink_schema" />
+            </intent-filter>
+
             <!-- Support deep-linking into a release group -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -29,7 +41,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/route_release_group"
+                    android:host="@string/deeplink_release_group"
                     android:scheme="@string/deeplink_schema" />
             </intent-filter>
 
@@ -41,7 +53,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/route_release"
+                    android:host="@string/deeplink_release"
                     android:scheme="@string/deeplink_schema" />
             </intent-filter>
         </activity>
