@@ -25,15 +25,9 @@ import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
+import ly.david.musicbrainzjetpackcompose.ui.common.UiState
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
-
-// TODO: rename? will we need something like this for every api return type? Can generalize
-private data class ReleasesByReleaseGroupUiState(
-    val response: List<Release>? = null,
-    val isLoading: Boolean = false,
-    val isError: Boolean = false // TODO: deal with errors
-)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -44,8 +38,8 @@ fun ReleasesByReleaseGroupScreen(
     onReleaseClick: (String) -> Unit = {},
     viewModel: ReleaseGroupViewModel = viewModel()
 ) {
-    val uiState by produceState(initialValue = ReleasesByReleaseGroupUiState(isLoading = true)) {
-        value = ReleasesByReleaseGroupUiState(response = viewModel.getReleasesByReleaseGroup(releaseGroupId))
+    val uiState by produceState(initialValue = UiState(isLoading = true)) {
+        value = UiState(response = viewModel.getReleasesByReleaseGroup(releaseGroupId))
     }
 
     when {

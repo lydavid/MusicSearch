@@ -7,9 +7,8 @@ import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.musicbrainzjetpackcompose.preferences.MAX_BROWSE_LIMIT
 
-// TODO: will we have this one viewmodel for all the tabs in Artist screen?
-//  or should each tab have its own? As long as this can remain alive when switching tabs, then we should use different viewmodels for clarity
-class ArtistViewModel : ViewModel() {
+// TODO: Let's have one viewmodel for each tab, they should stay alive
+class ReleaseGroupsByArtistViewModel : ViewModel() {
 
     private val musicBrainzApiService by lazy {
         MusicBrainzApiService.create()
@@ -17,6 +16,7 @@ class ArtistViewModel : ViewModel() {
 
     private var initialized = false
 
+    // TODO: use pager3, as we scroll, will it cause crazy jumps as we group?
     // TODO: Would be nice if view can listen to this
     //  and we would emit data every time one api is complete, meaning user doesn't have to wait for all api to complete
     //  to start viewing data
@@ -52,4 +52,6 @@ class ArtistViewModel : ViewModel() {
             allReleaseGroups
         }
     }
+
+
 }

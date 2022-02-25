@@ -47,7 +47,7 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 @Composable
 internal fun SearchScreenScaffold(
     openDrawer: () -> Unit = {},
-    onArtistClick: (Artist) -> Unit = {},
+    onArtistClick: (String) -> Unit = {},
     viewModel: SearchViewModel = viewModel()
 ) {
 
@@ -73,7 +73,7 @@ private fun SearchScreen(
     state: LazyListState,
     pagingItems: LazyPagingItems<Artist>,
     onSearch: (String) -> Unit = {},
-    onArtistClick: (Artist) -> Unit = {}
+    onArtistClick: (String) -> Unit = {}
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by remember { mutableStateOf(QueryResource.ARTIST) }
@@ -150,7 +150,7 @@ private fun SearchScreen(
             itemsIndexed(pagingItems) { _, artist ->
                 if (artist == null) return@itemsIndexed
                 ArtistCard(artist = artist) {
-                    onArtistClick(it)
+                    onArtistClick(it.id)
                 }
             }
             // TODO: if we're at the end of the list, can we show a message saying so?

@@ -27,14 +27,8 @@ import ly.david.musicbrainzjetpackcompose.data.sortAndGroupByTypes
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
+import ly.david.musicbrainzjetpackcompose.ui.common.UiState
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
-
-// TODO: rename? will we need something like this for every api return type? Can generalize
-private data class ReleaseGroupsByArtistUiState(
-    val response: List<ReleaseGroup>? = null,
-    val isLoading: Boolean = false,
-    val isError: Boolean = false
-)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -43,10 +37,12 @@ fun ReleaseGroupsByArtistScreen(
     artistId: String,
     state: LazyListState,
     onReleaseGroupClick: (String) -> Unit = {},
-    viewModel: ArtistViewModel = viewModel()
+    viewModel: ReleaseGroupsByArtistViewModel = viewModel()
 ) {
-    val uiState by produceState(initialValue = ReleaseGroupsByArtistUiState(isLoading = true)) {
-        value = ReleaseGroupsByArtistUiState(response = viewModel.getReleaseGroupsByArtist(artistId = artistId))
+
+    // TODO: these seem to happen on ui thread? It can't load in background when user switches tabs
+    val uiState by produceState(initialValue = UiState(isLoading = true)) {
+        value = UiState(response = viewModel.getReleaseGroupsByArtist(artistId = artistId))
     }
 
     when {

@@ -12,9 +12,6 @@ class ReleaseViewModel : ViewModel() {
 
     private var release: Release? = null
 
-    suspend fun lookupRelease(
-        releaseId: String,
-    ): Release {
-        return release ?: musicBrainzApiService.lookupRelease(releaseId).also { release = it }
-    }
+    suspend fun lookupRelease(releaseId: String, ): Release =
+        release ?: musicBrainzApiService.lookupRelease(releaseId).also { release = it }
 }

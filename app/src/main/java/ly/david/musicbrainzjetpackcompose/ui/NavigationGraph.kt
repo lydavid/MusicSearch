@@ -11,9 +11,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.musicbrainzjetpackcompose.R
-import ly.david.musicbrainzjetpackcompose.common.fromJson
-import ly.david.musicbrainzjetpackcompose.common.toJson
-import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
@@ -50,9 +47,9 @@ internal fun NavigationGraph(
             }
         }
 
-        val onArtistClick: (Artist) -> Unit = { artist ->
-            val artistJson = artist.toJson()
-            navController.navigate("${Routes.LOOKUP_ARTIST}/$artistJson")
+        val onArtistClick: (String) -> Unit = { artistId ->
+//            val artistJson = artist.toJson()
+            navController.navigate("${Routes.LOOKUP_ARTIST}/$artistId")
             // TODO: seems like even without restoreState = true here, we keep the search results
             //  also, it looks like we don't need another api call! Well, that's because we don't call viewmodel until
             //  user hits search
@@ -75,29 +72,29 @@ internal fun NavigationGraph(
 
         // TODO: use id, and update title from response
         composable(
-            route = "${Routes.LOOKUP_ARTIST}/{artistJson}",
+            route = "${Routes.LOOKUP_ARTIST}/{artistId}",
             arguments = listOf(
-                navArgument("artistJson") {
+                navArgument("artistId") {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://artist/{artistJson}"
+                    uriPattern = "$deeplinkSchema://artist/{artistId}"
                 }
             )
         ) { entry ->
-            val artistJson = entry.arguments?.getString("artistJson") ?: return@composable
-            val artist = artistJson.fromJson(Artist::class.java)
-            if (artist != null) {
-                ArtistScreenScaffold(
-                    artist = artist,
-                    onReleaseGroupClick = onReleaseGroupClick,
-                    onBack = onBack
-                )
-            }
+            val artistId = entry.arguments?.getString("artistId") ?: return@composable
+            ArtistScreenScaffold(
+                artistId = artistId,
+                onReleaseGroupClick = onReleaseGroupClick,
+                onBack = onBack
+            )
         }
 
+        // TODO: we can generalize all "lookup" routes that only needs an id
+        //  together with a string/enum for route, we can navigate to appropriate screen
+        //  Then we can pass that to history/drawer
         val onReleaseClick: (String) -> Unit = { releaseId ->
             navController.navigate("${Routes.LOOKUP_RELEASE}/$releaseId") {
                 restoreState = true

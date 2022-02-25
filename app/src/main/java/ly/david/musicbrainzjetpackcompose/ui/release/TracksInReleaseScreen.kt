@@ -27,21 +27,14 @@ import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.ArtistCredit
 import ly.david.musicbrainzjetpackcompose.data.Recording
-import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.Track
 import ly.david.musicbrainzjetpackcompose.data.Work
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
+import ly.david.musicbrainzjetpackcompose.ui.common.UiState
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
-
-// TODO: rename? will we need something like this for every api return type? Can generalize
-private data class ReleaseUiState(
-    val response: Release? = null,
-    val isLoading: Boolean = false,
-    val isError: Boolean = false // TODO: deal with errors
-)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -52,8 +45,8 @@ fun TracksInReleaseScreen(
     onRecordingClick: (String) -> Unit = {},
     viewModel: ReleaseViewModel = viewModel() // TODO: can we make this previewable by accepting an interface, and creating a mock viewmodel that just returns fake data with lookupRelease?
 ) {
-    val uiState by produceState(initialValue = ReleaseUiState(isLoading = true)) {
-        value = ReleaseUiState(response = viewModel.lookupRelease(releaseId))
+    val uiState by produceState(initialValue = UiState(isLoading = true)) {
+        value = UiState(response = viewModel.lookupRelease(releaseId))
     }
 
     var shouldShowTrackArtists by rememberSaveable { mutableStateOf(false) }

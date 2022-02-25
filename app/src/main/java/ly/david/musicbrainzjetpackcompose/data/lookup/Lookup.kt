@@ -1,5 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.data.lookup
 
+import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import retrofit2.http.GET
@@ -13,6 +14,12 @@ import retrofit2.http.Query
  * Can include additional information related to the entity. Max of 25.
  */
 interface Lookup {
+
+    @GET("artist/{artistId}")
+    suspend fun lookupArtist(
+        @Path("artistId") artistId: String,
+//        @Query("inc") include: String = "genres"
+    ): Artist
 
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
