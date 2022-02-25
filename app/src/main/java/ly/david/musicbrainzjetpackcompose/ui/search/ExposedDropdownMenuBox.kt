@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.ui.discovery
+package ly.david.musicbrainzjetpackcompose.ui.search
 
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi

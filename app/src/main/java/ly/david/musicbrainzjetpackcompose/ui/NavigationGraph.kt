@@ -15,9 +15,9 @@ import ly.david.musicbrainzjetpackcompose.common.fromJson
 import ly.david.musicbrainzjetpackcompose.common.toJson
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
-import ly.david.musicbrainzjetpackcompose.ui.discovery.SearchScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
+import ly.david.musicbrainzjetpackcompose.ui.search.SearchScreenScaffold
 
 object Routes {
     // Not a route. Just used to split sub-routes.
@@ -27,32 +27,34 @@ object Routes {
     private const val RELEASE_GROUP = "release-group"
     private const val RELEASE = "release"
 
+    // TODO: once we support searching other resources, figure out if it should be in same screen?
+    //  can it feasibly use the same list items? onClick will be different
     /**
-     * Search MusicBrainz for resources with a string query.
+     * Search MusicBrainz for resources.
      * Right now, we only support searching artists.
      */
-    const val DISCOVER = "discover"
+    const val SEARCH = "search"
 
+    // TODO: Consider whether these screens will continue to be sub-routes of search
+    //  if not, which top-level screen should we highlight on the nav drawer, if any?
+    //  If these routes can be accessed from both search and history screens, then they don't actually fit under either.
     /**
-     * Information about an artist.
-     * Currently, we only show a list of their release groups.
+     * Information about an artist, including all release groups by them.
      */
-    const val DISCOVER_ARTIST = "$DISCOVER$DIVIDER$ARTIST"
+    const val LOOKUP_ARTIST = "$SEARCH$DIVIDER$ARTIST"
 
     /**
-     * Information about a release group.
-     * Currently, we only show a list of its releases.
+     * Information about a release group, including all releases under it.
      */
-    const val DISCOVER_RELEASE_GROUP = "$DISCOVER$DIVIDER$RELEASE_GROUP"
+    const val LOOKUP_RELEASE_GROUP = "$SEARCH$DIVIDER$RELEASE_GROUP"
 
     /**
-     * Information about a release.
-     * Currently, we only show a list of its tracks.
+     * Information about a release, including all its tracks.
      */
-    const val DISCOVER_RELEASE = "$DISCOVER$DIVIDER$RELEASE"
+    const val LOOKUP_RELEASE = "$SEARCH$DIVIDER$RELEASE"
 
     /**
-     * Shows a the user's most recently visited screens.
+     * Shows the user's most recently visited screens.
      */
     const val HISTORY = "history"
 
@@ -70,7 +72,7 @@ internal fun NavigationGraph(
 
     NavHost(
         navController = navController,
-        startDestination = Routes.DISCOVER,
+        startDestination = Routes.SEARCH,
     ) {
 
         val onBack = {
@@ -79,7 +81,7 @@ internal fun NavigationGraph(
         }
 
         val onHomeClick: () -> Unit = {
-            navController.navigate(Routes.DISCOVER) {
+            navController.navigate(Routes.SEARCH) {
                 // Top-level screens should use this to prevent selecting the same screen
                 launchSingleTop = true
 
@@ -92,13 +94,13 @@ internal fun NavigationGraph(
 
         val onArtistClick: (Artist) -> Unit = { artist ->
             val artistJson = artist.toJson()
-            navController.navigate("${Routes.DISCOVER_ARTIST}/$artistJson")
+            navController.navigate("${Routes.LOOKUP_ARTIST}/$artistJson")
             // TODO: seems like even without restoreState = true here, we keep the search results
             //  also, it looks like we don't need another api call! Well, that's because we don't call viewmodel until
             //  user hits search
         }
 
-        composable(Routes.DISCOVER) {
+        composable(Routes.SEARCH) {
             SearchScreenScaffold(
                 onArtistClick = onArtistClick,
                 openDrawer = openDrawer
@@ -106,7 +108,7 @@ internal fun NavigationGraph(
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("${Routes.DISCOVER_RELEASE_GROUP}/$releaseGroupId") {
+            navController.navigate("${Routes.LOOKUP_RELEASE_GROUP}/$releaseGroupId") {
                 // TODO: This let us return to this screen in the same position, but doesn't prevent another api all
                 //  since we're always calling at start
                 restoreState = true
@@ -115,7 +117,7 @@ internal fun NavigationGraph(
 
         // TODO: use id, and update title from response
         composable(
-            route = "${Routes.DISCOVER_ARTIST}/{artistJson}",
+            route = "${Routes.LOOKUP_ARTIST}/{artistJson}",
             arguments = listOf(
                 navArgument("artistJson") {
                     type = NavType.StringType // Make argument type safe
@@ -139,13 +141,13 @@ internal fun NavigationGraph(
         }
 
         val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("${Routes.DISCOVER_RELEASE}/$releaseId") {
+            navController.navigate("${Routes.LOOKUP_RELEASE}/$releaseId") {
                 restoreState = true
             }
         }
 
         composable(
-            route = "${Routes.DISCOVER_RELEASE_GROUP}/{releaseGroupId}",
+            route = "${Routes.LOOKUP_RELEASE_GROUP}/{releaseGroupId}",
             arguments = listOf(
                 navArgument("releaseGroupId") {
                     type = NavType.StringType // Make argument type safe
@@ -167,7 +169,7 @@ internal fun NavigationGraph(
         }
 
         composable(
-            "${Routes.DISCOVER_RELEASE}/{releaseId}",
+            "${Routes.LOOKUP_RELEASE}/{releaseId}",
             arguments = listOf(
                 navArgument("releaseId") {
                     type = NavType.StringType // Make argument type safe

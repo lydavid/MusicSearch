@@ -50,7 +50,7 @@ fun NavigationDrawer(
             icon = Icons.Default.Search,
             iconDescription = "Navigate to search Music Brainz screen.",
             label = "Search MusicBrainz",
-            isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.DISCOVER
+            isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.SEARCH
         ) {
             Log.d("Remove This", "NavigationDrawer: clicked discover")
             closeDrawer()

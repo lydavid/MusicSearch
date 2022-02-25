@@ -7,11 +7,11 @@ class RoutesTest {
 
     @Test
     fun `get top-level route of top-level route`() {
-        assertEquals(Routes.DISCOVER, Routes.getTopLevelRoute(Routes.DISCOVER))
+        assertEquals(Routes.SEARCH, Routes.getTopLevelRoute(Routes.SEARCH))
     }
 
     @Test
     fun `get top-level route of non-top-level route`() {
-        assertEquals(Routes.DISCOVER, Routes.getTopLevelRoute(Routes.DISCOVER_ARTIST))
+        assertEquals(Routes.SEARCH, Routes.getTopLevelRoute(Routes.LOOKUP_ARTIST))
     }
 }

@@ -32,7 +32,7 @@ internal fun MainApp() {
 
         val coroutineScope = rememberCoroutineScope()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: Routes.DISCOVER
+        val currentRoute = navBackStackEntry?.destination?.route ?: Routes.SEARCH
 
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 

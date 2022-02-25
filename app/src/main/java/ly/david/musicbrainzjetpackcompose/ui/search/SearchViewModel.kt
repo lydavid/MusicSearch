@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.ui.discovery
+package ly.david.musicbrainzjetpackcompose.ui.search
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

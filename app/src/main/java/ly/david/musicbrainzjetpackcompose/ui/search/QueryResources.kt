@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.ui.discovery
+package ly.david.musicbrainzjetpackcompose.ui.search
 
 // area, artist, event, genre, instrument, label, place, recording, release, release-group, series, work, url
 enum class QueryResources(val displayText: String, val queryText: String) {
