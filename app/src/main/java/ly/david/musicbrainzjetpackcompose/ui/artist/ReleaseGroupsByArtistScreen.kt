@@ -24,7 +24,7 @@ import ly.david.musicbrainzjetpackcompose.common.getYear
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.data.sortAndGroupByTypes
-import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.common.UiState
@@ -41,6 +41,8 @@ fun ReleaseGroupsByArtistScreen(
 ) {
 
     // TODO: these seem to happen on ui thread? It can't load in background when user switches tabs
+    // TODO: something like this should be hoisted? don't have to do it now since we're changing to flow
+    //  but maybe hoist that flow
     val uiState by produceState(initialValue = UiState(isLoading = true)) {
         value = UiState(response = viewModel.getReleaseGroupsByArtist(artistId = artistId))
     }
@@ -101,7 +103,7 @@ private fun ReleaseGroupCard(
     releaseGroup: ReleaseGroup,
     onClick: (ReleaseGroup) -> Unit = {}
 ) {
-    ClickableCard(
+    ClickableListItem(
         onClick = { onClick(releaseGroup) },
     ) {
         Row(

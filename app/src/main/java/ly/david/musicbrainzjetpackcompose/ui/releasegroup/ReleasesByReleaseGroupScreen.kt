@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ly.david.musicbrainzjetpackcompose.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
-import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.common.UiState
@@ -91,7 +91,7 @@ private fun ReleaseCard(
     release: Release,
     onClick: (Release) -> Unit = {}
 ) {
-    ClickableCard(
+    ClickableListItem(
         onClick = { onClick(release) },
     ) {
         Row(

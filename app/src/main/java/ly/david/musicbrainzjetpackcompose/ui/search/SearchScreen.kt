@@ -31,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
@@ -39,7 +41,7 @@ import androidx.paging.compose.itemsIndexed
 import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
-import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
@@ -164,7 +166,7 @@ private fun ArtistCard(
     artist: Artist,
     onArtistClick: (Artist) -> Unit = {}
 ) {
-    ClickableCard(
+    ClickableListItem(
         onClick = { onArtistClick(artist) },
     ) {
         Column(
@@ -188,27 +190,39 @@ private fun ArtistCard(
     }
 }
 
-private val testArtist = Artist(
-    id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-    type = "Group",
-    typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
-    score = 77,
-    name = "Paracoccidioidomicosisproctitissarcomucosis paracoccidioidomicosisproctitissarcomucosisevenlonger",
-    sortName = "Tsukuyomi",
-    disambiguation = "blah, blah, blah, some really long text that forces wrapping",
-    country = "JP",
-    lifeSpan = LifeSpan(
-        begin = "2020-10-10"
+// region Previews
+
+class ArtistPreviewParameterProvider : PreviewParameterProvider<Artist> {
+    override val values = sequenceOf(
+        Artist(
+            id = "1",
+            name = "artist name",
+            sortName = "sort name should not be seen",
+        ),
+        Artist(
+            id = "2",
+            type = "Group",
+            typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
+            name = "wow, this artist name is so long it will wrap around the screen",
+            sortName = "sort name should not be seen",
+            disambiguation = "blah, blah, blah, some really long text that forces wrapping",
+            country = "JP",
+            lifeSpan = LifeSpan(
+                begin = "2020-10-10"
+            )
+        )
     )
-)
+}
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun ArtistCardPreview() {
+internal fun ArtistCardPreview(
+    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: Artist
+) {
     MusicBrainzJetpackComposeTheme {
         Surface {
-            ArtistCard(testArtist)
+            ArtistCard(artist)
         }
     }
 }
@@ -221,3 +235,4 @@ internal fun SearchScreenPreview() {
         SearchScreenScaffold()
     }
 }
+// endregion

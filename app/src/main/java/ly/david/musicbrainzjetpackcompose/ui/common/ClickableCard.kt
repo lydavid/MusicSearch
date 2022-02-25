@@ -12,21 +12,10 @@ import androidx.compose.ui.Modifier
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ClickableCard(
+fun ClickableListItem(
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp),
-//        shape = RoundedCornerShape(0.dp),
-//        onClick = onClick,
-//        elevation = 4.dp
-////        border = BorderStroke(1.dp, getSubBackgroundColor())
-//    ) {
-//        content()
-//    }
     ListItem(
         modifier = Modifier
             .clickable { onClick() }
@@ -35,5 +24,3 @@ fun ClickableCard(
         content()
     }
 }
-
-// TODO: ExpandableCard: has two content sections, one for always-show, one for expandable/collapsible

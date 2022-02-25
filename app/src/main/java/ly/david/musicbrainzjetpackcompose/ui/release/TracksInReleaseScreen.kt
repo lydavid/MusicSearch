@@ -30,7 +30,7 @@ import ly.david.musicbrainzjetpackcompose.data.Recording
 import ly.david.musicbrainzjetpackcompose.data.Track
 import ly.david.musicbrainzjetpackcompose.data.Work
 import ly.david.musicbrainzjetpackcompose.data.getDisplayNames
-import ly.david.musicbrainzjetpackcompose.ui.common.ClickableCard
+import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.StickyHeader
 import ly.david.musicbrainzjetpackcompose.ui.common.UiState
@@ -111,74 +111,46 @@ private fun TrackCard(
     // no onTrackClick needed since Tracks exists in the context of a Release
 ) {
 
-    var expanded by rememberSaveable { mutableStateOf(false) }
-
-    ClickableCard(
+    ClickableListItem(
         onClick = { onRecordingClick(track.recording.id) },
     ) {
-        Column(
+        Row(
             modifier = Modifier.padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+            Text(
+                text = track.number,
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            Column(
+                modifier = Modifier.weight(10f)
             ) {
                 Text(
-                    text = track.number,
-                    style = MaterialTheme.typography.body1,
-                    modifier = Modifier.weight(1f)
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-
-                Column(
-                    modifier = Modifier.weight(10f)
-                ) {
-                    Text(
-                        text = track.title,
-                        style = MaterialTheme.typography.h6,
+                    text = track.title,
+                    style = MaterialTheme.typography.h6,
 
                     )
-                    if (showTrackArtists) {
-//                    Spacer(modifier = Modifier.padding(4.dp))
-                        Text(
-                            modifier = Modifier.padding(top = 4.dp),
-                            style = MaterialTheme.typography.body1,
-                            text = track.artistCredits.getDisplayNames()
-                        )
-                    }
+                if (showTrackArtists) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = MaterialTheme.typography.body1,
+                        text = track.artistCredits.getDisplayNames()
+                    )
                 }
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Text(
-                    text = track.length.toDisplayTime(),
-                    style = MaterialTheme.typography.body2
-                )
             }
 
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//
-//
-//
-////                Spacer(modifier = Modifier.weight(1f))
-////
-////
-////                IconToggleButton(
-////                    checked = expanded,
-////                    onCheckedChange = {
-////                        expanded = it
-////                    }
-////                ) {
-////                    Icon(
-////                        if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-////                        contentDescription = if (expanded) "Click to collapse" else "click to expand",
-////                    )
-////                }
-//            }
+            Spacer(modifier = Modifier.weight(1f))
+
+            Text(
+                text = track.length.toDisplayTime(),
+                style = MaterialTheme.typography.body2
+            )
         }
 
-        // TODO: more content
+        // TODO: more content in new screen that expands, but maybe not cover the entire screen
     }
 }
 
