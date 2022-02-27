@@ -40,11 +40,12 @@ internal fun MainApp() {
         val onDrawerItemClick: (String) -> Unit = { route ->
             // TODO: compile-time safety? use enum?
             navController.navigate(route) {
-                // Top-level screens should use this to prevent selecting the same screen
+                // Top-level screens should use this to prevent selecting the same screen.
                 launchSingleTop = true
 
-                // Selecting a top-level screen should remove all backstack
+                // Selecting a top-level screen should remove all backstack.
                 popUpTo(navController.graph.findStartDestination().id) {
+                    // And it should not save the state of the previous screen.
                     saveState = false
                 }
             }

@@ -121,7 +121,6 @@ private fun TrackCard(
             Text(
                 text = track.number,
                 style = MaterialTheme.typography.body1,
-                modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.padding(4.dp))
 
@@ -164,7 +163,7 @@ private val testTrack = Track(
         video = false
     ),
     position = 1,
-    number = "A1",
+    number = "123",
     length = 253000,
     artistCredits = listOf(
         ArtistCredit(
