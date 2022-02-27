@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
+import androidx.paging.compose.items
 import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
@@ -103,7 +103,6 @@ private fun SearchScreen(
                                 // TODO: error
                                 Log.d("Remove This", "SearchScreen: can't be empty!!")
                             } else {
-//                                viewModel.query.value = text
                                 onSearch(text)
                                 state.scrollToItem(0)
                                 focusManager.clearFocus()
@@ -137,20 +136,8 @@ private fun SearchScreen(
         LazyColumn(
             state = state
         ) {
-//            item {
-//                val results = viewModel.totalFoundResults.value
-//                if (results != 0) {
-//                    Text(text = "Found $results results for \"${viewModel.queryString}\"")
-//                }
-//            }
-//
-//            items(viewModel.artists) { artist ->
-//                ArtistCard(artist = artist) {
-//                    onArtistClick(it)
-//                }
-//            }
-            itemsIndexed(pagingItems) { _, artist ->
-                if (artist == null) return@itemsIndexed
+            items(pagingItems) { artist ->
+                if (artist == null) return@items
                 ArtistCard(artist = artist) {
                     onArtistClick(it.id)
                 }
