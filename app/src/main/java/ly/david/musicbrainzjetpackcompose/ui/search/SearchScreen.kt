@@ -137,6 +137,7 @@ private fun SearchScreen(
             )
 
             // TODO: this doesn't fill rest of screen despite weight 1f
+            // TODO: focusing on this requires 1-2 additional backpresses to exit app
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
                 options = QueryResource.values().toList(),

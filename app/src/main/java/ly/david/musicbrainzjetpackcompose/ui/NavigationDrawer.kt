@@ -1,7 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.ui
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +33,7 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 fun NavigationDrawer(
     selectedRoute: String,
     closeDrawer: () -> Unit = {},
+    navigateToTopLevelRoute: (String) -> Unit = {}
 ) {
     Column {
 
@@ -52,7 +52,7 @@ fun NavigationDrawer(
             label = "Search MusicBrainz",
             isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.SEARCH
         ) {
-            Log.d("Remove This", "NavigationDrawer: clicked discover")
+            navigateToTopLevelRoute(Routes.SEARCH)
             closeDrawer()
         }
         NavigationDrawerItem(
@@ -61,7 +61,7 @@ fun NavigationDrawer(
             label = "Search History",
             isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.HISTORY
         ) {
-            Log.d("Remove This", "NavigationDrawer: clicked history")
+            navigateToTopLevelRoute(Routes.HISTORY)
             closeDrawer()
         }
     }

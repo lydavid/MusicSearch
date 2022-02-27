@@ -9,6 +9,7 @@ import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
@@ -36,11 +37,25 @@ internal fun MainApp() {
 
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
+        val onDrawerItemClick: (String) -> Unit = { route ->
+            // TODO: compile-time safety? use enum?
+            navController.navigate(route) {
+                // Top-level screens should use this to prevent selecting the same screen
+                launchSingleTop = true
+
+                // Selecting a top-level screen should remove all backstack
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = false
+                }
+            }
+        }
+
         ModalDrawer(
             drawerContent = {
                 NavigationDrawer(
                     selectedRoute = currentRoute,
-                    closeDrawer = { coroutineScope.launch { drawerState.close() } }
+                    closeDrawer = { coroutineScope.launch { drawerState.close() } },
+                    navigateToTopLevelRoute = onDrawerItemClick
                 )
             },
             drawerState = drawerState

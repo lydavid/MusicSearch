@@ -3,7 +3,6 @@ package ly.david.musicbrainzjetpackcompose.ui
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -12,6 +11,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.musicbrainzjetpackcompose.R
 import ly.david.musicbrainzjetpackcompose.ui.artist.ArtistScreenScaffold
+import ly.david.musicbrainzjetpackcompose.ui.history.HistoryScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.release.ReleaseScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.musicbrainzjetpackcompose.ui.search.SearchScreenScaffold
@@ -34,18 +34,6 @@ internal fun NavigationGraph(
         val onBack = {
             // Consume return value so that we don't have to specify Boolean return type when passing this function
             val consumed = navController.popBackStack()
-        }
-
-        val onHomeClick: () -> Unit = {
-            navController.navigate(Routes.SEARCH) {
-                // Top-level screens should use this to prevent selecting the same screen
-                launchSingleTop = true
-
-                // Selecting a top-level screen should remove all backstack
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-            }
         }
 
         val onArtistClick: (String) -> Unit = { artistId ->
@@ -143,6 +131,14 @@ internal fun NavigationGraph(
             ) {
                 Log.d("Remove This", "NavigationGraph: Clicked recording with id=${it}")
             }
+        }
+
+        composable(
+            Routes.HISTORY
+        ) {
+            HistoryScreenScaffold(
+                openDrawer = openDrawer,
+            )
         }
     }
 }
