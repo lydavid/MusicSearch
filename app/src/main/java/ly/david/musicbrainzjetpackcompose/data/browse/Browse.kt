@@ -4,7 +4,6 @@ import com.squareup.moshi.Json
 import ly.david.musicbrainzjetpackcompose.data.Recording
 import ly.david.musicbrainzjetpackcompose.data.Release
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
-import ly.david.musicbrainzjetpackcompose.preferences.MAX_BROWSE_LIMIT
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -20,14 +19,14 @@ interface Browse {
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
         @Query("artist") artistId: String,
-        @Query("limit") limit: Int = MAX_BROWSE_LIMIT,
+        @Query("limit") limit: Int,
         @Query("offset") offset: Int = 0
     ): BrowseReleaseGroupsResponse
 
     @GET("release")
     suspend fun browseReleasesByReleaseGroup(
         @Query("release-group") releaseGroupId: String,
-        @Query("limit") limit: Int = MAX_BROWSE_LIMIT,
+        @Query("limit") limit: Int,
         @Query("offset") offset: Int = 0,
         @Query("inc") include: String = "artist-credits+labels+media"
     ): BrowseReleasesResponse
@@ -35,7 +34,7 @@ interface Browse {
     @GET("recording")
     suspend fun browseRecordingsByRelease(
         @Query("release") releaseId: String,
-        @Query("limit") limit: Int = MAX_BROWSE_LIMIT,
+        @Query("limit") limit: Int,
         @Query("offset") offset: Int = 0
     ): BrowseRecordingsResponse
 }
