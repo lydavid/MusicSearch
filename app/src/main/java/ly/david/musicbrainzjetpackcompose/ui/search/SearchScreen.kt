@@ -44,6 +44,7 @@ import ly.david.musicbrainzjetpackcompose.data.LifeSpan
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.musicbrainzjetpackcompose.ui.theme.getAlertBackgroundColor
 import ly.david.musicbrainzjetpackcompose.ui.theme.getSubTextColor
 
 @Composable
@@ -87,6 +88,7 @@ private fun SearchScreen(
     if (showAlertDialog) {
         AlertDialog(
             title = { Text("Search cannot be empty") },
+            backgroundColor = getAlertBackgroundColor(),
             onDismissRequest = {
                 showAlertDialog = false
             },
