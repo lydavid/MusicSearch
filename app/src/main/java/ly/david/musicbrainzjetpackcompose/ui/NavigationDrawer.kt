@@ -31,9 +31,9 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 
 @Composable
 fun NavigationDrawer(
-    selectedRoute: String,
+    selectedTopLevelDestination: Destination,
     closeDrawer: () -> Unit = {},
-    navigateToTopLevelRoute: (String) -> Unit = {}
+    navigateToTopLevelDestination: (Destination) -> Unit = {}
 ) {
     Column {
 
@@ -50,18 +50,18 @@ fun NavigationDrawer(
             icon = Icons.Default.Search,
             iconDescription = "Navigate to search Music Brainz screen.",
             label = "Search MusicBrainz",
-            isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.SEARCH
+            isSelected = selectedTopLevelDestination == Destination.LOOKUP
         ) {
-            navigateToTopLevelRoute(Routes.SEARCH)
+            navigateToTopLevelDestination(Destination.LOOKUP)
             closeDrawer()
         }
         NavigationDrawerItem(
             icon = Icons.Default.History,
             iconDescription = "Navigate to search history screen.",
             label = "Search History",
-            isSelected = Routes.getTopLevelRoute(selectedRoute) == Routes.HISTORY
+            isSelected = selectedTopLevelDestination == Destination.HISTORY
         ) {
-            navigateToTopLevelRoute(Routes.HISTORY)
+            navigateToTopLevelDestination(Destination.HISTORY)
             closeDrawer()
         }
     }
@@ -117,7 +117,7 @@ fun NavigationDrawerItem(
 internal fun NavigationDrawerPreview() {
     MusicBrainzJetpackComposeTheme {
         Surface {
-            NavigationDrawer(selectedRoute = Routes.HISTORY)
+            NavigationDrawer(selectedTopLevelDestination = Destination.HISTORY)
         }
     }
 }

@@ -28,7 +28,7 @@ internal fun NavigationGraph(
 
     NavHost(
         navController = navController,
-        startDestination = Routes.SEARCH,
+        startDestination = Destination.LOOKUP.route,
     ) {
 
         val onBack = {
@@ -37,12 +37,12 @@ internal fun NavigationGraph(
         }
 
         val onArtistClick: (String) -> Unit = { artistId ->
-            navController.navigate("${Routes.LOOKUP_ARTIST}/$artistId") {
+            navController.navigate("${Destination.LOOKUP_ARTIST.route}/$artistId") {
                 restoreState = true
             }
         }
 
-        composable(Routes.SEARCH) {
+        composable(Destination.LOOKUP.route) {
             SearchScreenScaffold(
                 openDrawer = openDrawer,
                 onArtistClick = onArtistClick
@@ -50,7 +50,7 @@ internal fun NavigationGraph(
         }
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("${Routes.LOOKUP_RELEASE_GROUP}/$releaseGroupId") {
+            navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId") {
                 // TODO: This let us return to this screen in the same position, but doesn't prevent another api all
                 //  since we're always calling at start
                 restoreState = true
@@ -59,7 +59,7 @@ internal fun NavigationGraph(
 
         // TODO: use id, and update title from response
         composable(
-            route = "${Routes.LOOKUP_ARTIST}/{artistId}",
+            route = "${Destination.LOOKUP_ARTIST.route}/{artistId}",
             arguments = listOf(
                 navArgument("artistId") {
                     type = NavType.StringType // Make argument type safe
@@ -83,13 +83,13 @@ internal fun NavigationGraph(
         //  together with a string/enum for route, we can navigate to appropriate screen
         //  Then we can pass that to history/drawer
         val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("${Routes.LOOKUP_RELEASE}/$releaseId") {
+            navController.navigate("${Destination.LOOKUP_RELEASE.route}/$releaseId") {
                 restoreState = true
             }
         }
 
         composable(
-            route = "${Routes.LOOKUP_RELEASE_GROUP}/{releaseGroupId}",
+            route = "${Destination.LOOKUP_RELEASE_GROUP.route}/{releaseGroupId}",
             arguments = listOf(
                 navArgument("releaseGroupId") {
                     type = NavType.StringType // Make argument type safe
@@ -111,7 +111,7 @@ internal fun NavigationGraph(
         }
 
         composable(
-            "${Routes.LOOKUP_RELEASE}/{releaseId}",
+            "${Destination.LOOKUP_RELEASE.route}/{releaseId}",
             arguments = listOf(
                 navArgument("releaseId") {
                     type = NavType.StringType // Make argument type safe
@@ -134,7 +134,7 @@ internal fun NavigationGraph(
         }
 
         composable(
-            Routes.HISTORY
+            Destination.HISTORY.route
         ) {
             HistoryScreenScaffold(
                 openDrawer = openDrawer,

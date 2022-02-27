@@ -33,13 +33,15 @@ internal fun MainApp() {
 
         val coroutineScope = rememberCoroutineScope()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: Routes.SEARCH
+
+        // Note that destination?.route includes parameters such as artistId
+        val currentRoute = navBackStackEntry?.destination?.route ?: Destination.LOOKUP.route
+        val currentTopLevelDestination: Destination = currentRoute.getTopLevelRoute().getTopLevelDestination()
 
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-        val onDrawerItemClick: (String) -> Unit = { route ->
-            // TODO: compile-time safety? use enum?
-            navController.navigate(route) {
+        val onTopLevelDestinationClick: (Destination) -> Unit = { topLevelDestination ->
+            navController.navigate(topLevelDestination.name) {
                 // Top-level screens should use this to prevent selecting the same screen.
                 launchSingleTop = true
 
@@ -54,9 +56,9 @@ internal fun MainApp() {
         ModalDrawer(
             drawerContent = {
                 NavigationDrawer(
-                    selectedRoute = currentRoute,
+                    selectedTopLevelDestination = currentTopLevelDestination,
                     closeDrawer = { coroutineScope.launch { drawerState.close() } },
-                    navigateToTopLevelRoute = onDrawerItemClick
+                    navigateToTopLevelDestination = onTopLevelDestinationClick
                 )
             },
             drawerState = drawerState
