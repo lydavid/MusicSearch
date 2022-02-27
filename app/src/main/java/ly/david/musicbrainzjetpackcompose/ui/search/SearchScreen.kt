@@ -1,7 +1,6 @@
 package ly.david.musicbrainzjetpackcompose.ui.search
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,18 +11,19 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -78,11 +78,25 @@ private fun SearchScreen(
     onArtistClick: (String) -> Unit = {}
 ) {
     var text by rememberSaveable { mutableStateOf("") }
-    var selectedOption by remember { mutableStateOf(QueryResource.ARTIST) }
-
+    var selectedOption by rememberSaveable { mutableStateOf(QueryResource.ARTIST) }
     val focusManager = LocalFocusManager.current
-
     val coroutineScope = rememberCoroutineScope()
+    var showAlertDialog by rememberSaveable { mutableStateOf(false) }
+
+    // TODO: extract & generalize
+    if (showAlertDialog) {
+        AlertDialog(
+            title = { Text("Search cannot be empty") },
+            onDismissRequest = {
+                showAlertDialog = false
+            },
+            confirmButton = {
+                TextButton(onClick = { showAlertDialog = false }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
 
     Column {
         Row(
@@ -100,8 +114,7 @@ private fun SearchScreen(
                     onSearch = {
                         coroutineScope.launch {
                             if (text.isEmpty()) {
-                                // TODO: error
-                                Log.d("Remove This", "SearchScreen: can't be empty!!")
+                                showAlertDialog = true
                             } else {
                                 onSearch(text)
                                 state.scrollToItem(0)
@@ -131,7 +144,6 @@ private fun SearchScreen(
                 }
             )
         }
-
 
         LazyColumn(
             state = state
