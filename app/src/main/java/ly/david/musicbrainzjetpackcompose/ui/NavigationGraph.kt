@@ -37,6 +37,7 @@ internal fun NavigationGraph(
         }
 
         val onArtistClick: (String) -> Unit = { artistId ->
+            // TODO: these should be built by Destination
             navController.navigate("${Destination.LOOKUP_ARTIST.route}/$artistId") {
                 restoreState = true
             }
@@ -51,13 +52,10 @@ internal fun NavigationGraph(
 
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
             navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId") {
-                // TODO: This let us return to this screen in the same position, but doesn't prevent another api all
-                //  since we're always calling at start
                 restoreState = true
             }
         }
 
-        // TODO: use id, and update title from response
         composable(
             route = "${Destination.LOOKUP_ARTIST.route}/{artistId}",
             arguments = listOf(
@@ -133,11 +131,23 @@ internal fun NavigationGraph(
             }
         }
 
+        val onHistoryItemClick: (Destination, String) -> Unit = { destination, id ->
+            when (destination) {
+                Destination.LOOKUP_ARTIST -> onArtistClick(id)
+                Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
+                Destination.LOOKUP_RELEASE -> onReleaseClick(id)
+                else -> {
+                    // Not supported.
+                }
+            }
+        }
+
         composable(
             Destination.HISTORY.route
         ) {
             HistoryScreenScaffold(
                 openDrawer = openDrawer,
+                onItemClick = onHistoryItemClick
             )
         }
     }

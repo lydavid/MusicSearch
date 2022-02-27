@@ -20,7 +20,7 @@ import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeThem
 
 @Composable
 internal fun HistoryScreenScaffold(
-    onItemClick: (id: String) -> Unit = {},
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     openDrawer: () -> Unit = {},
 ) {
 
@@ -49,18 +49,26 @@ val testData = listOf(
             "Release by 月詠み",
         Destination.LOOKUP_RELEASE,
         "165f6643-2edb-4795-9abe-26bd0533e59d"
+    ),
+    HistoricalRecord(
+        "Viewed 月詠み",
+        Destination.LOOKUP_ARTIST,
+        "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
     )
 )
 
 @Composable
 fun HistoryScreen(
-    onItemClick: (id: String) -> Unit = {},
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     viewModel: HistoryViewModel = viewModel()
 ) {
 
     LazyColumn {
         items(testData) {
-            HistoryEntry(historicalRecord = it)
+            HistoryEntry(
+                historicalRecord = it,
+                onItemClick = onItemClick
+            )
         }
     }
 }
@@ -68,13 +76,11 @@ fun HistoryScreen(
 @Composable
 private fun HistoryEntry(
     historicalRecord: HistoricalRecord,
-//    route: String,
-//    id: String,
-    onItemClick: (route: String, id: String) -> Unit = { _, _ -> }
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
     ClickableListItem(
         onClick = {
-            // TODO: depending on route, go to it with id
+            onItemClick(historicalRecord.destination, historicalRecord.id)
         },
     ) {
         Column(
