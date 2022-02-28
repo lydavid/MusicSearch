@@ -18,5 +18,5 @@
 .cxx
 local.properties
 
-/captures
-/examples
+# Includes example screenshots, example json responses, and app release keystore
+/ignore-folder
