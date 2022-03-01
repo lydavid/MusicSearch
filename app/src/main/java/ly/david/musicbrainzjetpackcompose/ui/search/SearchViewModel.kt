@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicbrainzjetpackcompose.data.Artist
@@ -32,5 +33,7 @@ internal class SearchViewModel : ViewModel() {
                         SearchArtistsPagingSource(queryString = query)
                     }
                 ).flow
-            }.cachedIn(viewModelScope)
+            }
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
 }

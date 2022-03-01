@@ -33,14 +33,16 @@ class SearchArtistsPagingSource(
         if (currentOffset != STARTING_OFFSET) {
             delay(DELAY_PAGED_API_CALLS_MS)
         }
+
+        val limit = params.loadSize
         return try {
             val response = musicBrainzApiService.queryArtists(
                 query = queryString,
                 offset = currentOffset,
-                limit = params.loadSize
+                limit = limit
             )
             val artists = response.artists
-            val nextOffset = if (artists.isEmpty()) {
+            val nextOffset = if (artists.size < limit) {
                 null
             } else {
                 currentOffset + artists.size
