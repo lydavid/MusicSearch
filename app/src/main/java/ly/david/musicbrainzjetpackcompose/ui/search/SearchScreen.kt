@@ -24,10 +24,13 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,6 +84,7 @@ private fun SearchScreen(
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by rememberSaveable { mutableStateOf(QueryResource.ARTIST) }
     val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
     var showAlertDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -105,7 +109,9 @@ private fun SearchScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             TextField(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .focusRequester(focusRequester),
                 value = text,
                 label = { Text("Search") },
                 placeholder = { Text("Search") },
@@ -127,7 +133,10 @@ private fun SearchScreen(
                 ),
                 trailingIcon = {
                     if (text.isEmpty()) return@TextField
-                    IconButton(onClick = { text = "" }) {
+                    IconButton(onClick = {
+                        text = ""
+                        focusRequester.requestFocus()
+                    }) {
                         Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
                     }
                 },
