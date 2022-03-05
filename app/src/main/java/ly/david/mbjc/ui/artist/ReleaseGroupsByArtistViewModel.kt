@@ -1,14 +1,23 @@
 package ly.david.mbjc.ui.artist
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.MusicBrainzApiService
 import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.ReleaseGroupArtist
+import ly.david.mbjc.data.ReleaseGroupArtistDao
+import ly.david.mbjc.data.ReleaseGroupDao
 import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT
 
 // TODO: Let's have one viewmodel for each tab, they should stay alive
-class ReleaseGroupsByArtistViewModel : ViewModel() {
+@HiltViewModel
+class ReleaseGroupsByArtistViewModel @Inject constructor(
+    private val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupArtistDao: ReleaseGroupArtistDao
+) : ViewModel() {
 
     private val musicBrainzApiService by lazy {
         MusicBrainzApiService.create()
@@ -49,9 +58,14 @@ class ReleaseGroupsByArtistViewModel : ViewModel() {
             )
         } else {
             initialized = true
+            // TODO: Should we insert all?
+            //  Probably, so that next time, we can fetch from database instead
+            releaseGroupDao.insertAll(allReleaseGroups)
+            releaseGroupArtistDao.insertAll(
+                allReleaseGroups.map { ReleaseGroupArtist(releaseGroupId = it.id, artistId = artistId) }
+            )
             allReleaseGroups
         }
     }
-
 
 }

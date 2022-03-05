@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("ly.david.musicbrainzjetpackcompose", appContext.packageName)
+        assertEquals("ly.david.mbjc", appContext.packageName)
     }
 }

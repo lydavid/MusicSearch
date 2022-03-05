@@ -1,29 +1,73 @@
 package ly.david.mbjc.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
+@Entity(
+    tableName = "artists",
+    indices = [
+        Index(value = ["id"], unique = true)
+    ],
+//    foreignKeys = []
+)
 data class Artist(
-    @Json(name = "id") val id: String,
 
-    @Json(name = "name") val name: String,
-    @Json(name = "sort-name") val sortName: String,
-    @Json(name = "disambiguation") val disambiguation: String? = null,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @Json(name = "id")
+    val id: String,
 
-    @Json(name = "type") val type: String? = null,
-    @Json(name = "type-id") val typeId: String? = null,
+    @ColumnInfo(name = "name")
+    @Json(name = "name")
+    val name: String = "",
+    @ColumnInfo(name = "sort-name")
+    @Json(name = "sort-name")
+    val sortName: String = "",
+    @ColumnInfo(name = "disambiguation")
+    @Json(name = "disambiguation")
+    val disambiguation: String? = null,
 
-    @Json(name = "gender") val gender: String? = null,
-    @Json(name = "gender-id") val genderId: String? = null,
+    @ColumnInfo(name = "type")
+    @Json(name = "type")
+    val type: String? = null,
+    @ColumnInfo(name = "type-id")
+    @Json(name = "type-id")
+    val typeId: String? = null,
 
-    @Json(name = "country") val country: String? = null,
+    @ColumnInfo(name = "gender")
+    @Json(name = "gender")
+    val gender: String? = null,
+    @ColumnInfo(name = "gender-id")
+    @Json(name = "gender-id")
+    val genderId: String? = null,
 
+    @ColumnInfo(name = "country")
+    @Json(name = "country")
+    val country: String? = null,
+
+    // Allow nested fields to be part of this Room table. Good for data that doesn't require its own table.
+    @Embedded
     @Json(name = "life-span") val lifeSpan: LifeSpan? = null,
 
     // for search responses only
-    @Json(name = "score") val score: Int? = null,
+    @ColumnInfo(name = "score")
+    @Json(name = "score")
+    val score: Int? = null,
 )
 
 data class LifeSpan(
-    @Json(name = "begin") val begin: String? = null,
-    @Json(name = "ended") val ended: Boolean? = null
+    @ColumnInfo(name = "begin")
+    @Json(name = "begin")
+    val begin: String? = null,
+    @ColumnInfo(name = "ended")
+    @Json(name = "ended")
+    val ended: Boolean? = null
 )
+
+fun Artist.getNameWithDisambiguation(): String =
+    name + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }

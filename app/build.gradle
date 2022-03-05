@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "kotlin-kapt"
+    id 'dagger.hilt.android.plugin'
 }
 
 // https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
@@ -93,6 +95,19 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
+
+    // Room
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.2"
+    androidTestImplementation "androidx.room:room-testing:2.4.2"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.40.5"
+    kapt "com.google.dagger:hilt-compiler:2.40.5"
+//    implementation "androidx.hilt:hilt-work:1.0.0"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
 
 //    implementation("io.coil-kt:coil-compose:1.4.0")
 

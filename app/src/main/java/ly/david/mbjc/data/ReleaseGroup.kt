@@ -1,33 +1,86 @@
 package ly.david.mbjc.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import ly.david.mbjc.preferences.NO_TYPE
 
+// Do this if we need a many-to-many relationship.
+// For 1-to-many, we can have a field to reference another entity's id.
+/**
+ * An [Artist] for a [ReleaseGroup].
+ * A release group can have many artists. An artist can have many release groups.
+ */
+@Entity(
+    tableName = "release_groups_artists",
+    primaryKeys = ["release_group_id", "artist_id"]
+)
+data class ReleaseGroupArtist(
+    @ColumnInfo(name = "release_group_id")
+    val releaseGroupId: String,
+
+    @ColumnInfo(name = "artist_id")
+    val artistId: String,
+)
+
+@Entity(
+    tableName = "release_groups",
+    indices = [
+        Index(value = ["id"], unique = true)
+    ],
+//    foreignKeys = []
+)
 data class ReleaseGroup(
-    @Json(name = "id") val id: String,
-    @Json(name = "title") val title: String,
-    @Json(name = "first-release-date") val firstReleaseDate: String,
-    @Json(name = "disambiguation") val disambiguation: String = "",
+
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @Json(name = "id")
+    val id: String,
+    @ColumnInfo(name = "title")
+    @Json(name = "title")
+    val title: String = "",
+    @ColumnInfo(name = "first-release-date")
+    @Json(name = "first-release-date")
+    val firstReleaseDate: String = "",
+    @ColumnInfo(name = "disambiguation")
+    @Json(name = "disambiguation")
+    val disambiguation: String = "",
 
     // album, single, ep, other
-    @Json(name = "primary-type") val primaryType: String? = null,
-    @Json(name = "primary-type-id") val primaryTypeId: String? = null,
+    @ColumnInfo(name = "primary-type")
+    @Json(name = "primary-type")
+    val primaryType: String? = null,
+    @ColumnInfo(name = "primary-type-id")
+    @Json(name = "primary-type-id")
+    val primaryTypeId: String? = null,
 
+    // TODO: List<String> can be type converted to String separated by , and back
     // audio drama, audiobook, broadcast, compilation, dj-mix, interview, live, mixtape/street, remix, soundtrack, spokenword
-    @Json(name = "secondary-types") val secondaryTypes: List<String>? = null,
-    @Json(name = "secondary-type-ids") val secondaryTypeIds: List<String>? = null,
+    @ColumnInfo(name = "secondary-types")
+    @Json(name = "secondary-types")
+    val secondaryTypes: List<String>? = null,
+    @ColumnInfo(name = "secondary-type-ids")
+    @Json(name = "secondary-type-ids")
+    val secondaryTypeIds: List<String>? = null,
 
+    // TODO: can we 1-to-many relationship this? possibly embed  name/joinphrase, and reference list of artist id?
     // inc=artists
-    @Json(name = "artist-credit") val artistCredits: List<ArtistCredit>? = null,
-
-    // inc=label
-    @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
-
-    // inc=media
-    @Json(name = "media") val media: List<Medium>? = null,
-
-    // lookup only, inc=releases
-    @Json(name = "releases") val releases: List<Release>? = null,
+//    @Json(name = "artist-credit")
+//    val artistCredits: List<ArtistCredit>? = null,
+//
+//    // inc=label
+//    @Json(name = "label-info")
+//    val labelInfoList: List<LabelInfo>? = null,
+//
+//    // inc=media
+//    @Json(name = "media")
+//    val media: List<Medium>? = null,
+//
+//    // lookup only, inc=releases
+//    @Json(name = "releases")
+//    val releases: List<Release>? = null,
 )
 
 /**

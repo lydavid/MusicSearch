@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ly.david.mbjc.data.LookupHistory
 import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
@@ -31,29 +32,29 @@ internal fun HistoryScreenScaffold(
     }
 }
 
-data class HistoricalRecord(
-    val summary: String,
-    val destination: Destination,
-    val id: String,
-    val numberOfVisits: Int = 0
-)
+//data class HistoricalRecord(
+//    val summary: String,
+//    val destination: Destination,
+//    val id: String,
+//    val numberOfVisits: Int = 0
+//)
 
 val testData = listOf(
-    HistoricalRecord(
-        "Viewed 欠けた心象、世のよすが\nRelease Group by 月詠み",
-        Destination.LOOKUP_RELEASE_GROUP,
-        "81d75493-78b6-4a37-b5ae-2a3918ee3756"
+    LookupHistory(
+        summary = "Viewed 欠けた心象、世のよすが\nRelease Group by 月詠み",
+        destination = Destination.LOOKUP_RELEASE_GROUP,
+        mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756"
     ),
-    HistoricalRecord(
-        "Viewed 欠けた心象、世のよすが\n" +
+    LookupHistory(
+        summary = "Viewed 欠けた心象、世のよすが\n" +
             "Release by 月詠み",
-        Destination.LOOKUP_RELEASE,
-        "165f6643-2edb-4795-9abe-26bd0533e59d"
+        destination = Destination.LOOKUP_RELEASE,
+        mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
     ),
-    HistoricalRecord(
-        "Viewed 月詠み",
-        Destination.LOOKUP_ARTIST,
-        "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
+    LookupHistory(
+        summary = "Viewed 月詠み",
+        destination = Destination.LOOKUP_ARTIST,
+        mbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
     )
 )
 
@@ -66,7 +67,7 @@ fun HistoryScreen(
     LazyColumn {
         items(testData) {
             HistoryEntry(
-                historicalRecord = it,
+                lookupHistory = it,
                 onItemClick = onItemClick
             )
         }
@@ -75,12 +76,12 @@ fun HistoryScreen(
 
 @Composable
 private fun HistoryEntry(
-    historicalRecord: HistoricalRecord,
+    lookupHistory: LookupHistory,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
     ClickableListItem(
         onClick = {
-            onItemClick(historicalRecord.destination, historicalRecord.id)
+            onItemClick(lookupHistory.destination, lookupHistory.mbid)
         },
     ) {
         Column(
@@ -88,7 +89,7 @@ private fun HistoryEntry(
         ) {
 
             Text(
-                text = historicalRecord.summary,
+                text = lookupHistory.summary,
                 modifier = Modifier.fillMaxWidth()
             )
         }

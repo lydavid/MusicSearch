@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.sortAndGroupByTypes
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -37,7 +37,7 @@ fun ReleaseGroupsByArtistScreen(
     artistId: String,
     state: LazyListState,
     onReleaseGroupClick: (String) -> Unit = {},
-    viewModel: ReleaseGroupsByArtistViewModel = viewModel()
+    viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
 
     // TODO: these seem to happen on ui thread? It can't load in background when user switches tabs
@@ -50,8 +50,6 @@ fun ReleaseGroupsByArtistScreen(
     when {
         uiState.response != null -> {
             uiState.response?.let { response ->
-
-                // TODO: update title with artist name, disam, and type such as Group, Person
 
                 LazyColumn(
                     state = state,
