@@ -13,6 +13,11 @@ import ly.david.mbjc.data.MusicBrainzResource
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.lookupInBrowser
 
+private enum class ReleaseGroupTab(val title: String) {
+    OVERVIEW("Overview"),
+    RELEASES("Releases"),
+}
+
 /**
  * Equivalent of a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
  *
@@ -27,6 +32,7 @@ fun ReleaseGroupScreenScaffold(
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
+    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.OVERVIEW) }
     val context = LocalContext.current
 
     Scaffold(
@@ -38,17 +44,34 @@ fun ReleaseGroupScreenScaffold(
                 openInBrowser = {
                     context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
                 },
+                tabsTitle = ReleaseGroupTab.values().map { it.title },
+                selectedTabIndex = selectedTab.ordinal,
+                onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] }
             )
         },
     ) { innerPadding ->
-        ReleasesByReleaseGroupScreen(
-            modifier = Modifier.padding(innerPadding),
-            releaseGroupId = releaseGroupId,
-            onTitleUpdate = { title, subtitle ->
-                titleState = title
-                subtitleState = subtitle
-            },
-            onReleaseClick = onReleaseClick
-        )
+
+        when (selectedTab) {
+            ReleaseGroupTab.OVERVIEW -> {
+                ReleaseGroupOverviewScreen(
+                    releaseGroupId = releaseGroupId,
+                    onTitleUpdate = { title, subtitle ->
+                        titleState = title
+                        subtitleState = subtitle
+                    },
+                )
+            }
+            ReleaseGroupTab.RELEASES -> {
+                ReleasesByReleaseGroupScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    releaseGroupId = releaseGroupId,
+//                    onTitleUpdate = { title, subtitle ->
+//                        titleState = title
+//                        subtitleState = subtitle
+//                    },
+                    onReleaseClick = onReleaseClick
+                )
+            }
+        }
     }
 }

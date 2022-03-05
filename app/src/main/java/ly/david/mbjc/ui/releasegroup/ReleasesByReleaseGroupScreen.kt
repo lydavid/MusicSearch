@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,13 +20,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.mbjc.ui.common.toDate
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.StickyHeader
 import ly.david.mbjc.ui.common.UiState
+import ly.david.mbjc.ui.common.toDate
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.mbjc.ui.theme.getSubTextColor
 
@@ -34,9 +34,8 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
     releaseGroupId: String,
-    onTitleUpdate: (title: String, subtitle: String) -> Unit,
     onReleaseClick: (String) -> Unit = {},
-    viewModel: ReleaseGroupViewModel = viewModel()
+    viewModel: ReleasesByReleaseGroupViewModel = viewModel()
 ) {
     val uiState by produceState(initialValue = UiState(isLoading = true)) {
         value = UiState(response = viewModel.getReleasesByReleaseGroup(releaseGroupId))
@@ -45,14 +44,6 @@ fun ReleasesByReleaseGroupScreen(
     when {
         uiState.response != null -> {
             uiState.response?.let { releases ->
-
-                onTitleUpdate(
-                    releases.first().title, // TODO: include disambiguation, will need lookup though...
-                    // We can have this screen first just do a lookup of the release group with some info
-                    //  maybe have a button at the bottom to view all releases in the release group (if there are 25 releases, we will show it)
-                    //  we can get some info for some of the other tabs too
-                    "Release Group by ${releases.first().artistCredits.getDisplayNames()}"
-                )
 
                 LazyColumn(
                     modifier = modifier
@@ -150,7 +141,9 @@ private val testRelease = Release(
 @Composable
 internal fun ReleaseCardPreview() {
     MusicBrainzJetpackComposeTheme {
-        ReleaseCard(testRelease)
+        Surface {
+            ReleaseCard(testRelease)
+        }
     }
 }
 
@@ -165,6 +158,8 @@ private val testRelease2 = Release(
 @Composable
 internal fun ReleaseCardWithoutYearPreview() {
     MusicBrainzJetpackComposeTheme {
-        ReleaseCard(testRelease2)
+        Surface {
+            ReleaseCard(testRelease2)
+        }
     }
 }

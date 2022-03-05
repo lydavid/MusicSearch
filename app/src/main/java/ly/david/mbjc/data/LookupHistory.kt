@@ -2,6 +2,7 @@ package ly.david.mbjc.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.Date
 import ly.david.mbjc.ui.Destination
@@ -17,7 +18,8 @@ import ly.david.mbjc.ui.Destination
  * We can use this to let them deeplink back to this screen.
  */
 @Entity(
-    tableName = "lookup_history"
+    tableName = "lookup_history",
+    indices = [Index(value = ["mbid"], unique = true)]
 )
 data class LookupHistory(
     @PrimaryKey(autoGenerate = true)
@@ -35,7 +37,7 @@ data class LookupHistory(
     val mbid: String,
 
     @ColumnInfo(name = "number_of_visits")
-    val numberOfVisits: Int = 0,
+    val numberOfVisits: Int = 1,
 
     @ColumnInfo(name = "last_accessed")
     val lastAccessed: Date = Date()

@@ -9,7 +9,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
 import dagger.Module
@@ -19,44 +18,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.Date
 import javax.inject.Singleton
-import ly.david.mbjc.ui.Destination
-
-// Just need to make sure possible values cannot include this delimiter
-private const val DELIMITER = ","
-
-class MusicBrainzTypeConverters {
-
-    // For things like "secondary-types" which does not need its own table.
-    @TypeConverter
-    fun toString(strings: List<String>?): String? {
-        return strings?.joinToString(DELIMITER)
-    }
-
-    @TypeConverter
-    fun fromString(string: String?): List<String>? {
-        return string?.split(DELIMITER)
-    }
-
-    @TypeConverter
-    fun toDestination(string: String?): Destination? {
-        return Destination.values().firstOrNull { it.route == string }
-    }
-
-    @TypeConverter
-    fun fromDestination(destination: Destination?): String? {
-        return destination?.route
-    }
-
-    @TypeConverter
-    fun toDate(dateLong: Long): Date {
-        return Date(dateLong)
-    }
-
-    @TypeConverter
-    fun fromDate(date: Date): Long {
-        return date.time
-    }
-}
 
 @Database(
     entities = [
@@ -65,7 +26,7 @@ class MusicBrainzTypeConverters {
         LookupHistory::class
     ],
     views = [],
-    version = 8
+    version = 9
 )
 @TypeConverters(MusicBrainzTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
@@ -75,6 +36,22 @@ abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
+}
+
+private const val DATABASE_NAME = "mbjc.db"
+
+@InstallIn(SingletonComponent::class)
+@Module
+object DatabaseModule {
+    @Singleton
+    @Provides
+    fun provideDatabase(
+        @ApplicationContext context: Context
+    ): MusicBrainzRoomDatabase {
+        return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 }
 
 interface BaseDao<in T> {
@@ -108,28 +85,27 @@ abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtist>
 @Dao
 abstract class LookupHistoryDao : BaseDao<LookupHistory> {
 
-    // TODO: order by last accessed date
-    @Query("SELECT * from lookup_history order by last_accessed")
+    @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")
     abstract suspend fun getAllLookupHistory(): List<LookupHistory>
 
-    // TODO: allow updating last visited count, should also update last accessed
-    // https://stackoverflow.com/a/50694690
+    @Query(
+        """
+        UPDATE lookup_history 
+        SET number_of_visits = number_of_visits + 1,
+            last_accessed = :lastAccessed
+        WHERE mbid = :mbid
+        """
+    )
+    abstract suspend fun incrementVisitAndDateAccessed(mbid: String, lastAccessed: Date = Date()): Int
 
-}
-
-private const val DATABASE_NAME = "mbjc.db"
-
-@InstallIn(SingletonComponent::class)
-@Module
-object DatabaseModule {
-    @Singleton
-    @Provides
-    fun provideDatabase(
-        @ApplicationContext context: Context
-    ): MusicBrainzRoomDatabase {
-        return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
+    /**
+     *
+     */
+    suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistory) {
+        val numUpdated = incrementVisitAndDateAccessed(lookupHistory.mbid)
+        if (numUpdated == 0) {
+            insert(lookupHistory)
+        }
     }
 }
 

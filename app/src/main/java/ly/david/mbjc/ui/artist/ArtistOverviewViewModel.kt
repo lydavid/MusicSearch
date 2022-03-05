@@ -26,17 +26,17 @@ class ArtistOverviewViewModel @Inject constructor(
     suspend fun lookupArtist(artistId: String): Artist =
         artist ?: musicBrainzApiService.lookupArtist(artistId).also {
             artistDao.insert(it)
-            addToHistory(it)
+            incrementOrInsertLookupHistory(it)
             artist = it
         }
 
-    private suspend fun addToHistory(artist: Artist) {
-        lookupHistoryDao.insert(
+    // TODO: see if we can generalize
+    private suspend fun incrementOrInsertLookupHistory(artist: Artist) {
+        lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
                 summary = artist.getNameWithDisambiguation(),
                 destination = Destination.LOOKUP_ARTIST,
-                mbid = artist.id,
-                numberOfVisits = 1
+                mbid = artist.id
             )
         )
     }

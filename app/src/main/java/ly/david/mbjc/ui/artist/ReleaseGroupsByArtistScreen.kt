@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.getTitleWithDisambiguation
 import ly.david.mbjc.data.sortAndGroupByTypes
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
@@ -109,7 +110,7 @@ private fun ReleaseGroupCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = releaseGroup.title,
+                text = releaseGroup.getTitleWithDisambiguation(),
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.weight(3f)
             )

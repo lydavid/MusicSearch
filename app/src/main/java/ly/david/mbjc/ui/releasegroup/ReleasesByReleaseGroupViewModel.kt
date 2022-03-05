@@ -7,7 +7,7 @@ import ly.david.mbjc.data.Release
 import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT
 
-class ReleaseGroupViewModel : ViewModel() {
+class ReleasesByReleaseGroupViewModel : ViewModel() {
 
     private val musicBrainzApiService by lazy {
         MusicBrainzApiService.create()

@@ -6,24 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import ly.david.mbjc.preferences.NO_TYPE
-
-// Do this if we need a many-to-many relationship.
-// For 1-to-many, we can have a field to reference another entity's id.
-/**
- * An [Artist] for a [ReleaseGroup].
- * A release group can have many artists. An artist can have many release groups.
- */
-@Entity(
-    tableName = "release_groups_artists",
-    primaryKeys = ["release_group_id", "artist_id"]
-)
-data class ReleaseGroupArtist(
-    @ColumnInfo(name = "release_group_id")
-    val releaseGroupId: String,
-
-    @ColumnInfo(name = "artist_id")
-    val artistId: String,
-)
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @Entity(
     tableName = "release_groups",
@@ -82,6 +65,9 @@ data class ReleaseGroup(
 //    @Json(name = "releases")
 //    val releases: List<Release>? = null,
 )
+
+fun ReleaseGroup.getTitleWithDisambiguation(): String =
+    title + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }
 
 /**
  * Returns [ReleaseGroup]'s primary type concatenated with all secondary types for display.
