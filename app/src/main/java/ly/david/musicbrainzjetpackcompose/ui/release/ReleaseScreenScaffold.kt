@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.ui.releasegroup
+package ly.david.musicbrainzjetpackcompose.ui.release
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -8,40 +8,47 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzResource
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
+import ly.david.musicbrainzjetpackcompose.ui.common.lookupInBrowser
 
 /**
- * Equivalent of a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
+ * Equivalent of a screen like: https://musicbrainz.org/release/f171e0ae-bea8-41e6-bb41-4c7af7977f50
  *
- * Displays a list of releases under this release group.
+ * Displays the tracks/recordings for this release.
  */
 @Composable
-fun ReleaseGroupScreenScaffold(
-    releaseGroupId: String,
-    onReleaseClick: (String) -> Unit = {},
-    onBack: () -> Unit
+fun ReleaseScreenScaffold(
+    releaseId: String,
+    onBack: () -> Unit,
+    onRecordingClick: (String) -> Unit = {}
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
                 title = titleState,
                 subtitle = subtitleState,
-                onBack = onBack
+                onBack = onBack,
+                openInBrowser = {
+                    context.lookupInBrowser(MusicBrainzResource.RELEASE, releaseId)
+                },
             )
         },
     ) { innerPadding ->
-        ReleasesByReleaseGroupScreen(
+        TracksInReleaseScreen(
             modifier = Modifier.padding(innerPadding),
-            releaseGroupId = releaseGroupId,
+            releaseId = releaseId,
             onTitleUpdate = { title, subtitle ->
                 titleState = title
                 subtitleState = subtitle
             },
-            onReleaseClick = onReleaseClick
+            onRecordingClick = onRecordingClick
         )
     }
 }

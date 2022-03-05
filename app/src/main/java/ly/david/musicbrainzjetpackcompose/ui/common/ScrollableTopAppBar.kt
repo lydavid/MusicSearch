@@ -1,10 +1,11 @@
 package ly.david.musicbrainzjetpackcompose.ui.common
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -15,7 +16,12 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
@@ -26,12 +32,15 @@ fun ScrollableTopAppBar(
     subtitle: String = "",
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
+    openInBrowser: (() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
     tabsTitle: List<String> = listOf(),
     selectedTabIndex: Int = 0,
     onSelectTabIndex: (Int) -> Unit = {}
 ) {
+    var showMenu by rememberSaveable { mutableStateOf(false) }
+
     Column {
         TopAppBar(
             title = {
@@ -51,7 +60,6 @@ fun ScrollableTopAppBar(
             },
             navigationIcon = {
                 IconButton(onClick = {
-                    Log.d("Remove This", "ScrollableTopAppBar: clicked menu")
                     if (openDrawer == null) {
                         onBack()
                     } else {
@@ -62,6 +70,20 @@ fun ScrollableTopAppBar(
                         Icon(Icons.Default.ArrowBack, contentDescription = "Go back to previous screen.")
                     } else {
                         Icon(Icons.Default.Menu, contentDescription = "Open navigation drawer.")
+                    }
+                }
+            },
+            actions = {
+                if (openInBrowser != null) {
+                    IconButton(onClick = { showMenu = !showMenu }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
+                    }
+                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                        DropdownMenuItem(onClick = {
+                            openInBrowser.invoke()
+                        }) {
+                            Text("Open in browser")
+                        }
                     }
                 }
             },

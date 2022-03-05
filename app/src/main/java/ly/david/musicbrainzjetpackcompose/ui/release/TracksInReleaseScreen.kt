@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.common.toDisplayTime
-import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
+import ly.david.musicbrainzjetpackcompose.ui.common.toDisplayTime
+import ly.david.musicbrainzjetpackcompose.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.ArtistCredit
 import ly.david.musicbrainzjetpackcompose.data.Recording

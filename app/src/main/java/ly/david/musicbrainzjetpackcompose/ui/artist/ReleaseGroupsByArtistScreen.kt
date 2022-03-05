@@ -20,8 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.common.getYear
-import ly.david.musicbrainzjetpackcompose.common.toDate
+import ly.david.musicbrainzjetpackcompose.ui.common.getYear
+import ly.david.musicbrainzjetpackcompose.ui.common.toDate
 import ly.david.musicbrainzjetpackcompose.data.ReleaseGroup
 import ly.david.musicbrainzjetpackcompose.data.sortAndGroupByTypes
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem

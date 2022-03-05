@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.musicbrainzjetpackcompose.common.transformThisIfNotNullOrEmpty
+import ly.david.musicbrainzjetpackcompose.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.musicbrainzjetpackcompose.ui.common.FullScreenLoadingIndicator
 import ly.david.musicbrainzjetpackcompose.ui.common.UiState
 

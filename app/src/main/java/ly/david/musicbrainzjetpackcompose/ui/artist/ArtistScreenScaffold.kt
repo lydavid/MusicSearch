@@ -10,7 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzResource
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
+import ly.david.musicbrainzjetpackcompose.ui.common.lookupInBrowser
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
 enum class ArtistTab(val title: String) {
@@ -28,6 +31,7 @@ fun ArtistScreenScaffold(
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.OVERVIEW) }
     var titleState by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
 
     val browseReleaseGroupsState = rememberLazyListState()
 
@@ -36,6 +40,9 @@ fun ArtistScreenScaffold(
             ScrollableTopAppBar(
                 title = titleState,
                 onBack = onBack,
+                openInBrowser = {
+                    context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                },
                 tabsTitle = ArtistTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ArtistTab.values()[it] }
@@ -43,7 +50,7 @@ fun ArtistScreenScaffold(
         },
     ) { innerPadding ->
 
-        when(selectedTab) {
+        when (selectedTab) {
             ArtistTab.OVERVIEW -> {
                 ArtistOverviewScreen(
                     artistId = artistId,

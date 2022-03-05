@@ -44,6 +44,7 @@ import androidx.paging.compose.items
 import kotlinx.coroutines.launch
 import ly.david.musicbrainzjetpackcompose.data.Artist
 import ly.david.musicbrainzjetpackcompose.data.LifeSpan
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzResource
 import ly.david.musicbrainzjetpackcompose.ui.common.ClickableListItem
 import ly.david.musicbrainzjetpackcompose.ui.common.ScrollableTopAppBar
 import ly.david.musicbrainzjetpackcompose.ui.theme.MusicBrainzJetpackComposeTheme
@@ -82,7 +83,7 @@ private fun SearchScreen(
     onArtistClick: (String) -> Unit = {}
 ) {
     var text by rememberSaveable { mutableStateOf("") }
-    var selectedOption by rememberSaveable { mutableStateOf(QueryResource.ARTIST) }
+    var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
@@ -149,7 +150,7 @@ private fun SearchScreen(
             // TODO: focusing on this requires 1-2 additional backpresses to exit app
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
-                options = QueryResource.values().toList(),
+                options = MusicBrainzResource.values().toList(),
                 selectedOption = selectedOption,
                 onSelectOption = {
                     selectedOption = it

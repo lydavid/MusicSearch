@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.common
+package ly.david.musicbrainzjetpackcompose.ui.common
 
 private const val MS = 1000
 private const val SECONDS_IN_MINUTE = 60

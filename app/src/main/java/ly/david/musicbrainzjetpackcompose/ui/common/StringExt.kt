@@ -1,4 +1,4 @@
-package ly.david.musicbrainzjetpackcompose.common
+package ly.david.musicbrainzjetpackcompose.ui.common
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

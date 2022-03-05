@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-private const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org/ws/2/"
+private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 
 internal interface MusicBrainzApiService : Search, Browse, Lookup {
     companion object {
@@ -22,7 +22,7 @@ internal interface MusicBrainzApiService : Search, Browse, Lookup {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
                 .client(client)
-                .baseUrl(MUSIC_BRAINZ_BASE_URL)
+                .baseUrl(MUSIC_BRAINZ_API_BASE_URL)
                 .build()
 
             return retrofit.create(MusicBrainzApiService::class.java)

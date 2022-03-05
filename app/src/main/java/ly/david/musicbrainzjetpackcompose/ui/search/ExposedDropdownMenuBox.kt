@@ -12,16 +12,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import ly.david.musicbrainzjetpackcompose.data.MusicBrainzResource
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ExposedDropdownMenuBox(
+internal fun ExposedDropdownMenuBox(
     modifier: Modifier = Modifier,
-    options: List<QueryResource>,
-    selectedOption: QueryResource,
-    onSelectOption: (QueryResource) -> Unit
+    options: List<MusicBrainzResource>,
+    selectedOption: MusicBrainzResource,
+    onSelectOption: (MusicBrainzResource) -> Unit
 ) {
 
     var expanded by remember { mutableStateOf(false) }

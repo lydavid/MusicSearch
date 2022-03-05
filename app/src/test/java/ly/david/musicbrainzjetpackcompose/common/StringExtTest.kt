@@ -1,5 +1,7 @@
 package ly.david.musicbrainzjetpackcompose.common
 
+import ly.david.musicbrainzjetpackcompose.ui.common.getYear
+import ly.david.musicbrainzjetpackcompose.ui.common.useHttps
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

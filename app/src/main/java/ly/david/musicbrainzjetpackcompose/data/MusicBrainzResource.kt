@@ -1,7 +1,9 @@
-package ly.david.musicbrainzjetpackcompose.ui.search
+package ly.david.musicbrainzjetpackcompose.data
 
-// area, artist, event, genre, instrument, label, place, recording, release, release-group, series, work, url
-enum class QueryResource(val displayText: String, val queryText: String) {
+/**
+ * These are resources available for lookup requests. Many of them are query-able as well.
+ */
+internal enum class MusicBrainzResource(val displayText: String, val resourceName: String) {
     AREA("Area", "area"),
     ARTIST("Artist", "artist"),
     EVENT("Event", "event"),
@@ -11,7 +13,7 @@ enum class QueryResource(val displayText: String, val queryText: String) {
     PLACE("Place", "place"),
     RECORDING("Recording", "recording"),
     RELEASE("Release", "release"),
-    RELEASE_GROUP("Release Group", "release_group"),
+    RELEASE_GROUP("Release Group", "release-group"),
     SERIES("Series", "series"),
     WORK("Work", "work"),
     URL("URL", "url")
