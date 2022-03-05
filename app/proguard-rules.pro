@@ -24,5 +24,5 @@
 -renamesourcefileattribute SourceFile
 
 # Make sure all POJOs are under this directory.
--keep class ly.david.musicbrainzjetpackcompose.data.** { *; }
--keepclassmembers class ly.david.musicbrainzjetpackcompose.data.** { *; }
+-keep class ly.david.mbjc.data.** { *; }
+-keepclassmembers class ly.david.mbjc.data.** { *; }
