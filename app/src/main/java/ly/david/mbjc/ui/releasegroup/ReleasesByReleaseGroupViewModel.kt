@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
-import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT
+import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
+import ly.david.mbjc.data.network.BROWSE_LIMIT
 
 class ReleasesByReleaseGroupViewModel : ViewModel() {
 
@@ -19,7 +19,7 @@ class ReleasesByReleaseGroupViewModel : ViewModel() {
 
     suspend fun getReleasesByReleaseGroup(
         releaseGroupId: String,
-        limit: Int = MAX_BROWSE_LIMIT,
+        limit: Int = BROWSE_LIMIT,
         offset: Int = 0
     ): List<Release> {
         if (initialized) {

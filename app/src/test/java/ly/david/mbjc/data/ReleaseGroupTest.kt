@@ -2,7 +2,7 @@ package ly.david.mbjc.data
 
 import io.mockk.every
 import io.mockk.mockk
-import ly.david.mbjc.preferences.NO_TYPE
+import ly.david.mbjc.data.network.NO_TYPE
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

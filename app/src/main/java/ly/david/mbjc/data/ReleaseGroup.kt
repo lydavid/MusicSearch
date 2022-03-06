@@ -1,6 +1,6 @@
 package ly.david.mbjc.data
 
-import ly.david.mbjc.preferences.NO_TYPE
+import ly.david.mbjc.data.network.NO_TYPE
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 /**

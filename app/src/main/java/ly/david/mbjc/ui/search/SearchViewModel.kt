@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.preferences.INITIAL_SEARCH_LIMIT
-import ly.david.mbjc.preferences.SEARCH_LIMIT
+import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
+import ly.david.mbjc.data.network.SEARCH_LIMIT
 
 internal class SearchViewModel : ViewModel() {
 

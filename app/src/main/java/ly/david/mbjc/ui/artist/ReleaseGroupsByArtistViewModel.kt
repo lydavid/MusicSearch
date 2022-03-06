@@ -10,8 +10,8 @@ import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
-import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
-import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT
+import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
+import ly.david.mbjc.data.network.BROWSE_LIMIT
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -34,7 +34,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
 
     suspend fun getReleaseGroupsByArtist(
         artistId: String,
-        limit: Int = MAX_BROWSE_LIMIT,
+        limit: Int = BROWSE_LIMIT,
         offset: Int = 0
     ): List<MusicBrainzReleaseGroup> {
         if (initialized) {
