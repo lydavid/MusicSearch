@@ -24,11 +24,16 @@ class ReleaseGroupRepository @Inject constructor(
 ) {
     private var releaseGroup: UiReleaseGroup? = null
 
-    // TODO: should talk to repository who wiil decide whether to talk to network if entry does not exist in database
     suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
         releaseGroup ?: run {
-            val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
 
+            val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
+            if (roomReleaseGroup != null) {
+                incrementOrInsertLookupHistory(roomReleaseGroup)
+                return roomReleaseGroup.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(releaseGroupId))
+            }
+
+            val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
             releaseGroupDao.insert(musicBrainzReleaseGroup.toRoomReleaseGroup())
             incrementOrInsertLookupHistory(musicBrainzReleaseGroup)
             musicBrainzReleaseGroup.toUiReleaseGroup()

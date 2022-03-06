@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.network.MusicBrainzArtistCredit
+import ly.david.mbjc.data.persistence.ReleaseGroupArtist
 import ly.david.mbjc.preferences.NO_TYPE
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
@@ -155,6 +156,20 @@ fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
         secondaryTypes = secondaryTypes,
 
         artistCredits = artistCredits.getDisplayNames()
+    )
+}
+
+fun RoomReleaseGroup.toUiReleaseGroup(releaseGroupArtists: List<ReleaseGroupArtist>): UiReleaseGroup {
+    return UiReleaseGroup(
+        id = id,
+        title = title,
+        firstReleaseDate = firstReleaseDate,
+        disambiguation = disambiguation,
+
+        primaryType = primaryType,
+        secondaryTypes = secondaryTypes,
+
+        artistCredits = releaseGroupArtists.getDisplayNames()
     )
 }
 

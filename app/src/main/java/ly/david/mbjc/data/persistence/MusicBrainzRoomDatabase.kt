@@ -78,7 +78,11 @@ interface BaseDao<in T> {
 abstract class ArtistDao : BaseDao<Artist>
 
 @Dao
-abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup>
+abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
+
+    @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
+    abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
+}
 
 @Dao
 abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtist> {
