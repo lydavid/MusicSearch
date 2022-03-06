@@ -21,13 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Track
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.getDisplayNames
+import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.StickyHeader
@@ -36,6 +36,9 @@ import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
+/**
+ * Main screen for Release lookup. Shows all tracks in all media in this release.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TracksInReleaseScreen(
@@ -43,7 +46,7 @@ fun TracksInReleaseScreen(
     releaseId: String,
     onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
     onRecordingClick: (String) -> Unit = {},
-    viewModel: ReleaseViewModel = viewModel() // TODO: can we make this previewable by accepting an interface, and creating a mock viewmodel that just returns fake data with lookupRelease?
+    viewModel: ReleaseViewModel = hiltViewModel()
 ) {
     val uiState by produceState(initialValue = UiState(isLoading = true)) {
         value = UiState(response = viewModel.lookupRelease(releaseId))
@@ -120,12 +123,13 @@ private fun TrackCard(
         ) {
             Text(
                 text = track.number,
+                modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.body1,
             )
-            Spacer(modifier = Modifier.padding(4.dp))
 
             Column(
                 modifier = Modifier.weight(10f)
+                    .padding(start = 4.dp)
             ) {
                 Text(
                     text = track.title,

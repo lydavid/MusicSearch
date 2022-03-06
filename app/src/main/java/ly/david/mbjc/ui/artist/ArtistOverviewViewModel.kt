@@ -13,13 +13,10 @@ import ly.david.mbjc.ui.Destination
 
 @HiltViewModel
 class ArtistOverviewViewModel @Inject constructor(
+    private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel() {
-
-    private val musicBrainzApiService by lazy {
-        MusicBrainzApiService.create()
-    }
 
     private var artist: Artist? = null
 
