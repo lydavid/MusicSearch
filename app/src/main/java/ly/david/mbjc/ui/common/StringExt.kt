@@ -31,7 +31,7 @@ private const val MUSIC_BRAINZ_DATE_FORMAT = "yyyy-MM-dd"
 private const val MUSIC_BRAINZ_YEAR_ONLY_FORMAT = "yyyy"
 
 /**
- * Turns a Music Brainz string date field to [Date] object.
+ * Turns a MusicBrainz string date field to [Date] object.
  */
 fun String.toDate(): Date? {
     return when {

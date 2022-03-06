@@ -19,7 +19,7 @@ private const val RELEASE = "release"
  * The [Destination] enum is mostly for compile-time safety.
  *
  * @param route The underlying route that should be passed to navigation components.
- * @param musicBrainzResource The associated Music Brainz resource, if any.
+ * @param musicBrainzResource The associated MusicBrainz resource, if any.
  */
 enum class Destination(val route: String, val musicBrainzResource: MusicBrainzResource?) {
     LOOKUP(TOP_LEVEL_LOOKUP, null),

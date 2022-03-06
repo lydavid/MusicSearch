@@ -2,6 +2,8 @@ package ly.david.mbjc.data.network
 
 /**
  * These are resources available for lookup requests. Many of them are query-able as well.
+ *
+ * @param resourceName The resource to use for query/lookup request to MusicBrainz.
  */
 enum class MusicBrainzResource(val displayText: String, val resourceName: String) {
     AREA("Area", "area"),
