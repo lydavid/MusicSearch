@@ -24,12 +24,11 @@ fun ReleaseGroupOverviewScreen(
         uiState.response != null -> {
             uiState.response?.let { releaseGroup ->
 
+                // TODO: UI should receive a domain model
                 onTitleUpdate(
                     releaseGroup.getTitleWithDisambiguation(),
-                    // TODO: need to include artist-credits, how to deal with room?
-                    //  should include all credits, with joinphrase
-//                    "Release Group by ${releases.first().artistCredits.getDisplayNames()}"
-                    "Release Group by [TODO]"
+                    // TODO: should include all credits, with joinphrase
+                    "Release Group by ${releaseGroup.artistCredits?.map { it.name + it.joinPhrase }}"
                 )
             }
         }

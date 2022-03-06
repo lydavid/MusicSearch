@@ -5,14 +5,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.MusicBrainzApiService
-import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.ReleaseGroupArtist
+import ly.david.mbjc.data.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.ReleaseGroupArtistDao
 import ly.david.mbjc.data.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.ReleaseGroupArtist
+import ly.david.mbjc.data.toRoomReleaseGroup
 import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT
 
-// TODO: Let's have one viewmodel for each tab, they should stay alive
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val releaseGroupDao: ReleaseGroupDao,
@@ -30,13 +30,13 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     //  and we would emit data every time one api is complete, meaning user doesn't have to wait for all api to complete
     //  to start viewing data
     //  and when new data is emitted, we don't force scroll to the top
-    private val allReleaseGroups = mutableListOf<ReleaseGroup>()
+    private val allReleaseGroups = mutableListOf<MusicBrainzReleaseGroup>()
 
     suspend fun getReleaseGroupsByArtist(
         artistId: String,
         limit: Int = MAX_BROWSE_LIMIT,
         offset: Int = 0
-    ): List<ReleaseGroup> {
+    ): List<MusicBrainzReleaseGroup> {
         if (initialized) {
             return allReleaseGroups
         }
@@ -58,12 +58,22 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
             )
         } else {
             initialized = true
-            // TODO: Should we insert all?
-            //  Probably, so that next time, we can fetch from database instead
-            releaseGroupDao.insertAll(allReleaseGroups)
+            releaseGroupDao.insertAll(allReleaseGroups.map { it.toRoomReleaseGroup() })
+
             releaseGroupArtistDao.insertAll(
-                allReleaseGroups.map { ReleaseGroupArtist(releaseGroupId = it.id, artistId = artistId) }
+                allReleaseGroups.flatMap { releaseGroup ->
+                    releaseGroup.artistCredits?.mapIndexed { index, artistCredit ->
+                        ReleaseGroupArtist(
+                            releaseGroupId = releaseGroup.id,
+                            artistId = artistCredit.artist.id,
+                            name = artistCredit.name,
+                            joinPhrase = artistCredit.joinPhrase,
+                            order = index
+                        )
+                    }.orEmpty()
+                }
             )
+
             allReleaseGroups
         }
     }

@@ -1,18 +1,9 @@
 package ly.david.mbjc.data
 
-import com.squareup.moshi.Json
-
-data class ArtistCredit(
-
-    @Json(name = "artist")
-    val artist: Artist,
-
-    @Json(name = "joinphrase")
-    val joinPhrase: String, // How to join the artist names: "", " / "
-
-    @Json(name = "name")
-    val name: String,
-)
+interface ArtistCredit {
+    val name: String
+    val joinPhrase: String
+}
 
 /**
  * Get all artists in the credit, joined by their [ArtistCredit.joinPhrase].

@@ -22,10 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ly.david.mbjc.ui.common.toDisplayTime
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.ArtistCredit
+import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Track
 import ly.david.mbjc.data.Work
@@ -34,6 +32,8 @@ import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.StickyHeader
 import ly.david.mbjc.ui.common.UiState
+import ly.david.mbjc.ui.common.toDisplayTime
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -166,7 +166,7 @@ private val testTrack = Track(
     number = "123",
     length = 253000,
     artistCredits = listOf(
-        ArtistCredit(
+        MusicBrainzArtistCredit(
             Artist(
                 "3",
                 name = "actual name",

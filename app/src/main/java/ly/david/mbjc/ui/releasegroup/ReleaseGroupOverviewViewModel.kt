@@ -6,8 +6,10 @@ import javax.inject.Inject
 import ly.david.mbjc.data.LookupHistory
 import ly.david.mbjc.data.LookupHistoryDao
 import ly.david.mbjc.data.MusicBrainzApiService
+import ly.david.mbjc.data.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.ReleaseGroupDao
+import ly.david.mbjc.data.toRoomReleaseGroup
 import ly.david.mbjc.ui.Destination
 
 @HiltViewModel
@@ -20,11 +22,12 @@ class ReleaseGroupOverviewViewModel @Inject constructor(
         MusicBrainzApiService.create()
     }
 
-    private var releaseGroup: ReleaseGroup? = null
+    private var releaseGroup: MusicBrainzReleaseGroup? = null
 
-    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroup =
+    suspend fun lookupReleaseGroup(releaseGroupId: String): MusicBrainzReleaseGroup =
         releaseGroup ?: musicBrainzApiService.lookupReleaseGroup(releaseGroupId).also {
-            releaseGroupDao.insert(it)
+
+            releaseGroupDao.insert(it.toRoomReleaseGroup())
             incrementOrInsertLookupHistory(it)
             releaseGroup = it
         }

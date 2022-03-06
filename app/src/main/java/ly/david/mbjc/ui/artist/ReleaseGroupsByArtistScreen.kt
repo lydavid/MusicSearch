@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ly.david.mbjc.data.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.getTitleWithDisambiguation
 import ly.david.mbjc.data.sortAndGroupByTypes
@@ -125,11 +126,10 @@ private fun ReleaseGroupCard(
     }
 }
 
-private val testReleaseGroup = ReleaseGroup(
+private val testReleaseGroup = MusicBrainzReleaseGroup(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     title = "欠けた心象、世のよすが",
     primaryType = "EP",
-    primaryTypeId = "6d0c5bf6-7a33-3420-a519-44fc63eedebf",
     firstReleaseDate = "2021-09-08"
 )
 

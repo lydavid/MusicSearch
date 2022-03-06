@@ -1,6 +1,7 @@
 package ly.david.mbjc.data
 
 import com.squareup.moshi.Json
+import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 
 // browse inc: artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
 // lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
@@ -27,7 +28,7 @@ class Release(
     @Json(name = "media") val media: List<Medium>? = null,
 
     // inc=artist-credits
-    @Json(name = "artist-credit") val artistCredits: List<ArtistCredit>? = null,
+    @Json(name = "artist-credit") val artistCredits: List<MusicBrainzArtistCredit>? = null,
 
     // inc=label
     @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,

@@ -18,21 +18,24 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.Date
 import javax.inject.Singleton
+import ly.david.mbjc.data.persistence.ReleaseGroupArtist
 
 @Database(
     entities = [
-        Artist::class, ReleaseGroup::class,
+        Artist::class, RoomReleaseGroup::class,
         ReleaseGroupArtist::class,
+//        ArtistCredit::class,
         LookupHistory::class
     ],
     views = [],
-    version = 9
+    version = 12
 )
 @TypeConverters(MusicBrainzTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     abstract fun getArtistDao(): ArtistDao
     abstract fun getReleaseGroupDao(): ReleaseGroupDao
+
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
@@ -73,7 +76,7 @@ interface BaseDao<in T> {
 abstract class ArtistDao : BaseDao<Artist>
 
 @Dao
-abstract class ReleaseGroupDao : BaseDao<ReleaseGroup> {
+abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
 //    @Query("")
 //    suspend fun getAllReleaseGroupsByArtist(artistId: String): List<ReleaseGroup>

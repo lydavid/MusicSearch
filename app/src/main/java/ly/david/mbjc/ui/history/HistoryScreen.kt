@@ -107,8 +107,7 @@ private fun HistoryEntry(
         },
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
+            modifier = Modifier.padding(vertical = 16.dp)
 
         ) {
 

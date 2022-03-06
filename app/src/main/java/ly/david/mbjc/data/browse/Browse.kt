@@ -1,9 +1,9 @@
 package ly.david.mbjc.data.browse
 
 import com.squareup.moshi.Json
+import ly.david.mbjc.data.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.ReleaseGroup
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,7 +21,8 @@ interface Browse {
     suspend fun browseReleaseGroupsByArtist(
         @Query("artist") artistId: String,
         @Query("limit") limit: Int,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = "artist-credits"
     ): BrowseReleaseGroupsResponse
 
     @GET("release")
@@ -43,7 +44,7 @@ interface Browse {
 data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") val releaseGroupCount: Int,
     @Json(name = "release-group-offset") val releaseGroupOffset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroup>
+    @Json(name = "release-groups") val releaseGroups: List<MusicBrainzReleaseGroup>
 )
 
 data class BrowseReleasesResponse(

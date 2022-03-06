@@ -1,8 +1,8 @@
 package ly.david.mbjc.data.lookup
 
 import ly.david.mbjc.data.Artist
+import ly.david.mbjc.data.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.ReleaseGroup
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -25,7 +25,7 @@ interface Lookup {
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
         @Query("inc") include: String = "releases+artists+media"
-    ): ReleaseGroup
+    ): MusicBrainzReleaseGroup
 
     // TODO: screen should have information similar to: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
     @GET("release/{releaseId}")
