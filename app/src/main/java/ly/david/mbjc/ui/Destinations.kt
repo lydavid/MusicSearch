@@ -1,5 +1,7 @@
 package ly.david.mbjc.ui
 
+import ly.david.mbjc.data.network.MusicBrainzResource
+
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"
 
@@ -15,16 +17,18 @@ private const val RELEASE = "release"
 /**
  * A navigation destination in the app.
  * The [Destination] enum is mostly for compile-time safety.
- * The underlying [route] is what should be passed to navigation components.
+ *
+ * @param route The underlying route that should be passed to navigation components.
+ * @param musicBrainzResource The associated Music Brainz resource, if any.
  */
-enum class Destination(val route: String) {
-    LOOKUP(TOP_LEVEL_LOOKUP),
+enum class Destination(val route: String, val musicBrainzResource: MusicBrainzResource?) {
+    LOOKUP(TOP_LEVEL_LOOKUP, null),
 
-    LOOKUP_ARTIST("$TOP_LEVEL_LOOKUP$DIVIDER$ARTIST"),
-    LOOKUP_RELEASE_GROUP("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE_GROUP"),
-    LOOKUP_RELEASE("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE"),
+    LOOKUP_ARTIST("$TOP_LEVEL_LOOKUP$DIVIDER$ARTIST", MusicBrainzResource.ARTIST),
+    LOOKUP_RELEASE_GROUP("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE_GROUP", MusicBrainzResource.RELEASE_GROUP),
+    LOOKUP_RELEASE("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE", MusicBrainzResource.RELEASE),
 
-    HISTORY(TOP_LEVEL_HISTORY)
+    HISTORY(TOP_LEVEL_HISTORY, null)
 }
 
 /**

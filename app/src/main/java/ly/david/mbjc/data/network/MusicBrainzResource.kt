@@ -3,7 +3,7 @@ package ly.david.mbjc.data.network
 /**
  * These are resources available for lookup requests. Many of them are query-able as well.
  */
-internal enum class MusicBrainzResource(val displayText: String, val resourceName: String) {
+enum class MusicBrainzResource(val displayText: String, val resourceName: String) {
     AREA("Area", "area"),
     ARTIST("Artist", "artist"),
     EVENT("Event", "event"),

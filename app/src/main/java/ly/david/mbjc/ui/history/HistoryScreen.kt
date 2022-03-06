@@ -28,6 +28,7 @@ import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.UiState
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
 @Composable
@@ -45,14 +46,13 @@ internal fun HistoryScreenScaffold(
 
 val testData = listOf(
     LookupHistory(
-        summary = "欠けた心象、世のよすが\nRelease Group by 月詠み",
+        summary = "欠けた心象、世のよすがみ",
         destination = Destination.LOOKUP_RELEASE_GROUP,
         mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
         numberOfVisits = 9999
     ),
     LookupHistory(
-        summary = "欠けた心象、世のよすが\n" +
-            "Release by 月詠み",
+        summary = "欠けた心象、世のよすが",
         destination = Destination.LOOKUP_RELEASE,
         mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
     ),
@@ -111,8 +111,10 @@ private fun HistoryEntry(
 
         ) {
 
+            val resourceDescription =
+                lookupHistory.destination.musicBrainzResource?.displayText?.transformThisIfNotNullOrEmpty { "$it: " }
             Text(
-                text = lookupHistory.summary,
+                text = "$resourceDescription${lookupHistory.summary}",
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier.fillMaxWidth()
             )
