@@ -11,8 +11,8 @@ data class Label(
     @Json(name = "label-code") val labelCode: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
     @Json(name = "id") val id: String? = null,
-    @Json(name = "disambiguation") val disambiguation: String? = null,
-    @Json(name = "name") val name: String? = null,
+    @Json(name = "disambiguation") override val disambiguation: String? = null,
+    @Json(name = "name") override val name: String? = null,
     @Json(name = "sort-name") val sortName: String? = null,
     @Json(name = "type") val type: String? = null,
-)
+): NameWithDisambiguation

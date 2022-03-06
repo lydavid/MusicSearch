@@ -28,15 +28,15 @@ data class Relation(
 
 data class Work(
     @Json(name = "id") val id: String,
-    @Json(name = "title") val title: String,
+    @Json(name = "title") override val name: String,
 
     @Json(name = "type") val type: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
 
-    @Json(name = "disambiguation") val disambiguation: String? = null,
+    @Json(name = "disambiguation") override val disambiguation: String? = null,
 
     @Json(name = "language") val language: String? = null,
     @Json(name = "languages") val languages: List<String>? = null,
 
     @Json(name = "relations") val relations: List<Relation>? = null,
-)
+): NameWithDisambiguation

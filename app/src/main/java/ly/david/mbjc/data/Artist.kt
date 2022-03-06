@@ -6,7 +6,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 // TODO: split
 @Entity(
@@ -25,13 +24,13 @@ data class Artist(
 
     @ColumnInfo(name = "name")
     @Json(name = "name")
-    val name: String = "",
+    override val name: String = "",
     @ColumnInfo(name = "sort-name")
     @Json(name = "sort-name")
     val sortName: String = "",
     @ColumnInfo(name = "disambiguation")
     @Json(name = "disambiguation")
-    val disambiguation: String? = null, // TODO: if we want NameWithDisambiguation, we need to make this field nullable
+    override val disambiguation: String? = null,
 
     @ColumnInfo(name = "type")
     @Json(name = "type")
@@ -59,7 +58,7 @@ data class Artist(
     @ColumnInfo(name = "score")
     @Json(name = "score")
     val score: Int? = null,
-)
+): NameWithDisambiguation
 
 data class LifeSpan(
     @ColumnInfo(name = "begin")
@@ -69,6 +68,3 @@ data class LifeSpan(
     @Json(name = "ended")
     val ended: Boolean? = null
 )
-
-fun Artist.getNameWithDisambiguation(): String =
-    name + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }
