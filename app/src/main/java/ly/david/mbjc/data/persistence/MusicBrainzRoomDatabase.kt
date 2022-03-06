@@ -32,7 +32,7 @@ import ly.david.mbjc.data.Artist
         LookupHistory::class
     ],
     views = [],
-    version = 12
+    version = 13
 )
 @TypeConverters(MusicBrainzTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {

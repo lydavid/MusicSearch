@@ -14,7 +14,7 @@ import ly.david.mbjc.data.ArtistCredit
  */
 @Entity(
     tableName = "release_groups_artists",
-    primaryKeys = ["release_group_id", "artist_id"]
+    primaryKeys = ["release_group_id", "artist_id", "order"]
 )
 data class RoomReleaseGroupArtistCredit(
     @ColumnInfo(name = "release_group_id")
