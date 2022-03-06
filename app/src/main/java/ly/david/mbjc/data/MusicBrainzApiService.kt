@@ -1,5 +1,10 @@
 package ly.david.mbjc.data
 
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import ly.david.mbjc.common.JsonUtils
 import ly.david.mbjc.common.ServiceUtils
 import ly.david.mbjc.data.browse.Browse
@@ -11,7 +16,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 
-internal interface MusicBrainzApiService : Search, Browse, Lookup {
+// TODO: can put this into di module
+interface MusicBrainzApiService : Search, Browse, Lookup {
     companion object {
         private val client = OkHttpClient().newBuilder()
             .addInterceptor(ServiceUtils.interceptor)
@@ -30,4 +36,10 @@ internal interface MusicBrainzApiService : Search, Browse, Lookup {
     }
 }
 
-
+@InstallIn(SingletonComponent::class)
+@Module
+object MusicBrainzApiModule {
+    @Singleton
+    @Provides
+    fun provideMusicBrainzApi(): MusicBrainzApiService = MusicBrainzApiService.create()
+}

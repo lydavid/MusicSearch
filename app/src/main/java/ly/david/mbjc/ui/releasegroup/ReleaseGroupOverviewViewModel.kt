@@ -3,36 +3,37 @@ package ly.david.mbjc.ui.releasegroup
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import javax.inject.Singleton
 import ly.david.mbjc.data.LookupHistory
-import ly.david.mbjc.data.LookupHistoryDao
 import ly.david.mbjc.data.MusicBrainzApiService
-import ly.david.mbjc.data.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.ReleaseGroupDao
+import ly.david.mbjc.data.UiReleaseGroup
+import ly.david.mbjc.data.persistence.LookupHistoryDao
+import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
+import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.toRoomReleaseGroup
+import ly.david.mbjc.data.toUiReleaseGroup
 import ly.david.mbjc.ui.Destination
 
-@HiltViewModel
-class ReleaseGroupOverviewViewModel @Inject constructor(
+@Singleton
+class ReleaseGroupRepository @Inject constructor(
+    private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val lookupHistoryDao: LookupHistoryDao
-) : ViewModel() {
+) {
+    private var releaseGroup: UiReleaseGroup? = null
 
-    private val musicBrainzApiService by lazy {
-        MusicBrainzApiService.create()
-    }
+    // TODO: should talk to repository who wiil decide whether to talk to network if entry does not exist in database
+    suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
+        releaseGroup ?: run {
+            val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
 
-    private var releaseGroup: MusicBrainzReleaseGroup? = null
-
-    suspend fun lookupReleaseGroup(releaseGroupId: String): MusicBrainzReleaseGroup =
-        releaseGroup ?: musicBrainzApiService.lookupReleaseGroup(releaseGroupId).also {
-
-            releaseGroupDao.insert(it.toRoomReleaseGroup())
-            incrementOrInsertLookupHistory(it)
-            releaseGroup = it
+            releaseGroupDao.insert(musicBrainzReleaseGroup.toRoomReleaseGroup())
+            incrementOrInsertLookupHistory(musicBrainzReleaseGroup)
+            musicBrainzReleaseGroup.toUiReleaseGroup()
         }
 
-    // TODO: see if we can generalize
     private suspend fun incrementOrInsertLookupHistory(releaseGroup: ReleaseGroup) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
@@ -42,4 +43,13 @@ class ReleaseGroupOverviewViewModel @Inject constructor(
             )
         )
     }
+}
+
+@HiltViewModel
+class ReleaseGroupOverviewViewModel @Inject constructor(
+    private val releaseGroupRepository: ReleaseGroupRepository
+) : ViewModel() {
+
+    suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
+        releaseGroupRepository.lookupReleaseGroup(releaseGroupId)
 }

@@ -63,6 +63,7 @@ data class MusicBrainzReleaseGroup(
     val releases: List<Release>? = null,
 ): ReleaseGroup
 
+// TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
 fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
     return RoomReleaseGroup(
         id = id,
@@ -126,25 +127,36 @@ data class RoomReleaseGroup(
 //    val releases: List<Release>? = null,
 ): ReleaseGroup
 
-// TODO: We can use a DatabaseView and do something similar to LineWithWordCount
-//  to get a Releases count for a Release Group that we've clicked into, and have stored locally
-//  otherwise it would be too costly to make additional API calls just for this data.
+/**
+ * Representation of a [ReleaseGroup] for our UI.
+ * This can be mapped from [RoomReleaseGroup] or [MusicBrainzReleaseGroup].
+ */
+data class UiReleaseGroup(
+    override val id: String,
+    override val title: String,
+    override val firstReleaseDate: String,
+    override val disambiguation: String,
+    override val primaryType: String?,
+    override val secondaryTypes: List<String>?,
 
-// TODO: we should have a domain model afterall that our UI should use
-//  this model should be mappable from both network or persistence
-//  it should include the artist credits as a String already joined
+    // TODO: if we keep it as MusicBrainzArtistCredit, then we can deeplink to each artist's page from a dropdown
+    //  if we join table with artists, we could also get the artist object
+    val artistCredits: String
+): ReleaseGroup
 
-// TODO: Use a View, so that we don't have to store the same Artist Credits for every single release
-//  we can just query for it
-//@DatabaseView("""
-//
-//""")
-//data class ReleaseGroupWithArtistCredits(
-//    @Embedded
-//    val releaseGroup: ReleaseGroup
-//
-//
-//)
+fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
+    return UiReleaseGroup(
+        id = id,
+        title = title,
+        firstReleaseDate = firstReleaseDate,
+        disambiguation = disambiguation,
+
+        primaryType = primaryType,
+        secondaryTypes = secondaryTypes,
+
+        artistCredits = artistCredits.getDisplayNames()
+    )
+}
 
 fun ReleaseGroup.getTitleWithDisambiguation(): String =
     title + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }

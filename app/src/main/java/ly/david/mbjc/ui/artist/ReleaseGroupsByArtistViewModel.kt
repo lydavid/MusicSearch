@@ -6,9 +6,9 @@ import javax.inject.Inject
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.MusicBrainzApiService
 import ly.david.mbjc.data.MusicBrainzReleaseGroup
-import ly.david.mbjc.data.ReleaseGroupArtistDao
-import ly.david.mbjc.data.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtist
+import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
+import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.toRoomReleaseGroup
 import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT

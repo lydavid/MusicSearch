@@ -1,4 +1,4 @@
-package ly.david.mbjc.data
+package ly.david.mbjc.data.persistence
 
 import android.content.Context
 import androidx.room.Dao
@@ -18,13 +18,15 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.Date
 import javax.inject.Singleton
-import ly.david.mbjc.data.persistence.ReleaseGroupArtist
+import ly.david.mbjc.data.Artist
+import ly.david.mbjc.data.LookupHistory
+import ly.david.mbjc.data.MusicBrainzTypeConverters
+import ly.david.mbjc.data.RoomReleaseGroup
 
 @Database(
     entities = [
         Artist::class, RoomReleaseGroup::class,
         ReleaseGroupArtist::class,
-//        ArtistCredit::class,
         LookupHistory::class
     ],
     views = [],
@@ -76,14 +78,21 @@ interface BaseDao<in T> {
 abstract class ArtistDao : BaseDao<Artist>
 
 @Dao
-abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
-
-//    @Query("")
-//    suspend fun getAllReleaseGroupsByArtist(artistId: String): List<ReleaseGroup>
-}
+abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup>
 
 @Dao
-abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtist>
+abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtist> {
+    @Query(
+        """
+        select rga.*
+        from release_groups rg
+        left join release_groups_artists rga on rg.id = rga.release_group_id
+        where rg.id = :releaseGroupId
+        ORDER BY rga.`order`
+    """
+    )
+    abstract suspend fun getReleaseGroupArtistCredits(releaseGroupId: String): List<ReleaseGroupArtist>
+}
 
 @Dao
 abstract class LookupHistoryDao : BaseDao<LookupHistory> {
