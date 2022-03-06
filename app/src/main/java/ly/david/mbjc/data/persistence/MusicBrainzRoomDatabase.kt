@@ -19,14 +19,16 @@ import dagger.hilt.components.SingletonComponent
 import java.util.Date
 import javax.inject.Singleton
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.LookupHistory
-import ly.david.mbjc.data.MusicBrainzTypeConverters
-import ly.david.mbjc.data.RoomReleaseGroup
 
 @Database(
     entities = [
+        // Main tables
         Artist::class, RoomReleaseGroup::class,
-        ReleaseGroupArtist::class,
+
+        // Relationship tables
+        RoomReleaseGroupArtistCredit::class,
+
+        // Additional features tables
         LookupHistory::class
     ],
     views = [],
@@ -85,7 +87,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 }
 
 @Dao
-abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtist> {
+abstract class ReleaseGroupArtistDao : BaseDao<RoomReleaseGroupArtistCredit> {
     @Query(
         """
         select rga.*
@@ -95,7 +97,7 @@ abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtist> {
         ORDER BY rga.`order`
     """
     )
-    abstract suspend fun getReleaseGroupArtistCredits(releaseGroupId: String): List<ReleaseGroupArtist>
+    abstract suspend fun getReleaseGroupArtistCredits(releaseGroupId: String): List<RoomReleaseGroupArtistCredit>
 }
 
 @Dao

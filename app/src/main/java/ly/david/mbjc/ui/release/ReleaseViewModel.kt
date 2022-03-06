@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.release
 
 import androidx.lifecycle.ViewModel
-import ly.david.mbjc.data.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.Release
 
 class ReleaseViewModel : ViewModel() {

@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import java.io.IOException
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.preferences.STARTING_OFFSET
 import retrofit2.HttpException

@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import ly.david.mbjc.data.LookupHistory
+import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator

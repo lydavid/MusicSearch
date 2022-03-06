@@ -16,7 +16,7 @@ import ly.david.mbjc.data.ArtistCredit
     tableName = "release_groups_artists",
     primaryKeys = ["release_group_id", "artist_id"]
 )
-data class ReleaseGroupArtist(
+data class RoomReleaseGroupArtistCredit(
     @ColumnInfo(name = "release_group_id")
     val releaseGroupId: String,
 

@@ -44,7 +44,7 @@ import androidx.paging.compose.items
 import kotlinx.coroutines.launch
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
-import ly.david.mbjc.data.MusicBrainzResource
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme

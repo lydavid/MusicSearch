@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
+// TODO: split
 @Entity(
     tableName = "artists",
     indices = [

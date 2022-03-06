@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
-import ly.david.mbjc.data.MusicBrainzApiService
-import ly.david.mbjc.data.MusicBrainzReleaseGroup
-import ly.david.mbjc.data.persistence.ReleaseGroupArtist
+import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.toRoomReleaseGroup
+import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.persistence.toRoomReleaseGroup
 import ly.david.mbjc.preferences.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.preferences.MAX_BROWSE_LIMIT
 
@@ -63,7 +63,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
             releaseGroupArtistDao.insertAll(
                 allReleaseGroups.flatMap { releaseGroup ->
                     releaseGroup.artistCredits?.mapIndexed { index, artistCredit ->
-                        ReleaseGroupArtist(
+                        RoomReleaseGroupArtistCredit(
                             releaseGroupId = releaseGroup.id,
                             artistId = artistCredit.artist.id,
                             name = artistCredit.name,

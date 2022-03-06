@@ -1,4 +1,4 @@
-package ly.david.mbjc.data
+package ly.david.mbjc.data.network
 
 import dagger.Module
 import dagger.Provides
@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.common.JsonUtils
 import ly.david.mbjc.common.ServiceUtils
+import ly.david.mbjc.data.MUSIC_BRAINZ_BASE_URL
 import ly.david.mbjc.data.browse.Browse
 import ly.david.mbjc.data.lookup.Lookup
 import ly.david.mbjc.data.search.Search

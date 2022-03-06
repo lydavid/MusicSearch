@@ -1,7 +1,7 @@
 package ly.david.mbjc.data.browse
 
 import com.squareup.moshi.Json
-import ly.david.mbjc.data.MusicBrainzReleaseGroup
+import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Release
 import retrofit2.http.GET

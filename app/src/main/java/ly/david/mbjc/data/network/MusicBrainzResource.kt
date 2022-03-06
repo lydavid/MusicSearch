@@ -1,4 +1,4 @@
-package ly.david.mbjc.data
+package ly.david.mbjc.data.network
 
 /**
  * These are resources available for lookup requests. Many of them are query-able as well.
