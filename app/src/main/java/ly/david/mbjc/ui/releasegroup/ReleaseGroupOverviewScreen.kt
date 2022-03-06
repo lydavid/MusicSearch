@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.UiReleaseGroup
-import ly.david.mbjc.data.getTitleWithDisambiguation
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.UiState
 
@@ -27,7 +27,7 @@ fun ReleaseGroupOverviewScreen(
             uiState.response?.let { releaseGroup ->
 
                 onTitleUpdate(
-                    releaseGroup.getTitleWithDisambiguation(),
+                    releaseGroup.getNameWithDisambiguation(),
                     "Release Group by ${releaseGroup.artistCredits}"
                 )
 

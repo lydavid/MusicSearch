@@ -27,6 +27,7 @@ import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Track
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.getDisplayNames
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
@@ -59,7 +60,7 @@ fun TracksInReleaseScreen(
             uiState.response?.let { release ->
 
                 onTitleUpdate(
-                    release.title + release.disambiguation.transformThisIfNotNullOrEmpty { " ($it)" },
+                    release.getNameWithDisambiguation(),
                     "Release by ${release.artistCredits.getDisplayNames()}"
                 )
 
@@ -162,7 +163,7 @@ private val testTrack = Track(
     title = "Track title that is long and wraps",
     recording = Recording(
         id = "2",
-        title = "Recording title",
+        name = "Recording title",
         length = 256000,
         video = false
     ),

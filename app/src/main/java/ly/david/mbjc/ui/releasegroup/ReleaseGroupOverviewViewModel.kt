@@ -44,7 +44,7 @@ class ReleaseGroupRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(releaseGroup: ReleaseGroup) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = releaseGroup.title,
+                summary = releaseGroup.name,
                 destination = Destination.LOOKUP_RELEASE_GROUP,
                 mbid = releaseGroup.id
             )

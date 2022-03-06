@@ -31,7 +31,7 @@ data class Artist(
     val sortName: String = "",
     @ColumnInfo(name = "disambiguation")
     @Json(name = "disambiguation")
-    val disambiguation: String? = null,
+    val disambiguation: String? = null, // TODO: if we want NameWithDisambiguation, we need to make this field nullable
 
     @ColumnInfo(name = "type")
     @Json(name = "type")

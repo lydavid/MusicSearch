@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.mbjc.data.Release
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
@@ -29,7 +30,7 @@ class ReleaseViewModel @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(release: Release) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = release.title, // TODO: include disam
+                summary = release.getNameWithDisambiguation(),
                 destination = Destination.LOOKUP_RELEASE,
                 mbid = release.id
             )

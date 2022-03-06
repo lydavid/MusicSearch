@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.UiReleaseGroup
-import ly.david.mbjc.data.getTitleWithDisambiguation
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.sortAndGroupByTypes
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
@@ -113,7 +113,7 @@ private fun ReleaseGroupCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = releaseGroup.getTitleWithDisambiguation(),
+                    text = releaseGroup.getNameWithDisambiguation(),
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.weight(3f)
                 )
@@ -139,7 +139,7 @@ private fun ReleaseGroupCard(
 
 private val testReleaseGroup = UiReleaseGroup(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-    title = "欠けた心象、世のよすが",
+    name = "欠けた心象、世のよすが",
     primaryType = "EP",
     firstReleaseDate = "2021-09-08",
     artistCredits = "Some artist feat. some other artist"

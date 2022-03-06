@@ -95,7 +95,7 @@ private fun ReleaseCard(
             ) {
                 Row {
                     Text(
-                        text = release.title,
+                        text = release.name,
                         style = MaterialTheme.typography.h6,
                     )
                 }
@@ -130,7 +130,7 @@ private fun ReleaseCard(
 
 private val testRelease = Release(
     id = "1",
-    title = "Release title that is long and wraps",
+    name = "Release title that is long and wraps",
     disambiguation = "Disambiguation text that is also long",
     date = "2021-09-08",
     country = "JP"
@@ -149,7 +149,7 @@ internal fun ReleaseCardPreview() {
 
 private val testRelease2 = Release(
     id = "1",
-    title = "Release title",
+    name = "Release title",
     disambiguation = "Disambiguation text",
     country = "JP"
 )

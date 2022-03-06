@@ -7,8 +7,8 @@ import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 // lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
 class Release(
     @Json(name = "id") val id: String,
-    @Json(name = "title") val title: String,
-    @Json(name = "disambiguation") val disambiguation: String = "",
+    @Json(name = "title") override val name: String,
+    @Json(name = "disambiguation") override val disambiguation: String = "",
     @Json(name = "date") val date: String? = null,
     @Json(name = "status") val status: String? = null,
     @Json(name = "barcode") val barcode: String? = null,
@@ -32,7 +32,7 @@ class Release(
 
     // inc=label
     @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
-)
+): NameWithDisambiguation
 
 data class CoverArtArchive(
     @Json(name = "darkened") val darkened: Boolean = false,

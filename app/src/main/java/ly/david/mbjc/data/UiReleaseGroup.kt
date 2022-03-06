@@ -10,7 +10,7 @@ import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
  */
 data class UiReleaseGroup(
     override val id: String,
-    override val title: String,
+    override val name: String,
     override val firstReleaseDate: String = "",
     override val disambiguation: String = "",
     override val primaryType: String? = null,
@@ -24,7 +24,7 @@ data class UiReleaseGroup(
 fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
     return UiReleaseGroup(
         id = id,
-        title = title,
+        name = name,
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
 
@@ -38,7 +38,7 @@ fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
 fun RoomReleaseGroup.toUiReleaseGroup(roomReleaseGroupArtistCredits: List<RoomReleaseGroupArtistCredit>): UiReleaseGroup {
     return UiReleaseGroup(
         id = id,
-        title = title,
+        name = name,
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
 

@@ -11,7 +11,7 @@ data class MusicBrainzReleaseGroup(
     @Json(name = "id")
     override val id: String,
     @Json(name = "title")
-    override val title: String = "",
+    override val name: String = "",
     @Json(name = "first-release-date")
     override val firstReleaseDate: String = "",
     @Json(name = "disambiguation")

@@ -17,7 +17,7 @@ data class RoomReleaseGroup(
     @ColumnInfo(name = "id")
     override val id: String,
     @ColumnInfo(name = "title")
-    override val title: String = "",
+    override val name: String = "",
     @ColumnInfo(name = "first-release-date")
     override val firstReleaseDate: String = "",
     @ColumnInfo(name = "disambiguation")
@@ -34,7 +34,7 @@ data class RoomReleaseGroup(
 fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
     return RoomReleaseGroup(
         id = id,
-        title = title,
+        name = name,
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
 
@@ -46,7 +46,7 @@ fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
 fun UiReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
     return RoomReleaseGroup(
         id = id,
-        title = title,
+        name = name,
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
 

@@ -1,25 +1,21 @@
 package ly.david.mbjc.data
 
 import ly.david.mbjc.data.network.NO_TYPE
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 /**
  * Defines common properties between network and persistence model.
  */
-interface ReleaseGroup {
+interface ReleaseGroup: NameWithDisambiguation {
 
     val id: String
-    val title: String
+    override val name: String
     val firstReleaseDate: String
-    val disambiguation: String
+    override val disambiguation: String
 
     val primaryType: String?
 
     val secondaryTypes: List<String>?
 }
-
-fun ReleaseGroup.getTitleWithDisambiguation(): String =
-    title + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }
 
 /**
  * Returns [ReleaseGroup]'s primary type concatenated with all secondary types for display.
