@@ -2,6 +2,7 @@ package ly.david.mbjc.data.persistence
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Fts4
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.UiReleaseGroup
@@ -29,6 +30,25 @@ data class RoomReleaseGroup(
     @ColumnInfo(name = "secondary-types")
     override val secondaryTypes: List<String>? = null,
 ) : ReleaseGroup
+
+@Fts4(contentEntity = RoomReleaseGroup::class)
+@Entity(tableName = "release_groups_fts_table")
+data class ReleaseGroupFts(
+    @ColumnInfo(name = "title")
+    val name: String = "",
+
+    @ColumnInfo(name = "first-release-date")
+    val firstReleaseDate: String = "",
+
+    @ColumnInfo(name = "disambiguation")
+    val disambiguation: String = "",
+
+    @ColumnInfo(name = "primary-type")
+    val primaryType: String = "",
+
+    @ColumnInfo(name = "secondary-types")
+    val secondaryTypes: String = ""
+)
 
 // TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
 fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {

@@ -25,6 +25,9 @@ import ly.david.mbjc.data.Artist
         // Main tables
         Artist::class, RoomReleaseGroup::class,
 
+        // Full-Text Search (FTS) tables
+        ReleaseGroupFts::class,
+
         // Relationship tables
         RoomReleaseGroupArtistCredit::class,
 
@@ -32,9 +35,9 @@ import ly.david.mbjc.data.Artist
         LookupHistory::class
     ],
     views = [],
-    version = 13
+    version = 14
 )
-@TypeConverters(MusicBrainzTypeConverters::class)
+@TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     abstract fun getArtistDao(): ArtistDao
@@ -85,17 +88,18 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
 
-    @Query("""
+    @Query(
+        """
         SELECT COUNT(rg.id)
         FROM artists a
         LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
         LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
         WHERE a.id = :artistId
         GROUP BY a.id
-    """)
+    """
+    )
     abstract suspend fun getNumberOfReleaseGroupsByArtist(artistId: String): Int
 
-    // TODO: if no entries exists, will return a row with null... so we should check if any entries exist instead?
     @Query("""
         SELECT rg.*
         FROM artists a
@@ -104,6 +108,33 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         WHERE a.id = :artistId
     """)
     abstract suspend fun getAllReleaseGroupsByArtist(artistId: String): List<RoomReleaseGroup>
+
+    // We match FTS with rowid because we use MusicBrainz id for `id`
+    @Query(
+        """
+        SELECT rg.*
+        FROM artists a
+        LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
+        LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
+        JOIN release_groups_fts_table fts ON rg.rowid = fts.rowid
+        WHERE a.id = :artistId AND release_groups_fts_table MATCH :query
+    """
+    )
+    abstract suspend fun getAllReleaseGroupsByArtistFilteredFts(artistId: String, query: String): List<RoomReleaseGroup>
+
+    // Not as fast as FTS but allows searching characters within foreign words
+    @Query(
+        """
+        SELECT rg.*
+        FROM artists a
+        LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
+        LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
+        WHERE a.id = :artistId
+        AND rg.title LIKE :query OR rg.disambiguation LIKE :query
+        OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query
+    """
+    )
+    abstract suspend fun getAllReleaseGroupsByArtistFiltered(artistId: String, query: String): List<RoomReleaseGroup>
 }
 
 @Dao
