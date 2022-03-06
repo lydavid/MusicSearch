@@ -2,8 +2,10 @@ package ly.david.mbjc.ui.artist
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -20,8 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
-import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.getTitleWithDisambiguation
 import ly.david.mbjc.data.sortAndGroupByTypes
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -51,7 +52,7 @@ fun ReleaseGroupsByArtistScreen(
 
     when {
         uiState.response != null -> {
-            uiState.response?.let { response ->
+            uiState.response?.let { response: List<UiReleaseGroup> ->
 
                 LazyColumn(
                     state = state,
@@ -98,39 +99,55 @@ fun ReleaseGroupsByArtistScreen(
     }
 }
 
+// TODO: show artist credits if there are any that are different from artist?
+//  similar to tracks's shouldShowTrackArtists
+//  However, if we have to go through 500+ release groups only to find one at the end, then it might take too much effort to refresh
+//  so either always show artist credits or don't
 @Composable
 private fun ReleaseGroupCard(
-    releaseGroup: ReleaseGroup,
-    onClick: (ReleaseGroup) -> Unit = {}
+    releaseGroup: UiReleaseGroup,
+    onClick: (UiReleaseGroup) -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
     ) {
-        Row(
+        Column(
             modifier = Modifier.padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = releaseGroup.getTitleWithDisambiguation(),
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.weight(3f)
-            )
-            Spacer(modifier = Modifier.padding(4.dp))
-            Text(
-                text = releaseGroup.firstReleaseDate.getYear(),
-                modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.body1,
-                textAlign = TextAlign.End
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = releaseGroup.getTitleWithDisambiguation(),
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.weight(3f)
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = releaseGroup.firstReleaseDate.getYear(),
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.End
+                )
+            }
+
+            if (releaseGroup.artistCredits.isNotEmpty()) {
+                Text(
+                    text = releaseGroup.artistCredits,
+                    modifier = Modifier.fillMaxWidth(),
+                    style = MaterialTheme.typography.body1
+                )
+            }
         }
     }
 }
 
-private val testReleaseGroup = MusicBrainzReleaseGroup(
+private val testReleaseGroup = UiReleaseGroup(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     title = "欠けた心象、世のよすが",
     primaryType = "EP",
-    firstReleaseDate = "2021-09-08"
+    firstReleaseDate = "2021-09-08",
+    artistCredits = "Some artist feat. some other artist"
 )
 
 @Preview

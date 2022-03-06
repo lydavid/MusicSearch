@@ -11,14 +11,14 @@ import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 data class UiReleaseGroup(
     override val id: String,
     override val title: String,
-    override val firstReleaseDate: String,
-    override val disambiguation: String,
-    override val primaryType: String?,
-    override val secondaryTypes: List<String>?,
+    override val firstReleaseDate: String = "",
+    override val disambiguation: String = "",
+    override val primaryType: String? = null,
+    override val secondaryTypes: List<String>? = null,
 
     // TODO: if we keep it as MusicBrainzArtistCredit, then we can deeplink to each artist's page from a dropdown
     //  if we join table with artists, we could also get the artist object
-    val artistCredits: String
+    val artistCredits: String = ""
 ): ReleaseGroup
 
 fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {

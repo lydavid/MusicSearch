@@ -1,7 +1,6 @@
-package ly.david.mbjc.data.browse
+package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
-import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Release
 import retrofit2.http.GET
@@ -15,8 +14,6 @@ import retrofit2.http.Query
  */
 interface Browse {
 
-    // TODO: inc=artist-credits so that we can update title of screen with artist name
-    //  may not actually need to since we lookup the artist in the first tab
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
         @Query("artist") artistId: String,

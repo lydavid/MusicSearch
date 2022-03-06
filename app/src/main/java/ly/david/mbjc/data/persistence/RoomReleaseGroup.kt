@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 
 @Entity(
@@ -31,6 +32,18 @@ data class RoomReleaseGroup(
 
 // TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
 fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
+    return RoomReleaseGroup(
+        id = id,
+        title = title,
+        firstReleaseDate = firstReleaseDate,
+        disambiguation = disambiguation,
+
+        primaryType = primaryType,
+        secondaryTypes = secondaryTypes
+    )
+}
+
+fun UiReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
     return RoomReleaseGroup(
         id = id,
         title = title,

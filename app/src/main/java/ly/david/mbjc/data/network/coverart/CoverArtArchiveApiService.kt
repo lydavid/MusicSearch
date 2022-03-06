@@ -1,7 +1,7 @@
-package ly.david.mbjc.data.coverart
+package ly.david.mbjc.data.network.coverart
 
-import ly.david.mbjc.common.JsonUtils
-import ly.david.mbjc.common.ServiceUtils
+import ly.david.mbjc.data.network.JsonUtils
+import ly.david.mbjc.data.network.NetworkUtils
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -18,7 +18,7 @@ internal interface CoverArtArchiveApiService {
     companion object {
 
         private val client = OkHttpClient().newBuilder()
-            .addInterceptor(ServiceUtils.interceptor)
+            .addInterceptor(NetworkUtils.interceptor)
             .build()
 
         fun create(): CoverArtArchiveApiService {
@@ -32,5 +32,3 @@ internal interface CoverArtArchiveApiService {
         }
     }
 }
-
-

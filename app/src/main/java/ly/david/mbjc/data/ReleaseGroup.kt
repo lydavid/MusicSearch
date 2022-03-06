@@ -46,9 +46,9 @@ private val secondaryPrecedence = listOf(
 
 private fun Int.moveNotFoundToEnd() = if (this == -1) Int.MAX_VALUE else this
 
-fun List<ReleaseGroup>.sortAndGroupByTypes(): Map<String, List<ReleaseGroup>> =
+fun List<UiReleaseGroup>.sortAndGroupByTypes(): Map<String, List<UiReleaseGroup>> =
     this.sortedWith(
-        compareBy<ReleaseGroup> {
+        compareBy<UiReleaseGroup> {
             primaryPrecedence.indexOf(it.primaryType).moveNotFoundToEnd()
         }.thenBy {
             secondaryPrecedence.indexOf(it.secondaryTypes).moveNotFoundToEnd()

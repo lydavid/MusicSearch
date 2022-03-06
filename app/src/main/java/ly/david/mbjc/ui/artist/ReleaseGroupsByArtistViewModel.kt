@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
+import ly.david.mbjc.data.UiReleaseGroup
+import ly.david.mbjc.data.network.BROWSE_LIMIT
+import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.RoomReleaseGroup
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
-import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
-import ly.david.mbjc.data.network.BROWSE_LIMIT
+import ly.david.mbjc.data.toUiReleaseGroup
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -25,20 +28,39 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
 
     private var initialized = false
 
-    // TODO: use pager3, as we scroll, will it cause crazy jumps as we group?
     // TODO: Would be nice if view can listen to this
     //  and we would emit data every time one api is complete, meaning user doesn't have to wait for all api to complete
     //  to start viewing data
     //  and when new data is emitted, we don't force scroll to the top
-    private val allReleaseGroups = mutableListOf<MusicBrainzReleaseGroup>()
+    private val musicBrainzReleaseGroups = mutableListOf<MusicBrainzReleaseGroup>()
 
     suspend fun getReleaseGroupsByArtist(
         artistId: String,
         limit: Int = BROWSE_LIMIT,
         offset: Int = 0
+    ): List<UiReleaseGroup> {
+        // TODO: most efficient would be to not call API unless there are no entries in database
+        //  otherwise we will have to possibly waste an api call only to figure out we already had all entries
+        //  the number of artists with too many releaese groups to load within a few seconds is extremely low
+
+        // TODO: we could store a count of how many release groups an artist has, so that we can continue fetching if it's not complete
+        //  should be in artist's table? Update it there once we get it via browse release groups by artist
+        val releaseGroupsByArtistInRoom = releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
+        return if (releaseGroupsByArtistInRoom == 0) {
+            getReleaseGroupsByArtistFromNetwork(artistId, limit, offset).map { it.toUiReleaseGroup() }
+        } else {
+            val roomReleaseGroups: List<RoomReleaseGroup> = releaseGroupDao.getAllReleaseGroupsByArtist(artistId)
+            roomReleaseGroups.map { it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id)) }
+        }
+    }
+
+    private suspend fun getReleaseGroupsByArtistFromNetwork(
+        artistId: String,
+        limit: Int = BROWSE_LIMIT,
+        offset: Int = 0
     ): List<MusicBrainzReleaseGroup> {
         if (initialized) {
-            return allReleaseGroups
+            return musicBrainzReleaseGroups
         }
         if (offset != 0) {
             delay(DELAY_PAGED_API_CALLS_MS)
@@ -50,18 +72,21 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         )
 
         val newReleaseGroups = response.releaseGroups
-        allReleaseGroups.addAll(newReleaseGroups)
-        return if (allReleaseGroups.size < response.releaseGroupCount) {
-            getReleaseGroupsByArtist(
+        musicBrainzReleaseGroups.addAll(newReleaseGroups)
+        return if (musicBrainzReleaseGroups.size < response.releaseGroupCount) {
+            getReleaseGroupsByArtistFromNetwork(
                 artistId = artistId,
                 offset = offset + newReleaseGroups.size
             )
         } else {
             initialized = true
-            releaseGroupDao.insertAll(allReleaseGroups.map { it.toRoomReleaseGroup() })
+            releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toRoomReleaseGroup() })
 
+            // TODO: insert after each api call? That way, if interrupted, we will have saved data
+            //  can we also start off where we left off by comparing number of entries vs releaseGroupCount?
+            //  If so, provide way to invalidate database and fetch fresh, in case a new release group is added between already fetched data
             releaseGroupArtistDao.insertAll(
-                allReleaseGroups.flatMap { releaseGroup ->
+                musicBrainzReleaseGroups.flatMap { releaseGroup ->
                     releaseGroup.artistCredits?.mapIndexed { index, artistCredit ->
                         RoomReleaseGroupArtistCredit(
                             releaseGroupId = releaseGroup.id,
@@ -74,7 +99,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
                 }
             )
 
-            allReleaseGroups
+            musicBrainzReleaseGroups
         }
     }
 

@@ -84,15 +84,35 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
+
+    @Query("""
+        SELECT COUNT(rg.id)
+        FROM artists a
+        LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
+        LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
+        WHERE a.id = :artistId
+        GROUP BY a.id
+    """)
+    abstract suspend fun getNumberOfReleaseGroupsByArtist(artistId: String): Int
+
+    // TODO: if no entries exists, will return a row with null... so we should check if any entries exist instead?
+    @Query("""
+        SELECT rg.*
+        FROM artists a
+        LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
+        LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
+        WHERE a.id = :artistId
+    """)
+    abstract suspend fun getAllReleaseGroupsByArtist(artistId: String): List<RoomReleaseGroup>
 }
 
 @Dao
 abstract class ReleaseGroupArtistDao : BaseDao<RoomReleaseGroupArtistCredit> {
     @Query(
         """
-        select rga.*
-        from release_groups rg
-        left join release_groups_artists rga on rg.id = rga.release_group_id
+        SELECT rga.*
+        FROM release_groups rg
+        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
         where rg.id = :releaseGroupId
         ORDER BY rga.`order`
     """

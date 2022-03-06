@@ -1,4 +1,4 @@
-package ly.david.mbjc.common
+package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

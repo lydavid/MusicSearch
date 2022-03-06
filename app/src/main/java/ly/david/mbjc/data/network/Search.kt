@@ -1,8 +1,7 @@
-package ly.david.mbjc.data.search
+package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.network.SEARCH_LIMIT
 import retrofit2.http.GET
 import retrofit2.http.Query
 

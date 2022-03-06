@@ -1,7 +1,6 @@
-package ly.david.mbjc.data.lookup
+package ly.david.mbjc.data.network
 
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.Release
 import retrofit2.http.GET
 import retrofit2.http.Path
