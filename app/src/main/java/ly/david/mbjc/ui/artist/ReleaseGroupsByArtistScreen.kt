@@ -30,7 +30,9 @@ import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.sortAndGroupByTypes
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.StickyHeader
+import ly.david.mbjc.ui.common.UiState
 import ly.david.mbjc.ui.common.getYear
 import ly.david.mbjc.ui.common.toDate
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
@@ -47,61 +49,76 @@ fun ReleaseGroupsByArtistScreen(
 
     viewModel.updateArtist(artistId = artistId)
 
-    // TODO: make this a a UiReleaseGroupState instead that contains this, and loading/error
-    val uiReleaseGroups: List<UiReleaseGroup> by viewModel.uiReleaseGroups.collectAsState()
+    // TODO: allow determinate loading, progress based on remaining number of api calls
+    val uiState: UiState<List<UiReleaseGroup>> by viewModel.uiReleaseGroups.collectAsState()
     var queryText by rememberSaveable { mutableStateOf("") }
 
-    LazyColumn(
-        state = state,
-        modifier = modifier
-    ) {
+    when {
+        // TODO: could we do something about having to null check twice?
+        uiState.response != null -> {
+            uiState.response?.let { uiReleaseGroups ->
+                LazyColumn(
+                    state = state,
+                    modifier = modifier
+                ) {
 
-        item {
+                    item {
 
-            // TODO: use the same style from Search screen
-            //  including clear
-            // For now, let's just have this be in the screen itself, so that we don't clog up the top app bar.
-            OutlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                singleLine = true,
-                maxLines = 1,
-                placeholder = {
-                    Text(text = "Find in page")
-                },
-                value = queryText,
-                onValueChange = {
-                    queryText = it
-                    viewModel.updateQuery(it)
+                        // TODO: use the same style from Search screen
+                        //  including clear
+                        // For now, let's just have this be in the screen itself, so that we don't clog up the top app bar.
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            singleLine = true,
+                            maxLines = 1,
+                            placeholder = {
+                                Text(text = "Find in page")
+                            },
+                            value = queryText,
+                            onValueChange = {
+                                queryText = it
+                                viewModel.updateQuery(it)
+                            }
+                        )
+
+                        // TODO: lookup artist (should be cached at this point), and figure out number of release groups
+                        //  on filter: Showing 10 out of 197 release groups for this artist
+                        val results = uiReleaseGroups.size
+                        if (results == 0) {
+                            Text("No release groups found for this artist.")
+                        } else {
+                            Text("Found $results release groups for this artist.")
+                        }
+                    }
+
+                    uiReleaseGroups.sortAndGroupByTypes().forEach { (type, releaseGroupsForType) ->
+
+                        // TODO: clicking on header should collapse the group
+                        stickyHeader {
+                            StickyHeader(text = "$type (${releaseGroupsForType.size})")
+                        }
+                        items(releaseGroupsForType.sortedBy {
+                            it.firstReleaseDate.toDate()
+                        }) { releaseGroup ->
+                            ReleaseGroupCard(releaseGroup = releaseGroup) {
+                                onReleaseGroupClick(it.id)
+                            }
+                        }
+                    }
+
                 }
-            )
-
-            // TODO: lookup artist (should be cached at this point), and figure out number of release groups
-            //  on filter: Showing 10 out of 197 release groups for this artist
-            val results = uiReleaseGroups.size
-            if (results == 0) {
-                Text("No release groups found for this artist.")
-            } else {
-                Text("Found $results release groups for this artist.")
             }
         }
-
-        uiReleaseGroups.sortAndGroupByTypes().forEach { (type, releaseGroupsForType) ->
-
-            // TODO: clicking on header should collapse the group
-            stickyHeader {
-                StickyHeader(text = "$type (${releaseGroupsForType.size})")
-            }
-            items(releaseGroupsForType.sortedBy {
-                it.firstReleaseDate.toDate()
-            }) { releaseGroup ->
-                ReleaseGroupCard(releaseGroup = releaseGroup) {
-                    onReleaseGroupClick(it.id)
-                }
-            }
+        uiState.isLoading -> {
+            // TODO: loading bar freezes right before we get all of our data at once as a list
+            //  can we make it more smooth?
+            FullScreenLoadingIndicator()
         }
-
+        else -> {
+            Text(text = "error...")
+        }
     }
 }
 

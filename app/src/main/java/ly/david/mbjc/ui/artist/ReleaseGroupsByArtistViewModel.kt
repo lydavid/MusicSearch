@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.stateIn
 import ly.david.mbjc.data.UiReleaseGroup
@@ -23,6 +22,7 @@ import ly.david.mbjc.data.persistence.RoomReleaseGroup
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
 import ly.david.mbjc.data.toUiReleaseGroup
+import ly.david.mbjc.ui.common.UiState
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -45,14 +45,20 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         this.query.value = query
     }
 
-    val uiReleaseGroups: StateFlow<List<UiReleaseGroup>> =
-        combine(artistId.filter { it.isNotEmpty() }, query) { artistId, query ->
-            getReleaseGroupsByArtist(artistId, query)
-        }.distinctUntilChanged().stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            listOf()
-        )
+    val uiReleaseGroups: StateFlow<UiState<List<UiReleaseGroup>>> =
+        combine(
+            artistId.filter { it.isNotEmpty() },
+            query
+        ) { artistId, query ->
+            UiState(
+                response = getReleaseGroupsByArtist(artistId, query)
+            )
+        }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                UiState(isLoading = true)
+            )
 
     private suspend fun getReleaseGroupsByArtist(
         artistId: String,
