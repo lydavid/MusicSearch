@@ -122,7 +122,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     )
     abstract suspend fun getAllReleaseGroupsByArtistFilteredFts(artistId: String, query: String): List<RoomReleaseGroup>
 
-    // Not as fast as FTS but allows searching characters within foreign words
+    // Not as fast as FTS but allows searching characters within words
     @Query(
         """
         SELECT rg.*

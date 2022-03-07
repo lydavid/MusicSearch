@@ -1,9 +1,17 @@
 package ly.david.mbjc.ui.artist
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.stateIn
 import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
@@ -18,43 +26,56 @@ import ly.david.mbjc.data.toUiReleaseGroup
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
+    private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseGroupDao: ReleaseGroupDao,
     private val releaseGroupArtistDao: ReleaseGroupArtistDao
 ) : ViewModel() {
 
-    private val musicBrainzApiService by lazy {
-        MusicBrainzApiService.create()
+    // TODO: use functional paradigm, don't need to in-memory cache now
+    private val musicBrainzReleaseGroups = mutableListOf<MusicBrainzReleaseGroup>()
+
+    val query: MutableStateFlow<String> = MutableStateFlow("")
+    val artistId: MutableStateFlow<String> = MutableStateFlow("")
+
+    fun updateArtist(artistId: String) {
+        this.artistId.value = artistId
     }
 
-    // TODO: Would be nice if view can listen to this
-    //  and we would emit data every time one api is complete, meaning user doesn't have to wait for all api to complete
-    //  to start viewing data
-    //  and when new data is emitted, we don't force scroll to the top
-    private val musicBrainzReleaseGroups = mutableListOf<MusicBrainzReleaseGroup>()
-    private val uiReleaseGroups = mutableListOf<UiReleaseGroup>()
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
 
-    // TODO: as flow?
-    suspend fun getReleaseGroupsByArtist(
+    val uiReleaseGroups: StateFlow<List<UiReleaseGroup>> =
+        combine(artistId.filter { it.isNotEmpty() }, query) { artistId, query ->
+            getReleaseGroupsByArtist(artistId, query)
+        }.distinctUntilChanged().stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            listOf()
+        )
+
+    private suspend fun getReleaseGroupsByArtist(
         artistId: String,
+        query: String,
         limit: Int = BROWSE_LIMIT,
         offset: Int = 0
     ): List<UiReleaseGroup> {
-        if (uiReleaseGroups.isNotEmpty()) {
-            return uiReleaseGroups
-        }
 
         // TODO: we could store a count of how many release groups an artist has, so that we can continue fetching if it's not complete
         //  should be in artist's table? Update it there once we get it via browse release groups by artist
         val releaseGroupsByArtistInRoom = releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
-        uiReleaseGroups.addAll(
-            if (releaseGroupsByArtistInRoom == 0) {
-                getReleaseGroupsByArtistFromNetwork(artistId, limit, offset).map { it.toUiReleaseGroup() }
+        return if (releaseGroupsByArtistInRoom == 0) {
+            getReleaseGroupsByArtistFromNetwork(artistId, limit, offset).map { it.toUiReleaseGroup() }
+        } else {
+
+            val roomReleaseGroups: List<RoomReleaseGroup> = if (query.isEmpty()) {
+                releaseGroupDao.getAllReleaseGroupsByArtist(artistId)
             } else {
-                val roomReleaseGroups: List<RoomReleaseGroup> = releaseGroupDao.getAllReleaseGroupsByArtist(artistId)
-                roomReleaseGroups.map { it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id)) }
+                releaseGroupDao.getAllReleaseGroupsByArtistFiltered(artistId, "%$query%")
             }
-        )
-        return uiReleaseGroups
+
+            roomReleaseGroups.map { it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id)) }
+        }
     }
 
     private suspend fun getReleaseGroupsByArtistFromNetwork(

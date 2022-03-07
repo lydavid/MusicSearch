@@ -11,11 +11,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -26,9 +30,7 @@ import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.sortAndGroupByTypes
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.StickyHeader
-import ly.david.mbjc.ui.common.UiState
 import ly.david.mbjc.ui.common.getYear
 import ly.david.mbjc.ui.common.toDate
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
@@ -43,54 +45,63 @@ fun ReleaseGroupsByArtistScreen(
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
 
-    // TODO: these seem to happen on ui thread? It can't load in background when user switches tabs
-    // TODO: something like this should be hoisted? don't have to do it now since we're changing to flow
-    //  but maybe hoist that flow
-    val uiState by produceState(initialValue = UiState(isLoading = true)) {
-        value = UiState(response = viewModel.getReleaseGroupsByArtist(artistId = artistId))
-    }
+    viewModel.updateArtist(artistId = artistId)
 
-    when {
-        uiState.response != null -> {
-            uiState.response?.let { response: List<UiReleaseGroup> ->
+    // TODO: make this a a UiReleaseGroupState instead that contains this, and loading/error
+    val uiReleaseGroups: List<UiReleaseGroup> by viewModel.uiReleaseGroups.collectAsState()
+    var queryText by rememberSaveable { mutableStateOf("") }
 
-                LazyColumn(
-                    state = state,
-                    modifier = modifier
-                ) {
-                    item {
-                        val results = response.size
-                        if (results == 0) {
-                            Text("No release groups found for this artist.")
-                        } else {
-                            Text("Found $results release groups for this artist.")
-                        }
-                    }
+    LazyColumn(
+        state = state,
+        modifier = modifier
+    ) {
 
-                    response.sortAndGroupByTypes().forEach { (type, releaseGroupsForType) ->
+        item {
 
-                        // TODO: clicking on header should collapse the group
-                        stickyHeader {
-                            StickyHeader(text = "$type (${releaseGroupsForType.size})")
-                        }
-                        items(releaseGroupsForType.sortedBy {
-                            it.firstReleaseDate.toDate()
-                        }) { releaseGroup ->
-                            ReleaseGroupCard(releaseGroup = releaseGroup) {
-                                onReleaseGroupClick(it.id)
-                            }
-                        }
-                    }
+            // TODO: use the same style from Search screen
+            //  including clear
+            // For now, let's just have this be in the screen itself, so that we don't clog up the top app bar.
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                singleLine = true,
+                maxLines = 1,
+                placeholder = {
+                    Text(text = "Find in page")
+                },
+                value = queryText,
+                onValueChange = {
+                    queryText = it
+                    viewModel.updateQuery(it)
+                }
+            )
 
+            // TODO: lookup artist (should be cached at this point), and figure out number of release groups
+            //  on filter: Showing 10 out of 197 release groups for this artist
+            val results = uiReleaseGroups.size
+            if (results == 0) {
+                Text("No release groups found for this artist.")
+            } else {
+                Text("Found $results release groups for this artist.")
+            }
+        }
+
+        uiReleaseGroups.sortAndGroupByTypes().forEach { (type, releaseGroupsForType) ->
+
+            // TODO: clicking on header should collapse the group
+            stickyHeader {
+                StickyHeader(text = "$type (${releaseGroupsForType.size})")
+            }
+            items(releaseGroupsForType.sortedBy {
+                it.firstReleaseDate.toDate()
+            }) { releaseGroup ->
+                ReleaseGroupCard(releaseGroup = releaseGroup) {
+                    onReleaseGroupClick(it.id)
                 }
             }
         }
-        uiState.isLoading -> {
-            FullScreenLoadingIndicator()
-        }
-        else -> {
-            Text(text = "error...")
-        }
+
     }
 }
 

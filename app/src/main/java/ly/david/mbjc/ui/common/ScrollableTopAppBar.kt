@@ -30,8 +30,10 @@ import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 fun ScrollableTopAppBar(
     title: String,
     subtitle: String = "",
+
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
+
     openInBrowser: (() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
