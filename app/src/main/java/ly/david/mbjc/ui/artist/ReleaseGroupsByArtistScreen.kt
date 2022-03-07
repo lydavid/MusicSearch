@@ -64,8 +64,8 @@ fun ReleaseGroupsByArtistScreen(
 
                     item {
 
-                        // TODO: use the same style from Search screen
-                        //  including clear
+                        // TODO: add clear
+                        // TODO: in landscape mode, keyboard might block out field
                         // For now, let's just have this be in the screen itself, so that we don't clog up the top app bar.
                         OutlinedTextField(
                             modifier = Modifier

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.mbjc.data.Artist
+import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
 import ly.david.mbjc.data.network.SEARCH_LIMIT
 
@@ -21,7 +21,7 @@ internal class SearchViewModel : ViewModel() {
     val query: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val artists: Flow<PagingData<Artist>> =
+    val artists: Flow<PagingData<UiArtist>> =
         query.filterNot { it.isEmpty() }
             .flatMapLatest { query ->
                 Pager(

@@ -22,12 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Track
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.mbjc.data.network.MusicBrainzArtist
 import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
@@ -172,7 +172,7 @@ private val testTrack = Track(
     length = 253000,
     artistCredits = listOf(
         MusicBrainzArtistCredit(
-            Artist(
+            MusicBrainzArtist(
                 "3",
                 name = "actual name",
                 sortName = "sort name"

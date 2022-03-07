@@ -1,6 +1,5 @@
 package ly.david.mbjc.data.network
 
-import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.Release
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,7 +17,7 @@ interface Lookup {
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
 //        @Query("inc") include: String = "genres"
-    ): Artist
+    ): MusicBrainzArtist
 
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(

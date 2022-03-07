@@ -92,20 +92,33 @@ fun ScrollableTopAppBar(
             backgroundColor = MaterialTheme.colors.background
         )
 
-        if (tabsTitle.isNotEmpty()) {
-            ScrollableTabRow(
-                backgroundColor = MaterialTheme.colors.background,
-                selectedTabIndex = selectedTabIndex
-            ) {
-                tabsTitle.forEachIndexed { index, title ->
-                    Tab(
-                        text = { Text(title) },
-                        selected = selectedTabIndex == index,
-                        onClick = {
-                            onSelectTabIndex(index)
-                        }
-                    )
-                }
+        TabsBar(
+            tabsTitle = tabsTitle,
+            selectedTabIndex = selectedTabIndex,
+            onSelectTabIndex = onSelectTabIndex
+        )
+    }
+}
+
+@Composable
+fun TabsBar(
+    tabsTitle: List<String> = listOf(),
+    selectedTabIndex: Int = 0,
+    onSelectTabIndex: (Int) -> Unit = {}
+) {
+    if (tabsTitle.isNotEmpty()) {
+        ScrollableTabRow(
+            backgroundColor = MaterialTheme.colors.background,
+            selectedTabIndex = selectedTabIndex
+        ) {
+            tabsTitle.forEachIndexed { index, title ->
+                Tab(
+                    text = { Text(title) },
+                    selected = selectedTabIndex == index,
+                    onClick = {
+                        onSelectTabIndex(index)
+                    }
+                )
             }
         }
     }

@@ -18,12 +18,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.Date
 import javax.inject.Singleton
-import ly.david.mbjc.data.Artist
 
 @Database(
     entities = [
         // Main tables
-        Artist::class, RoomReleaseGroup::class,
+        RoomArtist::class, RoomReleaseGroup::class,
 
         // Full-Text Search (FTS) tables
         ReleaseGroupFts::class,
@@ -35,7 +34,7 @@ import ly.david.mbjc.data.Artist
         LookupHistory::class
     ],
     views = [],
-    version = 14
+    version = 15
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
@@ -80,7 +79,10 @@ interface BaseDao<in T> {
 }
 
 @Dao
-abstract class ArtistDao : BaseDao<Artist>
+abstract class ArtistDao : BaseDao<RoomArtist> {
+    @Query("SELECT * FROM artists WHERE id = :artistId")
+    abstract suspend fun getArtist(artistId: String): RoomArtist?
+}
 
 @Dao
 abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {

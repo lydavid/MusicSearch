@@ -42,8 +42,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.launch
-import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
+import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
@@ -59,7 +59,7 @@ internal fun SearchScreenScaffold(
 ) {
 
     val lazyListState: LazyListState = rememberLazyListState()
-    val pagingItems: LazyPagingItems<Artist> = viewModel.artists.collectAsLazyPagingItems()
+    val pagingItems: LazyPagingItems<UiArtist> = viewModel.artists.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = { ScrollableTopAppBar(title = "Search Artists", openDrawer = openDrawer) },
@@ -78,7 +78,7 @@ internal fun SearchScreenScaffold(
 @Composable
 private fun SearchScreen(
     state: LazyListState,
-    pagingItems: LazyPagingItems<Artist>,
+    pagingItems: LazyPagingItems<UiArtist>,
     onSearch: (String) -> Unit = {},
     onArtistClick: (String) -> Unit = {}
 ) {
@@ -175,8 +175,8 @@ private fun SearchScreen(
 // TODO: include Group/Person etc
 @Composable
 private fun ArtistCard(
-    artist: Artist,
-    onArtistClick: (Artist) -> Unit = {}
+    artist: UiArtist,
+    onArtistClick: (UiArtist) -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onArtistClick(artist) },
@@ -204,17 +204,16 @@ private fun ArtistCard(
 
 // region Previews
 
-class ArtistPreviewParameterProvider : PreviewParameterProvider<Artist> {
+class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
     override val values = sequenceOf(
-        Artist(
+        UiArtist(
             id = "1",
             name = "artist name",
             sortName = "sort name should not be seen",
         ),
-        Artist(
+        UiArtist(
             id = "2",
             type = "Group",
-            typeId = "e431f5f6-b5d2-343d-8b36-72607fffb74b",
             name = "wow, this artist name is so long it will wrap around the screen",
             sortName = "sort name should not be seen",
             disambiguation = "blah, blah, blah, some really long text that forces wrapping",
@@ -230,7 +229,7 @@ class ArtistPreviewParameterProvider : PreviewParameterProvider<Artist> {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ArtistCardPreview(
-    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: Artist
+    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: UiArtist
 ) {
     MusicBrainzJetpackComposeTheme {
         Surface {
