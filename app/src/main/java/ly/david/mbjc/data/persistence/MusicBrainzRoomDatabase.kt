@@ -130,8 +130,8 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
         LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
         WHERE a.id = :artistId
-        AND rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
-        OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query
+        AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
+        OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
     """
     )
     abstract suspend fun getAllReleaseGroupsByArtistFiltered(artistId: String, query: String): List<RoomReleaseGroup>
