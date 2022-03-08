@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.common
 import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -34,7 +34,7 @@ fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
 
-    openInBrowser: (() -> Unit)? = null,
+    dropdownMenuItems: @Composable (ColumnScope.() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
     tabsTitle: List<String> = listOf(),
@@ -76,17 +76,15 @@ fun ScrollableTopAppBar(
                 }
             },
             actions = {
-                if (openInBrowser != null) {
+                if (dropdownMenuItems != null) {
                     IconButton(onClick = { showMenu = !showMenu }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
                     }
-                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                        DropdownMenuItem(onClick = {
-                            openInBrowser.invoke()
-                        }) {
-                            Text("Open in browser")
-                        }
-                    }
+                    DropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false },
+                        content = dropdownMenuItems
+                    )
                 }
             },
             backgroundColor = MaterialTheme.colors.background

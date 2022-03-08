@@ -1,7 +1,9 @@
 package ly.david.mbjc.ui.artist
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -40,8 +42,20 @@ fun ArtistScreenScaffold(
             ScrollableTopAppBar(
                 title = titleState,
                 onBack = onBack,
-                openInBrowser = {
-                    context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                dropdownMenuItems = {
+                    DropdownMenuItem(onClick = {
+                        context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                    }) {
+                        Text("Open in browser")
+                    }
+
+                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                        DropdownMenuItem(onClick = {
+                            Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
+                        }) {
+                            Text("Sort by year")
+                        }
+                    }
                 },
                 tabsTitle = ArtistTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,

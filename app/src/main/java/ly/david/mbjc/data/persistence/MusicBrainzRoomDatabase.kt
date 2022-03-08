@@ -4,15 +4,11 @@ import android.content.Context
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Database
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.Transaction
 import androidx.room.TypeConverters
-import androidx.room.Update
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,21 +59,6 @@ object DatabaseModule {
             .fallbackToDestructiveMigration()
             .build()
     }
-}
-
-interface BaseDao<in T> {
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: T): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(entities: List<T>)
-
-    @Delete
-    fun delete(entity: T)
-
-    @Update
-    suspend fun update(entity: T)
 }
 
 @Dao

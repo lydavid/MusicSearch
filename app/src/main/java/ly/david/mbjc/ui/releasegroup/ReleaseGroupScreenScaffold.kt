@@ -1,7 +1,9 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,8 +43,12 @@ fun ReleaseGroupScreenScaffold(
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,
-                openInBrowser = {
-                    context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
+                dropdownMenuItems = {
+                    DropdownMenuItem(onClick = {
+                        context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
+                    }) {
+                        Text("Open in browser")
+                    }
                 },
                 tabsTitle = ReleaseGroupTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,
