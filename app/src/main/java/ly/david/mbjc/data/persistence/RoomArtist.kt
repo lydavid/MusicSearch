@@ -40,7 +40,8 @@ data class RoomArtist(
     @Embedded
     override val lifeSpan: LifeSpan? = null,
 
-    // TODO: include number of release groups once available
+    @ColumnInfo(name = "release_group_count")
+    val releaseGroupsCount: Int? = null
 
 ): Artist
 

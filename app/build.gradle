@@ -100,7 +100,7 @@ dependencies {
     implementation "androidx.room:room-runtime:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
     implementation "androidx.room:room-ktx:2.4.2"
-//    implementation "androidx.room:room-paging:2.5.0-alpha01"
+    implementation "androidx.room:room-paging:2.5.0-alpha01"
     androidTestImplementation "androidx.room:room-testing:2.4.2"
 
     // Hilt

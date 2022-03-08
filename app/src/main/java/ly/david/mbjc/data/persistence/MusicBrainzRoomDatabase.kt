@@ -1,6 +1,7 @@
 package ly.david.mbjc.data.persistence
 
 import android.content.Context
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Delete
@@ -9,6 +10,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.Transaction
 import androidx.room.TypeConverters
 import androidx.room.Update
 import dagger.Module
@@ -34,7 +36,7 @@ import javax.inject.Singleton
         LookupHistory::class
     ],
     views = [],
-    version = 15
+    version = 16
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
@@ -65,10 +67,10 @@ object DatabaseModule {
 
 interface BaseDao<in T> {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: T): Long
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(entities: List<T>)
 
     @Delete
@@ -82,10 +84,31 @@ interface BaseDao<in T> {
 abstract class ArtistDao : BaseDao<RoomArtist> {
     @Query("SELECT * FROM artists WHERE id = :artistId")
     abstract suspend fun getArtist(artistId: String): RoomArtist?
+
+    @Query(
+        """
+        UPDATE artists 
+        SET release_group_count = :releaseGroupCount
+        WHERE id = :artistId
+        """
+    )
+    abstract suspend fun updateNumberOfReleaseGroups(artistId: String, releaseGroupCount: Int)
 }
 
 @Dao
 abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
+
+    // Make sure to select from release_groups first, rather than artists.
+    // That way, when there are no entries, we return empty rather than 1 entry with null values.
+    @Transaction
+    @Query("""
+        SELECT rg.*
+        FROM release_groups rg
+        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        LEFT JOIN artists a ON a.id = rga.artist_id
+        WHERE a.id = :artistId
+    """)
+    abstract fun releaseGroupsPagingSource(artistId: String): PagingSource<Int, RoomReleaseGroup>
 
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
