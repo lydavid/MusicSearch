@@ -34,6 +34,7 @@ fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
 
+    mainAction: @Composable (() -> Unit)? = null,
     dropdownMenuItems: @Composable (ColumnScope.() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
@@ -76,6 +77,9 @@ fun ScrollableTopAppBar(
                 }
             },
             actions = {
+
+                mainAction?.invoke()
+
                 if (dropdownMenuItems != null) {
                     IconButton(onClick = { showMenu = !showMenu }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
