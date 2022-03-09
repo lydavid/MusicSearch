@@ -37,8 +37,8 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         val query: String = ""
     )
 
-    val artistId: MutableStateFlow<String> = MutableStateFlow("")
-    val query: MutableStateFlow<String> = MutableStateFlow("")
+    private val artistId: MutableStateFlow<String> = MutableStateFlow("")
+    private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = artistId.combine(query) { artistId, query ->
         Param(artistId, query)
     }
@@ -53,7 +53,6 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
 
     // TODO: what happens if we haven't fetched all release groups from network yet?
     //  does scrolling down fetch?
-
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleaseGroups: Flow<PagingData<UiReleaseGroup>> =
         paramState.flatMapLatest { paramState ->
@@ -70,9 +69,9 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
                 ),
                 pagingSourceFactory = {
                     if (paramState.query.isEmpty()) {
-                        releaseGroupDao.releaseGroupsPagingSource(paramState.artistId)
+                        releaseGroupDao.getReleaseGroupsByArtist(paramState.artistId)
                     } else {
-                        releaseGroupDao.releaseGroupsPagingSourceFiltered(
+                        releaseGroupDao.getReleaseGroupsByArtistFiltered(
                             paramState.artistId,
                             "%${paramState.query}%"
                         )

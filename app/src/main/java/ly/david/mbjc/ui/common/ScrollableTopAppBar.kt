@@ -70,9 +70,9 @@ fun ScrollableTopAppBar(
                     }
                 }) {
                     if (openDrawer == null) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Go back to previous screen.")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     } else {
-                        Icon(Icons.Default.Menu, contentDescription = "Open navigation drawer.")
+                        Icon(Icons.Default.Menu, contentDescription = "Open navigation drawer")
                     }
                 }
             },

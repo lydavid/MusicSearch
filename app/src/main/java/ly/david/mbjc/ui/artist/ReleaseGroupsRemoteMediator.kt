@@ -5,7 +5,9 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import java.io.IOException
+import kotlinx.coroutines.delay
 import ly.david.mbjc.data.network.BROWSE_LIMIT
+import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
@@ -35,6 +37,13 @@ class ReleaseGroupsRemoteMediator(
         }
     }
 
+    // TODO: when filtering without having fetched all,
+    //  we will keep loading from network until we get enough entries to fill prefetch distance
+    //  depending on what was searched, it might take a long time before we find enough entries that meets our requirement
+    //  ex: filter "202" for "Various Artists"
+    //  Of course, this artist is an edge case, in most cases, we would expect to get all entries rather quickly
+    //  Since we can't browse with a query, we can't really fix this.
+    //  For filtering by album types, we can pass in parameter like "type=album|ep"
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, RoomReleaseGroup>
@@ -44,6 +53,7 @@ class ReleaseGroupsRemoteMediator(
             LoadType.REFRESH -> 0
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
+                delay(DELAY_PAGED_API_CALLS_MS)
                 val numReleaseGroupsInDatabase = releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
                 val totalReleaseGroups = artistDao.getArtist(artistId)?.releaseGroupsCount
                 if (numReleaseGroupsInDatabase == totalReleaseGroups) {

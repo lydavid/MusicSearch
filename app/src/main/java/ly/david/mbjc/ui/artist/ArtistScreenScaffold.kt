@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.artist
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
@@ -69,7 +70,7 @@ fun ArtistScreenScaffold(
     Scaffold(
         topBar = {
 
-            // TODO: expand animation instead of sliding
+            // TODO: expand out from the icon
             AnimatedVisibility(
                 visible = isSearchAndFilterMode,
                 enter = slideInHorizontally(
@@ -80,7 +81,10 @@ fun ArtistScreenScaffold(
                 )
             ) {
 
+                // TODO: when returning, focus is in front of search text
+                //  most apps seems to not bring up the keyboard when returning
                 LaunchedEffect(Unit) {
+                    // TODO: only do them when first clicking on search icon
                     focusRequester.requestFocus()
                 }
 
@@ -110,7 +114,7 @@ fun ArtistScreenScaffold(
                                 Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                             }
                         },
-                        placeholder = { Text("Search") },
+                        placeholder = { Text("Search release groups") },
                         trailingIcon = {
                             if (searchText.isEmpty()) return@TextField
                             IconButton(onClick = {
@@ -166,13 +170,28 @@ fun ArtistScreenScaffold(
                             Text("Open in browser")
                         }
 
-//                        if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-//                            DropdownMenuItem(onClick = {
-//                                Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
-//                            }) {
-//                                Text("Sort by year")
-//                            }
-//                        }
+                        // TODO:
+                        if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                            DropdownMenuItem(onClick = {
+                                // TODO: dropdown or something with what to sort by
+                                Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
+                            }) {
+                                Text("Sort")
+                            }
+
+                            // TODO: good for debugging, but could give users some details of how many release groups are in db, network
+                            DropdownMenuItem(onClick = {
+                                Log.d("Remove This", "ArtistScreenScaffold: ee")
+                            }) {
+                                Text("Stats")
+                            }
+
+                            DropdownMenuItem(onClick = {
+                                Log.d("Remove This", "ArtistScreenScaffold: ee")
+                            }) {
+                                Text("Refresh")
+                            }
+                        }
                     },
                     tabsTitle = ArtistTab.values().map { it.title },
                     selectedTabIndex = selectedTab.ordinal,
