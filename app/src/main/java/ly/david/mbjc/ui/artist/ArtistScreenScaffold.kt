@@ -4,16 +4,17 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -35,7 +36,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.lookupInBrowser
@@ -88,9 +88,7 @@ fun ArtistScreenScaffold(
                     isSearchAndFilterMode = false
                 }
 
-                Surface(
-                    elevation = 8.dp,
-                ) {
+                Column {
                     TextField(
                         modifier = Modifier
                             .focusRequester(focusRequester)
@@ -133,6 +131,10 @@ fun ArtistScreenScaffold(
                             searchText = it
                         }
                     )
+
+                    // TODO: Filters
+
+                    Divider()
                 }
             }
 
@@ -194,6 +196,7 @@ fun ArtistScreenScaffold(
                 ReleaseGroupsByArtistScreen(
                     modifier = Modifier.padding(innerPadding),
                     artistId = artistId,
+                    searchText = searchText,
                     state = browseReleaseGroupsState,
                     onReleaseGroupClick = onReleaseGroupClick
                 )

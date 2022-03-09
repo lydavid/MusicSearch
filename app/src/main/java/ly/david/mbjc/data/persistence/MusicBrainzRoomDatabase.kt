@@ -91,6 +91,21 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     """)
     abstract fun releaseGroupsPagingSource(artistId: String): PagingSource<Int, RoomReleaseGroup>
 
+    // Not as fast as FTS but allows searching characters within words
+    @Transaction
+    @Query(
+        """
+        SELECT rg.*
+        FROM release_groups rg
+        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        LEFT JOIN artists a ON a.id = rga.artist_id
+        WHERE a.id = :artistId
+        AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
+        OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
+    """
+    )
+    abstract fun releaseGroupsPagingSourceFiltered(artistId: String, query: String): PagingSource<Int, RoomReleaseGroup>
+
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
 

@@ -45,6 +45,9 @@ class ReleaseGroupsRemoteMediator(
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val artistDao: ArtistDao,
     private val artistId: String
+
+    // TODO: if query is passed in, do something different?
+
 ) : RemoteMediator<Int, RoomReleaseGroup>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -110,9 +113,6 @@ class ReleaseGroupsRemoteMediator(
     }
 }
 
-
-
-
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
@@ -121,13 +121,31 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val artistDao: ArtistDao,
 ) : ViewModel() {
 
-    val artistId: MutableStateFlow<String> = MutableStateFlow("")
+    private data class Param(
+        val artistId: String = "",
+        val query: String = ""
+    )
 
-    // TODO: try combine
+    val artistId: MutableStateFlow<String> = MutableStateFlow("")
+    val query: MutableStateFlow<String> = MutableStateFlow("")
+    private val paramState = artistId.combine(query) { artistId, query ->
+        Param(artistId, query)
+    }
+
+    fun updateArtist(artistId: String) {
+        this.artistId.value = artistId
+    }
+
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
+
+    // TODO: what happens if we haven't fetched all release groups from network yet?
+    //  does scrolling down fetch?
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleaseGroups: Flow<PagingData<UiReleaseGroup>> =
-        artistId.filter { it.isNotEmpty() }
-            .flatMapLatest { artistId ->
+        paramState
+            .flatMapLatest { paramState ->
                 Pager(
                     config = PagingConfig(
                         pageSize = BROWSE_LIMIT
@@ -137,31 +155,25 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
                         releaseGroupDao = releaseGroupDao,
                         releaseGroupArtistDao = releaseGroupArtistDao,
                         artistDao = artistDao,
-                        artistId = artistId
+                        artistId = paramState.artistId
                     ),
                     pagingSourceFactory = {
-                        // TODO: crashing when querying for first time
-                        releaseGroupDao.releaseGroupsPagingSource(artistId)
+                        if (paramState.query.isEmpty()) {
+                            releaseGroupDao.releaseGroupsPagingSource(paramState.artistId)
+                        } else {
+                            releaseGroupDao.releaseGroupsPagingSourceFiltered(paramState.artistId, "%${paramState.query}%")
+                        }
                     }
-                ).flow.map { pagingData ->
-                    pagingData.map {
-                        it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
+                )
+                    .flow.map { pagingData ->
+                        pagingData.map {
+                            it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
+                        }
                     }
-                }
             }
 
     // TODO: use functional paradigm, don't need to in-memory cache now
     private val musicBrainzReleaseGroups = mutableListOf<MusicBrainzReleaseGroup>()
-
-    val query: MutableStateFlow<String> = MutableStateFlow("")
-
-    fun updateArtist(artistId: String) {
-        this.artistId.value = artistId
-    }
-
-    fun updateQuery(query: String) {
-        this.query.value = query
-    }
 
     val uiReleaseGroups: StateFlow<UiState<List<UiReleaseGroup>>> =
         combine(
