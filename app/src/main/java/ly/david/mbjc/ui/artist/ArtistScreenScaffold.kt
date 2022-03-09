@@ -86,6 +86,7 @@ fun ArtistScreenScaffold(
 
                 BackHandler {
                     isSearchAndFilterMode = false
+                    searchText = ""
                 }
 
                 Column {
@@ -97,8 +98,6 @@ fun ArtistScreenScaffold(
                         singleLine = true,
 //                        shape = RoundedCornerShape(32.dp),
                         colors = TextFieldDefaults.textFieldColors(
-//                            leadingIconColor = MaterialTheme.colors.onSurface,
-//                            trailingIconColor = MaterialTheme.colors.onSurface,
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             disabledIndicatorColor = Color.Transparent
@@ -106,8 +105,9 @@ fun ArtistScreenScaffold(
                         leadingIcon = {
                             IconButton(onClick = {
                                 isSearchAndFilterMode = false
+                                searchText = ""
                             }) {
-                                Icon(Icons.Default.ArrowBack, contentDescription = "Hide search field.")
+                                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                             }
                         },
                         placeholder = { Text("Search") },
