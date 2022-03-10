@@ -86,8 +86,8 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         """
         SELECT rg.*
         FROM release_groups rg
-        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        LEFT JOIN artists a ON a.id = rga.artist_id
+        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        INNER JOIN artists a ON a.id = rga.artist_id
         WHERE a.id = :artistId
     """
     )
@@ -99,8 +99,8 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         """
         SELECT rg.*
         FROM release_groups rg
-        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        LEFT JOIN artists a ON a.id = rga.artist_id
+        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        INNER JOIN artists a ON a.id = rga.artist_id
         WHERE a.id = :artistId
         AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
         OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
@@ -113,12 +113,15 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
     @Query(
         """
-        SELECT COUNT(rg.id)
-        FROM artists a
-        LEFT JOIN release_groups_artists rga ON a.id = rga.artist_id
-        LEFT JOIN release_groups rg ON rg.id = rga.release_group_id
-        WHERE a.id = :artistId
-        GROUP BY a.id
+        SELECT IFNULL(
+            (SELECT COUNT(*)
+            FROM release_groups rg
+            INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+            INNER JOIN artists a ON a.id = rga.artist_id
+            WHERE a.id = :artistId
+            GROUP BY a.id),
+            0
+        ) AS count
     """
     )
     abstract suspend fun getNumberOfReleaseGroupsByArtist(artistId: String): Int
@@ -129,8 +132,8 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         WHERE id in
         (SELECT rg.id
         FROM release_groups rg
-        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        LEFT JOIN artists a ON a.id = rga.artist_id
+        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        INNER JOIN artists a ON a.id = rga.artist_id
         WHERE a.id = :artistId)
     """
     )
@@ -143,7 +146,7 @@ abstract class ReleaseGroupArtistDao : BaseDao<RoomReleaseGroupArtistCredit> {
         """
         SELECT rga.*
         FROM release_groups rg
-        LEFT JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
         where rg.id = :releaseGroupId
         ORDER BY rga.`order`
     """

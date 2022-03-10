@@ -40,10 +40,18 @@ data class RoomArtist(
     @Embedded
     override val lifeSpan: LifeSpan? = null,
 
+    /**
+     * The total number of release groups this artist has in Music Brainz's database.
+     *
+     * We track this number so that we know whether or not we've collected them all in our local database.
+     *
+     * When not set, it means we have not queried for the number of release groups by this artist.
+     * Some artists may have 0 release groups, so 0 is considered set.
+     */
     @ColumnInfo(name = "release_group_count")
     val releaseGroupsCount: Int? = null
 
-): Artist
+) : Artist
 
 fun MusicBrainzArtist.toRoomArtist() =
     RoomArtist(

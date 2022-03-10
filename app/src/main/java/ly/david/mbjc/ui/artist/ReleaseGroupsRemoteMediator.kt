@@ -37,28 +37,24 @@ class ReleaseGroupsRemoteMediator(
         }
     }
 
-    // TODO: when filtering without having fetched all,
-    //  we will keep loading from network until we get enough entries to fill prefetch distance
-    //  depending on what was searched, it might take a long time before we find enough entries that meets our requirement
-    //  ex: filter "202" for "Various Artists"
-    //  Of course, this artist is an edge case, in most cases, we would expect to get all entries rather quickly
-    //  Since we can't browse with a query, we can't really fix this.
-    //  For filtering by album types, we can pass in parameter like "type=album|ep"
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, RoomReleaseGroup>
     ): MediatorResult {
-
-        val nextOffset = when (loadType) {
+        val nextOffset: Int = when (loadType) {
             LoadType.REFRESH -> 0
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
-                delay(DELAY_PAGED_API_CALLS_MS)
                 val numReleaseGroupsInDatabase = releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
                 val totalReleaseGroups = artistDao.getArtist(artistId)?.releaseGroupsCount
+
+                // It should not be possible for the number of release groups in the database to exceed the total
+                // from Music Brainz's database. But if it does, it could cause an infinite loop here.
                 if (numReleaseGroupsInDatabase == totalReleaseGroups) {
                     return MediatorResult.Success(endOfPaginationReached = true)
                 }
+
+                delay(DELAY_PAGED_API_CALLS_MS)
                 numReleaseGroupsInDatabase
             }
         }

@@ -51,8 +51,6 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         this.query.value = query
     }
 
-    // TODO: what happens if we haven't fetched all release groups from network yet?
-    //  does scrolling down fetch?
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleaseGroups: Flow<PagingData<UiReleaseGroup>> =
         paramState.flatMapLatest { paramState ->
