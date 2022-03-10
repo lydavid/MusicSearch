@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -59,6 +60,7 @@ fun ArtistScreenScaffold(
     var artistName by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
+    val scaffoldState = rememberScaffoldState()
     val browseReleaseGroupsState = rememberLazyListState()
 
     // TODO: "Filter" is for selecting chips like album type
@@ -68,6 +70,7 @@ fun ArtistScreenScaffold(
     val focusManager = LocalFocusManager.current
 
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
 
             // TODO: expand out from the icon
@@ -217,6 +220,7 @@ fun ArtistScreenScaffold(
                     artistId = artistId,
                     searchText = searchText,
                     state = browseReleaseGroupsState,
+                    scaffoldState = scaffoldState,
                     onReleaseGroupClick = onReleaseGroupClick
                 )
             }
