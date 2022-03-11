@@ -6,22 +6,23 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.insertFooterItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.mbjc.data.UiArtist
+import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
 import ly.david.mbjc.data.network.SEARCH_LIMIT
 
-internal class SearchViewModel : ViewModel() {
+internal class SearchArtistsViewModel : ViewModel() {
 
     val query: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val artists: Flow<PagingData<UiArtist>> =
+    val artists: Flow<PagingData<SearchArtistsUiModel>> =
         query.filterNot { it.isEmpty() }
             .flatMapLatest { query ->
                 Pager(
@@ -32,7 +33,9 @@ internal class SearchViewModel : ViewModel() {
                     pagingSourceFactory = {
                         SearchArtistsPagingSource(queryString = query)
                     }
-                ).flow
+                ).flow.map { pagingData ->
+                    pagingData.insertFooterItem(item = SearchArtistsUiModel.EndOfList)
+                }
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)

@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import java.io.IOException
 import kotlinx.coroutines.delay
-import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.STARTING_OFFSET
@@ -14,13 +13,13 @@ import retrofit2.HttpException
 // TODO: singleton?
 class SearchArtistsPagingSource(
     val queryString: String
-) : PagingSource<Int, UiArtist>() {
+) : PagingSource<Int, SearchArtistsUiModel>() {
 
     private val musicBrainzApiService by lazy {
         MusicBrainzApiService.create()
     }
 
-    override fun getRefreshKey(state: PagingState<Int, UiArtist>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, SearchArtistsUiModel>): Int? {
         // We need to get the previous key (or next key if previous is null) of the page
         // that was closest to the most recently accessed index.
         // Anchor position is the most recently accessed index.
@@ -30,7 +29,7 @@ class SearchArtistsPagingSource(
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UiArtist> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, SearchArtistsUiModel> {
         val currentOffset = params.key ?: STARTING_OFFSET
         if (currentOffset != STARTING_OFFSET) {
             delay(DELAY_PAGED_API_CALLS_MS)
@@ -50,7 +49,7 @@ class SearchArtistsPagingSource(
                 currentOffset + artists.size
             }
             LoadResult.Page(
-                data = artists.map { it.toUiArtist() },
+                data = artists.map { SearchArtistsUiModel.Data(it.toUiArtist()) },
                 prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
                 nextKey = nextOffset
             )

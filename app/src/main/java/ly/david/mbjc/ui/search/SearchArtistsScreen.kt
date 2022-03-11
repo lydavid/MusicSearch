@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -22,7 +21,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,13 +33,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.launch
 import ly.david.mbjc.data.LifeSpan
@@ -49,43 +46,15 @@ import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun SearchScreenScaffold(
-    openDrawer: () -> Unit = {},
-    onArtistClick: (String) -> Unit = {},
-    viewModel: SearchViewModel = viewModel()
-) {
-
-    val lazyListState: LazyListState = rememberLazyListState()
-    val scaffoldState = rememberScaffoldState()
-    val lazyPagingItems: LazyPagingItems<UiArtist> = viewModel.artists.collectAsLazyPagingItems()
-
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = { ScrollableTopAppBar(title = "Search Artists", openDrawer = openDrawer) },
-    ) {
-        SearchScreen(
-            state = lazyListState,
-            scaffoldState = scaffoldState,
-            lazyPagingItems = lazyPagingItems,
-            onSearch = { query ->
-                viewModel.query.value = query
-            },
-            onArtistClick = onArtistClick,
-        )
-    }
-}
-
-@Composable
-private fun SearchScreen(
-    state: LazyListState,
+fun SearchArtistsScreen(
+    lazyListState: LazyListState,
     scaffoldState: ScaffoldState,
-    lazyPagingItems: LazyPagingItems<UiArtist>,
+    lazyPagingItems: LazyPagingItems<SearchArtistsUiModel>,
     onSearch: (String) -> Unit = {},
     onArtistClick: (String) -> Unit = {}
 ) {
@@ -133,7 +102,7 @@ private fun SearchScreen(
                                 showAlertDialog = true
                             } else {
                                 onSearch(text)
-                                state.scrollToItem(0)
+                                lazyListState.scrollToItem(0)
                                 focusManager.clearFocus()
                             }
                         }
@@ -169,16 +138,44 @@ private fun SearchScreen(
             lazyPagingItems = lazyPagingItems,
             scaffoldState = scaffoldState
         ) {
-            LazyColumn(
-                state = state
-            ) {
-                items(lazyPagingItems) { artist ->
-                    if (artist == null) return@items
-                    ArtistCard(artist = artist) {
+            SearchArtistsResults(
+                lazyListState = lazyListState,
+                lazyPagingItems = lazyPagingItems,
+                onArtistClick = onArtistClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun SearchArtistsResults(
+    lazyListState: LazyListState,
+    lazyPagingItems: LazyPagingItems<SearchArtistsUiModel>,
+    onArtistClick: (String) -> Unit = {}
+) {
+    LazyColumn(
+        state = lazyListState
+    ) {
+        items(lazyPagingItems) { searchArtistsUiModel ->
+            when (searchArtistsUiModel) {
+                is SearchArtistsUiModel.Data -> {
+                    ArtistCard(artist = searchArtistsUiModel.uiArtist) {
                         onArtistClick(it.id)
                     }
                 }
-                // TODO: if we're at the end of the list, can we show a message saying so?
+                is SearchArtistsUiModel.EndOfList -> {
+                    Text(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body2,
+                        text = "End of search results."
+                    )
+                }
+                else -> {
+                    // Do nothing.
+                }
             }
         }
     }
@@ -216,7 +213,7 @@ private fun ArtistCard(
 
 // region Previews
 
-class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
+private class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
     override val values = sequenceOf(
         UiArtist(
             id = "1",
@@ -247,15 +244,6 @@ internal fun ArtistCardPreview(
         Surface {
             ArtistCard(artist)
         }
-    }
-}
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun SearchScreenPreview() {
-    MusicBrainzJetpackComposeTheme {
-        SearchScreenScaffold()
     }
 }
 // endregion
