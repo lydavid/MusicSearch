@@ -29,6 +29,7 @@ import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 fun <T : Any> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
     scaffoldState: ScaffoldState,
+    noResultsText: String = "No results found.",
     content: @Composable () -> Unit
 ) {
 
@@ -57,7 +58,7 @@ fun <T : Any> PagingLoadingAndErrorHandler(
                 Text(
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.body1,
-                    text = "No results found.\nTry refining your search query."
+                    text = noResultsText
                 )
             }
         }

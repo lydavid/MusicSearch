@@ -136,7 +136,8 @@ fun SearchArtistsScreen(
 
         PagingLoadingAndErrorHandler(
             lazyPagingItems = lazyPagingItems,
-            scaffoldState = scaffoldState
+            scaffoldState = scaffoldState,
+            noResultsText = "No results found.\nTry refining your search query."
         ) {
             SearchArtistsResults(
                 lazyListState = lazyListState,
