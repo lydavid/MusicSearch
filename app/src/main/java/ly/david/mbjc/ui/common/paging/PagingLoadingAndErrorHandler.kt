@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.mbjc.ui.common.paging
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 
 /**
  * Handles loading and errors for paging screens.
@@ -32,11 +33,11 @@ fun <T : Any> PagingLoadingAndErrorHandler(
 ) {
 
     // This doesn't affect "loads" from db/source.
-    when (lazyPagingItems.loadState.refresh) {
-        is LoadState.Loading -> {
+    when {
+        lazyPagingItems.loadState.refresh is LoadState.Loading -> {
             FullScreenLoadingIndicator()
         }
-        is LoadState.Error -> {
+        lazyPagingItems.loadState.refresh is LoadState.Error -> {
             // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
             LaunchedEffect(Unit) {
                 val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
@@ -45,6 +46,20 @@ fun <T : Any> PagingLoadingAndErrorHandler(
             }
 
             FullScreenErrorWithRetry(lazyPagingItems = lazyPagingItems)
+        }
+        lazyPagingItems.loadState.append.endOfPaginationReached &&
+            lazyPagingItems.itemCount == 0 -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.body1,
+                    text = "No results found.\nTry refining your search query."
+                )
+            }
         }
         else -> {
             if (lazyPagingItems.loadState.append is LoadState.Error) {
@@ -59,14 +74,13 @@ fun <T : Any> PagingLoadingAndErrorHandler(
                 }
             }
 
-            // When not in full-screen loading, or full screen error, display content.
             content()
         }
     }
 }
 
 @Composable
-fun <T : Any> FullScreenErrorWithRetry(
+private fun <T : Any> FullScreenErrorWithRetry(
     lazyPagingItems: LazyPagingItems<T>,
 ) {
     Column(

@@ -45,7 +45,7 @@ import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -213,7 +213,7 @@ private fun ArtistCard(
 
 // region Previews
 
-private class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
+class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
     override val values = sequenceOf(
         UiArtist(
             id = "1",

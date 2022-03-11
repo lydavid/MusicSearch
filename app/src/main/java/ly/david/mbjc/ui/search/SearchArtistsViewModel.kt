@@ -6,7 +6,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertFooterItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
 import ly.david.mbjc.data.network.SEARCH_LIMIT
+import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
 internal class SearchArtistsViewModel : ViewModel() {
 
@@ -34,7 +34,8 @@ internal class SearchArtistsViewModel : ViewModel() {
                         SearchArtistsPagingSource(queryString = query)
                     }
                 ).flow.map { pagingData ->
-                    pagingData.insertFooterItem(item = SearchArtistsUiModel.EndOfList)
+                    // TODO: can we somehow insert a footer for when we know there are more results but network failed?
+                    pagingData.insertFooterItemForNonEmpty(item = SearchArtistsUiModel.EndOfList)
                 }
             }
             .distinctUntilChanged()

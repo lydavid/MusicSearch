@@ -26,8 +26,8 @@ import androidx.paging.compose.items
 import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.getYear
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
 @OptIn(ExperimentalFoundationApi::class)
