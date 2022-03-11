@@ -2,110 +2,33 @@ package ly.david.mbjc.ui.artist
 
 import android.content.res.Configuration
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.getYear
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
-
-/**
- * Handles loading and errors for paging screens.
- */
-@Composable
-fun <T : Any> PagingLoadingAndErrorHandler(
-    lazyPagingItems: LazyPagingItems<T>,
-    scaffoldState: ScaffoldState,
-    content: @Composable () -> Unit
-) {
-
-    // This doesn't affect "loads" from db/source.
-    if (lazyPagingItems.loadState.refresh is LoadState.Loading) {
-        FullScreenLoadingIndicator()
-        return
-    }
-
-    // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
-    if (lazyPagingItems.loadState.refresh is LoadState.Error) {
-        LaunchedEffect(Unit) {
-            val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
-            val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
-            scaffoldState.snackbarHostState.showSnackbar(displayMessage)
-        }
-
-        // TODO: sometimes some amount of data is loaded (despite no internet), so this will show underneath those loaded data
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.body1,
-                text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again."
-            )
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                onClick = {
-                    lazyPagingItems.retry()
-                }
-            ) {
-                Icon(Icons.Default.Refresh, "")
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = "Retry"
-                )
-            }
-        }
-    }
-
-
-    if (lazyPagingItems.loadState.append is LoadState.Error) {
-        LaunchedEffect(Unit) {
-            val actionPerformed: SnackbarResult = scaffoldState.snackbarHostState.showSnackbar(
-                message = "Failed to fetch more data.",
-                actionLabel = "Retry"
-            )
-            if (actionPerformed == SnackbarResult.ActionPerformed) {
-                lazyPagingItems.retry()
-            }
-        }
-    }
-
-
-    // When not in full-screen loading, or full screen error, display content.
-    content()
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -124,9 +47,10 @@ fun ReleaseGroupsByArtistScreen(
 
     val lazyPagingItems: LazyPagingItems<UiReleaseGroup> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
 
-
-
-    PagingLoadingAndErrorHandler(lazyPagingItems = lazyPagingItems, scaffoldState = scaffoldState) {
+    PagingLoadingAndErrorHandler(
+        lazyPagingItems = lazyPagingItems,
+        scaffoldState = scaffoldState
+    ) {
         LazyColumn(
             state = state,
             modifier = modifier
@@ -139,7 +63,6 @@ fun ReleaseGroupsByArtistScreen(
             }
         }
     }
-
 
     // TODO: allow determinate loading, progress based on remaining number of api calls
 //    val uiState: UiState<List<UiReleaseGroup>> by viewModel.uiReleaseGroups.collectAsState()

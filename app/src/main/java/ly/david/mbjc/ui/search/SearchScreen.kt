@@ -47,8 +47,8 @@ import kotlinx.coroutines.launch
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.artist.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.mbjc.ui.theme.getAlertBackgroundColor
@@ -112,64 +112,63 @@ private fun SearchScreen(
         )
     }
 
-    PagingLoadingAndErrorHandler(
-        lazyPagingItems = lazyPagingItems,
-        scaffoldState = scaffoldState
-    ) {
-
-        Column {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TextField(
-                    modifier = Modifier
-                        .weight(1f)
-                        .focusRequester(focusRequester),
-                    value = text,
-                    label = { Text("Search") },
-                    placeholder = { Text("Search") },
-                    maxLines = 1, // TODO: Seems like this is currently broken
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            coroutineScope.launch {
-                                if (text.isEmpty()) {
-                                    showAlertDialog = true
-                                } else {
-                                    onSearch(text)
-                                    state.scrollToItem(0)
-                                    focusManager.clearFocus()
-                                }
+    Column {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            TextField(
+                modifier = Modifier
+                    .weight(1f)
+                    .focusRequester(focusRequester),
+                value = text,
+                label = { Text("Search") },
+                placeholder = { Text("Search") },
+                maxLines = 1, // TODO: Seems like this is currently broken
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        coroutineScope.launch {
+                            if (text.isEmpty()) {
+                                showAlertDialog = true
+                            } else {
+                                onSearch(text)
+                                state.scrollToItem(0)
+                                focusManager.clearFocus()
                             }
                         }
-                    ),
-                    trailingIcon = {
-                        if (text.isEmpty()) return@TextField
-                        IconButton(onClick = {
-                            text = ""
-                            focusRequester.requestFocus()
-                        }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
-                        }
-                    },
-                    onValueChange = { newText ->
-                        text = newText
                     }
-                )
-
-                // TODO: this doesn't fill rest of screen despite weight 1f
-                // TODO: focusing on this requires 1-2 additional backpresses to exit app
-                ExposedDropdownMenuBox(
-                    modifier = Modifier.weight(1f),
-                    options = MusicBrainzResource.values().toList(),
-                    selectedOption = selectedOption,
-                    onSelectOption = {
-                        selectedOption = it
+                ),
+                trailingIcon = {
+                    if (text.isEmpty()) return@TextField
+                    IconButton(onClick = {
+                        text = ""
+                        focusRequester.requestFocus()
+                    }) {
+                        Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
                     }
-                )
-            }
+                },
+                onValueChange = { newText ->
+                    text = newText
+                }
+            )
 
+            // TODO: this doesn't fill rest of screen despite weight 1f
+            // TODO: focusing on this requires 1-2 additional backpresses to exit app
+            ExposedDropdownMenuBox(
+                modifier = Modifier.weight(1f),
+                options = MusicBrainzResource.values().toList(),
+                selectedOption = selectedOption,
+                onSelectOption = {
+                    selectedOption = it
+                }
+            )
+        }
+
+        PagingLoadingAndErrorHandler(
+            lazyPagingItems = lazyPagingItems,
+            scaffoldState = scaffoldState
+        ) {
             LazyColumn(
                 state = state
             ) {
@@ -183,7 +182,6 @@ private fun SearchScreen(
             }
         }
     }
-
 }
 
 // TODO: include Group/Person etc
