@@ -41,7 +41,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = artistId.combine(query) { artistId, query ->
         Param(artistId, query)
-    }
+    }.distinctUntilChanged()
 
     fun updateArtist(artistId: String) {
         this.artistId.value = artistId
