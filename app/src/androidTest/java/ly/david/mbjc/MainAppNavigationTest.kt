@@ -1,10 +1,13 @@
 package ly.david.mbjc
 
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.Dispatchers
@@ -69,5 +72,26 @@ class MainAppNavigationTest {
         composeTestRule
             .onNodeWithText("Recent History")
             .assertIsDisplayed()
+    }
+
+    @Test
+    fun enterSearchText_thenClear() {
+        composeTestRule
+            .onNodeWithText("Search")
+            .assert(hasText(""))
+            .performTextInput("Hello there")
+
+        composeTestRule
+            .onNodeWithContentDescription("Clear search field.")
+            .assertIsDisplayed()
+            .performClick()
+
+        composeTestRule
+            .onNodeWithContentDescription("Clear search field.")
+            .assertDoesNotExist()
+
+        composeTestRule
+            .onNodeWithText("Search")
+            .assert(hasText(""))
     }
 }
