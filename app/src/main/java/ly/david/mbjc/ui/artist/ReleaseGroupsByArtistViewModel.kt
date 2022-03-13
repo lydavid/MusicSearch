@@ -27,6 +27,7 @@ import ly.david.mbjc.data.persistence.ReleaseGroupDao
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
+    private val artistRepository: ArtistRepository,
     private val releaseGroupDao: ReleaseGroupDao,
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val artistDao: ArtistDao,
@@ -43,9 +44,10 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         ViewModelState(artistId, query)
     }.distinctUntilChanged()
 
-    fun updateArtist(artistId: String) {
-        this.artistId.value = artistId
-    }
+    suspend fun lookupArtist(artistId: String) =
+        artistRepository.lookupArtist(artistId).also {
+            this.artistId.value = it.id
+        }
 
     fun updateQuery(query: String) {
         this.query.value = query

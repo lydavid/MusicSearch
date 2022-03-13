@@ -44,7 +44,7 @@ import ly.david.mbjc.ui.common.lookupInBrowser
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
 enum class ArtistTab(val title: String) {
-    OVERVIEW("Overview"),
+//    OVERVIEW("Overview"),
     RELEASE_GROUPS("Release Groups"),
     RELEASES("Releases"),
 }
@@ -56,7 +56,7 @@ fun ArtistScreenScaffold(
     onBack: () -> Unit
 ) {
 
-    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.OVERVIEW) }
+    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var artistName by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
@@ -206,14 +206,6 @@ fun ArtistScreenScaffold(
     ) { innerPadding ->
 
         when (selectedTab) {
-            ArtistTab.OVERVIEW -> {
-                ArtistOverviewScreen(
-                    artistId = artistId,
-                    onTitleUpdate = {
-                        artistName = it
-                    }
-                )
-            }
             ArtistTab.RELEASE_GROUPS -> {
                 ReleaseGroupsByArtistScreen(
                     modifier = Modifier.padding(innerPadding),
@@ -221,7 +213,10 @@ fun ArtistScreenScaffold(
                     searchText = searchText,
                     state = browseReleaseGroupsState,
                     scaffoldState = scaffoldState,
-                    onReleaseGroupClick = onReleaseGroupClick
+                    onReleaseGroupClick = onReleaseGroupClick,
+                    onTitleUpdate = {
+                        artistName = it
+                    }
                 )
             }
             ArtistTab.RELEASES -> {

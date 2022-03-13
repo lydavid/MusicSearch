@@ -5,12 +5,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
@@ -23,10 +25,14 @@ fun ReleaseGroupsByArtistScreen(
     state: LazyListState,
     scaffoldState: ScaffoldState,
     onReleaseGroupClick: (String) -> Unit = {},
+    onTitleUpdate: (title: String) -> Unit = {},
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
 
-    viewModel.updateArtist(artistId = artistId)
+    LaunchedEffect(key1 = artistId) {
+        onTitleUpdate(viewModel.lookupArtist(artistId).getNameWithDisambiguation())
+    }
+
     viewModel.updateQuery(query = searchText)
 
     val lazyPagingItems: LazyPagingItems<UiReleaseGroup> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
