@@ -15,10 +15,23 @@ interface Search {
         @Query("limit") limit: Int = SEARCH_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchArtistsResponse
+
+    @GET("release-group")
+    suspend fun queryReleaseGroups(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchReleaseGroupsResponse
 }
 
 data class SearchArtistsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "artists") val artists: List<MusicBrainzArtist>
+)
+
+data class SearchReleaseGroupsResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "release-groups") val releaseGroups: List<MusicBrainzReleaseGroup>
 )

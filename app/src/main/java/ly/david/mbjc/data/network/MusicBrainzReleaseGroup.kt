@@ -44,5 +44,5 @@ data class MusicBrainzReleaseGroup(
     // lookup only, inc=releases
     @Json(name = "releases")
     val releases: List<Release>? = null,
-): ReleaseGroup
+): ReleaseGroup, MusicBrainzData()
 

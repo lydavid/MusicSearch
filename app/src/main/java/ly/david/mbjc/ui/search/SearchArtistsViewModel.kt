@@ -13,29 +13,45 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.mbjc.data.EndOfList
+import ly.david.mbjc.data.UiData
 import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.SEARCH_LIMIT
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
 internal class SearchArtistsViewModel : ViewModel() {
 
-    val query: MutableStateFlow<String> = MutableStateFlow("")
+    private data class ViewModelState(
+        val resource: MusicBrainzResource = MusicBrainzResource.ARTIST,
+        val query: String = "",
+    )
+
+    private val viewModelState = MutableStateFlow(ViewModelState())
+
+    fun updateViewModelState(resource: MusicBrainzResource, query: String) {
+        viewModelState.value = ViewModelState(resource, query)
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val artists: Flow<PagingData<SearchArtistsUiModel>> =
-        query.filterNot { it.isEmpty() }
-            .flatMapLatest { query ->
+    val searchResultsUiData: Flow<PagingData<UiData>> =
+        viewModelState.filterNot { it.query.isEmpty() }
+            .flatMapLatest { viewModelState ->
                 Pager(
                     config = PagingConfig(
                         pageSize = SEARCH_LIMIT,
                         initialLoadSize = INITIAL_SEARCH_LIMIT
                     ),
                     pagingSourceFactory = {
-                        SearchArtistsPagingSource(queryString = query)
+                        SearchArtistsPagingSource(
+                            resource = viewModelState.resource,
+                            queryString = viewModelState.query,
+                        )
                     }
                 ).flow.map { pagingData ->
+                    pagingData.insertFooterItemForNonEmpty(item = EndOfList)
                     // TODO: can we somehow insert a footer for when we know there are more results but network failed?
-                    pagingData.insertFooterItemForNonEmpty(item = SearchArtistsUiModel.EndOfList)
+                    // TODO: loading more footer?
                 }
             }
             .distinctUntilChanged()

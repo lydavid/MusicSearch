@@ -35,4 +35,4 @@ data class MusicBrainzArtist(
     // for search responses only
 //    @Json(name = "score")
 //    val score: Int? = null,
-): Artist
+): Artist, MusicBrainzData()

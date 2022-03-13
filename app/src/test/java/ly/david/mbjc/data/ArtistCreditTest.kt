@@ -21,6 +21,10 @@ class ArtistCreditTest {
         every { name } returns ARTIST_2_NAME
         every { joinPhrase } returns ""
     }
+    private val artistCredit3: ArtistCredit = mockk {
+        every { name } returns ARTIST_2_NAME
+        every { joinPhrase } returns null
+    }
 
     @Test
     fun `null artist credits`() {
@@ -36,6 +40,12 @@ class ArtistCreditTest {
     @Test
     fun `single artist credit`() {
         artistCredits = listOf(artistCredit2)
+        assertEquals(ARTIST_2_NAME, artistCredits.getDisplayNames())
+    }
+
+    @Test
+    fun `single artist credit with null join phrase`() {
+        artistCredits = listOf(artistCredit3)
         assertEquals(ARTIST_2_NAME, artistCredits.getDisplayNames())
     }
 

@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.mbjc.data.UiData
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
@@ -25,18 +26,18 @@ internal fun SearchScreenScaffold(
     val scaffoldState: ScaffoldState = rememberScaffoldState()
 
     // TODO: move down if we don't generalize this screen
-    val lazyPagingItems: LazyPagingItems<SearchArtistsUiModel> = viewModel.artists.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.searchResultsUiData.collectAsLazyPagingItems()
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { ScrollableTopAppBar(title = "Search Artists", openDrawer = openDrawer) },
+        topBar = { ScrollableTopAppBar(title = "Search Music Brainz", openDrawer = openDrawer) },
     ) {
-        SearchArtistsScreen(
+        SearchScreen(
             lazyListState = lazyListState,
             scaffoldState = scaffoldState,
             lazyPagingItems = lazyPagingItems,
-            onSearch = { query ->
-                viewModel.query.value = query
+            onSearch = { resource, query ->
+                viewModel.updateViewModelState(resource, query)
             },
             onArtistClick = onArtistClick,
         )

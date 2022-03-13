@@ -11,6 +11,7 @@ data class MusicBrainzArtistCredit(
     @Json(name = "name")
     override val name: String,
 
+    // At least returns "" for browse, but could be null for query
     @Json(name = "joinphrase")
-    override val joinPhrase: String,
+    override val joinPhrase: String? = null,
 ) : ArtistCredit

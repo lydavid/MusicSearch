@@ -41,8 +41,11 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.launch
+import ly.david.mbjc.data.EndOfList
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.UiArtist
+import ly.david.mbjc.data.UiData
+import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -51,11 +54,11 @@ import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-fun SearchArtistsScreen(
+fun SearchScreen(
     lazyListState: LazyListState,
     scaffoldState: ScaffoldState,
-    lazyPagingItems: LazyPagingItems<SearchArtistsUiModel>,
-    onSearch: (String) -> Unit = {},
+    lazyPagingItems: LazyPagingItems<UiData>,
+    onSearch: (resource: MusicBrainzResource, query: String) -> Unit = { _, _ -> },
     onArtistClick: (String) -> Unit = {}
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -101,7 +104,7 @@ fun SearchArtistsScreen(
                             if (text.isEmpty()) {
                                 showAlertDialog = true
                             } else {
-                                onSearch(text)
+                                onSearch(selectedOption, text)
                                 lazyListState.scrollToItem(0)
                                 focusManager.clearFocus()
                             }
@@ -139,7 +142,7 @@ fun SearchArtistsScreen(
             scaffoldState = scaffoldState,
             noResultsText = "No results found.\nTry refining your search query."
         ) {
-            SearchArtistsResults(
+            SearchResults(
                 lazyListState = lazyListState,
                 lazyPagingItems = lazyPagingItems,
                 onArtistClick = onArtistClick
@@ -149,22 +152,26 @@ fun SearchArtistsScreen(
 }
 
 @Composable
-private fun SearchArtistsResults(
+private fun SearchResults(
     lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<SearchArtistsUiModel>,
+    lazyPagingItems: LazyPagingItems<UiData>,
     onArtistClick: (String) -> Unit = {}
 ) {
     LazyColumn(
         state = lazyListState
     ) {
-        items(lazyPagingItems) { searchArtistsUiModel ->
-            when (searchArtistsUiModel) {
-                is SearchArtistsUiModel.Data -> {
-                    ArtistCard(artist = searchArtistsUiModel.uiArtist) {
+        items(lazyPagingItems) { uiData: UiData? ->
+            when (uiData) {
+                is UiArtist -> {
+                    ArtistCard(artist = uiData) {
                         onArtistClick(it.id)
                     }
                 }
-                is SearchArtistsUiModel.EndOfList -> {
+                is UiReleaseGroup -> {
+                    // TODO: reuse ReleaseGroupCard
+                    Text(text = uiData.name)
+                }
+                is EndOfList -> {
                     Text(
                         modifier = Modifier
                             .padding(16.dp)
@@ -175,7 +182,7 @@ private fun SearchArtistsResults(
                     )
                 }
                 else -> {
-                    // Do nothing.
+                    // Null. Do nothing.
                 }
             }
         }

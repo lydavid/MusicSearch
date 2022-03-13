@@ -27,7 +27,7 @@ data class RoomReleaseGroupArtistCredit(
     override val name: String,
 
     @ColumnInfo(name = "join_phrase")
-    override val joinPhrase: String,
+    override val joinPhrase: String?,
 
     @ColumnInfo(name = "order")
     val order: Int

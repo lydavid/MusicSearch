@@ -12,7 +12,7 @@ data class UiArtist(
     override val gender: String? = null,
     override val country: String? = null,
     override val lifeSpan: LifeSpan? = null
-) : Artist
+) : Artist, UiData()
 
 fun MusicBrainzArtist.toUiArtist() =
     UiArtist(

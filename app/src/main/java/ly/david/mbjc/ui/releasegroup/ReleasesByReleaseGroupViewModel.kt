@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.releasegroup
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.BROWSE_LIMIT
+import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
+import ly.david.mbjc.data.network.MusicBrainzApiService
 
 class ReleasesByReleaseGroupViewModel : ViewModel() {
 
@@ -17,6 +17,7 @@ class ReleasesByReleaseGroupViewModel : ViewModel() {
 
     private val allReleases = mutableListOf<Release>()
 
+    // TODO: page, find release group with more than 100 releases
     suspend fun getReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int = BROWSE_LIMIT,

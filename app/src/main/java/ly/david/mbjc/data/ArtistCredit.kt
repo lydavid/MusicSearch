@@ -2,7 +2,7 @@ package ly.david.mbjc.data
 
 interface ArtistCredit {
     val name: String
-    val joinPhrase: String
+    val joinPhrase: String?
 }
 
 /**
@@ -11,7 +11,7 @@ interface ArtistCredit {
 fun List<ArtistCredit>?.getDisplayNames(): String {
     var displayName = ""
     this?.forEach {
-        displayName += "${it.name}${it.joinPhrase}"
+        displayName += "${it.name}${it.joinPhrase.orEmpty()}"
     }
     return displayName
 }
