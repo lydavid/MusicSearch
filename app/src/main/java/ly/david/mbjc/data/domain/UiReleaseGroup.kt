@@ -1,5 +1,7 @@
-package ly.david.mbjc.data
+package ly.david.mbjc.data.domain
 
+import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 import ly.david.mbjc.data.persistence.RoomReleaseGroup
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit

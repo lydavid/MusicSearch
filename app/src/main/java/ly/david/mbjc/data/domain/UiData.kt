@@ -1,4 +1,4 @@
-package ly.david.mbjc.data
+package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.network.MusicBrainzArtist
 import ly.david.mbjc.data.network.MusicBrainzData

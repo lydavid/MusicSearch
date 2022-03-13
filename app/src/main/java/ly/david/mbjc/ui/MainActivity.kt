@@ -36,7 +36,6 @@ internal fun MainApp(
 ) {
     MusicBrainzJetpackComposeTheme {
 
-
         val coroutineScope = rememberCoroutineScope()
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 

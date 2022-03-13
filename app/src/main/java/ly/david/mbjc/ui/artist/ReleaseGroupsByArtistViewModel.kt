@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.UiReleaseGroup
+import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.toUiReleaseGroup
 import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.toUiReleaseGroup
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(

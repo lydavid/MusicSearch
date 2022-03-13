@@ -5,14 +5,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.UiReleaseGroup
+import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.toUiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
-import ly.david.mbjc.data.toUiReleaseGroup
 import ly.david.mbjc.ui.Destination
 
 // TODO: Can Dropbox Store simplify this?

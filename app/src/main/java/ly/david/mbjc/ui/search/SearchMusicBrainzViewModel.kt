@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.EndOfList
-import ly.david.mbjc.data.UiData
+import ly.david.mbjc.data.domain.EndOfList
+import ly.david.mbjc.data.domain.UiData
 import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.SEARCH_LIMIT

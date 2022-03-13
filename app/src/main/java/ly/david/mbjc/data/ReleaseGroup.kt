@@ -1,5 +1,6 @@
 package ly.david.mbjc.data
 
+import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.network.NO_TYPE
 
 /**

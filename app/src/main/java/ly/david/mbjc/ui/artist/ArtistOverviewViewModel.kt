@@ -5,14 +5,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.UiArtist
+import ly.david.mbjc.data.domain.UiArtist
+import ly.david.mbjc.data.domain.toUiArtist
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.toRoomArtist
-import ly.david.mbjc.data.toUiArtist
 import ly.david.mbjc.ui.Destination
 
 @Singleton

@@ -4,13 +4,13 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import java.io.IOException
 import kotlinx.coroutines.delay
-import ly.david.mbjc.data.UiData
+import ly.david.mbjc.data.domain.UiData
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzData
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.STARTING_OFFSET
-import ly.david.mbjc.data.toUiData
+import ly.david.mbjc.data.domain.toUiData
 import retrofit2.HttpException
 
 class SearchMusicBrainzPagingSource(

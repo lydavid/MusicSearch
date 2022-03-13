@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.UiReleaseGroup
+import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 
 @Entity(
