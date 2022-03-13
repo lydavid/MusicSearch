@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.UiReleaseGroup
@@ -55,34 +56,36 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleaseGroups: Flow<PagingData<UiReleaseGroup>> =
-        paramState.flatMapLatest { paramState ->
-            Pager(
-                config = PagingConfig(
-                    pageSize = BROWSE_LIMIT
-                ),
-                remoteMediator = ReleaseGroupsRemoteMediator(
-                    musicBrainzApiService = musicBrainzApiService,
-                    releaseGroupDao = releaseGroupDao,
-                    releaseGroupArtistDao = releaseGroupArtistDao,
-                    artistDao = artistDao,
-                    artistId = paramState.artistId
-                ),
-                pagingSourceFactory = {
-                    if (paramState.query.isEmpty()) {
-                        releaseGroupDao.getReleaseGroupsByArtist(paramState.artistId)
-                    } else {
-                        releaseGroupDao.getReleaseGroupsByArtistFiltered(
-                            paramState.artistId,
-                            "%${paramState.query}%"
-                        )
+        paramState.filterNot { it.artistId.isEmpty() }
+            .flatMapLatest { paramState ->
+                Pager(
+                    config = PagingConfig(
+                        pageSize = BROWSE_LIMIT
+                    ),
+                    remoteMediator = ReleaseGroupsRemoteMediator(
+                        musicBrainzApiService = musicBrainzApiService,
+                        releaseGroupDao = releaseGroupDao,
+                        releaseGroupArtistDao = releaseGroupArtistDao,
+                        artistDao = artistDao,
+                        artistId = paramState.artistId,
+                        getRoomArtist = { artistDao.getArtist(paramState.artistId) }
+                    ),
+                    pagingSourceFactory = {
+                        if (paramState.query.isEmpty()) {
+                            releaseGroupDao.getReleaseGroupsByArtist(paramState.artistId)
+                        } else {
+                            releaseGroupDao.getReleaseGroupsByArtistFiltered(
+                                paramState.artistId,
+                                "%${paramState.query}%"
+                            )
+                        }
+                    }
+                ).flow.map { pagingData ->
+                    pagingData.map {
+                        it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
                     }
                 }
-            ).flow.map { pagingData ->
-                pagingData.map {
-                    it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
-                }
             }
-        }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 }

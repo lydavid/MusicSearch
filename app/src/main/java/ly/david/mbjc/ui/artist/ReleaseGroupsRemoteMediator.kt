@@ -12,6 +12,7 @@ import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.RoomArtist
 import ly.david.mbjc.data.persistence.RoomReleaseGroup
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
@@ -23,14 +24,15 @@ class ReleaseGroupsRemoteMediator(
     private val releaseGroupDao: ReleaseGroupDao,
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val artistDao: ArtistDao,
-    private val artistId: String
+    private val artistId: String,
+    private val getRoomArtist: suspend () -> RoomArtist?
 
     // TODO: if query is passed in, do something different?
 
 ) : RemoteMediator<Int, RoomReleaseGroup>() {
 
     override suspend fun initialize(): InitializeAction {
-        return if (artistDao.getArtist(artistId)?.releaseGroupsCount == null) {
+        return if (getRoomArtist()?.releaseGroupsCount == null) {
             InitializeAction.LAUNCH_INITIAL_REFRESH
         } else {
             InitializeAction.SKIP_INITIAL_REFRESH
@@ -46,7 +48,7 @@ class ReleaseGroupsRemoteMediator(
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
                 val numReleaseGroupsInDatabase = releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
-                val totalReleaseGroups = artistDao.getArtist(artistId)?.releaseGroupsCount
+                val totalReleaseGroups = getRoomArtist()?.releaseGroupsCount
 
                 // It should not be possible for the number of release groups in the database to exceed the total
                 // from Music Brainz's database. But if it does, it could cause an infinite loop here.

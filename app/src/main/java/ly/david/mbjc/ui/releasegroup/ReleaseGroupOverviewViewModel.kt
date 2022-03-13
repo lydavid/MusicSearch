@@ -52,6 +52,7 @@ class ReleaseGroupRepository @Inject constructor(
     }
 }
 
+// TODO: move this
 @HiltViewModel
 class ReleaseGroupOverviewViewModel @Inject constructor(
     private val releaseGroupRepository: ReleaseGroupRepository

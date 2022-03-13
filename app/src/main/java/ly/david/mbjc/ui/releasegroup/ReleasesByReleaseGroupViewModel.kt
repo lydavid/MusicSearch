@@ -7,6 +7,7 @@ import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 
+// TODO: mediator, can we generalize?
 class ReleasesByReleaseGroupViewModel : ViewModel() {
 
     private val musicBrainzApiService by lazy {
