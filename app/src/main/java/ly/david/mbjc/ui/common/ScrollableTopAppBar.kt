@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.common
 import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.Icon
@@ -20,11 +19,16 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+
+interface OverflowMenuScope {
+    fun closeMenu()
+}
 
 @Composable
 fun ScrollableTopAppBar(
@@ -35,14 +39,13 @@ fun ScrollableTopAppBar(
     openDrawer: (() -> Unit)? = null,
 
     mainAction: @Composable (() -> Unit)? = null,
-    dropdownMenuItems: @Composable (ColumnScope.() -> Unit)? = null,
+    dropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
     tabsTitle: List<String> = listOf(),
     selectedTabIndex: Int = 0,
     onSelectTabIndex: (Int) -> Unit = {}
 ) {
-    var showMenu by rememberSaveable { mutableStateOf(false) }
 
     Column {
         TopAppBar(
@@ -77,19 +80,8 @@ fun ScrollableTopAppBar(
                 }
             },
             actions = {
-
                 mainAction?.invoke()
-
-                if (dropdownMenuItems != null) {
-                    IconButton(onClick = { showMenu = !showMenu }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
-                    }
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false },
-                        content = dropdownMenuItems
-                    )
-                }
+                OverflowMenu(dropdownMenuItems = dropdownMenuItems)
             },
             backgroundColor = MaterialTheme.colors.background
         )
@@ -98,6 +90,38 @@ fun ScrollableTopAppBar(
             tabsTitle = tabsTitle,
             selectedTabIndex = selectedTabIndex,
             onSelectTabIndex = onSelectTabIndex
+        )
+    }
+}
+
+@Composable
+fun OverflowMenu(
+    dropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null
+) {
+    var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    val scope = remember {
+        object : OverflowMenuScope {
+            override fun closeMenu() {
+                showMenu = false
+            }
+        }
+    }
+
+    if (dropdownMenuItems != null) {
+        IconButton(onClick = { showMenu = !showMenu }) {
+            Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
+        }
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = { showMenu = false },
+            content = {
+                // We lose out on the ability to control these items within a Column,
+                // but now each item can close itself.
+                Column {
+                    dropdownMenuItems.invoke(scope)
+                }
+            }
         )
     }
 }

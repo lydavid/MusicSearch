@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Divider
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -38,9 +40,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.persistence.ArtistDao
+import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
 enum class ArtistTab(val title: String) {
@@ -53,7 +62,8 @@ enum class ArtistTab(val title: String) {
 fun ArtistScreenScaffold(
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    viewModel: ArtistStatsViewModel = hiltViewModel()
 ) {
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
@@ -64,6 +74,9 @@ fun ArtistScreenScaffold(
 
     // TODO: "Filter" is for selecting chips like album type
     var searchText by rememberSaveable { mutableStateOf("") }
+
+    var showAlertDialog by rememberSaveable { mutableStateOf(false) }
+
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -79,10 +92,46 @@ fun ArtistScreenScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
+                },
+                showStats = {
+                    showAlertDialog = true
                 }
             )
         },
     ) { innerPadding ->
+
+        if (showAlertDialog) {
+
+            var total by rememberSaveable { mutableStateOf(0) }
+            var current by rememberSaveable { mutableStateOf(0) }
+
+            LaunchedEffect(key1 = total, key2 = current) {
+                total = viewModel.getTotalReleaseGroups(artistId)
+                current = viewModel.getNumberOfReleaseGroupsByArtist(artistId)
+            }
+
+            AlertDialog(
+                title = {
+                    Text(text = "Stats")
+                },
+                text = {
+                    Column {
+                        Text(text = "Total release groups: $total")
+                        Text(text = "Current release groups: $current")
+                    }
+                },
+                backgroundColor = getAlertBackgroundColor(),
+                onDismissRequest = {
+                    showAlertDialog = false
+                },
+                confirmButton = {
+                    TextButton(onClick = { showAlertDialog = false }) {
+                        Text("Dismiss")
+                    }
+                }
+            )
+
+        }
 
         when (selectedTab) {
             ArtistTab.RELEASE_GROUPS -> {
@@ -113,7 +162,8 @@ private fun TopAppBarWithSearch(
     selectedTab: ArtistTab,
     onSelectTab: (ArtistTab) -> Unit,
     searchText: String,
-    onSearchTextChange: (String) -> Unit
+    onSearchTextChange: (String) -> Unit,
+    showStats: () -> Unit
 ) {
     val context = LocalContext.current
     var isSearchAndFilterMode by rememberSaveable { mutableStateOf(false) }
@@ -216,6 +266,7 @@ private fun TopAppBarWithSearch(
             dropdownMenuItems = {
                 DropdownMenuItem(onClick = {
                     context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                    closeMenu()
                 }) {
                     Text("Open in browser")
                 }
@@ -225,19 +276,23 @@ private fun TopAppBarWithSearch(
                     DropdownMenuItem(onClick = {
                         // TODO: dropdown or something with what to sort by
                         Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
+                        closeMenu()
                     }) {
                         Text("Sort")
                     }
 
                     // TODO: good for debugging, but could give users some details of how many release groups are in db, network
+                    //  when we click this, we will make db call? then we will need viewmodel
                     DropdownMenuItem(onClick = {
-                        Log.d("Remove This", "ArtistScreenScaffold: ee")
+                        showStats()
+                        closeMenu()
                     }) {
                         Text("Stats")
                     }
 
                     DropdownMenuItem(onClick = {
                         Log.d("Remove This", "ArtistScreenScaffold: ee")
+                        closeMenu()
                     }) {
                         Text("Refresh")
                     }
@@ -248,4 +303,16 @@ private fun TopAppBarWithSearch(
             onSelectTabIndex = { onSelectTab(ArtistTab.values()[it]) }
         )
     }
+}
+
+@HiltViewModel
+class ArtistStatsViewModel @Inject constructor(
+    private val artistDao: ArtistDao,
+    private val releaseGroupDao: ReleaseGroupDao
+) : ViewModel() {
+
+    suspend fun getTotalReleaseGroups(artistId: String) = artistDao.getArtist(artistId)?.releaseGroupsCount ?: 0
+
+    suspend fun getNumberOfReleaseGroupsByArtist(artistId: String) =
+        releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
 }

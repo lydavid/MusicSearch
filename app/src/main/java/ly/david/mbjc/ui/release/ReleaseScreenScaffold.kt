@@ -40,6 +40,7 @@ fun ReleaseScreenScaffold(
                 dropdownMenuItems = {
                     DropdownMenuItem(onClick = {
                         context.lookupInBrowser(MusicBrainzResource.RELEASE, releaseId)
+                        closeMenu()
                     }) {
                         Text("Open in browser")
                     }

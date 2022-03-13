@@ -47,6 +47,7 @@ class ReleaseGroupsRemoteMediator(
             LoadType.REFRESH -> 0
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             LoadType.APPEND -> {
+                // TODO: see if we can extract all these calls, so that we can use MusicBrainzData, and reuse this for releases
                 val numReleaseGroupsInDatabase = releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)
                 val totalReleaseGroups = getRoomArtist()?.releaseGroupsCount
 
@@ -70,7 +71,7 @@ class ReleaseGroupsRemoteMediator(
 
             // Only need to update it the first time we ever browse this artist's release groups.
             if (response.releaseGroupOffset == 0) {
-                artistDao.updateNumberOfReleaseGroups(artistId, response.releaseGroupCount)
+                artistDao.setTotalReleaseGroups(artistId, response.releaseGroupCount)
             }
 
             val musicBrainzReleaseGroups = response.releaseGroups
