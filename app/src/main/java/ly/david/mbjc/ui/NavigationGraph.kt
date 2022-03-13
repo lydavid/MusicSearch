@@ -31,11 +31,6 @@ internal fun NavigationGraph(
         startDestination = Destination.LOOKUP.route,
     ) {
 
-        val onBack = {
-            // Consume return value so that we don't have to specify Boolean return type when passing this function
-            val consumed = navController.popBackStack()
-        }
-
         val onArtistClick: (String) -> Unit = { artistId ->
             // TODO: these should be built by Destination
             navController.navigate("${Destination.LOOKUP_ARTIST.route}/$artistId") {
@@ -90,7 +85,7 @@ internal fun NavigationGraph(
             ArtistScreenScaffold(
                 artistId = artistId,
                 onReleaseGroupClick = onReleaseGroupClick,
-                onBack = onBack
+                onBack = navController::navigateUp
             )
         }
 
@@ -112,7 +107,7 @@ internal fun NavigationGraph(
             ReleaseGroupScreenScaffold(
                 releaseGroupId = releaseGroupId,
                 onReleaseClick = onReleaseClick,
-                onBack = onBack
+                onBack = navController::navigateUp
             )
         }
 
@@ -133,7 +128,7 @@ internal fun NavigationGraph(
             val releaseId = entry.arguments?.getString("releaseId") ?: return@composable
             ReleaseScreenScaffold(
                 releaseId = releaseId,
-                onBack = onBack
+                onBack = navController::navigateUp
             ) {
                 Log.d("Remove This", "NavigationGraph: Clicked recording with id=${it}")
             }
