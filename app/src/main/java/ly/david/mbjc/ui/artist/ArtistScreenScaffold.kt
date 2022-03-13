@@ -44,7 +44,7 @@ import ly.david.mbjc.ui.common.lookupInBrowser
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
 enum class ArtistTab(val title: String) {
-//    OVERVIEW("Overview"),
+    //    OVERVIEW("Overview"),
     RELEASE_GROUPS("Release Groups"),
     RELEASES("Releases"),
 }
@@ -58,150 +58,29 @@ fun ArtistScreenScaffold(
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var artistName by rememberSaveable { mutableStateOf("") }
-    val context = LocalContext.current
 
     val scaffoldState = rememberScaffoldState()
     val browseReleaseGroupsState = rememberLazyListState()
 
     // TODO: "Filter" is for selecting chips like album type
-    var isSearchAndFilterMode by rememberSaveable { mutableStateOf(false) }
     var searchText by rememberSaveable { mutableStateOf("") }
-    val focusRequester = remember { FocusRequester() }
-    val focusManager = LocalFocusManager.current
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-
-            // TODO: expand out from the icon
-            AnimatedVisibility(
-                visible = isSearchAndFilterMode,
-                enter = slideInHorizontally(
-                    initialOffsetX = { fullWidth -> fullWidth }
-                ),
-                exit = slideOutHorizontally(
-                    targetOffsetX = { fullWidth -> fullWidth }
-                )
-            ) {
-
-                // TODO: when returning, focus is in front of search text
-                //  most apps seems to not bring up the keyboard when returning
-                LaunchedEffect(Unit) {
-                    // TODO: only do them when first clicking on search icon
-                    focusRequester.requestFocus()
+            TopAppBarWithSearch(
+                artistId = artistId,
+                onBack = onBack,
+                artistName = artistName,
+                selectedTab = selectedTab,
+                onSelectTab = {
+                    selectedTab = it
+                },
+                searchText = searchText,
+                onSearchTextChange = {
+                    searchText = it
                 }
-
-                BackHandler {
-                    isSearchAndFilterMode = false
-                    searchText = ""
-                }
-
-                Column {
-                    TextField(
-                        modifier = Modifier
-                            .focusRequester(focusRequester)
-                            .fillMaxWidth(),
-                        maxLines = 1,
-                        singleLine = true,
-//                        shape = RoundedCornerShape(32.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent
-                        ),
-                        leadingIcon = {
-                            IconButton(onClick = {
-                                isSearchAndFilterMode = false
-                                searchText = ""
-                            }) {
-                                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                            }
-                        },
-                        placeholder = { Text("Search release groups") },
-                        trailingIcon = {
-                            if (searchText.isEmpty()) return@TextField
-                            IconButton(onClick = {
-                                searchText = ""
-                                focusRequester.requestFocus()
-                            }) {
-                                Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
-                            }
-                        },
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions(
-                            onSearch = {
-                                focusManager.clearFocus()
-                            }
-                        ),
-                        value = searchText,
-                        onValueChange = {
-                            searchText = it
-                        }
-                    )
-
-                    // TODO: Filters
-
-                    Divider()
-                }
-            }
-
-            AnimatedVisibility(
-                visible = !isSearchAndFilterMode,
-                enter = slideInHorizontally(
-                    initialOffsetX = { fullWidth -> -fullWidth }
-                ),
-                exit = slideOutHorizontally(
-                    targetOffsetX = { fullWidth -> -fullWidth }
-                )
-            ) {
-                ScrollableTopAppBar(
-                    title = artistName,
-                    onBack = onBack,
-                    mainAction = {
-                        if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                            IconButton(onClick = {
-                                isSearchAndFilterMode = true
-                            }) {
-                                Icon(Icons.Default.Search, "")
-                            }
-                        }
-                    },
-                    dropdownMenuItems = {
-                        DropdownMenuItem(onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
-                        }) {
-                            Text("Open in browser")
-                        }
-
-                        // TODO:
-                        if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                            DropdownMenuItem(onClick = {
-                                // TODO: dropdown or something with what to sort by
-                                Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
-                            }) {
-                                Text("Sort")
-                            }
-
-                            // TODO: good for debugging, but could give users some details of how many release groups are in db, network
-                            DropdownMenuItem(onClick = {
-                                Log.d("Remove This", "ArtistScreenScaffold: ee")
-                            }) {
-                                Text("Stats")
-                            }
-
-                            DropdownMenuItem(onClick = {
-                                Log.d("Remove This", "ArtistScreenScaffold: ee")
-                            }) {
-                                Text("Refresh")
-                            }
-                        }
-                    },
-                    tabsTitle = ArtistTab.values().map { it.title },
-                    selectedTabIndex = selectedTab.ordinal,
-                    onSelectTabIndex = { selectedTab = ArtistTab.values()[it] }
-                )
-            }
-
+            )
         },
     ) { innerPadding ->
 
@@ -226,3 +105,147 @@ fun ArtistScreenScaffold(
     }
 }
 
+@Composable
+private fun TopAppBarWithSearch(
+    artistId: String,
+    onBack: () -> Unit,
+    artistName: String,
+    selectedTab: ArtistTab,
+    onSelectTab: (ArtistTab) -> Unit,
+    searchText: String,
+    onSearchTextChange: (String) -> Unit
+) {
+    val context = LocalContext.current
+    var isSearchAndFilterMode by rememberSaveable { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    // TODO: expand out from the icon
+    AnimatedVisibility(
+        visible = isSearchAndFilterMode,
+        enter = slideInHorizontally(
+            initialOffsetX = { fullWidth -> fullWidth }
+        ),
+        exit = slideOutHorizontally(
+            targetOffsetX = { fullWidth -> fullWidth }
+        )
+    ) {
+
+        // TODO: when returning, focus is in front of search text
+        //  most apps seems to not bring up the keyboard when returning
+        LaunchedEffect(Unit) {
+            // TODO: only do them when first clicking on search icon
+            focusRequester.requestFocus()
+        }
+
+        BackHandler {
+            isSearchAndFilterMode = false
+            onSearchTextChange("")
+        }
+
+        Column {
+            TextField(
+                modifier = Modifier
+                    .focusRequester(focusRequester)
+                    .fillMaxWidth(),
+                maxLines = 1,
+                singleLine = true,
+//                        shape = RoundedCornerShape(32.dp),
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+                leadingIcon = {
+                    IconButton(onClick = {
+                        isSearchAndFilterMode = false
+                        onSearchTextChange("")
+                    }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                placeholder = { Text("Search release groups") },
+                trailingIcon = {
+                    if (searchText.isEmpty()) return@TextField
+                    IconButton(onClick = {
+                        onSearchTextChange("")
+                        focusRequester.requestFocus()
+                    }) {
+                        Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
+                    }
+                },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        focusManager.clearFocus()
+                    }
+                ),
+                value = searchText,
+                onValueChange = {
+                    onSearchTextChange(it)
+                }
+            )
+
+            // TODO: Filters
+
+            Divider()
+        }
+    }
+
+    AnimatedVisibility(
+        visible = !isSearchAndFilterMode,
+        enter = slideInHorizontally(
+            initialOffsetX = { fullWidth -> -fullWidth }
+        ),
+        exit = slideOutHorizontally(
+            targetOffsetX = { fullWidth -> -fullWidth }
+        )
+    ) {
+        ScrollableTopAppBar(
+            title = artistName,
+            onBack = onBack,
+            mainAction = {
+                if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                    IconButton(onClick = {
+                        isSearchAndFilterMode = true
+                    }) {
+                        Icon(Icons.Default.Search, "")
+                    }
+                }
+            },
+            dropdownMenuItems = {
+                DropdownMenuItem(onClick = {
+                    context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                }) {
+                    Text("Open in browser")
+                }
+
+                // TODO:
+                if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                    DropdownMenuItem(onClick = {
+                        // TODO: dropdown or something with what to sort by
+                        Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
+                    }) {
+                        Text("Sort")
+                    }
+
+                    // TODO: good for debugging, but could give users some details of how many release groups are in db, network
+                    DropdownMenuItem(onClick = {
+                        Log.d("Remove This", "ArtistScreenScaffold: ee")
+                    }) {
+                        Text("Stats")
+                    }
+
+                    DropdownMenuItem(onClick = {
+                        Log.d("Remove This", "ArtistScreenScaffold: ee")
+                    }) {
+                        Text("Refresh")
+                    }
+                }
+            },
+            tabsTitle = ArtistTab.values().map { it.title },
+            selectedTabIndex = selectedTab.ordinal,
+            onSelectTabIndex = { onSelectTab(ArtistTab.values()[it]) }
+        )
+    }
+}
