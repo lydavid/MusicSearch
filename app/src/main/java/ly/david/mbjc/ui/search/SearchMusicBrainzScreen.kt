@@ -47,6 +47,8 @@ import ly.david.mbjc.data.UiArtist
 import ly.david.mbjc.data.UiData
 import ly.david.mbjc.data.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.Destination
+import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
@@ -54,12 +56,12 @@ import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-fun SearchScreen(
+fun SearchMusicBrainzScreen(
     lazyListState: LazyListState,
     scaffoldState: ScaffoldState,
     lazyPagingItems: LazyPagingItems<UiData>,
     onSearch: (resource: MusicBrainzResource, query: String) -> Unit = { _, _ -> },
-    onArtistClick: (String) -> Unit = {}
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
@@ -145,7 +147,7 @@ fun SearchScreen(
             SearchResults(
                 lazyListState = lazyListState,
                 lazyPagingItems = lazyPagingItems,
-                onArtistClick = onArtistClick
+                onItemClick = onItemClick
             )
         }
     }
@@ -155,7 +157,7 @@ fun SearchScreen(
 private fun SearchResults(
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<UiData>,
-    onArtistClick: (String) -> Unit = {}
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> }
 ) {
     LazyColumn(
         state = lazyListState
@@ -164,12 +166,14 @@ private fun SearchResults(
             when (uiData) {
                 is UiArtist -> {
                     ArtistCard(artist = uiData) {
-                        onArtistClick(it.id)
+                        onItemClick(Destination.LOOKUP_ARTIST, it.id)
                     }
                 }
                 is UiReleaseGroup -> {
-                    // TODO: reuse ReleaseGroupCard
-                    Text(text = uiData.name)
+                    // TODO: should see album type rather than year
+                    ReleaseGroupCard(releaseGroup = uiData) {
+                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, it.id)
+                    }
                 }
                 is EndOfList -> {
                     Text(

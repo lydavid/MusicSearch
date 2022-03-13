@@ -20,7 +20,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.SEARCH_LIMIT
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
-internal class SearchArtistsViewModel : ViewModel() {
+internal class SearchMusicBrainzViewModel : ViewModel() {
 
     private data class ViewModelState(
         val resource: MusicBrainzResource = MusicBrainzResource.ARTIST,
@@ -43,7 +43,7 @@ internal class SearchArtistsViewModel : ViewModel() {
                         initialLoadSize = INITIAL_SEARCH_LIMIT
                     ),
                     pagingSourceFactory = {
-                        SearchArtistsPagingSource(
+                        SearchMusicBrainzPagingSource(
                             resource = viewModelState.resource,
                             queryString = viewModelState.query,
                         )

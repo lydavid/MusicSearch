@@ -13,8 +13,7 @@ import ly.david.mbjc.data.network.STARTING_OFFSET
 import ly.david.mbjc.data.toUiData
 import retrofit2.HttpException
 
-// TODO: singleton?
-class SearchArtistsPagingSource(
+class SearchMusicBrainzPagingSource(
     val resource: MusicBrainzResource,
     val queryString: String,
 ) : PagingSource<Int, UiData>() {
@@ -48,15 +47,15 @@ class SearchArtistsPagingSource(
                 currentOffset = currentOffset,
                 limit = limit
             )
-            val artists = response.data
-            val nextOffset = if (artists.size < limit) {
+            val searchResults = response.data
+            val nextOffset = if (searchResults.size < limit) {
                 null
             } else {
-                currentOffset + artists.size
+                currentOffset + searchResults.size
             }
 
             LoadResult.Page(
-                data = artists.map { it.toUiData() },
+                data = searchResults.map { it.toUiData() },
                 prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
                 nextKey = nextOffset
             )

@@ -32,7 +32,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val artistDao: ArtistDao,
 ) : ViewModel() {
 
-    private data class Param(
+    private data class ViewModelState(
         val artistId: String = "",
         val query: String = ""
     )
@@ -40,7 +40,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val artistId: MutableStateFlow<String> = MutableStateFlow("")
     private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = artistId.combine(query) { artistId, query ->
-        Param(artistId, query)
+        ViewModelState(artistId, query)
     }.distinctUntilChanged()
 
     fun updateArtist(artistId: String) {

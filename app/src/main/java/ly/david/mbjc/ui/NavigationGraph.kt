@@ -43,17 +43,34 @@ internal fun NavigationGraph(
             }
         }
 
-        composable(Destination.LOOKUP.route) {
-            SearchScreenScaffold(
-                openDrawer = openDrawer,
-                onArtistClick = onArtistClick
-            )
-        }
-
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
             navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId") {
                 restoreState = true
             }
+        }
+
+        val onReleaseClick: (String) -> Unit = { releaseId ->
+            navController.navigate("${Destination.LOOKUP_RELEASE.route}/$releaseId") {
+                restoreState = true
+            }
+        }
+
+        val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
+            when (destination) {
+                Destination.LOOKUP_ARTIST -> onArtistClick(id)
+                Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
+                Destination.LOOKUP_RELEASE -> onReleaseClick(id)
+                else -> {
+                    // Not supported.
+                }
+            }
+        }
+
+        composable(Destination.LOOKUP.route) {
+            SearchScreenScaffold(
+                openDrawer = openDrawer,
+                onItemClick = onLookupItemClick
+            )
         }
 
         composable(
@@ -75,15 +92,6 @@ internal fun NavigationGraph(
                 onReleaseGroupClick = onReleaseGroupClick,
                 onBack = onBack
             )
-        }
-
-        // TODO: we can generalize all "lookup" routes that only needs an id
-        //  together with a string/enum for route, we can navigate to appropriate screen
-        //  Then we can pass that to history/drawer
-        val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("${Destination.LOOKUP_RELEASE.route}/$releaseId") {
-                restoreState = true
-            }
         }
 
         composable(
@@ -131,23 +139,12 @@ internal fun NavigationGraph(
             }
         }
 
-        val onHistoryItemClick: (Destination, String) -> Unit = { destination, id ->
-            when (destination) {
-                Destination.LOOKUP_ARTIST -> onArtistClick(id)
-                Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
-                Destination.LOOKUP_RELEASE -> onReleaseClick(id)
-                else -> {
-                    // Not supported.
-                }
-            }
-        }
-
         composable(
             Destination.HISTORY.route
         ) {
             HistoryScreenScaffold(
                 openDrawer = openDrawer,
-                onItemClick = onHistoryItemClick
+                onItemClick = onLookupItemClick
             )
         }
     }

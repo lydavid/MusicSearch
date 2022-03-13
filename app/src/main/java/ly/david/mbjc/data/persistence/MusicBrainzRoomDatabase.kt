@@ -23,7 +23,7 @@ import javax.inject.Singleton
         RoomArtist::class, RoomReleaseGroup::class,
 
         // Full-Text Search (FTS) tables
-        ReleaseGroupFts::class,
+//        ReleaseGroupFts::class,
 
         // Relationship tables
         RoomReleaseGroupArtistCredit::class,
@@ -32,7 +32,7 @@ import javax.inject.Singleton
         LookupHistory::class
     ],
     views = [],
-    version = 16
+    version = 17
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
