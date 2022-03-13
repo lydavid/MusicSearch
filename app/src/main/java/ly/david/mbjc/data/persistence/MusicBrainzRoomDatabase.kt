@@ -1,20 +1,15 @@
 package ly.david.mbjc.data.persistence
 
 import android.content.Context
-import androidx.paging.PagingSource
-import androidx.room.Dao
 import androidx.room.Database
-import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.Transaction
 import androidx.room.TypeConverters
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import java.util.Date
 import javax.inject.Singleton
 
 @Database(
@@ -58,126 +53,6 @@ object DatabaseModule {
         return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
-    }
-}
-
-@Dao
-abstract class ArtistDao : BaseDao<RoomArtist> {
-    @Query("SELECT * FROM artists WHERE id = :artistId")
-    abstract suspend fun getArtist(artistId: String): RoomArtist?
-
-    @Query(
-        """
-        UPDATE artists 
-        SET release_group_count = :releaseGroupCount
-        WHERE id = :artistId
-        """
-    )
-    abstract suspend fun updateNumberOfReleaseGroups(artistId: String, releaseGroupCount: Int)
-}
-
-@Dao
-abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
-
-    // Make sure to select from release_groups first, rather than artists.
-    // That way, when there are no entries, we return empty rather than 1 entry with null values.
-    @Transaction
-    @Query(
-        """
-        SELECT rg.*
-        FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
-        WHERE a.id = :artistId
-    """
-    )
-    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, RoomReleaseGroup>
-
-    // Not as fast as FTS but allows searching characters within words
-    @Transaction
-    @Query(
-        """
-        SELECT rg.*
-        FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
-        WHERE a.id = :artistId
-        AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
-        OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
-    """
-    )
-    abstract fun getReleaseGroupsByArtistFiltered(artistId: String, query: String): PagingSource<Int, RoomReleaseGroup>
-
-    @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
-    abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            FROM release_groups rg
-            INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-            INNER JOIN artists a ON a.id = rga.artist_id
-            WHERE a.id = :artistId
-            GROUP BY a.id),
-            0
-        ) AS count
-    """
-    )
-    abstract suspend fun getNumberOfReleaseGroupsByArtist(artistId: String): Int
-
-    @Query(
-        """
-        DELETE from release_groups
-        WHERE id in
-        (SELECT rg.id
-        FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
-        WHERE a.id = :artistId)
-    """
-    )
-    abstract suspend fun deleteAllReleaseGroupsByArtist(artistId: String)
-}
-
-@Dao
-abstract class ReleaseGroupArtistDao : BaseDao<RoomReleaseGroupArtistCredit> {
-    @Query(
-        """
-        SELECT rga.*
-        FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        where rg.id = :releaseGroupId
-        ORDER BY rga.`order`
-    """
-    )
-    abstract suspend fun getReleaseGroupArtistCredits(releaseGroupId: String): List<RoomReleaseGroupArtistCredit>
-}
-
-@Dao
-abstract class LookupHistoryDao : BaseDao<LookupHistory> {
-
-    @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")
-    abstract suspend fun getAllLookupHistory(): List<LookupHistory>
-
-    @Query(
-        """
-        UPDATE lookup_history 
-        SET number_of_visits = number_of_visits + 1,
-            last_accessed = :lastAccessed
-        WHERE mbid = :mbid
-        """
-    )
-    abstract suspend fun incrementVisitAndDateAccessed(mbid: String, lastAccessed: Date = Date()): Int
-
-    /**
-     *
-     */
-    suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistory) {
-        val numUpdated = incrementVisitAndDateAccessed(lookupHistory.mbid)
-        if (numUpdated == 0) {
-            insert(lookupHistory)
-        }
     }
 }
 
