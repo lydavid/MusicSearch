@@ -1,6 +1,8 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.BROWSE_LIMIT
@@ -8,11 +10,10 @@ import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 
 // TODO: mediator, can we generalize?
-class ReleasesByReleaseGroupViewModel : ViewModel() {
-
-    private val musicBrainzApiService by lazy {
-        MusicBrainzApiService.create()
-    }
+@HiltViewModel
+class ReleasesByReleaseGroupViewModel @Inject constructor(
+    private val musicBrainzApiService: MusicBrainzApiService
+): ViewModel() {
 
     private var initialized = false
 

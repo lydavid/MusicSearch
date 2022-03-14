@@ -11,8 +11,15 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 
-// TODO: can put this into di module
-interface MusicBrainzApiService : Search, Browse, Lookup {
+/**
+ * Contract for MusicBrainz API.
+ */
+interface MusicBrainzApiService : Search, Browse, Lookup
+
+/**
+ * Implementation of MusicBrainz API.
+ */
+interface MusicBrainzApiServiceImpl : MusicBrainzApiService {
     companion object {
         private val client = OkHttpClient().newBuilder()
             .addInterceptor(NetworkUtils.interceptor)
@@ -36,5 +43,5 @@ interface MusicBrainzApiService : Search, Browse, Lookup {
 object MusicBrainzApiModule {
     @Singleton
     @Provides
-    fun provideMusicBrainzApi(): MusicBrainzApiService = MusicBrainzApiService.create()
+    fun provideMusicBrainzApi(): MusicBrainzApiService = MusicBrainzApiServiceImpl.create()
 }

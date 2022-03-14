@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
@@ -35,7 +35,7 @@ fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
     releaseGroupId: String,
     onReleaseClick: (String) -> Unit = {},
-    viewModel: ReleasesByReleaseGroupViewModel = viewModel()
+    viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel()
 ) {
     val uiState by produceState(initialValue = UiState(isLoading = true)) {
         value = UiState(response = viewModel.getReleasesByReleaseGroup(releaseGroupId))

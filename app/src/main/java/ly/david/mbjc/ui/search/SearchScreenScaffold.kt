@@ -8,7 +8,7 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.domain.UiData
@@ -20,7 +20,7 @@ import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 internal fun SearchScreenScaffold(
     openDrawer: () -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
-    viewModel: SearchMusicBrainzViewModel = viewModel()
+    viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
     val lazyListState: LazyListState = rememberLazyListState()

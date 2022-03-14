@@ -5,22 +5,19 @@ import androidx.paging.PagingState
 import java.io.IOException
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.domain.UiData
+import ly.david.mbjc.data.domain.toUiData
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzData
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.STARTING_OFFSET
-import ly.david.mbjc.data.domain.toUiData
 import retrofit2.HttpException
 
 class SearchMusicBrainzPagingSource(
-    val resource: MusicBrainzResource,
-    val queryString: String,
+    private val musicBrainzApiService: MusicBrainzApiService,
+    private val resource: MusicBrainzResource,
+    private val queryString: String,
 ) : PagingSource<Int, UiData>() {
-
-    private val musicBrainzApiService by lazy {
-        MusicBrainzApiService.create()
-    }
 
     override fun getRefreshKey(state: PagingState<Int, UiData>): Int? {
         // We need to get the previous key (or next key if previous is null) of the page
