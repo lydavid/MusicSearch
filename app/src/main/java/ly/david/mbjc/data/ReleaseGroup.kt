@@ -1,36 +1,19 @@
 package ly.david.mbjc.data
 
 import ly.david.mbjc.data.domain.UiReleaseGroup
-import ly.david.mbjc.data.network.NO_TYPE
 
 /**
  * Defines common properties between network and persistence model.
  */
-interface ReleaseGroup: NameWithDisambiguation {
+interface ReleaseGroup: NameWithDisambiguation, ReleaseGroupTypes {
 
     val id: String
     override val name: String
     val firstReleaseDate: String
     override val disambiguation: String
 
-    val primaryType: String?
-
-    val secondaryTypes: List<String>?
-}
-
-/**
- * Returns [ReleaseGroup]'s primary type concatenated with all secondary types for display.
- */
-fun ReleaseGroup.getDisplayTypes(): String {
-
-    var displayTypes = primaryType.orEmpty()
-
-    if (displayTypes.isNotEmpty() && !secondaryTypes.isNullOrEmpty()) {
-        displayTypes += " + "
-    }
-    displayTypes += secondaryTypes?.joinToString(separator = " + ").orEmpty()
-
-    return displayTypes.ifEmpty { NO_TYPE }
+    override val primaryType: String?
+    override val secondaryTypes: List<String>?
 }
 
 // TODO: ordering actually has null first. Right now, that would push bootlegs to the top, so we're not doing it.

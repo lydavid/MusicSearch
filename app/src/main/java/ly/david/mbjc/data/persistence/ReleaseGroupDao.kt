@@ -1,9 +1,11 @@
 package ly.david.mbjc.data.persistence
 
 import androidx.paging.PagingSource
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import ly.david.mbjc.data.ReleaseGroupTypes
 
 @Dao
 abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
@@ -86,6 +88,18 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
     @Query(
         """
+        SELECT rg.`primary-type`, rg.`secondary-types`, COUNT(rg.id) as count
+        FROM release_groups rg
+        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+        INNER JOIN artists a ON a.id = rga.artist_id
+        WHERE a.id = :artistId
+        GROUP  BY rg.`primary-type`, rg.`secondary-types`
+    """
+    )
+    abstract suspend fun getCountOfEachAlbumType(artistId: String): List<ReleaseGroupTypeCount>
+
+    @Query(
+        """
         DELETE from release_groups
         WHERE id in
         (SELECT rg.id
@@ -97,3 +111,14 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     )
     abstract suspend fun deleteAllReleaseGroupsByArtist(artistId: String)
 }
+
+data class ReleaseGroupTypeCount(
+    @ColumnInfo(name = "primary-type")
+    override val primaryType: String? = null,
+
+    @ColumnInfo(name = "secondary-types")
+    override val secondaryTypes: List<String>? = null,
+
+    @ColumnInfo(name = "count")
+    val count: Int,
+): ReleaseGroupTypes
