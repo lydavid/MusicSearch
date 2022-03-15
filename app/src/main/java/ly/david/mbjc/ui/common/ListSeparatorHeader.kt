@@ -14,7 +14,7 @@ import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.mbjc.ui.theme.getSubBackgroundColor
 
 @Composable
-fun StickyHeader(text: String) {
+fun ListSeparatorHeader(text: String) {
     Surface(color = getSubBackgroundColor()) {
         Text(
             text = text,
@@ -29,8 +29,8 @@ fun StickyHeader(text: String) {
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun ArtistCardPreview() {
+internal fun ListSeparatorHeaderPreview() {
     MusicBrainzJetpackComposeTheme {
-        StickyHeader("Album + Compilation")
+        ListSeparatorHeader("Album + Compilation")
     }
 }

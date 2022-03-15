@@ -8,7 +8,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
@@ -70,13 +69,13 @@ fun ArtistScreenScaffold(
     var artistName by rememberSaveable { mutableStateOf("") }
 
     val scaffoldState = rememberScaffoldState()
-    val browseReleaseGroupsState = rememberLazyListState()
 
     // TODO: "Filter" is for selecting chips like album type
     var searchText by rememberSaveable { mutableStateOf("") }
 
     var showAlertDialog by rememberSaveable { mutableStateOf(false) }
 
+    var isSorted by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -95,6 +94,10 @@ fun ArtistScreenScaffold(
                 },
                 showStats = {
                     showAlertDialog = true
+                },
+                isSorted = isSorted,
+                onSortChange = {
+                    isSorted = it
                 }
             )
         },
@@ -130,7 +133,6 @@ fun ArtistScreenScaffold(
                     }
                 }
             )
-
         }
 
         when (selectedTab) {
@@ -139,7 +141,7 @@ fun ArtistScreenScaffold(
                     modifier = Modifier.padding(innerPadding),
                     artistId = artistId,
                     searchText = searchText,
-                    state = browseReleaseGroupsState,
+                    isSorted = isSorted,
                     scaffoldState = scaffoldState,
                     onReleaseGroupClick = onReleaseGroupClick,
                     onTitleUpdate = {
@@ -163,7 +165,9 @@ private fun TopAppBarWithSearch(
     onSelectTab: (ArtistTab) -> Unit,
     searchText: String,
     onSearchTextChange: (String) -> Unit,
-    showStats: () -> Unit
+    showStats: () -> Unit,
+    isSorted: Boolean,
+    onSortChange: (Boolean) -> Unit
 ) {
     val context = LocalContext.current
     var isSearchAndFilterMode by rememberSaveable { mutableStateOf(false) }
@@ -271,14 +275,12 @@ private fun TopAppBarWithSearch(
                     Text("Open in browser")
                 }
 
-                // TODO:
                 if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                     DropdownMenuItem(onClick = {
-                        // TODO: dropdown or something with what to sort by
-                        Log.d("Remove This", "ArtistScreenScaffold: Only for this tab!")
                         closeMenu()
+                        onSortChange(!isSorted)
                     }) {
-                        Text("Sort")
+                        Text(if (isSorted) "Un-sort" else "Sort")
                     }
 
                     // TODO: good for debugging, but could give users some details of how many release groups are in db, network

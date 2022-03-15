@@ -15,6 +15,11 @@ sealed class UiData
 object EndOfList : UiData()
 
 /**
+ * Represents a separator with [text] that can be inserted between two list items.
+ */
+class ListSeparator(val text: String): UiData()
+
+/**
  * Converts a [MusicBrainzData] that we got from the network to its UI version for display.
  *
  * We can map a [MusicBrainzData] to [UiData] but not the other way around because there are [UiData] such as

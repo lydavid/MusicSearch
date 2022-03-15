@@ -8,34 +8,63 @@ import androidx.room.Transaction
 @Dao
 abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
+    companion object {
+        private const val RELEASE_GROUPS_BY_ARTIST = """
+            SELECT rg.*
+            FROM release_groups rg
+            INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
+            INNER JOIN artists a ON a.id = rga.artist_id
+            WHERE a.id = :artistId
+        """
+
+        private const val SORTED = "ORDER BY rg.`primary-type`, rg.`secondary-types`, rg.`first-release-date`"
+
+        private const val FILTERED = """
+            AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
+            OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
+        """
+    }
+
     // Make sure to select from release_groups first, rather than artists.
     // That way, when there are no entries, we return empty rather than 1 entry with null values.
     @Transaction
+    @Query(RELEASE_GROUPS_BY_ARTIST)
+    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, RoomReleaseGroup>
+
+    @Transaction
     @Query(
         """
-        SELECT rg.*
-        FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
-        WHERE a.id = :artistId
+        $RELEASE_GROUPS_BY_ARTIST
+        $SORTED
     """
     )
-    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, RoomReleaseGroup>
+    abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, RoomReleaseGroup>
 
     // Not as fast as FTS but allows searching characters within words
     @Transaction
     @Query(
         """
-        SELECT rg.*
-        FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
-        WHERE a.id = :artistId
-        AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
-        OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
+        $RELEASE_GROUPS_BY_ARTIST
+        $FILTERED
     """
     )
-    abstract fun getReleaseGroupsByArtistFiltered(artistId: String, query: String): PagingSource<Int, RoomReleaseGroup>
+    abstract fun getReleaseGroupsByArtistFiltered(
+        artistId: String,
+        query: String
+    ): PagingSource<Int, RoomReleaseGroup>
+
+    @Transaction
+    @Query(
+        """
+        $RELEASE_GROUPS_BY_ARTIST
+        $FILTERED
+        $SORTED
+    """
+    )
+    abstract fun getReleaseGroupsByArtistFilteredSorted(
+        artistId: String,
+        query: String
+    ): PagingSource<Int, RoomReleaseGroup>
 
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?

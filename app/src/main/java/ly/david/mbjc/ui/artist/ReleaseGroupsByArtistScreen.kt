@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.artist
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,8 +10,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import ly.david.mbjc.data.domain.ListSeparator
+import ly.david.mbjc.data.domain.UiData
 import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
@@ -22,7 +24,7 @@ fun ReleaseGroupsByArtistScreen(
     modifier: Modifier,
     artistId: String,
     searchText: String,
-    state: LazyListState,
+    isSorted: Boolean,
     scaffoldState: ScaffoldState,
     onReleaseGroupClick: (String) -> Unit = {},
     onTitleUpdate: (title: String) -> Unit = {},
@@ -34,42 +36,32 @@ fun ReleaseGroupsByArtistScreen(
     }
 
     viewModel.updateQuery(query = searchText)
+    viewModel.updateIsSorted(isSorted = isSorted)
 
-    val lazyPagingItems: LazyPagingItems<UiReleaseGroup> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
         lazyPagingItems = lazyPagingItems,
         scaffoldState = scaffoldState
     ) {
         LazyColumn(
-            state = state,
             modifier = modifier
         ) {
-            items(lazyPagingItems) { releaseGroup: UiReleaseGroup? ->
-                if (releaseGroup == null) return@items
-                ReleaseGroupCard(releaseGroup = releaseGroup) {
-                    onReleaseGroupClick(it.id)
+            items(lazyPagingItems) { uiData: UiData? ->
+                when (uiData) {
+                    is UiReleaseGroup -> {
+                        ReleaseGroupCard(releaseGroup = uiData) {
+                            onReleaseGroupClick(it.id)
+                        }
+                    }
+                    is ListSeparator -> {
+                        ListSeparatorHeader(text = uiData.text)
+                    }
+                    else -> {
+                        // Do nothing.
+                    }
                 }
             }
         }
     }
-
-//                    uiReleaseGroups.sortAndGroupByTypes().forEach { (type, releaseGroupsForType) ->
-//
-//                        // TODO: clicking on header should collapse the group
-//                        stickyHeader {
-//                            StickyHeader(text = "$type (${releaseGroupsForType.size})")
-//                        }
-//                        items(releaseGroupsForType.sortedBy {
-//                            it.firstReleaseDate.toDate()
-//                        }) { releaseGroup ->
-//                            ReleaseGroupCard(releaseGroup = releaseGroup) {
-//                                onReleaseGroupClick(it.id)
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
 }

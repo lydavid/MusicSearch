@@ -31,7 +31,7 @@ import ly.david.mbjc.data.network.MusicBrainzArtist
 import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
-import ly.david.mbjc.ui.common.StickyHeader
+import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.UiState
 import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
@@ -71,7 +71,7 @@ fun TracksInReleaseScreen(
                         if (medium.tracks == null) return@forEach
 
                         stickyHeader {
-                            StickyHeader(
+                            ListSeparatorHeader(
                                 text = "${medium.format.orEmpty()} ${medium.position}" +
                                     medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
                             )

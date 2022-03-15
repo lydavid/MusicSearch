@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
-import ly.david.mbjc.ui.common.StickyHeader
+import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.UiState
 import ly.david.mbjc.ui.common.toDate
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
@@ -51,7 +51,7 @@ fun ReleasesByReleaseGroupScreen(
                     val grouped = releases.groupBy { it.status ?: "(No status)" }
                     grouped.forEach { (status, releasesWithStatus) ->
                         stickyHeader {
-                            StickyHeader(text = status)
+                            ListSeparatorHeader(text = status)
                         }
                         items(releasesWithStatus.sortedBy {
                             it.date?.toDate()
