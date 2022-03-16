@@ -18,15 +18,15 @@ data class RoomReleaseGroup(
     override val id: String,
     @ColumnInfo(name = "title")
     override val name: String = "",
-    @ColumnInfo(name = "first-release-date")
+    @ColumnInfo(name = "first_release_date")
     override val firstReleaseDate: String = "",
     @ColumnInfo(name = "disambiguation")
     override val disambiguation: String = "",
 
-    @ColumnInfo(name = "primary-type")
+    @ColumnInfo(name = "primary_type")
     override val primaryType: String? = null,
 
-    @ColumnInfo(name = "secondary-types")
+    @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
 ) : ReleaseGroup
 

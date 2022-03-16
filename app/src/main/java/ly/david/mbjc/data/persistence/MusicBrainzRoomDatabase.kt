@@ -13,6 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Database(
+    version = 1,
     entities = [
         // Main tables
         RoomArtist::class, RoomReleaseGroup::class,
@@ -27,7 +28,6 @@ import javax.inject.Singleton
         LookupHistory::class
     ],
     views = [],
-    version = 17
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {

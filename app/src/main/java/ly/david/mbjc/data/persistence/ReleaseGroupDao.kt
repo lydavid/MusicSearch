@@ -19,11 +19,11 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
             WHERE a.id = :artistId
         """
 
-        private const val SORTED = "ORDER BY rg.`primary-type`, rg.`secondary-types`, rg.`first-release-date`"
+        private const val SORTED = "ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date"
 
         private const val FILTERED = """
-            AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.`first-release-date` LIKE :query
-            OR rg.`primary-type` LIKE :query OR rg.`secondary-types` LIKE :query)
+            AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.first_release_date LIKE :query
+            OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query)
         """
     }
 
@@ -88,12 +88,12 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
     @Query(
         """
-        SELECT rg.`primary-type`, rg.`secondary-types`, COUNT(rg.id) as count
+        SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) as count
         FROM release_groups rg
         INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
         INNER JOIN artists a ON a.id = rga.artist_id
         WHERE a.id = :artistId
-        GROUP  BY rg.`primary-type`, rg.`secondary-types`
+        GROUP  BY rg.primary_type, rg.secondary_types
     """
     )
     abstract suspend fun getCountOfEachAlbumType(artistId: String): List<ReleaseGroupTypeCount>
@@ -113,10 +113,10 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 }
 
 data class ReleaseGroupTypeCount(
-    @ColumnInfo(name = "primary-type")
+    @ColumnInfo(name = "primary_type")
     override val primaryType: String? = null,
 
-    @ColumnInfo(name = "secondary-types")
+    @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
 
     @ColumnInfo(name = "count")
