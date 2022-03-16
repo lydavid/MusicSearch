@@ -3,54 +3,7 @@ package ly.david.mbjc.ui.releasegroup
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import javax.inject.Singleton
-import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.domain.UiReleaseGroup
-import ly.david.mbjc.data.domain.toUiReleaseGroup
-import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.LookupHistory
-import ly.david.mbjc.data.persistence.LookupHistoryDao
-import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
-import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.toRoomReleaseGroup
-import ly.david.mbjc.ui.Destination
-
-// TODO: Can Dropbox Store simplify this?
-// TODO: use this same repo for list of ReleaseGroups as well?
-@Singleton
-class ReleaseGroupRepository @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
-    private val releaseGroupDao: ReleaseGroupDao,
-    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
-    private val lookupHistoryDao: LookupHistoryDao
-) {
-    private var releaseGroup: UiReleaseGroup? = null
-
-    suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
-        releaseGroup ?: run {
-
-            val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
-            if (roomReleaseGroup != null) {
-                incrementOrInsertLookupHistory(roomReleaseGroup)
-                return roomReleaseGroup.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(releaseGroupId))
-            }
-
-            val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
-            releaseGroupDao.insert(musicBrainzReleaseGroup.toRoomReleaseGroup())
-            incrementOrInsertLookupHistory(musicBrainzReleaseGroup)
-            musicBrainzReleaseGroup.toUiReleaseGroup()
-        }
-
-    private suspend fun incrementOrInsertLookupHistory(releaseGroup: ReleaseGroup) {
-        lookupHistoryDao.incrementOrInsertLookupHistory(
-            LookupHistory(
-                summary = releaseGroup.name,
-                destination = Destination.LOOKUP_RELEASE_GROUP,
-                mbid = releaseGroup.id
-            )
-        )
-    }
-}
 
 // TODO: move this
 @HiltViewModel

@@ -186,7 +186,7 @@ private val testTrack = Track(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun ReleaseCardPreview() {
+internal fun TrackCardPreview() {
     MusicBrainzJetpackComposeTheme {
         Surface {
             TrackCard(

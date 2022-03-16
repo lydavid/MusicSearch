@@ -19,6 +19,14 @@ class ArtistRepository @Inject constructor(
 ) {
     private var artist: Artist? = null
 
+    /**
+     * Retrieves [Artist] from one of:
+     * 1. In-memory cache
+     * 2. Local database.
+     * 3. MusicBrainz server.
+     *
+     * Side-effect: Records a visit this this artist's page.
+     */
     suspend fun lookupArtist(artistId: String): Artist =
         artist ?: run {
 

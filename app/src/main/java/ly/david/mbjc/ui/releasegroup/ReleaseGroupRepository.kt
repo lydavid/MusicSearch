@@ -1,0 +1,54 @@
+package ly.david.mbjc.ui.releasegroup
+
+import javax.inject.Inject
+import javax.inject.Singleton
+import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.toUiReleaseGroup
+import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.persistence.LookupHistory
+import ly.david.mbjc.data.persistence.LookupHistoryDao
+import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
+import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.toRoomReleaseGroup
+import ly.david.mbjc.ui.Destination
+
+@Singleton
+class ReleaseGroupRepository @Inject constructor(
+    private val musicBrainzApiService: MusicBrainzApiService,
+    private val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
+    private val lookupHistoryDao: LookupHistoryDao
+) {
+    private var releaseGroup: UiReleaseGroup? = null
+
+    // We need UiReleaseGroup so that we have artist credits
+    suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
+        releaseGroup ?: run {
+
+            val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
+            if (roomReleaseGroup != null) {
+                incrementOrInsertLookupHistory(roomReleaseGroup)
+                return roomReleaseGroup.toUiReleaseGroup(
+                    releaseGroupArtistDao.getReleaseGroupArtistCredits(
+                        releaseGroupId
+                    )
+                )
+            }
+
+            val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
+            releaseGroupDao.insert(musicBrainzReleaseGroup.toRoomReleaseGroup())
+            incrementOrInsertLookupHistory(musicBrainzReleaseGroup)
+            musicBrainzReleaseGroup.toUiReleaseGroup()
+        }
+
+    private suspend fun incrementOrInsertLookupHistory(releaseGroup: ReleaseGroup) {
+        lookupHistoryDao.incrementOrInsertLookupHistory(
+            LookupHistory(
+                summary = releaseGroup.name,
+                destination = Destination.LOOKUP_RELEASE_GROUP,
+                mbid = releaseGroup.id
+            )
+        )
+    }
+}
