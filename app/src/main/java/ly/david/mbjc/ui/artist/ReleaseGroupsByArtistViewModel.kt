@@ -30,6 +30,7 @@ import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
+import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -83,28 +84,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
                             browseReleaseGroupsAndStore(artistId, offset)
                         }
                     ),
-                    pagingSourceFactory = {
-                        when {
-                            isSorted && query.isEmpty() -> {
-                                releaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
-                            }
-                            isSorted -> {
-                                releaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
-                                    artistId,
-                                    "%$query%"
-                                )
-                            }
-                            query.isEmpty() -> {
-                                releaseGroupDao.getReleaseGroupsByArtist(artistId)
-                            }
-                            else -> {
-                                releaseGroupDao.getReleaseGroupsByArtistFiltered(
-                                    artistId,
-                                    "%$query%"
-                                )
-                            }
-                        }
-                    }
+                    pagingSourceFactory = { getPagingSource(artistId, query, isSorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
@@ -152,5 +132,26 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         )
 
         return musicBrainzReleaseGroups.size
+    }
+
+    private fun getPagingSource(artistId: String, query: String, isSorted: Boolean) = when {
+        isSorted && query.isEmpty() -> {
+            releaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
+        }
+        isSorted -> {
+            releaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
+                artistId = artistId,
+                query = "%$query%"
+            )
+        }
+        query.isEmpty() -> {
+            releaseGroupDao.getReleaseGroupsByArtist(artistId)
+        }
+        else -> {
+            releaseGroupDao.getReleaseGroupsByArtistFiltered(
+                artistId = artistId,
+                query = "%$query%"
+            )
+        }
     }
 }

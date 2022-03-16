@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.common.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -9,18 +9,8 @@ import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.persistence.RoomData
 
-// TODO: update description on what it actual does
 /**
- * Gets data from MusicBrainz server, stores it in local Room database, then fetches it from Room database.
- * It can determine whether there is anymore data to fetch from MusicBrainz based on how many rows are in our
- * local database.
- *
- * Uses:
- *   * release groups by artist
- *   * releases by release group
- *   * tracks by release -> might be able to get all tracks from browse
- *
- *
+ * Generic RemoteMediator for loading remote data into [RoomData].
  *
  * @param getRemoteResourceCount Computes total number of this resource in MusicBrainz's server.
  *  If null, then that means we don't know yet.
@@ -29,7 +19,7 @@ import ly.david.mbjc.data.persistence.RoomData
  *  Expects back the number of returned resources.
  */
 @OptIn(ExperimentalPagingApi::class)
-class RoomDataRemoteMediator<RD: RoomData>(
+class RoomDataRemoteMediator<RD : RoomData>(
     private val getRemoteResourceCount: suspend () -> Int?,
     private val getLocalResourceCount: suspend () -> Int,
     private val browseResource: suspend (offset: Int) -> Int
