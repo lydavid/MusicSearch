@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,21 +33,33 @@ fun ArtistStatsScreen(
         releaseGroupTypeCounts = viewModel.getCountOfEachAlbumType(artistId)
     }
 
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.padding(horizontal = 8.dp)
+    ) {
         item {
-            Text(text = "Release groups on MusicBrainz network: $totalRemote")
-            Text(text = "Release groups in local database: $totalLocal")
+            Text(
+                style = MaterialTheme.typography.h6,
+                text = "Release groups on MusicBrainz network: $totalRemote"
+            )
+            Text(
+                style = MaterialTheme.typography.h6,
+                text = "Release groups in local database: $totalLocal"
+            )
 
             if (releaseGroupTypeCounts.isNotEmpty()) {
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(
+                    style = MaterialTheme.typography.body1,
                     modifier = Modifier.padding(bottom = 8.dp),
                     text = "Release groups types in local database"
                 )
             }
         }
         items(releaseGroupTypeCounts) {
-            Text(text = "${it.getDisplayTypes()}: ${it.count}")
+            Text(
+                style = MaterialTheme.typography.h6,
+                text = "${it.getDisplayTypes()}: ${it.count}"
+            )
         }
     }
 }
