@@ -51,7 +51,7 @@ data class RoomArtist(
     @ColumnInfo(name = "release_group_count")
     val releaseGroupsCount: Int? = null
 
-) : Artist
+) : RoomData(), Artist
 
 fun MusicBrainzArtist.toRoomArtist() =
     RoomArtist(

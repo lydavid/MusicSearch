@@ -39,7 +39,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
 
         val newReleases = response.releases
         allReleases.addAll(newReleases)
-        return if (allReleases.size < response.releaseCount) {
+        return if (allReleases.size < response.count) {
             getReleasesByReleaseGroup(
                 releaseGroupId = releaseGroupId,
                 offset = offset + newReleases.size

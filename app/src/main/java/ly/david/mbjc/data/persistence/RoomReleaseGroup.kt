@@ -28,7 +28,7 @@ data class RoomReleaseGroup(
 
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
-) : ReleaseGroup
+) : RoomData(), ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
 //@Entity(tableName = "release_groups_fts_table")

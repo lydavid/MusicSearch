@@ -28,6 +28,8 @@ import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.persistence.toRoomReleaseGroup
 
 @HiltViewModel
 class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -52,9 +54,11 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     }.distinctUntilChanged()
 
     suspend fun lookupArtist(artistId: String) =
-        artistRepository.lookupArtist(artistId).also {
-            this.artistId.value = it.id
-        }
+        artistRepository.lookupArtist(artistId)
+
+    fun updateArtistId(artistId: String) {
+        this.artistId.value = artistId
+    }
 
     fun updateQuery(query: String) {
         this.query.value = query
@@ -67,37 +71,36 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleaseGroups: Flow<PagingData<UiData>> =
         paramState.filterNot { it.artistId.isEmpty() }
-            .flatMapLatest { paramState ->
+            .flatMapLatest { (artistId, query, isSorted) ->
                 Pager(
                     config = PagingConfig(
                         pageSize = BROWSE_LIMIT
                     ),
-                    remoteMediator = ReleaseGroupsRemoteMediator(
-                        musicBrainzApiService = musicBrainzApiService,
-                        releaseGroupDao = releaseGroupDao,
-                        releaseGroupArtistDao = releaseGroupArtistDao,
-                        artistDao = artistDao,
-                        artistId = paramState.artistId,
-                        getRoomArtist = { artistDao.getArtist(paramState.artistId) }
+                    remoteMediator = RoomDataRemoteMediator(
+                        getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
+                        getLocalResourceCount = { releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId) },
+                        browseResource = { offset ->
+                            browseReleaseGroupsAndStore(artistId, offset)
+                        }
                     ),
                     pagingSourceFactory = {
                         when {
-                            paramState.isSorted && paramState.query.isEmpty() -> {
-                                releaseGroupDao.getReleaseGroupsByArtistSorted(paramState.artistId)
+                            isSorted && query.isEmpty() -> {
+                                releaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
                             }
-                            paramState.isSorted -> {
+                            isSorted -> {
                                 releaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
-                                    paramState.artistId,
-                                    "%${paramState.query}%"
+                                    artistId,
+                                    "%$query%"
                                 )
                             }
-                            paramState.query.isEmpty() -> {
-                                releaseGroupDao.getReleaseGroupsByArtist(paramState.artistId)
+                            query.isEmpty() -> {
+                                releaseGroupDao.getReleaseGroupsByArtist(artistId)
                             }
                             else -> {
                                 releaseGroupDao.getReleaseGroupsByArtistFiltered(
-                                    paramState.artistId,
-                                    "%${paramState.query}%"
+                                    artistId,
+                                    "%$query%"
                                 )
                             }
                         }
@@ -106,7 +109,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
                     pagingData.map {
                         it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
                     }.insertSeparators { uiReleaseGroup: UiReleaseGroup?, uiReleaseGroup2: UiReleaseGroup? ->
-                        if (paramState.isSorted && uiReleaseGroup2 != null &&
+                        if (isSorted && uiReleaseGroup2 != null &&
                             (uiReleaseGroup?.primaryType != uiReleaseGroup2.primaryType ||
                                 uiReleaseGroup?.secondaryTypes != uiReleaseGroup2.secondaryTypes)
                         ) {
@@ -119,4 +122,35 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
+
+    private suspend fun browseReleaseGroupsAndStore(artistId: String, nextOffset: Int): Int {
+        val response = musicBrainzApiService.browseReleaseGroupsByArtist(
+            artistId = artistId,
+            limit = BROWSE_LIMIT,
+            offset = nextOffset
+        )
+
+        // Only need to update it the first time we ever browse this artist's release groups.
+        if (response.offset == 0) {
+            artistDao.setTotalReleaseGroups(artistId, response.count)
+        }
+
+        val musicBrainzReleaseGroups = response.releaseGroups
+        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toRoomReleaseGroup() })
+        releaseGroupArtistDao.insertAll(
+            musicBrainzReleaseGroups.flatMap { releaseGroup ->
+                releaseGroup.artistCredits?.mapIndexed { index, artistCredit ->
+                    RoomReleaseGroupArtistCredit(
+                        releaseGroupId = releaseGroup.id,
+                        artistId = artistCredit.artist.id,
+                        name = artistCredit.name,
+                        joinPhrase = artistCredit.joinPhrase,
+                        order = index
+                    )
+                }.orEmpty()
+            }
+        )
+
+        return musicBrainzReleaseGroups.size
+    }
 }

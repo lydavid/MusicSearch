@@ -17,13 +17,15 @@ object EndOfList : UiData()
 /**
  * Represents a separator with [text] that can be inserted between two list items.
  */
-class ListSeparator(val text: String): UiData()
+class ListSeparator(val text: String) : UiData()
 
 /**
  * Converts a [MusicBrainzData] that we got from the network to its UI version for display.
  *
  * We can map a [MusicBrainzData] to [UiData] but not the other way around because there are [UiData] such as
  * [EndOfList] that do not have a 1-to-t mapping. We could still do it, but the result will be nullable.
+ *
+ * It seems like this needs to be in the same directory as [UiData] or else it tells us to add an else branch.
  */
 fun MusicBrainzData.toUiData(): UiData {
     return when (this) {

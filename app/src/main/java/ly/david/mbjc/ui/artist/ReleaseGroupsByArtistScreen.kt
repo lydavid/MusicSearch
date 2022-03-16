@@ -32,7 +32,15 @@ fun ReleaseGroupsByArtistScreen(
 ) {
 
     LaunchedEffect(key1 = artistId) {
-        onTitleUpdate(viewModel.lookupArtist(artistId).getNameWithDisambiguation())
+        viewModel.updateArtistId(artistId)
+        onTitleUpdate(
+            try {
+                viewModel.lookupArtist(artistId).getNameWithDisambiguation()
+            } catch (e: Exception) {
+                // Technically, we could fallback to artist name from card in previous screen.
+                "[Artist lookup failed]"
+            }
+        )
     }
 
     viewModel.updateQuery(query = searchText)

@@ -38,17 +38,25 @@ interface Browse {
     ): BrowseRecordingsResponse
 }
 
+/**
+ * Generic response fields when from a Browse request.
+ */
+interface Browsable {
+    val count: Int
+    val offset: Int
+}
+
 data class BrowseReleaseGroupsResponse(
-    @Json(name = "release-group-count") val releaseGroupCount: Int,
-    @Json(name = "release-group-offset") val releaseGroupOffset: Int,
+    @Json(name = "release-group-count") override val count: Int,
+    @Json(name = "release-group-offset") override val offset: Int,
     @Json(name = "release-groups") val releaseGroups: List<MusicBrainzReleaseGroup>
-)
+): Browsable
 
 data class BrowseReleasesResponse(
-    @Json(name = "release-count") val releaseCount: Int,
-    @Json(name = "release-offset") val releaseOffset: Int,
+    @Json(name = "release-count") override val count: Int,
+    @Json(name = "release-offset") override val offset: Int,
     @Json(name = "releases") val releases: List<Release>
-)
+): Browsable
 
 data class BrowseRecordingsResponse(
     @Json(name = "recordings-count") val recordingCount: Int,
