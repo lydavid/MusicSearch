@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,12 +33,14 @@ fun ReleaseGroupScreenScaffold(
     onBack: () -> Unit
 ) {
 
+    val scaffoldState = rememberScaffoldState()
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.OVERVIEW) }
     val context = LocalContext.current
 
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             ScrollableTopAppBar(
                 title = titleState,
@@ -72,11 +75,13 @@ fun ReleaseGroupScreenScaffold(
                 ReleasesByReleaseGroupScreen(
                     modifier = Modifier.padding(innerPadding),
                     releaseGroupId = releaseGroupId,
-//                    onTitleUpdate = { title, subtitle ->
-//                        titleState = title
-//                        subtitleState = subtitle
-//                    },
-                    onReleaseClick = onReleaseClick
+                    onTitleUpdate = { title, subtitle ->
+                        titleState = title
+                        subtitleState = subtitle
+                    },
+                    scaffoldState = scaffoldState,
+                    onReleaseClick = onReleaseClick,
+                    searchText = "" // TODO:
                 )
             }
         }

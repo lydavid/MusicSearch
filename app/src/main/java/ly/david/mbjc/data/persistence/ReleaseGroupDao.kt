@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.mbjc.data.ReleaseGroupTypes
 
+// TODO: move dir
 @Dao
 abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
@@ -26,6 +27,10 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
             OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query)
         """
     }
+
+    // Lookup
+    @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
+    abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
 
     // Make sure to select from release_groups first, rather than artists.
     // That way, when there are no entries, we return empty rather than 1 entry with null values.
@@ -68,9 +73,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         query: String
     ): PagingSource<Int, RoomReleaseGroup>
 
-    @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
-    abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
-
+    // TODO: move to artist?
     @Query(
         """
         SELECT IFNULL(
@@ -100,6 +103,15 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
     @Query(
         """
+        UPDATE release_groups 
+        SET release_count = :releaseCount
+        WHERE id = :releaseGroupId
+        """
+    )
+    abstract suspend fun setReleaseCount(releaseGroupId: String, releaseCount: Int)
+
+    @Query(
+        """
         DELETE from release_groups
         WHERE id in
         (SELECT rg.id
@@ -121,4 +133,4 @@ data class ReleaseGroupTypeCount(
 
     @ColumnInfo(name = "count")
     val count: Int,
-): ReleaseGroupTypes
+) : ReleaseGroupTypes

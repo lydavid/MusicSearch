@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.Release
+import ly.david.mbjc.data.domain.UiRelease
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -23,11 +23,11 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 //  some of these will only be present if we've already previously clicked into this card
 @Composable
 fun ReleaseCard(
-    release: Release,
-    onClick: (Release) -> Unit = {}
+    uiRelease: UiRelease,
+    onClick: (UiRelease) -> Unit = {}
 ) {
     ClickableListItem(
-        onClick = { onClick(release) },
+        onClick = { onClick(uiRelease) },
     ) {
         Row(
             modifier = Modifier.padding(vertical = 16.dp),
@@ -39,12 +39,12 @@ fun ReleaseCard(
             ) {
                 Row {
                     Text(
-                        text = release.name,
+                        text = uiRelease.name,
                         style = MaterialTheme.typography.h6,
                     )
                 }
 
-                val disambiguation = release.disambiguation
+                val disambiguation = uiRelease.disambiguation
                 if (disambiguation.isNotEmpty()) {
                     Row {
                         Text(
@@ -56,7 +56,7 @@ fun ReleaseCard(
                 }
             }
 
-            val date = release.date
+            val date = uiRelease.date
             if (!date.isNullOrEmpty()) {
                 Spacer(modifier = Modifier.padding(start = 8.dp))
                 Text(
@@ -73,7 +73,7 @@ fun ReleaseCard(
     }
 }
 
-private val testRelease = Release(
+private val testRelease = UiRelease(
     id = "1",
     name = "Release title that is long and wraps",
     disambiguation = "Disambiguation text that is also long",
@@ -92,7 +92,7 @@ internal fun ReleaseCardPreview() {
     }
 }
 
-private val testRelease2 = Release(
+private val testRelease2 = UiRelease(
     id = "1",
     name = "Release title",
     disambiguation = "Disambiguation text",

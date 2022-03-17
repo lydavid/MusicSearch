@@ -2,6 +2,7 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.network.MusicBrainzArtist
 import ly.david.mbjc.data.network.MusicBrainzData
+import ly.david.mbjc.data.network.MusicBrainzRelease
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 
 /**
@@ -31,5 +32,6 @@ fun MusicBrainzData.toUiData(): UiData {
     return when (this) {
         is MusicBrainzArtist -> this.toUiArtist()
         is MusicBrainzReleaseGroup -> this.toUiReleaseGroup()
+        is MusicBrainzRelease -> this.toUiRelease()
     }
 }

@@ -3,7 +3,7 @@ package ly.david.mbjc.data
 import ly.david.mbjc.data.domain.UiReleaseGroup
 
 /**
- * Defines common properties between network and persistence model.
+ * Defines common properties between domain, network and persistence model.
  */
 interface ReleaseGroup: NameWithDisambiguation, ReleaseGroupTypes {
 

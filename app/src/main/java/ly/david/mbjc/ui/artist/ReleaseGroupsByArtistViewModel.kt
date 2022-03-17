@@ -112,7 +112,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
 
         // Only need to update it the first time we ever browse this artist's release groups.
         if (response.offset == 0) {
-            artistDao.setTotalReleaseGroups(artistId, response.count)
+            artistDao.setReleaseGroupCount(artistId, response.count)
         }
 
         val musicBrainzReleaseGroups = response.releaseGroups

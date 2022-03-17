@@ -21,7 +21,7 @@ data class UiReleaseGroup(
     // TODO: if we keep it as MusicBrainzArtistCredit, then we can deeplink to each artist's page from a dropdown
     //  if we join table with artists, we could also get the artist object
     val artistCredits: String = ""
-): ReleaseGroup, UiData()
+): UiData(), ReleaseGroup
 
 fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
     return UiReleaseGroup(

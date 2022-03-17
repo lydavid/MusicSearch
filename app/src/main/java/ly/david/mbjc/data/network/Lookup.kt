@@ -1,6 +1,5 @@
 package ly.david.mbjc.data.network
 
-import ly.david.mbjc.data.Release
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -30,5 +29,5 @@ interface Lookup {
     suspend fun lookupRelease(
         @Path("releaseId") releaseId: String,
         @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels+place-rels+label-rels"
-    ): Release
+    ): MusicBrainzRelease
 }

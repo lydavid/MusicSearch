@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
 
 @Entity(
@@ -28,6 +27,16 @@ data class RoomReleaseGroup(
 
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
+
+    /**
+     * The total number of releases in this release group in Music Brainz's database.
+     *
+     * We track this number so that we know whether or not we've collected them all in our local database.
+     *
+     * When not set, it means we have not queried for the number of releases in this release group.
+     */
+    @ColumnInfo(name = "release_count")
+    val releaseCount: Int? = null
 ) : RoomData(), ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
@@ -50,26 +59,12 @@ data class RoomReleaseGroup(
 //)
 
 // TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
-fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
-    return RoomReleaseGroup(
-        id = id,
-        name = name,
-        firstReleaseDate = firstReleaseDate,
-        disambiguation = disambiguation,
+fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup = RoomReleaseGroup(
+    id = id,
+    name = name,
+    firstReleaseDate = firstReleaseDate,
+    disambiguation = disambiguation,
 
-        primaryType = primaryType,
-        secondaryTypes = secondaryTypes
-    )
-}
-
-fun UiReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup {
-    return RoomReleaseGroup(
-        id = id,
-        name = name,
-        firstReleaseDate = firstReleaseDate,
-        disambiguation = disambiguation,
-
-        primaryType = primaryType,
-        secondaryTypes = secondaryTypes
-    )
-}
+    primaryType = primaryType,
+    secondaryTypes = secondaryTypes
+)

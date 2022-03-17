@@ -3,6 +3,9 @@ package ly.david.mbjc.data
 import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
 
+/**
+ * Defines common properties between domain, network and persistence model.
+ */
 interface Artist : NameWithDisambiguation {
     val id: String
 

@@ -3,7 +3,6 @@ package ly.david.mbjc.data.network
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.LabelInfo
 import ly.david.mbjc.data.Medium
-import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.ReleaseGroup
 
 data class MusicBrainzReleaseGroup(
@@ -43,6 +42,5 @@ data class MusicBrainzReleaseGroup(
 
     // lookup only, inc=releases
     @Json(name = "releases")
-    val releases: List<Release>? = null,
+    val musicBrainzReleases: List<MusicBrainzRelease>? = null,
 ): ReleaseGroup, MusicBrainzData()
-

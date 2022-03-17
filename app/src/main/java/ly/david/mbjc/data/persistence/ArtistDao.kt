@@ -15,5 +15,5 @@ abstract class ArtistDao : BaseDao<RoomArtist> {
         WHERE id = :artistId
         """
     )
-    abstract suspend fun setTotalReleaseGroups(artistId: String, releaseGroupCount: Int)
+    abstract suspend fun setReleaseGroupCount(artistId: String, releaseGroupCount: Int)
 }

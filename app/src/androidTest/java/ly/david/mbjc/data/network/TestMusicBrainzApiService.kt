@@ -1,7 +1,5 @@
 package ly.david.mbjc.data.network
 
-import ly.david.mbjc.data.Release
-
 class TestMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
         return SearchArtistsResponse(
@@ -65,7 +63,7 @@ class TestMusicBrainzApiService : MusicBrainzApiService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lookupRelease(releaseId: String, include: String): Release {
+    override suspend fun lookupRelease(releaseId: String, include: String): MusicBrainzRelease {
         TODO("Not yet implemented")
     }
 }
