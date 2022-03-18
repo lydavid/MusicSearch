@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
@@ -38,7 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.launch
 import ly.david.mbjc.data.LifeSpan
@@ -57,12 +60,14 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 fun SearchMusicBrainzScreen(
-    lazyListState: LazyListState,
+    lazyListState: LazyListState = rememberLazyListState(),
     scaffoldState: ScaffoldState,
-    lazyPagingItems: LazyPagingItems<UiData>,
-    onSearch: (resource: MusicBrainzResource, query: String) -> Unit = { _, _ -> },
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
+
+    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.searchResultsUiData.collectAsLazyPagingItems()
+
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
     val focusManager = LocalFocusManager.current
@@ -106,7 +111,7 @@ fun SearchMusicBrainzScreen(
                             if (text.isEmpty()) {
                                 showAlertDialog = true
                             } else {
-                                onSearch(selectedOption, text)
+                                viewModel.updateViewModelState(selectedOption, text)
                                 lazyListState.scrollToItem(0)
                                 focusManager.clearFocus()
                             }
