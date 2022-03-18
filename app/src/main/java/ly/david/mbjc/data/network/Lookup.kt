@@ -21,7 +21,7 @@ interface Lookup {
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
-        @Query("inc") include: String = "releases+artists+media"
+        @Query("inc") include: String = "artists" // "releases+artists+media"
     ): MusicBrainzReleaseGroup
 
     // TODO: screen should have information similar to: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba

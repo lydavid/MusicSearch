@@ -12,6 +12,9 @@ import ly.david.mbjc.data.ArtistCredit
  * An [ArtistCredit] for a [ReleaseGroup] should map to this.
  * Remember [ArtistCredit] can exist for other entities like [Recording]. That will have its own table.
  */
+// TODO: this is actually 1-to-many, so we'll want foreignKeys referencing ReleaseGroup and an id for this (auto gen?)
+//  a many to many would be a linking table of release group and artist, without all the other data,
+//  it's probably not needed
 @Entity(
     tableName = "release_groups_artists",
     primaryKeys = ["release_group_id", "artist_id", "order"]

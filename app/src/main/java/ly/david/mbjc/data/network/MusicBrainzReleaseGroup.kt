@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import ly.david.mbjc.data.LabelInfo
 import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 
 data class MusicBrainzReleaseGroup(
 
@@ -43,4 +44,19 @@ data class MusicBrainzReleaseGroup(
     // lookup only, inc=releases
     @Json(name = "releases")
     val musicBrainzReleases: List<MusicBrainzRelease>? = null,
-): ReleaseGroup, MusicBrainzData()
+) : MusicBrainzData(), ReleaseGroup
+
+// TODO: unit test
+/**
+ * Returns all artist credits for this release group for caching in database.
+ */
+fun MusicBrainzReleaseGroup.getRoomReleaseGroupArtistCredit(): List<RoomReleaseGroupArtistCredit> =
+    artistCredits?.mapIndexed { index, artistCredit ->
+        RoomReleaseGroupArtistCredit(
+            releaseGroupId = id,
+            artistId = artistCredit.artist.id,
+            name = artistCredit.name,
+            joinPhrase = artistCredit.joinPhrase,
+            order = index
+        )
+    }.orEmpty()

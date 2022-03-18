@@ -17,8 +17,8 @@ import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.lookupInBrowser
 
 private enum class ReleaseGroupTab(val title: String) {
-    OVERVIEW("Overview"),
     RELEASES("Releases"),
+    STATS("Stats"),
 }
 
 /**
@@ -36,7 +36,7 @@ fun ReleaseGroupScreenScaffold(
     val scaffoldState = rememberScaffoldState()
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
-    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.OVERVIEW) }
+    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     val context = LocalContext.current
 
     Scaffold(
@@ -62,15 +62,6 @@ fun ReleaseGroupScreenScaffold(
     ) { innerPadding ->
 
         when (selectedTab) {
-            ReleaseGroupTab.OVERVIEW -> {
-                ReleaseGroupOverviewScreen(
-                    releaseGroupId = releaseGroupId,
-                    onTitleUpdate = { title, subtitle ->
-                        titleState = title
-                        subtitleState = subtitle
-                    },
-                )
-            }
             ReleaseGroupTab.RELEASES -> {
                 ReleasesByReleaseGroupScreen(
                     modifier = Modifier.padding(innerPadding),
@@ -83,6 +74,9 @@ fun ReleaseGroupScreenScaffold(
                     onReleaseClick = onReleaseClick,
                     searchText = "" // TODO:
                 )
+            }
+            ReleaseGroupTab.STATS -> {
+                Text(text = "nothing")
             }
         }
     }

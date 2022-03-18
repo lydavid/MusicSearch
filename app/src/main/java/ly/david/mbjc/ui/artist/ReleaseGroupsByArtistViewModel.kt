@@ -25,10 +25,10 @@ import ly.david.mbjc.data.domain.toUiReleaseGroup
 import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
@@ -116,18 +116,11 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         }
 
         val musicBrainzReleaseGroups = response.releaseGroups
+
         releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toRoomReleaseGroup() })
         releaseGroupArtistDao.insertAll(
             musicBrainzReleaseGroups.flatMap { releaseGroup ->
-                releaseGroup.artistCredits?.mapIndexed { index, artistCredit ->
-                    RoomReleaseGroupArtistCredit(
-                        releaseGroupId = releaseGroup.id,
-                        artistId = artistCredit.artist.id,
-                        name = artistCredit.name,
-                        joinPhrase = artistCredit.joinPhrase,
-                        order = index
-                    )
-                }.orEmpty()
+                releaseGroup.getRoomReleaseGroupArtistCredit()
             }
         )
 
