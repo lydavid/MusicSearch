@@ -190,6 +190,8 @@ private fun SearchResults(
                         text = "End of search results."
                     )
                 }
+                // TODO: can we somehow insert a footer for when we know there are more results but network failed?
+                // TODO: loading more footer?
                 else -> {
                     // Null. Do nothing.
                 }

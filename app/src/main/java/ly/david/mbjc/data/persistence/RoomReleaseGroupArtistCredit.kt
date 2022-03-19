@@ -2,22 +2,29 @@ package ly.david.mbjc.data.persistence
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import ly.david.mbjc.data.ArtistCredit
 
-// Do this if we need a many-to-many relationship.
-// For 1-to-many, we can have a field to reference another entity's id.
 /**
- * An [Artist] for a [ReleaseGroup].
- * A release group can have many artists. An artist can have many release groups.
+ * An artist's credit for a [ReleaseGroup].
+ * A release group can have many artists credits. It can even have the same artist listed twice under different names.
+ *
  * An [ArtistCredit] for a [ReleaseGroup] should map to this.
+ *
  * Remember [ArtistCredit] can exist for other entities like [Recording]. That will have its own table.
  */
-// TODO: this is actually 1-to-many, so we'll want foreignKeys referencing ReleaseGroup and an id for this (auto gen?)
-//  a many to many would be a linking table of release group and artist, without all the other data,
-//  it's probably not needed
 @Entity(
     tableName = "release_groups_artists",
-    primaryKeys = ["release_group_id", "artist_id", "order"]
+    primaryKeys = ["release_group_id", "order"],
+    foreignKeys = [
+        ForeignKey(
+            entity = RoomReleaseGroup::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("release_group_id"),
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
 )
 data class RoomReleaseGroupArtistCredit(
     @ColumnInfo(name = "release_group_id")
@@ -34,4 +41,4 @@ data class RoomReleaseGroupArtistCredit(
 
     @ColumnInfo(name = "order")
     val order: Int
-): ArtistCredit
+) : ArtistCredit

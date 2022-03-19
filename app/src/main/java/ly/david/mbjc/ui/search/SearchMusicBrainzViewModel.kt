@@ -24,7 +24,7 @@ import ly.david.mbjc.data.network.SEARCH_LIMIT
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel
-internal class SearchMusicBrainzViewModel @Inject constructor(
+class SearchMusicBrainzViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService
 ) : ViewModel() {
 
@@ -56,9 +56,8 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
                         )
                     }
                 ).flow.map { pagingData ->
+                    // separators waits till both before/after have loaded, so we can't use it for loading footer
                     pagingData.insertFooterItemForNonEmpty(item = EndOfList)
-                    // TODO: can we somehow insert a footer for when we know there are more results but network failed?
-                    // TODO: loading more footer?
                 }
             }
             .distinctUntilChanged()
