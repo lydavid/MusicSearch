@@ -30,7 +30,7 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzArtist
 import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.UiState
 import ly.david.mbjc.ui.common.toDisplayTime

@@ -21,7 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.FullScreenText
 
 /**
  * Handles loading and errors for paging screens.
@@ -49,19 +50,8 @@ fun <T : Any> PagingLoadingAndErrorHandler(
 
             FullScreenErrorWithRetry(lazyPagingItems = lazyPagingItems)
         }
-        lazyPagingItems.loadState.append.endOfPaginationReached &&
-            lazyPagingItems.itemCount == 0 -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.body1,
-                    text = noResultsText
-                )
-            }
+        lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
+            FullScreenText(noResultsText)
         }
         else -> {
             if (lazyPagingItems.loadState.append is LoadState.Error) {

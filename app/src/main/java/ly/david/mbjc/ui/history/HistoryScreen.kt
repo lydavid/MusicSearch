@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import java.text.SimpleDateFormat
@@ -37,9 +38,11 @@ import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 internal fun HistoryScreenScaffold(
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     openDrawer: () -> Unit = {},
+    viewModel: HistoryViewModel = hiltViewModel()
 ) {
 
     var searchText by rememberSaveable { mutableStateOf("") }
+    val lazyPagingItems = viewModel.lookUpHistory.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -49,12 +52,13 @@ internal fun HistoryScreenScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
+                    viewModel.updateQuery(query = searchText)
                 },
             )
         },
     ) {
         HistoryScreen(
-            searchText = searchText,
+            lazyPagingItems = lazyPagingItems,
             onItemClick = onItemClick
         )
     }
@@ -62,17 +66,12 @@ internal fun HistoryScreenScaffold(
 
 @Composable
 fun HistoryScreen(
-    searchText: String,
+    lazyPagingItems: LazyPagingItems<LookupHistory>,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
-    viewModel: HistoryViewModel = hiltViewModel()
 ) {
 
-    viewModel.updateQuery(query = searchText)
-
-    val lazyPagingItems = viewModel.lookUpHistory.collectAsLazyPagingItems()
-
     PagingLoadingAndErrorHandler(
-        lazyPagingItems = lazyPagingItems
+        lazyPagingItems = lazyPagingItems,
     ) {
         LazyColumn {
             items(lazyPagingItems) { lookupHistory: LookupHistory? ->
