@@ -1,16 +1,51 @@
 package ly.david.mbjc.ui.history
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 
-// TODO: this needs to access data stored in Room/SharedPreferences
-//  need to store two piece of info for each screen: route, id
+private const val PAGE_SIZE = 25
+
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao
-): ViewModel() {
+) : ViewModel() {
 
-    suspend fun getAllLookupHistory() = lookupHistoryDao.getAllLookupHistory()
+    private val query: MutableStateFlow<String> = MutableStateFlow("")
+
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val lookUpHistory: Flow<PagingData<LookupHistory>> =
+        query.flatMapLatest { query ->
+            Pager(
+                config = PagingConfig(
+                    pageSize = PAGE_SIZE,
+                    initialLoadSize = PAGE_SIZE
+                ),
+                pagingSourceFactory = {
+                    if (query.isEmpty()) {
+                        lookupHistoryDao.getAllLookupHistory()
+                    } else {
+                        lookupHistoryDao.getAllLookupHistoryFiltered("%$query%")
+                    }
+                }
+            ).flow
+        }
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
 }

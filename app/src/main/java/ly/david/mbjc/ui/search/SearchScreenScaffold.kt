@@ -7,7 +7,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import ly.david.mbjc.ui.Destination
-import ly.david.mbjc.ui.common.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
 @Composable

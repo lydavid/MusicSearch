@@ -1,14 +1,28 @@
 package ly.david.mbjc.data.persistence
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import java.util.Date
 
 @Dao
 abstract class LookupHistoryDao : BaseDao<LookupHistory> {
 
+    @Transaction
     @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")
-    abstract suspend fun getAllLookupHistory(): List<LookupHistory>
+    abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistory>
+
+    @Transaction
+    @Query(
+        """
+        SELECT * 
+        FROM lookup_history
+        WHERE summary LIKE :query
+        ORDER BY last_accessed DESC
+        """
+    )
+    abstract fun getAllLookupHistoryFiltered(query: String): PagingSource<Int, LookupHistory>
 
     @Query(
         """

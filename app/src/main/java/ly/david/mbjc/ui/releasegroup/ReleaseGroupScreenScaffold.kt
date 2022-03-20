@@ -13,8 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 
 private enum class ReleaseGroupTab(val title: String) {
     RELEASES("Releases"),
@@ -54,7 +54,7 @@ fun ReleaseGroupScreenScaffold(
                         Text("Open in browser")
                     }
                 },
-                tabsTitle = ReleaseGroupTab.values().map { it.title },
+                tabsTitles = ReleaseGroupTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] }
             )

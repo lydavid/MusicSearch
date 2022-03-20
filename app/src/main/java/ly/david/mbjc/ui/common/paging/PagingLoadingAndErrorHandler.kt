@@ -12,6 +12,7 @@ import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -28,7 +29,7 @@ import ly.david.mbjc.ui.common.FullScreenLoadingIndicator
 @Composable
 fun <T : Any> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
-    scaffoldState: ScaffoldState,
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
     noResultsText: String = "No results found.",
     content: @Composable () -> Unit
 ) {

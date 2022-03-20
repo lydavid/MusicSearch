@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.mbjc.ui.common.topappbar
 
 import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
@@ -32,17 +32,15 @@ interface OverflowMenuScope {
 
 @Composable
 fun ScrollableTopAppBar(
-    title: String,
-    subtitle: String = "",
-
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
-
+    title: String,
+    subtitle: String = "",
     mainAction: @Composable (() -> Unit)? = null,
     dropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
-    tabsTitle: List<String> = listOf(),
+    tabsTitles: List<String> = listOf(),
     selectedTabIndex: Int = 0,
     onSelectTabIndex: (Int) -> Unit = {}
 ) {
@@ -87,7 +85,7 @@ fun ScrollableTopAppBar(
         )
 
         TabsBar(
-            tabsTitle = tabsTitle,
+            tabsTitle = tabsTitles,
             selectedTabIndex = selectedTabIndex,
             onSelectTabIndex = onSelectTabIndex
         )
@@ -95,7 +93,7 @@ fun ScrollableTopAppBar(
 }
 
 @Composable
-fun OverflowMenu(
+private fun OverflowMenu(
     dropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null
 ) {
     var showMenu by rememberSaveable { mutableStateOf(false) }
@@ -127,7 +125,7 @@ fun OverflowMenu(
 }
 
 @Composable
-fun TabsBar(
+private fun TabsBar(
     tabsTitle: List<String> = listOf(),
     selectedTabIndex: Int = 0,
     onSelectTabIndex: (Int) -> Unit = {}
@@ -150,11 +148,16 @@ fun TabsBar(
     }
 }
 
+// region Preview
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun ReleaseCardPreview() {
+internal fun ScrollableTopAppBarPreview() {
     MusicBrainzJetpackComposeTheme {
-        ScrollableTopAppBar("A title", "A subtitle")
+        ScrollableTopAppBar(
+            title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            subtitle = "A subtitle that is also very long that will also go off the screen."
+        )
     }
 }
+// endregion
