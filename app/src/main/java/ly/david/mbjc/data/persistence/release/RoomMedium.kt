@@ -5,6 +5,8 @@ import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import androidx.room.Query
+import androidx.room.Transaction
 import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.network.MusicBrainzMedium
 import ly.david.mbjc.data.persistence.BaseDao
@@ -13,11 +15,14 @@ import ly.david.mbjc.data.persistence.RoomRelease
 @Dao
 abstract class MediumDao : BaseDao<RoomMedium> {
 
-//    @Transaction
-//    @Query("""
-//
-//    """)
-//    abstract fun getMediaInRelease(releaseId: String): PagingSource<Int, RoomMedium>
+    @Transaction
+    @Query("""
+        SELECT m.*
+        FROM media m
+        INNER JOIN tracks t ON t.medium_id = m.id
+        WHERE t.id = :trackId
+    """)
+    abstract suspend fun getMediumForTrack(trackId: String): RoomMedium
 }
 
 @Entity(

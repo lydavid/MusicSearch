@@ -22,9 +22,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.Work
-import ly.david.mbjc.data.domain.sub.UiTrack
+import ly.david.mbjc.data.domain.ListSeparator
+import ly.david.mbjc.data.domain.UiData
+import ly.david.mbjc.data.domain.UiTrack
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
@@ -72,7 +75,7 @@ fun TracksInReleaseScreen(
         }
     }
 
-    val lazyPagingItems: LazyPagingItems<UiTrack> = viewModel.pagedTracks.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.pagedTracks.collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
         lazyPagingItems = lazyPagingItems,
@@ -80,14 +83,17 @@ fun TracksInReleaseScreen(
         LazyColumn(
             modifier = modifier
         ) {
-            items(lazyPagingItems) { uiTrack: UiTrack? ->
-                when (uiTrack) {
+            items(lazyPagingItems) { uiData: UiData? ->
+                when (uiData) {
                     is UiTrack -> {
                         TrackCard(
-                            track = uiTrack,
+                            track = uiData,
 //                            showTrackArtists = shouldShowTrackArtists,
                             onRecordingClick = onRecordingClick
                         )
+                    }
+                    is ListSeparator -> {
+                        ListSeparatorHeader(text = uiData.text)
                     }
                     else -> {
                         // Do nothing.

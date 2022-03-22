@@ -1,11 +1,13 @@
 package ly.david.mbjc.ui.release
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,17 +17,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.domain.sub.UiTrack
-import ly.david.mbjc.data.domain.sub.toUiTrack
+import ly.david.mbjc.data.domain.ListSeparator
+import ly.david.mbjc.data.domain.UiData
+import ly.david.mbjc.data.domain.UiTrack
+import ly.david.mbjc.data.domain.toUiTrack
 import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.persistence.release.MediumDao
+import ly.david.mbjc.data.persistence.release.RoomMedium
 import ly.david.mbjc.data.persistence.release.TrackDao
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @HiltViewModel
 class TracksInReleaseViewModel @Inject constructor(
     private val releaseRepository: ReleaseRepository,
-//    private val musicBrainzApiService: MusicBrainzApiService,
-//    private val lookupHistoryDao: LookupHistoryDao
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
 ) : ViewModel() {
@@ -36,15 +40,8 @@ class TracksInReleaseViewModel @Inject constructor(
         this.releaseId.value = it.id
     }
 
-//    suspend fun insertMediaAndTracks(musicBrainzRelease: MusicBrainzRelease) {
-//        musicBrainzRelease.media?.forEach { medium ->
-//            val mediumId = mediumDao.insert(medium.toRoomMedium(musicBrainzRelease.id))
-//            trackDao.insertAll(medium.tracks?.map { it.toRoomTrack(mediumId) } ?: emptyList())
-//        }
-//    }
-
     @OptIn(ExperimentalCoroutinesApi::class)
-    val pagedTracks: Flow<PagingData<UiTrack>> =
+    val pagedTracks: Flow<PagingData<UiData>> =
         releaseId.flatMapLatest { releaseId ->
             Pager(
                 config = PagingConfig(
@@ -56,30 +53,22 @@ class TracksInReleaseViewModel @Inject constructor(
             ).flow.map { pagingData ->
                 pagingData.map { track ->
                     track.toUiTrack()
+                }.insertSeparators { _: UiTrack?, after: UiTrack? ->
+                    // TODO: if we want separators when we filter, then we should compare before/after medium id
+                    //  before converting it to uitrack...
+                    if (after?.position == 1) {
+                        val medium: RoomMedium = mediumDao.getMediumForTrack(after.id)
+                        Log.d("Remove This", "$medium: ")
+                        ListSeparator(
+                            text = "${medium.format.orEmpty()} ${medium.position}" +
+                                medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
+                        )
+                    } else {
+                        null
+                    }
                 }
             }
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
-
-//    private var musicBrainzRelease: MusicBrainzRelease? = null
-//
-//    suspend fun lookupRelease(releaseId: String, ): MusicBrainzRelease =
-//        musicBrainzRelease ?: musicBrainzApiService.lookupRelease(releaseId).also {
-//            // TODO: insert release into table or we can do it when getting all release in release group
-//            //  only artist lookup needed to do it here since we didn't cache the query results
-//            incrementOrInsertLookupHistory(it)
-//            musicBrainzRelease = it
-//        }
-//
-//    // TODO: see if we can generalize
-//    private suspend fun incrementOrInsertLookupHistory(musicBrainzRelease: MusicBrainzRelease) {
-//        lookupHistoryDao.incrementOrInsertLookupHistory(
-//            LookupHistory(
-//                summary = musicBrainzRelease.getNameWithDisambiguation(),
-//                destination = Destination.LOOKUP_RELEASE,
-//                mbid = musicBrainzRelease.id
-//            )
-//        )
-//    }
 }

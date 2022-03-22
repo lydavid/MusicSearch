@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.domain.sub
+package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.Track
@@ -31,7 +31,7 @@ data class UiTrack(
     override val number: String,
     override val title: String,
     override val length: Int?
-) : Track
+) : UiData(), Track
 
 fun RoomTrack.toUiTrack() =
     UiTrack(
