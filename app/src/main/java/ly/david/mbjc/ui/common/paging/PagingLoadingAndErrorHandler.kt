@@ -17,10 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.fullscreen.FullScreenText
 
@@ -31,7 +33,7 @@ import ly.david.mbjc.ui.common.fullscreen.FullScreenText
 fun <T : Any> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    noResultsText: String = "No results found.",
+    noResultsText: String = stringResource(id = R.string.no_results_found),
     content: @Composable () -> Unit
 ) {
 

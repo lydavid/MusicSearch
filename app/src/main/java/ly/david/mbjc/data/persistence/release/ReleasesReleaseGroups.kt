@@ -1,7 +1,12 @@
 package ly.david.mbjc.data.persistence.release
 
 import androidx.room.ColumnInfo
+import androidx.room.Dao
 import androidx.room.Entity
+import ly.david.mbjc.data.persistence.BaseDao
+
+@Dao
+abstract class ReleasesReleaseGroupsDao : BaseDao<ReleasesReleaseGroups>
 
 @Entity(
     tableName = "releases_release_groups",

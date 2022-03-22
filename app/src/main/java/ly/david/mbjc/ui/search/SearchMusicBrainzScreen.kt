@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,6 +45,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.launch
+import ly.david.mbjc.R
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.UiArtist
@@ -147,7 +149,7 @@ fun SearchMusicBrainzScreen(
         PagingLoadingAndErrorHandler(
             lazyPagingItems = lazyPagingItems,
             scaffoldState = scaffoldState,
-            noResultsText = "No results found.\nTry refining your search query."
+            noResultsText = stringResource(id = R.string.no_results_found_search)
         ) {
             SearchResults(
                 lazyListState = lazyListState,

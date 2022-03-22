@@ -60,6 +60,7 @@ fun ArtistScreenScaffold(
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                         DropdownMenuItem(onClick = {
                             closeMenu()
+                            // TODO: disclaimer when turning on sort if we have not gotten all release groups
                             isSorted = !isSorted
                         }) {
                             Text(if (isSorted) "Un-sort" else "Sort")

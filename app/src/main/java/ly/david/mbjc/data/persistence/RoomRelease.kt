@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.MusicBrainzRelease
+import ly.david.mbjc.data.network.getFormatsForDisplay
+import ly.david.mbjc.data.network.getTracksForDisplay
 
 @Entity(tableName = "releases")
 data class RoomRelease(
@@ -33,6 +35,12 @@ data class RoomRelease(
     override val asin: String?,
     @ColumnInfo(name = "quality")
     override val quality: String?,
+
+    @ColumnInfo(name = "formats")
+    val formats: String?,
+
+    @ColumnInfo(name = "tracks")
+    val tracks: String?
 ) : RoomData(), Release
 
 fun MusicBrainzRelease.toRoomRelease() =
@@ -48,5 +56,7 @@ fun MusicBrainzRelease.toRoomRelease() =
         packaging = packaging,
         packagingId = packagingId,
         asin = asin,
-        quality = quality
+        quality = quality,
+        formats = media?.getFormatsForDisplay(),
+        tracks = media?.getTracksForDisplay()
     )

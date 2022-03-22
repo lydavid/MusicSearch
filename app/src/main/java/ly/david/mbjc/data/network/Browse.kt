@@ -21,13 +21,16 @@ interface Browse {
         @Query("inc") include: String = "artist-credits"
     ): BrowseReleaseGroupsResponse
 
+    // can browse by area, artist, collection, label, track, track_artist, recording, release-group
+    // currently only browsing by release-group
     @GET("release")
     suspend fun browseReleasesByReleaseGroup(
         @Query("release-group") releaseGroupId: String,
         @Query("limit") limit: Int,
         @Query("offset") offset: Int = 0,
         // artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
-        @Query("inc") include: String = "media"
+        // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
+//        @Query("inc") include: String = "media"
     ): BrowseReleasesResponse
 
     @GET("recording")

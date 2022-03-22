@@ -7,38 +7,33 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.mbjc.data.Recording
-import ly.david.mbjc.data.Track
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
+import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.Work
-import ly.david.mbjc.data.getDisplayNames
+import ly.david.mbjc.data.domain.sub.UiTrack
 import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.data.network.MusicBrainzArtist
-import ly.david.mbjc.data.network.MusicBrainzArtistCredit
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
-import ly.david.mbjc.ui.common.ListSeparatorHeader
-import ly.david.mbjc.ui.common.UiState
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.toDisplayTime
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.
+ *
+ * Tracks are recordings that are part of a release. It includes reference to recording,
+ * but some of its details might be different for a given release.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -47,68 +42,122 @@ fun TracksInReleaseScreen(
     releaseId: String,
     onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
     onRecordingClick: (String) -> Unit = {},
-    viewModel: ReleaseViewModel = hiltViewModel()
+    viewModel: TracksInReleaseViewModel = hiltViewModel()
 ) {
-    val uiState by produceState(initialValue = UiState(isLoading = true)) {
-        value = UiState(response = viewModel.lookupRelease(releaseId))
+
+    LaunchedEffect(key1 = releaseId) {
+        try {
+            // TODO: if the lookup is really long, then we won't display title until it's done
+            //  technically, we already know title if we can from release group screen.
+            //  we could fetch title from db if it exists, or fetch it from network without rest of data
+            //  worst case means we need to make 2 api calls.
+
+            // TODO: check if release is in db, if so, display title from it
+            //  if not, query for just title
+
+            val release: Release = viewModel.lookupRelease(releaseId)
+            onTitleUpdate(
+                release.getNameWithDisambiguation(),
+                "Release by [TODO]" // TODO: artistCredits
+            )
+//            if (release is MusicBrainzRelease) {
+//                viewModel.insertMediaAndTracks(release)
+//            }
+
+            // TODO: if not paging, we would just populate the lazy column here
+            //  with all media, and all tracks
+
+        } catch (e: Exception) {
+            onTitleUpdate("[Release lookup failed]", "[error]")
+        }
     }
 
-    var shouldShowTrackArtists by rememberSaveable { mutableStateOf(false) }
+    val lazyPagingItems: LazyPagingItems<UiTrack> = viewModel.pagedTracks.collectAsLazyPagingItems()
 
-    when {
-        uiState.response != null -> {
-            uiState.response?.let { release ->
-
-                onTitleUpdate(
-                    release.getNameWithDisambiguation(),
-                    "Release by ${release.artistCredits.getDisplayNames()}"
-                )
-
-                LazyColumn(
-                    modifier = modifier
-                ) {
-                    release.media?.forEach { medium ->
-                        if (medium.tracks == null) return@forEach
-
-                        stickyHeader {
-                            ListSeparatorHeader(
-                                text = "${medium.format.orEmpty()} ${medium.position}" +
-                                    medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
-                            )
-                        }
-
-                        items(medium.tracks) { track ->
-                            // Only show tracks' artists if there are any tracks in this release
-                            // with artists different from the release's artists
-                            if (track.artistCredits != release.artistCredits) {
-                                shouldShowTrackArtists = true
-                            }
-                            TrackCard(
-                                track = track,
-                                showTrackArtists = shouldShowTrackArtists,
-                                onRecordingClick = onRecordingClick
-                            )
-                        }
+    PagingLoadingAndErrorHandler(
+        lazyPagingItems = lazyPagingItems,
+    ) {
+        LazyColumn(
+            modifier = modifier
+        ) {
+            items(lazyPagingItems) { uiTrack: UiTrack? ->
+                when (uiTrack) {
+                    is UiTrack -> {
+                        TrackCard(
+                            track = uiTrack,
+//                            showTrackArtists = shouldShowTrackArtists,
+                            onRecordingClick = onRecordingClick
+                        )
                     }
-
+                    else -> {
+                        // Do nothing.
+                    }
                 }
             }
-
-        }
-        uiState.isLoading -> {
-            FullScreenLoadingIndicator()
-        }
-        else -> {
-            Text(text = "error...")
         }
     }
+
+    // TODO: don't do this, it causes loading spinner to stall right before data is loaded
+//    val uiState by produceState(initialValue = UiState(isLoading = true)) {
+//        value = UiState(response = viewModel.lookupRelease(releaseId))
+//    }
+//
+//    var shouldShowTrackArtists by rememberSaveable { mutableStateOf(false) }
+//
+//    when {
+//        uiState.response != null -> {
+//            uiState.response?.let { release ->
+//
+//                onTitleUpdate(
+//                    release.getNameWithDisambiguation(),
+//                    "Release by ${release.artistCredits.getDisplayNames()}"
+//                )
+//
+//                LazyColumn(
+//                    modifier = modifier
+//                ) {
+//                    release.media?.forEach { medium ->
+//                        if (medium.tracks == null) return@forEach
+//
+//                        stickyHeader {
+//                            ListSeparatorHeader(
+//                                text = "${medium.format.orEmpty()} ${medium.position}" +
+//                                    medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
+//                            )
+//                        }
+//
+//                        items(medium.tracks) { track ->
+//                            // Only show tracks' artists if there are any tracks in this release
+//                            // with artists different from the release's artists
+//                            if (track.artistCredits != release.artistCredits) {
+//                                shouldShowTrackArtists = true
+//                            }
+//                            TrackCard(
+//                                track = track,
+//                                showTrackArtists = shouldShowTrackArtists,
+//                                onRecordingClick = onRecordingClick
+//                            )
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//        }
+//        uiState.isLoading -> {
+//            FullScreenLoadingIndicator()
+//        }
+//        else -> {
+//            Text(text = "error...")
+//        }
+//    }
 }
 
 // TODO: Should have similar data to each table row in: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
 
 @Composable
 private fun TrackCard(
-    track: Track,
+    track: UiTrack,
     showTrackArtists: Boolean = false,
     onRecordingClick: (String) -> Unit = {},
     onWorkClick: (Work) -> Unit = {},
@@ -116,7 +165,9 @@ private fun TrackCard(
 ) {
 
     ClickableListItem(
-        onClick = { onRecordingClick(track.recording.id) },
+        onClick = {
+//            onRecordingClick(musicBrainzTrack.recording.id)
+        },
     ) {
         Row(
             modifier = Modifier.padding(vertical = 16.dp),
@@ -129,7 +180,8 @@ private fun TrackCard(
             )
 
             Column(
-                modifier = Modifier.weight(10f)
+                modifier = Modifier
+                    .weight(10f)
                     .padding(start = 4.dp)
             ) {
                 Text(
@@ -141,13 +193,14 @@ private fun TrackCard(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         style = MaterialTheme.typography.body1,
-                        text = track.artistCredits.getDisplayNames()
+                        text = "TODO"//uiTrack.artistCredits.getDisplayNames()
                     )
                 }
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
+            // TODO: constraint layout to keep start/end text on 1 line, wrapping only middle
             Text(
                 text = track.length.toDisplayTime(),
                 style = MaterialTheme.typography.body2
@@ -158,29 +211,29 @@ private fun TrackCard(
     }
 }
 
-private val testTrack = Track(
+private val testTrack = UiTrack(
     id = "1",
     title = "Track title that is long and wraps",
-    recording = Recording(
-        id = "2",
-        name = "Recording title",
-        length = 256000,
-        video = false
-    ),
+//    recording = Recording(
+//        id = "2",
+//        name = "Recording title",
+//        length = 256000,
+//        video = false
+//    ),
     position = 1,
     number = "123",
-    length = 253000,
-    artistCredits = listOf(
-        MusicBrainzArtistCredit(
-            MusicBrainzArtist(
-                "3",
-                name = "actual name",
-                sortName = "sort name"
-            ),
-            joinPhrase = "",
-            name = "name on track"
-        )
-    )
+    length = 25300000,
+//    artistCredits = listOf(
+//        MusicBrainzArtistCredit(
+//            MusicBrainzArtist(
+//                "3",
+//                name = "actual name",
+//                sortName = "sort name"
+//            ),
+//            joinPhrase = "",
+//            name = "name on track"
+//        )
+//    )
 )
 
 @Preview

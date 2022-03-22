@@ -12,15 +12,20 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
+import ly.david.mbjc.data.persistence.release.RoomMedium
+import ly.david.mbjc.data.persistence.release.RoomTrack
+import ly.david.mbjc.data.persistence.release.TrackDao
 
 @Database(
-    version = 3,
+    version = 4,
     entities = [
         // Main tables
         RoomArtist::class, RoomReleaseGroup::class, RoomRelease::class,
+        RoomMedium::class, RoomTrack::class,
 
         // Full-Text Search (FTS) tables
 //        ReleaseGroupFts::class,
@@ -35,16 +40,23 @@ import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     abstract fun getArtistDao(): ArtistDao
+
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
+
     abstract fun getReleaseGroupDao(): ReleaseGroupDao
+
     abstract fun getReleasesReleaseGroupsDao(): ReleasesReleaseGroupsDao
+
     abstract fun getReleaseDao(): ReleaseDao
+    abstract fun getMediumDao(): MediumDao
+    abstract fun getTrackDao(): TrackDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
@@ -82,6 +94,12 @@ object DatabaseDaoModule {
 
     @Provides
     fun provideReleaseDao(db: MusicBrainzRoomDatabase) = db.getReleaseDao()
+
+    @Provides
+    fun provideMediumDao(db: MusicBrainzRoomDatabase) = db.getMediumDao()
+
+    @Provides
+    fun provideTrackDao(db: MusicBrainzRoomDatabase) = db.getTrackDao()
 
     @Provides
     fun provideLookupHistoryDao(db: MusicBrainzRoomDatabase) = db.getLookupHistoryDao()

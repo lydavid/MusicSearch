@@ -3,7 +3,6 @@ package ly.david.mbjc.data.network
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.Area
 import ly.david.mbjc.data.LabelInfo
-import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.NameWithDisambiguation
 import ly.david.mbjc.data.Release
 
@@ -32,7 +31,7 @@ data class MusicBrainzRelease(
     //   "relations": [],
 
     // inc=media
-    @Json(name = "media") val media: List<Medium>? = null,
+    @Json(name = "media") val media: List<MusicBrainzMedium>? = null,
 
     // inc=artist-credits
     @Json(name = "artist-credit") val artistCredits: List<MusicBrainzArtistCredit>? = null,

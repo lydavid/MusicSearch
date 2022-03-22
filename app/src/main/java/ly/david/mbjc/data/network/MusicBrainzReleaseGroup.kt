@@ -2,7 +2,6 @@ package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.LabelInfo
-import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
 
@@ -39,7 +38,7 @@ data class MusicBrainzReleaseGroup(
 
     // inc=media
     @Json(name = "media")
-    val media: List<Medium>? = null,
+    val media: List<MusicBrainzMedium>? = null,
 
     // lookup only, inc=releases
     @Json(name = "releases")
