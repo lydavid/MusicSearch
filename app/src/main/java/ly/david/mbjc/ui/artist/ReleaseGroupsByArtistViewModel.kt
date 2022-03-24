@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
@@ -23,13 +22,13 @@ import ly.david.mbjc.data.domain.UiData
 import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.domain.toUiReleaseGroup
 import ly.david.mbjc.data.getDisplayTypes
-import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toRoomReleaseGroup
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
 @HiltViewModel
@@ -74,9 +73,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
         paramState.filterNot { it.artistId.isEmpty() }
             .flatMapLatest { (artistId, query, isSorted) ->
                 Pager(
-                    config = PagingConfig(
-                        pageSize = BROWSE_LIMIT
-                    ),
+                    config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = RoomDataRemoteMediator(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
                         getLocalResourceCount = { releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId) },
@@ -106,7 +103,6 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     private suspend fun browseReleaseGroupsAndStore(artistId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleaseGroupsByArtist(
             artistId = artistId,
-            limit = BROWSE_LIMIT,
             offset = nextOffset
         )
 

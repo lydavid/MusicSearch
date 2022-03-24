@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,10 +16,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.UiData
-import ly.david.mbjc.data.network.INITIAL_SEARCH_LIMIT
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.network.SEARCH_LIMIT
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel
@@ -44,10 +42,7 @@ class SearchMusicBrainzViewModel @Inject constructor(
         viewModelState.filterNot { it.query.isEmpty() }
             .flatMapLatest { viewModelState ->
                 Pager(
-                    config = PagingConfig(
-                        pageSize = SEARCH_LIMIT,
-                        initialLoadSize = INITIAL_SEARCH_LIMIT
-                    ),
+                    config = MusicBrainzPagingConfig.pagingConfig,
                     pagingSourceFactory = {
                         SearchMusicBrainzPagingSource(
                             musicBrainzApiService = musicBrainzApiService,
@@ -56,7 +51,7 @@ class SearchMusicBrainzViewModel @Inject constructor(
                         )
                     }
                 ).flow.map { pagingData ->
-                    // separators waits till both before/after have loaded, so we can't use it for loading footer
+                    // TODO: instead of footer here, we could use the one in PagingLoadingAndErrorHandler
                     pagingData.insertFooterItemForNonEmpty(item = EndOfList)
                 }
             }

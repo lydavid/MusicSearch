@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.domain.ListSeparator
@@ -77,28 +75,26 @@ fun TracksInReleaseScreen(
 
     val lazyPagingItems: LazyPagingItems<UiData> = viewModel.pagedTracks.collectAsLazyPagingItems()
 
+    // TODO: never see error, cause error would be from the above try-catch
+    //  this paging source is local only
+    // TODO: keeps flashing between "No results found" and loading indicator when loading big data
     PagingLoadingAndErrorHandler(
+        modifier = modifier,
         lazyPagingItems = lazyPagingItems,
-    ) {
-        LazyColumn(
-            modifier = modifier
-        ) {
-            items(lazyPagingItems) { uiData: UiData? ->
-                when (uiData) {
-                    is UiTrack -> {
-                        TrackCard(
-                            track = uiData,
+    ) { uiData: UiData? ->
+        when (uiData) {
+            is UiTrack -> {
+                TrackCard(
+                    track = uiData,
 //                            showTrackArtists = shouldShowTrackArtists,
-                            onRecordingClick = onRecordingClick
-                        )
-                    }
-                    is ListSeparator -> {
-                        ListSeparatorHeader(text = uiData.text)
-                    }
-                    else -> {
-                        // Do nothing.
-                    }
-                }
+                    onRecordingClick = onRecordingClick
+                )
+            }
+            is ListSeparator -> {
+                ListSeparatorHeader(text = uiData.text)
+            }
+            else -> {
+                // Do nothing.
             }
         }
     }
@@ -150,13 +146,6 @@ fun TracksInReleaseScreen(
 //            }
 //
 //        }
-//        uiState.isLoading -> {
-//            FullScreenLoadingIndicator()
-//        }
-//        else -> {
-//            Text(text = "error...")
-//        }
-//    }
 }
 
 // TODO: Should have similar data to each table row in: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
@@ -207,6 +196,7 @@ private fun TrackCard(
             Spacer(modifier = Modifier.weight(1f))
 
             // TODO: constraint layout to keep start/end text on 1 line, wrapping only middle
+
             Text(
                 text = track.length.toDisplayTime(),
                 style = MaterialTheme.typography.body2

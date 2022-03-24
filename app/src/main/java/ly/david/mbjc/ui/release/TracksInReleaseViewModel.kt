@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
@@ -21,10 +20,10 @@ import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.UiData
 import ly.david.mbjc.data.domain.UiTrack
 import ly.david.mbjc.data.domain.toUiTrack
-import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.RoomMedium
 import ly.david.mbjc.data.persistence.release.TrackDao
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @HiltViewModel
@@ -44,9 +43,7 @@ class TracksInReleaseViewModel @Inject constructor(
     val pagedTracks: Flow<PagingData<UiData>> =
         releaseId.flatMapLatest { releaseId ->
             Pager(
-                config = PagingConfig(
-                    pageSize = BROWSE_LIMIT,
-                ),
+                config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
                     trackDao.getTracksInRelease(releaseId)
                 }

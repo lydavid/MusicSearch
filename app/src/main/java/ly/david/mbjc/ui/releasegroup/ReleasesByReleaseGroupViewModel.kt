@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.UiRelease
 import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.domain.toUiRelease
-import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.RoomRelease
@@ -29,6 +27,7 @@ import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.toRoomRelease
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
 @HiltViewModel
@@ -67,9 +66,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
         paramState.filterNot { it.releaseGroupId.isEmpty() }
             .flatMapLatest { (releaseGroupId, query) ->
                 Pager(
-                    config = PagingConfig(
-                        pageSize = BROWSE_LIMIT
-                    ),
+                    config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = RoomDataRemoteMediator(
                         getRemoteResourceCount = { releaseGroupDao.getReleaseGroup(releaseGroupId)?.releaseCount },
                         getLocalResourceCount = { releaseDao.getNumberOfReleasesInReleaseGroup(releaseGroupId) },
@@ -90,7 +87,6 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
     private suspend fun browseReleasesAndStore(releaseGroupId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleasesByReleaseGroup(
             releaseGroupId = releaseGroupId,
-            limit = BROWSE_LIMIT,
             offset = nextOffset
         )
 

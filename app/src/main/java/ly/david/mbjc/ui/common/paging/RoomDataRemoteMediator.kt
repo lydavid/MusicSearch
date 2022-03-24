@@ -5,8 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kotlinx.coroutines.delay
-import ly.david.mbjc.data.network.BROWSE_LIMIT
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
+import ly.david.mbjc.data.network.SEARCH_BROWSE_LIMIT
 import ly.david.mbjc.data.persistence.RoomData
 
 /**
@@ -62,7 +62,8 @@ class RoomDataRemoteMediator<RD : RoomData>(
                 }
             }
 
-            MediatorResult.Success(endOfPaginationReached = browseResource(nextOffset) < BROWSE_LIMIT)
+            // Assuming all browse uses this limit.
+            MediatorResult.Success(endOfPaginationReached = browseResource(nextOffset) < SEARCH_BROWSE_LIMIT)
         } catch (e: Exception) {
             MediatorResult.Error(e)
         }

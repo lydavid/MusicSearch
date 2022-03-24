@@ -11,19 +11,16 @@ internal const val MUSIC_BRAINZ_BASE_URL = "https://musicbrainz.org"
 const val DELAY_PAGED_API_CALLS_MS = 1000L
 
 /**
- * Starting offset for all search/browse types.
+ * Starting offset for all search/browse requests.
  */
 const val STARTING_OFFSET = 0
 
-const val SEARCH_LIMIT = 25
-const val INITIAL_SEARCH_LIMIT = 50
+/**
+ * Limit for search/browse requests. This is the max size.
+ */
+const val SEARCH_BROWSE_LIMIT = 100
 
 /**
- * Max page size for browse requests.
+ * Specifically chosen so that we don't fetch multiple pages before loading footer disappears.
  */
-private const val MAX_BROWSE_LIMIT = 100
-
-/**
- * Page size limit for browse requests.
- */
-const val BROWSE_LIMIT = MAX_BROWSE_LIMIT
+const val PREFETCH_DISTANCE = 1

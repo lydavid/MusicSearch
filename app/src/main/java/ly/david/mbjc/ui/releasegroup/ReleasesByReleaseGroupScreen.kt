@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import ly.david.mbjc.data.domain.UiRelease
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -45,23 +43,18 @@ fun ReleasesByReleaseGroupScreen(
     val lazyPagingItems: LazyPagingItems<UiRelease> = viewModel.pagedReleases.collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
+        modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         scaffoldState = scaffoldState
-    ) {
-        LazyColumn(
-            modifier = modifier
-        ) {
-            items(lazyPagingItems) { uiRelease: UiRelease? ->
-                when (uiRelease) {
-                    is UiRelease -> {
-                        ReleaseCard(uiRelease = uiRelease) {
-                            onReleaseClick(it.id)
-                        }
-                    }
-                    else -> {
-                        // Do nothing.
-                    }
+    ) { uiRelease: UiRelease? ->
+        when (uiRelease) {
+            is UiRelease -> {
+                ReleaseCard(uiRelease = uiRelease) {
+                    onReleaseClick(it.id)
                 }
+            }
+            else -> {
+                // Do nothing.
             }
         }
     }

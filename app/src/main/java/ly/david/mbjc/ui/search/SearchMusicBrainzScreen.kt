@@ -6,19 +6,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -43,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.LifeSpan
@@ -54,10 +50,10 @@ import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
-import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
@@ -77,19 +73,11 @@ fun SearchMusicBrainzScreen(
     val coroutineScope = rememberCoroutineScope()
     var showAlertDialog by rememberSaveable { mutableStateOf(false) }
 
-    // TODO: extract & generalize
     if (showAlertDialog) {
-        AlertDialog(
-            title = { Text("Search cannot be empty") },
-            backgroundColor = getAlertBackgroundColor(),
-            onDismissRequest = {
-                showAlertDialog = false
-            },
-            confirmButton = {
-                TextButton(onClick = { showAlertDialog = false }) {
-                    Text("OK")
-                }
-            }
+        SimpleAlertDialog(
+            title = "Search cannot be empty",
+            confirmText = "OK",
+            onDismiss = { showAlertDialog = false }
         )
     }
 
@@ -148,28 +136,10 @@ fun SearchMusicBrainzScreen(
 
         PagingLoadingAndErrorHandler(
             lazyPagingItems = lazyPagingItems,
+            lazyListState = lazyListState,
             scaffoldState = scaffoldState,
             noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) {
-            SearchResults(
-                lazyListState = lazyListState,
-                lazyPagingItems = lazyPagingItems,
-                onItemClick = onItemClick
-            )
-        }
-    }
-}
-
-@Composable
-private fun SearchResults(
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<UiData>,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> }
-) {
-    LazyColumn(
-        state = lazyListState
-    ) {
-        items(lazyPagingItems) { uiData: UiData? ->
+        ) { uiData: UiData? ->
             when (uiData) {
                 is UiArtist -> {
                     ArtistCard(artist = uiData) {
@@ -192,12 +162,11 @@ private fun SearchResults(
                         text = "End of search results."
                     )
                 }
-                // TODO: can we somehow insert a footer for when we know there are more results but network failed?
-                // TODO: loading more footer?
                 else -> {
                     // Null. Do nothing.
                 }
             }
+
         }
     }
 }

@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.search
 
 import android.content.res.Configuration
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
@@ -17,6 +18,7 @@ internal fun SearchScreenScaffold(
 ) {
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
+    val lazyListState = rememberLazyListState()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -24,6 +26,7 @@ internal fun SearchScreenScaffold(
     ) {
         SearchMusicBrainzScreen(
             scaffoldState = scaffoldState,
+            lazyListState = lazyListState,
             onItemClick = onItemClick,
         )
     }

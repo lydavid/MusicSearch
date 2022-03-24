@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -72,20 +70,16 @@ fun HistoryScreen(
 
     PagingLoadingAndErrorHandler(
         lazyPagingItems = lazyPagingItems,
-    ) {
-        LazyColumn {
-            items(lazyPagingItems) { lookupHistory: LookupHistory? ->
-                when (lookupHistory) {
-                    is LookupHistory -> {
-                        HistoryEntry(
-                            lookupHistory = lookupHistory,
-                            onItemClick = onItemClick
-                        )
-                    }
-                    else -> {
-                        // Do nothing.
-                    }
-                }
+    ) { lookupHistory: LookupHistory? ->
+        when (lookupHistory) {
+            is LookupHistory -> {
+                HistoryEntry(
+                    lookupHistory = lookupHistory,
+                    onItemClick = onItemClick
+                )
+            }
+            else -> {
+                // Do nothing.
             }
         }
     }

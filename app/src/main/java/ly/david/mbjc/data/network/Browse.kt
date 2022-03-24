@@ -16,7 +16,7 @@ interface Browse {
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
         @Query("artist") artistId: String,
-        @Query("limit") limit: Int,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
         @Query("inc") include: String = "artist-credits"
     ): BrowseReleaseGroupsResponse
@@ -26,7 +26,7 @@ interface Browse {
     @GET("release")
     suspend fun browseReleasesByReleaseGroup(
         @Query("release-group") releaseGroupId: String,
-        @Query("limit") limit: Int,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
         // artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
         // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
@@ -36,7 +36,7 @@ interface Browse {
     @GET("recording")
     suspend fun browseRecordingsByRelease(
         @Query("release") releaseId: String,
-        @Query("limit") limit: Int,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
     ): BrowseRecordingsResponse
 }

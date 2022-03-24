@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.history
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 private const val PAGE_SIZE = 25
 
@@ -33,10 +33,7 @@ class HistoryViewModel @Inject constructor(
     val lookUpHistory: Flow<PagingData<LookupHistory>> =
         query.flatMapLatest { query ->
             Pager(
-                config = PagingConfig(
-                    pageSize = PAGE_SIZE,
-                    initialLoadSize = PAGE_SIZE
-                ),
+                config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
                     if (query.isEmpty()) {
                         lookupHistoryDao.getAllLookupHistory()

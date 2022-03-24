@@ -12,14 +12,14 @@ interface Search {
     @GET("artist")
     suspend fun queryArtists(
         @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_LIMIT,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchArtistsResponse
 
     @GET("release-group")
     suspend fun queryReleaseGroups(
         @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_LIMIT,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchReleaseGroupsResponse
 }
