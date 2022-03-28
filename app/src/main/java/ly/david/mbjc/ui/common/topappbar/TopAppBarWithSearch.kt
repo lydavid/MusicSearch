@@ -40,8 +40,8 @@ fun TopAppBarWithSearch(
     subtitle: String = "",
     showSearchIcon: Boolean = true,
     dropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-    searchText: String,
-    onSearchTextChange: (String) -> Unit,
+    searchText: String = "",
+    onSearchTextChange: (String) -> Unit = {},
     tabsTitles: List<String> = listOf(),
     selectedTabIndex: Int = 0,
     onSelectTabIndex: (Int) -> Unit = {}

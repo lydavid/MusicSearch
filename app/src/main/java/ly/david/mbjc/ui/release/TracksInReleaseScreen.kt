@@ -77,7 +77,9 @@ fun TracksInReleaseScreen(
 
     // TODO: never see error, cause error would be from the above try-catch
     //  this paging source is local only
+
     // TODO: keeps flashing between "No results found" and loading indicator when loading big data
+    //  doesn't happen on my physical device. Emulator issue?
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,

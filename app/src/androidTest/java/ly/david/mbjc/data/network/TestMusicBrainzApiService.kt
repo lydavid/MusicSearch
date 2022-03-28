@@ -41,8 +41,7 @@ class TestMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int,
-        offset: Int,
-        include: String
+        offset: Int
     ): BrowseReleasesResponse {
         TODO("Not yet implemented")
     }
