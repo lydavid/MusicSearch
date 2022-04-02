@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,7 +25,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.delay
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+
+/**
+ * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we
+ * exceed this time.
+ */
+private const val DELAY_LOADING_MS = 300L
 
 interface OverflowMenuScope {
     fun closeMenu()
@@ -45,20 +53,35 @@ fun ScrollableTopAppBar(
     onSelectTabIndex: (Int) -> Unit = {}
 ) {
 
+    var showLoading by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = title) {
+        showLoading = if (title.isEmpty()) {
+            delay(DELAY_LOADING_MS)
+            true
+        } else {
+            false
+        }
+    }
+
     Column {
         TopAppBar(
             title = {
-                Column {
-                    Text(
-                        text = title,
-                        modifier = Modifier.horizontalScroll(rememberScrollState())
-                    )
-                    if (subtitle.isNotEmpty()) {
+                if (showLoading) {
+                    DotsFlashing()
+                } else {
+                    Column {
                         Text(
-                            text = subtitle,
-                            style = MaterialTheme.typography.body1,
+                            text = title,
                             modifier = Modifier.horizontalScroll(rememberScrollState())
                         )
+                        if (subtitle.isNotEmpty()) {
+                            Text(
+                                text = subtitle,
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.horizontalScroll(rememberScrollState())
+                            )
+                        }
                     }
                 }
             },
