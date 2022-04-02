@@ -3,5 +3,6 @@
 
     <style name="Theme.MusicBrainzJetpackCompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 </resources>
