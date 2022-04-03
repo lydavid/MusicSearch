@@ -3,9 +3,11 @@ package ly.david.mbjc.data.persistence
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.AutoMigrationSpec
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +23,7 @@ import ly.david.mbjc.data.persistence.release.RoomTrack
 import ly.david.mbjc.data.persistence.release.TrackDao
 
 @Database(
-    version = 4,
+    version = 5,
     entities = [
         // Main tables
         RoomArtist::class, RoomReleaseGroup::class, RoomRelease::class,
@@ -41,10 +43,14 @@ import ly.david.mbjc.data.persistence.release.TrackDao
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
+        AutoMigration(from = 4, to = 5, spec = MusicBrainzRoomDatabase.RenameCountry::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase() {
+
+    @RenameColumn(tableName = "artists", fromColumnName = "country", toColumnName = "country_code")
+    class RenameCountry : AutoMigrationSpec
 
     abstract fun getArtistDao(): ArtistDao
 

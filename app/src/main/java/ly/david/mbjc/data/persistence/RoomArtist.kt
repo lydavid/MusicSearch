@@ -33,8 +33,8 @@ data class RoomArtist(
 //    @ColumnInfo(name = "gender-id")
 //    val genderId: String? = null,
 
-    @ColumnInfo(name = "country")
-    override val country: String? = null,
+    @ColumnInfo(name = "country_code")
+    override val countryCode: String? = null,
 
     // Allow nested fields to be part of this Room table. Good for data that doesn't require its own table.
     @Embedded
@@ -61,6 +61,6 @@ fun MusicBrainzArtist.toRoomArtist() =
         disambiguation = disambiguation,
         type = type,
         gender = gender,
-        country = country,
+        countryCode = countryCode,
         lifeSpan = lifeSpan
     )

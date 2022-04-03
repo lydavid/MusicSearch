@@ -12,7 +12,7 @@ data class UiArtist(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val gender: String? = null,
-    override val country: String? = null,
+    override val countryCode: String? = null,
     override val lifeSpan: LifeSpan? = null
 ) : UiData(), Artist
 
@@ -24,7 +24,7 @@ fun MusicBrainzArtist.toUiArtist() =
         disambiguation = disambiguation,
         type = type,
         gender = gender,
-        country = country,
+        countryCode = countryCode,
         lifeSpan = lifeSpan
     )
 
@@ -36,6 +36,6 @@ fun RoomArtist.toUiArtist() =
         disambiguation = disambiguation,
         type = type,
         gender = gender,
-        country = country,
+        countryCode = countryCode,
         lifeSpan = lifeSpan
     )

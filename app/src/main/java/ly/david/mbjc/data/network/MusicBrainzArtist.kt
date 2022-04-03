@@ -27,7 +27,7 @@ data class MusicBrainzArtist(
 //    val genderId: String? = null,
 
     @Json(name = "country")
-    override val country: String? = null,
+    override val countryCode: String? = null,
 
     @Json(name = "life-span")
     override val lifeSpan: LifeSpan? = null,

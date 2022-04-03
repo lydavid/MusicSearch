@@ -1,9 +1,7 @@
 package ly.david.mbjc.ui.search
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -14,7 +12,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -33,28 +30,22 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
-import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.UiArtist
 import ly.david.mbjc.data.domain.UiData
 import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.Destination
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 fun SearchMusicBrainzScreen(
@@ -170,70 +161,3 @@ fun SearchMusicBrainzScreen(
         }
     }
 }
-
-// TODO: include Group/Person etc
-@Composable
-private fun ArtistCard(
-    artist: UiArtist,
-    onArtistClick: (UiArtist) -> Unit = {}
-) {
-    ClickableListItem(
-        onClick = { onArtistClick(artist) },
-    ) {
-        Column(
-            modifier = Modifier.padding(vertical = 16.dp),
-        ) {
-
-            Text(
-                text = artist.name,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            if (artist.disambiguation != null) {
-                Spacer(modifier = Modifier.padding(top = 4.dp))
-                Text(
-                    text = "(${artist.disambiguation})",
-                    color = getSubTextColor(),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-    }
-}
-
-// region Previews
-
-class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
-    override val values = sequenceOf(
-        UiArtist(
-            id = "1",
-            name = "artist name",
-            sortName = "sort name should not be seen",
-        ),
-        UiArtist(
-            id = "2",
-            type = "Group",
-            name = "wow, this artist name is so long it will wrap around the screen",
-            sortName = "sort name should not be seen",
-            disambiguation = "blah, blah, blah, some really long text that forces wrapping",
-            country = "JP",
-            lifeSpan = LifeSpan(
-                begin = "2020-10-10"
-            )
-        )
-    )
-}
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun ArtistCardPreview(
-    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: UiArtist
-) {
-    MusicBrainzJetpackComposeTheme {
-        Surface {
-            ArtistCard(artist)
-        }
-    }
-}
-// endregion
