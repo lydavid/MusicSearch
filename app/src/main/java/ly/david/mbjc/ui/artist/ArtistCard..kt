@@ -51,7 +51,7 @@ fun ArtistCard(
                     }
             )
 
-            if (artist.countryCode != null) {
+            if (!artist.countryCode.isNullOrEmpty()) {
                 Text(
                     text = "${artist.countryCode.toFlagEmoji()} ${artist.countryCode}",
                     style = MaterialTheme.typography.body1,
@@ -69,7 +69,7 @@ fun ArtistCard(
                 })
             }
 
-            if (artist.disambiguation != null) {
+            if (!artist.disambiguation.isNullOrEmpty()) {
                 Text(
                     text = artist.disambiguation.transformThisIfNotNullOrEmpty { "($it)" },
                     style = MaterialTheme.typography.body1,
@@ -86,7 +86,7 @@ fun ArtistCard(
                 })
             }
 
-            if (artist.type != null) {
+            if (!artist.type.isNullOrEmpty()) {
                 Text(
                     text = artist.type,
                     style = MaterialTheme.typography.body2,
@@ -97,8 +97,6 @@ fun ArtistCard(
                         }
                 )
             }
-
-
         }
     }
 }

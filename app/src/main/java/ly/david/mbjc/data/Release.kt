@@ -11,7 +11,7 @@ interface Release : NameWithDisambiguation {
     val status: String?
     val barcode: String?
     val statusId: String?
-    val country: String?
+    val countryCode: String?
     val packaging: String?
     val packagingId: String?
     val asin: String?

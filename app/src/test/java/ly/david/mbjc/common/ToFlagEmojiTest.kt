@@ -17,6 +17,11 @@ class ToFlagEmojiTest {
     }
 
     @Test
+    fun `European Union code`() {
+        assertEquals("\uD83C\uDDEA\uD83C\uDDFA", "XE".toFlagEmoji())
+    }
+
+    @Test
     fun `empty string`() {
         assertEquals("", "".toFlagEmoji())
     }

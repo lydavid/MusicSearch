@@ -16,7 +16,7 @@ data class MusicBrainzRelease(
     @Json(name = "status") override val status: String? = null,
     @Json(name = "barcode") override val barcode: String? = null,
     @Json(name = "status-id") override val statusId: String? = null,
-    @Json(name = "country") override val country: String? = null,
+    @Json(name = "country") override val countryCode: String? = null,
     @Json(name = "packaging") override val packaging: String? = null,
     @Json(name = "packaging-id") override val packagingId: String? = null,
     @Json(name = "asin") override val asin: String? = null,

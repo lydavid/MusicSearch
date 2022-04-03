@@ -25,8 +25,8 @@ data class RoomRelease(
     override val barcode: String?,
     @ColumnInfo(name = "status_id")
     override val statusId: String?,
-    @ColumnInfo(name = "country")
-    override val country: String?,
+    @ColumnInfo(name = "country_code")
+    override val countryCode: String?,
     @ColumnInfo(name = "packaging")
     override val packaging: String?,
     @ColumnInfo(name = "packaging_id")
@@ -52,7 +52,7 @@ fun MusicBrainzRelease.toRoomRelease() =
         status = status,
         barcode = barcode,
         statusId = statusId,
-        country = country,
+        countryCode = countryCode,
         packaging = packaging,
         packagingId = packagingId,
         asin = asin,

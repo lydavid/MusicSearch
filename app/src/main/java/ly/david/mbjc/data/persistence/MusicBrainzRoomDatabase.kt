@@ -23,7 +23,7 @@ import ly.david.mbjc.data.persistence.release.RoomTrack
 import ly.david.mbjc.data.persistence.release.TrackDao
 
 @Database(
-    version = 5,
+    version = 6,
     entities = [
         // Main tables
         RoomArtist::class, RoomReleaseGroup::class, RoomRelease::class,
@@ -44,6 +44,7 @@ import ly.david.mbjc.data.persistence.release.TrackDao
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5, spec = MusicBrainzRoomDatabase.RenameCountry::class),
+        AutoMigration(from = 5, to = 6, spec = MusicBrainzRoomDatabase.RenameReleasesCountryToCountryCode::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -51,6 +52,9 @@ abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     @RenameColumn(tableName = "artists", fromColumnName = "country", toColumnName = "country_code")
     class RenameCountry : AutoMigrationSpec
+
+    @RenameColumn(tableName = "releases", fromColumnName = "country", toColumnName = "country_code")
+    class RenameReleasesCountryToCountryCode : AutoMigrationSpec
 
     abstract fun getArtistDao(): ArtistDao
 

@@ -18,8 +18,11 @@ data class MusicBrainzMedium(
 ) : Medium
 
 /**
- * @sample 170xCD
- * @sample 2×CD + Blu-ray
+ * All formats in this list of media grouped together.
+ *
+ * Example returns:
+ * * 170xCD
+ * * 2×CD + Blu-ray
  */
 fun List<MusicBrainzMedium>?.getFormatsForDisplay(): String? {
 
@@ -51,8 +54,11 @@ fun List<MusicBrainzMedium>?.getFormatsForDisplay(): String? {
 }
 
 /**
- * @sample 23
- * @sample 15 + 8 + 24
+ * The number of tracks in each media in the list, in sequential order.
+ *
+ * Example returns:
+ * * 23
+ * * 15 + 8 + 24
  */
 fun List<MusicBrainzMedium>?.getTracksForDisplay(): String? {
     val tracksForDisplay = this?.joinToString(" + ") {

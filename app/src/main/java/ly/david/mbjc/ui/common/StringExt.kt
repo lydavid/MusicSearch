@@ -61,9 +61,11 @@ inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): Str
 }
 
 /**
+ * Converts a country code to flag emoji.
  * Copied from: [https://stackoverflow.com/a/50963795].
  *
- * @receiver An [ISO 3166-1 alpha-2 two-letter country code](https://en.wikipedia.org/wiki/Regional_Indicator_Symbol), or "XW" for global.
+ * @receiver An [ISO 3166-1 alpha-2 two-letter country code](https://en.wikipedia.org/wiki/Regional_Indicator_Symbol),
+ * or "XW" for global, or "XE" for EU.
  * @return Flag emoji of country code, or globe emoji for global.
  */
 fun String.toFlagEmoji(): String {
@@ -72,6 +74,7 @@ fun String.toFlagEmoji(): String {
     }
 
     if (this == "XW") return "\uD83C\uDF10"
+    else if (this == "XE") return "\uD83C\uDDEA\uD83C\uDDFA"
 
     val countryCodeCaps = this.uppercase() // upper case is important because we are calculating offset
     val firstLetter = Character.codePointAt(countryCodeCaps, 0) - 0x41 + 0x1F1E6
