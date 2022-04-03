@@ -60,22 +60,24 @@ inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): Str
     }
 }
 
-// TODO: handle WX
-// TODO: unit test
 /**
  * Copied from: [https://stackoverflow.com/a/50963795].
+ *
+ * @receiver An [ISO 3166-1 alpha-2 two-letter country code](https://en.wikipedia.org/wiki/Regional_Indicator_Symbol), or "XW" for global.
+ * @return Flag emoji of country code, or globe emoji for global.
  */
 fun String.toFlagEmoji(): String {
-    // 1. It first checks if the string consists of only 2 characters: ISO 3166-1 alpha-2 two-letter country codes (https://en.wikipedia.org/wiki/Regional_Indicator_Symbol).
     if (this.length != 2) {
         return this
     }
+
+    if (this == "XW") return "\uD83C\uDF10"
 
     val countryCodeCaps = this.uppercase() // upper case is important because we are calculating offset
     val firstLetter = Character.codePointAt(countryCodeCaps, 0) - 0x41 + 0x1F1E6
     val secondLetter = Character.codePointAt(countryCodeCaps, 1) - 0x41 + 0x1F1E6
 
-    // 2. It then checks if both characters are alphabet
+    // Check if both characters are alphabet
     if (!countryCodeCaps[0].isLetter() || !countryCodeCaps[1].isLetter()) {
         return this
     }
