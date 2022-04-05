@@ -20,7 +20,13 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
             WHERE a.id = :artistId
         """
 
-        private const val SORTED = "ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date"
+        private const val ORDER_BY_ARTIST_LINKING_TABLE = """
+            ORDER BY rga.rowid
+        """
+
+        private const val ORDER_BY_TYPES_AND_DATE = """
+            ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date
+        """
 
         private const val FILTERED = """
             AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.first_release_date LIKE :query
@@ -35,14 +41,19 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     // Make sure to select from release_groups first, rather than artists.
     // That way, when there are no entries, we return empty rather than 1 entry with null values.
     @Transaction
-    @Query(RELEASE_GROUPS_BY_ARTIST)
+    @Query(
+        """
+        $RELEASE_GROUPS_BY_ARTIST
+        $ORDER_BY_ARTIST_LINKING_TABLE
+        """
+    )
     abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, RoomReleaseGroup>
 
     @Transaction
     @Query(
         """
         $RELEASE_GROUPS_BY_ARTIST
-        $SORTED
+        $ORDER_BY_TYPES_AND_DATE
     """
     )
     abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, RoomReleaseGroup>
@@ -53,6 +64,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         """
         $RELEASE_GROUPS_BY_ARTIST
         $FILTERED
+        $ORDER_BY_ARTIST_LINKING_TABLE
     """
     )
     abstract fun getReleaseGroupsByArtistFiltered(
@@ -65,7 +77,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         """
         $RELEASE_GROUPS_BY_ARTIST
         $FILTERED
-        $SORTED
+        $ORDER_BY_TYPES_AND_DATE
     """
     )
     abstract fun getReleaseGroupsByArtistFilteredSorted(

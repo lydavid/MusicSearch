@@ -19,7 +19,10 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
             WHERE rg.id = :releaseGroupId
         """
 
-        // TODO:
+        private const val ORDER_BY_RELEASE_GROUP_LINKING_TABLE = """
+            ORDER BY rrg.rowid
+        """
+
         private const val FILTERED = """
             AND (r.name LIKE :query OR r.disambiguation LIKE :query)
         """
@@ -45,7 +48,12 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
     abstract suspend fun getNumberOfReleasesInReleaseGroup(releaseGroupId: String): Int
 
     @Transaction
-    @Query(RELEASES_IN_RELEASE_GROUP)
+    @Query(
+        """
+        $RELEASES_IN_RELEASE_GROUP
+        $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
+    """
+    )
     abstract fun getReleasesInReleaseGroup(releaseGroupId: String): PagingSource<Int, RoomRelease>
 
     @Transaction
@@ -59,8 +67,5 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
         releaseGroupId: String,
         query: String
     ): PagingSource<Int, RoomRelease>
-
-
-
 
 }
