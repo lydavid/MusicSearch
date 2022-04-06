@@ -28,9 +28,14 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
             ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date
         """
 
+        // TODO: if something like this gets too slow, then use fts
+        // TODO: we're able to filter on date's month/day even though we don't display it. Could be confusing
         private const val FILTERED = """
-            AND (rg.title LIKE :query OR rg.disambiguation LIKE :query OR rg.first_release_date LIKE :query
-            OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query)
+            AND (
+                rg.title LIKE :query OR rg.disambiguation LIKE :query
+                OR rg.first_release_date LIKE :query
+                OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query
+            )
         """
     }
 

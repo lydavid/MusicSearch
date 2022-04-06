@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 
 private enum class ReleaseGroupTab(val title: String) {
     RELEASES("Releases"),
@@ -37,12 +37,13 @@ fun ReleaseGroupScreenScaffold(
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
+    var searchText by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithSearch(
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,
@@ -56,7 +57,12 @@ fun ReleaseGroupScreenScaffold(
                 },
                 tabsTitles = ReleaseGroupTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] }
+                onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] },
+                showSearchIcon = selectedTab == ReleaseGroupTab.RELEASES,
+                searchText = searchText,
+                onSearchTextChange = {
+                    searchText = it
+                },
             )
         },
     ) { innerPadding ->
@@ -72,7 +78,7 @@ fun ReleaseGroupScreenScaffold(
                     },
                     scaffoldState = scaffoldState,
                     onReleaseClick = onReleaseClick,
-                    searchText = "" // TODO:
+                    searchText = searchText
                 )
             }
             ReleaseGroupTab.STATS -> {

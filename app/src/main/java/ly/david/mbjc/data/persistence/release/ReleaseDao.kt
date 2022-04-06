@@ -24,7 +24,11 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
         """
 
         private const val FILTERED = """
-            AND (r.name LIKE :query OR r.disambiguation LIKE :query)
+            AND (
+                r.name LIKE :query OR r.disambiguation LIKE :query
+                OR r.date LIKE :query OR r.country_code LIKE :query
+                OR r.formats LIKE :query OR r.tracks LIKE :query
+            )
         """
     }
 
