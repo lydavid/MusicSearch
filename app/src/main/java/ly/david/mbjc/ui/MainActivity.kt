@@ -3,9 +3,10 @@ package ly.david.mbjc.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.ModalDrawer
-import androidx.compose.material.rememberDrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainApp(
     navController: NavHostController
@@ -59,7 +61,7 @@ internal fun MainApp(
         }
     }
 
-    ModalDrawer(
+    ModalNavigationDrawer(
         drawerContent = {
             NavigationDrawer(
                 selectedTopLevelDestination = currentTopLevelDestination,

@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.flowOf
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.fullscreen.FullScreenText
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
  * Handles loading and errors for paging screens.
@@ -146,7 +146,7 @@ private fun <T : Any> RetryButton(lazyPagingItems: LazyPagingItems<T>) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun FullScreenErrorWithRetryPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             FullScreenErrorWithRetry(flowOf(PagingData.from(listOf())).collectAsLazyPagingItems())
         }

@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.Dimension
 import ly.david.mbjc.data.domain.UiRelease
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
@@ -199,7 +199,7 @@ class ReleasePreviewParameterProvider : PreviewParameterProvider<UiRelease> {
 internal fun ReleaseCardPreview(
     @PreviewParameter(ReleasePreviewParameterProvider::class) release: UiRelease
 ) {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             ReleaseCard(release)
         }

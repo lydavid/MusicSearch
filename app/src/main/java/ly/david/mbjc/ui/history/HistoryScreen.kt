@@ -30,7 +30,7 @@ import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -157,7 +157,7 @@ val testData = listOf(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ArtistCardPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             HistoryEntry(testData.first())
         }

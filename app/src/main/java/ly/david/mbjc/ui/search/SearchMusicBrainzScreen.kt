@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -80,6 +81,7 @@ fun SearchMusicBrainzScreen(
                 modifier = Modifier
                     .weight(1f)
                     .focusRequester(focusRequester),
+                shape = RectangleShape,
                 value = text,
                 label = { Text("Search") },
                 placeholder = { Text("Search") },
@@ -113,7 +115,6 @@ fun SearchMusicBrainzScreen(
                 }
             )
 
-            // TODO: this doesn't fill rest of screen despite weight 1f
             // TODO: focusing on this requires 1-2 additional backpresses to exit app
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),

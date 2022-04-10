@@ -19,7 +19,7 @@ import ly.david.mbjc.data.domain.UiArtist
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
@@ -134,7 +134,7 @@ class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
 internal fun ArtistCardPreview(
     @PreviewParameter(ArtistPreviewParameterProvider::class) artist: UiArtist
 ) {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             ArtistCard(artist)
         }

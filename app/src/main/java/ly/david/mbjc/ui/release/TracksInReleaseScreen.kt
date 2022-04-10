@@ -27,7 +27,7 @@ import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.toDisplayTime
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 /**
@@ -239,7 +239,7 @@ private val testTrack = UiTrack(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun TrackCardPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             TrackCard(
                 track = testTrack,

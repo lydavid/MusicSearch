@@ -1,14 +1,12 @@
 package ly.david.mbjc.ui.artist
 
 import android.util.Log
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -59,9 +57,9 @@ fun ArtistScreenScaffold(
                     DropdownMenuItem(
                         text = { Text("Open in browser") },
                         onClick = {
-                        context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
-                        closeMenu()
-                    })
+                            context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                            closeMenu()
+                        })
 
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                         DropdownMenuItem(
@@ -69,19 +67,19 @@ fun ArtistScreenScaffold(
                                 Text(if (isSorted) "Un-sort" else "Sort")
                             },
                             onClick = {
-                            closeMenu()
-                            // TODO: disclaimer when turning on sort if we have not gotten all release groups
-                            isSorted = !isSorted
-                        })
+                                closeMenu()
+                                // TODO: disclaimer when turning on sort if we have not gotten all release groups
+                                isSorted = !isSorted
+                            })
 
                         DropdownMenuItem(
-                            text =  {
+                            text = {
                                 Text("Refresh")
                             },
                             onClick = {
-                            Log.d("Remove This", "ArtistScreenScaffold: ee")
-                            closeMenu()
-                        })
+                                Log.d("Remove This", "ArtistScreenScaffold: ee")
+                                closeMenu()
+                            })
                     }
                 },
                 searchText = searchText,
@@ -95,29 +93,26 @@ fun ArtistScreenScaffold(
         },
     ) { innerPadding ->
 
-        Surface(modifier = Modifier.fillMaxSize()) {
-            when (selectedTab) {
-                ArtistTab.RELEASE_GROUPS -> {
-                    ReleaseGroupsByArtistScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        artistId = artistId,
-                        searchText = searchText,
-                        isSorted = isSorted,
-                        snackbarHostState = snackbarHostState,
-                        onReleaseGroupClick = onReleaseGroupClick,
-                        onTitleUpdate = {
-                            artistName = it
-                        }
-                    )
-                }
-                ArtistTab.RELEASES -> {
-                    Text(text = "Nothing yet!")
-                }
-                ArtistTab.STATS -> {
-                    ArtistStatsScreen(artistId = artistId)
-                }
+        when (selectedTab) {
+            ArtistTab.RELEASE_GROUPS -> {
+                ReleaseGroupsByArtistScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    artistId = artistId,
+                    searchText = searchText,
+                    isSorted = isSorted,
+                    snackbarHostState = snackbarHostState,
+                    onReleaseGroupClick = onReleaseGroupClick,
+                    onTitleUpdate = {
+                        artistName = it
+                    }
+                )
+            }
+            ArtistTab.RELEASES -> {
+                Text(text = "Nothing yet!")
+            }
+            ArtistTab.STATS -> {
+                ArtistStatsScreen(artistId = artistId)
             }
         }
     }
 }
-

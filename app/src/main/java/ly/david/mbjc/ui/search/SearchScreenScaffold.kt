@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,11 +35,12 @@ internal fun SearchScreenScaffold(
     }
 }
 
+// TODO: broken
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun SearchScreenPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         SearchScreenScaffold()
     }
 }

@@ -26,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we
@@ -176,7 +176,7 @@ private fun TabsBar(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ScrollableTopAppBarPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         ScrollableTopAppBar(
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen."

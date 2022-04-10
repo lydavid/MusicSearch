@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubBackgroundColor
 
@@ -30,7 +30,7 @@ fun ListSeparatorHeader(text: String) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ListSeparatorHeaderPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         ListSeparatorHeader("Album + Compilation")
     }
 }

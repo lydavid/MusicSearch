@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.search
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -15,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import ly.david.mbjc.data.network.MusicBrainzResource
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
@@ -39,7 +41,9 @@ internal fun ExposedDropdownMenuBox(
         modifier = modifier
     ) {
         TextField(
+            modifier = modifier.fillMaxWidth(),
             readOnly = true,
+            shape = RectangleShape,
             value = selectedOption.displayText,
             onValueChange = { },
             label = { Text("Resource") },
@@ -51,7 +55,8 @@ internal fun ExposedDropdownMenuBox(
             colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
         ExposedDropdownMenu(
-            expanded = expanded,
+            modifier = modifier,
+                expanded = expanded,
             onDismissRequest = {
                 expanded = false
             }

@@ -58,7 +58,7 @@ fun BaseTheme(context: Context, darkTheme: Boolean = isSystemInDarkTheme(), cont
  * Theme for previews/tests and devices below Android 12.
  */
 @Composable
-fun MusicBrainzJetpackComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun PreviewTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colorSchemes = if (darkTheme) {
         DarkColorScheme
     } else {

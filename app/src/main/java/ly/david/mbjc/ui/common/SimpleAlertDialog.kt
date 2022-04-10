@@ -14,7 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
 fun SimpleAlertDialog(
@@ -39,7 +39,7 @@ fun SimpleAlertDialog(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SimpleAlertDialogPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {

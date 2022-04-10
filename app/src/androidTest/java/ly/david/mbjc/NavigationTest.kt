@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.MainActivity
 import ly.david.mbjc.ui.MainApp
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +34,7 @@ class NavigationTest {
     fun setupApp() {
         composeTestRule.setContent {
             navController = rememberNavController()
-            MusicBrainzJetpackComposeTheme {
+            PreviewTheme {
                 MainApp(navController)
             }
         }

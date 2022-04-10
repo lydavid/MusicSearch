@@ -18,7 +18,7 @@ import ly.david.mbjc.data.domain.UiReleaseGroup
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.getYear
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
@@ -73,7 +73,7 @@ private val testReleaseGroup = UiReleaseGroup(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ReleaseGroupCardPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             ReleaseGroupCard(testReleaseGroup)
         }
