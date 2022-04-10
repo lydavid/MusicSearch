@@ -12,15 +12,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -50,10 +51,13 @@ fun <T : Any> PagingLoadingAndErrorHandler(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
     lazyListState: LazyListState = rememberLazyListState(),
+    snackbarHostState: SnackbarHostState? = null,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     noResultsText: String = stringResource(id = R.string.no_results_found),
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
+
+    // TODO: move this to scaffold, and pass it here. currently not seeing anything
 
     // This doesn't affect "loads" from db/source.
     when {
@@ -65,7 +69,7 @@ fun <T : Any> PagingLoadingAndErrorHandler(
             LaunchedEffect(Unit) {
                 val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
                 val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
-                scaffoldState.snackbarHostState.showSnackbar(displayMessage)
+                snackbarHostState?.showSnackbar(displayMessage)
             }
 
             FullScreenErrorWithRetry(lazyPagingItems = lazyPagingItems)
@@ -89,14 +93,18 @@ fun <T : Any> PagingLoadingAndErrorHandler(
                             }
                             is LoadState.Error -> {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     RetryButton(lazyPagingItems = lazyPagingItems)
                                 }
                             }
                             else -> {
-                                Spacer(modifier = Modifier.fillMaxWidth().padding(16.dp))
+                                Spacer(modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp))
                             }
                         }
                     }
@@ -118,7 +126,7 @@ private fun <T : Any> FullScreenErrorWithRetry(
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyMedium,
             text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again."
         )
         RetryButton(lazyPagingItems = lazyPagingItems)

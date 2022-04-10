@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,7 +16,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.BaseTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,16 +26,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            MainApp(navController)
+            MainApp(this, navController)
         }
     }
 }
 
 @Composable
 internal fun MainApp(
+    context: Context,
     navController: NavHostController
 ) {
-    MusicBrainzJetpackComposeTheme {
+    BaseTheme(context = context) {
 
         val coroutineScope = rememberCoroutineScope()
         val navBackStackEntry by navController.currentBackStackEntryAsState()

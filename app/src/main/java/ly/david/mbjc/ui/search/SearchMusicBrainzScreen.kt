@@ -2,20 +2,22 @@ package ly.david.mbjc.ui.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,92 +74,97 @@ fun SearchMusicBrainzScreen(
         )
     }
 
-    Column {
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            TextField(
-                modifier = Modifier
-                    .weight(1f)
-                    .focusRequester(focusRequester),
-                value = text,
-                label = { Text("Search") },
-                placeholder = { Text("Search") },
-                maxLines = 1, // TODO: Seems like this is currently broken
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        coroutineScope.launch {
-                            if (text.isEmpty()) {
-                                showAlertDialog = true
-                            } else {
-                                viewModel.updateViewModelState(selectedOption, text)
-                                lazyListState.scrollToItem(0)
-                                focusManager.clearFocus()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+//        color = MaterialTheme.colorScheme.background
+    ) {
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TextField(
+                    modifier = Modifier
+                        .weight(1f)
+                        .focusRequester(focusRequester),
+                    value = text,
+                    label = { Text("Search") },
+                    placeholder = { Text("Search") },
+                    maxLines = 1, // TODO: Seems like this is currently broken
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            coroutineScope.launch {
+                                if (text.isEmpty()) {
+                                    showAlertDialog = true
+                                } else {
+                                    viewModel.updateViewModelState(selectedOption, text)
+                                    lazyListState.scrollToItem(0)
+                                    focusManager.clearFocus()
+                                }
                             }
                         }
+                    ),
+                    trailingIcon = {
+                        if (text.isEmpty()) return@TextField
+                        IconButton(onClick = {
+                            text = ""
+                            focusRequester.requestFocus()
+                        }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
+                        }
+                    },
+                    onValueChange = { newText ->
+                        text = newText
                     }
-                ),
-                trailingIcon = {
-                    if (text.isEmpty()) return@TextField
-                    IconButton(onClick = {
-                        text = ""
-                        focusRequester.requestFocus()
-                    }) {
-                        Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
-                    }
-                },
-                onValueChange = { newText ->
-                    text = newText
-                }
-            )
+                )
 
-            // TODO: this doesn't fill rest of screen despite weight 1f
-            // TODO: focusing on this requires 1-2 additional backpresses to exit app
-            ExposedDropdownMenuBox(
-                modifier = Modifier.weight(1f),
-                options = MusicBrainzResource.values().toList(),
-                selectedOption = selectedOption,
-                onSelectOption = {
-                    selectedOption = it
-                }
-            )
-        }
-
-        PagingLoadingAndErrorHandler(
-            lazyPagingItems = lazyPagingItems,
-            lazyListState = lazyListState,
-            scaffoldState = scaffoldState,
-            noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) { uiData: UiData? ->
-            when (uiData) {
-                is UiArtist -> {
-                    ArtistCard(artist = uiData) {
-                        onItemClick(Destination.LOOKUP_ARTIST, it.id)
+                // TODO: this doesn't fill rest of screen despite weight 1f
+                // TODO: focusing on this requires 1-2 additional backpresses to exit app
+                ExposedDropdownMenuBox(
+                    modifier = Modifier.weight(1f),
+                    options = MusicBrainzResource.values().toList(),
+                    selectedOption = selectedOption,
+                    onSelectOption = {
+                        selectedOption = it
                     }
-                }
-                is UiReleaseGroup -> {
-                    // TODO: should see album type rather than year
-                    ReleaseGroupCard(releaseGroup = uiData) {
-                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, it.id)
-                    }
-                }
-                is EndOfList -> {
-                    Text(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.body2,
-                        text = "End of search results."
-                    )
-                }
-                else -> {
-                    // Null. Do nothing.
-                }
+                )
             }
 
+            PagingLoadingAndErrorHandler(
+                lazyPagingItems = lazyPagingItems,
+                lazyListState = lazyListState,
+                scaffoldState = scaffoldState,
+                noResultsText = stringResource(id = R.string.no_results_found_search)
+            ) { uiData: UiData? ->
+                when (uiData) {
+                    is UiArtist -> {
+                        ArtistCard(artist = uiData) {
+                            onItemClick(Destination.LOOKUP_ARTIST, it.id)
+                        }
+                    }
+                    is UiReleaseGroup -> {
+                        // TODO: should see album type rather than year
+                        ReleaseGroupCard(releaseGroup = uiData) {
+                            onItemClick(Destination.LOOKUP_RELEASE_GROUP, it.id)
+                        }
+                    }
+                    is EndOfList -> {
+                        Text(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodyMedium,
+                            text = "End of search results."
+                        )
+                    }
+                    else -> {
+                        // Null. Do nothing.
+                    }
+                }
+
+            }
         }
     }
 }

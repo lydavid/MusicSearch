@@ -1,14 +1,14 @@
 package ly.david.mbjc.ui.search
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +19,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ExposedDropdownMenuBox(
     modifier: Modifier = Modifier,
@@ -60,19 +60,18 @@ internal fun ExposedDropdownMenuBox(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = if (selectedOption == selectionOption) {
-                        MaterialTheme.colors.primary.copy(alpha = 0.2f)
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                     } else {
-                        MaterialTheme.colors.background
+                        MaterialTheme.colorScheme.background
                     }
                 ) {
                     DropdownMenuItem(
+                        text = { Text(text = selectionOption.displayText) },
                         onClick = {
                             onSelectOption(selectionOption)
                             expanded = false
                         }
-                    ) {
-                        Text(text = selectionOption.displayText)
-                    }
+                    )
                 }
             }
         }
