@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,54 +25,53 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            MainApp(this, navController)
+            BaseTheme(context = this) {
+                MainApp(navController)
+            }
         }
     }
 }
 
 @Composable
 internal fun MainApp(
-    context: Context,
     navController: NavHostController
 ) {
-    BaseTheme(context = context) {
 
-        val coroutineScope = rememberCoroutineScope()
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val coroutineScope = rememberCoroutineScope()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-        // Note that destination?.route includes parameters such as artistId
-        val currentRoute = navBackStackEntry?.destination?.route ?: Destination.LOOKUP.route
-        val currentTopLevelDestination: Destination = currentRoute.getTopLevelRoute().getTopLevelDestination()
+    // Note that destination?.route includes parameters such as artistId
+    val currentRoute = navBackStackEntry?.destination?.route ?: Destination.LOOKUP.route
+    val currentTopLevelDestination: Destination = currentRoute.getTopLevelRoute().getTopLevelDestination()
 
-        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-        val onTopLevelDestinationClick: (Destination) -> Unit = { topLevelDestination ->
-            navController.navigate(topLevelDestination.name) {
-                // Top-level screens should use this to prevent selecting the same screen.
-                launchSingleTop = true
+    val onTopLevelDestinationClick: (Destination) -> Unit = { topLevelDestination ->
+        navController.navigate(topLevelDestination.name) {
+            // Top-level screens should use this to prevent selecting the same screen.
+            launchSingleTop = true
 
-                // Selecting a top-level screen should remove all backstack.
-                popUpTo(navController.graph.findStartDestination().id) {
-                    // And it should not save the state of the previous screen.
-                    saveState = false
-                }
+            // Selecting a top-level screen should remove all backstack.
+            popUpTo(navController.graph.findStartDestination().id) {
+                // And it should not save the state of the previous screen.
+                saveState = false
             }
         }
+    }
 
-        ModalDrawer(
-            drawerContent = {
-                NavigationDrawer(
-                    selectedTopLevelDestination = currentTopLevelDestination,
-                    closeDrawer = { coroutineScope.launch { drawerState.close() } },
-                    navigateToTopLevelDestination = onTopLevelDestinationClick
-                )
-            },
-            drawerState = drawerState
-        ) {
-            NavigationGraph(
-                navController = navController,
-                openDrawer = { coroutineScope.launch { drawerState.open() } }
+    ModalDrawer(
+        drawerContent = {
+            NavigationDrawer(
+                selectedTopLevelDestination = currentTopLevelDestination,
+                closeDrawer = { coroutineScope.launch { drawerState.close() } },
+                navigateToTopLevelDestination = onTopLevelDestinationClick
             )
-        }
+        },
+        drawerState = drawerState
+    ) {
+        NavigationGraph(
+            navController = navController,
+            openDrawer = { coroutineScope.launch { drawerState.open() } }
+        )
     }
 }

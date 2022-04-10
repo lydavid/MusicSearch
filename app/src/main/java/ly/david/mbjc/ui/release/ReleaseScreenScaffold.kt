@@ -1,9 +1,10 @@
 package ly.david.mbjc.ui.release
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,14 +13,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 
 /**
  * Equivalent of a screen like: https://musicbrainz.org/release/f171e0ae-bea8-41e6-bb41-4c7af7977f50
  *
  * Displays the tracks/recordings for this release.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReleaseScreenScaffold(
     releaseId: String,
@@ -38,12 +40,13 @@ fun ReleaseScreenScaffold(
                 subtitle = subtitleState,
                 onBack = onBack,
                 dropdownMenuItems = {
-                    DropdownMenuItem(onClick = {
-                        context.lookupInBrowser(MusicBrainzResource.RELEASE, releaseId)
-                        closeMenu()
-                    }) {
-                        Text("Open in browser")
-                    }
+                    DropdownMenuItem(
+                        text = { Text("Open in browser") },
+                        onClick = {
+                            context.lookupInBrowser(MusicBrainzResource.RELEASE, releaseId)
+                            closeMenu()
+                        }
+                    )
                 },
             )
         },

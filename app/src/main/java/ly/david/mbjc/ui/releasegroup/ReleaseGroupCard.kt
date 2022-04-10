@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +19,7 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.getYear
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.TextStyles
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 @Composable
@@ -38,14 +38,14 @@ fun ReleaseGroupCard(
             ) {
                 Text(
                     text = releaseGroup.getNameWithDisambiguation(),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier.weight(3f)
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
                 Text(
                     text = releaseGroup.firstReleaseDate.getYear(),
                     modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = TextStyles.getCardBodyTextStyle(),
                     textAlign = TextAlign.End
                 )
             }
@@ -54,7 +54,7 @@ fun ReleaseGroupCard(
                 Text(
                     text = releaseGroup.artistCredits,
                     modifier = Modifier.fillMaxWidth(),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = TextStyles.getCardBodyTextStyle()
                 )
             }
         }

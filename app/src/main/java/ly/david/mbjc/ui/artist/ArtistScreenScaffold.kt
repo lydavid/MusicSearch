@@ -41,7 +41,6 @@ fun ArtistScreenScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var artistName by rememberSaveable { mutableStateOf("") }
 
-//    val scaffoldState = rememberScaffoldState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     var searchText by rememberSaveable { mutableStateOf("") }

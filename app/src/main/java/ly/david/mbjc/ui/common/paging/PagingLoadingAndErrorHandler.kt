@@ -12,10 +12,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -52,12 +50,9 @@ fun <T : Any> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
     noResultsText: String = stringResource(id = R.string.no_results_found),
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
-
-    // TODO: move this to scaffold, and pass it here. currently not seeing anything
 
     // This doesn't affect "loads" from db/source.
     when {
@@ -141,6 +136,7 @@ private fun <T : Any> RetryButton(lazyPagingItems: LazyPagingItems<T>) {
         Icon(Icons.Default.Refresh, "")
         Text(
             modifier = Modifier.padding(start = 8.dp),
+            style = MaterialTheme.typography.headlineMedium,
             text = "Retry"
         )
     }

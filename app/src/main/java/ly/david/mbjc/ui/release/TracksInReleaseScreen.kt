@@ -6,9 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -29,6 +28,7 @@ import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.TextStyles
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.
@@ -161,6 +161,7 @@ private fun TrackCard(
     // no onTrackClick needed since Tracks exists in the context of a Release
 ) {
 
+    // TODO: constraint
     ClickableListItem(
         onClick = {
 //            onRecordingClick(musicBrainzTrack.recording.id)
@@ -173,7 +174,7 @@ private fun TrackCard(
             Text(
                 text = track.number,
                 modifier = Modifier.weight(1f),
-                style = MaterialTheme.typography.body1,
+                style = TextStyles.getCardBodyTextStyle(),
             )
 
             Column(
@@ -183,13 +184,13 @@ private fun TrackCard(
             ) {
                 Text(
                     text = track.title,
-                    style = MaterialTheme.typography.h6,
+                    style = TextStyles.getCardTitleTextStyle(),
 
                     )
                 if (showTrackArtists) {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        style = MaterialTheme.typography.body1,
+                        style = TextStyles.getCardBodyTextStyle(),
                         text = "TODO"//uiTrack.artistCredits.getDisplayNames()
                     )
                 }
@@ -201,7 +202,7 @@ private fun TrackCard(
 
             Text(
                 text = track.length.toDisplayTime(),
-                style = MaterialTheme.typography.body2
+                style = TextStyles.getCardBodyTextStyle()
             )
         }
 

@@ -24,7 +24,6 @@ fun ReleaseGroupsByArtistScreen(
     searchText: String,
     isSorted: Boolean,
     snackbarHostState: SnackbarHostState,
-//    scaffoldState: ScaffoldState,
     onReleaseGroupClick: (String) -> Unit = {},
     onTitleUpdate: (title: String) -> Unit = {},
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
@@ -51,7 +50,6 @@ fun ReleaseGroupsByArtistScreen(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-//        scaffoldState = scaffoldState
     ) { uiData: UiData? ->
         when (uiData) {
             is UiReleaseGroup -> {
