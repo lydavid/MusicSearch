@@ -16,8 +16,6 @@ import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
-private const val PAGE_SIZE = 25
-
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao
