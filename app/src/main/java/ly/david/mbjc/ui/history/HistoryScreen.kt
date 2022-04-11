@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,8 +30,10 @@ import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryScreenScaffold(
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
@@ -104,14 +106,14 @@ private fun HistoryEntry(
                 lookupHistory.destination.musicBrainzResource?.displayText?.transformThisIfNotNullOrEmpty { "$it: " }
             Text(
                 text = "$resourceDescription${lookupHistory.summary}",
-                style = MaterialTheme.typography.h6,
+                style = TextStyles.getCardTitleTextStyle(),
                 modifier = Modifier.fillMaxWidth()
             )
 
             Row {
                 Text(
                     text = "Last visited: ${lookupHistory.lastAccessed.toDisplayDate()}",
-                    style = MaterialTheme.typography.body1,
+                    style = TextStyles.getCardBodyTextStyle(),
                 )
 
                 Text(
@@ -119,7 +121,7 @@ private fun HistoryEntry(
                         .padding(start = 8.dp)
                         .fillMaxWidth(),
                     text = lookupHistory.numberOfVisits.toString(),
-                    style = MaterialTheme.typography.body1,
+                    style = TextStyles.getCardBodyTextStyle(),
                     textAlign = TextAlign.End
                 )
             }
@@ -155,7 +157,7 @@ val testData = listOf(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ArtistCardPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             HistoryEntry(testData.first())
         }

@@ -1,13 +1,16 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,6 +29,7 @@ private enum class ReleaseGroupTab(val title: String) {
  *
  * Displays a list of releases under this release group.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReleaseGroupScreenScaffold(
     releaseGroupId: String,
@@ -33,7 +37,7 @@ fun ReleaseGroupScreenScaffold(
     onBack: () -> Unit
 ) {
 
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
@@ -41,19 +45,19 @@ fun ReleaseGroupScreenScaffold(
     val context = LocalContext.current
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,
                 dropdownMenuItems = {
-                    DropdownMenuItem(onClick = {
-                        context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
-                        closeMenu()
-                    }) {
-                        Text("Open in browser")
-                    }
+                    DropdownMenuItem(
+                        text = { Text("Open in browser") },
+                        onClick = {
+                            context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
+                            closeMenu()
+                        })
                 },
                 tabsTitles = ReleaseGroupTab.values().map { it.title },
                 selectedTabIndex = selectedTab.ordinal,
@@ -76,7 +80,7 @@ fun ReleaseGroupScreenScaffold(
                         titleState = title
                         subtitleState = subtitle
                     },
-                    scaffoldState = scaffoldState,
+                    snackbarHostState = snackbarHostState,
                     onReleaseClick = onReleaseClick,
                     searchText = searchText
                 )

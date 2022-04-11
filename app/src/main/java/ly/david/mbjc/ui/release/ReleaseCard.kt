@@ -7,9 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +22,8 @@ import androidx.constraintlayout.compose.Dimension
 import ly.david.mbjc.data.domain.UiRelease
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
@@ -47,7 +47,7 @@ fun ReleaseCard(
 
                 Text(
                     text = uiRelease.name,
-                    style = MaterialTheme.typography.h6,
+                    style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier
                         .constrainAs(name) {
                             width = Dimension.fillToConstraints
@@ -72,7 +72,7 @@ fun ReleaseCard(
                         Text(
                             text = "($uiDisambiguation)",
                             color = getSubTextColor(),
-                            style = MaterialTheme.typography.body1,
+                            style = TextStyles.getCardBodyTextStyle(),
                             modifier = Modifier.padding(top = 4.dp)
                         )
                     }
@@ -91,7 +91,7 @@ fun ReleaseCard(
                     if (!uiDate.isNullOrEmpty()) {
                         Text(
                             text = uiDate,
-                            style = MaterialTheme.typography.body1,
+                            style = TextStyles.getCardBodyTextStyle(),
                         )
                     }
 
@@ -102,7 +102,7 @@ fun ReleaseCard(
                         }
                         Text(
                             text = "${uiCountry.toFlagEmoji()} $uiCountry",
-                            style = MaterialTheme.typography.body1,
+                            style = TextStyles.getCardBodyTextStyle(),
                         )
                     }
                 }
@@ -116,7 +116,7 @@ fun ReleaseCard(
                             .weight(1f)
                             .padding(top = 4.dp),
                         text = uiFormats,
-                        style = MaterialTheme.typography.body2,
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -128,7 +128,7 @@ fun ReleaseCard(
                             .weight(1f)
                             .padding(top = 4.dp),
                         text = uiTracks,
-                        style = MaterialTheme.typography.body2,
+                        style = TextStyles.getCardBodySubTextStyle(),
                         textAlign = TextAlign.End
                     )
                 }
@@ -199,7 +199,7 @@ class ReleasePreviewParameterProvider : PreviewParameterProvider<UiRelease> {
 internal fun ReleaseCardPreview(
     @PreviewParameter(ReleasePreviewParameterProvider::class) release: UiRelease
 ) {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             ReleaseCard(release)
         }

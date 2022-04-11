@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -19,7 +19,7 @@ fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
     releaseGroupId: String,
     searchText: String,
-    scaffoldState: ScaffoldState,
+    snackbarHostState: SnackbarHostState,
     onReleaseClick: (String) -> Unit = {},
     onTitleUpdate: (title: String, subtitle: String) -> Unit,
     viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel()
@@ -45,7 +45,7 @@ fun ReleasesByReleaseGroupScreen(
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
-        scaffoldState = scaffoldState
+        snackbarHostState = snackbarHostState
     ) { uiRelease: UiRelease? ->
         when (uiRelease) {
             is UiRelease -> {

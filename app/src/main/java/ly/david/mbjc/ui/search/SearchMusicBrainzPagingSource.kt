@@ -87,6 +87,9 @@ class SearchMusicBrainzPagingSource(
                     queryReleaseGroups.releaseGroups
                 )
             }
+//            MusicBrainzResource.RELEASE -> {
+//
+//            }
             else -> {
                 // Artist; until we implement them all
                 val queryArtists = musicBrainzApiService.queryArtists(

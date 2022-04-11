@@ -12,15 +12,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -38,7 +37,7 @@ import kotlinx.coroutines.flow.flowOf
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.fullscreen.FullScreenText
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
  * Handles loading and errors for paging screens.
@@ -50,7 +49,7 @@ fun <T : Any> PagingLoadingAndErrorHandler(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
     lazyListState: LazyListState = rememberLazyListState(),
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
@@ -65,7 +64,7 @@ fun <T : Any> PagingLoadingAndErrorHandler(
             LaunchedEffect(Unit) {
                 val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
                 val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
-                scaffoldState.snackbarHostState.showSnackbar(displayMessage)
+                snackbarHostState?.showSnackbar(displayMessage)
             }
 
             FullScreenErrorWithRetry(lazyPagingItems = lazyPagingItems)
@@ -89,14 +88,18 @@ fun <T : Any> PagingLoadingAndErrorHandler(
                             }
                             is LoadState.Error -> {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp),
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     RetryButton(lazyPagingItems = lazyPagingItems)
                                 }
                             }
                             else -> {
-                                Spacer(modifier = Modifier.fillMaxWidth().padding(16.dp))
+                                Spacer(modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp))
                             }
                         }
                     }
@@ -118,7 +121,7 @@ private fun <T : Any> FullScreenErrorWithRetry(
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyMedium,
             text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again."
         )
         RetryButton(lazyPagingItems = lazyPagingItems)
@@ -133,6 +136,7 @@ private fun <T : Any> RetryButton(lazyPagingItems: LazyPagingItems<T>) {
         Icon(Icons.Default.Refresh, "")
         Text(
             modifier = Modifier.padding(start = 8.dp),
+            style = MaterialTheme.typography.headlineMedium,
             text = "Retry"
         )
     }
@@ -142,7 +146,7 @@ private fun <T : Any> RetryButton(lazyPagingItems: LazyPagingItems<T>) {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun FullScreenErrorWithRetryPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             FullScreenErrorWithRetry(flowOf(PagingData.from(listOf())).collectAsLazyPagingItems())
         }

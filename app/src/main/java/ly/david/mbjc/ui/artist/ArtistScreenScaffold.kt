@@ -2,13 +2,16 @@ package ly.david.mbjc.ui.artist
 
 import android.util.Log
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -25,6 +28,7 @@ enum class ArtistTab(val title: String) {
     STATS("Stats")
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistScreenScaffold(
     artistId: String,
@@ -35,7 +39,7 @@ fun ArtistScreenScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var artistName by rememberSaveable { mutableStateOf("") }
 
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var searchText by rememberSaveable { mutableStateOf("") }
 
@@ -43,35 +47,39 @@ fun ArtistScreenScaffold(
     val context = LocalContext.current
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
                 onBack = onBack,
                 title = artistName,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 dropdownMenuItems = {
-                    DropdownMenuItem(onClick = {
-                        context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
-                        closeMenu()
-                    }) {
-                        Text("Open in browser")
-                    }
+                    DropdownMenuItem(
+                        text = { Text("Open in browser") },
+                        onClick = {
+                            context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                            closeMenu()
+                        })
 
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                        DropdownMenuItem(onClick = {
-                            closeMenu()
-                            // TODO: disclaimer when turning on sort if we have not gotten all release groups
-                            isSorted = !isSorted
-                        }) {
-                            Text(if (isSorted) "Un-sort" else "Sort")
-                        }
+                        DropdownMenuItem(
+                            text = {
+                                Text(if (isSorted) "Un-sort" else "Sort")
+                            },
+                            onClick = {
+                                closeMenu()
+                                // TODO: disclaimer when turning on sort if we have not gotten all release groups
+                                isSorted = !isSorted
+                            })
 
-                        DropdownMenuItem(onClick = {
-                            Log.d("Remove This", "ArtistScreenScaffold: ee")
-                            closeMenu()
-                        }) {
-                            Text("Refresh")
-                        }
+                        DropdownMenuItem(
+                            text = {
+                                Text("Refresh")
+                            },
+                            onClick = {
+                                Log.d("Remove This", "ArtistScreenScaffold: ee")
+                                closeMenu()
+                            })
                     }
                 },
                 searchText = searchText,
@@ -92,7 +100,7 @@ fun ArtistScreenScaffold(
                     artistId = artistId,
                     searchText = searchText,
                     isSorted = isSorted,
-                    scaffoldState = scaffoldState,
+                    snackbarHostState = snackbarHostState,
                     onReleaseGroupClick = onReleaseGroupClick,
                     onTitleUpdate = {
                         artistName = it
@@ -108,4 +116,3 @@ fun ArtistScreenScaffold(
         }
     }
 }
-

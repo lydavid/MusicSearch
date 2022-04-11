@@ -2,22 +2,24 @@ package ly.david.mbjc.ui.common.topappbar
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun TopAppBarWithSearch(
     onBack: () -> Unit = {},
@@ -53,12 +56,8 @@ fun TopAppBarWithSearch(
     // TODO: expand out from the icon
     AnimatedVisibility(
         visible = isSearchAndFilterMode,
-        enter = slideInHorizontally(
-            initialOffsetX = { fullWidth -> fullWidth }
-        ),
-        exit = slideOutHorizontally(
-            targetOffsetX = { fullWidth -> fullWidth }
-        )
+        enter = expandVertically(),
+        exit = shrinkVertically { fullHeight -> fullHeight/2 }
     ) {
 
         // TODO: when returning, focus is in front of search text
@@ -73,62 +72,60 @@ fun TopAppBarWithSearch(
             onSearchTextChange("")
         }
 
-        Column {
-            TextField(
-                modifier = Modifier
-                    .focusRequester(focusRequester)
-                    .fillMaxWidth(),
-                maxLines = 1,
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
-                ),
-                leadingIcon = {
-                    IconButton(onClick = {
-                        isSearchAndFilterMode = false
-                        onSearchTextChange("")
-                    }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+        Surface {
+            Column {
+                TextField(
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                        .fillMaxWidth(),
+                    maxLines = 1,
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    leadingIcon = {
+                        IconButton(onClick = {
+                            isSearchAndFilterMode = false
+                            onSearchTextChange("")
+                        }) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        }
+                    },
+                    placeholder = { Text("Search") },
+                    trailingIcon = {
+                        if (searchText.isEmpty()) return@TextField
+                        IconButton(onClick = {
+                            onSearchTextChange("")
+                            focusRequester.requestFocus()
+                        }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    value = searchText,
+                    onValueChange = {
+                        onSearchTextChange(it)
                     }
-                },
-                placeholder = { Text("Search") },
-                trailingIcon = {
-                    if (searchText.isEmpty()) return@TextField
-                    IconButton(onClick = {
-                        onSearchTextChange("")
-                        focusRequester.requestFocus()
-                    }) {
-                        Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
-                    }
-                },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        focusManager.clearFocus()
-                    }
-                ),
-                value = searchText,
-                onValueChange = {
-                    onSearchTextChange(it)
-                }
-            )
+                )
 
-            // TODO: Filters
+                // TODO: Filters
 
-            Divider()
+                Divider()
+            }
         }
     }
 
     AnimatedVisibility(
         visible = !isSearchAndFilterMode,
-        enter = slideInHorizontally(
-            initialOffsetX = { fullWidth -> -fullWidth }
-        ),
-        exit = slideOutHorizontally(
-            targetOffsetX = { fullWidth -> -fullWidth }
-        )
+        enter = expandVertically { fullHeight -> fullHeight/2 },
+        exit = shrinkVertically()
     ) {
         ScrollableTopAppBar(
             onBack = onBack,
