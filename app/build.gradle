@@ -6,14 +6,14 @@ plugins {
 }
 
 // https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
-def keystorePropertiesFile = rootProject.file("ignore-folder/keystore.properties")
+def keystorePropertiesFile = rootProject.file("ignore_folder/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     signingConfigs {
         release {
-            storeFile rootProject.file("ignore-folder/release-keystore.jks")
+            storeFile rootProject.file("ignore_folder/release-keystore.jks")
             keyAlias "mbjc"
             storePassword keystoreProperties["storePassword"]
             keyPassword keystoreProperties["keyPassword"]

@@ -56,7 +56,7 @@ internal fun ExposedDropdownMenuBox(
         )
         ExposedDropdownMenu(
             modifier = modifier,
-                expanded = expanded,
+            expanded = expanded,
             onDismissRequest = {
                 expanded = false
             }
