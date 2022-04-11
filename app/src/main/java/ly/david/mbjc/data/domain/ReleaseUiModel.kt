@@ -4,7 +4,7 @@ import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.MusicBrainzRelease
 import ly.david.mbjc.data.persistence.RoomRelease
 
-data class UiRelease(
+data class ReleaseUiModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String,
@@ -21,10 +21,10 @@ data class UiRelease(
     val formats: String? = null,
     val tracks: String? = null
 
-) : UiData(), Release
+) : UiModel(), Release
 
-fun MusicBrainzRelease.toUiRelease() =
-    UiRelease(
+fun MusicBrainzRelease.toReleaseUiModel() =
+    ReleaseUiModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -39,8 +39,8 @@ fun MusicBrainzRelease.toUiRelease() =
         quality = quality
     )
 
-fun RoomRelease.toUiRelease() =
-    UiRelease(
+fun RoomRelease.toReleaseUiModel() =
+    ReleaseUiModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

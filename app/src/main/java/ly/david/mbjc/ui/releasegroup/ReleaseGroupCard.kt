@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.getYear
@@ -24,8 +24,8 @@ import ly.david.mbjc.ui.theme.TextStyles
 // TODO: have 2 modes: query and browse where some data is displayed differently
 @Composable
 fun ReleaseGroupCard(
-    releaseGroup: UiReleaseGroup,
-    onClick: (UiReleaseGroup) -> Unit = {}
+    releaseGroup: ReleaseGroupUiModel,
+    onClick: (ReleaseGroupUiModel) -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
@@ -61,7 +61,7 @@ fun ReleaseGroupCard(
     }
 }
 
-private val testReleaseGroup = UiReleaseGroup(
+private val testReleaseGroup = ReleaseGroupUiModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     name = "欠けた心象、世のよすが",
     primaryType = "EP",

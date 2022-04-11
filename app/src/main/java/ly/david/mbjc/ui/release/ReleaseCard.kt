@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import ly.david.mbjc.data.domain.UiRelease
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -28,11 +28,11 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 fun ReleaseCard(
-    uiRelease: UiRelease,
-    onClick: (UiRelease) -> Unit = {}
+    releaseUiModel: ReleaseUiModel,
+    onClick: (ReleaseUiModel) -> Unit = {}
 ) {
     ClickableListItem(
-        onClick = { onClick(uiRelease) },
+        onClick = { onClick(releaseUiModel) },
     ) {
         Column(
             modifier = Modifier
@@ -46,7 +46,7 @@ fun ReleaseCard(
                 val (name, disambiguation, countryDate) = createRefs()
 
                 Text(
-                    text = uiRelease.name,
+                    text = releaseUiModel.name,
                     style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier
                         .constrainAs(name) {
@@ -67,7 +67,7 @@ fun ReleaseCard(
                             end.linkTo(name.end)
                         }
                 ) {
-                    val uiDisambiguation = uiRelease.disambiguation
+                    val uiDisambiguation = releaseUiModel.disambiguation
                     if (uiDisambiguation.isNotEmpty()) {
                         Text(
                             text = "($uiDisambiguation)",
@@ -87,7 +87,7 @@ fun ReleaseCard(
                         },
                     horizontalAlignment = Alignment.End
                 ) {
-                    val uiDate = uiRelease.date
+                    val uiDate = releaseUiModel.date
                     if (!uiDate.isNullOrEmpty()) {
                         Text(
                             text = uiDate,
@@ -95,7 +95,7 @@ fun ReleaseCard(
                         )
                     }
 
-                    val uiCountry = uiRelease.countryCode
+                    val uiCountry = releaseUiModel.countryCode
                     if (!uiCountry.isNullOrEmpty()) {
                         if (!uiDate.isNullOrEmpty()) {
                             Spacer(modifier = Modifier.padding(4.dp))
@@ -109,7 +109,7 @@ fun ReleaseCard(
             }
 
             Row {
-                val uiFormats = uiRelease.formats
+                val uiFormats = releaseUiModel.formats
                 if (!uiFormats.isNullOrEmpty()) {
                     Text(
                         modifier = Modifier
@@ -121,7 +121,7 @@ fun ReleaseCard(
                 }
 
                 // TODO: rename so it isn't named like our data class
-                val uiTracks = uiRelease.tracks
+                val uiTracks = releaseUiModel.tracks
                 if (!uiTracks.isNullOrEmpty()) {
                     Text(
                         modifier = Modifier
@@ -138,31 +138,31 @@ fun ReleaseCard(
     }
 }
 
-class ReleasePreviewParameterProvider : PreviewParameterProvider<UiRelease> {
-    override val values: Sequence<UiRelease> = sequenceOf(
-        UiRelease(
+class ReleasePreviewParameterProvider : PreviewParameterProvider<ReleaseUiModel> {
+    override val values: Sequence<ReleaseUiModel> = sequenceOf(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             disambiguation = ""
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             disambiguation = "Disambiguation text",
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             disambiguation = "Disambiguation text",
             countryCode = "US"
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             disambiguation = "",
             countryCode = "CA"
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title that is long and wraps",
             disambiguation = "Disambiguation text that is also long",
@@ -171,20 +171,20 @@ class ReleasePreviewParameterProvider : PreviewParameterProvider<UiRelease> {
             formats = "2×CD + Blu-ray",
             tracks = "15 + 8 + 24"
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             date = "2022-04-03",
             disambiguation = "",
             countryCode = "NL",
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             disambiguation = "",
             countryCode = "NL",
         ),
-        UiRelease(
+        ReleaseUiModel(
             id = "1",
             name = "Release title",
             date = "2022-04-03",
@@ -197,7 +197,7 @@ class ReleasePreviewParameterProvider : PreviewParameterProvider<UiRelease> {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ReleaseCardPreview(
-    @PreviewParameter(ReleasePreviewParameterProvider::class) release: UiRelease
+    @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseUiModel
 ) {
     PreviewTheme {
         Surface {

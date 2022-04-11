@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.search
 import androidx.paging.PagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import ly.david.mbjc.data.domain.UiArtist
-import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.ArtistUiModel
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.TestMusicBrainzApiService
 import org.junit.Assert.assertEquals
@@ -23,7 +23,7 @@ class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    UiArtist(
+                    ArtistUiModel(
                         id = "1",
                         name = "artist name",
                         sortName = "sort name"
@@ -51,7 +51,7 @@ class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    UiReleaseGroup(
+                    ReleaseGroupUiModel(
                         id = "1",
                         name = "release group name",
                         firstReleaseDate = "2022-03-14"

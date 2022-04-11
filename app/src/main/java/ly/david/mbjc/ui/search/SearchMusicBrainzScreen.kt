@@ -38,9 +38,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.EndOfList
-import ly.david.mbjc.data.domain.UiArtist
-import ly.david.mbjc.data.domain.UiData
-import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.ArtistUiModel
+import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.artist.ArtistCard
@@ -56,7 +56,7 @@ fun SearchMusicBrainzScreen(
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.searchResultsUiData.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.searchResultsUiModel.collectAsLazyPagingItems()
 
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
@@ -131,16 +131,16 @@ fun SearchMusicBrainzScreen(
             lazyListState = lazyListState,
             snackbarHostState = snackbarHostState,
             noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) { uiData: UiData? ->
-            when (uiData) {
-                is UiArtist -> {
-                    ArtistCard(artist = uiData) {
+        ) { uiModel: UiModel? ->
+            when (uiModel) {
+                is ArtistUiModel -> {
+                    ArtistCard(artist = uiModel) {
                         onItemClick(Destination.LOOKUP_ARTIST, it.id)
                     }
                 }
-                is UiReleaseGroup -> {
+                is ReleaseGroupUiModel -> {
                     // TODO: should see album type rather than year
-                    ReleaseGroupCard(releaseGroup = uiData) {
+                    ReleaseGroupCard(releaseGroup = uiModel) {
                         onItemClick(Destination.LOOKUP_RELEASE_GROUP, it.id)
                     }
                 }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.EndOfList
-import ly.david.mbjc.data.domain.UiData
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
@@ -38,7 +38,7 @@ class SearchMusicBrainzViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val searchResultsUiData: Flow<PagingData<UiData>> =
+    val searchResultsUiModel: Flow<PagingData<UiModel>> =
         viewModelState.filterNot { it.query.isEmpty() }
             .flatMapLatest { viewModelState ->
                 Pager(

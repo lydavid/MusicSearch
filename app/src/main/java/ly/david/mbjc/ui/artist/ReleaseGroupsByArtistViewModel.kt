@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiData
-import ly.david.mbjc.data.domain.UiReleaseGroup
-import ly.david.mbjc.data.domain.toUiReleaseGroup
+import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
@@ -69,7 +69,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    val pagedReleaseGroups: Flow<PagingData<UiData>> =
+    val pagedReleaseGroups: Flow<PagingData<UiModel>> =
         paramState.filterNot { it.artistId.isEmpty() }
             .flatMapLatest { (artistId, query, isSorted) ->
                 Pager(
@@ -84,13 +84,13 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(artistId, query, isSorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toUiReleaseGroup(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
-                    }.insertSeparators { uiReleaseGroup: UiReleaseGroup?, uiReleaseGroup2: UiReleaseGroup? ->
-                        if (isSorted && uiReleaseGroup2 != null &&
-                            (uiReleaseGroup?.primaryType != uiReleaseGroup2.primaryType ||
-                                uiReleaseGroup?.secondaryTypes != uiReleaseGroup2.secondaryTypes)
+                        it.toReleaseGroupUiModel(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
+                    }.insertSeparators { releaseGroupUiModel: ReleaseGroupUiModel?, releaseGroupUiModel2: ReleaseGroupUiModel? ->
+                        if (isSorted && releaseGroupUiModel2 != null &&
+                            (releaseGroupUiModel?.primaryType != releaseGroupUiModel2.primaryType ||
+                                releaseGroupUiModel?.secondaryTypes != releaseGroupUiModel2.secondaryTypes)
                         ) {
-                            ListSeparator(uiReleaseGroup2.getDisplayTypes())
+                            ListSeparator(releaseGroupUiModel2.getDisplayTypes())
                         } else {
                             null
                         }

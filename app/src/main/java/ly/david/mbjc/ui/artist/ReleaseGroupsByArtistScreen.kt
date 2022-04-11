@@ -9,8 +9,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiData
-import ly.david.mbjc.data.domain.UiReleaseGroup
+import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -44,21 +44,21 @@ fun ReleaseGroupsByArtistScreen(
     viewModel.updateQuery(query = searchText)
     viewModel.updateIsSorted(isSorted = isSorted)
 
-    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { uiData: UiData? ->
-        when (uiData) {
-            is UiReleaseGroup -> {
-                ReleaseGroupCard(releaseGroup = uiData) {
+    ) { uiModel: UiModel? ->
+        when (uiModel) {
+            is ReleaseGroupUiModel -> {
+                ReleaseGroupCard(releaseGroup = uiModel) {
                     onReleaseGroupClick(it.id)
                 }
             }
             is ListSeparator -> {
-                ListSeparatorHeader(text = uiData.text)
+                ListSeparatorHeader(text = uiModel.text)
             }
             else -> {
                 // Do nothing.

@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiData
-import ly.david.mbjc.data.domain.UiTrack
-import ly.david.mbjc.data.domain.toUiTrack
+import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.TrackUiModel
+import ly.david.mbjc.data.domain.toTrackUiModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.RoomMedium
 import ly.david.mbjc.data.persistence.release.TrackDao
@@ -40,7 +40,7 @@ class TracksInReleaseViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val pagedTracks: Flow<PagingData<UiData>> =
+    val pagedTracks: Flow<PagingData<UiModel>> =
         releaseId.flatMapLatest { releaseId ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
@@ -49,8 +49,8 @@ class TracksInReleaseViewModel @Inject constructor(
                 }
             ).flow.map { pagingData ->
                 pagingData.map { track ->
-                    track.toUiTrack()
-                }.insertSeparators { _: UiTrack?, after: UiTrack? ->
+                    track.toTrackUiModel()
+                }.insertSeparators { _: TrackUiModel?, after: TrackUiModel? ->
                     // TODO: if we want separators when we filter, then we should compare before/after medium id
                     //  before converting it to uitrack...
                     if (after?.position == 1) {

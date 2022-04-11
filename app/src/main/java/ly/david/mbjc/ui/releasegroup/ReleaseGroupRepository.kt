@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.releasegroup
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.domain.UiReleaseGroup
-import ly.david.mbjc.data.domain.toUiReleaseGroup
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.LookupHistory
@@ -21,16 +21,16 @@ class ReleaseGroupRepository @Inject constructor(
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
-    private var releaseGroup: UiReleaseGroup? = null
+    private var releaseGroup: ReleaseGroupUiModel? = null
 
     // We need UiReleaseGroup so that we have artist credits
-    suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
         releaseGroup ?: run {
 
             val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
             if (roomReleaseGroup != null) {
                 incrementOrInsertLookupHistory(roomReleaseGroup)
-                return roomReleaseGroup.toUiReleaseGroup(
+                return roomReleaseGroup.toReleaseGroupUiModel(
                     releaseGroupArtistDao.getReleaseGroupArtistCredits(
                         releaseGroupId
                     )
@@ -45,7 +45,7 @@ class ReleaseGroupRepository @Inject constructor(
 
             incrementOrInsertLookupHistory(musicBrainzReleaseGroup)
 
-            musicBrainzReleaseGroup.toUiReleaseGroup()
+            musicBrainzReleaseGroup.toReleaseGroupUiModel()
         }
 
     private suspend fun incrementOrInsertLookupHistory(releaseGroup: ReleaseGroup) {

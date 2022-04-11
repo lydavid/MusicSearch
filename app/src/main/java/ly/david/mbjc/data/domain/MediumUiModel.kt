@@ -8,16 +8,16 @@ import ly.david.mbjc.data.persistence.release.RoomTrack
 /**
  * [Medium] to display in UI, along with its [Track]s.
  */
-data class UiMedium(
+data class MediumUiModel(
     override val position: Int,
     override val title: String,
     override val trackCount: Int,
     override val format: String?,
-    val tracks: List<UiTrack>
+    val tracks: List<TrackUiModel>
 ) : Medium
 
-fun RoomMedium.toUiMedium(tracks: List<UiTrack>) =
-    UiMedium(
+fun RoomMedium.toMediumUiModel(tracks: List<TrackUiModel>) =
+    MediumUiModel(
         position = position,
         title = title,
         trackCount = trackCount,
@@ -25,16 +25,8 @@ fun RoomMedium.toUiMedium(tracks: List<UiTrack>) =
         tracks = tracks
     )
 
-data class UiTrack(
-    override val id: String,
-    override val position: Int,
-    override val number: String,
-    override val title: String,
-    override val length: Int?
-) : UiData(), Track
-
-fun RoomTrack.toUiTrack() =
-    UiTrack(
+fun RoomTrack.toTrackUiModel() =
+    TrackUiModel(
         id = id,
         position = position,
         number = number,

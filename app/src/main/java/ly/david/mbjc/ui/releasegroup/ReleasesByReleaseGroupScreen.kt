@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.mbjc.data.domain.UiRelease
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.release.ReleaseCard
@@ -40,16 +40,16 @@ fun ReleasesByReleaseGroupScreen(
 
     viewModel.updateQuery(query = searchText)
 
-    val lazyPagingItems: LazyPagingItems<UiRelease> = viewModel.pagedReleases.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<ReleaseUiModel> = viewModel.pagedReleases.collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { uiRelease: UiRelease? ->
-        when (uiRelease) {
-            is UiRelease -> {
-                ReleaseCard(uiRelease = uiRelease) {
+    ) { releaseUiModel: ReleaseUiModel? ->
+        when (releaseUiModel) {
+            is ReleaseUiModel -> {
+                ReleaseCard(releaseUiModel = releaseUiModel) {
                     onReleaseClick(it.id)
                 }
             }

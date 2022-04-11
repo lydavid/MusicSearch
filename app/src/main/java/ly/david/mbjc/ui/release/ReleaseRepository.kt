@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.release
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.domain.UiRelease
-import ly.david.mbjc.data.domain.toUiRelease
+import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
@@ -24,7 +24,7 @@ class ReleaseRepository @Inject constructor(
     private val trackDao: TrackDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
-    private var release: UiRelease? = null
+    private var release: ReleaseUiModel? = null
 
     // We need UiReleaseGroup so that we have artist credits
     suspend fun lookupRelease(releaseId: String): Release =
@@ -34,7 +34,7 @@ class ReleaseRepository @Inject constructor(
             if (roomRelease?.formats != null && roomRelease.tracks != null) {
                 incrementOrInsertLookupHistory(roomRelease)
 
-                return roomRelease.toUiRelease()
+                return roomRelease.toReleaseUiModel()
             }
 
             val musicBrainzRelease = musicBrainzApiService.lookupRelease(releaseId)

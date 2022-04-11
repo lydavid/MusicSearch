@@ -10,7 +10,7 @@ import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
  * Representation of a [ReleaseGroup] for our UI.
  * This can be mapped from [RoomReleaseGroup] or [MusicBrainzReleaseGroup].
  */
-data class UiReleaseGroup(
+data class ReleaseGroupUiModel(
     override val id: String,
     override val name: String,
     override val firstReleaseDate: String = "",
@@ -21,10 +21,10 @@ data class UiReleaseGroup(
     // TODO: if we keep it as MusicBrainzArtistCredit, then we can deeplink to each artist's page from a dropdown
     //  if we join table with artists, we could also get the artist object
     val artistCredits: String = ""
-): UiData(), ReleaseGroup
+): UiModel(), ReleaseGroup
 
-fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
-    return UiReleaseGroup(
+fun MusicBrainzReleaseGroup.toReleaseGroupUiModel(): ReleaseGroupUiModel {
+    return ReleaseGroupUiModel(
         id = id,
         name = name,
         firstReleaseDate = firstReleaseDate,
@@ -37,8 +37,8 @@ fun MusicBrainzReleaseGroup.toUiReleaseGroup(): UiReleaseGroup {
     )
 }
 
-fun RoomReleaseGroup.toUiReleaseGroup(roomReleaseGroupArtistCredits: List<RoomReleaseGroupArtistCredit>): UiReleaseGroup {
-    return UiReleaseGroup(
+fun RoomReleaseGroup.toReleaseGroupUiModel(roomReleaseGroupArtistCredits: List<RoomReleaseGroupArtistCredit>): ReleaseGroupUiModel {
+    return ReleaseGroupUiModel(
         id = id,
         name = name,
         firstReleaseDate = firstReleaseDate,

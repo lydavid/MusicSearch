@@ -20,8 +20,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiData
-import ly.david.mbjc.data.domain.UiTrack
+import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
@@ -73,7 +73,7 @@ fun TracksInReleaseScreen(
         }
     }
 
-    val lazyPagingItems: LazyPagingItems<UiData> = viewModel.pagedTracks.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.pagedTracks.collectAsLazyPagingItems()
 
     // TODO: never see error, cause error would be from the above try-catch
     //  this paging source is local only
@@ -83,17 +83,17 @@ fun TracksInReleaseScreen(
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
-    ) { uiData: UiData? ->
-        when (uiData) {
-            is UiTrack -> {
+    ) { uiModel: UiModel? ->
+        when (uiModel) {
+            is TrackUiModel -> {
                 TrackCard(
-                    track = uiData,
+                    track = uiModel,
 //                            showTrackArtists = shouldShowTrackArtists,
                     onRecordingClick = onRecordingClick
                 )
             }
             is ListSeparator -> {
-                ListSeparatorHeader(text = uiData.text)
+                ListSeparatorHeader(text = uiModel.text)
             }
             else -> {
                 // Do nothing.
@@ -154,7 +154,7 @@ fun TracksInReleaseScreen(
 
 @Composable
 private fun TrackCard(
-    track: UiTrack,
+    track: TrackUiModel,
     showTrackArtists: Boolean = false,
     onRecordingClick: (String) -> Unit = {},
     onWorkClick: (Work) -> Unit = {},
@@ -210,7 +210,7 @@ private fun TrackCard(
     }
 }
 
-private val testTrack = UiTrack(
+private val testTrack = TrackUiModel(
     id = "1",
     title = "Track title that is long and wraps",
 //    recording = Recording(

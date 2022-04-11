@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.domain.UiRelease
-import ly.david.mbjc.data.domain.UiReleaseGroup
-import ly.david.mbjc.data.domain.toUiRelease
+import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.RoomRelease
@@ -50,7 +50,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
         ViewModelState(releaseGroupId, query)
     }.distinctUntilChanged()
 
-    suspend fun lookupReleaseGroup(releaseGroupId: String): UiReleaseGroup =
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
         releaseGroupRepository.lookupReleaseGroup(releaseGroupId)
 
     fun updateReleaseGroupId(artistId: String) {
@@ -62,7 +62,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    val pagedReleases: Flow<PagingData<UiRelease>> =
+    val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
         paramState.filterNot { it.releaseGroupId.isEmpty() }
             .flatMapLatest { (releaseGroupId, query) ->
                 Pager(
@@ -77,7 +77,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(releaseGroupId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toUiRelease()
+                        it.toReleaseUiModel()
                     }
                 }
             }

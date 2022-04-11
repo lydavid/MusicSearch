@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.mbjc.data.LifeSpan
-import ly.david.mbjc.data.domain.UiArtist
+import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
@@ -25,8 +25,8 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 fun ArtistCard(
-    artist: UiArtist,
-    onArtistClick: (UiArtist) -> Unit = {}
+    artist: ArtistUiModel,
+    onArtistClick: (ArtistUiModel) -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onArtistClick(artist) },
@@ -101,15 +101,15 @@ fun ArtistCard(
     }
 }
 
-class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
+class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistUiModel> {
     override val values = sequenceOf(
-        UiArtist(
+        ArtistUiModel(
             id = "1",
             name = "artist name",
             sortName = "sort name should not be seen",
             countryCode = "CA"
         ),
-        UiArtist(
+        ArtistUiModel(
             id = "2",
             type = "Group, but for some reason it is really long and wraps",
             name = "wow, this artist name is so long it will wrap around the screen",
@@ -120,7 +120,7 @@ class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
                 begin = "2020-10-10"
             )
         ),
-        UiArtist(
+        ArtistUiModel(
             id = "3",
             name = "wow, this artist name is so long it will wrap around the screen",
             sortName = ""
@@ -132,7 +132,7 @@ class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ArtistCardPreview(
-    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: UiArtist
+    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistUiModel
 ) {
     PreviewTheme {
         Surface {

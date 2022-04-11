@@ -5,7 +5,7 @@ import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.MusicBrainzArtist
 import ly.david.mbjc.data.persistence.RoomArtist
 
-data class UiArtist(
+data class ArtistUiModel(
     override val id: String,
     override val name: String,
     override val sortName: String,
@@ -14,10 +14,10 @@ data class UiArtist(
     override val gender: String? = null,
     override val countryCode: String? = null,
     override val lifeSpan: LifeSpan? = null
-) : UiData(), Artist
+) : UiModel(), Artist
 
-fun MusicBrainzArtist.toUiArtist() =
-    UiArtist(
+fun MusicBrainzArtist.toArtistUiModel() =
+    ArtistUiModel(
         id = id,
         name = name,
         sortName = sortName,
@@ -28,8 +28,8 @@ fun MusicBrainzArtist.toUiArtist() =
         lifeSpan = lifeSpan
     )
 
-fun RoomArtist.toUiArtist() =
-    UiArtist(
+fun RoomArtist.toArtistUiModel() =
+    ArtistUiModel(
         id = id,
         name = name,
         sortName = sortName,
