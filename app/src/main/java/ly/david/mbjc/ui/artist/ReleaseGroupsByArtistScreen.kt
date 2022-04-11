@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.artist
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ScaffoldState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -23,7 +23,7 @@ fun ReleaseGroupsByArtistScreen(
     artistId: String,
     searchText: String,
     isSorted: Boolean,
-    scaffoldState: ScaffoldState,
+    snackbarHostState: SnackbarHostState,
     onReleaseGroupClick: (String) -> Unit = {},
     onTitleUpdate: (title: String) -> Unit = {},
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
@@ -49,7 +49,7 @@ fun ReleaseGroupsByArtistScreen(
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
-        scaffoldState = scaffoldState
+        snackbarHostState = snackbarHostState
     ) { uiData: UiData? ->
         when (uiData) {
             is UiReleaseGroup -> {

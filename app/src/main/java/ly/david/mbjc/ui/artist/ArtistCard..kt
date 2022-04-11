@@ -4,9 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,7 +19,8 @@ import ly.david.mbjc.data.domain.UiArtist
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
@@ -41,7 +41,7 @@ fun ArtistCard(
 
             Text(
                 text = artist.name,
-                style = MaterialTheme.typography.body1,
+                style = TextStyles.getCardTitleTextStyle(),
                 modifier = Modifier
                     .constrainAs(name) {
                         width = Dimension.fillToConstraints
@@ -54,7 +54,7 @@ fun ArtistCard(
             if (!artist.countryCode.isNullOrEmpty()) {
                 Text(
                     text = "${artist.countryCode.toFlagEmoji()} ${artist.countryCode}",
-                    style = MaterialTheme.typography.body1,
+                    style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier
                         .constrainAs(countryCode) {
                             width = Dimension.wrapContent
@@ -72,7 +72,7 @@ fun ArtistCard(
             if (!artist.disambiguation.isNullOrEmpty()) {
                 Text(
                     text = artist.disambiguation.transformThisIfNotNullOrEmpty { "($it)" },
-                    style = MaterialTheme.typography.body1,
+                    style = TextStyles.getCardBodyTextStyle(),
                     color = getSubTextColor(),
                     modifier = Modifier
                         .constrainAs(disambiguation) {
@@ -89,7 +89,7 @@ fun ArtistCard(
             if (!artist.type.isNullOrEmpty()) {
                 Text(
                     text = artist.type,
-                    style = MaterialTheme.typography.body2,
+                    style = TextStyles.getCardBodySubTextStyle(),
                     modifier = Modifier
                         .constrainAs(type) {
                             width = Dimension.matchParent
@@ -134,7 +134,7 @@ class ArtistPreviewParameterProvider : PreviewParameterProvider<UiArtist> {
 internal fun ArtistCardPreview(
     @PreviewParameter(ArtistPreviewParameterProvider::class) artist: UiArtist
 ) {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         Surface {
             ArtistCard(artist)
         }

@@ -1,10 +1,9 @@
 package ly.david.mbjc.ui.common
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import ly.david.mbjc.ui.theme.getAlertBackgroundColor
 
 @Composable
 fun SimpleAlertDialog(
@@ -14,7 +13,6 @@ fun SimpleAlertDialog(
 ) {
     AlertDialog(
         title = { Text(title) },
-        backgroundColor = getAlertBackgroundColor(),
         onDismissRequest = {
             onDismiss()
         },

@@ -4,18 +4,18 @@ import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScrollableTabRow
-import androidx.compose.material.Tab
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,7 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
-import ly.david.mbjc.ui.theme.MusicBrainzJetpackComposeTheme
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we
@@ -65,7 +65,7 @@ fun ScrollableTopAppBar(
     }
 
     Column {
-        TopAppBar(
+        SmallTopAppBar(
             title = {
                 if (showLoading) {
                     DotsFlashing()
@@ -78,7 +78,7 @@ fun ScrollableTopAppBar(
                         if (subtitle.isNotEmpty()) {
                             Text(
                                 text = subtitle,
-                                style = MaterialTheme.typography.body1,
+                                style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.horizontalScroll(rememberScrollState())
                             )
                         }
@@ -104,7 +104,7 @@ fun ScrollableTopAppBar(
                 mainAction?.invoke()
                 OverflowMenu(dropdownMenuItems = dropdownMenuItems)
             },
-            backgroundColor = MaterialTheme.colors.background
+//            backgroundColor = MaterialTheme.colors.background
         )
 
         TabsBar(
@@ -155,7 +155,7 @@ private fun TabsBar(
 ) {
     if (tabsTitle.isNotEmpty()) {
         ScrollableTabRow(
-            backgroundColor = MaterialTheme.colors.background,
+//            backgroundColor = MaterialTheme.colors.background,
             selectedTabIndex = selectedTabIndex
         ) {
             tabsTitle.forEachIndexed { index, title ->
@@ -176,7 +176,7 @@ private fun TabsBar(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 internal fun ScrollableTopAppBarPreview() {
-    MusicBrainzJetpackComposeTheme {
+    PreviewTheme {
         ScrollableTopAppBar(
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen."

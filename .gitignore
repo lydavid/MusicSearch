@@ -19,4 +19,4 @@
 local.properties
 
 # Includes example screenshots, example json responses, and app release keystore
-/ignore-folder
+/ignore_folder
