@@ -37,15 +37,15 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
-import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.ArtistUiModel
-import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
 @Composable

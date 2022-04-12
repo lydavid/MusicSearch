@@ -25,11 +25,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import ly.david.mbjc.data.persistence.LookupHistory
-import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
+import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 

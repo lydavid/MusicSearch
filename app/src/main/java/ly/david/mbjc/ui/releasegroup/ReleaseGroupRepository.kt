@@ -12,7 +12,7 @@ import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
-import ly.david.mbjc.ui.Destination
+import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 class ReleaseGroupRepository @Inject constructor(

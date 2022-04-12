@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.Date
-import ly.david.mbjc.ui.Destination
+import ly.david.mbjc.ui.navigation.Destination
 
 //data class HistoricalRecord(
 //    val summary: String,

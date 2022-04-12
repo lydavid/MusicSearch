@@ -13,9 +13,9 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import ly.david.mbjc.ui.Destination
 import ly.david.mbjc.ui.MainActivity
 import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Rule

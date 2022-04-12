@@ -16,6 +16,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.navigation.NavigationDrawer
+import ly.david.mbjc.ui.navigation.NavigationGraph
+import ly.david.mbjc.ui.navigation.getTopLevelDestination
+import ly.david.mbjc.ui.navigation.getTopLevelRoute
 import ly.david.mbjc.ui.theme.BaseTheme
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui
+package ly.david.mbjc.ui.navigation
 
 import android.util.Log
 import androidx.compose.runtime.Composable

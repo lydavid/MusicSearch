@@ -14,7 +14,7 @@ import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.toMediumRoomModel
 import ly.david.mbjc.data.persistence.release.toTrackRoomModel
 import ly.david.mbjc.data.persistence.toReleaseRoomModel
-import ly.david.mbjc.ui.Destination
+import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 class ReleaseRepository @Inject constructor(

@@ -71,6 +71,7 @@ internal fun ExposedDropdownMenuBox(
                     }
                 ) {
                     DropdownMenuItem(
+                        modifier = modifier,
                         text = { Text(text = selectionOption.displayText) },
                         onClick = {
                             onSelectOption(selectionOption)

@@ -9,7 +9,7 @@ import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.toArtistRoomModel
-import ly.david.mbjc.ui.Destination
+import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 class ArtistRepository @Inject constructor(

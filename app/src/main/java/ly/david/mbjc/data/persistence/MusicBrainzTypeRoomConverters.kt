@@ -2,7 +2,7 @@ package ly.david.mbjc.data.persistence
 
 import androidx.room.TypeConverter
 import java.util.Date
-import ly.david.mbjc.ui.Destination
+import ly.david.mbjc.ui.navigation.Destination
 
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
