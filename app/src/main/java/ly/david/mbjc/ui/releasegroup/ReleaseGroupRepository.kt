@@ -10,7 +10,7 @@ import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
-import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
 import ly.david.mbjc.ui.Destination
 

@@ -2,7 +2,7 @@ package ly.david.mbjc.ui.search
 
 import androidx.paging.PagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
@@ -14,7 +14,7 @@ class SearchMusicBrainzPagingSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun loadOneArtist() = runBlockingTest {
+    fun loadOneArtist() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
             TestMusicBrainzApiService(),
             MusicBrainzResource.ARTIST,
@@ -42,7 +42,7 @@ class SearchMusicBrainzPagingSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun loadOneReleaseGroup() = runBlockingTest {
+    fun loadOneReleaseGroup() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
             TestMusicBrainzApiService(),
             MusicBrainzResource.RELEASE_GROUP,

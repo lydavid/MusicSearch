@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.mbjc.data.persistence.ArtistDao
-import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @HiltViewModel
 class ArtistStatsViewModel @Inject constructor(

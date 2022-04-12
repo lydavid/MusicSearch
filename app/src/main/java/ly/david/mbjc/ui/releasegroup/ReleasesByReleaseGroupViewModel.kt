@@ -21,7 +21,7 @@ import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups

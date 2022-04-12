@@ -21,6 +21,7 @@ import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.release.TrackDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
     version = 6,

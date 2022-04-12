@@ -18,15 +18,15 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
-import ly.david.mbjc.data.persistence.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
