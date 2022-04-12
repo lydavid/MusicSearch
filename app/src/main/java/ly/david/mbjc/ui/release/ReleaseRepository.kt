@@ -11,9 +11,9 @@ import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.TrackDao
-import ly.david.mbjc.data.persistence.release.toRoomMedium
-import ly.david.mbjc.data.persistence.release.toRoomTrack
-import ly.david.mbjc.data.persistence.toRoomRelease
+import ly.david.mbjc.data.persistence.release.toMediumRoomModel
+import ly.david.mbjc.data.persistence.release.toTrackRoomModel
+import ly.david.mbjc.data.persistence.toReleaseRoomModel
 import ly.david.mbjc.ui.Destination
 
 @Singleton
@@ -39,13 +39,13 @@ class ReleaseRepository @Inject constructor(
 
             val musicBrainzRelease = musicBrainzApiService.lookupRelease(releaseId)
 
-            releaseDao.insert(musicBrainzRelease.toRoomRelease())
+            releaseDao.insert(musicBrainzRelease.toReleaseRoomModel())
 
             // TODO: doing these inserts will slow down loading the title. could we do these async?
             musicBrainzRelease.media?.forEach { medium ->
-                val mediumId = mediumDao.insert(medium.toRoomMedium(musicBrainzRelease.id))
+                val mediumId = mediumDao.insert(medium.toMediumRoomModel(musicBrainzRelease.id))
 
-                trackDao.insertAll(medium.tracks?.map { it.toRoomTrack(mediumId) } ?: emptyList())
+                trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
             }
 
             incrementOrInsertLookupHistory(musicBrainzRelease)

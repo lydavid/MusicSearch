@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.mbjc.data.persistence.BaseDao
 
 @Dao
-abstract class MediumDao : BaseDao<RoomMedium> {
+abstract class MediumDao : BaseDao<MediumRoomModel> {
 
     @Transaction
     @Query("""
@@ -15,5 +15,5 @@ abstract class MediumDao : BaseDao<RoomMedium> {
         INNER JOIN tracks t ON t.medium_id = m.id
         WHERE t.id = :trackId
     """)
-    abstract suspend fun getMediumForTrack(trackId: String): RoomMedium
+    abstract suspend fun getMediumForTrack(trackId: String): MediumRoomModel
 }

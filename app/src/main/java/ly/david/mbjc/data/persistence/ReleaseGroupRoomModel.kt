@@ -10,7 +10,7 @@ import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
     tableName = "release_groups",
 //    foreignKeys = []
 )
-data class RoomReleaseGroup(
+data class ReleaseGroupRoomModel(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -37,7 +37,7 @@ data class RoomReleaseGroup(
      */
     @ColumnInfo(name = "release_count")
     val releaseCount: Int? = null
-) : RoomData(), ReleaseGroup
+) : RoomModel(), ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
 //@Entity(tableName = "release_groups_fts_table")
@@ -59,7 +59,7 @@ data class RoomReleaseGroup(
 //)
 
 // TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
-fun MusicBrainzReleaseGroup.toRoomReleaseGroup(): RoomReleaseGroup = RoomReleaseGroup(
+fun MusicBrainzReleaseGroup.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
     id = id,
     name = name,
     firstReleaseDate = firstReleaseDate,

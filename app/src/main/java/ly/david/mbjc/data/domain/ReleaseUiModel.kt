@@ -2,7 +2,7 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.MusicBrainzRelease
-import ly.david.mbjc.data.persistence.RoomRelease
+import ly.david.mbjc.data.persistence.ReleaseRoomModel
 
 data class ReleaseUiModel(
     override val id: String,
@@ -39,7 +39,7 @@ fun MusicBrainzRelease.toReleaseUiModel() =
         quality = quality
     )
 
-fun RoomRelease.toReleaseUiModel() =
+fun ReleaseRoomModel.toReleaseUiModel() =
     ReleaseUiModel(
         id = id,
         name = name,

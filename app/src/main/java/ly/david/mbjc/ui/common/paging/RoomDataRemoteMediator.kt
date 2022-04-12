@@ -7,10 +7,10 @@ import androidx.paging.RemoteMediator
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.SEARCH_BROWSE_LIMIT
-import ly.david.mbjc.data.persistence.RoomData
+import ly.david.mbjc.data.persistence.RoomModel
 
 /**
- * Generic RemoteMediator for loading remote data into [RoomData].
+ * Generic RemoteMediator for loading remote data into [RoomModel].
  *
  * @param getRemoteResourceCount Computes total number of this resource in MusicBrainz's server.
  *  If null, then that means we don't know yet.
@@ -19,7 +19,7 @@ import ly.david.mbjc.data.persistence.RoomData
  *  Expects back the number of returned resources.
  */
 @OptIn(ExperimentalPagingApi::class)
-class RoomDataRemoteMediator<RD : RoomData>(
+class RoomDataRemoteMediator<RD : RoomModel>(
     private val getRemoteResourceCount: suspend () -> Int?,
     private val getLocalResourceCount: suspend () -> Int,
     private val browseResource: suspend (offset: Int) -> Int

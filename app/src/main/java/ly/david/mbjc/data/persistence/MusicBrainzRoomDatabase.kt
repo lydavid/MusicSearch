@@ -18,22 +18,22 @@ import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
-import ly.david.mbjc.data.persistence.release.RoomMedium
-import ly.david.mbjc.data.persistence.release.RoomTrack
+import ly.david.mbjc.data.persistence.release.MediumRoomModel
+import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.release.TrackDao
 
 @Database(
     version = 6,
     entities = [
         // Main tables
-        RoomArtist::class, RoomReleaseGroup::class, RoomRelease::class,
-        RoomMedium::class, RoomTrack::class,
+        ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
+        MediumRoomModel::class, TrackRoomModel::class,
 
         // Full-Text Search (FTS) tables
 //        ReleaseGroupFts::class,
 
         // Relationship tables
-        RoomReleaseGroupArtistCredit::class, ReleasesReleaseGroups::class,
+        ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
 
         // Additional features tables
         LookupHistory::class

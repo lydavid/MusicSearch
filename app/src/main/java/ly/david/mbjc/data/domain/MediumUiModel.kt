@@ -2,8 +2,8 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.Track
-import ly.david.mbjc.data.persistence.release.RoomMedium
-import ly.david.mbjc.data.persistence.release.RoomTrack
+import ly.david.mbjc.data.persistence.release.MediumRoomModel
+import ly.david.mbjc.data.persistence.release.TrackRoomModel
 
 /**
  * [Medium] to display in UI, along with its [Track]s.
@@ -16,7 +16,7 @@ data class MediumUiModel(
     val tracks: List<TrackUiModel>
 ) : Medium
 
-fun RoomMedium.toMediumUiModel(tracks: List<TrackUiModel>) =
+fun MediumRoomModel.toMediumUiModel(tracks: List<TrackUiModel>) =
     MediumUiModel(
         position = position,
         title = title,
@@ -25,7 +25,7 @@ fun RoomMedium.toMediumUiModel(tracks: List<TrackUiModel>) =
         tracks = tracks
     )
 
-fun RoomTrack.toTrackUiModel() =
+fun TrackRoomModel.toTrackUiModel() =
     TrackUiModel(
         id = id,
         position = position,

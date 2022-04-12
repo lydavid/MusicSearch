@@ -9,7 +9,7 @@ import ly.david.mbjc.data.network.getFormatsForDisplay
 import ly.david.mbjc.data.network.getTracksForDisplay
 
 @Entity(tableName = "releases")
-data class RoomRelease(
+data class ReleaseRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
     override val id: String,
@@ -41,10 +41,10 @@ data class RoomRelease(
 
     @ColumnInfo(name = "tracks")
     val tracks: String?
-) : RoomData(), Release
+) : RoomModel(), Release
 
-fun MusicBrainzRelease.toRoomRelease() =
-    RoomRelease(
+fun MusicBrainzRelease.toReleaseRoomModel() =
+    ReleaseRoomModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

@@ -21,7 +21,7 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
 import ly.david.mbjc.data.persistence.release.MediumDao
-import ly.david.mbjc.data.persistence.release.RoomMedium
+import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
@@ -54,7 +54,7 @@ class TracksInReleaseViewModel @Inject constructor(
                     // TODO: if we want separators when we filter, then we should compare before/after medium id
                     //  before converting it to uitrack...
                     if (after?.position == 1) {
-                        val medium: RoomMedium = mediumDao.getMediumForTrack(after.id)
+                        val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
                         Log.d("Remove This", "$medium: ")
                         ListSeparator(
                             text = "${medium.format.orEmpty()} ${medium.position}" +

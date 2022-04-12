@@ -22,11 +22,11 @@ import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.RoomRelease
+import ly.david.mbjc.data.persistence.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
-import ly.david.mbjc.data.persistence.toRoomRelease
+import ly.david.mbjc.data.persistence.toReleaseRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
@@ -96,7 +96,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
         }
 
         val musicBrainzReleases = response.musicBrainzReleases
-        releaseDao.insertAll(musicBrainzReleases.map { it.toRoomRelease() })
+        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
         releasesReleaseGroupsDao.insertAll(
             musicBrainzReleases.map { release ->
                 ReleasesReleaseGroups(release.id, releaseGroupId)
@@ -106,7 +106,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
         return musicBrainzReleases.size
     }
 
-    private fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, RoomRelease> = when {
+    private fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
         query.isEmpty() -> {
             releaseDao.getReleasesInReleaseGroup(releaseGroupId)
         }

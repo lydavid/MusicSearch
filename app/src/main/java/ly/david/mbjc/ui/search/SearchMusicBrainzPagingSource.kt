@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import java.io.IOException
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.toUiData
+import ly.david.mbjc.data.domain.toUiModel
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzData
@@ -52,7 +52,7 @@ class SearchMusicBrainzPagingSource(
             }
 
             LoadResult.Page(
-                data = searchResults.map { it.toUiData() },
+                data = searchResults.map { it.toUiModel() },
                 prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
                 nextKey = nextOffset
             )

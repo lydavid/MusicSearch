@@ -8,7 +8,7 @@ import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
-import ly.david.mbjc.data.persistence.toRoomArtist
+import ly.david.mbjc.data.persistence.toArtistRoomModel
 import ly.david.mbjc.ui.Destination
 
 @Singleton
@@ -37,7 +37,7 @@ class ArtistRepository @Inject constructor(
             }
 
             val musicBrainzArtist = musicBrainzApiService.lookupArtist(artistId)
-            artistDao.insert(musicBrainzArtist.toRoomArtist())
+            artistDao.insert(musicBrainzArtist.toArtistRoomModel())
             incrementOrInsertLookupHistory(musicBrainzArtist)
             musicBrainzArtist
         }

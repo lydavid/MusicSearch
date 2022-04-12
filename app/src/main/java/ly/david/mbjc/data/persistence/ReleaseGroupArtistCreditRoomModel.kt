@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import ly.david.mbjc.data.ArtistCredit
+import ly.david.mbjc.data.Recording
+import ly.david.mbjc.data.ReleaseGroup
 
 /**
  * An artist's credit for a [ReleaseGroup].
@@ -18,7 +20,7 @@ import ly.david.mbjc.data.ArtistCredit
     primaryKeys = ["release_group_id", "order"],
     foreignKeys = [
         ForeignKey(
-            entity = RoomReleaseGroup::class,
+            entity = ReleaseGroupRoomModel::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("release_group_id"),
             onUpdate = ForeignKey.CASCADE,
@@ -26,7 +28,7 @@ import ly.david.mbjc.data.ArtistCredit
         )
     ]
 )
-data class RoomReleaseGroupArtistCredit(
+data class ReleaseGroupArtistCreditRoomModel(
     @ColumnInfo(name = "release_group_id")
     val releaseGroupId: String,
 

@@ -9,7 +9,7 @@ import ly.david.mbjc.data.ReleaseGroupTypes
 
 // TODO: move dir
 @Dao
-abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
+abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """
@@ -41,7 +41,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
 
     // Lookup
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
-    abstract suspend fun getReleaseGroup(releaseGroupId: String): RoomReleaseGroup?
+    abstract suspend fun getReleaseGroup(releaseGroupId: String): ReleaseGroupRoomModel?
 
     // Make sure to select from release_groups first, rather than artists.
     // That way, when there are no entries, we return empty rather than 1 entry with null values.
@@ -52,7 +52,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         $ORDER_BY_ARTIST_LINKING_TABLE
         """
     )
-    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, RoomReleaseGroup>
+    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, ReleaseGroupRoomModel>
 
     @Transaction
     @Query(
@@ -61,7 +61,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
         $ORDER_BY_TYPES_AND_DATE
     """
     )
-    abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, RoomReleaseGroup>
+    abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, ReleaseGroupRoomModel>
 
     // Not as fast as FTS but allows searching characters within words
     @Transaction
@@ -75,7 +75,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     abstract fun getReleaseGroupsByArtistFiltered(
         artistId: String,
         query: String
-    ): PagingSource<Int, RoomReleaseGroup>
+    ): PagingSource<Int, ReleaseGroupRoomModel>
 
     @Transaction
     @Query(
@@ -88,7 +88,7 @@ abstract class ReleaseGroupDao : BaseDao<RoomReleaseGroup> {
     abstract fun getReleaseGroupsByArtistFilteredSorted(
         artistId: String,
         query: String
-    ): PagingSource<Int, RoomReleaseGroup>
+    ): PagingSource<Int, ReleaseGroupRoomModel>
 
     // TODO: move to artist?
     @Query(

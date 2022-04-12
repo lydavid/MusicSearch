@@ -11,7 +11,7 @@ import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.toRoomReleaseGroup
+import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
 import ly.david.mbjc.ui.Destination
 
 @Singleton
@@ -40,7 +40,7 @@ class ReleaseGroupRepository @Inject constructor(
             val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
 
             // Whenever we insert a release group, we must always insert all of its artists as well
-            releaseGroupDao.insert(musicBrainzReleaseGroup.toRoomReleaseGroup())
+            releaseGroupDao.insert(musicBrainzReleaseGroup.toReleaseGroupRoomModel())
             releaseGroupArtistDao.insertAll(musicBrainzReleaseGroup.getRoomReleaseGroupArtistCredit())
 
             incrementOrInsertLookupHistory(musicBrainzReleaseGroup)

@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import ly.david.mbjc.data.persistence.BaseDao
 
 @Dao
-abstract class TrackDao : BaseDao<RoomTrack> {
+abstract class TrackDao : BaseDao<TrackRoomModel> {
 
     @Transaction
     @Query(
@@ -19,5 +19,5 @@ abstract class TrackDao : BaseDao<RoomTrack> {
         WHERE r.id = :releaseId
     """
     )
-    abstract fun getTracksInRelease(releaseId: String): PagingSource<Int, RoomTrack>
+    abstract fun getTracksInRelease(releaseId: String): PagingSource<Int, TrackRoomModel>
 }

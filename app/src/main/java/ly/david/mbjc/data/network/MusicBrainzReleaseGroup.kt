@@ -3,7 +3,7 @@ package ly.david.mbjc.data.network
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.LabelInfo
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
 
 data class MusicBrainzReleaseGroup(
 
@@ -49,9 +49,9 @@ data class MusicBrainzReleaseGroup(
 /**
  * Returns all artist credits for this release group for caching in database.
  */
-fun MusicBrainzReleaseGroup.getRoomReleaseGroupArtistCredit(): List<RoomReleaseGroupArtistCredit> =
+fun MusicBrainzReleaseGroup.getRoomReleaseGroupArtistCredit(): List<ReleaseGroupArtistCreditRoomModel> =
     artistCredits?.mapIndexed { index, artistCredit ->
-        RoomReleaseGroupArtistCredit(
+        ReleaseGroupArtistCreditRoomModel(
             releaseGroupId = id,
             artistId = artistCredit.artist.id,
             name = artistCredit.name,

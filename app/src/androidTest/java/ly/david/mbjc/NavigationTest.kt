@@ -52,7 +52,7 @@ class NavigationTest {
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("Search History")
+            .onNodeWithText("History")
             .performClick()
 
         composeTestRule

@@ -5,10 +5,10 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.mbjc.data.persistence.BaseDao
-import ly.david.mbjc.data.persistence.RoomRelease
+import ly.david.mbjc.data.persistence.ReleaseRoomModel
 
 @Dao
-abstract class ReleaseDao : BaseDao<RoomRelease> {
+abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
 
     companion object {
         private const val RELEASES_IN_RELEASE_GROUP = """
@@ -34,7 +34,7 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
 
     // Lookup
     @Query("SELECT * FROM releases WHERE id = :releaseId")
-    abstract suspend fun getRelease(releaseId: String): RoomRelease?
+    abstract suspend fun getRelease(releaseId: String): ReleaseRoomModel?
 
     @Query(
         """
@@ -58,7 +58,7 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
         $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
     """
     )
-    abstract fun getReleasesInReleaseGroup(releaseGroupId: String): PagingSource<Int, RoomRelease>
+    abstract fun getReleasesInReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseRoomModel>
 
     @Transaction
     @Query(
@@ -70,6 +70,6 @@ abstract class ReleaseDao : BaseDao<RoomRelease> {
     abstract fun getReleasesInReleaseGroupFiltered(
         releaseGroupId: String,
         query: String
-    ): PagingSource<Int, RoomRelease>
+    ): PagingSource<Int, ReleaseRoomModel>
 
 }

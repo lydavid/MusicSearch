@@ -12,7 +12,7 @@ import ly.david.mbjc.data.network.MusicBrainzTrack
     tableName = "tracks",
     foreignKeys = [
         ForeignKey(
-            entity = RoomMedium::class,
+            entity = MediumRoomModel::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("medium_id"),
             onUpdate = ForeignKey.CASCADE,
@@ -20,7 +20,7 @@ import ly.david.mbjc.data.network.MusicBrainzTrack
         )
     ]
 )
-data class RoomTrack(
+data class TrackRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
     override val id: String,
@@ -38,8 +38,8 @@ data class RoomTrack(
     override val length: Int?
 ) : Track
 
-fun MusicBrainzTrack.toRoomTrack(mediumId: Long) =
-    RoomTrack(
+fun MusicBrainzTrack.toTrackRoomModel(mediumId: Long) =
+    TrackRoomModel(
         id = id,
         mediumId = mediumId,
         position = position,

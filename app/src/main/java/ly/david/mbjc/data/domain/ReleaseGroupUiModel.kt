@@ -3,12 +3,12 @@ package ly.david.mbjc.data.domain
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
-import ly.david.mbjc.data.persistence.RoomReleaseGroup
-import ly.david.mbjc.data.persistence.RoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
+import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
 
 /**
  * Representation of a [ReleaseGroup] for our UI.
- * This can be mapped from [RoomReleaseGroup] or [MusicBrainzReleaseGroup].
+ * This can be mapped from [ReleaseGroupRoomModel] or [MusicBrainzReleaseGroup].
  */
 data class ReleaseGroupUiModel(
     override val id: String,
@@ -37,7 +37,7 @@ fun MusicBrainzReleaseGroup.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     )
 }
 
-fun RoomReleaseGroup.toReleaseGroupUiModel(roomReleaseGroupArtistCredits: List<RoomReleaseGroupArtistCredit>): ReleaseGroupUiModel {
+fun ReleaseGroupRoomModel.toReleaseGroupUiModel(releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel>): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,
@@ -47,6 +47,6 @@ fun RoomReleaseGroup.toReleaseGroupUiModel(roomReleaseGroupArtistCredits: List<R
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
 
-        artistCredits = roomReleaseGroupArtistCredits.getDisplayNames()
+        artistCredits = releaseGroupArtistCreditRoomModels.getDisplayNames()
     )
 }

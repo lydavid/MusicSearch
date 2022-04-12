@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 
 @Dao
-abstract class ReleaseGroupArtistDao : BaseDao<RoomReleaseGroupArtistCredit> {
+abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtistCreditRoomModel> {
     @Query(
         """
         SELECT rga.*
@@ -14,5 +14,5 @@ abstract class ReleaseGroupArtistDao : BaseDao<RoomReleaseGroupArtistCredit> {
         ORDER BY rga.`order`
     """
     )
-    abstract suspend fun getReleaseGroupArtistCredits(releaseGroupId: String): List<RoomReleaseGroupArtistCredit>
+    abstract suspend fun getReleaseGroupArtistCredits(releaseGroupId: String): List<ReleaseGroupArtistCreditRoomModel>
 }

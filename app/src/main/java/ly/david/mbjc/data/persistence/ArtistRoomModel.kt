@@ -11,7 +11,7 @@ import ly.david.mbjc.data.network.MusicBrainzArtist
 @Entity(
     tableName = "artists"
 )
-data class RoomArtist(
+data class ArtistRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
     override val id: String,
@@ -51,10 +51,10 @@ data class RoomArtist(
     @ColumnInfo(name = "release_group_count")
     val releaseGroupsCount: Int? = null
 
-) : RoomData(), Artist
+) : RoomModel(), Artist
 
-fun MusicBrainzArtist.toRoomArtist() =
-    RoomArtist(
+fun MusicBrainzArtist.toArtistRoomModel() =
+    ArtistRoomModel(
         id = id,
         name = name,
         sortName = sortName,

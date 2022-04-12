@@ -28,7 +28,7 @@ class ListSeparator(val text: String) : UiModel()
  *
  * It seems like this needs to be in the same directory as [UiModel] or else it tells us to add an else branch.
  */
-fun MusicBrainzData.toUiData(): UiModel {
+fun MusicBrainzData.toUiModel(): UiModel {
     return when (this) {
         is MusicBrainzArtist -> this.toArtistUiModel()
         is MusicBrainzReleaseGroup -> this.toReleaseGroupUiModel()

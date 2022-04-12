@@ -6,13 +6,13 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Medium
 import ly.david.mbjc.data.network.MusicBrainzMedium
-import ly.david.mbjc.data.persistence.RoomRelease
+import ly.david.mbjc.data.persistence.ReleaseRoomModel
 
 @Entity(
     tableName = "media",
     foreignKeys = [
         ForeignKey(
-            entity = RoomRelease::class,
+            entity = ReleaseRoomModel::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("release_id"),
             onUpdate = ForeignKey.CASCADE,
@@ -20,7 +20,7 @@ import ly.david.mbjc.data.persistence.RoomRelease
         )
     ]
 )
-data class RoomMedium(
+data class MediumRoomModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long = 0,
@@ -37,8 +37,8 @@ data class RoomMedium(
     override val format: String? = null,
 ) : Medium
 
-fun MusicBrainzMedium.toRoomMedium(releaseId: String) =
-    RoomMedium(
+fun MusicBrainzMedium.toMediumRoomModel(releaseId: String) =
+    MediumRoomModel(
         releaseId = releaseId,
         position = position,
         title = title,

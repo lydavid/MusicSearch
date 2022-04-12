@@ -27,7 +27,7 @@ import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.toRoomReleaseGroup
+import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
@@ -113,7 +113,7 @@ class ReleaseGroupsByArtistViewModel @Inject constructor(
 
         val musicBrainzReleaseGroups = response.releaseGroups
 
-        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toRoomReleaseGroup() })
+        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toReleaseGroupRoomModel() })
         releaseGroupArtistDao.insertAll(
             musicBrainzReleaseGroups.flatMap { releaseGroup ->
                 releaseGroup.getRoomReleaseGroupArtistCredit()

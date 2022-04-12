@@ -3,7 +3,7 @@ package ly.david.mbjc.data.domain
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.MusicBrainzArtist
-import ly.david.mbjc.data.persistence.RoomArtist
+import ly.david.mbjc.data.persistence.ArtistRoomModel
 
 data class ArtistUiModel(
     override val id: String,
@@ -28,7 +28,7 @@ fun MusicBrainzArtist.toArtistUiModel() =
         lifeSpan = lifeSpan
     )
 
-fun RoomArtist.toArtistUiModel() =
+fun ArtistRoomModel.toArtistUiModel() =
     ArtistUiModel(
         id = id,
         name = name,
