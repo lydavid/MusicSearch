@@ -1,6 +1,8 @@
 package ly.david.mbjc.ui.common.topappbar
 
 import android.content.res.Configuration
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
@@ -53,37 +55,10 @@ fun ScrollableTopAppBar(
     onSelectTabIndex: (Int) -> Unit = {}
 ) {
 
-    var showLoading by rememberSaveable { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = title) {
-        showLoading = if (title.isEmpty()) {
-            delay(DELAY_LOADING_MS)
-            true
-        } else {
-            false
-        }
-    }
-
     Column {
         SmallTopAppBar(
             title = {
-                if (showLoading) {
-                    DotsFlashing()
-                } else {
-                    Column {
-                        Text(
-                            text = title,
-                            modifier = Modifier.horizontalScroll(rememberScrollState())
-                        )
-                        if (subtitle.isNotEmpty()) {
-                            Text(
-                                text = subtitle,
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.horizontalScroll(rememberScrollState())
-                            )
-                        }
-                    }
-                }
+                TitleBar(title = title, subtitle = subtitle)
             },
             navigationIcon = {
                 IconButton(onClick = {
@@ -103,8 +78,7 @@ fun ScrollableTopAppBar(
             actions = {
                 mainAction?.invoke()
                 OverflowMenu(dropdownMenuItems = dropdownMenuItems)
-            },
-//            backgroundColor = MaterialTheme.colors.background
+            }
         )
 
         TabsBar(
@@ -112,6 +86,55 @@ fun ScrollableTopAppBar(
             selectedTabIndex = selectedTabIndex,
             onSelectTabIndex = onSelectTabIndex
         )
+    }
+}
+
+@Composable
+private fun TitleBar(
+    title: String,
+    subtitle: String = "",
+) {
+
+    var showLoading by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = title) {
+        showLoading = if (title.isEmpty()) {
+            delay(DELAY_LOADING_MS)
+            true
+        } else {
+            false
+        }
+    }
+
+    if (showLoading) {
+        DotsFlashing()
+    } else {
+        Column {
+            Text(
+                text = title,
+                modifier = Modifier.horizontalScroll(rememberScrollState())
+            )
+            if (subtitle.isNotEmpty()) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier
+                        .horizontalScroll(rememberScrollState())
+                        // As long as tap and scroll does not trigger a click, we can use this
+                        // as a way to "navigate up".
+                        // When a user searches for a release group, they can't return to the artist by
+                        // pressing back.
+                        // This will allow them to click the subtitle to go to the artist's page.
+                        // From release screen, the subtitle is usually "Release by [Artist]".
+                        // MB website has "(see all versions of this release, 6 available)" to allow up navigation
+                        // to release group screen.
+                        .clickable {
+                            // TODO: clicking this should show a dialog, allowing user to deeplink to this screen
+                            Log.d("Remove This", "ScrollableTopAppBar: hello from subtitle")
+                        }
+                )
+            }
+        }
     }
 }
 

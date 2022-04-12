@@ -77,6 +77,7 @@ fun ArtistScreenScaffold(
                                 Text("Refresh")
                             },
                             onClick = {
+                                // TODO:
                                 Log.d("Remove This", "ArtistScreenScaffold: ee")
                                 closeMenu()
                             })
