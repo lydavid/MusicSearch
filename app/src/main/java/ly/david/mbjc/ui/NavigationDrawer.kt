@@ -14,11 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +49,7 @@ fun NavigationDrawer(
 
             NavigationDrawerItem(
                 icon = Icons.Default.Search,
-                iconDescription = "Navigate to search Music Brainz screen.",
+                iconDescription = "",
                 label = "Search MusicBrainz",
                 isSelected = selectedTopLevelDestination == Destination.LOOKUP
             ) {
@@ -58,8 +58,8 @@ fun NavigationDrawer(
             }
             NavigationDrawerItem(
                 icon = Icons.Default.History,
-                iconDescription = "Navigate to search history screen.",
-                label = "Search History",
+                iconDescription = "",
+                label = "History",
                 isSelected = selectedTopLevelDestination == Destination.HISTORY
             ) {
                 navigateToTopLevelDestination(Destination.HISTORY)
@@ -69,6 +69,7 @@ fun NavigationDrawer(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawerItem(
     icon: ImageVector,
@@ -85,30 +86,30 @@ fun NavigationDrawerItem(
     }
 
     Surface(
+        onClick = onClick,
         shape = RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp),
         color = backgroundColor,
-        modifier = Modifier.padding(end = 8.dp)
+        modifier = Modifier
+            .padding(end = 8.dp)
     ) {
-        TextButton(onClick = onClick) {
-            Row(
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = iconDescription,
-                    tint = MaterialTheme.colorScheme.onBackground,
-                )
-                Spacer(Modifier.width(16.dp))
-                Text(
-                    text = label,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            }
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxWidth()
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = iconDescription,
+                tint = MaterialTheme.colorScheme.onBackground,
+            )
+            Spacer(Modifier.width(16.dp))
+            Text(
+                text = label,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineSmall
+            )
         }
     }
 }
