@@ -25,7 +25,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun ReleaseGroupCard(
     releaseGroup: ReleaseGroupUiModel,
-    onClick: (ReleaseGroupUiModel) -> Unit = {}
+    onClick: ReleaseGroupUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseGroup) },

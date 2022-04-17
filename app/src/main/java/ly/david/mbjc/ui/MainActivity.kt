@@ -53,8 +53,8 @@ internal fun MainApp(
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    val onTopLevelDestinationClick: (Destination) -> Unit = { topLevelDestination ->
-        navController.navigate(topLevelDestination.name) {
+    val onTopLevelDestinationClick: Destination.() -> Unit = {
+        navController.navigate(name) {
             // Top-level screens should use this to prevent selecting the same screen.
             launchSingleTop = true
 

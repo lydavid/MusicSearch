@@ -135,13 +135,13 @@ internal fun SearchMusicBrainzScreen(
             when (uiModel) {
                 is ArtistUiModel -> {
                     ArtistCard(artist = uiModel) {
-                        onItemClick(Destination.LOOKUP_ARTIST, it.id)
+                        onItemClick(Destination.LOOKUP_ARTIST, id)
                     }
                 }
                 is ReleaseGroupUiModel -> {
                     // TODO: should see album type rather than year
                     ReleaseGroupCard(releaseGroup = uiModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, it.id)
+                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, id)
                     }
                 }
                 is EndOfList -> {

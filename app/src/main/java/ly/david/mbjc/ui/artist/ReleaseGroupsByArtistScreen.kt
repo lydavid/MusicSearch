@@ -54,7 +54,7 @@ internal fun ReleaseGroupsByArtistScreen(
         when (uiModel) {
             is ReleaseGroupUiModel -> {
                 ReleaseGroupCard(releaseGroup = uiModel) {
-                    onReleaseGroupClick(it.id)
+                    onReleaseGroupClick(id)
                 }
             }
             is ListSeparator -> {

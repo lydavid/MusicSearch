@@ -50,7 +50,7 @@ internal fun ReleasesByReleaseGroupScreen(
         when (releaseUiModel) {
             is ReleaseUiModel -> {
                 ReleaseCard(releaseUiModel = releaseUiModel) {
-                    onReleaseClick(it.id)
+                    onReleaseClick(id)
                 }
             }
             else -> {

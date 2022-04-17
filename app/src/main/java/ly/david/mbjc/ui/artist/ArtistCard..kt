@@ -27,7 +27,7 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun ArtistCard(
     artist: ArtistUiModel,
-    onArtistClick: (ArtistUiModel) -> Unit = {}
+    onArtistClick: ArtistUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onArtistClick(artist) },

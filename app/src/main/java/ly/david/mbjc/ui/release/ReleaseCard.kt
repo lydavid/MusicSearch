@@ -29,7 +29,7 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun ReleaseCard(
     releaseUiModel: ReleaseUiModel,
-    onClick: (ReleaseUiModel) -> Unit = {}
+    onClick: ReleaseUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseUiModel) },
