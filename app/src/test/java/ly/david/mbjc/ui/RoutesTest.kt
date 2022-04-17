@@ -1,5 +1,8 @@
 package ly.david.mbjc.ui
 
+import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.navigation.getTopLevelDestination
+import ly.david.mbjc.ui.navigation.getTopLevelRoute
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

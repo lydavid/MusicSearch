@@ -16,6 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.domain.ArtistUiModel
+import ly.david.mbjc.data.domain.getLifeSpanForDisplay
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
@@ -37,7 +38,7 @@ fun ArtistCard(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            val (name, disambiguation, type, countryCode) = createRefs()
+            val (name, countryCode, disambiguation, type, lifeSpan) = createRefs()
 
             Text(
                 text = artist.name,
@@ -96,6 +97,23 @@ fun ArtistCard(
                             top.linkTo(disambiguation.bottom, margin = 4.dp)
                         }
                 )
+            } else {
+                Spacer(modifier = Modifier.constrainAs(type) {
+                    top.linkTo(disambiguation.bottom)
+                })
+            }
+
+            val lifeSpanText = artist.getLifeSpanForDisplay()
+            if (lifeSpanText.isNotEmpty()) {
+                Text(
+                    text = lifeSpanText,
+                    style = TextStyles.getCardBodySubTextStyle(),
+                    modifier = Modifier
+                        .constrainAs(lifeSpan) {
+                            width = Dimension.matchParent
+                            top.linkTo(type.bottom, margin = 4.dp)
+                        }
+                )
             }
         }
     }
@@ -111,13 +129,14 @@ class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistUiModel> {
         ),
         ArtistUiModel(
             id = "2",
-            type = "Group, but for some reason it is really long and wraps",
+            type = "Group, but for some reason it is really long and wraps around the screen",
             name = "wow, this artist name is so long it will wrap around the screen",
             sortName = "sort name should not be seen",
             disambiguation = "blah, blah, blah, some really long text that forces wrapping",
             countryCode = "XW",
             lifeSpan = LifeSpan(
-                begin = "2020-10-10"
+                begin = "2020-12-31",
+                end = "2022-01-01"
             )
         ),
         ArtistUiModel(
