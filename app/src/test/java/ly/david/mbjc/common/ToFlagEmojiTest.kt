@@ -4,7 +4,7 @@ import ly.david.mbjc.ui.common.toFlagEmoji
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ToFlagEmojiTest {
+internal class ToFlagEmojiTest {
 
     @Test
     fun `valid country code`() {

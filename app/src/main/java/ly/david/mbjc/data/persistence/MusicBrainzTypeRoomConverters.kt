@@ -7,7 +7,7 @@ import ly.david.mbjc.ui.navigation.Destination
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
 
-class MusicBrainzRoomTypeConverters {
+internal class MusicBrainzRoomTypeConverters {
 
     // For things like "secondary-types" which does not need its own table.
     @TypeConverter

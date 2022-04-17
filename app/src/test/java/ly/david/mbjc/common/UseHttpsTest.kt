@@ -4,7 +4,7 @@ import ly.david.mbjc.ui.common.useHttps
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class UseHttpsTest {
+internal class UseHttpsTest {
 
     @Test
     fun `convert http to https`() {

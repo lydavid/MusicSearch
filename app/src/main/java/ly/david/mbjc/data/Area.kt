@@ -13,7 +13,7 @@ import com.squareup.moshi.Json
 //    "JP"
 //    ]
 //},
-data class Area(
+internal data class Area(
     @Json(name = "id") val id: String,
     @Json(name = "iso-3166-1-codes") val isoCodes: List<String>,
 )

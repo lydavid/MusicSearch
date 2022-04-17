@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.ImeAction
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun TopAppBarWithSearch(
+internal fun TopAppBarWithSearch(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
     title: String,

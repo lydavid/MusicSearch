@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import ly.david.mbjc.data.persistence.BaseDao
 
 @Dao
-abstract class TrackDao : BaseDao<TrackRoomModel> {
+internal abstract class TrackDao : BaseDao<TrackRoomModel> {
 
     @Transaction
     @Query(

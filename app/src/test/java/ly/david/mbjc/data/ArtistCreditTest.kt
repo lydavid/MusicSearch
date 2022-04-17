@@ -9,7 +9,7 @@ private const val ARTIST_1_NAME = "Artist Name"
 private const val ARTIST_1_JOIN_PHRASE = "Artist Name"
 private const val ARTIST_2_NAME = "Other Artist"
 
-class ArtistCreditTest {
+internal class ArtistCreditTest {
 
     private var artistCredits: List<ArtistCredit>? = null
 

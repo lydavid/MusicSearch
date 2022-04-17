@@ -1,6 +1,6 @@
 package ly.david.mbjc.data
 
-interface ArtistCredit {
+internal interface ArtistCredit {
     val name: String
     val joinPhrase: String?
 }
@@ -8,7 +8,7 @@ interface ArtistCredit {
 /**
  * Get all artists in the credit, joined by their [ArtistCredit.joinPhrase].
  */
-fun List<ArtistCredit>?.getDisplayNames(): String {
+internal fun List<ArtistCredit>?.getDisplayNames(): String {
     var displayName = ""
     this?.forEach {
         displayName += "${it.name}${it.joinPhrase.orEmpty()}"

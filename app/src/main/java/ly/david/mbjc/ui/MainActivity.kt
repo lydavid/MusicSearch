@@ -24,7 +24,7 @@ import ly.david.mbjc.ui.navigation.getTopLevelRoute
 import ly.david.mbjc.ui.theme.BaseTheme
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+internal class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

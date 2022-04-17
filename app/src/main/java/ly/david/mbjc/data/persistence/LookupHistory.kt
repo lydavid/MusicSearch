@@ -21,7 +21,7 @@ import ly.david.mbjc.ui.navigation.Destination
     tableName = "lookup_history",
     indices = [Index(value = ["mbid"], unique = true)]
 )
-data class LookupHistory(
+internal data class LookupHistory(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long = 0,

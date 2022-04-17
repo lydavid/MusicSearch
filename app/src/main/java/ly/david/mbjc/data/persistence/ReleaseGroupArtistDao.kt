@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 
 @Dao
-abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtistCreditRoomModel> {
+internal abstract class ReleaseGroupArtistDao : BaseDao<ReleaseGroupArtistCreditRoomModel> {
     @Query(
         """
         SELECT rga.*

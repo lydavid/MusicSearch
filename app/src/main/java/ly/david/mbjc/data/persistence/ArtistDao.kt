@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 
 @Dao
-abstract class ArtistDao : BaseDao<ArtistRoomModel> {
+internal abstract class ArtistDao : BaseDao<ArtistRoomModel> {
     @Query("SELECT * FROM artists WHERE id = :artistId")
     abstract suspend fun getArtist(artistId: String): ArtistRoomModel?
 

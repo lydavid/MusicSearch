@@ -2,12 +2,12 @@ package ly.david.mbjc.data.network.coverart
 
 import com.squareup.moshi.Json
 
-data class CoverArtsResponse(
+internal data class CoverArtsResponse(
     @Json(name = "release") val release: String,
     @Json(name = "images") val coverArtUrls: List<CoverArtUrls>
 )
 
-data class CoverArtUrls(
+internal data class CoverArtUrls(
     @Json(name = "edit") val edit: String,
     @Json(name = "id") val id: String,
     @Json(name = "image") val imageUrl: String? = null,
@@ -19,7 +19,7 @@ data class CoverArtUrls(
     @Json(name = "types") val types: List<String>? = null,
 )
 
-data class ThumbnailsUrls(
+internal data class ThumbnailsUrls(
     @Json(name = "250") val resolution250Url: String? = null,
     @Json(name = "500") val resolution500Url: String? = null,
     @Json(name = "1200") val resolution1200Url: String? = null,

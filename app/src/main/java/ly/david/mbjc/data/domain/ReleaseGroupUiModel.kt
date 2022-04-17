@@ -3,14 +3,14 @@ package ly.david.mbjc.data.domain
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
+import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
 
 /**
  * Representation of a [ReleaseGroup] for our UI.
  * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
  */
-data class ReleaseGroupUiModel(
+internal data class ReleaseGroupUiModel(
     override val id: String,
     override val name: String,
     override val firstReleaseDate: String = "",
@@ -23,7 +23,7 @@ data class ReleaseGroupUiModel(
     val artistCredits: String = ""
 ): UiModel(), ReleaseGroup
 
-fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
+internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,
@@ -37,7 +37,7 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     )
 }
 
-fun ReleaseGroupRoomModel.toReleaseGroupUiModel(releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel>): ReleaseGroupUiModel {
+internal fun ReleaseGroupRoomModel.toReleaseGroupUiModel(releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel>): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,

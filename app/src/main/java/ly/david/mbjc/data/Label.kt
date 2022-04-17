@@ -2,12 +2,12 @@ package ly.david.mbjc.data
 
 import com.squareup.moshi.Json
 
-data class LabelInfo(
+internal data class LabelInfo(
     @Json(name = "catalog-number") val catalogNumber: String? = null,
     @Json(name = "label") val label: Label? = null,
 )
 
-data class Label(
+internal data class Label(
     @Json(name = "label-code") val labelCode: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
     @Json(name = "id") val id: String? = null,

@@ -1,3 +1,3 @@
 package ly.david.mbjc.data.network
 
-const val NO_TYPE = "Unspecified type"
+internal const val NO_TYPE = "Unspecified type"

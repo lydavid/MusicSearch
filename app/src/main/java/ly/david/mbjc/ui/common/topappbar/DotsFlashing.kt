@@ -26,7 +26,7 @@ private const val ANIMATION_DELAY_MS = 300
  * Based off of: [https://gist.github.com/EugeneTheDev/a27664cb7e7899f964348b05883cbccd]
  */
 @Composable
-fun DotsFlashing() {
+internal fun DotsFlashing() {
     val minAlpha = 0.2f
 
     @Composable

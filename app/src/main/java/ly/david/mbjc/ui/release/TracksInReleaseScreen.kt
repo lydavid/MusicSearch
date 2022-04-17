@@ -20,8 +20,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.TrackUiModel
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
@@ -38,7 +38,7 @@ import ly.david.mbjc.ui.theme.TextStyles
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TracksInReleaseScreen(
+internal fun TracksInReleaseScreen(
     modifier: Modifier = Modifier,
     releaseId: String,
     onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },

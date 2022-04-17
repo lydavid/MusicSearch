@@ -7,7 +7,7 @@ import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @HiltViewModel
-class ArtistStatsViewModel @Inject constructor(
+internal class ArtistStatsViewModel @Inject constructor(
     private val artistDao: ArtistDao,
     private val releaseGroupDao: ReleaseGroupDao
 ) : ViewModel() {

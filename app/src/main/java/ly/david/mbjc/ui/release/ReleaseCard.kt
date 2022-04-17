@@ -27,7 +27,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-fun ReleaseCard(
+internal fun ReleaseCard(
     releaseUiModel: ReleaseUiModel,
     onClick: (ReleaseUiModel) -> Unit = {}
 ) {
@@ -138,7 +138,7 @@ fun ReleaseCard(
     }
 }
 
-class ReleasePreviewParameterProvider : PreviewParameterProvider<ReleaseUiModel> {
+internal class ReleasePreviewParameterProvider : PreviewParameterProvider<ReleaseUiModel> {
     override val values: Sequence<ReleaseUiModel> = sequenceOf(
         ReleaseUiModel(
             id = "1",

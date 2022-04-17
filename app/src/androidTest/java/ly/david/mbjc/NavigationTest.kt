@@ -21,7 +21,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class NavigationTest {
+internal class NavigationTest {
 
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces

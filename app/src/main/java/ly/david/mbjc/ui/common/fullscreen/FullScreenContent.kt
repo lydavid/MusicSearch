@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
  * For content that should fill the whole screen (to be precise, fill max size given to it).
  */
 @Composable
-fun FullScreenContent(
+internal fun FullScreenContent(
     content: @Composable () -> Unit
 ) {
     Column(
@@ -28,14 +28,14 @@ fun FullScreenContent(
 }
 
 @Composable
-fun FullScreenLoadingIndicator() {
+internal fun FullScreenLoadingIndicator() {
     FullScreenContent {
         CircularProgressIndicator()
     }
 }
 
 @Composable
-fun FullScreenText(
+internal fun FullScreenText(
     text: String,
 ) {
     FullScreenContent {

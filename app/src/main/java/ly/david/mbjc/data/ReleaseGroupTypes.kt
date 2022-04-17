@@ -2,7 +2,7 @@ package ly.david.mbjc.data
 
 import ly.david.mbjc.data.network.NO_TYPE
 
-interface ReleaseGroupTypes {
+internal interface ReleaseGroupTypes {
     val primaryType: String?
     val secondaryTypes: List<String>?
 }
@@ -10,7 +10,7 @@ interface ReleaseGroupTypes {
 /**
  * Returns primary type concatenated with all secondary types for display.
  */
-fun ReleaseGroupTypes.getDisplayTypes(): String {
+internal fun ReleaseGroupTypes.getDisplayTypes(): String {
 
     var displayTypes = primaryType.orEmpty()
 

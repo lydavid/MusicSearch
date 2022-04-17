@@ -4,7 +4,7 @@ import ly.david.mbjc.ui.common.toDisplayTime
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ToDisplayTimeTest {
+internal class ToDisplayTimeTest {
 
     @Test
     fun `null`() {

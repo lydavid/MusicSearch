@@ -65,7 +65,7 @@ internal fun HistoryScreenScaffold(
 }
 
 @Composable
-fun HistoryScreen(
+internal fun HistoryScreen(
     lazyPagingItems: LazyPagingItems<LookupHistory>,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
@@ -134,7 +134,7 @@ private fun Date.toDisplayDate(): String {
     return dateFormat.format(this)
 }
 
-val testData = listOf(
+private val testData = listOf(
     LookupHistory(
         summary = "欠けた心象、世のよすがみ",
         destination = Destination.LOOKUP_RELEASE_GROUP,

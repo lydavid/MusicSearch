@@ -6,7 +6,7 @@ import ly.david.mbjc.data.network.NO_TYPE
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ReleaseGroupTest {
+internal class ReleaseGroupTest {
 
     private val releaseGroupTypes: ReleaseGroupTypes = mockk()
 

@@ -6,7 +6,7 @@ import ly.david.mbjc.data.Medium
 /**
  * A [Medium] in [ReleaseMusicBrainzModel].
  */
-data class MediumMusicBrainzModel(
+internal data class MediumMusicBrainzModel(
     @Json(name = "position") override val position: Int,
     @Json(name = "title") override val title: String,
     @Json(name = "track-count") override val trackCount: Int,
@@ -24,7 +24,7 @@ data class MediumMusicBrainzModel(
  * * 170xCD
  * * 2×CD + Blu-ray
  */
-fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
+internal fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
 
     val hashMap = hashMapOf<String, Int>()
 
@@ -60,7 +60,7 @@ fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
  * * 23
  * * 15 + 8 + 24
  */
-fun List<MediumMusicBrainzModel>?.getTracksForDisplay(): String? {
+internal fun List<MediumMusicBrainzModel>?.getTracksForDisplay(): String? {
     val tracksForDisplay = this?.joinToString(" + ") {
         "${it.trackCount}"
     }

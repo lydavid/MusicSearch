@@ -1,6 +1,6 @@
 package ly.david.mbjc.data.network
 
-class TestMusicBrainzApiService : MusicBrainzApiService {
+internal class TestMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
         return SearchArtistsResponse(
             1,

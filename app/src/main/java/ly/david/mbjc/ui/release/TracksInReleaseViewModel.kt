@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.TrackUiModel
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
@@ -27,7 +27,7 @@ import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @HiltViewModel
-class TracksInReleaseViewModel @Inject constructor(
+internal class TracksInReleaseViewModel @Inject constructor(
     private val releaseRepository: ReleaseRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,

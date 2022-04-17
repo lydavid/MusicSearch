@@ -6,7 +6,7 @@ import ly.david.mbjc.ui.navigation.getTopLevelRoute
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class RoutesTest {
+internal class RoutesTest {
 
     @Test
     fun `get top-level route of top-level route`() {

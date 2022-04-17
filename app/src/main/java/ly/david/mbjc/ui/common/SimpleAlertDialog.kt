@@ -6,7 +6,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun SimpleAlertDialog(
+internal fun SimpleAlertDialog(
     title: String,
     confirmText: String,
     onDismiss: () -> Unit,
@@ -23,3 +23,5 @@ fun SimpleAlertDialog(
         }
     )
 }
+
+// TODO: preview. currently can't due to api

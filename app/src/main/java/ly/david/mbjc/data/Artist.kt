@@ -3,7 +3,7 @@ package ly.david.mbjc.data
 /**
  * Defines common properties between domain, network and persistence model.
  */
-interface Artist : NameWithDisambiguation {
+internal interface Artist : NameWithDisambiguation {
     val id: String
 
     override val name: String

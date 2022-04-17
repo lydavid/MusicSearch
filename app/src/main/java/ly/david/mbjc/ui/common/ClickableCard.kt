@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ClickableListItem(
+internal fun ClickableListItem(
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {

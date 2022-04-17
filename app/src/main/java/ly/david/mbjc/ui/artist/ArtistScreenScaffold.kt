@@ -21,7 +21,7 @@ import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
-enum class ArtistTab(val title: String) {
+internal enum class ArtistTab(val title: String) {
     //    OVERVIEW("Overview"),
     RELEASE_GROUPS("Release Groups"),
     RELEASES("Releases"),
@@ -30,7 +30,7 @@ enum class ArtistTab(val title: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArtistScreenScaffold(
+internal fun ArtistScreenScaffold(
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
     onBack: () -> Unit,

@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel
-class SearchMusicBrainzViewModel @Inject constructor(
+internal class SearchMusicBrainzViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService
 ) : ViewModel() {
 

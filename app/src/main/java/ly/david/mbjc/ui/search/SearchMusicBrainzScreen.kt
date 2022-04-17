@@ -49,7 +49,7 @@ import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
 @Composable
-fun SearchMusicBrainzScreen(
+internal fun SearchMusicBrainzScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },

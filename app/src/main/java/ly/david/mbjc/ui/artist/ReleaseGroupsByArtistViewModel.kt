@@ -32,7 +32,7 @@ import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
 @HiltViewModel
-class ReleaseGroupsByArtistViewModel @Inject constructor(
+internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistRepository: ArtistRepository,
     private val releaseGroupDao: ReleaseGroupDao,

@@ -4,7 +4,7 @@ import androidx.paging.PagingConfig
 import ly.david.mbjc.data.network.PREFETCH_DISTANCE
 import ly.david.mbjc.data.network.SEARCH_BROWSE_LIMIT
 
-object MusicBrainzPagingConfig {
+internal object MusicBrainzPagingConfig {
 
     /**
      * Common [PagingConfig] for consistency.

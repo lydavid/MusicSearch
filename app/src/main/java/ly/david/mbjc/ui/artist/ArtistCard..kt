@@ -25,7 +25,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-fun ArtistCard(
+internal fun ArtistCard(
     artist: ArtistUiModel,
     onArtistClick: (ArtistUiModel) -> Unit = {}
 ) {
@@ -119,7 +119,7 @@ fun ArtistCard(
     }
 }
 
-class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistUiModel> {
+internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistUiModel> {
     override val values = sequenceOf(
         ArtistUiModel(
             id = "1",

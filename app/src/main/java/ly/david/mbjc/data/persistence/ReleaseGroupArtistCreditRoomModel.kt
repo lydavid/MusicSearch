@@ -28,7 +28,7 @@ import ly.david.mbjc.data.ReleaseGroup
         )
     ]
 )
-data class ReleaseGroupArtistCreditRoomModel(
+internal data class ReleaseGroupArtistCreditRoomModel(
     @ColumnInfo(name = "release_group_id")
     val releaseGroupId: String,
 

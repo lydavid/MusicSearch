@@ -2,7 +2,7 @@ package ly.david.mbjc.data
 
 import com.squareup.moshi.Json
 
-data class Work(
+internal data class Work(
     @Json(name = "id") val id: String,
     @Json(name = "title") override val name: String,
 

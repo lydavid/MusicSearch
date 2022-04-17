@@ -20,7 +20,7 @@ import ly.david.mbjc.data.persistence.ReleaseRoomModel
         )
     ]
 )
-data class MediumRoomModel(
+internal data class MediumRoomModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long = 0,
@@ -37,7 +37,7 @@ data class MediumRoomModel(
     override val format: String? = null,
 ) : Medium
 
-fun MediumMusicBrainzModel.toMediumRoomModel(releaseId: String) =
+internal fun MediumMusicBrainzModel.toMediumRoomModel(releaseId: String) =
     MediumRoomModel(
         releaseId = releaseId,
         position = position,

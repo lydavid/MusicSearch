@@ -3,7 +3,7 @@ package ly.david.mbjc.data.network
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.ArtistCredit
 
-data class ArtistCreditMusicBrainzModel(
+internal data class ArtistCreditMusicBrainzModel(
 
     @Json(name = "artist")
     val artist: ArtistMusicBrainzModel,

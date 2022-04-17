@@ -17,7 +17,7 @@ import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor(
+internal class HistoryViewModel @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel() {
 

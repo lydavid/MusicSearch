@@ -50,7 +50,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
-abstract class MusicBrainzRoomDatabase : RoomDatabase() {
+internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     @RenameColumn(tableName = "artists", fromColumnName = "country", toColumnName = "country_code")
     class RenameCountry : AutoMigrationSpec
@@ -77,7 +77,7 @@ private const val DATABASE_NAME = "mbjc.db"
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DatabaseModule {
+internal object DatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(
@@ -91,7 +91,7 @@ object DatabaseModule {
 
 @InstallIn(SingletonComponent::class)
 @Module
-object DatabaseDaoModule {
+internal object DatabaseDaoModule {
     @Provides
     fun provideArtistDao(db: MusicBrainzRoomDatabase): ArtistDao = db.getArtistDao()
 

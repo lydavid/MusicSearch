@@ -12,7 +12,7 @@ private const val YEAR_LAST_INDEX = 4
  * Converts a date string with format "2022-02-15" to year only string "2022".
  * Or empty string if incompatible.
  */
-fun String.getYear(): String =
+internal fun String.getYear(): String =
     if (length < YEAR_LAST_INDEX) {
         ""
     } else {
@@ -25,7 +25,7 @@ fun String.getYear(): String =
  * Ensure we use https because Coil doesn't accept it otherwise.
  * Cover Art Archive gives us urls with http.
  */
-fun String.useHttps(): String = replace("http://", "https://")
+internal fun String.useHttps(): String = replace("http://", "https://")
 
 private const val MUSIC_BRAINZ_DATE_FORMAT = "yyyy-MM-dd"
 private const val MUSIC_BRAINZ_YEAR_ONLY_FORMAT = "yyyy"
@@ -33,7 +33,7 @@ private const val MUSIC_BRAINZ_YEAR_ONLY_FORMAT = "yyyy"
 /**
  * Turns a MusicBrainz string date field to [Date] object.
  */
-fun String.toDate(): Date? {
+internal fun String.toDate(): Date? {
     return when {
         isEmpty() -> null
         else -> try {
@@ -46,13 +46,13 @@ fun String.toDate(): Date? {
     }
 }
 
-inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
+internal inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
     if (!this.isNullOrEmpty()) {
         block(this)
     }
 }
 
-inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): String {
+internal inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): String {
     return if (!this.isNullOrEmpty()) {
         block(this)
     } else {
@@ -68,7 +68,7 @@ inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): Str
  * or "XW" for global, or "XE" for EU.
  * @return Flag emoji of country code, or globe emoji for global.
  */
-fun String.toFlagEmoji(): String {
+internal fun String.toFlagEmoji(): String {
     if (this.length != 2) {
         return this
     }

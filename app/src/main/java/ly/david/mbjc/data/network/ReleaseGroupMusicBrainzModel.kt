@@ -5,7 +5,7 @@ import ly.david.mbjc.data.LabelInfo
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
 
-data class ReleaseGroupMusicBrainzModel(
+internal data class ReleaseGroupMusicBrainzModel(
 
     @Json(name = "id")
     override val id: String,
@@ -49,7 +49,7 @@ data class ReleaseGroupMusicBrainzModel(
 /**
  * Returns all artist credits for this release group for caching in database.
  */
-fun ReleaseGroupMusicBrainzModel.getRoomReleaseGroupArtistCredit(): List<ReleaseGroupArtistCreditRoomModel> =
+internal fun ReleaseGroupMusicBrainzModel.getRoomReleaseGroupArtistCredit(): List<ReleaseGroupArtistCreditRoomModel> =
     artistCredits?.mapIndexed { index, artistCredit ->
         ReleaseGroupArtistCreditRoomModel(
             releaseGroupId = id,

@@ -5,7 +5,7 @@ import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class NameWithDisambiguationTest {
+internal class NameWithDisambiguationTest {
 
     private val nameWithDisambiguation: NameWithDisambiguation = mockk()
 

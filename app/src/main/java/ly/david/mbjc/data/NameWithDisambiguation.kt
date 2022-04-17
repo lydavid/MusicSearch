@@ -5,7 +5,7 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 /**
  * Represents an entity that has a title/name, and disambiguation.
  */
-interface NameWithDisambiguation {
+internal interface NameWithDisambiguation {
     val name: String?
     val disambiguation: String?
 }
@@ -13,5 +13,5 @@ interface NameWithDisambiguation {
 /**
  * Get name, and optionally disambiguation if it's not null or empty.
  */
-fun NameWithDisambiguation.getNameWithDisambiguation(): String =
+internal fun NameWithDisambiguation.getNameWithDisambiguation(): String =
     name.orEmpty() + disambiguation.transformThisIfNotNullOrEmpty { " ($it)" }

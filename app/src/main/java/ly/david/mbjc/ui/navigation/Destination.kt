@@ -21,7 +21,7 @@ private const val RELEASE = "release"
  * @param route The underlying route that should be passed to navigation components.
  * @param musicBrainzResource The associated MusicBrainz resource, if any.
  */
-enum class Destination(val route: String, val musicBrainzResource: MusicBrainzResource?) {
+internal enum class Destination(val route: String, val musicBrainzResource: MusicBrainzResource?) {
     LOOKUP(TOP_LEVEL_LOOKUP, null),
 
     LOOKUP_ARTIST("$TOP_LEVEL_LOOKUP$DIVIDER$ARTIST", MusicBrainzResource.ARTIST),
@@ -34,12 +34,12 @@ enum class Destination(val route: String, val musicBrainzResource: MusicBrainzRe
 /**
  * Get the route before any [DIVIDER].
  */
-fun String.getTopLevelRoute(): String = this.split(DIVIDER).first()
+internal fun String.getTopLevelRoute(): String = this.split(DIVIDER).first()
 
 /**
  * If not acting on [Destination.route], consider [getTopLevelRoute] first.
  */
-fun String.getTopLevelDestination(): Destination = when(this) {
+internal fun String.getTopLevelDestination(): Destination = when(this) {
     TOP_LEVEL_HISTORY -> Destination.HISTORY
     else -> Destination.LOOKUP
 }

@@ -9,7 +9,7 @@ import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
 import ly.david.mbjc.data.persistence.ReleaseGroupTypeCount
 
 @Dao
-abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
+internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """

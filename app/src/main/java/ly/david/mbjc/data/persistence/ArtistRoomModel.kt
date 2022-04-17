@@ -11,7 +11,7 @@ import ly.david.mbjc.data.network.ArtistMusicBrainzModel
 @Entity(
     tableName = "artists"
 )
-data class ArtistRoomModel(
+internal data class ArtistRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
     override val id: String,
@@ -53,7 +53,7 @@ data class ArtistRoomModel(
 
 ) : RoomModel(), Artist
 
-fun ArtistMusicBrainzModel.toArtistRoomModel() =
+internal fun ArtistMusicBrainzModel.toArtistRoomModel() =
     ArtistRoomModel(
         id = id,
         name = name,

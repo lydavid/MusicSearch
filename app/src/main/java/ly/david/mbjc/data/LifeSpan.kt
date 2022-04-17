@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 /**
  * Used by both network and persistence models.
  */
-data class LifeSpan(
+internal data class LifeSpan(
     @ColumnInfo(name = "begin")
     @Json(name = "begin")
     val begin: String? = null,

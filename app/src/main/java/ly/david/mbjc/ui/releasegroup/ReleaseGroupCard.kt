@@ -23,7 +23,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 @Composable
-fun ReleaseGroupCard(
+internal fun ReleaseGroupCard(
     releaseGroup: ReleaseGroupUiModel,
     onClick: (ReleaseGroupUiModel) -> Unit = {}
 ) {

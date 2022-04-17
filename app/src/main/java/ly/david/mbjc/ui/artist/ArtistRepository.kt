@@ -12,7 +12,7 @@ import ly.david.mbjc.data.persistence.toArtistRoomModel
 import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
-class ArtistRepository @Inject constructor(
+internal class ArtistRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
     private val lookupHistoryDao: LookupHistoryDao

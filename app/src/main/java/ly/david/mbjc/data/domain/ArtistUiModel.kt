@@ -6,7 +6,7 @@ import ly.david.mbjc.data.network.ArtistMusicBrainzModel
 import ly.david.mbjc.data.persistence.ArtistRoomModel
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
-data class ArtistUiModel(
+internal data class ArtistUiModel(
     override val id: String,
     override val name: String,
     override val sortName: String,
@@ -17,7 +17,7 @@ data class ArtistUiModel(
     override val lifeSpan: LifeSpan? = null
 ) : UiModel(), Artist
 
-fun ArtistMusicBrainzModel.toArtistUiModel() =
+internal fun ArtistMusicBrainzModel.toArtistUiModel() =
     ArtistUiModel(
         id = id,
         name = name,
@@ -29,7 +29,7 @@ fun ArtistMusicBrainzModel.toArtistUiModel() =
         lifeSpan = lifeSpan
     )
 
-fun ArtistRoomModel.toArtistUiModel() =
+internal fun ArtistRoomModel.toArtistUiModel() =
     ArtistUiModel(
         id = id,
         name = name,

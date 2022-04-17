@@ -10,7 +10,7 @@ import retrofit2.http.Query
  * Gets information for a specific entity.
  * Can include additional information related to the entity. Max of 25.
  */
-interface Lookup {
+internal interface Lookup {
 
     @GET("artist/{artistId}")
     suspend fun lookupArtist(

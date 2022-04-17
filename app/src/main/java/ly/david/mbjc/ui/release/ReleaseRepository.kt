@@ -17,7 +17,7 @@ import ly.david.mbjc.data.persistence.toReleaseRoomModel
 import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
-class ReleaseRepository @Inject constructor(
+internal class ReleaseRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,

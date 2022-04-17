@@ -23,7 +23,7 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReleaseScreenScaffold(
+internal fun ReleaseScreenScaffold(
     releaseId: String,
     onBack: () -> Unit,
     onRecordingClick: (String) -> Unit = {}

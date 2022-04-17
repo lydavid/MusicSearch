@@ -15,7 +15,7 @@ import ly.david.mbjc.ui.release.ReleaseCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ReleasesByReleaseGroupScreen(
+internal fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
     releaseGroupId: String,
     searchText: String,

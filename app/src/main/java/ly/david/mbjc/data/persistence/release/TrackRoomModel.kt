@@ -20,7 +20,7 @@ import ly.david.mbjc.data.network.TrackMusicBrainzModel
         )
     ]
 )
-data class TrackRoomModel(
+internal data class TrackRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
     override val id: String,
@@ -38,7 +38,7 @@ data class TrackRoomModel(
     override val length: Int?
 ) : Track
 
-fun TrackMusicBrainzModel.toTrackRoomModel(mediumId: Long) =
+internal fun TrackMusicBrainzModel.toTrackRoomModel(mediumId: Long) =
     TrackRoomModel(
         id = id,
         mediumId = mediumId,

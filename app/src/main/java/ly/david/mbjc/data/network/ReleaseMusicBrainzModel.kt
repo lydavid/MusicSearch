@@ -8,7 +8,7 @@ import ly.david.mbjc.data.Release
 
 // browse inc: artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
 // lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
-data class ReleaseMusicBrainzModel(
+internal data class ReleaseMusicBrainzModel(
     @Json(name = "id") override val id: String,
     @Json(name = "title") override val name: String,
     @Json(name = "disambiguation") override val disambiguation: String = "",
@@ -40,7 +40,7 @@ data class ReleaseMusicBrainzModel(
     @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
 ) : MusicBrainzModel(), Release
 
-data class CoverArtArchive(
+internal data class CoverArtArchive(
     @Json(name = "darkened") val darkened: Boolean = false,
     @Json(name = "artwork") val artwork: Boolean = false,
     @Json(name = "back") val back: Boolean = false,
@@ -48,12 +48,12 @@ data class CoverArtArchive(
     @Json(name = "count") val count: Int = 0
 )
 
-data class TextRepresentation(
+internal data class TextRepresentation(
     @Json(name = "script") val script: String? = null,
     @Json(name = "language") val language: String? = null,
 )
 
-data class ReleaseEvent(
+internal data class ReleaseEvent(
     @Json(name = "date") val date: String? = null,
     @Json(name = "area") val area: Area? = null,
     @Json(name = "type") val type: String? = null,

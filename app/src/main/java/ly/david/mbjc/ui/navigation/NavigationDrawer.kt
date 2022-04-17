@@ -31,7 +31,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-fun NavigationDrawer(
+internal fun NavigationDrawer(
     selectedTopLevelDestination: Destination,
     closeDrawer: () -> Unit = {},
     navigateToTopLevelDestination: (Destination) -> Unit = {}
@@ -71,7 +71,7 @@ fun NavigationDrawer(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationDrawerItem(
+internal fun NavigationDrawerItem(
     icon: ImageVector,
     iconDescription: String,
     label: String,

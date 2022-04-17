@@ -4,7 +4,7 @@ import ly.david.mbjc.ui.common.getYear
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class GetYearTest {
+internal class GetYearTest {
 
     @Test
     fun `get year success`() {

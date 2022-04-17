@@ -45,7 +45,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  * @param modifier For lazy column containing [content].
  */
 @Composable
-fun <T : Any> PagingLoadingAndErrorHandler(
+internal fun <T : Any> PagingLoadingAndErrorHandler(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
     lazyListState: LazyListState = rememberLazyListState(),

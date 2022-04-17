@@ -3,7 +3,7 @@ package ly.david.mbjc.data
 /**
  * Defines common properties between domain, network and persistence model.
  */
-interface ReleaseGroup : NameWithDisambiguation, ReleaseGroupTypes {
+internal interface ReleaseGroup : NameWithDisambiguation, ReleaseGroupTypes {
 
     val id: String
     override val name: String

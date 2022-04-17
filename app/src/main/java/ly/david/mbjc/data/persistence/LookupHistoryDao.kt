@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import java.util.Date
 
 @Dao
-abstract class LookupHistoryDao : BaseDao<LookupHistory> {
+internal abstract class LookupHistoryDao : BaseDao<LookupHistory> {
 
     @Transaction
     @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")

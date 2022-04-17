@@ -7,7 +7,7 @@ import ly.david.mbjc.data.Track
 /**
  * A [Track] in [MediumMusicBrainzModel].
  */
-data class TrackMusicBrainzModel(
+internal data class TrackMusicBrainzModel(
     @Json(name = "id") override val id: String,
     @Json(name = "position") override val position: Int,
     @Json(name = "number") override val number: String, // Usually a string of `position`, but could be things like `A1`

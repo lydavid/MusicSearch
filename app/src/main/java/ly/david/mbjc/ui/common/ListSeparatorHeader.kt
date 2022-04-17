@@ -14,7 +14,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubBackgroundColor
 
 @Composable
-fun ListSeparatorHeader(text: String) {
+internal fun ListSeparatorHeader(text: String) {
     Surface(color = getSubBackgroundColor()) {
         Text(
             text = text,

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-fun FooterLoadingIndicator() {
+internal fun FooterLoadingIndicator() {
     Row(
         modifier = Modifier
             .fillMaxWidth()

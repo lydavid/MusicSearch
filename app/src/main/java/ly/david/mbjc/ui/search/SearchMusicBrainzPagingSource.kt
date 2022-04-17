@@ -13,7 +13,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.STARTING_OFFSET
 import retrofit2.HttpException
 
-class SearchMusicBrainzPagingSource(
+internal class SearchMusicBrainzPagingSource(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val resource: MusicBrainzResource,
     private val queryString: String,

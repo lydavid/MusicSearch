@@ -10,7 +10,7 @@ import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
     tableName = "release_groups",
 //    foreignKeys = []
 )
-data class ReleaseGroupRoomModel(
+internal data class ReleaseGroupRoomModel(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
@@ -59,7 +59,7 @@ data class ReleaseGroupRoomModel(
 //)
 
 // TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
-fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
+internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
     id = id,
     name = name,
     firstReleaseDate = firstReleaseDate,

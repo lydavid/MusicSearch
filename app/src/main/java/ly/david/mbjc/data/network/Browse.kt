@@ -11,7 +11,7 @@ import retrofit2.http.Query
  * Get entities directly linked to another entity. Such as all release groups by an artist.
  * This is the only type of request with pagination.
  */
-interface Browse {
+internal interface Browse {
 
     @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
@@ -44,24 +44,24 @@ interface Browse {
 /**
  * Generic response fields from a Browse request.
  */
-interface Browsable {
+internal interface Browsable {
     val count: Int
     val offset: Int
 }
 
-data class BrowseReleaseGroupsResponse(
+internal data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") override val count: Int,
     @Json(name = "release-group-offset") override val offset: Int,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
 ): Browsable
 
-data class BrowseReleasesResponse(
+internal data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,
     @Json(name = "release-offset") override val offset: Int,
     @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
 ): Browsable
 
-data class BrowseRecordingsResponse(
+internal data class BrowseRecordingsResponse(
     @Json(name = "recordings-count") val recordingCount: Int,
     @Json(name = "recordings-offset") val recordingOffset: Int,
     @Json(name = "recordings") val recordings: List<Recording>

@@ -18,7 +18,7 @@ import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.persistence.ReleaseGroupTypeCount
 
 @Composable
-fun ArtistStatsScreen(
+internal fun ArtistStatsScreen(
     artistId: String,
     viewModel: ArtistStatsViewModel = hiltViewModel()
 ) {

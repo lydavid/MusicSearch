@@ -3,7 +3,7 @@ package ly.david.mbjc.data
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.network.ArtistCreditMusicBrainzModel
 
-data class Recording(
+internal data class Recording(
     @Json(name = "id") val id: String,
     @Json(name = "title") override val name: String,
     @Json(name = "first-release-date") val date: String? = null,

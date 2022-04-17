@@ -10,7 +10,7 @@ import ly.david.mbjc.data.network.TestMusicBrainzApiService
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class SearchMusicBrainzPagingSourceTest {
+internal class SearchMusicBrainzPagingSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test

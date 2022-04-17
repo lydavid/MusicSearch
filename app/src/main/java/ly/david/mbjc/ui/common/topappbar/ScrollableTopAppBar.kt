@@ -36,12 +36,12 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 private const val DELAY_LOADING_MS = 300L
 
-interface OverflowMenuScope {
+internal interface OverflowMenuScope {
     fun closeMenu()
 }
 
 @Composable
-fun ScrollableTopAppBar(
+internal fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
     title: String,

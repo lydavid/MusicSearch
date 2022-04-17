@@ -31,7 +31,7 @@ private enum class ReleaseGroupTab(val title: String) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReleaseGroupScreenScaffold(
+internal fun ReleaseGroupScreenScaffold(
     releaseGroupId: String,
     onReleaseClick: (String) -> Unit = {},
     onBack: () -> Unit

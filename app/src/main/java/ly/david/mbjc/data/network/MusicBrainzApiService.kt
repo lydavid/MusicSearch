@@ -14,12 +14,12 @@ private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 /**
  * Contract for MusicBrainz API.
  */
-interface MusicBrainzApiService : Search, Browse, Lookup
+internal interface MusicBrainzApiService : Search, Browse, Lookup
 
 /**
  * Implementation of MusicBrainz API.
  */
-interface MusicBrainzApiServiceImpl : MusicBrainzApiService {
+internal interface MusicBrainzApiServiceImpl : MusicBrainzApiService {
     companion object {
         private val client = OkHttpClient().newBuilder()
             .addInterceptor(NetworkUtils.interceptor)
@@ -40,7 +40,7 @@ interface MusicBrainzApiServiceImpl : MusicBrainzApiService {
 
 @InstallIn(SingletonComponent::class)
 @Module
-object MusicBrainzApiModule {
+internal object MusicBrainzApiModule {
     @Singleton
     @Provides
     fun provideMusicBrainzApi(): MusicBrainzApiService = MusicBrainzApiServiceImpl.create()

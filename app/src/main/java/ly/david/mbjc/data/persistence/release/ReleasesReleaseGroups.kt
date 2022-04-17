@@ -6,13 +6,13 @@ import androidx.room.Entity
 import ly.david.mbjc.data.persistence.BaseDao
 
 @Dao
-abstract class ReleasesReleaseGroupsDao : BaseDao<ReleasesReleaseGroups>
+internal abstract class ReleasesReleaseGroupsDao : BaseDao<ReleasesReleaseGroups>
 
 @Entity(
     tableName = "releases_release_groups",
     primaryKeys = ["release_id", "release_group_id"]
 )
-data class ReleasesReleaseGroups(
+internal data class ReleasesReleaseGroups(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
 
