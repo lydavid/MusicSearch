@@ -1,0 +1,15 @@
+package ly.david.mbjc.data.persistence.recording
+
+import androidx.room.Dao
+import androidx.room.Query
+import ly.david.mbjc.data.persistence.BaseDao
+import ly.david.mbjc.data.persistence.RecordingRoomModel
+
+@Dao
+internal abstract class RecordingDao : BaseDao<RecordingRoomModel> {
+
+    // TODO: get recording with all relationships
+
+    @Query("SELECT * FROM recordings WHERE id = :recordingId")
+    abstract suspend fun getRecording(recordingId: String): RecordingRoomModel?
+}

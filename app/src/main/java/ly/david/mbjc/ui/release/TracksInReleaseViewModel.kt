@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.release
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -55,7 +54,6 @@ internal class TracksInReleaseViewModel @Inject constructor(
                     //  before converting it to uitrack...
                     if (after?.position == 1) {
                         val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
-                        Log.d("Remove This", "$medium: ")
                         ListSeparator(
                             text = "${medium.format.orEmpty()} ${medium.position}" +
                                 medium.title.transformThisIfNotNullOrEmpty { " ($it)" }

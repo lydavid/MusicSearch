@@ -14,6 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import ly.david.mbjc.data.persistence.recording.RecordingDao
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
@@ -24,11 +25,11 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 7,
+    version = 9,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
-        MediumRoomModel::class, TrackRoomModel::class,
+        MediumRoomModel::class, TrackRoomModel::class, RecordingRoomModel::class,
 
         // Full-Text Search (FTS) tables
 //        ReleaseGroupFts::class,
@@ -47,6 +48,8 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 4, to = 5, spec = MusicBrainzRoomDatabase.RenameCountry::class),
         AutoMigration(from = 5, to = 6, spec = MusicBrainzRoomDatabase.RenameReleasesCountryToCountryCode::class),
         AutoMigration(from = 6, to = 7),
+        AutoMigration(from = 7, to = 8),
+        AutoMigration(from = 8, to = 9),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -59,16 +62,13 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     class RenameReleasesCountryToCountryCode : AutoMigrationSpec
 
     abstract fun getArtistDao(): ArtistDao
-
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
-
     abstract fun getReleaseGroupDao(): ReleaseGroupDao
-
     abstract fun getReleasesReleaseGroupsDao(): ReleasesReleaseGroupsDao
-
     abstract fun getReleaseDao(): ReleaseDao
     abstract fun getMediumDao(): MediumDao
     abstract fun getTrackDao(): TrackDao
+    abstract fun getRecordingDao(): RecordingDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
@@ -112,6 +112,9 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideTrackDao(db: MusicBrainzRoomDatabase) = db.getTrackDao()
+
+    @Provides
+    fun provideRecordingDao(db: MusicBrainzRoomDatabase) = db.getRecordingDao()
 
     @Provides
     fun provideLookupHistoryDao(db: MusicBrainzRoomDatabase) = db.getLookupHistoryDao()

@@ -1,7 +1,6 @@
 package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
-import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.Track
 
 /**
@@ -15,6 +14,6 @@ internal data class TrackMusicBrainzModel(
     @Json(name = "length") override val length: Int? = null,
 
     @Json(name = "artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
-    @Json(name = "recording") val recording: Recording,
+    @Json(name = "recording") val recording: RecordingMusicBrainzModel,
 //    @Json(name = "relations") val relations: List<Relation>? = null,
 ) : Track

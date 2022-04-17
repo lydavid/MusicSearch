@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import ly.david.mbjc.data.ArtistCredit
-import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.ReleaseGroup
+import ly.david.mbjc.data.network.RecordingMusicBrainzModel
 
 /**
  * An artist's credit for a [ReleaseGroup].
@@ -13,7 +13,7 @@ import ly.david.mbjc.data.ReleaseGroup
  *
  * An [ArtistCredit] for a [ReleaseGroup] should map to this.
  *
- * Remember [ArtistCredit] can exist for other entities like [Recording]. That will have its own table.
+ * Remember [ArtistCredit] can exist for other entities like [RecordingMusicBrainzModel]. That will have its own table.
  */
 @Entity(
     tableName = "release_groups_artists",

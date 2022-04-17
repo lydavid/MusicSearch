@@ -13,6 +13,7 @@ private const val DIVIDER = "/"
 private const val ARTIST = "artist"
 private const val RELEASE_GROUP = "release-group"
 private const val RELEASE = "release"
+private const val RECORDING = "recording"
 
 /**
  * A navigation destination in the app.
@@ -27,6 +28,7 @@ internal enum class Destination(val route: String, val musicBrainzResource: Musi
     LOOKUP_ARTIST("$TOP_LEVEL_LOOKUP$DIVIDER$ARTIST", MusicBrainzResource.ARTIST),
     LOOKUP_RELEASE_GROUP("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE_GROUP", MusicBrainzResource.RELEASE_GROUP),
     LOOKUP_RELEASE("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE", MusicBrainzResource.RELEASE),
+    LOOKUP_RECORDING("$TOP_LEVEL_LOOKUP$DIVIDER$RECORDING", MusicBrainzResource.RECORDING),
 
     HISTORY(TOP_LEVEL_HISTORY, null)
 }

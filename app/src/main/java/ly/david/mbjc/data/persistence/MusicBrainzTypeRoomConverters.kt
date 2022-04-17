@@ -2,6 +2,7 @@ package ly.david.mbjc.data.persistence
 
 import androidx.room.TypeConverter
 import java.util.Date
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.navigation.Destination
 
 // Just need to make sure possible values cannot include this delimiter
@@ -26,6 +27,13 @@ internal class MusicBrainzRoomTypeConverters {
 
     @TypeConverter
     fun fromDestination(destination: Destination?): String? = destination?.route
+
+    @TypeConverter
+    fun toResource(string: String?): MusicBrainzResource? =
+        MusicBrainzResource.values().firstOrNull { it.resourceName == string }
+
+    @TypeConverter
+    fun fromResource(resource: MusicBrainzResource?): String? = resource?.resourceName
 
     @TypeConverter
     fun toDate(dateLong: Long): Date = Date(dateLong)

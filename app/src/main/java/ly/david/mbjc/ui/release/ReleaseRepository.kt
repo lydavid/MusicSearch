@@ -26,7 +26,6 @@ internal class ReleaseRepository @Inject constructor(
 ) {
     private var release: ReleaseUiModel? = null
 
-    // We need UiReleaseGroup so that we have artist credits
     suspend fun lookupRelease(releaseId: String): Release =
         release ?: run {
 

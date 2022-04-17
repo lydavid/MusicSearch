@@ -163,9 +163,7 @@ private fun TrackCard(
 
     // TODO: constraint
     ClickableListItem(
-        onClick = {
-//            onRecordingClick(musicBrainzTrack.recording.id)
-        },
+        onClick = { onRecordingClick(track.recordingId) },
     ) {
         Row(
             modifier = Modifier.padding(vertical = 16.dp),
@@ -232,9 +230,11 @@ private val testTrack = TrackUiModel(
 //            joinPhrase = "",
 //            name = "name on track"
 //        )
-//    )
+//    ),
+    recordingId = "r1"
 )
 
+// TODO: broken
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

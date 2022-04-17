@@ -19,11 +19,11 @@ import ly.david.mbjc.data.persistence.RoomModel
  *  Expects back the number of returned resources.
  */
 @OptIn(ExperimentalPagingApi::class)
-internal class RoomDataRemoteMediator<RD : RoomModel>(
+internal class RoomDataRemoteMediator<RM : RoomModel>(
     private val getRemoteResourceCount: suspend () -> Int?,
     private val getLocalResourceCount: suspend () -> Int,
     private val browseResource: suspend (offset: Int) -> Int
-) : RemoteMediator<Int, RD>() {
+) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
         return try {
@@ -39,7 +39,7 @@ internal class RoomDataRemoteMediator<RD : RoomModel>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RD>
+        state: PagingState<Int, RM>
     ): MediatorResult {
 
         return try {

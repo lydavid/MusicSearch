@@ -12,9 +12,12 @@ import androidx.navigation.navDeepLink
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
+import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScreenScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
+
+private const val RECORDING_ID = "recordingId"
 
 @Composable
 internal fun NavigationGraph(
@@ -25,6 +28,7 @@ internal fun NavigationGraph(
     val artistDeeplink = stringResource(id = R.string.deeplink_artist)
     val releaseGroupDeeplink = stringResource(id = R.string.deeplink_release_group)
     val releaseDeeplink = stringResource(id = R.string.deeplink_release)
+    val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
 
     NavHost(
         navController = navController,
@@ -50,11 +54,18 @@ internal fun NavigationGraph(
             }
         }
 
+        val onRecordingClick: (String) -> Unit = { recordingId ->
+            navController.navigate("${Destination.LOOKUP_RECORDING.route}/$recordingId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
                 Destination.LOOKUP_RELEASE -> onReleaseClick(id)
+                Destination.LOOKUP_RECORDING -> onRecordingClick(id)
                 else -> {
                     // Not supported.
                 }
@@ -128,9 +139,30 @@ internal fun NavigationGraph(
             val releaseId = entry.arguments?.getString("releaseId") ?: return@composable
             ReleaseScreenScaffold(
                 releaseId = releaseId,
+                onBack = navController::navigateUp,
+                onRecordingClick = onRecordingClick
+            )
+        }
+
+        composable(
+            "${Destination.LOOKUP_RECORDING.route}/{$RECORDING_ID}",
+            arguments = listOf(
+                navArgument(RECORDING_ID) {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://$recordingDeeplink/{$RECORDING_ID}"
+                }
+            )
+        ) { entry ->
+            val recordingId = entry.arguments?.getString(RECORDING_ID) ?: return@composable
+            RecordingScaffold(
+                recordingId = recordingId,
                 onBack = navController::navigateUp
             ) {
-                Log.d("Remove This", "NavigationGraph: Clicked recording with id=${it}")
+                Log.d("Remove This", "NavigationGraph: Clicked something with id=${it}")
             }
         }
 

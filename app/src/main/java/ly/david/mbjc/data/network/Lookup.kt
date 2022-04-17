@@ -31,4 +31,10 @@ internal interface Lookup {
 //        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels+place-rels+label-rels"
         @Query("inc") include: String = "recordings"
     ): ReleaseMusicBrainzModel
+
+    @GET("recording/{recordingId}")
+    suspend fun lookupRecording(
+        @Path("recordingId") recordingId: String,
+        @Query("inc") include: String = "artist-rels+work-rels+label-rels" // TODO: add rest
+    ): RecordingMusicBrainzModel
 }

@@ -1,7 +1,6 @@
 package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
-import ly.david.mbjc.data.Recording
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -64,5 +63,5 @@ internal data class BrowseReleasesResponse(
 internal data class BrowseRecordingsResponse(
     @Json(name = "recordings-count") val recordingCount: Int,
     @Json(name = "recordings-offset") val recordingOffset: Int,
-    @Json(name = "recordings") val recordings: List<Recording>
+    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
 )

@@ -5,4 +5,5 @@
     <string name="deeplink_artist" translatable="false">artist</string>
     <string name="deeplink_release_group" translatable="false">release-group</string>
     <string name="deeplink_release" translatable="false">release</string>
+    <string name="deeplink_recording" translatable="false">recording</string>
 </resources>

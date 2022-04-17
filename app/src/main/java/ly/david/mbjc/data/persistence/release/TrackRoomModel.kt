@@ -35,7 +35,13 @@ internal data class TrackRoomModel(
     @ColumnInfo(name = "title")
     override val title: String,
     @ColumnInfo(name = "length")
-    override val length: Int?
+    override val length: Int?,
+
+    // TODO: when adding a new required field, need to specify defaultValue for migration
+    //  but now we would have to empty check this everywhere.
+    //  since we haven't released yet, let's just destructive migrate and get rid of this.
+    @ColumnInfo(name = "recording_id", defaultValue = "")
+    val recordingId: String,
 ) : Track
 
 internal fun TrackMusicBrainzModel.toTrackRoomModel(mediumId: Long) =
@@ -45,5 +51,6 @@ internal fun TrackMusicBrainzModel.toTrackRoomModel(mediumId: Long) =
         position = position,
         number = number,
         title = title,
-        length = length
+        length = length,
+        recordingId = recording.id
     )
