@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
 
-data class MusicBrainzArtist(
+data class ArtistMusicBrainzModel(
 
     @Json(name = "id")
     override val id: String,
@@ -35,4 +35,4 @@ data class MusicBrainzArtist(
     // for search responses only
 //    @Json(name = "score")
 //    val score: Int? = null,
-): Artist, MusicBrainzData()
+): Artist, MusicBrainzModel()

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
+import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
 
 @Entity(
     tableName = "release_groups",
@@ -59,7 +59,7 @@ data class ReleaseGroupRoomModel(
 //)
 
 // TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
-fun MusicBrainzReleaseGroup.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
+fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
     id = id,
     name = name,
     firstReleaseDate = firstReleaseDate,

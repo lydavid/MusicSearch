@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import ly.david.mbjc.data.Medium
 
 /**
- * A [Medium] in [MusicBrainzRelease].
+ * A [Medium] in [ReleaseMusicBrainzModel].
  */
-data class MusicBrainzMedium(
+data class MediumMusicBrainzModel(
     @Json(name = "position") override val position: Int,
     @Json(name = "title") override val title: String,
     @Json(name = "track-count") override val trackCount: Int,
@@ -14,7 +14,7 @@ data class MusicBrainzMedium(
 //    @Json(name = "format-id") val formatId: String? = null,
 //    @Json(name = "track-offset") val trackOffset: Int = 0, // currently doesn't seem like we need to use
 
-    @Json(name = "tracks") val tracks: List<MusicBrainzTrack>? = null,
+    @Json(name = "tracks") val tracks: List<TrackMusicBrainzModel>? = null,
 ) : Medium
 
 /**
@@ -24,7 +24,7 @@ data class MusicBrainzMedium(
  * * 170xCD
  * * 2×CD + Blu-ray
  */
-fun List<MusicBrainzMedium>?.getFormatsForDisplay(): String? {
+fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
 
     val hashMap = hashMapOf<String, Int>()
 
@@ -60,7 +60,7 @@ fun List<MusicBrainzMedium>?.getFormatsForDisplay(): String? {
  * * 23
  * * 15 + 8 + 24
  */
-fun List<MusicBrainzMedium>?.getTracksForDisplay(): String? {
+fun List<MediumMusicBrainzModel>?.getTracksForDisplay(): String? {
     val tracksForDisplay = this?.joinToString(" + ") {
         "${it.trackCount}"
     }

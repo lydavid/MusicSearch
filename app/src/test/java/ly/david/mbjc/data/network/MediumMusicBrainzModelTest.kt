@@ -5,21 +5,21 @@ import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class MusicBrainzMediumTest {
+class MediumMusicBrainzModelTest {
 
-    private var media: List<MusicBrainzMedium>? = null
+    private var media: List<MediumMusicBrainzModel>? = null
 
-    private val cd1: MusicBrainzMedium = mockk {
+    private val cd1: MediumMusicBrainzModel = mockk {
         every { format } returns "CD"
         every { trackCount } returns 15
     }
 
-    private val cd2: MusicBrainzMedium = mockk {
+    private val cd2: MediumMusicBrainzModel = mockk {
         every { format } returns "CD"
         every { trackCount } returns 8
     }
 
-    private val bluRay: MusicBrainzMedium = mockk {
+    private val bluRay: MediumMusicBrainzModel = mockk {
         every { format } returns "Blu-ray"
         every { trackCount } returns 24
     }

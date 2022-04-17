@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Medium
-import ly.david.mbjc.data.network.MusicBrainzMedium
+import ly.david.mbjc.data.network.MediumMusicBrainzModel
 import ly.david.mbjc.data.persistence.ReleaseRoomModel
 
 @Entity(
@@ -37,7 +37,7 @@ data class MediumRoomModel(
     override val format: String? = null,
 ) : Medium
 
-fun MusicBrainzMedium.toMediumRoomModel(releaseId: String) =
+fun MediumMusicBrainzModel.toMediumRoomModel(releaseId: String) =
     MediumRoomModel(
         releaseId = releaseId,
         position = position,

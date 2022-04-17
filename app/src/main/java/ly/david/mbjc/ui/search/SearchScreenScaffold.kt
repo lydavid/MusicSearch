@@ -25,7 +25,12 @@ internal fun SearchScreenScaffold(
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = { ScrollableTopAppBar(title = "Search Music Brainz", openDrawer = openDrawer) },
+        topBar = {
+            ScrollableTopAppBar(
+                title = "Search Music Brainz",
+                openDrawer = openDrawer
+            )
+        },
     ) {
         SearchMusicBrainzScreen(
             snackbarHostState = snackbarHostState,

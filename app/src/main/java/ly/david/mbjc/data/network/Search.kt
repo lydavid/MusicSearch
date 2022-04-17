@@ -27,11 +27,11 @@ interface Search {
 data class SearchArtistsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "artists") val artists: List<MusicBrainzArtist>
+    @Json(name = "artists") val artists: List<ArtistMusicBrainzModel>
 )
 
 data class SearchReleaseGroupsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<MusicBrainzReleaseGroup>
+    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
 )

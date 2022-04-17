@@ -17,15 +17,15 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toReleaseRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
@@ -95,7 +95,7 @@ class ReleasesByReleaseGroupViewModel @Inject constructor(
             releaseGroupDao.setReleaseCount(releaseGroupId, response.count)
         }
 
-        val musicBrainzReleases = response.musicBrainzReleases
+        val musicBrainzReleases = response.releases
         releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
         releasesReleaseGroupsDao.insertAll(
             musicBrainzReleases.map { release ->

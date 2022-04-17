@@ -8,7 +8,7 @@ import ly.david.mbjc.data.Release
 
 // browse inc: artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
 // lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
-data class MusicBrainzRelease(
+data class ReleaseMusicBrainzModel(
     @Json(name = "id") override val id: String,
     @Json(name = "title") override val name: String,
     @Json(name = "disambiguation") override val disambiguation: String = "",
@@ -31,14 +31,14 @@ data class MusicBrainzRelease(
     //   "relations": [],
 
     // inc=media
-    @Json(name = "media") val media: List<MusicBrainzMedium>? = null,
+    @Json(name = "media") val media: List<MediumMusicBrainzModel>? = null,
 
     // inc=artist-credits
-    @Json(name = "artist-credit") val artistCredits: List<MusicBrainzArtistCredit>? = null,
+    @Json(name = "artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
 
     // inc=label
     @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
-) : MusicBrainzData(), Release
+) : MusicBrainzModel(), Release
 
 data class CoverArtArchive(
     @Json(name = "darkened") val darkened: Boolean = false,

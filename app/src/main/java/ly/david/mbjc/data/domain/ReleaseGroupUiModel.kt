@@ -2,13 +2,13 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.getDisplayNames
-import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
+import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
 
 /**
  * Representation of a [ReleaseGroup] for our UI.
- * This can be mapped from [ReleaseGroupRoomModel] or [MusicBrainzReleaseGroup].
+ * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
  */
 data class ReleaseGroupUiModel(
     override val id: String,
@@ -23,7 +23,7 @@ data class ReleaseGroupUiModel(
     val artistCredits: String = ""
 ): UiModel(), ReleaseGroup
 
-fun MusicBrainzReleaseGroup.toReleaseGroupUiModel(): ReleaseGroupUiModel {
+fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,

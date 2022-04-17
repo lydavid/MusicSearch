@@ -6,7 +6,7 @@ class TestMusicBrainzApiService : MusicBrainzApiService {
             1,
             0,
             listOf(
-                MusicBrainzArtist(
+                ArtistMusicBrainzModel(
                     id = "1",
                     name = "artist name",
                     sortName = "sort name"
@@ -20,7 +20,7 @@ class TestMusicBrainzApiService : MusicBrainzApiService {
             1,
             0,
             listOf(
-                MusicBrainzReleaseGroup(
+                ReleaseGroupMusicBrainzModel(
                     id = "1",
                     name = "release group name",
                     firstReleaseDate = "2022-03-14"
@@ -54,15 +54,15 @@ class TestMusicBrainzApiService : MusicBrainzApiService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lookupArtist(artistId: String): MusicBrainzArtist {
+    override suspend fun lookupArtist(artistId: String): ArtistMusicBrainzModel {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): MusicBrainzReleaseGroup {
+    override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lookupRelease(releaseId: String, include: String): MusicBrainzRelease {
+    override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
         TODO("Not yet implemented")
     }
 }

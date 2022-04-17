@@ -16,13 +16,13 @@ interface Lookup {
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
 //        @Query("inc") include: String = "genres"
-    ): MusicBrainzArtist
+    ): ArtistMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
         @Query("inc") include: String = "artists" // "releases+artists+media"
-    ): MusicBrainzReleaseGroup
+    ): ReleaseGroupMusicBrainzModel
 
     // TODO: screen should have information similar to: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
     @GET("release/{releaseId}")
@@ -30,5 +30,5 @@ interface Lookup {
         @Path("releaseId") releaseId: String,
 //        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels+place-rels+label-rels"
         @Query("inc") include: String = "recordings"
-    ): MusicBrainzRelease
+    ): ReleaseMusicBrainzModel
 }

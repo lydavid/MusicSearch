@@ -3,10 +3,10 @@ package ly.david.mbjc.data.network
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.ArtistCredit
 
-data class MusicBrainzArtistCredit(
+data class ArtistCreditMusicBrainzModel(
 
     @Json(name = "artist")
-    val artist: MusicBrainzArtist,
+    val artist: ArtistMusicBrainzModel,
 
     @Json(name = "name")
     override val name: String,

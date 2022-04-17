@@ -5,7 +5,7 @@ import ly.david.mbjc.data.LabelInfo
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
 
-data class MusicBrainzReleaseGroup(
+data class ReleaseGroupMusicBrainzModel(
 
     @Json(name = "id")
     override val id: String,
@@ -30,7 +30,7 @@ data class MusicBrainzReleaseGroup(
 
     // Lookup: inc=artists; Browse: inc=artist-credits
     @Json(name = "artist-credit")
-    val artistCredits: List<MusicBrainzArtistCredit>? = null,
+    val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
 
     // inc=label
     @Json(name = "label-info")
@@ -38,18 +38,18 @@ data class MusicBrainzReleaseGroup(
 
     // inc=media
     @Json(name = "media")
-    val media: List<MusicBrainzMedium>? = null,
+    val media: List<MediumMusicBrainzModel>? = null,
 
     // lookup only, inc=releases
     @Json(name = "releases")
-    val musicBrainzReleases: List<MusicBrainzRelease>? = null,
-) : MusicBrainzData(), ReleaseGroup
+    val releases: List<ReleaseMusicBrainzModel>? = null,
+) : MusicBrainzModel(), ReleaseGroup
 
 // TODO: unit test
 /**
  * Returns all artist credits for this release group for caching in database.
  */
-fun MusicBrainzReleaseGroup.getRoomReleaseGroupArtistCredit(): List<ReleaseGroupArtistCreditRoomModel> =
+fun ReleaseGroupMusicBrainzModel.getRoomReleaseGroupArtistCredit(): List<ReleaseGroupArtistCreditRoomModel> =
     artistCredits?.mapIndexed { index, artistCredit ->
         ReleaseGroupArtistCreditRoomModel(
             releaseGroupId = id,

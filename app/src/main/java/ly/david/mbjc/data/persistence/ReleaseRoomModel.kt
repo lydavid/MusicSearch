@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.network.MusicBrainzRelease
+import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import ly.david.mbjc.data.network.getFormatsForDisplay
 import ly.david.mbjc.data.network.getTracksForDisplay
 
@@ -43,7 +43,7 @@ data class ReleaseRoomModel(
     val tracks: String?
 ) : RoomModel(), Release
 
-fun MusicBrainzRelease.toReleaseRoomModel() =
+fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
     ReleaseRoomModel(
         id = id,
         name = name,

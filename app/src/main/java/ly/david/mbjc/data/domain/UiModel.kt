@@ -1,9 +1,9 @@
 package ly.david.mbjc.data.domain
 
-import ly.david.mbjc.data.network.MusicBrainzArtist
-import ly.david.mbjc.data.network.MusicBrainzData
-import ly.david.mbjc.data.network.MusicBrainzRelease
-import ly.david.mbjc.data.network.MusicBrainzReleaseGroup
+import ly.david.mbjc.data.network.ArtistMusicBrainzModel
+import ly.david.mbjc.data.network.MusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 
 /**
  * Data that can be displayed in our app should extend this.
@@ -21,17 +21,17 @@ object EndOfList : UiModel()
 class ListSeparator(val text: String) : UiModel()
 
 /**
- * Converts a [MusicBrainzData] that we got from the network to its UI version for display.
+ * Converts a [MusicBrainzModel] that we got from the network to its UI version for display.
  *
- * We can map a [MusicBrainzData] to [UiModel] but not the other way around because there are [UiModel] such as
+ * We can map a [MusicBrainzModel] to [UiModel] but not the other way around because there are [UiModel] such as
  * [EndOfList] that do not have a 1-to-t mapping. We could still do it, but the result will be nullable.
  *
  * It seems like this needs to be in the same directory as [UiModel] or else it tells us to add an else branch.
  */
-fun MusicBrainzData.toUiModel(): UiModel {
+fun MusicBrainzModel.toUiModel(): UiModel {
     return when (this) {
-        is MusicBrainzArtist -> this.toArtistUiModel()
-        is MusicBrainzReleaseGroup -> this.toReleaseGroupUiModel()
-        is MusicBrainzRelease -> this.toReleaseUiModel()
+        is ArtistMusicBrainzModel -> this.toArtistUiModel()
+        is ReleaseGroupMusicBrainzModel -> this.toReleaseGroupUiModel()
+        is ReleaseMusicBrainzModel -> this.toReleaseUiModel()
     }
 }

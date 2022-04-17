@@ -25,7 +25,7 @@ class ArtistRepository @Inject constructor(
      * 2. Local database.
      * 3. MusicBrainz server.
      *
-     * Side-effect: Records a visit this this artist's page.
+     * Side-effect: Records a visit to this artist's page.
      */
     suspend fun lookupArtist(artistId: String): Artist =
         artist ?: run {

@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
-import ly.david.mbjc.data.network.MusicBrainzArtist
+import ly.david.mbjc.data.network.ArtistMusicBrainzModel
 
 @Entity(
     tableName = "artists"
@@ -53,7 +53,7 @@ data class ArtistRoomModel(
 
 ) : RoomModel(), Artist
 
-fun MusicBrainzArtist.toArtistRoomModel() =
+fun ArtistMusicBrainzModel.toArtistRoomModel() =
     ArtistRoomModel(
         id = id,
         name = name,

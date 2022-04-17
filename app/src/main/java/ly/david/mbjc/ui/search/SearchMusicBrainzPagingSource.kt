@@ -8,7 +8,7 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toUiModel
 import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.network.MusicBrainzData
+import ly.david.mbjc.data.network.MusicBrainzModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.STARTING_OFFSET
 import retrofit2.HttpException
@@ -65,7 +65,7 @@ class SearchMusicBrainzPagingSource(
 
     private data class QueryResults(
         val offset: Int,
-        val data: List<MusicBrainzData>
+        val data: List<MusicBrainzModel>
     )
 
     private suspend fun getQueryResults(

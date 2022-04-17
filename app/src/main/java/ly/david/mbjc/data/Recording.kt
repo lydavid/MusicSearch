@@ -1,7 +1,7 @@
 package ly.david.mbjc.data
 
 import com.squareup.moshi.Json
-import ly.david.mbjc.data.network.MusicBrainzArtistCredit
+import ly.david.mbjc.data.network.ArtistCreditMusicBrainzModel
 
 data class Recording(
     @Json(name = "id") val id: String,
@@ -10,5 +10,5 @@ data class Recording(
     @Json(name = "disambiguation") override val disambiguation: String = "",
     @Json(name = "length") val length: Int? = null,
     @Json(name = "video") val video: Boolean = false,
-    @Json(name = "artist-credit") val artistCredits: List<MusicBrainzArtistCredit>? = null,
+    @Json(name = "artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
 ): NameWithDisambiguation

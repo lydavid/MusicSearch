@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Track
-import ly.david.mbjc.data.network.MusicBrainzTrack
+import ly.david.mbjc.data.network.TrackMusicBrainzModel
 
 // TODO: check that deleting a release will delete all media and tracks
 @Entity(
@@ -38,7 +38,7 @@ data class TrackRoomModel(
     override val length: Int?
 ) : Track
 
-fun MusicBrainzTrack.toTrackRoomModel(mediumId: Long) =
+fun TrackMusicBrainzModel.toTrackRoomModel(mediumId: Long) =
     TrackRoomModel(
         id = id,
         mediumId = mediumId,

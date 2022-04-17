@@ -42,7 +42,7 @@ interface Browse {
 }
 
 /**
- * Generic response fields when from a Browse request.
+ * Generic response fields from a Browse request.
  */
 interface Browsable {
     val count: Int
@@ -52,13 +52,13 @@ interface Browsable {
 data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") override val count: Int,
     @Json(name = "release-group-offset") override val offset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<MusicBrainzReleaseGroup>
+    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
 ): Browsable
 
 data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,
     @Json(name = "release-offset") override val offset: Int,
-    @Json(name = "releases") val musicBrainzReleases: List<MusicBrainzRelease>
+    @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
 ): Browsable
 
 data class BrowseRecordingsResponse(

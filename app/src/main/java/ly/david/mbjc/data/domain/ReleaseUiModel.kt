@@ -1,7 +1,7 @@
 package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.network.MusicBrainzRelease
+import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import ly.david.mbjc.data.persistence.ReleaseRoomModel
 
 data class ReleaseUiModel(
@@ -23,7 +23,7 @@ data class ReleaseUiModel(
 
 ) : UiModel(), Release
 
-fun MusicBrainzRelease.toReleaseUiModel() =
+fun ReleaseMusicBrainzModel.toReleaseUiModel() =
     ReleaseUiModel(
         id = id,
         name = name,
