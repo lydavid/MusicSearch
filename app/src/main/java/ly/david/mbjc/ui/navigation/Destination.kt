@@ -33,6 +33,17 @@ internal enum class Destination(val route: String, val musicBrainzResource: Musi
     HISTORY(TOP_LEVEL_HISTORY, null)
 }
 
+internal fun MusicBrainzResource.toDestination() =
+    when (this) {
+        MusicBrainzResource.ARTIST -> Destination.LOOKUP_ARTIST
+        MusicBrainzResource.RELEASE_GROUP -> Destination.LOOKUP_RELEASE_GROUP
+        MusicBrainzResource.RELEASE -> Destination.LOOKUP_RELEASE
+        MusicBrainzResource.RECORDING -> Destination.LOOKUP_RECORDING
+
+        // TODO: create rest of destinations
+        else -> Destination.LOOKUP_ARTIST
+    }
+
 /**
  * Get the route before any [DIVIDER].
  */
@@ -41,7 +52,7 @@ internal fun String.getTopLevelRoute(): String = this.split(DIVIDER).first()
 /**
  * If not acting on [Destination.route], consider [getTopLevelRoute] first.
  */
-internal fun String.getTopLevelDestination(): Destination = when(this) {
+internal fun String.getTopLevelDestination(): Destination = when (this) {
     TOP_LEVEL_HISTORY -> Destination.HISTORY
     else -> Destination.LOOKUP
 }

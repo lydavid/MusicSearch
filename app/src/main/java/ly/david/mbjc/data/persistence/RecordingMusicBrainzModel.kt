@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Recording
-import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
 
 @Entity(tableName = "recordings")
@@ -39,17 +38,3 @@ internal fun RecordingMusicBrainzModel.toRecordingRoomModel() =
         length = length,
         video = video
     )
-
-@Entity(tableName = "relations")
-internal data class RelationRoomModel(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val id: Long = 0,
-
-    @ColumnInfo(name = "description")
-    val description: String,
-    @ColumnInfo(name = "resource")
-    val resource: MusicBrainzResource, // TODO: Destination (superset [soon TM])?
-    @ColumnInfo(name = "resource_id")
-    val resourceId: String,
-)
