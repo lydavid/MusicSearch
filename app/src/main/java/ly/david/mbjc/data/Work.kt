@@ -1,6 +1,7 @@
 package ly.david.mbjc.data
 
 import com.squareup.moshi.Json
+import ly.david.mbjc.data.network.RelationMusicBrainzModel
 
 internal data class Work(
     @Json(name = "id") val id: String,
@@ -14,5 +15,5 @@ internal data class Work(
     @Json(name = "language") val language: String? = null,
     @Json(name = "languages") val languages: List<String>? = null,
 
-    @Json(name = "relations") val relations: List<Relation>? = null,
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ): NameWithDisambiguation

@@ -6,17 +6,21 @@ import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
+import ly.david.mbjc.data.persistence.RelationDao
+import ly.david.mbjc.data.persistence.RelationRoomModel
 import ly.david.mbjc.data.persistence.recording.RecordingDao
+import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
+import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
 import ly.david.mbjc.data.persistence.toRecordingRoomModel
+import ly.david.mbjc.data.persistence.toRelationRoomModel
 import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 internal class RecordingRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-//    private val releaseDao: ReleaseDao,
-//    private val mediumDao: MediumDao,
-//    private val trackDao: TrackDao,
     private val recordingDao: RecordingDao,
+    private val recordingRelationDao: RecordingRelationDao,
+    private val relationDao: RelationDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
     private var recording: Recording? = null
@@ -25,8 +29,7 @@ internal class RecordingRepository @Inject constructor(
         recording ?: run {
 
             // Use cached model.
-            // TODO: if we previously store recordings, but not their relations, then need to make api call again
-            //  let's try to avoid that though
+            // TODO: if we haven't stored all relations, then make call again? Only for development
             val recordingRoomModel = recordingDao.getRecording(recordingId)
             if (recordingRoomModel != null) {
                 incrementOrInsertLookupHistory(recordingRoomModel)
@@ -36,12 +39,22 @@ internal class RecordingRepository @Inject constructor(
             val musicBrainzRecording = musicBrainzApiService.lookupRecording(recordingId)
             recordingDao.insert(musicBrainzRecording.toRecordingRoomModel())
 
-            // TODO: insert relations
-//            musicBrainzRecording.media?.forEach { medium ->
-//                val mediumId = mediumDao.insert(medium.toMediumRoomModel(musicBrainzRecording.id))
-//
-//                trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
-//            }
+            val relations = mutableListOf<RelationRoomModel>()
+            val recordingRelations = mutableListOf<RecordingRelationRoomModel>()
+            musicBrainzRecording.relations?.forEachIndexed { index, relationMusicBrainzModel ->
+                relationMusicBrainzModel.toRelationRoomModel()?.let { relationRoomModel ->
+                    relations.add(relationRoomModel)
+                    recordingRelations.add(
+                        RecordingRelationRoomModel(
+                            recordingId = recordingId,
+                            linkedResourceId = relationRoomModel.resourceId,
+                            order = index
+                        )
+                    )
+                }
+            }
+            relationDao.insertAllIgnoreDuplicates(relations)
+            recordingRelationDao.insertAll(recordingRelations)
 
             incrementOrInsertLookupHistory(musicBrainzRecording)
             musicBrainzRecording

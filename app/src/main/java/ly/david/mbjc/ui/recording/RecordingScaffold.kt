@@ -6,15 +6,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
@@ -60,25 +57,4 @@ internal fun RecordingScaffold(
             },
         )
     }
-}
-
-// TODO: unlike the screens before, the main screen just displays all the details/rels of this recording
-@Composable
-internal fun RecordingScreen(
-    modifier: Modifier = Modifier,
-    recordingId: String,
-    onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
-    viewModel: RecordingViewModel = hiltViewModel()
-) {
-
-    LaunchedEffect(key1 = recordingId) {
-        try {
-            onTitleUpdate(viewModel.lookupRecording(recordingId).getNameWithDisambiguation(), "[TODO]")
-        } catch (e: Exception) {
-            onTitleUpdate("[Recording lookup failed]", "[error]")
-        }
-    }
-    // TODO: lookup recording including rels
-
-    Text(text = "reco")
 }

@@ -15,6 +15,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.recording.RecordingDao
+import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
+import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
@@ -25,7 +27,7 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 9,
+    version = 10,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -36,6 +38,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
         // Relationship tables
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
+        RecordingRelationRoomModel::class, RelationRoomModel::class,
 
         // Additional features tables
         LookupHistory::class
@@ -50,6 +53,9 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 6, to = 7),
         AutoMigration(from = 7, to = 8),
         AutoMigration(from = 8, to = 9),
+        AutoMigration(from = 9, to = 10),
+//        AutoMigration(from = 9, to = 10),
+//        AutoMigration(from = 10, to = 11),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -61,6 +67,9 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     @RenameColumn(tableName = "releases", fromColumnName = "country", toColumnName = "country_code")
     class RenameReleasesCountryToCountryCode : AutoMigrationSpec
 
+
+    class E : AutoMigrationSpec
+
     abstract fun getArtistDao(): ArtistDao
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
     abstract fun getReleaseGroupDao(): ReleaseGroupDao
@@ -69,6 +78,8 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getMediumDao(): MediumDao
     abstract fun getTrackDao(): TrackDao
     abstract fun getRecordingDao(): RecordingDao
+    abstract fun getRecordingRelationDao(): RecordingRelationDao
+    abstract fun getRelationDao(): RelationDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
@@ -115,6 +126,12 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideRecordingDao(db: MusicBrainzRoomDatabase) = db.getRecordingDao()
+
+    @Provides
+    fun provideRecordingRelationDao(db: MusicBrainzRoomDatabase) = db.getRecordingRelationDao()
+
+    @Provides
+    fun provideRelationDao(db: MusicBrainzRoomDatabase) = db.getRelationDao()
 
     @Provides
     fun provideLookupHistoryDao(db: MusicBrainzRoomDatabase) = db.getLookupHistoryDao()
