@@ -27,6 +27,7 @@ import java.util.Locale
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.navigation.Destination
@@ -42,7 +43,8 @@ internal fun HistoryScreenScaffold(
 ) {
 
     var searchText by rememberSaveable { mutableStateOf("") }
-    val lazyPagingItems = viewModel.lookUpHistory.collectAsLazyPagingItems()
+    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.lookUpHistory)
+        .collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {

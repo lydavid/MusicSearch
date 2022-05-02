@@ -11,6 +11,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.release.ReleaseCard
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,7 +41,8 @@ internal fun ReleasesByReleaseGroupScreen(
 
     viewModel.updateQuery(query = searchText)
 
-    val lazyPagingItems: LazyPagingItems<ReleaseUiModel> = viewModel.pagedReleases.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<ReleaseUiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+        .collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
@@ -14,6 +13,7 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -44,7 +44,8 @@ internal fun ReleaseGroupsByArtistScreen(
     viewModel.updateQuery(query = searchText)
     viewModel.updateIsSorted(isSorted = isSorted)
 
-    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.pagedReleaseGroups.collectAsLazyPagingItems()
+    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
+        .collectAsLazyPagingItems()
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,

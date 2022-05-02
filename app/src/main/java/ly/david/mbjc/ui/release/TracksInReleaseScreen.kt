@@ -26,6 +26,7 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -73,7 +74,8 @@ internal fun TracksInReleaseScreen(
         }
     }
 
-    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.pagedTracks.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
+        .collectAsLazyPagingItems()
 
     // TODO: never see error, cause error would be from the above try-catch
     //  this paging source is local only

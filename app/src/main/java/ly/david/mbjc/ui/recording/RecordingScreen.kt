@@ -25,7 +25,7 @@ internal fun RecordingScreen(
         }
     }
 
-//    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.pagedTracks.collectAsLazyPagingItems()
+//    val lazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedTracks).collectAsLazyPagingItems()
 
     // TODO: display details of this recording
     //  cards: display all relations

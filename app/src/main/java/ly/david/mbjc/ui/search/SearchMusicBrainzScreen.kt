@@ -45,6 +45,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
@@ -56,7 +57,8 @@ internal fun SearchMusicBrainzScreen(
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<UiModel> = viewModel.searchResultsUiModel.collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
+        .collectAsLazyPagingItems()
 
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
