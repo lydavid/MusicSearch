@@ -12,11 +12,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.UiModel
@@ -51,7 +53,11 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val isSorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val paramState = combine(artistId, query, isSorted) { artistId, query, isSorted ->
         ViewModelState(artistId, query, isSorted)
-    }.distinctUntilChanged()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = ViewModelState()
+    )
 
     suspend fun lookupArtist(artistId: String) =
         artistRepository.lookupArtist(artistId)
