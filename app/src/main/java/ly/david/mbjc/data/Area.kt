@@ -15,5 +15,5 @@ import com.squareup.moshi.Json
 //},
 internal data class Area(
     @Json(name = "id") val id: String,
-    @Json(name = "iso-3166-1-codes") val isoCodes: List<String>,
+    @Json(name = "iso-3166-1-codes") val isoCodes: List<String>? = null,
 )

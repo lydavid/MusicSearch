@@ -1,15 +1,25 @@
 package ly.david.mbjc.ui.recording
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.mbjc.data.persistence.RelationDao
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
+import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class RecordingViewModel @Inject constructor(
     private val recordingRepository: RecordingRepository,
-    private val relationDao: RelationDao
+    private val recordingRelationDao: RecordingRelationDao
 ) : ViewModel() {
 
     private val recordingId: MutableStateFlow<String> = MutableStateFlow("")
@@ -18,32 +28,16 @@ internal class RecordingViewModel @Inject constructor(
         this.recordingId.value = it.id
     }
 
-//    @OptIn(ExperimentalCoroutinesApi::class)
-//    val pagedRelations: Flow<PagingData<UiModel>> =
-//        releaseId.flatMapLatest { releaseId ->
-//            Pager(
-//                config = MusicBrainzPagingConfig.pagingConfig,
-//                pagingSourceFactory = {
-//                    trackDao.getTracksInRelease(releaseId)
-//                }
-//            ).flow.map { pagingData ->
-//                pagingData.map { track ->
-//                    track.toTrackUiModel()
-//                }.insertSeparators { _: TrackUiModel?, after: TrackUiModel? ->
-//                    // TODO: if we want separators when we filter, then we should compare before/after medium id
-//                    //  before converting it to uitrack...
-//                    if (after?.position == 1) {
-//                        val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
-//                        ListSeparator(
-//                            text = "${medium.format.orEmpty()} ${medium.position}" +
-//                                medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
-//                        )
-//                    } else {
-//                        null
-//                    }
-//                }
-//            }
-//        }
-//            .distinctUntilChanged()
-//            .cachedIn(viewModelScope)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val pagedRelations: Flow<PagingData<RecordingRelationRoomModel>> =
+        recordingId.flatMapLatest { recordingId ->
+            Pager(
+                config = MusicBrainzPagingConfig.pagingConfig,
+                pagingSourceFactory = {
+                    recordingRelationDao.getRelationsForRecording(recordingId)
+                }
+            ).flow
+        }
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
 }

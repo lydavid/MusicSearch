@@ -38,7 +38,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
         // Relationship tables
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
-        RecordingRelationRoomModel::class, RelationRoomModel::class,
+        RecordingRelationRoomModel::class,
 
         // Additional features tables
         LookupHistory::class
@@ -54,8 +54,6 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 7, to = 8),
         AutoMigration(from = 8, to = 9),
         AutoMigration(from = 9, to = 10),
-//        AutoMigration(from = 9, to = 10),
-//        AutoMigration(from = 10, to = 11),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -79,7 +77,6 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getTrackDao(): TrackDao
     abstract fun getRecordingDao(): RecordingDao
     abstract fun getRecordingRelationDao(): RecordingRelationDao
-    abstract fun getRelationDao(): RelationDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
@@ -129,9 +126,6 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideRecordingRelationDao(db: MusicBrainzRoomDatabase) = db.getRecordingRelationDao()
-
-    @Provides
-    fun provideRelationDao(db: MusicBrainzRoomDatabase) = db.getRelationDao()
 
     @Provides
     fun provideLookupHistoryDao(db: MusicBrainzRoomDatabase) = db.getLookupHistoryDao()

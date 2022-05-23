@@ -1,8 +1,8 @@
 package ly.david.mbjc.ui.common.topappbar
 
+import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
@@ -33,8 +33,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
+import ly.david.mbjc.ui.theme.PreviewTheme
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun TopAppBarWithSearch(
     onBack: () -> Unit = {},
@@ -146,5 +147,16 @@ internal fun TopAppBarWithSearch(
             selectedTabIndex = selectedTabIndex,
             onSelectTabIndex = onSelectTabIndex
         )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun My() {
+    PreviewTheme {
+        Surface {
+            TopAppBarWithSearch(title = "Title")
+        }
     }
 }
