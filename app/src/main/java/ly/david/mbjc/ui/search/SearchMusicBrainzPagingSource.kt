@@ -87,9 +87,29 @@ internal class SearchMusicBrainzPagingSource(
                     queryReleaseGroups.releaseGroups
                 )
             }
-//            MusicBrainzResource.RELEASE -> {
-//
-//            }
+            MusicBrainzResource.RELEASE -> {
+                val queryReleases = musicBrainzApiService.queryReleases(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryReleases.offset,
+                    queryReleases.releases
+                )
+            }
+            MusicBrainzResource.RECORDING -> {
+                val queryRecordings = musicBrainzApiService.queryRecordings(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryRecordings.offset,
+                    queryRecordings.recordings
+                )
+            }
+            // TODO: support rest
             else -> {
                 // Artist; until we implement them all
                 val queryArtists = musicBrainzApiService.queryArtists(

@@ -29,9 +29,9 @@ internal data class MediumRoomModel(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
     @ColumnInfo(name = "position")
-    override val position: Int,
+    override val position: Int?,
     @ColumnInfo(name = "title")
-    override val title: String,
+    override val title: String?,
     @ColumnInfo(name = "track_count")
     override val trackCount: Int,
     @ColumnInfo(name = "format")

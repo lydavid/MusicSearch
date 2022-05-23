@@ -39,7 +39,9 @@ import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.EndOfList
+import ly.david.mbjc.data.domain.RecordingUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.ArtistCard
@@ -47,6 +49,8 @@ import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.recording.RecordingCard
+import ly.david.mbjc.ui.release.ReleaseCard
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
 @Composable
@@ -144,6 +148,16 @@ internal fun SearchMusicBrainzScreen(
                     // TODO: should see album type rather than year
                     ReleaseGroupCard(releaseGroup = uiModel) {
                         onItemClick(Destination.LOOKUP_RELEASE_GROUP, id)
+                    }
+                }
+                is ReleaseUiModel -> {
+                    ReleaseCard(releaseUiModel = uiModel) {
+                        onItemClick(Destination.LOOKUP_RELEASE, id)
+                    }
+                }
+                is RecordingUiModel -> {
+                    RecordingCard(recordingUiModel = uiModel) {
+                        onItemClick(Destination.LOOKUP_RECORDING, id)
                     }
                 }
                 is EndOfList -> {

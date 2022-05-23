@@ -12,7 +12,7 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.Destination
 
-// TODO: unlike the screens before, the main screen just displays all the details/rels of this recording
+// TODO: This can be generalized for Work relations too
 @Composable
 internal fun RecordingScreen(
     modifier: Modifier = Modifier,

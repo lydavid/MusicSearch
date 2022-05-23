@@ -2,7 +2,6 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
-import ly.david.mbjc.data.persistence.RecordingRoomModel
 
 internal data class RecordingUiModel(
     override val id: String,
@@ -14,11 +13,11 @@ internal data class RecordingUiModel(
 ) : UiModel(), Recording
 
 internal fun RecordingMusicBrainzModel.toRecordingUiModel() =
-    RecordingRoomModel(
+    RecordingUiModel(
         id = id,
         name = name,
         date = date,
         disambiguation = disambiguation,
         length = length,
-        video = video
+        video = video ?: false
     )

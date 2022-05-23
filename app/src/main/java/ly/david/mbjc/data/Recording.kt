@@ -9,5 +9,5 @@ internal interface Recording : NameWithDisambiguation {
     val date: String?
     override val disambiguation: String
     val length: Int?
-    val video: Boolean
+    val video: Boolean?
 }

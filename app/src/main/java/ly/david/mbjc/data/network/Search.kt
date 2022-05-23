@@ -22,6 +22,20 @@ internal interface Search {
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchReleaseGroupsResponse
+
+    @GET("release")
+    suspend fun queryReleases(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchReleasesResponse
+
+    @GET("recording")
+    suspend fun queryRecordings(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchRecordingsResponse
 }
 
 internal data class SearchArtistsResponse(
@@ -34,4 +48,16 @@ internal data class SearchReleaseGroupsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
+)
+
+internal data class SearchReleasesResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
+)
+
+internal data class SearchRecordingsResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
 )
