@@ -34,7 +34,10 @@ internal fun RecordingRelationCard(
                 style = TextStyles.getCardBodyTextStyle()
             )
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.padding(top = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
                 DestinationIcon(
                     destination = relation.destination,
@@ -50,6 +53,7 @@ internal fun RecordingRelationCard(
             val disambiguation = relation.disambiguation
             if (!disambiguation.isNullOrEmpty()) {
                 Text(
+                    modifier = Modifier.padding(top = 4.dp),
                     text = "($disambiguation)",
                     style = TextStyles.getCardBodyTextStyle(),
                     color = getSubTextColor()
@@ -59,6 +63,7 @@ internal fun RecordingRelationCard(
             val attributes = relation.attributes
             if (!attributes.isNullOrEmpty()) {
                 Text(
+                    modifier = Modifier.padding(top = 4.dp),
                     text = "($attributes)",
                     style = TextStyles.getCardBodyTextStyle(),
                 )

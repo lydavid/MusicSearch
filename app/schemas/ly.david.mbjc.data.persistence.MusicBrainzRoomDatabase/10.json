@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "9a7b4df678a87385e5f0b8b632a3bda1",
+    "identityHash": "f234626df06c3feb8d87d61f61a2a3bf",
     "entities": [
       {
         "tableName": "artists",
@@ -240,7 +240,7 @@
       },
       {
         "tableName": "media",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `release_id` TEXT NOT NULL, `position` INTEGER NOT NULL, `title` TEXT NOT NULL, `track_count` INTEGER NOT NULL, `format` TEXT, FOREIGN KEY(`release_id`) REFERENCES `releases`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `release_id` TEXT NOT NULL, `position` INTEGER, `title` TEXT, `track_count` INTEGER NOT NULL, `format` TEXT, FOREIGN KEY(`release_id`) REFERENCES `releases`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -258,13 +258,13 @@
             "fieldPath": "position",
             "columnName": "position",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "title",
             "columnName": "title",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "trackCount",
@@ -643,7 +643,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9a7b4df678a87385e5f0b8b632a3bda1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f234626df06c3feb8d87d61f61a2a3bf')"
     ]
   }
 }

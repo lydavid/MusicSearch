@@ -55,7 +55,8 @@ internal class TracksInReleaseViewModel @Inject constructor(
                     if (after?.position == 1) {
                         val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
                         ListSeparator(
-                            text = "${medium.format.orEmpty()} ${medium.position}" +
+                            text = medium.format.orEmpty() +
+                                "${medium.position ?: ""}" +
                                 medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
                         )
                     } else {

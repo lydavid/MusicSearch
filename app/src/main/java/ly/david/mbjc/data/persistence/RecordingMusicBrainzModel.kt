@@ -36,5 +36,5 @@ internal fun RecordingMusicBrainzModel.toRecordingRoomModel() =
         date = date,
         disambiguation = disambiguation,
         length = length,
-        video = video
+        video = video ?: false
     )
