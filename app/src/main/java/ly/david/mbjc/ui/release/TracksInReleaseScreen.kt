@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.release
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.Release
-import ly.david.mbjc.data.Work
+import ly.david.mbjc.data.WorkMusicBrainzModel
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
@@ -37,7 +36,6 @@ import ly.david.mbjc.ui.theme.TextStyles
  * Tracks are recordings that are part of a release. It includes reference to recording,
  * but some of its details might be different for a given release.
  */
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TracksInReleaseScreen(
     modifier: Modifier = Modifier,
@@ -69,7 +67,7 @@ internal fun TracksInReleaseScreen(
             // TODO: if not paging, we would just populate the lazy column here
             //  with all media, and all tracks
 
-        } catch (e: Exception) {
+        } catch (ex: Exception) {
             onTitleUpdate("[Release lookup failed]", "[error]")
         }
     }
@@ -159,7 +157,7 @@ private fun TrackCard(
     track: TrackUiModel,
     showTrackArtists: Boolean = false,
     onRecordingClick: (String) -> Unit = {},
-    onWorkClick: (Work) -> Unit = {},
+    onWorkClick: (WorkMusicBrainzModel) -> Unit = {},
     // no onTrackClick needed since Tracks exists in the context of a Release
 ) {
 

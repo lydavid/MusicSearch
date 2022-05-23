@@ -3,7 +3,7 @@ package ly.david.mbjc.data
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.network.RelationMusicBrainzModel
 
-internal data class Work(
+internal data class WorkMusicBrainzModel(
     @Json(name = "id") val id: String,
     @Json(name = "title") override val name: String,
 

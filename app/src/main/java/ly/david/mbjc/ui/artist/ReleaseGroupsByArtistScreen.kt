@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.artist
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,7 +15,6 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ReleaseGroupsByArtistScreen(
     modifier: Modifier,
@@ -34,7 +32,7 @@ internal fun ReleaseGroupsByArtistScreen(
         onTitleUpdate(
             try {
                 viewModel.lookupArtist(artistId).getNameWithDisambiguation()
-            } catch (e: Exception) {
+            } catch (ex: Exception) {
                 // Technically, we could fallback to artist name from card in previous screen.
                 "[Artist lookup failed]"
             }

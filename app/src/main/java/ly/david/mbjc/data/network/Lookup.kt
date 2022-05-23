@@ -32,19 +32,11 @@ internal interface Lookup {
         @Query("inc") include: String = "recordings"
     ): ReleaseMusicBrainzModel
 
-    // TODO: Add these
-    //  - area-rels
-    //  - event-rels
-    //  - instrument-rels
-    //  - recording-rels
-    //  - release-rels
-    //  - release-group-rels
-    //  - series-rels
-    //  - url-rels
     @GET("recording/{recordingId}")
     suspend fun lookupRecording(
         @Path("recordingId") recordingId: String,
-//        @Query("inc") include: String = "artist-rels+work-rels+label-rels+place-rels"
-        @Query("inc") include: String = "artist-rels+work-rels+label-rels+place-rels+area-rels+event-rels+instrument-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels"
+        @Query("inc") include: String = "artist-rels+work-rels+label-rels+place-rels+area-rels+event-rels" +
+            "+instrument-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels" +
+            "+artist-credits"
     ): RecordingMusicBrainzModel
 }

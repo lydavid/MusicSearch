@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "b736b15c486d8761ce1a7663d151d0bc",
+    "identityHash": "9a7b4df678a87385e5f0b8b632a3bda1",
     "entities": [
       {
         "tableName": "artists",
@@ -505,7 +505,7 @@
       },
       {
         "tableName": "recordings_relations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recording_id` TEXT NOT NULL, `linked_resource_id` TEXT NOT NULL, `order` INTEGER NOT NULL, PRIMARY KEY(`recording_id`, `linked_resource_id`, `order`), FOREIGN KEY(`recording_id`) REFERENCES `recordings`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recording_id` TEXT NOT NULL, `linked_resource_id` TEXT NOT NULL, `order` INTEGER NOT NULL, `label` TEXT NOT NULL, `name` TEXT NOT NULL, `disambiguation` TEXT, `attributes` TEXT, `destination` TEXT NOT NULL, PRIMARY KEY(`recording_id`, `linked_resource_id`, `order`), FOREIGN KEY(`recording_id`) REFERENCES `recordings`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "recordingId",
@@ -523,6 +523,36 @@
             "fieldPath": "order",
             "columnName": "order",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "disambiguation",
+            "columnName": "disambiguation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "attributes",
+            "columnName": "attributes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "destination",
+            "columnName": "destination",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -548,44 +578,6 @@
             ]
           }
         ]
-      },
-      {
-        "tableName": "relations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `description` TEXT NOT NULL, `destination` TEXT NOT NULL, `resource_id` TEXT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "description",
-            "columnName": "description",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "destination",
-            "columnName": "destination",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "resourceId",
-            "columnName": "resource_id",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [],
-        "foreignKeys": []
       },
       {
         "tableName": "lookup_history",
@@ -651,7 +643,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b736b15c486d8761ce1a7663d151d0bc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9a7b4df678a87385e5f0b8b632a3bda1')"
     ]
   }
 }

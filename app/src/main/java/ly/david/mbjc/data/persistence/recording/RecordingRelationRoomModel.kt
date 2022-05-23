@@ -3,7 +3,11 @@ package ly.david.mbjc.data.persistence.recording
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.persistence.RecordingRoomModel
+import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.navigation.toDestination
 
 // TODO: instead of this, could we just have a linking table from Recording to [Artist, Label, Place, Work, etc] ?
 //  maybe try it eventually. For now, let's get something working first.
@@ -37,5 +41,107 @@ internal data class RecordingRelationRoomModel(
     //  for now, we'll use order which is the order we insert it. But we probably won't display it in this order.
     //  This is not necessarily the order it's displayed on MB website.
     @ColumnInfo(name = "order")
-    val order: Int
+    val order: Int,
+
+    /**
+     * [RelationMusicBrainzModel.type].
+     */
+    @ColumnInfo(name = "label")
+    val label: String,
+
+    @ColumnInfo(name = "name")
+    val name: String,
+
+    @ColumnInfo(name = "disambiguation")
+    val disambiguation: String? = null,
+
+    /**
+     * Combined [RelationMusicBrainzModel.attributes].
+     */
+    @ColumnInfo(name = "attributes")
+    val attributes: String? = null,
+
+    /**
+     * A soon-to-be superset of [MusicBrainzResource].
+     * Use [toDestination] to get corresponding destination for a MB resource.
+     */
+    @ColumnInfo(name = "destination")
+    val destination: Destination,
 )
+
+/**
+ * We cannot guarantee that a [RecordingRelationRoomModel] will be created in the scenario that target-type points to a resource
+ * but that object is null. It's possible that this is never the case, but our models are currently structured such
+ * that any of them are nullable.
+ */
+internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
+    recordingId: String,
+    order: Int,
+): RecordingRelationRoomModel? {
+
+    val resourceId: String
+    val name: String
+    val disambiguation: String?
+    when (targetType) {
+        MusicBrainzResource.ARTIST -> {
+            if (artist == null) return null
+            resourceId = artist.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                artist.name
+            } else {
+                targetCredit
+            }
+            disambiguation = artist.disambiguation
+        }
+        MusicBrainzResource.LABEL -> {
+            if (label == null) return null
+            resourceId = label.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                label.name.orEmpty()
+            } else {
+                targetCredit
+            }
+            disambiguation = label.disambiguation
+        }
+        MusicBrainzResource.PLACE -> {
+            if (place == null) return null
+            resourceId = place.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                place.name.orEmpty()
+            } else {
+                targetCredit
+            }
+            disambiguation = place.disambiguation
+        }
+        MusicBrainzResource.WORK -> {
+            if (work == null) return null
+            resourceId = work.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                work.name
+            } else {
+                targetCredit
+            }
+            disambiguation = work.disambiguation
+        }
+
+        // TODO: handle rest
+        else -> {
+            return null
+        }
+    }
+
+    return RecordingRelationRoomModel(
+        recordingId = recordingId,
+        linkedResourceId = resourceId,
+        order = order,
+        label = type,
+        name = name,
+        disambiguation = disambiguation,
+
+        // TODO: if an attribute is not part of a list of attributes, then write it [eg. strings]
+        //  otherwise, write it + ": " + attribute-value [eg. task]
+        //  separate all with ","
+        attributes = attributes?.joinToString(",").orEmpty(), // TODO:
+        destination = targetType.toDestination()
+    )
+}
