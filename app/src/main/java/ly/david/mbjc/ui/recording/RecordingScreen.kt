@@ -10,6 +10,7 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.navigation.Destination
 
 // TODO: unlike the screens before, the main screen just displays all the details/rels of this recording
 @Composable
@@ -17,6 +18,7 @@ internal fun RecordingScreen(
     modifier: Modifier = Modifier,
     recordingId: String,
     onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     viewModel: RecordingViewModel = hiltViewModel()
 ) {
 
@@ -45,10 +47,8 @@ internal fun RecordingScreen(
         
         if (recordingRelation == null) return@PagingLoadingAndErrorHandler
         RecordingRelationCard(
-            label = recordingRelation.label,
-            name = recordingRelation.name,
-            disambiguation = recordingRelation.disambiguation,
-            attributes = recordingRelation.attributes
+            relation = recordingRelation,
+            onItemClick = onItemClick,
         )
     }
 }
