@@ -15,15 +15,14 @@ import androidx.compose.ui.platform.LocalContext
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.navigation.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RecordingScaffold(
     recordingId: String,
     onBack: () -> Unit,
-    onArtistClick: (String) -> Unit = {},
-    onLabelClick: (String) -> Unit = {},
-    onWorkClick: (String) -> Unit = {},
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
@@ -55,6 +54,7 @@ internal fun RecordingScaffold(
                 titleState = title
                 subtitleState = subtitle
             },
+            onItemClick = onItemClick
         )
     }
 }

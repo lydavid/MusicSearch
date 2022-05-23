@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -66,6 +65,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
                 Destination.LOOKUP_RELEASE -> onReleaseClick(id)
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
+                // TODO: place, work, label
                 // TODO: support rest
                 else -> {
                     // Not supported.
@@ -161,10 +161,9 @@ internal fun NavigationGraph(
             val recordingId = entry.arguments?.getString(RECORDING_ID) ?: return@composable
             RecordingScaffold(
                 recordingId = recordingId,
-                onBack = navController::navigateUp
-            ) {
-                Log.d("Remove This", "NavigationGraph: Clicked something with id=${it}")
-            }
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
         }
 
         composable(

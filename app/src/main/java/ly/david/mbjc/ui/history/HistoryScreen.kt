@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,6 +27,7 @@ import java.util.Date
 import java.util.Locale
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.DestinationIcon
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
@@ -101,16 +103,22 @@ private fun HistoryEntry(
     ) {
         Column(
             modifier = Modifier.padding(vertical = 16.dp)
-
         ) {
 
-            val resourceDescription =
-                lookupHistory.destination.musicBrainzResource?.displayText?.transformThisIfNotNullOrEmpty { "$it: " }
-            Text(
-                text = "$resourceDescription${lookupHistory.summary}",
-                style = TextStyles.getCardTitleTextStyle(),
-                modifier = Modifier.fillMaxWidth()
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                DestinationIcon(
+                    destination = lookupHistory.destination,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+
+                val resourceDescription =
+                    lookupHistory.destination.musicBrainzResource?.displayText?.transformThisIfNotNullOrEmpty { "$it: " }
+                Text(
+                    text = "$resourceDescription${lookupHistory.summary}",
+                    style = TextStyles.getCardTitleTextStyle(),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             Row {
                 Text(
