@@ -3,6 +3,7 @@ package ly.david.mbjc.data.network
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.LabelMusicBrainzModel
 import ly.david.mbjc.data.WorkMusicBrainzModel
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 internal data class RelationMusicBrainzModel(
     @Json(name = "type")
@@ -15,7 +16,7 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "attributes")
     val attributes: List<String>? = null, // strings, task
     @Json(name = "attribute-values")
-    val attributeValues: List<AttributeValue>? = null, // "director & organizer"
+    val attributeValues: AttributeValue? = null, // "director & organizer"
 
     @Json(name = "artist")
     val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
@@ -27,10 +28,23 @@ internal data class RelationMusicBrainzModel(
     val place: PlaceMusicBrainzModel? = null,
 )
 
-// TODO: this is a very bad structure for json...
-//  given a string in attributes, we need to check for that field in this data class
-//  will need to map every possible value
 internal data class AttributeValue(
     @Json(name = "task")
     val task: String? = null
 )
+
+/**
+ * Some [RelationMusicBrainzModel.attributes] such as "strings" does not have
+ * a corresponding [RelationMusicBrainzModel.attributeValues].
+ * Others such as "task" does. List these with their corresponding values.
+ *
+ * All attributes/attribute-value pairs should be comma-separated.
+ */
+internal fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
+    attributes?.joinToString(", ") { attribute ->
+        if (attribute == "task") {
+            attribute + attributeValues?.task.transformThisIfNotNullOrEmpty { ": $it" }
+        } else {
+            attribute
+        }
+    }.orEmpty()
