@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.RelationMusicBrainzModel
+import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
 import ly.david.mbjc.data.persistence.RecordingRoomModel
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.navigation.toDestination
@@ -137,11 +138,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         label = type,
         name = name,
         disambiguation = disambiguation,
-
-        // TODO: if an attribute is not part of a list of attributes, then write it [eg. strings]
-        //  otherwise, write it + ": " + attribute-value [eg. task]
-        //  separate all with ","
-        attributes = attributes?.joinToString(",").orEmpty(), // TODO:
+        attributes = getFormattedAttributesForDisplay(),
         destination = targetType.toDestination()
     )
 }
