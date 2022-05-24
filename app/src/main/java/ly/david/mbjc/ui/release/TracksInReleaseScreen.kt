@@ -9,6 +9,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +49,8 @@ internal fun TracksInReleaseScreen(
     viewModel: TracksInReleaseViewModel = hiltViewModel()
 ) {
 
+    var lookupInProgress by rememberSaveable { mutableStateOf(true) }
+
     LaunchedEffect(key1 = releaseId) {
         try {
             // TODO: if the lookup is really long, then we won't display title until it's done
@@ -60,13 +66,7 @@ internal fun TracksInReleaseScreen(
                 release.getNameWithDisambiguation(),
                 "Release by [TODO]" // TODO: artistCredits
             )
-//            if (release is MusicBrainzRelease) {
-//                viewModel.insertMediaAndTracks(release)
-//            }
-
-            // TODO: if not paging, we would just populate the lazy column here
-            //  with all media, and all tracks
-
+            lookupInProgress = false
         } catch (ex: Exception) {
             onTitleUpdate("[Release lookup failed]", "[error]")
         }
@@ -75,14 +75,12 @@ internal fun TracksInReleaseScreen(
     val lazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
         .collectAsLazyPagingItems()
 
-    // TODO: never see error, cause error would be from the above try-catch
+    // TODO: this will never show error, cause error would be from the above try-catch
     //  this paging source is local only
-
-    // TODO: keeps flashing between "No results found" and loading indicator when loading big data
-    //  doesn't happen on my physical device. Emulator issue?
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
+        somethingElseLoading = lookupInProgress
     ) { uiModel: UiModel? ->
         when (uiModel) {
             is TrackUiModel -> {

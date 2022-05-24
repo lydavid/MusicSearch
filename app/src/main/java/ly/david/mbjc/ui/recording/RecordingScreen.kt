@@ -2,6 +2,10 @@ package ly.david.mbjc.ui.recording
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
@@ -22,12 +26,16 @@ internal fun RecordingScreen(
     viewModel: RecordingViewModel = hiltViewModel()
 ) {
 
+    var lookupInProgress by rememberSaveable { mutableStateOf(true) }
+
     LaunchedEffect(key1 = recordingId) {
         try {
             onTitleUpdate(
                 viewModel.lookupRecording(recordingId).getNameWithDisambiguation(),
                 "[Recording by <artist name>]"
             )
+            lookupInProgress = false
+
         } catch (ex: Exception) {
             onTitleUpdate("[Recording lookup failed]", "[error]")
         }
@@ -40,11 +48,12 @@ internal fun RecordingScreen(
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
+        somethingElseLoading = lookupInProgress
 //        snackbarHostState = snackbarHostState
     ) { recordingRelation ->
 
         // TODO: could put non-clickable items for length/first release date
-        
+
         if (recordingRelation == null) return@PagingLoadingAndErrorHandler
         RecordingRelationCard(
             relation = recordingRelation,

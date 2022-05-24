@@ -43,11 +43,15 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  * Handles loading and errors for paging screens.
  *
  * @param modifier For lazy column containing [content].
+ * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.
+ *  Although this should be decoupled, some screens' paged contents relies on a lookup that feeds data into Room,
+ *  which is then loaded with pagination.
  */
 @Composable
 internal fun <T : Any> PagingLoadingAndErrorHandler(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
+    somethingElseLoading: Boolean = false,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
@@ -56,7 +60,7 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
 
     // This doesn't affect "loads" from db/source.
     when {
-        lazyPagingItems.loadState.refresh is LoadState.Loading -> {
+        lazyPagingItems.loadState.refresh is LoadState.Loading || somethingElseLoading -> {
             FullScreenLoadingIndicator()
         }
         lazyPagingItems.loadState.refresh is LoadState.Error -> {
@@ -97,9 +101,11 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                                 }
                             }
                             else -> {
-                                Spacer(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp))
+                                Spacer(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp)
+                                )
                             }
                         }
                     }
