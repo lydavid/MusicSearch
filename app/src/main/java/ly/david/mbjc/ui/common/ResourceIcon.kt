@@ -11,26 +11,26 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.data.network.MusicBrainzResource
 
 /**
  * An appropriate icon for a given [destination].
  */
 @Composable
-internal fun DestinationIcon(
-    destination: Destination,
+internal fun ResourceIcon(
+    resource: MusicBrainzResource,
     modifier: Modifier = Modifier
 ) {
     Icon(
         modifier = modifier,
-        imageVector = when (destination) {
-            Destination.LOOKUP_ARTIST -> Icons.Default.Person
-            Destination.LOOKUP_RELEASE_GROUP -> Icons.Default.Folder
-            Destination.LOOKUP_RELEASE -> Icons.Default.Album
-            Destination.LOOKUP_RECORDING -> Icons.Default.Mic
-            Destination.LOOKUP_LABEL -> Icons.Default.CorporateFare
-            Destination.LOOKUP_PLACE -> Icons.Default.PinDrop
-            Destination.LOOKUP_WORK -> Icons.Default.MusicNote
+        imageVector = when (resource) {
+            MusicBrainzResource.ARTIST -> Icons.Default.Person
+            MusicBrainzResource.RELEASE_GROUP -> Icons.Default.Folder
+            MusicBrainzResource.RELEASE -> Icons.Default.Album
+            MusicBrainzResource.RECORDING -> Icons.Default.Mic
+            MusicBrainzResource.LABEL -> Icons.Default.CorporateFare
+            MusicBrainzResource.PLACE -> Icons.Default.PinDrop
+            MusicBrainzResource.WORK -> Icons.Default.MusicNote
             else -> {
                 // No icons.
                 return

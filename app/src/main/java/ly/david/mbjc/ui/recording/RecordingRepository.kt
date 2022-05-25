@@ -4,6 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.recording.RecordingDao
@@ -11,7 +12,6 @@ import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
 import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
 import ly.david.mbjc.data.persistence.recording.toRecordingRelationRoomModel
 import ly.david.mbjc.data.persistence.toRecordingRoomModel
-import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 internal class RecordingRepository @Inject constructor(
@@ -65,7 +65,7 @@ internal class RecordingRepository @Inject constructor(
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
                 summary = recording.name,
-                destination = Destination.LOOKUP_RECORDING,
+                resource = MusicBrainzResource.RECORDING,
                 mbid = recording.id
             )
         )

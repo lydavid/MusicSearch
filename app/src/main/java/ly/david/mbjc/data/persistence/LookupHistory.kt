@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.Date
-import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.data.network.MusicBrainzResource
 
 //data class HistoricalRecord(
 //    val summary: String,
@@ -29,8 +29,8 @@ internal data class LookupHistory(
     @ColumnInfo(name = "summary")
     val summary: String = "",
 
-    @ColumnInfo(name = "destination")
-    val destination: Destination,
+    @ColumnInfo(name = "resource")
+    val resource: MusicBrainzResource,
 
     // MusicBrainz id
     @ColumnInfo(name = "mbid")

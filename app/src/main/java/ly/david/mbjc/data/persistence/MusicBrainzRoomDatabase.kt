@@ -8,6 +8,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +29,7 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 10,
+    version = 11,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -65,7 +67,6 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     @RenameColumn(tableName = "releases", fromColumnName = "country", toColumnName = "country_code")
     class RenameReleasesCountryToCountryCode : AutoMigrationSpec
 
-
     class E : AutoMigrationSpec
 
     abstract fun getArtistDao(): ArtistDao
@@ -81,6 +82,38 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
 
+val MIGRATION_10_11 = object : Migration(10, 11) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+                ALTER TABLE lookup_history
+                RENAME COLUMN destination TO resource
+            """
+        )
+
+        // removes leading "lookup/"
+        database.execSQL(
+            """
+                UPDATE lookup_history
+                SET resource = SUBSTR(resource, 8)
+            """
+        )
+
+        database.execSQL(
+            """
+                ALTER TABLE recordings_relations
+                RENAME COLUMN destination TO resource
+            """
+        )
+        database.execSQL(
+            """
+                UPDATE recordings_relations
+                SET resource = SUBSTR(resource, 8)
+            """
+        )
+    }
+}
+
 private const val DATABASE_NAME = "mbjc.db"
 
 @InstallIn(SingletonComponent::class)
@@ -92,6 +125,7 @@ internal object DatabaseModule {
         @ApplicationContext context: Context
     ): MusicBrainzRoomDatabase {
         return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
+            .addMigrations(MIGRATION_10_11)
             .fallbackToDestructiveMigration()
             .build()
     }

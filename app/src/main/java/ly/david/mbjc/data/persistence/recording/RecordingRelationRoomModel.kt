@@ -7,8 +7,6 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
 import ly.david.mbjc.data.persistence.RecordingRoomModel
-import ly.david.mbjc.ui.navigation.Destination
-import ly.david.mbjc.ui.navigation.toDestination
 
 // TODO: instead of this, could we just have a linking table from Recording to [Artist, Label, Place, Work, etc] ?
 //  maybe try it eventually. For now, let's get something working first.
@@ -62,12 +60,8 @@ internal data class RecordingRelationRoomModel(
     @ColumnInfo(name = "attributes")
     val attributes: String? = null,
 
-    /**
-     * A soon-to-be superset of [MusicBrainzResource].
-     * Use [toDestination] to get corresponding destination for a MB resource.
-     */
-    @ColumnInfo(name = "destination")
-    val destination: Destination,
+    @ColumnInfo(name = "resource")
+    val resource: MusicBrainzResource,
 )
 
 /**
@@ -139,6 +133,6 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         name = name,
         disambiguation = disambiguation,
         attributes = getFormattedAttributesForDisplay(),
-        destination = targetType.toDestination()
+        resource = targetType
     )
 }

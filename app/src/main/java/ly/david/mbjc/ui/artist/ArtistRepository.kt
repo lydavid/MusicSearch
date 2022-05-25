@@ -5,11 +5,11 @@ import javax.inject.Singleton
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.toArtistRoomModel
-import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 internal class ArtistRepository @Inject constructor(
@@ -46,7 +46,7 @@ internal class ArtistRepository @Inject constructor(
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
                 summary = artist.getNameWithDisambiguation(),
-                destination = Destination.LOOKUP_ARTIST,
+                resource = MusicBrainzResource.ARTIST,
                 mbid = artist.id
             )
         )

@@ -25,14 +25,16 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.DestinationIcon
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.navigation.toDestination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -98,7 +100,7 @@ private fun HistoryEntry(
 ) {
     ClickableListItem(
         onClick = {
-            onItemClick(lookupHistory.destination, lookupHistory.mbid)
+            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid)
         },
     ) {
         Column(
@@ -106,13 +108,13 @@ private fun HistoryEntry(
         ) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                DestinationIcon(
-                    destination = lookupHistory.destination,
+                ResourceIcon(
+                    resource = lookupHistory.resource,
                     modifier = Modifier.padding(end = 8.dp)
                 )
 
                 val resourceDescription =
-                    lookupHistory.destination.musicBrainzResource?.displayText?.transformThisIfNotNullOrEmpty { "$it: " }
+                    lookupHistory.resource.displayText.transformThisIfNotNullOrEmpty { "$it: " }
                 Text(
                     text = "$resourceDescription${lookupHistory.summary}",
                     style = TextStyles.getCardTitleTextStyle(),
@@ -147,18 +149,18 @@ private fun Date.toDisplayDate(): String {
 private val testData = listOf(
     LookupHistory(
         summary = "欠けた心象、世のよすがみ",
-        destination = Destination.LOOKUP_RELEASE_GROUP,
+        resource = MusicBrainzResource.RELEASE_GROUP,
         mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
         numberOfVisits = 9999
     ),
     LookupHistory(
         summary = "欠けた心象、世のよすが",
-        destination = Destination.LOOKUP_RELEASE,
+        resource = MusicBrainzResource.RELEASE,
         mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
     ),
     LookupHistory(
         summary = "月詠み",
-        destination = Destination.LOOKUP_ARTIST,
+        resource = MusicBrainzResource.ARTIST,
         mbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
     )
 )

@@ -11,10 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.DestinationIcon
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.navigation.toDestination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -26,7 +28,7 @@ internal fun RecordingRelationCard(
 ) {
 
     ClickableListItem(onClick = {
-        onItemClick(relation.destination, relation.linkedResourceId)
+        onItemClick(relation.resource.toDestination(), relation.linkedResourceId)
     }) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
             Text(
@@ -39,8 +41,8 @@ internal fun RecordingRelationCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                DestinationIcon(
-                    destination = relation.destination,
+                ResourceIcon(
+                    resource = relation.resource,
                     modifier = Modifier.padding(end = 8.dp)
                 )
 
@@ -84,7 +86,7 @@ internal fun RecordingRelationCardPreview() {
                     name = "Artist Name",
                     disambiguation = "that guy",
                     attributes = "task: director & organizer, strings",
-                    destination = Destination.LOOKUP_ARTIST,
+                    resource = MusicBrainzResource.ARTIST,
                     recordingId = "1",
                     linkedResourceId = "2",
                     order = 0

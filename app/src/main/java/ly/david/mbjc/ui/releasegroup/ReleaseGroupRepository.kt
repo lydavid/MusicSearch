@@ -6,13 +6,13 @@ import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
-import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 internal class ReleaseGroupRepository @Inject constructor(
@@ -52,7 +52,7 @@ internal class ReleaseGroupRepository @Inject constructor(
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
                 summary = releaseGroup.name,
-                destination = Destination.LOOKUP_RELEASE_GROUP,
+                resource = MusicBrainzResource.RELEASE_GROUP,
                 mbid = releaseGroup.id
             )
         )

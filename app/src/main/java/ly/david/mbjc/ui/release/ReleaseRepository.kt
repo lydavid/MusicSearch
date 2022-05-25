@@ -6,6 +6,7 @@ import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.MediumDao
@@ -14,7 +15,6 @@ import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.toMediumRoomModel
 import ly.david.mbjc.data.persistence.release.toTrackRoomModel
 import ly.david.mbjc.data.persistence.toReleaseRoomModel
-import ly.david.mbjc.ui.navigation.Destination
 
 @Singleton
 internal class ReleaseRepository @Inject constructor(
@@ -56,7 +56,7 @@ internal class ReleaseRepository @Inject constructor(
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
                 summary = release.name,
-                destination = Destination.LOOKUP_RELEASE,
+                resource = MusicBrainzResource.RELEASE,
                 mbid = release.id
             )
         )
