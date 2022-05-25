@@ -1,7 +1,9 @@
 package ly.david.mbjc.ui.search
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -15,9 +17,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.ResourceIcon
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
 
@@ -61,10 +66,10 @@ internal fun ExposedDropdownMenuBox(
                 expanded = false
             }
         ) {
-            options.forEach { selectionOption ->
+            options.forEach { option ->
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = if (selectedOption == selectionOption) {
+                    color = if (selectedOption == option) {
                         MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                     } else {
                         MaterialTheme.colorScheme.background
@@ -72,9 +77,17 @@ internal fun ExposedDropdownMenuBox(
                 ) {
                     DropdownMenuItem(
                         modifier = modifier,
-                        text = { Text(text = selectionOption.displayText) },
+                        text = {
+                            Row(verticalAlignment = CenterVertically) {
+                                ResourceIcon(
+                                    modifier = Modifier.padding(end = 8.dp),
+                                    resource = option
+                                )
+                                Text(text = option.displayText)
+                            }
+                        },
                         onClick = {
-                            onSelectOption(selectionOption)
+                            onSelectOption(option)
                             expanded = false
                         }
                     )

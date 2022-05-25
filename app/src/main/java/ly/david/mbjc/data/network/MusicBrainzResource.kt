@@ -17,9 +17,6 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     @Json(name = "event")
     EVENT("Event", "event"),
 
-    @Json(name = "genre")
-    GENRE("Genre", "genre"),
-
     @Json(name = "instrument")
     INSTRUMENT("Instrument", "instrument"),
 
@@ -44,6 +41,18 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     @Json(name = "work")
     WORK("Work", "work"),
 
-    @Json(name = "url")
-    URL("URL", "url")
+    // Seems like these are no longer valid, or maybe they never were
+//    @Json(name = "genre")
+//    GENRE("Genre", "genre"),
+
+//    @Json(name = "url")
+//    URL("URL", "url"),
+
+    // Other searchable: annotation, tag, cd stub, editor, documentation
+
+    // Other non-core resources with API: rating, tag, collection
+
+    // Other lookupable: discid, isrc, iswc
+
+    // TODO: for non-first-class resources, maybe they shouldn't be in this enum
 }
