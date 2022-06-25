@@ -45,8 +45,9 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
 //    @Json(name = "genre")
 //    GENRE("Genre", "genre"),
 
-//    @Json(name = "url")
-//    URL("URL", "url"),
+    // These should not be stored in a table.
+    @Json(name = "url")
+    URL("URL", "url"),
 
     // Other searchable: annotation, tag, cd stub, editor, documentation
 
@@ -56,3 +57,18 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
 
     // TODO: for non-first-class resources, maybe they shouldn't be in this enum
 }
+
+internal val searchableResources: List<MusicBrainzResource>
+    get() = listOf(
+        MusicBrainzResource.AREA,
+        MusicBrainzResource.ARTIST,
+        MusicBrainzResource.EVENT,
+        MusicBrainzResource.INSTRUMENT,
+        MusicBrainzResource.LABEL,
+        MusicBrainzResource.PLACE,
+        MusicBrainzResource.RECORDING,
+        MusicBrainzResource.RELEASE,
+        MusicBrainzResource.RELEASE_GROUP,
+        MusicBrainzResource.SERIES,
+        MusicBrainzResource.WORK,
+    )

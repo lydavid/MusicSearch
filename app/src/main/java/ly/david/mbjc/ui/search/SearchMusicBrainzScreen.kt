@@ -44,6 +44,7 @@ import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.searchableResources
 import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -124,7 +125,7 @@ internal fun SearchMusicBrainzScreen(
             // TODO: focusing on this requires 1-2 additional backpresses to exit app
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
-                options = MusicBrainzResource.values().toList(),
+                options = searchableResources,
                 selectedOption = selectedOption,
                 onSelectOption = {
                     selectedOption = it

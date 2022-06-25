@@ -120,6 +120,11 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         }
 
         // TODO: handle rest
+
+        // TODO: handle urls, should just open that url in browser
+        //  since we want to support full offline after returning to a screen, we need to save this url.
+        //  Either save the url in the relation object, or store an id to the url in a urls table.
+        //  Upon navigation to a "url screen", we will instead open the url in the user's browser of choice.
         else -> {
             return null
         }

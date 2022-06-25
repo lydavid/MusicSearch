@@ -39,6 +39,10 @@ internal fun ResourceIcon(
             MusicBrainzResource.EVENT -> Icons.Default.Event
             MusicBrainzResource.SERIES -> Icons.Default.List
             MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
+            else -> {
+                // No icons.
+                return
+            }
         },
         contentDescription = ""
     )
