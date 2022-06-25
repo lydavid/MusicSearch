@@ -34,11 +34,10 @@ internal fun RecordingScreen(
                 viewModel.lookupRecording(recordingId).getNameWithDisambiguation(),
                 "[Recording by <artist name>]"
             )
-            lookupInProgress = false
-
         } catch (ex: Exception) {
             onTitleUpdate("[Recording lookup failed]", "[error]")
         }
+        lookupInProgress = false
     }
 
     val lazyPagingItems: LazyPagingItems<RecordingRelationRoomModel> =

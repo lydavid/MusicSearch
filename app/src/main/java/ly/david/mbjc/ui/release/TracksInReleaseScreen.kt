@@ -66,10 +66,10 @@ internal fun TracksInReleaseScreen(
                 release.getNameWithDisambiguation(),
                 "Release by [TODO]" // TODO: artistCredits
             )
-            lookupInProgress = false
         } catch (ex: Exception) {
             onTitleUpdate("[Release lookup failed]", "[error]")
         }
+        lookupInProgress = false
     }
 
     val lazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
