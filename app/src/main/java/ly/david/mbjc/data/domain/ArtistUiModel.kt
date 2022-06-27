@@ -4,7 +4,6 @@ import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.ArtistMusicBrainzModel
 import ly.david.mbjc.data.persistence.ArtistRoomModel
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 internal data class ArtistUiModel(
     override val id: String,
@@ -40,10 +39,3 @@ internal fun ArtistRoomModel.toArtistUiModel() =
         countryCode = countryCode,
         lifeSpan = lifeSpan
     )
-
-internal fun ArtistUiModel.getLifeSpanForDisplay(): String {
-    if (lifeSpan == null) return ""
-    val begin = lifeSpan.begin.orEmpty()
-    val end = lifeSpan.end.transformThisIfNotNullOrEmpty { " to $it" }
-    return begin + end
-}

@@ -16,7 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.domain.ArtistUiModel
-import ly.david.mbjc.data.domain.getLifeSpanForDisplay
+import ly.david.mbjc.data.getLifeSpanForDisplay
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toFlagEmoji
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
@@ -103,7 +103,7 @@ internal fun ArtistCard(
                 })
             }
 
-            val lifeSpanText = artist.getLifeSpanForDisplay()
+            val lifeSpanText = artist.lifeSpan.getLifeSpanForDisplay()
             if (lifeSpanText.isNotEmpty()) {
                 Text(
                     text = lifeSpanText,
@@ -150,7 +150,7 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistU
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun ArtistCardPreview(
+private fun ArtistCardPreview(
     @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistUiModel
 ) {
     PreviewTheme {

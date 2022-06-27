@@ -36,6 +36,13 @@ internal interface Search {
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchRecordingsResponse
+
+    @GET("place")
+    suspend fun queryPlaces(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchPlacesResponse
 }
 
 internal data class SearchArtistsResponse(
@@ -60,4 +67,10 @@ internal data class SearchRecordingsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
+)
+
+internal data class SearchPlacesResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "places") val places: List<PlaceMusicBrainzModel>
 )

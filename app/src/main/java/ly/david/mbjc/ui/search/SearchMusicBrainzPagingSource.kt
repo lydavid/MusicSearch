@@ -109,6 +109,17 @@ internal class SearchMusicBrainzPagingSource(
                     queryRecordings.recordings
                 )
             }
+            MusicBrainzResource.PLACE -> {
+                val queryPlaces = musicBrainzApiService.queryPlaces(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryPlaces.offset,
+                    queryPlaces.places
+                )
+            }
             // TODO: support rest
             else -> {
                 // Artist; until we implement them all

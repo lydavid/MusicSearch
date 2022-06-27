@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.EndOfList
+import ly.david.mbjc.data.domain.PlaceUiModel
 import ly.david.mbjc.data.domain.RecordingUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
@@ -50,6 +51,7 @@ import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.place.PlaceCard
 import ly.david.mbjc.ui.recording.RecordingCard
 import ly.david.mbjc.ui.release.ReleaseCard
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
@@ -159,6 +161,11 @@ internal fun SearchMusicBrainzScreen(
                 is RecordingUiModel -> {
                     RecordingCard(recordingUiModel = uiModel) {
                         onItemClick(Destination.LOOKUP_RECORDING, id)
+                    }
+                }
+                is PlaceUiModel -> {
+                    PlaceCard(place = uiModel) {
+                        onItemClick(Destination.LOOKUP_PLACE, id)
                     }
                 }
                 is EndOfList -> {

@@ -46,8 +46,8 @@ internal fun MusicBrainzResource.toDestination() =
         MusicBrainzResource.RELEASE_GROUP -> Destination.LOOKUP_RELEASE_GROUP
         MusicBrainzResource.RELEASE -> Destination.LOOKUP_RELEASE
         MusicBrainzResource.RECORDING -> Destination.LOOKUP_RECORDING
-
         MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
+
         MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
         MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
 
