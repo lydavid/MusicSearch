@@ -10,20 +10,30 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 internal data class LifeSpan(
     @ColumnInfo(name = "begin")
     @Json(name = "begin")
-    val begin: String? = null,
+    override val begin: String? = null,
 
     @ColumnInfo(name = "end")
     @Json(name = "end")
-    val end: String? = null,
+    override val end: String? = null,
 
     @ColumnInfo(name = "ended")
     @Json(name = "ended")
-    val ended: Boolean? = null
-)
+    override val ended: Boolean? = null
+): ILifeSpan
 
-internal fun LifeSpan?.getLifeSpanForDisplay(): String {
+internal interface ILifeSpan {
+    val begin: String?
+    val end: String?
+    val ended: Boolean?
+}
+
+internal fun ILifeSpan?.getLifeSpanForDisplay(): String {
     if (this == null) return ""
     val begin = begin.orEmpty()
-    val end = end.transformThisIfNotNullOrEmpty { " to $it" }
+    val end = if (begin == end) {
+        ""
+    } else {
+        end.transformThisIfNotNullOrEmpty { " to $it" }
+    }
     return begin + end
 }

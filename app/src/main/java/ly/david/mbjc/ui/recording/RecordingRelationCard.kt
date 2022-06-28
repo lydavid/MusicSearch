@@ -70,6 +70,15 @@ internal fun RecordingRelationCard(
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }
+
+            val additionalInfo = relation.additionalInfo
+            if (!additionalInfo.isNullOrEmpty()) {
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = additionalInfo,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            }
         }
     }
 }
@@ -77,7 +86,7 @@ internal fun RecordingRelationCard(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun RecordingRelationCardPreview() {
+private fun Artist() {
     PreviewTheme {
         Surface {
             RecordingRelationCard(
@@ -87,6 +96,27 @@ internal fun RecordingRelationCardPreview() {
                     disambiguation = "that guy",
                     attributes = "task: director & organizer, strings",
                     resource = MusicBrainzResource.ARTIST,
+                    recordingId = "1",
+                    linkedResourceId = "2",
+                    order = 0
+                )
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun Recording() {
+    PreviewTheme {
+        Surface {
+            RecordingRelationCard(
+                relation = RecordingRelationRoomModel(
+                    label = "DJ-mixes",
+                    name = "Recording Name",
+                    additionalInfo = "by Artist Names (order: 10)",
+                    resource = MusicBrainzResource.RECORDING,
                     recordingId = "1",
                     linkedResourceId = "2",
                     order = 0

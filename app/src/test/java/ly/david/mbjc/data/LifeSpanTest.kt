@@ -37,6 +37,12 @@ internal class LifeSpanTest {
         Assert.assertEquals("1957-03 to 1970-04-10", lifeSpan.getLifeSpanForDisplay())
     }
 
+    @Test
+    fun `lifespan same begin, and end`() {
+        lifeSpan = LifeSpan(begin = "1957-03", end = "1957-03")
+        Assert.assertEquals("1957-03", lifeSpan.getLifeSpanForDisplay())
+    }
+
     // Is valid?
     @Test
     fun `lifespan end, no begin`() {

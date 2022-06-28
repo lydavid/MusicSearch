@@ -3,16 +3,19 @@ package ly.david.mbjc.data.persistence.recording
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import ly.david.mbjc.data.getDisplayNames
+import ly.david.mbjc.data.getLifeSpanForDisplay
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
 import ly.david.mbjc.data.persistence.RecordingRoomModel
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
+
+// TODO: can generalize recording_id to
 
 // TODO: instead of this, could we just have a linking table from Recording to [Artist, Label, Place, Work, etc] ?
 //  maybe try it eventually. For now, let's get something working first.
 //  If we don't plan to display items like we do for Recording, let's just make this Recording specific for now.
-// TODO: need a linking table back to recording or whatever else
-//  relation_id: Long
 @Entity(
     tableName = "recordings_relations",
     primaryKeys = ["recording_id", "linked_resource_id", "order"],
@@ -30,9 +33,7 @@ internal data class RecordingRelationRoomModel(
     @ColumnInfo(name = "recording_id")
     val recordingId: String,
 
-    // TODO: rather than linking to this which is susceptible to change, link it to resource_id
-    //  assuming it will be unique. If it is not unique between resources, it is for sure unique for a given resource.
-    //  otherwise lookup uri wouldn't work
+    // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
     val linkedResourceId: String,
 
@@ -60,6 +61,16 @@ internal data class RecordingRelationRoomModel(
     @ColumnInfo(name = "attributes")
     val attributes: String? = null,
 
+    /**
+     * Includes things like:
+     * - by Artists
+     * - in Area
+     * - (in 1970-01)
+     * - (order: 8)
+     */
+    @ColumnInfo(name = "additional_info")
+    val additionalInfo: String? = null,
+
     @ColumnInfo(name = "resource")
     val resource: MusicBrainzResource,
 )
@@ -77,6 +88,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
     val resourceId: String
     val name: String
     val disambiguation: String?
+    var additionalInfo: String? = null
     when (targetType) {
         MusicBrainzResource.ARTIST -> {
             if (artist == null) return null
@@ -87,6 +99,19 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
                 targetCredit
             }
             disambiguation = artist.disambiguation
+            additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+        }
+        MusicBrainzResource.RECORDING -> {
+            if (recording == null) return null
+            resourceId = recording.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                recording.name
+            } else {
+                targetCredit
+            }
+            disambiguation = recording.disambiguation
+            additionalInfo = recording.artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" } +
+                getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
         }
         MusicBrainzResource.LABEL -> {
             if (label == null) return null
@@ -102,7 +127,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
             if (place == null) return null
             resourceId = place.id
             name = if (targetCredit.isNullOrEmpty()) {
-                place.name.orEmpty()
+                place.name
             } else {
                 targetCredit
             }
@@ -118,13 +143,20 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
             }
             disambiguation = work.disambiguation
         }
-
-        // TODO: handle rest
-
         // TODO: handle urls, should just open that url in browser
         //  since we want to support full offline after returning to a screen, we need to save this url.
         //  Either save the url in the relation object, or store an id to the url in a urls table.
         //  Upon navigation to a "url screen", we will instead open the url in the user's browser of choice.
+        MusicBrainzResource.URL -> {
+            if (url == null) return null
+            resourceId = url.id
+            name = url.resource
+            disambiguation = null
+        }
+
+        // TODO: handle rest
+
+
         else -> {
             return null
         }
@@ -138,6 +170,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         name = name,
         disambiguation = disambiguation,
         attributes = getFormattedAttributesForDisplay(),
+        additionalInfo = additionalInfo,
         resource = targetType
     )
 }
