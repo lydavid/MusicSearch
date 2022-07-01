@@ -13,6 +13,11 @@ import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 internal sealed class UiModel
 
 /**
+ * Content that appears in front of a list of [UiModel].
+ */
+internal object Header : UiModel()
+
+/**
  * Represents the end of the list of [UiModel] being displayed.
  */
 internal object EndOfList : UiModel()

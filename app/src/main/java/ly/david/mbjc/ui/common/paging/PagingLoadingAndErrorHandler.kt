@@ -46,6 +46,8 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.
  *  Although this should be decoupled, some screens' paged contents relies on a lookup that feeds data into Room,
  *  which is then loaded with pagination.
+ *
+ *  @param itemContent Composable UI for each [lazyPagingItems].
  */
 @Composable
 internal fun <T : Any> PagingLoadingAndErrorHandler(
@@ -55,6 +57,7 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
+    prependedItems: @Composable (LazyItemScope.() -> Unit)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
 
@@ -81,6 +84,14 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                 modifier = modifier,
                 state = lazyListState,
             ) {
+
+                // TODO: can't have additional item or it will scroll to top on config change
+                //  it works fine in ArtistStatsScreen
+                //  best way is to use headers and add them as part of lazypadingitems
+//                item {
+//                        Text(text = "dd")
+//                }
+
                 itemsIndexed(lazyPagingItems) { index: Int, value: T? ->
                     itemContent(value)
 

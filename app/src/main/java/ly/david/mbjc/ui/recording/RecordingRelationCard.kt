@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ly.david.mbjc.data.domain.RecordingRelationUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.navigation.Destination
@@ -23,7 +23,7 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun RecordingRelationCard(
-    relation: RecordingRelationRoomModel,
+    relation: RecordingRelationUiModel,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
 
@@ -90,7 +90,7 @@ private fun Artist() {
     PreviewTheme {
         Surface {
             RecordingRelationCard(
-                relation = RecordingRelationRoomModel(
+                relation = RecordingRelationUiModel(
                     label = "miscellaneous support",
                     name = "Artist Name",
                     disambiguation = "that guy",
@@ -112,7 +112,7 @@ private fun Recording() {
     PreviewTheme {
         Surface {
             RecordingRelationCard(
-                relation = RecordingRelationRoomModel(
+                relation = RecordingRelationUiModel(
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
