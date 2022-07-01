@@ -3,6 +3,7 @@ package ly.david.mbjc.data.persistence
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.DeleteColumn
 import androidx.room.RenameColumn
 import androidx.room.RenameTable
 import androidx.room.Room
@@ -28,7 +29,7 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 14,
+    version = 15,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -58,6 +59,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 11, to = 12),
         AutoMigration(from = 12, to = 13, spec = MusicBrainzRoomDatabase.GeneralizeRecordingRelation::class),
         AutoMigration(from = 13, to = 14, spec = MusicBrainzRoomDatabase.RenameResourceId::class),
+        AutoMigration(from = 14, to = 15, spec = MusicBrainzRoomDatabase.DeleteResource::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -76,6 +78,9 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     @RenameColumn(tableName = "relations", fromColumnName = "recording_id", toColumnName = "resource_id")
     class RenameResourceId : AutoMigrationSpec
+
+    @DeleteColumn(tableName = "relations", columnName = "resource")
+    class DeleteResource : AutoMigrationSpec
     // endregion
 
     abstract fun getArtistDao(): ArtistDao

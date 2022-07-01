@@ -18,11 +18,6 @@ internal data class RelationRoomModel(
     @ColumnInfo(name = "resource_id")
     val resourceId: String,
 
-    // Default is because this used to be for recordings only.
-    // We expect to always pass in an appropriate resource, so it shouldn't affect us.
-    @ColumnInfo(name = "resource", defaultValue = "recording")
-    val resource: MusicBrainzResource,
-
     // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
     override val linkedResourceId: String,
@@ -72,7 +67,6 @@ internal data class RelationRoomModel(
  */
 internal fun RelationMusicBrainzModel.toRelationRoomModel(
     resourceId: String,
-    resource: MusicBrainzResource,
     order: Int,
 ): RelationRoomModel? {
 
@@ -154,7 +148,6 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
 
     return RelationRoomModel(
         resourceId = resourceId,
-        resource = resource,
         linkedResourceId = linkedResourceId,
         linkedResource = targetType,
         order = order,
