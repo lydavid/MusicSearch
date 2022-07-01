@@ -7,17 +7,17 @@ import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
+import ly.david.mbjc.data.persistence.RelationDao
+import ly.david.mbjc.data.persistence.RelationRoomModel
 import ly.david.mbjc.data.persistence.recording.RecordingDao
-import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
-import ly.david.mbjc.data.persistence.recording.RelationRoomModel
-import ly.david.mbjc.data.persistence.recording.toRelationRoomModel
 import ly.david.mbjc.data.persistence.toRecordingRoomModel
+import ly.david.mbjc.data.persistence.toRelationRoomModel
 
 @Singleton
 internal class RecordingRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val recordingDao: RecordingDao,
-    private val recordingRelationDao: RecordingRelationDao,
+    private val relationDao: RelationDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
     private var recording: Recording? = null
@@ -56,7 +56,7 @@ internal class RecordingRepository @Inject constructor(
                 }
             }
 //            relationDao.insertAllIgnoreDuplicates(relations)
-            recordingRelationDao.insertAll(recordingRelations)
+            relationDao.insertAll(recordingRelations)
 
             incrementOrInsertLookupHistory(musicBrainzRecording)
             musicBrainzRecording

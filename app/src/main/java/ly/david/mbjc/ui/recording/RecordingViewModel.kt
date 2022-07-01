@@ -20,13 +20,13 @@ import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toRelationUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
+import ly.david.mbjc.data.persistence.RelationDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class RecordingViewModel @Inject constructor(
     private val recordingRepository: RecordingRepository,
-    private val recordingRelationDao: RecordingRelationDao
+    private val relationDao: RelationDao
 ) : ViewModel() {
 
     private val recordingId: MutableStateFlow<String> = MutableStateFlow("")
@@ -41,7 +41,7 @@ internal class RecordingViewModel @Inject constructor(
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
-                    recordingRelationDao.getRelationsForRecording(recordingId, MusicBrainzResource.RECORDING)
+                    relationDao.getRelationsForResource(recordingId, MusicBrainzResource.RECORDING)
                 }
             ).flow.map { pagingData ->
                 pagingData.map { relation ->

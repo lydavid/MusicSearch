@@ -1,46 +1,167 @@
 package ly.david.mbjc.data.persistence
 
-// TODO: we could put recording id here, but then each of these relationships will be 1-to-many from each recording/work/etc
-//  this could work if we don't plan to store rels for anything else
-//  but even then, that would mean the same relations rows will be repeated for every recording using the same ones
-//  so we should NOT store recording_id here
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import ly.david.mbjc.data.Relation
+import ly.david.mbjc.data.getDisplayNames
+import ly.david.mbjc.data.getLifeSpanForDisplay
+import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.RelationMusicBrainzModel
+import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
-// TODO: one advantage of using a model like this separate from querying all artists/places/labels/etc related to a recording
-//  is that it returns the exact info needed. Well, technically we could query artists and map to a ui object with only the info we want.
-//  The biggest advantage is that some artists are creditd under a different name for different recordings, this will allow us to store/get that.
+@Entity(
+    tableName = "relations",
+    primaryKeys = ["resource_id", "linked_resource_id", "order"],
+)
+internal data class RelationRoomModel(
+    @ColumnInfo(name = "resource_id")
+    override val resourceId: String,
 
-// TODO: if we're using an auto id for relation, how will we know to not insert a relation that already exists?
-//@Entity(tableName = "relations")
-//internal data class RelationRoomModel(
-////    @PrimaryKey(autoGenerate = true)
-////    @ColumnInfo(name = "id")
-////    val id: Long = 0,
-//
-//    @ColumnInfo(name = "description")
-//    val description: String,
-//
-//    /**
-//     * A soon-to-be superset of [MusicBrainzResource].
-//     * Use [toDestination] to get corresponding destination for a MB resource.
-//     */
-//    @ColumnInfo(name = "destination")
-//    val destination: Destination,
-//
-//    /**
-//     * This assumes Music Brainz id are unique between resources.
-//     * We know for certain they are unique within a resource (eg. artist), otherwise lookups wouldn't work.
-//     */
-//    @PrimaryKey
-//    @ColumnInfo(name = "resource_id")
-//    val resourceId: String,
-//)
-// TODO: could this be in the same model as recordings_relations?
-//  doing it this way reduces the amount of duplicates we have.
-//  however the description for a relation may not be the same all the time. They are release-dependent...
-//  Idea: a relation linking table with 2 music brainz id, then lookup the resource in their respective tables
-//  so artists for any artist relationship
-//  if they are not in table, then we will query API for them on click
-//  when we first init recordings screen, should add new artists to artists table with what data we have
-//  on click, we can query for rest
-//  For this method, we still need linking table to hold a description (name+disam/attributes).
-//  In that case, just make relations primary key [description, resource_id] -> how do we know which to use?
+    // Default is because this used to be for recordings only.
+    // We expect to always pass in an appropriate resource, so it shouldn't affect us.
+    @ColumnInfo(name = "resource", defaultValue = "recording")
+    override val resource: MusicBrainzResource,
+
+    // TODO: can we make it nullable so that we don't pass url id?
+    @ColumnInfo(name = "linked_resource_id")
+    override val linkedResourceId: String,
+
+    @ColumnInfo(name = "linked_resource")
+    override val linkedResource: MusicBrainzResource,
+
+    // TODO: an artist can appear multiple times similar to artist credits
+    //  for now, we'll use order which is the order we insert it. But we probably won't display it in this order.
+    //  This is not necessarily the order it's displayed on MB website.
+    @ColumnInfo(name = "order")
+    override val order: Int,
+
+    /**
+     * [RelationMusicBrainzModel.type].
+     */
+    @ColumnInfo(name = "label")
+    override val label: String,
+
+    @ColumnInfo(name = "name")
+    override val name: String,
+
+    @ColumnInfo(name = "disambiguation")
+    override val disambiguation: String? = null,
+
+    /**
+     * Combined [RelationMusicBrainzModel.attributes].
+     */
+    @ColumnInfo(name = "attributes")
+    override val attributes: String? = null,
+
+    /**
+     * Includes things like:
+     * - by Artists
+     * - in Area
+     * - (in 1970-01)
+     * - (order: 8)
+     */
+    @ColumnInfo(name = "additional_info")
+    override val additionalInfo: String? = null,
+) : Relation
+
+/**
+ * We cannot guarantee that a [RelationRoomModel] will be created in the scenario that target-type points to a resource
+ * but that object is null. It's possible that this is never the case, but our models are currently structured such
+ * that any of them are nullable.
+ */
+internal fun RelationMusicBrainzModel.toRelationRoomModel(
+    resourceId: String,
+    resource: MusicBrainzResource,
+    order: Int,
+): RelationRoomModel? {
+
+    val linkedResourceId: String
+    val name: String
+    val disambiguation: String?
+    var additionalInfo: String? = null
+    when (targetType) {
+        MusicBrainzResource.ARTIST -> {
+            if (artist == null) return null
+            linkedResourceId = artist.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                artist.name
+            } else {
+                targetCredit
+            }
+            disambiguation = artist.disambiguation
+            additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+        }
+        MusicBrainzResource.RECORDING -> {
+            if (recording == null) return null
+            linkedResourceId = recording.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                recording.name
+            } else {
+                targetCredit
+            }
+            disambiguation = recording.disambiguation
+            additionalInfo = recording.artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" } +
+                getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+        }
+        MusicBrainzResource.LABEL -> {
+            if (label == null) return null
+            linkedResourceId = label.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                label.name.orEmpty()
+            } else {
+                targetCredit
+            }
+            disambiguation = label.disambiguation
+        }
+        MusicBrainzResource.PLACE -> {
+            if (place == null) return null
+            linkedResourceId = place.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                place.name
+            } else {
+                targetCredit
+            }
+            disambiguation = place.disambiguation
+        }
+        MusicBrainzResource.WORK -> {
+            if (work == null) return null
+            linkedResourceId = work.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                work.name
+            } else {
+                targetCredit
+            }
+            disambiguation = work.disambiguation
+        }
+        // TODO: handle urls, should just open that url in browser
+        //  since we want to support full offline after returning to a screen, we need to save this url.
+        //  Either save the url in the relation object, or store an id to the url in a urls table.
+        //  Upon navigation to a "url screen", we will instead open the url in the user's browser of choice.
+        MusicBrainzResource.URL -> {
+            if (url == null) return null
+            linkedResourceId = url.id
+            name = url.resource
+            disambiguation = null
+        }
+
+        // TODO: handle rest
+
+        else -> {
+            return null
+        }
+    }
+
+    return RelationRoomModel(
+        resourceId = resourceId,
+        resource = resource,
+        linkedResourceId = linkedResourceId,
+        linkedResource = targetType,
+        order = order,
+        label = type,
+        name = name,
+        disambiguation = disambiguation,
+        attributes = getFormattedAttributesForDisplay(),
+        additionalInfo = additionalInfo
+    )
+}

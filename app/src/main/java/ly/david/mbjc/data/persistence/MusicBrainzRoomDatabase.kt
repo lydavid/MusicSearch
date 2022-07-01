@@ -18,8 +18,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.recording.RecordingDao
-import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
-import ly.david.mbjc.data.persistence.recording.RelationRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
@@ -88,7 +86,7 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getMediumDao(): MediumDao
     abstract fun getTrackDao(): TrackDao
     abstract fun getRecordingDao(): RecordingDao
-    abstract fun getRecordingRelationDao(): RecordingRelationDao
+    abstract fun getRecordingRelationDao(): RelationDao
 
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
