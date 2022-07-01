@@ -16,12 +16,12 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 )
 internal data class RelationRoomModel(
     @ColumnInfo(name = "resource_id")
-    override val resourceId: String,
+    val resourceId: String,
 
     // Default is because this used to be for recordings only.
     // We expect to always pass in an appropriate resource, so it shouldn't affect us.
     @ColumnInfo(name = "resource", defaultValue = "recording")
-    override val resource: MusicBrainzResource,
+    val resource: MusicBrainzResource,
 
     // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
@@ -34,7 +34,7 @@ internal data class RelationRoomModel(
     //  for now, we'll use order which is the order we insert it. But we probably won't display it in this order.
     //  This is not necessarily the order it's displayed on MB website.
     @ColumnInfo(name = "order")
-    override val order: Int,
+    val order: Int,
 
     /**
      * [RelationMusicBrainzModel.type].

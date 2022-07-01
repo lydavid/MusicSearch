@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.recording
+package ly.david.mbjc.ui.relation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -21,9 +21,8 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
-// TODO: since this doesn't reference recordingId, can be generalized for all relation cards
 @Composable
-internal fun RecordingRelationCard(
+internal fun RelationCard(
     relation: RelationUiModel,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
@@ -90,17 +89,14 @@ internal fun RecordingRelationCard(
 private fun Artist() {
     PreviewTheme {
         Surface {
-            RecordingRelationCard(
+            RelationCard(
                 relation = RelationUiModel(
-                    resourceId = "1",
-                    resource = MusicBrainzResource.RECORDING,
                     linkedResourceId = "2",
                     linkedResource = MusicBrainzResource.ARTIST,
                     label = "miscellaneous support",
                     name = "Artist Name",
                     disambiguation = "that guy",
                     attributes = "task: director & organizer, strings",
-                    order = 0
                 )
             )
         }
@@ -113,16 +109,13 @@ private fun Artist() {
 private fun Recording() {
     PreviewTheme {
         Surface {
-            RecordingRelationCard(
+            RelationCard(
                 relation = RelationUiModel(
-                    resourceId = "1",
-                    resource = MusicBrainzResource.RECORDING,
                     linkedResourceId = "2",
                     linkedResource = MusicBrainzResource.RECORDING,
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
-                    order = 0
                 )
             )
         }

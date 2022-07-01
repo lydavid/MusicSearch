@@ -23,6 +23,7 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.relation.RelationCard
 
 // TODO: Do we want to generalize this for places? and any screens that uses relations?
 //  might be better to copy/paste and tailor them
@@ -74,7 +75,7 @@ internal fun RecordingScreen(
                 }
             }
             is RelationUiModel -> {
-                RecordingRelationCard(
+                RelationCard(
                     relation = uiModel,
                     onItemClick = onItemClick,
                 )
