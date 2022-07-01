@@ -16,7 +16,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.domain.Header
-import ly.david.mbjc.data.domain.RecordingRelationUiModel
+import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -73,7 +73,7 @@ internal fun RecordingScreen(
                     Text(text = recording?.date.orEmpty())
                 }
             }
-            is RecordingRelationUiModel -> {
+            is RelationUiModel -> {
                 RecordingRelationCard(
                     relation = uiModel,
                     onItemClick = onItemClick,

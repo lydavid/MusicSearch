@@ -9,8 +9,8 @@ import ly.david.mbjc.data.persistence.LookupHistory
 import ly.david.mbjc.data.persistence.LookupHistoryDao
 import ly.david.mbjc.data.persistence.recording.RecordingDao
 import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
-import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
-import ly.david.mbjc.data.persistence.recording.toRecordingRelationRoomModel
+import ly.david.mbjc.data.persistence.recording.RelationRoomModel
+import ly.david.mbjc.data.persistence.recording.toRelationRoomModel
 import ly.david.mbjc.data.persistence.toRecordingRoomModel
 
 @Singleton
@@ -37,10 +37,11 @@ internal class RecordingRepository @Inject constructor(
             recordingDao.insert(musicBrainzRecording.toRecordingRoomModel())
 
 //            val relations = mutableListOf<RelationRoomModel>()
-            val recordingRelations = mutableListOf<RecordingRelationRoomModel>()
+            val recordingRelations = mutableListOf<RelationRoomModel>()
             musicBrainzRecording.relations?.forEachIndexed { index, relationMusicBrainzModel ->
-                relationMusicBrainzModel.toRecordingRelationRoomModel(
-                    recordingId = recordingId,
+                relationMusicBrainzModel.toRelationRoomModel(
+                    resourceId = recordingId,
+                    resource = MusicBrainzResource.RECORDING,
                     order = index
                 )?.let { relationRoomModel ->
 //                    relations.add(relationRoomModel)

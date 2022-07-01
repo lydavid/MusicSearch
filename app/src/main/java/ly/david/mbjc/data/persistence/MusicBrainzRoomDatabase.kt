@@ -19,7 +19,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.recording.RecordingDao
 import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
-import ly.david.mbjc.data.persistence.recording.RecordingRelationRoomModel
+import ly.david.mbjc.data.persistence.recording.RelationRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
@@ -41,7 +41,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
         // Relationship tables
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
-        RecordingRelationRoomModel::class,
+        RelationRoomModel::class,
 
         // Additional features tables
         LookupHistory::class

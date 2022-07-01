@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.RecordingRelationUiModel
+import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
@@ -24,7 +24,7 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 // TODO: since this doesn't reference recordingId, can be generalized for all relation cards
 @Composable
 internal fun RecordingRelationCard(
-    relation: RecordingRelationUiModel,
+    relation: RelationUiModel,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
 
@@ -91,14 +91,15 @@ private fun Artist() {
     PreviewTheme {
         Surface {
             RecordingRelationCard(
-                relation = RecordingRelationUiModel(
+                relation = RelationUiModel(
+                    resourceId = "1",
+                    resource = MusicBrainzResource.RECORDING,
+                    linkedResourceId = "2",
+                    linkedResource = MusicBrainzResource.ARTIST,
                     label = "miscellaneous support",
                     name = "Artist Name",
                     disambiguation = "that guy",
                     attributes = "task: director & organizer, strings",
-                    linkedResource = MusicBrainzResource.ARTIST,
-                    recordingId = "1",
-                    linkedResourceId = "2",
                     order = 0
                 )
             )
@@ -113,13 +114,14 @@ private fun Recording() {
     PreviewTheme {
         Surface {
             RecordingRelationCard(
-                relation = RecordingRelationUiModel(
+                relation = RelationUiModel(
+                    resourceId = "1",
+                    resource = MusicBrainzResource.RECORDING,
+                    linkedResourceId = "2",
+                    linkedResource = MusicBrainzResource.RECORDING,
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
-                    linkedResource = MusicBrainzResource.RECORDING,
-                    recordingId = "1",
-                    linkedResourceId = "2",
                     order = 0
                 )
             )

@@ -13,24 +13,15 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 @Entity(
     tableName = "relations",
     primaryKeys = ["resource_id", "linked_resource_id", "order"],
-
-    // TODO: FK is useful for ensuring data integrity but we can't have one column use FK from multiple tables
-//    foreignKeys = [
-//        ForeignKey(
-//            entity = RecordingRoomModel::class,
-//            parentColumns = arrayOf("id"),
-//            childColumns = arrayOf("recording_id"),
-//            onUpdate = ForeignKey.CASCADE,
-//            onDelete = ForeignKey.CASCADE
-//        )
-//    ]
 )
-internal data class RecordingRelationRoomModel(
+internal data class RelationRoomModel(
     @ColumnInfo(name = "resource_id")
-    val resourceId: String,
+    override val resourceId: String,
 
+    // Default is because this used to be for recordings only.
+    // We expect to always pass in an appropriate resource, so it shouldn't affect us.
     @ColumnInfo(name = "resource", defaultValue = "recording")
-    val resource: MusicBrainzResource,
+    override val resource: MusicBrainzResource,
 
     // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
@@ -72,26 +63,27 @@ internal data class RecordingRelationRoomModel(
      */
     @ColumnInfo(name = "additional_info")
     override val additionalInfo: String? = null,
-): Relation
+) : Relation
 
 /**
- * We cannot guarantee that a [RecordingRelationRoomModel] will be created in the scenario that target-type points to a resource
+ * We cannot guarantee that a [RelationRoomModel] will be created in the scenario that target-type points to a resource
  * but that object is null. It's possible that this is never the case, but our models are currently structured such
  * that any of them are nullable.
  */
-internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
-    recordingId: String,
+internal fun RelationMusicBrainzModel.toRelationRoomModel(
+    resourceId: String,
+    resource: MusicBrainzResource,
     order: Int,
-): RecordingRelationRoomModel? {
+): RelationRoomModel? {
 
-    val resourceId: String
+    val linkedResourceId: String
     val name: String
     val disambiguation: String?
     var additionalInfo: String? = null
     when (targetType) {
         MusicBrainzResource.ARTIST -> {
             if (artist == null) return null
-            resourceId = artist.id
+            linkedResourceId = artist.id
             name = if (targetCredit.isNullOrEmpty()) {
                 artist.name
             } else {
@@ -102,7 +94,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         }
         MusicBrainzResource.RECORDING -> {
             if (recording == null) return null
-            resourceId = recording.id
+            linkedResourceId = recording.id
             name = if (targetCredit.isNullOrEmpty()) {
                 recording.name
             } else {
@@ -114,7 +106,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         }
         MusicBrainzResource.LABEL -> {
             if (label == null) return null
-            resourceId = label.id
+            linkedResourceId = label.id
             name = if (targetCredit.isNullOrEmpty()) {
                 label.name.orEmpty()
             } else {
@@ -124,7 +116,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         }
         MusicBrainzResource.PLACE -> {
             if (place == null) return null
-            resourceId = place.id
+            linkedResourceId = place.id
             name = if (targetCredit.isNullOrEmpty()) {
                 place.name
             } else {
@@ -134,7 +126,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         }
         MusicBrainzResource.WORK -> {
             if (work == null) return null
-            resourceId = work.id
+            linkedResourceId = work.id
             name = if (targetCredit.isNullOrEmpty()) {
                 work.name
             } else {
@@ -148,23 +140,22 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         //  Upon navigation to a "url screen", we will instead open the url in the user's browser of choice.
         MusicBrainzResource.URL -> {
             if (url == null) return null
-            resourceId = url.id
+            linkedResourceId = url.id
             name = url.resource
             disambiguation = null
         }
 
         // TODO: handle rest
 
-
         else -> {
             return null
         }
     }
 
-    return RecordingRelationRoomModel(
-        resourceId = recordingId,
-        resource = MusicBrainzResource.RECORDING,
-        linkedResourceId = resourceId,
+    return RelationRoomModel(
+        resourceId = resourceId,
+        resource = resource,
+        linkedResourceId = linkedResourceId,
         linkedResource = targetType,
         order = order,
         label = type,

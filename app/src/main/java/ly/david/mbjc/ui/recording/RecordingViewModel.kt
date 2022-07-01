@@ -16,9 +16,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.Header
-import ly.david.mbjc.data.domain.RecordingRelationUiModel
+import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.toRecordingRelationUiModel
+import ly.david.mbjc.data.domain.toRelationUiModel
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.recording.RecordingRelationDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
@@ -40,12 +41,12 @@ internal class RecordingViewModel @Inject constructor(
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
-                    recordingRelationDao.getRelationsForRecording(recordingId)
+                    recordingRelationDao.getRelationsForRecording(recordingId, MusicBrainzResource.RECORDING)
                 }
             ).flow.map { pagingData ->
                 pagingData.map { relation ->
-                    relation.toRecordingRelationUiModel()
-                }.insertSeparators { before: RecordingRelationUiModel?, _: RecordingRelationUiModel? ->
+                    relation.toRelationUiModel()
+                }.insertSeparators { before: RelationUiModel?, _: RelationUiModel? ->
                     if (before == null) Header else null
                 }
             }
