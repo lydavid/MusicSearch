@@ -30,7 +30,7 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 13,
+    version = 14,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -59,12 +59,13 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 9, to = 10),
         AutoMigration(from = 11, to = 12),
         AutoMigration(from = 12, to = 13, spec = MusicBrainzRoomDatabase.GeneralizeRecordingRelation::class),
-//        AutoMigration(from = 13, to = 14, spec = MusicBrainzRoomDatabase.RenameResourceId::class),
+        AutoMigration(from = 13, to = 14, spec = MusicBrainzRoomDatabase.RenameResourceId::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
+    // region Migrations
     @RenameColumn(tableName = "artists", fromColumnName = "country", toColumnName = "country_code")
     class RenameCountry : AutoMigrationSpec
 
@@ -75,10 +76,9 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     @RenameColumn(tableName = "recordings_relations", fromColumnName = "resource", toColumnName = "linked_resource")
     class GeneralizeRecordingRelation : AutoMigrationSpec
 
-    @RenameColumn(tableName = "recordings_relations", fromColumnName = "recording_id", toColumnName = "resource_id")
+    @RenameColumn(tableName = "relations", fromColumnName = "recording_id", toColumnName = "resource_id")
     class RenameResourceId : AutoMigrationSpec
-
-    class E : AutoMigrationSpec
+    // endregion
 
     abstract fun getArtistDao(): ArtistDao
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao

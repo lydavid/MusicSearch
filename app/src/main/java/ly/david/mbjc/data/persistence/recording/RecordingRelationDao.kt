@@ -12,8 +12,8 @@ internal abstract class RecordingRelationDao : BaseDao<RecordingRelationRoomMode
         """
             SELECT rel.*
             FROM relations rel
-            INNER JOIN recordings rec ON rel.recording_id = rec.id
-            WHERE rec.id = :recordingId
+            INNER JOIN recordings rec ON rel.resource_id = rec.id
+            WHERE rec.id = :recordingId AND rel.resource = "recording"
             ORDER BY rel.`order`
         """
     )

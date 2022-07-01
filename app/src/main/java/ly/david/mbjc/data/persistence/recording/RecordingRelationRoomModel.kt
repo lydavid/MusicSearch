@@ -10,14 +10,9 @@ import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
-// TODO: can generalize recording_id to
-
-// TODO: instead of this, could we just have a linking table from Recording to [Artist, Label, Place, Work, etc] ?
-//  maybe try it eventually. For now, let's get something working first.
-//  If we don't plan to display items like we do for Recording, let's just make this Recording specific for now.
 @Entity(
     tableName = "relations",
-    primaryKeys = ["recording_id", "linked_resource_id", "order"],
+    primaryKeys = ["resource_id", "linked_resource_id", "order"],
 
     // TODO: FK is useful for ensuring data integrity but we can't have one column use FK from multiple tables
 //    foreignKeys = [
@@ -31,12 +26,18 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 //    ]
 )
 internal data class RecordingRelationRoomModel(
-    @ColumnInfo(name = "recording_id")
+    @ColumnInfo(name = "resource_id")
     val resourceId: String,
+
+    @ColumnInfo(name = "resource", defaultValue = "recording")
+    val resource: MusicBrainzResource,
 
     // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
     override val linkedResourceId: String,
+
+    @ColumnInfo(name = "linked_resource")
+    override val linkedResource: MusicBrainzResource,
 
     // TODO: an artist can appear multiple times similar to artist credits
     //  for now, we'll use order which is the order we insert it. But we probably won't display it in this order.
@@ -71,9 +72,6 @@ internal data class RecordingRelationRoomModel(
      */
     @ColumnInfo(name = "additional_info")
     override val additionalInfo: String? = null,
-
-    @ColumnInfo(name = "linked_resource")
-    override val linkedResource: MusicBrainzResource,
 ): Relation
 
 /**
@@ -165,13 +163,14 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
 
     return RecordingRelationRoomModel(
         resourceId = recordingId,
+        resource = MusicBrainzResource.RECORDING,
         linkedResourceId = resourceId,
+        linkedResource = targetType,
         order = order,
         label = type,
         name = name,
         disambiguation = disambiguation,
         attributes = getFormattedAttributesForDisplay(),
-        additionalInfo = additionalInfo,
-        linkedResource = targetType
+        additionalInfo = additionalInfo
     )
 }
