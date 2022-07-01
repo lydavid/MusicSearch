@@ -2,13 +2,12 @@ package ly.david.mbjc.data.persistence.recording
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
+import ly.david.mbjc.data.Relation
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.getLifeSpanForDisplay
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
-import ly.david.mbjc.data.persistence.RecordingRoomModel
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 // TODO: can generalize recording_id to
@@ -17,49 +16,51 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 //  maybe try it eventually. For now, let's get something working first.
 //  If we don't plan to display items like we do for Recording, let's just make this Recording specific for now.
 @Entity(
-    tableName = "recordings_relations",
+    tableName = "relations",
     primaryKeys = ["recording_id", "linked_resource_id", "order"],
-    foreignKeys = [
-        ForeignKey(
-            entity = RecordingRoomModel::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("recording_id"),
-            onUpdate = ForeignKey.CASCADE,
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+
+    // TODO: FK is useful for ensuring data integrity but we can't have one column use FK from multiple tables
+//    foreignKeys = [
+//        ForeignKey(
+//            entity = RecordingRoomModel::class,
+//            parentColumns = arrayOf("id"),
+//            childColumns = arrayOf("recording_id"),
+//            onUpdate = ForeignKey.CASCADE,
+//            onDelete = ForeignKey.CASCADE
+//        )
+//    ]
 )
 internal data class RecordingRelationRoomModel(
     @ColumnInfo(name = "recording_id")
-    val recordingId: String,
+    val resourceId: String,
 
     // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
-    val linkedResourceId: String,
+    override val linkedResourceId: String,
 
     // TODO: an artist can appear multiple times similar to artist credits
     //  for now, we'll use order which is the order we insert it. But we probably won't display it in this order.
     //  This is not necessarily the order it's displayed on MB website.
     @ColumnInfo(name = "order")
-    val order: Int,
+    override val order: Int,
 
     /**
      * [RelationMusicBrainzModel.type].
      */
     @ColumnInfo(name = "label")
-    val label: String,
+    override val label: String,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    override val name: String,
 
     @ColumnInfo(name = "disambiguation")
-    val disambiguation: String? = null,
+    override val disambiguation: String? = null,
 
     /**
      * Combined [RelationMusicBrainzModel.attributes].
      */
     @ColumnInfo(name = "attributes")
-    val attributes: String? = null,
+    override val attributes: String? = null,
 
     /**
      * Includes things like:
@@ -69,11 +70,11 @@ internal data class RecordingRelationRoomModel(
      * - (order: 8)
      */
     @ColumnInfo(name = "additional_info")
-    val additionalInfo: String? = null,
+    override val additionalInfo: String? = null,
 
-    @ColumnInfo(name = "resource")
-    val resource: MusicBrainzResource,
-)
+    @ColumnInfo(name = "linked_resource")
+    override val linkedResource: MusicBrainzResource,
+): Relation
 
 /**
  * We cannot guarantee that a [RecordingRelationRoomModel] will be created in the scenario that target-type points to a resource
@@ -163,7 +164,7 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
     }
 
     return RecordingRelationRoomModel(
-        recordingId = recordingId,
+        resourceId = recordingId,
         linkedResourceId = resourceId,
         order = order,
         label = type,
@@ -171,6 +172,6 @@ internal fun RelationMusicBrainzModel.toRecordingRelationRoomModel(
         disambiguation = disambiguation,
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo,
-        resource = targetType
+        linkedResource = targetType
     )
 }

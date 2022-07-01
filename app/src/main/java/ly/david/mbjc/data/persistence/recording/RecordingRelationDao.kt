@@ -10,11 +10,11 @@ internal abstract class RecordingRelationDao : BaseDao<RecordingRelationRoomMode
 
     @Query(
         """
-            SELECT rr.*
-            FROM recordings_relations rr
-            INNER JOIN recordings rec ON rr.recording_id = rec.id
+            SELECT rel.*
+            FROM relations rel
+            INNER JOIN recordings rec ON rel.recording_id = rec.id
             WHERE rec.id = :recordingId
-            ORDER BY rr.`order`
+            ORDER BY rel.`order`
         """
     )
     abstract fun getRelationsForRecording(recordingId: String): PagingSource<Int, RecordingRelationRoomModel>

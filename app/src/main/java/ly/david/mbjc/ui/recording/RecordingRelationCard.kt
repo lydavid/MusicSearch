@@ -21,6 +21,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
+// TODO: since this doesn't reference recordingId, can be generalized for all relation cards
 @Composable
 internal fun RecordingRelationCard(
     relation: RecordingRelationUiModel,
@@ -28,7 +29,7 @@ internal fun RecordingRelationCard(
 ) {
 
     ClickableListItem(onClick = {
-        onItemClick(relation.resource.toDestination(), relation.linkedResourceId)
+        onItemClick(relation.linkedResource.toDestination(), relation.linkedResourceId)
     }) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
             Text(
@@ -42,7 +43,7 @@ internal fun RecordingRelationCard(
             ) {
 
                 ResourceIcon(
-                    resource = relation.resource,
+                    resource = relation.linkedResource,
                     modifier = Modifier.padding(end = 8.dp)
                 )
 
@@ -95,7 +96,7 @@ private fun Artist() {
                     name = "Artist Name",
                     disambiguation = "that guy",
                     attributes = "task: director & organizer, strings",
-                    resource = MusicBrainzResource.ARTIST,
+                    linkedResource = MusicBrainzResource.ARTIST,
                     recordingId = "1",
                     linkedResourceId = "2",
                     order = 0
@@ -116,7 +117,7 @@ private fun Recording() {
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
-                    resource = MusicBrainzResource.RECORDING,
+                    linkedResource = MusicBrainzResource.RECORDING,
                     recordingId = "1",
                     linkedResourceId = "2",
                     order = 0

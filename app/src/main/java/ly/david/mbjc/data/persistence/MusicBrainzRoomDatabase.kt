@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RenameColumn
+import androidx.room.RenameTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -29,7 +30,7 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 12,
+    version = 13,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -57,6 +58,8 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 8, to = 9),
         AutoMigration(from = 9, to = 10),
         AutoMigration(from = 11, to = 12),
+        AutoMigration(from = 12, to = 13, spec = MusicBrainzRoomDatabase.GeneralizeRecordingRelation::class),
+//        AutoMigration(from = 13, to = 14, spec = MusicBrainzRoomDatabase.RenameResourceId::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -67,6 +70,13 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     @RenameColumn(tableName = "releases", fromColumnName = "country", toColumnName = "country_code")
     class RenameReleasesCountryToCountryCode : AutoMigrationSpec
+
+    @RenameTable(fromTableName = "recordings_relations", toTableName = "relations")
+    @RenameColumn(tableName = "recordings_relations", fromColumnName = "resource", toColumnName = "linked_resource")
+    class GeneralizeRecordingRelation : AutoMigrationSpec
+
+    @RenameColumn(tableName = "recordings_relations", fromColumnName = "recording_id", toColumnName = "resource_id")
+    class RenameResourceId : AutoMigrationSpec
 
     class E : AutoMigrationSpec
 
