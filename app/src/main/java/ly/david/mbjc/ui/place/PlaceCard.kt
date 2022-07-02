@@ -23,6 +23,7 @@ internal fun PlaceCard(
     ClickableListItem(
         onClick = { onPlaceClick(place) },
     ) {
+        // TODO:
         Column {
             Text(text = place.getNameWithDisambiguation())
             Text(text = place.address)

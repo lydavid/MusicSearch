@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.place
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
@@ -11,16 +12,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.mbjc.data.Coordinates
 import ly.david.mbjc.data.Place
 import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.showMap
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.relation.RelationCard
 
@@ -36,6 +41,7 @@ internal fun PlaceScreen(
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }
     var place: Place? by remember { mutableStateOf(null) }
     val lazyListState = rememberLazyListState()
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = placeId) {
         try {
@@ -66,9 +72,12 @@ internal fun PlaceScreen(
 
         when (uiModel) {
             is Header -> {
-                Column {
-                    Text(text = place?.coordinates?.longitude.toString())
-                    Text(text = place?.coordinates?.latitude.toString())
+                place?.coordinates?.let {
+                    CoordinateCard(
+                        context = context,
+                        coordinates = it,
+                        label = place?.name
+                    )
                 }
             }
             is RelationUiModel -> {
@@ -80,6 +89,22 @@ internal fun PlaceScreen(
             else -> {
                 // Do nothing.
             }
+        }
+    }
+}
+
+@Composable
+internal fun CoordinateCard(
+    context: Context,
+    coordinates: Coordinates,
+    label: String? = null
+) {
+    ClickableListItem(onClick = {
+        context.showMap(coordinates, label)
+    }) {
+        Column {
+            Text(text = coordinates.longitude.toString())
+            Text(text = coordinates.latitude.toString())
         }
     }
 }

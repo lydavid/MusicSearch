@@ -22,4 +22,3 @@ internal data class PlaceMusicBrainzModel(
     @Json(name = "area") val area: Area? = null,
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), Place
-
