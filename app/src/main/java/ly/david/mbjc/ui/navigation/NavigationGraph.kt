@@ -11,12 +11,14 @@ import androidx.navigation.navDeepLink
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
+import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScreenScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 
 private const val RECORDING_ID = "recordingId"
+private const val PLACE_ID = "placeId"
 
 @Composable
 internal fun NavigationGraph(
@@ -28,6 +30,7 @@ internal fun NavigationGraph(
     val releaseGroupDeeplink = stringResource(id = R.string.deeplink_release_group)
     val releaseDeeplink = stringResource(id = R.string.deeplink_release)
     val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
+    val placeDeeplink = stringResource(id = R.string.deeplink_place)
 
     NavHost(
         navController = navController,
@@ -59,13 +62,20 @@ internal fun NavigationGraph(
             }
         }
 
+        val onPlaceClick: (String) -> Unit = { recordingId ->
+            navController.navigate("${Destination.LOOKUP_PLACE.route}/$recordingId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
                 Destination.LOOKUP_RELEASE -> onReleaseClick(id)
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
-                // TODO: place, work, label
+                Destination.LOOKUP_PLACE -> onPlaceClick(id)
+                // TODO: work, label
 
                 // TODO: support rest
                 else -> {
@@ -162,6 +172,27 @@ internal fun NavigationGraph(
             val recordingId = entry.arguments?.getString(RECORDING_ID) ?: return@composable
             RecordingScaffold(
                 recordingId = recordingId,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            "${Destination.LOOKUP_PLACE.route}/{$PLACE_ID}",
+            arguments = listOf(
+                navArgument(PLACE_ID) {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://$placeDeeplink/{$PLACE_ID}"
+                }
+            )
+        ) { entry ->
+            val placeId = entry.arguments?.getString(PLACE_ID) ?: return@composable
+            PlaceScaffold(
+                placeId = placeId,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )

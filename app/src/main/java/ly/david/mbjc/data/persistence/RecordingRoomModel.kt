@@ -21,14 +21,8 @@ internal data class RecordingRoomModel(
     override val length: Int? = null,
     @ColumnInfo(name = "video")
     override val video: Boolean = false,
-
-    // TODO: need linking tables 
-//    @ColumnInfo(name = "artist_credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
-//    @ColumnInfo(name = "relations") val relations: List<Relation>? = null
 ) : RoomModel(), Recording
 
-// TODO: because relation model can contain any of [artist, label, work, ...], we might only want to store a
-//  formatted description of it, its id, and its resource, so that we can deeplink to its page.
 internal fun RecordingMusicBrainzModel.toRecordingRoomModel() =
     RecordingRoomModel(
         id = id,

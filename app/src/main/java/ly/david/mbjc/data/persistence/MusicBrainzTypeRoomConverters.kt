@@ -3,7 +3,6 @@ package ly.david.mbjc.data.persistence
 import androidx.room.TypeConverter
 import java.util.Date
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.navigation.Destination
 
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
@@ -22,11 +21,11 @@ internal class MusicBrainzRoomTypeConverters {
             string.split(DELIMITER)
         }
 
-    @TypeConverter
-    fun toDestination(string: String?): Destination? = Destination.values().firstOrNull { it.route == string }
-
-    @TypeConverter
-    fun fromDestination(destination: Destination?): String? = destination?.route
+//    @TypeConverter
+//    fun toCoordinates(string: String?): Destination? = Destination.values().firstOrNull { it.route == string }
+//
+//    @TypeConverter
+//    fun fromCoordinates(coordinates: Coordinates): String? = destination?.route
 
     @TypeConverter
     fun toResource(string: String?): MusicBrainzResource? =

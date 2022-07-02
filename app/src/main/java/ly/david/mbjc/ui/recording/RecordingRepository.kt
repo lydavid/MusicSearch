@@ -13,6 +13,7 @@ import ly.david.mbjc.data.persistence.recording.RecordingDao
 import ly.david.mbjc.data.persistence.toRecordingRoomModel
 import ly.david.mbjc.data.persistence.toRelationRoomModel
 
+// TODO: place, work will use something like this
 @Singleton
 internal class RecordingRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
@@ -36,26 +37,15 @@ internal class RecordingRepository @Inject constructor(
             val musicBrainzRecording = musicBrainzApiService.lookupRecording(recordingId)
             recordingDao.insert(musicBrainzRecording.toRecordingRoomModel())
 
-//            val relations = mutableListOf<RelationRoomModel>()
             val recordingRelations = mutableListOf<RelationRoomModel>()
             musicBrainzRecording.relations?.forEachIndexed { index, relationMusicBrainzModel ->
                 relationMusicBrainzModel.toRelationRoomModel(
                     resourceId = recordingId,
-                    resource = MusicBrainzResource.RECORDING,
                     order = index
                 )?.let { relationRoomModel ->
-//                    relations.add(relationRoomModel)
-//                    recordingRelations.add(
-//                        RecordingRelationRoomModel(
-//                            recordingId = recordingId,
-//                            linkedResourceId = relationRoomModel.resourceId,
-//                            order = index
-//                        )
-//                    )
                     recordingRelations.add(relationRoomModel)
                 }
             }
-//            relationDao.insertAllIgnoreDuplicates(relations)
             relationDao.insertAll(recordingRelations)
 
             incrementOrInsertLookupHistory(musicBrainzRecording)

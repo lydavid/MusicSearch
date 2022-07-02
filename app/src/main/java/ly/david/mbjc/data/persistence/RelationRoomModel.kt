@@ -10,6 +10,8 @@ import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
+// TODO: recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.
+//  web doesn't display it twice, so maybe we shouldn't either.
 @Entity(
     tableName = "relations",
     primaryKeys = ["resource_id", "linked_resource_id", "order"],

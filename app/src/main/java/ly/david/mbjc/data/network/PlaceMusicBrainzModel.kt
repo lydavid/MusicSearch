@@ -24,8 +24,8 @@ internal data class PlaceMusicBrainzModel(
 
 internal data class Coordinates(
     @Json(name = "longitude")
-    val longitude: Float,
+    val longitude: Double,
 
     @Json(name = "latitude")
-    val latitude: Float,
+    val latitude: Double,
 )

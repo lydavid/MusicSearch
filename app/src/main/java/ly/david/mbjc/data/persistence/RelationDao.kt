@@ -9,11 +9,10 @@ internal abstract class RelationDao : BaseDao<RelationRoomModel> {
 
     @Query(
         """
-            SELECT rel.*
-            FROM relations rel
-            INNER JOIN recordings rec ON rel.resource_id = rec.id
-            WHERE rec.id = :resourceId
-            ORDER BY rel.`order`
+            SELECT *
+            FROM relations
+            WHERE resource_id = :resourceId
+            ORDER BY `order`
         """
     )
     abstract fun getRelationsForResource(

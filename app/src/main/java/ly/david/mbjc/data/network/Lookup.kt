@@ -40,4 +40,11 @@ internal interface Lookup {
             "+artist-credits"
         // "+work-level-rels" // Web displays this in recording screen, but we can reserve it for work screen
     ): RecordingMusicBrainzModel
+
+    @GET("place/{placeId}")
+    suspend fun lookupPlace(
+        @Path("placeId") placeId: String,
+        @Query("inc") include: String = "area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
+            "+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
+    ): PlaceMusicBrainzModel
 }
