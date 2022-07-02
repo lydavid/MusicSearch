@@ -2,6 +2,7 @@ package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.Area
+import ly.david.mbjc.data.Coordinates
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.Place
 
@@ -22,10 +23,3 @@ internal data class PlaceMusicBrainzModel(
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), Place
 
-internal data class Coordinates(
-    @Json(name = "longitude")
-    val longitude: Double,
-
-    @Json(name = "latitude")
-    val latitude: Double,
-)

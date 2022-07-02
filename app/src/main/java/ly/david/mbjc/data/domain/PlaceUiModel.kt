@@ -1,9 +1,9 @@
 package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Area
+import ly.david.mbjc.data.Coordinates
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.Place
-import ly.david.mbjc.data.network.Coordinates
 import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 
 internal data class PlaceUiModel(

@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ly.david.mbjc.data.Coordinates
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.Place
-import ly.david.mbjc.data.network.Coordinates
 import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 
 @Entity(tableName = "places")

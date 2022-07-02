@@ -1,7 +1,5 @@
 package ly.david.mbjc.data
 
-import ly.david.mbjc.data.network.Coordinates
-
 internal interface Place : NameWithDisambiguation {
     val id: String
     override val name: String
