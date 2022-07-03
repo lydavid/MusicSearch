@@ -21,12 +21,19 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
     @Json(name = "label") val label: LabelMusicBrainzModel? = null,
     @Json(name = "work") val work: WorkMusicBrainzModel? = null,
+    @Json(name = "area") val area: AreaMusicBrainzModel? = null,
     @Json(name = "place") val place: PlaceMusicBrainzModel? = null,
     @Json(name = "url") val url: UrlMusicBrainzModel? = null,
     @Json(name = "recording") val recording: RecordingMusicBrainzModel? = null,
 ): ILifeSpan
 
+// TODO: rest of attributes that have a corresponding value
+//  would be nice if we didn't need a field for each one, seeing as how they all have a string value...
 internal data class AttributeValue(
+
+    /**
+     * https://musicbrainz.org/relationship/68330a36-44cf-4fa2-84e8-533c6fe3fc23
+     */
     @Json(name = "task")
     val task: String? = null
 )

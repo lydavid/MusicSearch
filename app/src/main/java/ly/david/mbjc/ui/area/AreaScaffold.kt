@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.place
+package ly.david.mbjc.ui.area
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
@@ -19,8 +19,8 @@ import ly.david.mbjc.ui.navigation.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun PlaceScaffold(
-    placeId: String,
+internal fun AreaScaffold(
+    areaId: String,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
@@ -37,7 +37,7 @@ internal fun PlaceScaffold(
                     DropdownMenuItem(
                         text = { Text("Open in browser") },
                         onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.PLACE, placeId)
+                            context.lookupInBrowser(MusicBrainzResource.AREA, areaId)
                             closeMenu()
                         }
                     )
@@ -45,10 +45,9 @@ internal fun PlaceScaffold(
             )
         },
     ) { innerPadding ->
-        PlaceScreen(
+        AreaScreen(
             modifier = Modifier.padding(innerPadding),
-            context = context,
-            placeId = placeId,
+            areaId = areaId,
             onTitleUpdate = { title ->
                 titleState = title
             },

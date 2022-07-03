@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
@@ -17,6 +18,8 @@ import ly.david.mbjc.ui.release.ReleaseScreenScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 
+// TODO: unless we need more parameters, these can all be "id"
+private const val ID = "id"
 private const val RECORDING_ID = "recordingId"
 private const val PLACE_ID = "placeId"
 
@@ -30,6 +33,7 @@ internal fun NavigationGraph(
     val releaseGroupDeeplink = stringResource(id = R.string.deeplink_release_group)
     val releaseDeeplink = stringResource(id = R.string.deeplink_release)
     val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
+    val areaDeeplink = stringResource(id = R.string.deeplink_area)
     val placeDeeplink = stringResource(id = R.string.deeplink_place)
 
     NavHost(
@@ -62,8 +66,14 @@ internal fun NavigationGraph(
             }
         }
 
-        val onPlaceClick: (String) -> Unit = { recordingId ->
-            navController.navigate("${Destination.LOOKUP_PLACE.route}/$recordingId") {
+        val onAreaClick: (String) -> Unit = { recordingId ->
+            navController.navigate("${Destination.LOOKUP_AREA.route}/$recordingId") {
+                restoreState = true
+            }
+        }
+
+        val onPlaceClick: (String) -> Unit = { placeId ->
+            navController.navigate("${Destination.LOOKUP_PLACE.route}/$placeId") {
                 restoreState = true
             }
         }
@@ -74,10 +84,9 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
                 Destination.LOOKUP_RELEASE -> onReleaseClick(id)
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
+                Destination.LOOKUP_AREA -> onAreaClick(id)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
-                // TODO: area, work, label
-
-                // TODO: support rest
+                // TODO:  work, label, event, instrument, series
                 else -> {
                     // Not supported.
                 }
@@ -172,6 +181,27 @@ internal fun NavigationGraph(
             val recordingId = entry.arguments?.getString(RECORDING_ID) ?: return@composable
             RecordingScaffold(
                 recordingId = recordingId,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            "${Destination.LOOKUP_AREA.route}/{$ID}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://$areaDeeplink/{$ID}"
+                }
+            )
+        ) { entry ->
+            val areaId = entry.arguments?.getString(ID) ?: return@composable
+            AreaScaffold(
+                areaId = areaId,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )

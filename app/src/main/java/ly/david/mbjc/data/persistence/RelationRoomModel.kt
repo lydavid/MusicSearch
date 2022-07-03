@@ -110,6 +110,12 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
             }
             disambiguation = label.disambiguation
         }
+        MusicBrainzResource.AREA -> {
+            if (area == null) return null
+            linkedResourceId = area.id
+            name = area.name
+            disambiguation = area.disambiguation
+        }
         MusicBrainzResource.PLACE -> {
             if (place == null) return null
             linkedResourceId = place.id

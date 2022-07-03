@@ -45,7 +45,7 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
 //    @Json(name = "genre")
 //    GENRE("Genre", "genre"),
 
-    // These should not be stored in a table.
+    // These are not searchable, but they are lookupable
     @Json(name = "url")
     URL("URL", "url"),
 

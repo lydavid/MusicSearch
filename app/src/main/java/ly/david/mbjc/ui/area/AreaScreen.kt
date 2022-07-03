@@ -1,6 +1,5 @@
-package ly.david.mbjc.ui.place
+package ly.david.mbjc.ui.area
 
-import android.content.Context
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,8 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.mbjc.data.Place
-import ly.david.mbjc.data.domain.Header
+import ly.david.mbjc.data.Area
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
@@ -24,25 +22,25 @@ import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.relation.RelationCard
 
 @Composable
-internal fun PlaceScreen(
+internal fun AreaScreen(
     modifier: Modifier = Modifier,
-    context: Context,
-    placeId: String,
+    areaId: String,
     onTitleUpdate: (title: String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
-    viewModel: PlaceViewModel = hiltViewModel()
+    viewModel: AreaViewModel = hiltViewModel()
 ) {
 
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }
-    var place: Place? by remember { mutableStateOf(null) }
+    var area: Area? by remember { mutableStateOf(null) }
     val lazyListState = rememberLazyListState()
+//    val context = LocalContext.current
 
-    LaunchedEffect(key1 = placeId) {
+    LaunchedEffect(key1 = areaId) {
         try {
-            place = viewModel.lookupPlace(placeId)
-            onTitleUpdate(place?.getNameWithDisambiguation() ?: "[should not happen]")
+            area = viewModel.lookupArea(areaId)
+            onTitleUpdate(area?.getNameWithDisambiguation() ?: "[should not happen]")
         } catch (ex: Exception) {
-            onTitleUpdate("[Place lookup failed]")
+            onTitleUpdate("[Area lookup failed]")
         }
         lookupInProgress = false
     }
@@ -62,15 +60,6 @@ internal fun PlaceScreen(
     ) { uiModel: UiModel? ->
 
         when (uiModel) {
-            is Header -> {
-                place?.coordinates?.let {
-                    CoordinateCard(
-                        context = context,
-                        coordinates = it,
-                        label = place?.name
-                    )
-                }
-            }
             is RelationUiModel -> {
                 RelationCard(
                     relation = uiModel,

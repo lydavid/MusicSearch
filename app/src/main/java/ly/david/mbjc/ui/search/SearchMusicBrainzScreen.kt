@@ -47,6 +47,7 @@ import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.searchableResources
+import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -165,7 +166,9 @@ internal fun SearchMusicBrainzScreen(
                     }
                 }
                 is AreaUiModel -> {
-                    Text(text = uiModel.name)
+                    AreaCard(area = uiModel) {
+                        onItemClick(Destination.LOOKUP_AREA, id)
+                    }
                 }
                 is PlaceUiModel -> {
                     PlaceCard(place = uiModel) {

@@ -69,6 +69,18 @@
                     android:scheme="@string/deeplink_schema" />
             </intent-filter>
 
+            <!-- Support deep-linking into a area -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/deeplink_area"
+                    android:scheme="@string/deeplink_schema" />
+            </intent-filter>
+
             <!-- Support deep-linking into a place -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

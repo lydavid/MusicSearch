@@ -41,10 +41,29 @@ internal interface Lookup {
         // "+work-level-rels" // Web displays this in recording screen, but we can reserve it for work screen
     ): RecordingMusicBrainzModel
 
+    // TODO: lookup with all rels might be a bit too much, especially since there's no pagination
+    //  It takes 10s to retrieve 7.6MB of data for the city of New York, with 19381 relationships...
+    @GET("area/{areaId}")
+    suspend fun lookupArea(
+        @Path("areaId") areaId: String,
+
+        @Query("inc") include: String =
+        // Overview
+            "area-rels+url-rels+instrument-rels"
+
+        // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
+
+        // TODO: place-rels doesn't return anything
+        //  it isn't enough to get the data on this page: https://musicbrainz.org/area/74e50e58-5deb-4b99-93a2-decbb365c07f/places
+
+        //"area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
+        //"+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
+    ): AreaMusicBrainzModel
+
     @GET("place/{placeId}")
     suspend fun lookupPlace(
         @Path("placeId") placeId: String,
-        @Query("inc") include: String = "area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
-            "+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
+        @Query("inc") include: String = "place-rels"//"area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
+        //"+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
     ): PlaceMusicBrainzModel
 }
