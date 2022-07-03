@@ -1,9 +1,6 @@
 package ly.david.mbjc.ui.place
 
-import android.content.Context
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,16 +13,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.mbjc.data.Coordinates
 import ly.david.mbjc.data.Place
 import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.common.showMap
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.relation.RelationCard
 
@@ -86,22 +80,6 @@ internal fun PlaceScreen(
             else -> {
                 // Do nothing.
             }
-        }
-    }
-}
-
-@Composable
-internal fun CoordinateCard(
-    context: Context,
-    coordinates: Coordinates,
-    label: String? = null
-) {
-    ClickableListItem(onClick = {
-        context.showMap(coordinates, label)
-    }) {
-        Column {
-            Text(text = coordinates.longitude.toString())
-            Text(text = coordinates.latitude.toString())
         }
     }
 }
