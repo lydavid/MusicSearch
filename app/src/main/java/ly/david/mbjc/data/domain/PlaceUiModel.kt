@@ -1,9 +1,9 @@
 package ly.david.mbjc.data.domain
 
-import ly.david.mbjc.data.Area
 import ly.david.mbjc.data.Coordinates
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.Place
+import ly.david.mbjc.data.network.AreaMusicBrainzModel
 import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 
 internal data class PlaceUiModel(
@@ -16,7 +16,7 @@ internal data class PlaceUiModel(
     override val coordinates: Coordinates? = null,
     override val lifeSpan: LifeSpan? = null,
 
-    val area: Area? = null,
+    val area: AreaMusicBrainzModel? = null,
 ) : Place, UiModel()
 
 internal fun PlaceMusicBrainzModel.toPlaceUiModel() =
@@ -27,6 +27,6 @@ internal fun PlaceMusicBrainzModel.toPlaceUiModel() =
         address = address,
         type = type,
         coordinates = coordinates,
+        lifeSpan = lifeSpan,
         area = area
     )
-

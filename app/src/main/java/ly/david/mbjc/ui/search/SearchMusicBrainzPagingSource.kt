@@ -109,6 +109,17 @@ internal class SearchMusicBrainzPagingSource(
                     queryRecordings.recordings
                 )
             }
+            MusicBrainzResource.AREA -> {
+                val queryAreas = musicBrainzApiService.queryAreas(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryAreas.offset,
+                    queryAreas.areas
+                )
+            }
             MusicBrainzResource.PLACE -> {
                 val queryPlaces = musicBrainzApiService.queryPlaces(
                     query = queryString,

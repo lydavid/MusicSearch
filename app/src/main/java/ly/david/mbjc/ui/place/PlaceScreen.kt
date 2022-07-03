@@ -33,7 +33,7 @@ import ly.david.mbjc.ui.relation.RelationCard
 internal fun PlaceScreen(
     modifier: Modifier = Modifier,
     placeId: String,
-    onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> }, //todo: don't need sub
+    onTitleUpdate: (title: String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     viewModel: PlaceViewModel = hiltViewModel()
 ) {
@@ -46,12 +46,9 @@ internal fun PlaceScreen(
     LaunchedEffect(key1 = placeId) {
         try {
             place = viewModel.lookupPlace(placeId)
-            onTitleUpdate(
-                place?.getNameWithDisambiguation() ?: "[should not happen]",
-                "[Recording by <artist name>]"
-            )
+            onTitleUpdate(place?.getNameWithDisambiguation() ?: "[should not happen]")
         } catch (ex: Exception) {
-            onTitleUpdate("[Place lookup failed]", "[error]")
+            onTitleUpdate("[Place lookup failed]")
         }
         lookupInProgress = false
     }

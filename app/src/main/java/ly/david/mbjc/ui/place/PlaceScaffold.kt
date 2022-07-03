@@ -26,14 +26,12 @@ internal fun PlaceScaffold(
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
-    var subtitleState by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
                 title = titleState,
-                subtitle = subtitleState,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
@@ -50,9 +48,8 @@ internal fun PlaceScaffold(
         PlaceScreen(
             modifier = Modifier.padding(innerPadding),
             placeId = placeId,
-            onTitleUpdate = { title, subtitle ->
+            onTitleUpdate = { title ->
                 titleState = title
-                subtitleState = subtitle
             },
             onItemClick = onItemClick
         )

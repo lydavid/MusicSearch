@@ -16,6 +16,7 @@ internal data class LifeSpan(
     @Json(name = "end")
     override val end: String? = null,
 
+    // TODO: could be non-null
     @ColumnInfo(name = "ended")
     @Json(name = "ended")
     override val ended: Boolean? = null

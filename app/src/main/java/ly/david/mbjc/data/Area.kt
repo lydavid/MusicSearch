@@ -1,7 +1,5 @@
 package ly.david.mbjc.data
 
-import com.squareup.moshi.Json
-
 //"area": {
 //    "type": null,
 //    "name": "Japan",
@@ -13,7 +11,12 @@ import com.squareup.moshi.Json
 //    "JP"
 //    ]
 //},
-internal data class Area(
-    @Json(name = "id") val id: String,
-    @Json(name = "iso-3166-1-codes") val isoCodes: List<String>? = null,
-)
+internal interface Area : NameWithDisambiguation {
+    val id: String
+    override val name: String
+    override val disambiguation: String?
+    val type: String?
+    val lifeSpan: LifeSpan?
+
+    // val isoCodes: List<String>?
+}

@@ -37,6 +37,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
+import ly.david.mbjc.data.domain.AreaUiModel
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.PlaceUiModel
@@ -163,6 +164,9 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_RECORDING, id)
                     }
                 }
+                is AreaUiModel -> {
+                    Text(text = uiModel.name)
+                }
                 is PlaceUiModel -> {
                     PlaceCard(place = uiModel) {
                         onItemClick(Destination.LOOKUP_PLACE, id)
@@ -182,7 +186,6 @@ internal fun SearchMusicBrainzScreen(
                     // Null. Do nothing.
                 }
             }
-
         }
     }
 }

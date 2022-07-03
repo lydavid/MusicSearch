@@ -75,7 +75,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_RELEASE -> onReleaseClick(id)
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
-                // TODO: work, label
+                // TODO: area, work, label
 
                 // TODO: support rest
                 else -> {
