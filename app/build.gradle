@@ -22,7 +22,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "ly.david.musicbrainzjetpackcompose"
+        applicationId "ly.david.mbjc"
         minSdk 23
         targetSdk 32
         versionCode 1
@@ -41,11 +41,13 @@ android {
     }
 
     buildTypes {
-//        debug {
+        debug {
 //            minifyEnabled true
 //            shrinkResources true
 //            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-//        }
+
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled true
             shrinkResources true

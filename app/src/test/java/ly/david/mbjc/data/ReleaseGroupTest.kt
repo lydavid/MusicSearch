@@ -32,6 +32,13 @@ internal class ReleaseGroupTest {
     }
 
     @Test
+    fun `primary type, empty secondary types`() {
+        every { releaseGroupTypes.primaryType } returns "Album"
+        every { releaseGroupTypes.secondaryTypes } returns listOf()
+        assertEquals("Album", releaseGroupTypes.getDisplayTypes())
+    }
+
+    @Test
     fun `only has primary type`() {
         every { releaseGroupTypes.primaryType } returns "Album"
         every { releaseGroupTypes.secondaryTypes } returns null

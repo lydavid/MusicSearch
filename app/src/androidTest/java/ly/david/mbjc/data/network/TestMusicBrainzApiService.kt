@@ -29,6 +29,22 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
         )
     }
 
+    override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun browseReleaseGroupsByArtist(
         artistId: String,
         limit: Int,
@@ -63,6 +79,18 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {
         TODO("Not yet implemented")
     }
 }
