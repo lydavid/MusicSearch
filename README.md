@@ -27,6 +27,32 @@ adb shell am start -d "mbjc://instrument/e346ac37-b617-4c12-b54d-d25474b6c7b7" -
 </blockquote></details>
 
 
+<details><summary>artist</summary><blockquote>
+
+### The Rolling Stones
+- Many release groups (~950)
+- 10 browse requests
+
+```shell
+adb shell am start -d "mbjc://artist/b071f9fa-14b0-4217-8e97-eb41da73f598" -a android.intent.action.VIEW
+```
+
+### Wolfgang Amadeus Mozart
+- Huge number of release groups (~4600)
+
+```shell
+adb shell am start -d "mbjc://artist/b972f589-fb0e-474e-b64a-803b0364fa75" -a android.intent.action.VIEW
+```
+
+### Various Artist
+- Massive number of release groups (~210880)
+
+```shell
+adb shell am start -d "mbjc://artist/89ad4ac3-39f7-470e-963a-56509c546377" -a android.intent.action.VIEW
+```
+
+</blockquote></details>
+
 
 ## Generate unit test coverage
 
