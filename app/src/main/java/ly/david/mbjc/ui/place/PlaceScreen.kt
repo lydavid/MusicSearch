@@ -64,10 +64,14 @@ internal fun PlaceScreen(
         when (uiModel) {
             is Header -> {
                 place?.coordinates?.let {
+
+                    val label = place?.name +
+                        if (place?.lifeSpan?.ended == true) " (closed)" else ""
+
                     CoordinateCard(
                         context = context,
                         coordinates = it,
-                        label = place?.name
+                        label = label
                     )
                 }
             }

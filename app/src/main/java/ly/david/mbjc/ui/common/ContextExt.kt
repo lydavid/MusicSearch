@@ -31,7 +31,6 @@ internal fun Context.showMap(coordinates: Coordinates, label: String?) {
             val urlString = if (label.isNullOrEmpty()) {
                 "geo:$latitude,$longitude?z=$ZOOM_LEVEL"
             } else {
-                // TODO: if it closed, then mention it in label
                 "geo:0,0?q=$latitude,$longitude($label)&z=$ZOOM_LEVEL"
             }
             data = Uri.parse(urlString)

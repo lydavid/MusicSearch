@@ -10,7 +10,7 @@ import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Piano
-import androidx.compose.material.icons.filled.PinDrop
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -34,7 +34,7 @@ internal fun ResourceIcon(
             MusicBrainzResource.RECORDING -> Icons.Default.Mic
             MusicBrainzResource.WORK -> Icons.Default.MusicNote
             MusicBrainzResource.LABEL -> Icons.Default.CorporateFare
-            MusicBrainzResource.PLACE -> Icons.Default.PinDrop
+            MusicBrainzResource.PLACE -> Icons.Default.Place
             MusicBrainzResource.AREA -> Icons.Default.Public
             MusicBrainzResource.EVENT -> Icons.Default.Event
             MusicBrainzResource.SERIES -> Icons.Default.List
