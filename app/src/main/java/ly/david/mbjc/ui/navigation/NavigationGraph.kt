@@ -36,7 +36,7 @@ internal fun NavigationGraph(
     val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
     val areaDeeplink = stringResource(id = R.string.deeplink_area)
     val placeDeeplink = stringResource(id = R.string.deeplink_place)
-    val instrumentDeeplink = stringResource(id = R.string.deeplink_place)
+    val instrumentDeeplink = stringResource(id = R.string.deeplink_instrument)
 
     NavHost(
         navController = navController,

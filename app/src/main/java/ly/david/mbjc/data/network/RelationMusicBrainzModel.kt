@@ -27,7 +27,7 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "recording") val recording: RecordingMusicBrainzModel? = null,
     @Json(name = "instrument") val instrument: InstrumentMusicBrainzModel? = null,
 
-//    @Json(name = "genre") val genre: GenreMusicBrainzModel? = null,
+    @Json(name = "genre") val genre: GenreMusicBrainzModel? = null,
 ) : ILifeSpan
 
 // TODO: rest of attributes that have a corresponding value

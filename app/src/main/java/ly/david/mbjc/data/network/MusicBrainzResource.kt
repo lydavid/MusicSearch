@@ -42,8 +42,8 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     WORK("Work", "work"),
 
     // These are not searchable, but they are lookupable
-//    @Json(name = "genre")
-//    GENRE("Genre", "genre"),
+    @Json(name = "genre")
+    GENRE("Genre", "genre"),
 
     // These are not searchable, but they are lookupable
     @Json(name = "url")

@@ -40,6 +40,7 @@ internal fun ResourceIcon(
             MusicBrainzResource.SERIES -> Icons.Default.List
             MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
             else -> {
+                // Non-searchable resources like Genre, URL
                 // No icons.
                 return
             }

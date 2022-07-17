@@ -146,6 +146,18 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
             }
             disambiguation = instrument.disambiguation
         }
+
+        MusicBrainzResource.GENRE -> {
+            if (genre == null) return null
+            linkedResourceId = genre.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                genre.name
+            } else {
+                targetCredit
+            }
+            disambiguation = genre.disambiguation
+        }
+
         // TODO: handle urls, should just open that url in browser
         //  since we want to support full offline after returning to a screen, we need to save this url.
         //  Either save the url in the relation object, or store an id to the url in a urls table.
