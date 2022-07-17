@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.instrument
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
@@ -43,6 +45,13 @@ internal fun InstrumentScaffold(
             )
         },
     ) { innerPadding ->
-        Text(text = "$instrumentId")
+        InstrumentScreen(
+            modifier = Modifier.padding(innerPadding),
+            instrumentId = instrumentId,
+            onTitleUpdate = { title ->
+                titleState = title
+            },
+            onItemClick = onItemClick
+        )
     }
 }

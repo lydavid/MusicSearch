@@ -68,4 +68,10 @@ internal interface Lookup {
         @Query("inc") include: String = "place-rels"//"area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
         //"+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
     ): PlaceMusicBrainzModel
+
+    @GET("instrument/{instrumentId}")
+    suspend fun lookupInstrument(
+        @Path("instrumentId") instrumentId: String,
+        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels"//+genre-rels"
+    ): InstrumentMusicBrainzModel
 }

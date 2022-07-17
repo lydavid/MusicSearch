@@ -9,4 +9,6 @@ internal data class InstrumentMusicBrainzModel(
     @Json(name = "disambiguation") override val disambiguation: String?,
     @Json(name = "description") override val description: String?,
     @Json(name = "type") override val type: String?,
+
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), Instrument

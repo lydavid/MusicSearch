@@ -41,7 +41,7 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     @Json(name = "work")
     WORK("Work", "work"),
 
-    // Seems like these are no longer valid, or maybe they never were
+    // These are not searchable, but they are lookupable
 //    @Json(name = "genre")
 //    GENRE("Genre", "genre"),
 

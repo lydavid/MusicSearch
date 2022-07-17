@@ -25,7 +25,10 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "place") val place: PlaceMusicBrainzModel? = null,
     @Json(name = "url") val url: UrlMusicBrainzModel? = null,
     @Json(name = "recording") val recording: RecordingMusicBrainzModel? = null,
-): ILifeSpan
+    @Json(name = "instrument") val instrument: InstrumentMusicBrainzModel? = null,
+
+//    @Json(name = "genre") val genre: GenreMusicBrainzModel? = null,
+) : ILifeSpan
 
 // TODO: rest of attributes that have a corresponding value
 //  would be nice if we didn't need a field for each one, seeing as how they all have a string value...
