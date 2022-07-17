@@ -72,6 +72,6 @@ internal interface Lookup {
     @GET("instrument/{instrumentId}")
     suspend fun lookupInstrument(
         @Path("instrumentId") instrumentId: String,
-        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels+genre-rels"
+        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels+genre-rels+label-rels"
     ): InstrumentMusicBrainzModel
 }
