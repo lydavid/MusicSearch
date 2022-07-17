@@ -18,6 +18,7 @@ private const val AREA = "area"
 private const val PLACE = "place"
 private const val WORK = "work"
 private const val LABEL = "label"
+private const val INSTRUMENT = "instrument"
 
 /**
  * A navigation destination in the app.
@@ -38,6 +39,7 @@ internal enum class Destination(val route: String, val musicBrainzResource: Musi
     LOOKUP_PLACE("$TOP_LEVEL_LOOKUP$DIVIDER$PLACE", MusicBrainzResource.PLACE),
     LOOKUP_LABEL("$TOP_LEVEL_LOOKUP$DIVIDER$LABEL", MusicBrainzResource.LABEL),
     LOOKUP_WORK("$TOP_LEVEL_LOOKUP$DIVIDER$WORK", MusicBrainzResource.WORK),
+    LOOKUP_INSTRUMENT("$TOP_LEVEL_LOOKUP$DIVIDER$INSTRUMENT", MusicBrainzResource.INSTRUMENT),
 
     HISTORY(TOP_LEVEL_HISTORY, null)
 }
@@ -53,6 +55,7 @@ internal fun MusicBrainzResource.toDestination() =
 
         MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
         MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
+        MusicBrainzResource.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
 
         // TODO: create rest of destinations
         else -> Destination.LOOKUP_ARTIST

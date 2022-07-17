@@ -12,6 +12,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
+import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScreenScaffold
@@ -35,6 +36,7 @@ internal fun NavigationGraph(
     val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
     val areaDeeplink = stringResource(id = R.string.deeplink_area)
     val placeDeeplink = stringResource(id = R.string.deeplink_place)
+    val instrumentDeeplink = stringResource(id = R.string.deeplink_place)
 
     NavHost(
         navController = navController,
@@ -78,6 +80,12 @@ internal fun NavigationGraph(
             }
         }
 
+        val onInstrumentClick: (String) -> Unit = { instrumentId ->
+            navController.navigate("${Destination.LOOKUP_INSTRUMENT.route}/$instrumentId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
@@ -86,7 +94,8 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
                 Destination.LOOKUP_AREA -> onAreaClick(id)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
-                // TODO:  work, label, event, instrument, series
+                Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
+                // TODO:  work, label, event, series
                 else -> {
                     // Not supported.
                 }
@@ -223,6 +232,27 @@ internal fun NavigationGraph(
             val placeId = entry.arguments?.getString(PLACE_ID) ?: return@composable
             PlaceScaffold(
                 placeId = placeId,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            "${Destination.LOOKUP_INSTRUMENT.route}/{$ID}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://$instrumentDeeplink/{$ID}"
+                }
+            )
+        ) { entry ->
+            val instrumentId = entry.arguments?.getString(ID) ?: return@composable
+            InstrumentScaffold(
+                instrumentId = instrumentId,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )

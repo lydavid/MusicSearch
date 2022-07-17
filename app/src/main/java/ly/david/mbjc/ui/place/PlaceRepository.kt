@@ -35,6 +35,8 @@ internal class PlaceRepository @Inject constructor(
             val placeMusicBrainzModel = musicBrainzApiService.lookupPlace(placeId)
             placeDao.insert(placeMusicBrainzModel.toPlaceRoomModel())
 
+            // TODO: insert its area
+
             val relations = mutableListOf<RelationRoomModel>()
             placeMusicBrainzModel.relations?.forEachIndexed { index, relationMusicBrainzModel ->
                 relationMusicBrainzModel.toRelationRoomModel(

@@ -2,6 +2,7 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.network.AreaMusicBrainzModel
 import ly.david.mbjc.data.network.ArtistMusicBrainzModel
+import ly.david.mbjc.data.network.InstrumentMusicBrainzModel
 import ly.david.mbjc.data.network.MusicBrainzModel
 import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
@@ -44,5 +45,6 @@ internal fun MusicBrainzModel.toUiModel(): UiModel {
         is RecordingMusicBrainzModel -> this.toRecordingUiModel()
         is PlaceMusicBrainzModel -> this.toPlaceUiModel()
         is AreaMusicBrainzModel -> this.toAreaUiModel()
+        is InstrumentMusicBrainzModel -> this.toInstrumentUiModel()
     }
 }
