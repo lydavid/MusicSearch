@@ -19,6 +19,10 @@ private const val PLACE = "place"
 private const val WORK = "work"
 private const val LABEL = "label"
 private const val INSTRUMENT = "instrument"
+private const val EVENT = "event"
+private const val SERIES = "series"
+private const val GENRE = "genre"
+private const val URL = "url"
 
 /**
  * A navigation destination in the app.
@@ -40,6 +44,10 @@ internal enum class Destination(val route: String, val musicBrainzResource: Musi
     LOOKUP_LABEL("$TOP_LEVEL_LOOKUP$DIVIDER$LABEL", MusicBrainzResource.LABEL),
     LOOKUP_WORK("$TOP_LEVEL_LOOKUP$DIVIDER$WORK", MusicBrainzResource.WORK),
     LOOKUP_INSTRUMENT("$TOP_LEVEL_LOOKUP$DIVIDER$INSTRUMENT", MusicBrainzResource.INSTRUMENT),
+    LOOKUP_EVENT("$TOP_LEVEL_LOOKUP$DIVIDER$EVENT", MusicBrainzResource.EVENT),
+    LOOKUP_SERIES("$TOP_LEVEL_LOOKUP$DIVIDER$SERIES", MusicBrainzResource.SERIES),
+    LOOKUP_GENRE("$TOP_LEVEL_LOOKUP$DIVIDER$GENRE", MusicBrainzResource.GENRE),
+    LOOKUP_URL("$TOP_LEVEL_LOOKUP$DIVIDER$URL", MusicBrainzResource.URL),
 
     HISTORY(TOP_LEVEL_HISTORY, null)
 }
@@ -52,13 +60,16 @@ internal fun MusicBrainzResource.toDestination() =
         MusicBrainzResource.RECORDING -> Destination.LOOKUP_RECORDING
         MusicBrainzResource.AREA -> Destination.LOOKUP_AREA
         MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
-
-        MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
-        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
         MusicBrainzResource.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
 
-        // TODO: create rest of destinations
-        else -> Destination.LOOKUP_ARTIST
+        // TODO: everything below
+        MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
+        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
+        MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
+        MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES
+
+        MusicBrainzResource.GENRE -> Destination.LOOKUP_GENRE
+        MusicBrainzResource.URL -> Destination.LOOKUP_URL
     }
 
 /**

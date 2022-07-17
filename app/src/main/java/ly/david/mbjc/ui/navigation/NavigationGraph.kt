@@ -97,7 +97,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
                 // TODO:  work, label, event, series
                 else -> {
-                    // Not supported.
+                    // Not supported yet.
                 }
             }
         }
