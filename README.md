@@ -2,22 +2,41 @@
 
 ## Some deeplinks for testing
 
+<details><summary>area</summary><blockquote>
+
+### Kenya
+- parts, instruments, genre, url
+
+```shell
+adb shell am start -d "mbjc://area/023da4a0-acee-3fb1-b91e-5de74ccf787b" -a android.intent.action.VIEW
+```
+
+### New York
+- part of
+
+```shell
+adb shell am start -d "mbjc://area/74e50e58-5deb-4b99-93a2-decbb365c07f" -a android.intent.action.VIEW
+```
+
+</blockquote></details>
+
 <details><summary>instrument</summary><blockquote>
 
-electric guitar
+### electric guitar
 - used in, derivations, derived from, has hybrids, Wikidata
+
 ```shell
 adb shell am start -d "mbjc://instrument/7ee8ebf5-3aed-4fc8-8004-49f4a8c45a87" -a android.intent.action.VIEW
 ```
 
-biwa
+### biwa
 - from, picture
 
 ```shell
 adb shell am start -d "mbjc://instrument/1b165fa4-8510-4a3e-a2b5-2d38baf55176" -a android.intent.action.VIEW
 ```
 
-tubon
+### tubon
 - `invented by` a label
 
 ```shell

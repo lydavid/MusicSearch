@@ -73,8 +73,25 @@ internal fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String
 //  probably not unless we have access to an api that exposes all of these for us
 private val relationshipLabels = hashMapOf(
 
+    // https://musicbrainz.org/relationships/area-area
+    "de7cc874-8b1b-3a05-8272-f3834c968fb7" to ("parts" to "part of"),
+
+    // https://musicbrainz.org/relationships/area-event
+    // https://musicbrainz.org/relationships/area-recording
+    // https://musicbrainz.org/relationships/area-release
+    // https://musicbrainz.org/relationships/area-series
+    // https://musicbrainz.org/relationships/area-work
+    // TODO:
+
+    // https://musicbrainz.org/relationships/area-genre
+    "25ed73f8-a864-42cf-8b9c-68db198dbe0e" to ("genres" to "from"),
+
     // https://musicbrainz.org/relationships/area-instrument
     "0b67183b-9f36-4b09-b561-0fa531508f91" to ("instruments" to "from"),
+
+    // https://musicbrainz.org/relationships/area-url
+
+
 
     // https://musicbrainz.org/relationships/artist-instrument
     "87bfa63d-c91f-4bf2-9051-5103f7d181dd" to ("invented" to "invented by"),

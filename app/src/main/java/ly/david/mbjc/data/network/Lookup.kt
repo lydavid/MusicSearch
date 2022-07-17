@@ -49,7 +49,7 @@ internal interface Lookup {
 
         @Query("inc") include: String =
         // Overview
-            "area-rels+url-rels+instrument-rels"
+            "area-rels+url-rels+instrument-rels+genre-rels"
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
