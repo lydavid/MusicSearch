@@ -52,6 +52,8 @@ internal interface Lookup {
             "area-rels+url-rels+instrument-rels"
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
+        //  we might be able to do paged browse requests for these
+        //  place by area id
 
         // TODO: place-rels doesn't return anything
         //  it isn't enough to get the data on this page: https://musicbrainz.org/area/74e50e58-5deb-4b99-93a2-decbb365c07f/places
