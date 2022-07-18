@@ -2,6 +2,7 @@ package ly.david.mbjc.data.persistence
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import java.net.URLDecoder
 import ly.david.mbjc.data.Relation
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.getLifeSpanForDisplay
@@ -159,14 +160,10 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
             disambiguation = genre.disambiguation
         }
 
-        // TODO: handle urls, should just open that url in browser
-        //  since we want to support full offline after returning to a screen, we need to save this url.
-        //  Either save the url in the relation object, or store an id to the url in a urls table.
-        //  Upon navigation to a "url screen", we will instead open the url in the user's browser of choice.
         MusicBrainzResource.URL -> {
             if (url == null) return null
             linkedResourceId = url.id
-            name = url.resource
+            name = URLDecoder.decode(url.resource, "utf-8")
             disambiguation = null
         }
 

@@ -17,14 +17,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.artist.relation.ArtistRelationsScreen
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.navigation.Destination
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
 internal enum class ArtistTab(val title: String) {
     //    OVERVIEW("Overview"),
     RELEASE_GROUPS("Release Groups"),
-    RELEASES("Releases"),
+    RELATIONSHIPS("Relationships"),
     STATS("Stats")
 }
 
@@ -33,6 +35,7 @@ internal enum class ArtistTab(val title: String) {
 internal fun ArtistScreenScaffold(
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     onBack: () -> Unit,
 ) {
 
@@ -95,6 +98,9 @@ internal fun ArtistScreenScaffold(
     ) { innerPadding ->
 
         when (selectedTab) {
+            // TODO: in order for each of these screens to maintain their scroll state when switching tabs
+            //  we need to save state in viewmodel
+            //  That means we need a viewmodel in scaffold that is passed to each screen?
             ArtistTab.RELEASE_GROUPS -> {
                 ReleaseGroupsByArtistScreen(
                     modifier = Modifier.padding(innerPadding),
@@ -108,8 +114,11 @@ internal fun ArtistScreenScaffold(
                     }
                 )
             }
-            ArtistTab.RELEASES -> {
-                Text(text = "Nothing yet!")
+            ArtistTab.RELATIONSHIPS -> {
+                ArtistRelationsScreen(
+                    artistId = artistId,
+                    onItemClick = onItemClick
+                )
             }
             ArtistTab.STATS -> {
                 ArtistStatsScreen(artistId = artistId)

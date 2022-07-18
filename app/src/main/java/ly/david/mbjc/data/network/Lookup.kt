@@ -12,10 +12,14 @@ import retrofit2.http.Query
  */
 internal interface Lookup {
 
+    companion object {
+        const val ARTIST_INC_DEFAULT = "artist-rels+url-rels"
+    }
+
     @GET("artist/{artistId}")
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
-//        @Query("inc") include: String = "genres"
+        @Query("inc") include: String? = null
     ): ArtistMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")

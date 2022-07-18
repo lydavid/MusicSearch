@@ -95,9 +95,21 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_AREA -> onAreaClick(id)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
                 Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
-                // TODO:  work, label, event, series
-                else -> {
-                    // Not supported yet.
+
+                Destination.LOOKUP_URL -> {
+                    // Expected to be handled elsewhere.
+                }
+
+                Destination.LOOKUP_LABEL -> TODO()
+                Destination.LOOKUP_WORK -> TODO()
+                Destination.LOOKUP_EVENT -> TODO()
+                Destination.LOOKUP_SERIES -> TODO()
+                Destination.LOOKUP_GENRE -> TODO()
+                Destination.LOOKUP -> {
+                    // Not handled.
+                }
+                Destination.HISTORY -> {
+                    // Not handled.
                 }
             }
         }
@@ -126,7 +138,8 @@ internal fun NavigationGraph(
             ArtistScreenScaffold(
                 artistId = artistId,
                 onReleaseGroupClick = onReleaseGroupClick,
-                onBack = navController::navigateUp
+                onItemClick = onLookupItemClick,
+                onBack = navController::navigateUp,
             )
         }
 

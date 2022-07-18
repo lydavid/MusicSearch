@@ -9,12 +9,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.openUrl
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.navigation.toDestination
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -27,8 +29,15 @@ internal fun RelationCard(
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
 ) {
 
+    val context = LocalContext.current
+
     ClickableListItem(onClick = {
-        onItemClick(relation.linkedResource.toDestination(), relation.linkedResourceId)
+        val destination = relation.linkedResource.toDestination()
+        if (destination == Destination.LOOKUP_URL) {
+            context.openUrl(relation.name)
+        } else {
+            onItemClick(destination, relation.linkedResourceId)
+        }
     }) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
             Text(

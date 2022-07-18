@@ -32,6 +32,8 @@ internal data class ArtistMusicBrainzModel(
     @Json(name = "life-span")
     override val lifeSpan: LifeSpan? = null,
 
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+
     // for search responses only
 //    @Json(name = "score")
 //    val score: Int? = null,
