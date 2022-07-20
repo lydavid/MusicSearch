@@ -15,6 +15,7 @@ import ly.david.mbjc.data.persistence.RoomModel
  * @param getRemoteResourceCount Computes total number of this resource in MusicBrainz's server.
  *  If null, then that means we don't know yet.
  * @param getLocalResourceCount Computes total number of this resource in our local database.
+ * @param deleteLocalResource Drops the relevant local resources.
  * @param browseResource Send browse request for resource with given offset.
  *  Expects back the number of returned resources.
  */
@@ -22,6 +23,7 @@ import ly.david.mbjc.data.persistence.RoomModel
 internal class RoomDataRemoteMediator<RM : RoomModel>(
     private val getRemoteResourceCount: suspend () -> Int?,
     private val getLocalResourceCount: suspend () -> Int,
+    private val deleteLocalResource: suspend () -> Unit,
     private val browseResource: suspend (offset: Int) -> Int
 ) : RemoteMediator<Int, RM>() {
 
@@ -45,7 +47,11 @@ internal class RoomDataRemoteMediator<RM : RoomModel>(
         return try {
 
             val nextOffset: Int = when (loadType) {
-                LoadType.REFRESH -> 0
+                LoadType.REFRESH -> {
+                    // TODO: can we somehow support delta refresh? Might need Dropbox Store
+                    deleteLocalResource()
+                    0
+                }
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val localResourceCount = getLocalResourceCount()

@@ -13,11 +13,20 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """
-            SELECT rg.*
             FROM release_groups rg
             INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
             INNER JOIN artists a ON a.id = rga.artist_id
             WHERE a.id = :artistId
+        """
+
+        private const val SELECT_RELEASE_GROUPS_BY_ARTIST = """
+            SELECT rg.*
+            $RELEASE_GROUPS_BY_ARTIST
+        """
+
+        private const val SELECT_RELEASE_GROUPS_ID_BY_ARTIST = """
+            SELECT rg.id
+            $RELEASE_GROUPS_BY_ARTIST
         """
 
         private const val ORDER_BY_ARTIST_LINKING_TABLE = """
@@ -43,12 +52,21 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): ReleaseGroupRoomModel?
 
+    @Query(
+        """
+        DELETE FROM release_groups WHERE id IN (
+        $SELECT_RELEASE_GROUPS_ID_BY_ARTIST
+        )
+        """
+    )
+    abstract suspend fun deleteReleaseGroupsByArtist(artistId: String)
+
     // Make sure to select from release_groups first, rather than artists.
     // That way, when there are no entries, we return empty rather than 1 entry with null values.
     @Transaction
     @Query(
         """
-        $RELEASE_GROUPS_BY_ARTIST
+        $SELECT_RELEASE_GROUPS_BY_ARTIST
         $ORDER_BY_ARTIST_LINKING_TABLE
         """
     )
@@ -57,7 +75,7 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
     @Transaction
     @Query(
         """
-        $RELEASE_GROUPS_BY_ARTIST
+        $SELECT_RELEASE_GROUPS_BY_ARTIST
         $ORDER_BY_TYPES_AND_DATE
     """
     )
@@ -67,7 +85,7 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
     @Transaction
     @Query(
         """
-        $RELEASE_GROUPS_BY_ARTIST
+        $SELECT_RELEASE_GROUPS_BY_ARTIST
         $FILTERED
         $ORDER_BY_ARTIST_LINKING_TABLE
     """
@@ -80,7 +98,7 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
     @Transaction
     @Query(
         """
-        $RELEASE_GROUPS_BY_ARTIST
+        $SELECT_RELEASE_GROUPS_BY_ARTIST
         $FILTERED
         $ORDER_BY_TYPES_AND_DATE
     """

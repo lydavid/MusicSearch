@@ -83,6 +83,9 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     remoteMediator = RoomDataRemoteMediator(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
                         getLocalResourceCount = { releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId) },
+                        deleteLocalResource = {
+                            releaseGroupDao.deleteReleaseGroupsByArtist(artistId = artistId)
+                        },
                         browseResource = { offset ->
                             browseReleaseGroupsAndStore(artistId, offset)
                         }

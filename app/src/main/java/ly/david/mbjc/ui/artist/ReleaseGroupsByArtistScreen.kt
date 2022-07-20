@@ -1,18 +1,17 @@
 package ly.david.mbjc.ui.artist
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.LazyPagingItems
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 
 @Composable
@@ -24,7 +23,9 @@ internal fun ReleaseGroupsByArtistScreen(
     snackbarHostState: SnackbarHostState,
     onReleaseGroupClick: (String) -> Unit = {},
     onTitleUpdate: (title: String) -> Unit = {},
-    viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
+    viewModel: ReleaseGroupsByArtistViewModel,
+    lazyListState: LazyListState,
+    lazyPagingItems: LazyPagingItems<UiModel>
 ) {
 
     LaunchedEffect(key1 = artistId) {
@@ -42,11 +43,9 @@ internal fun ReleaseGroupsByArtistScreen(
     viewModel.updateQuery(query = searchText)
     viewModel.updateIsSorted(isSorted = isSorted)
 
-    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
-        .collectAsLazyPagingItems()
-
     PagingLoadingAndErrorHandler(
         modifier = modifier,
+        lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
     ) { uiModel: UiModel? ->

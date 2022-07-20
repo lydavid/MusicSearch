@@ -8,6 +8,7 @@ internal abstract class ArtistDao : BaseDao<ArtistRoomModel> {
     @Query("SELECT * FROM artists WHERE id = :artistId")
     abstract suspend fun getArtist(artistId: String): ArtistRoomModel?
 
+
     @Query(
         """
         UPDATE artists
