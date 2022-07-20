@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.artist.relation
 
 import android.util.Log
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,20 +25,18 @@ internal fun ArtistRelationsScreen(
     artistId: String,
 //    onTitleUpdate: (title: String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    lazyListState: LazyListState,
     viewModel: ArtistRelationsViewModel = hiltViewModel()
 ) {
 
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }
-//    var instrument: Instrument? by remember { mutableStateOf(null) }
-    val lazyListState = rememberLazyListState()
-//    val context = LocalContext.current
 
     LaunchedEffect(key1 = artistId) {
 
         try {
             viewModel.lookupArtistRelations(artistId)
         } catch (ex: Exception) {
-            // TODO:
+            // TODO: is error already handled below? apparently not...
             Log.d("Remove This", "ArtistRelationsScreen: lookup failed")
         }
         lookupInProgress = false

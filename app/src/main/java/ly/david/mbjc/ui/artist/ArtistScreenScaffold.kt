@@ -47,19 +47,20 @@ internal fun ArtistScreenScaffold(
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var artistName by rememberSaveable { mutableStateOf("") }
+    var searchText by rememberSaveable { mutableStateOf("") }
+    var isSorted by rememberSaveable { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var searchText by rememberSaveable { mutableStateOf("") }
-
-    var isSorted by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
-
     val coroutineScope = rememberCoroutineScope()
 
-    val lazyListState = rememberLazyListState()
-    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
+    // This is sufficient to preserve scroll position when switching tabs
+    val releaseGroupsLazyListState = rememberLazyListState()
+    val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
         .collectAsLazyPagingItems()
+
+    // TODO: this is not enough. Need to hoist lazypagingitems out too
+    val relationshipsLazyListState = rememberLazyListState()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -94,8 +95,8 @@ internal fun ArtistScreenScaffold(
                             onClick = {
                                 closeMenu()
                                 coroutineScope.launch {
-                                    lazyListState.scrollToItem(0)
-                                    lazyPagingItems.refresh()
+                                    releaseGroupsLazyListState.scrollToItem(0)
+                                    releaseGroupsLazyPagingItems.refresh()
                                 }
                             })
                     }
@@ -124,14 +125,15 @@ internal fun ArtistScreenScaffold(
                         artistName = it
                     },
                     viewModel = viewModel,
-                    lazyListState = lazyListState,
-                    lazyPagingItems = lazyPagingItems
+                    lazyListState = releaseGroupsLazyListState,
+                    lazyPagingItems = releaseGroupsLazyPagingItems
                 )
             }
             ArtistTab.RELATIONSHIPS -> {
                 ArtistRelationsScreen(
                     artistId = artistId,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
+                    lazyListState = relationshipsLazyListState
                 )
             }
             ArtistTab.STATS -> {
