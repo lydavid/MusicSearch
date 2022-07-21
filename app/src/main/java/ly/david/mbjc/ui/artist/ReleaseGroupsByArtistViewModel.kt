@@ -84,7 +84,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
                         getLocalResourceCount = { releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId) },
                         deleteLocalResource = {
-                            releaseGroupDao.deleteReleaseGroupsByArtist(artistId = artistId)
+                            releaseGroupDao.deleteReleaseGroupsByArtist(artistId)
                         },
                         browseResource = { offset ->
                             browseReleaseGroupsAndStore(artistId, offset)

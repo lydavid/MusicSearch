@@ -46,6 +46,7 @@ android {
 //            shrinkResources true
 //            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
 
+            // Does not work with AGP 7.2.1
 //            testCoverageEnabled true
         }
         release {

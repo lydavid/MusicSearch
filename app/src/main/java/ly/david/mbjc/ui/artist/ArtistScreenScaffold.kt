@@ -22,6 +22,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.relation.ArtistRelationsScreen
+import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch

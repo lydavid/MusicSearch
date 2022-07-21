@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.artist.stats
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn

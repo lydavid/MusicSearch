@@ -12,11 +12,20 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
 
     companion object {
         private const val RELEASES_IN_RELEASE_GROUP = """
-            SELECT r.*
             FROM releases r
             INNER JOIN releases_release_groups rrg ON r.id = rrg.release_id
             INNER JOIN release_groups rg ON rg.id = rrg.release_group_id
             WHERE rg.id = :releaseGroupId
+        """
+
+        private const val SELECT_RELEASES_IN_RELEASE_GROUP = """
+            SELECT r.*
+            $RELEASES_IN_RELEASE_GROUP
+        """
+
+        private const val SELECT_RELEASES_ID_IN_RELEASE_GROUP = """
+            SELECT r.id
+            $RELEASES_IN_RELEASE_GROUP
         """
 
         private const val ORDER_BY_RELEASE_GROUP_LINKING_TABLE = """
@@ -38,6 +47,15 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
 
     @Query(
         """
+        DELETE FROM releases WHERE id IN (
+        $SELECT_RELEASES_ID_IN_RELEASE_GROUP
+        )
+        """
+    )
+    abstract suspend fun deleteReleasesInReleaseGroup(releaseGroupId: String)
+
+    @Query(
+        """
         SELECT IFNULL(
             (SELECT COUNT(*)
             FROM releases r
@@ -54,7 +72,7 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     @Transaction
     @Query(
         """
-        $RELEASES_IN_RELEASE_GROUP
+        $SELECT_RELEASES_IN_RELEASE_GROUP
         $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
     """
     )
@@ -63,7 +81,7 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     @Transaction
     @Query(
         """
-        $RELEASES_IN_RELEASE_GROUP
+        $SELECT_RELEASES_IN_RELEASE_GROUP
         $FILTERED
     """
     )

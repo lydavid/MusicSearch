@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.artist.stats
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,8 @@ internal class ArtistStatsViewModel @Inject constructor(
     private val releaseGroupDao: ReleaseGroupDao
 ) : ViewModel() {
 
-    suspend fun getTotalReleaseGroups(artistId: String) = artistDao.getArtist(artistId)?.releaseGroupsCount ?: 0
+    suspend fun getTotalReleaseGroups(artistId: String) =
+        artistDao.getArtist(artistId)?.releaseGroupsCount ?: 0
 
     suspend fun getNumberOfReleaseGroupsByArtist(artistId: String) =
         releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId)

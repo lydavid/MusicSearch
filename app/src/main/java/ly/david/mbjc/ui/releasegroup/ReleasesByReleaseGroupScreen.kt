@@ -1,20 +1,16 @@
 package ly.david.mbjc.ui.releasegroup
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.release.ReleaseCard
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ReleasesByReleaseGroupScreen(
     modifier: Modifier,
@@ -23,7 +19,9 @@ internal fun ReleasesByReleaseGroupScreen(
     snackbarHostState: SnackbarHostState,
     onReleaseClick: (String) -> Unit = {},
     onTitleUpdate: (title: String, subtitle: String) -> Unit,
-    viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel()
+    viewModel: ReleasesByReleaseGroupViewModel,
+    lazyListState: LazyListState,
+    lazyPagingItems: LazyPagingItems<ReleaseUiModel>
 ) {
 
     LaunchedEffect(key1 = releaseGroupId) {
@@ -41,11 +39,9 @@ internal fun ReleasesByReleaseGroupScreen(
 
     viewModel.updateQuery(query = searchText)
 
-    val lazyPagingItems: LazyPagingItems<ReleaseUiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
-        .collectAsLazyPagingItems()
-
     PagingLoadingAndErrorHandler(
         modifier = modifier,
+        lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
     ) { releaseUiModel: ReleaseUiModel? ->

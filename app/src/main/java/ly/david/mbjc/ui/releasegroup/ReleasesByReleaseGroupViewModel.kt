@@ -71,7 +71,7 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
                         getRemoteResourceCount = { releaseGroupDao.getReleaseGroup(releaseGroupId)?.releaseCount },
                         getLocalResourceCount = { releaseDao.getNumberOfReleasesInReleaseGroup(releaseGroupId) },
                         deleteLocalResource = {
-                            // TODO:
+                            releaseDao.deleteReleasesInReleaseGroup(releaseGroupId)
                         },
                         browseResource = { offset ->
                             browseReleasesAndStore(releaseGroupId, offset)

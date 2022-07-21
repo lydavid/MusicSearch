@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -11,13 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.launch
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
 private enum class ReleaseGroupTab(val title: String) {
     RELEASES("Releases"),
@@ -34,7 +43,8 @@ private enum class ReleaseGroupTab(val title: String) {
 internal fun ReleaseGroupScreenScaffold(
     releaseGroupId: String,
     onReleaseClick: (String) -> Unit = {},
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel()
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -43,6 +53,12 @@ internal fun ReleaseGroupScreenScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     var searchText by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    val releasesLazyListState = rememberLazyListState()
+    val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
+        rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+            .collectAsLazyPagingItems()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -57,6 +73,17 @@ internal fun ReleaseGroupScreenScaffold(
                         onClick = {
                             context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
                             closeMenu()
+                        })
+                    DropdownMenuItem(
+                        text = {
+                            Text("Refresh")
+                        },
+                        onClick = {
+                            closeMenu()
+                            coroutineScope.launch {
+                                releasesLazyListState.scrollToItem(0)
+                                releasesLazyPagingItems.refresh()
+                            }
                         })
                 },
                 tabsTitles = ReleaseGroupTab.values().map { it.title },
@@ -82,11 +109,14 @@ internal fun ReleaseGroupScreenScaffold(
                     },
                     snackbarHostState = snackbarHostState,
                     onReleaseClick = onReleaseClick,
-                    searchText = searchText
+                    searchText = searchText,
+                    viewModel = viewModel,
+                    lazyListState = releasesLazyListState,
+                    lazyPagingItems = releasesLazyPagingItems
                 )
             }
             ReleaseGroupTab.STATS -> {
-                Text(text = "nothing")
+                ReleaseGroupStatsScreen(releaseGroupId = releaseGroupId)
             }
         }
     }
