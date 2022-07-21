@@ -23,7 +23,7 @@ internal class ReleaseGroupRepository @Inject constructor(
 ) {
     private var releaseGroup: ReleaseGroupUiModel? = null
 
-    // We need UiReleaseGroup so that we have artist credits
+    // We need ReleaseGroupUiModel so that we have artist credits
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
         releaseGroup ?: run {
 
