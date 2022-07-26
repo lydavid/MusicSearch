@@ -1,7 +1,6 @@
 package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
-import ly.david.mbjc.data.LabelInfo
 import ly.david.mbjc.data.NameWithDisambiguation
 import ly.david.mbjc.data.Release
 

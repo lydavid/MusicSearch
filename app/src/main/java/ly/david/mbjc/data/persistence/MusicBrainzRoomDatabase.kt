@@ -20,6 +20,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.area.AreaDao
 import ly.david.mbjc.data.persistence.instrument.InstrumentDao
+import ly.david.mbjc.data.persistence.label.LabelDao
 import ly.david.mbjc.data.persistence.place.PlaceDao
 import ly.david.mbjc.data.persistence.recording.RecordingDao
 import ly.david.mbjc.data.persistence.release.MediumDao
@@ -32,13 +33,13 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 
 @Database(
-    version = 19,
+    version = 20,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
         MediumRoomModel::class, TrackRoomModel::class, RecordingRoomModel::class,
         AreaRoomModel::class, PlaceRoomModel::class,
-        InstrumentRoomModel::class,
+        InstrumentRoomModel::class, LabelRoomModel::class,
 
         // Full-Text Search (FTS) tables
 //        ReleaseGroupFts::class,
@@ -69,6 +70,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 16, to = 17),
         AutoMigration(from = 17, to = 18),
         AutoMigration(from = 18, to = 19),
+        AutoMigration(from = 19, to = 20),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -103,6 +105,7 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getAreaDao(): AreaDao
     abstract fun getPlaceDao(): PlaceDao
     abstract fun getInstrumentDao(): InstrumentDao
+    abstract fun getLabelDao(): LabelDao
 
     abstract fun getRelationDao(): RelationDao
     abstract fun getLookupHistoryDao(): LookupHistoryDao
@@ -192,6 +195,9 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideInstrumentDao(db: MusicBrainzRoomDatabase) = db.getInstrumentDao()
+
+    @Provides
+    fun provideLabelDao(db: MusicBrainzRoomDatabase) = db.getLabelDao()
 
     @Provides
     fun provideRelationDao(db: MusicBrainzRoomDatabase) = db.getRelationDao()

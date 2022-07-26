@@ -104,6 +104,18 @@
                     android:host="@string/deeplink_instrument"
                     android:scheme="@string/deeplink_schema" />
             </intent-filter>
+
+            <!-- Support deep-linking into a label -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/deeplink_label"
+                    android:scheme="@string/deeplink_schema" />
+            </intent-filter>
         </activity>
     </application>
 

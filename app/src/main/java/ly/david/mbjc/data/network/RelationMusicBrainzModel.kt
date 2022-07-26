@@ -2,7 +2,6 @@ package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.ILifeSpan
-import ly.david.mbjc.data.LabelMusicBrainzModel
 import ly.david.mbjc.data.WorkMusicBrainzModel
 
 internal data class RelationMusicBrainzModel(

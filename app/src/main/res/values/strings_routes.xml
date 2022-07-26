@@ -9,4 +9,5 @@
     <string name="deeplink_area" translatable="false">area</string>
     <string name="deeplink_place" translatable="false">place</string>
     <string name="deeplink_instrument" translatable="false">instrument</string>
+    <string name="deeplink_label" translatable="false">label</string>
 </resources>

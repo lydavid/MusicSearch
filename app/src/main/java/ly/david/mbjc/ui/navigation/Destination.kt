@@ -41,9 +41,10 @@ internal enum class Destination(val route: String, val musicBrainzResource: Musi
 
     LOOKUP_AREA("$TOP_LEVEL_LOOKUP$DIVIDER$AREA", MusicBrainzResource.AREA),
     LOOKUP_PLACE("$TOP_LEVEL_LOOKUP$DIVIDER$PLACE", MusicBrainzResource.PLACE),
-    LOOKUP_LABEL("$TOP_LEVEL_LOOKUP$DIVIDER$LABEL", MusicBrainzResource.LABEL),
-    LOOKUP_WORK("$TOP_LEVEL_LOOKUP$DIVIDER$WORK", MusicBrainzResource.WORK),
     LOOKUP_INSTRUMENT("$TOP_LEVEL_LOOKUP$DIVIDER$INSTRUMENT", MusicBrainzResource.INSTRUMENT),
+    LOOKUP_LABEL("$TOP_LEVEL_LOOKUP$DIVIDER$LABEL", MusicBrainzResource.LABEL),
+
+    LOOKUP_WORK("$TOP_LEVEL_LOOKUP$DIVIDER$WORK", MusicBrainzResource.WORK),
     LOOKUP_EVENT("$TOP_LEVEL_LOOKUP$DIVIDER$EVENT", MusicBrainzResource.EVENT),
     LOOKUP_SERIES("$TOP_LEVEL_LOOKUP$DIVIDER$SERIES", MusicBrainzResource.SERIES),
     LOOKUP_GENRE("$TOP_LEVEL_LOOKUP$DIVIDER$GENRE", MusicBrainzResource.GENRE),
@@ -61,9 +62,9 @@ internal fun MusicBrainzResource.toDestination() =
         MusicBrainzResource.AREA -> Destination.LOOKUP_AREA
         MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
         MusicBrainzResource.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
+        MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
 
         // TODO: everything below
-        MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
         MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
         MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
         MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES

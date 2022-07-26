@@ -142,7 +142,21 @@ internal class SearchMusicBrainzPagingSource(
                     queryInstruments.instruments
                 )
             }
+            MusicBrainzResource.LABEL -> {
+                val queryLabels = musicBrainzApiService.queryLabels(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryLabels.offset,
+                    queryLabels.labels
+                )
+            }
             // TODO: support rest
+
+            // TODO: if we switch on MusicBrainzResource, some of them are not query-able...
+            //  could use is-cases with MusicBrainzModel
             else -> {
                 // Artist; until we implement them all
                 val queryArtists = musicBrainzApiService.queryArtists(

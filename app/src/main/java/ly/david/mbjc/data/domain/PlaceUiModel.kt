@@ -16,6 +16,7 @@ internal data class PlaceUiModel(
     override val coordinates: Coordinates? = null,
     override val lifeSpan: LifeSpan? = null,
 
+    // TODO:
     val area: AreaMusicBrainzModel? = null,
 ) : Place, UiModel()
 

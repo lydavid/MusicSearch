@@ -13,6 +13,7 @@ import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
+import ly.david.mbjc.ui.label.LabelScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScreenScaffold
@@ -37,6 +38,7 @@ internal fun NavigationGraph(
     val areaDeeplink = stringResource(id = R.string.deeplink_area)
     val placeDeeplink = stringResource(id = R.string.deeplink_place)
     val instrumentDeeplink = stringResource(id = R.string.deeplink_instrument)
+    val labelDeeplink = stringResource(id = R.string.deeplink_label)
 
     NavHost(
         navController = navController,
@@ -86,6 +88,12 @@ internal fun NavigationGraph(
             }
         }
 
+        val onLabelClick: (String) -> Unit = { labelId ->
+            navController.navigate("${Destination.LOOKUP_LABEL.route}/$labelId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
@@ -95,12 +103,12 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_AREA -> onAreaClick(id)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
                 Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
+                Destination.LOOKUP_LABEL -> onLabelClick(id)
 
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
                 }
 
-                Destination.LOOKUP_LABEL -> TODO()
                 Destination.LOOKUP_WORK -> TODO()
                 Destination.LOOKUP_EVENT -> TODO()
                 Destination.LOOKUP_SERIES -> TODO()
@@ -266,6 +274,27 @@ internal fun NavigationGraph(
             val instrumentId = entry.arguments?.getString(ID) ?: return@composable
             InstrumentScaffold(
                 instrumentId = instrumentId,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            "${Destination.LOOKUP_LABEL.route}/{$ID}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://$labelDeeplink/{$ID}"
+                }
+            )
+        ) { entry ->
+            val labelId = entry.arguments?.getString(ID) ?: return@composable
+            LabelScaffold(
+                labelId = labelId,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )

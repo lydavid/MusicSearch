@@ -59,6 +59,12 @@ internal interface Search {
     ): SearchInstrumentsResponse
 
     // TODO: label
+    @GET("label")
+    suspend fun queryLabels(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchLabelsResponse
 
     // TODO: series
 
@@ -107,4 +113,10 @@ internal data class SearchInstrumentsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "instruments") val instruments: List<InstrumentMusicBrainzModel>
+)
+
+internal data class SearchLabelsResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "labels") val labels: List<LabelMusicBrainzModel>
 )

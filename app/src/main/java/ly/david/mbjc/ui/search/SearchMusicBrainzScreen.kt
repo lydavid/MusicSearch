@@ -41,6 +41,7 @@ import ly.david.mbjc.data.domain.AreaUiModel
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.InstrumentUiModel
+import ly.david.mbjc.data.domain.LabelUiModel
 import ly.david.mbjc.data.domain.PlaceUiModel
 import ly.david.mbjc.data.domain.RecordingUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
@@ -54,6 +55,7 @@ import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.instrument.InstrumentCard
+import ly.david.mbjc.ui.label.LabelCard
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.place.PlaceCard
 import ly.david.mbjc.ui.recording.RecordingCard
@@ -180,6 +182,11 @@ internal fun SearchMusicBrainzScreen(
                 is InstrumentUiModel -> {
                     InstrumentCard(instrument = uiModel) {
                         onItemClick(Destination.LOOKUP_INSTRUMENT, id)
+                    }
+                }
+                is LabelUiModel -> {
+                    LabelCard(label = uiModel) {
+                        onItemClick(Destination.LOOKUP_LABEL, id)
                     }
                 }
                 is EndOfList -> {

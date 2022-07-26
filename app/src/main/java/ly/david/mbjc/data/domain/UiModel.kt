@@ -4,6 +4,7 @@ import ly.david.mbjc.data.network.AreaMusicBrainzModel
 import ly.david.mbjc.data.network.ArtistMusicBrainzModel
 import ly.david.mbjc.data.network.GenreMusicBrainzModel
 import ly.david.mbjc.data.network.InstrumentMusicBrainzModel
+import ly.david.mbjc.data.network.LabelMusicBrainzModel
 import ly.david.mbjc.data.network.MusicBrainzModel
 import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
@@ -34,7 +35,7 @@ internal class ListSeparator(val text: String) : UiModel()
  * Converts a [MusicBrainzModel] that we got from the network to its UI version for display.
  *
  * We can map a [MusicBrainzModel] to [UiModel] but not the other way around because there are [UiModel] such as
- * [EndOfList] that do not have a 1-to-t mapping. We could still do it, but the result will be nullable.
+ * [EndOfList] that do not have a 1-to-1 mapping. We could still do it, but the result will be nullable.
  *
  * It seems like this needs to be in the same directory as [UiModel] or else it tells us to add an else branch.
  */
@@ -47,6 +48,7 @@ internal fun MusicBrainzModel.toUiModel(): UiModel {
         is PlaceMusicBrainzModel -> this.toPlaceUiModel()
         is AreaMusicBrainzModel -> this.toAreaUiModel()
         is InstrumentMusicBrainzModel -> this.toInstrumentUiModel()
+        is LabelMusicBrainzModel -> this.toLabelUiModel()
 
         is GenreMusicBrainzModel -> this.toInstrumentUiModel()
     }
