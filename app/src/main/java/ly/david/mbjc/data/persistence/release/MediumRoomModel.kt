@@ -26,7 +26,7 @@ internal data class MediumRoomModel(
     @ColumnInfo(name = "id")
     val id: Long = 0,
 
-    @ColumnInfo(name = "release_id")
+    @ColumnInfo(name = "release_id", index = true)
     val releaseId: String,
     @ColumnInfo(name = "position")
     override val position: Int?,

@@ -26,7 +26,7 @@ internal data class TrackRoomModel(
     @ColumnInfo(name = "id")
     override val id: String,
 
-    @ColumnInfo(name = "medium_id")
+    @ColumnInfo(name = "medium_id", index = true)
     val mediumId: Long,
 
     @ColumnInfo(name = "position")
