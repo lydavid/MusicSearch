@@ -1,5 +1,6 @@
 package ly.david.mbjc.data.domain
 
+import androidx.compose.runtime.Immutable
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
@@ -10,12 +11,16 @@ import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
  * Representation of a [ReleaseGroup] for our UI.
  * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
  */
+@Immutable
 internal data class ReleaseGroupUiModel(
     override val id: String,
     override val name: String,
     override val firstReleaseDate: String = "",
     override val disambiguation: String = "",
     override val primaryType: String? = null,
+
+    // Lists are considered unstable by Compose.
+    // Since this is just a list of primitives, we will mark this class immutable.
     override val secondaryTypes: List<String>? = null,
 
     // TODO: if we keep it as MusicBrainzArtistCredit, then we can deeplink to each artist's page from a dropdown

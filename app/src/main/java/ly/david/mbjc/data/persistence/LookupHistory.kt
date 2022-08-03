@@ -7,12 +7,8 @@ import androidx.room.PrimaryKey
 import java.util.Date
 import ly.david.mbjc.data.network.MusicBrainzResource
 
-//data class HistoricalRecord(
-//    val summary: String,
-//    val destination: Destination,
-//    val id: String,
-//    val numberOfVisits: Int = 0
-//)
+// TODO: We can probably make this stable by mapping it to a ui model
+//  but is that worth it?
 /**
  * Record of which Lookup screen a user has visited.
  * We can use this to let them deeplink back to this screen.
