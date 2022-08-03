@@ -14,10 +14,9 @@ plugins {
 
 allprojects {
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions.freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
-    }
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
+            freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
+
             if (project.findProperty("mbjc.enableComposeCompilerReports") == "true") {
                 freeCompilerArgs += [
                         "-P",
