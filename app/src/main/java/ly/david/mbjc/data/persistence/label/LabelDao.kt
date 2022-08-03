@@ -8,6 +8,6 @@ import ly.david.mbjc.data.persistence.LabelRoomModel
 @Dao
 internal abstract class LabelDao : BaseDao<LabelRoomModel> {
 
-    @Query("SELECT * FROM instruments WHERE id = :labelId")
+    @Query("SELECT * FROM labels WHERE id = :labelId")
     abstract suspend fun getLabel(labelId: String): LabelRoomModel?
 }
