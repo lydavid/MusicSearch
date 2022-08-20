@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -31,12 +32,16 @@ internal fun NavigationGraph(
     openDrawer: () -> Unit = {}
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
+
     val artistDeeplink = stringResource(id = R.string.deeplink_artist)
     val releaseGroupDeeplink = stringResource(id = R.string.deeplink_release_group)
     val releaseDeeplink = stringResource(id = R.string.deeplink_release)
     val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
+    val workDeeplink = stringResource(id = R.string.deeplink_work)
+
     val areaDeeplink = stringResource(id = R.string.deeplink_area)
     val placeDeeplink = stringResource(id = R.string.deeplink_place)
+
     val instrumentDeeplink = stringResource(id = R.string.deeplink_instrument)
     val labelDeeplink = stringResource(id = R.string.deeplink_label)
 
@@ -214,6 +219,23 @@ internal fun NavigationGraph(
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )
+        }
+
+        composable(
+            "${Destination.LOOKUP_WORK.route}/{$ID}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType // Make argument type safe
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://$workDeeplink/{$ID}"
+                }
+            )
+        ) { entry ->
+            val workId = entry.arguments?.getString(ID) ?: return@composable
+            Text("workId=$workId")
         }
 
         composable(

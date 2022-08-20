@@ -13,7 +13,7 @@ import ly.david.mbjc.data.persistence.RoomModel
  * Generic RemoteMediator for loading remote data into [RoomModel].
  *
  * @param getRemoteResourceCount Computes total number of this resource in MusicBrainz's server.
- *  If null, then that means we don't know yet.
+ *  If null, then we don't know yet.
  * @param getLocalResourceCount Computes total number of this resource in our local database.
  * @param deleteLocalResource Drops the relevant local resources.
  * @param browseResource Send browse request for resource with given offset.
@@ -68,7 +68,7 @@ internal class RoomDataRemoteMediator<RM : RoomModel>(
                 }
             }
 
-            // Assuming all browse uses this limit.
+            // Assuming all Browse uses this limit.
             MediatorResult.Success(endOfPaginationReached = browseResource(nextOffset) < SEARCH_BROWSE_LIMIT)
         } catch (e: Exception) {
             MediatorResult.Error(e)

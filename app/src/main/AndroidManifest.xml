@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Support deep-linking into an artist's screen -->
+            <!-- Support deep-linking into a specific screen -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -29,91 +29,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/deeplink_artist"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into a release group -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_release_group"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into a release -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_release"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into a recording -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_recording"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into a area -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_area"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into a place -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_place"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into an instrument -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_instrument"
-                    android:scheme="@string/deeplink_schema" />
-            </intent-filter>
-
-            <!-- Support deep-linking into a label -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/deeplink_label"
+                    android:host="*"
                     android:scheme="@string/deeplink_schema" />
             </intent-filter>
         </activity>

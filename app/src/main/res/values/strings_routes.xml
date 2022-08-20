@@ -6,6 +6,7 @@
     <string name="deeplink_release_group" translatable="false">release-group</string>
     <string name="deeplink_release" translatable="false">release</string>
     <string name="deeplink_recording" translatable="false">recording</string>
+    <string name="deeplink_work" translatable="false">work</string>
     <string name="deeplink_area" translatable="false">area</string>
     <string name="deeplink_place" translatable="false">place</string>
     <string name="deeplink_instrument" translatable="false">instrument</string>
