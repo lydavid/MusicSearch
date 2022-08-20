@@ -9,6 +9,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -17,7 +18,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun SearchScreenScaffold(
     openDrawer: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> }
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    searchQuery: String? = null,
+    searchOption: MusicBrainzResource? = null,
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -36,6 +39,8 @@ internal fun SearchScreenScaffold(
             snackbarHostState = snackbarHostState,
             lazyListState = lazyListState,
             onItemClick = onItemClick,
+            searchQuery = searchQuery,
+            searchOption = searchOption
         )
     }
 }

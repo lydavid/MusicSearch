@@ -17,6 +17,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,6 +68,8 @@ internal fun SearchMusicBrainzScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    searchQuery: String? = null,
+    searchOption: MusicBrainzResource? = null,
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
@@ -86,6 +89,15 @@ internal fun SearchMusicBrainzScreen(
             confirmText = "OK",
             onDismiss = { showAlertDialog = false }
         )
+    }
+
+    // Allow deeplinking into search screen with a query and type.
+    // This will allow us to record searches in History.
+    LaunchedEffect(key1 = searchQuery, key2 = searchOption) {
+        if (searchQuery == null || searchOption == null) return@LaunchedEffect
+        text = searchQuery
+        selectedOption = searchOption
+        viewModel.updateViewModelState(selectedOption, text)
     }
 
     Column {

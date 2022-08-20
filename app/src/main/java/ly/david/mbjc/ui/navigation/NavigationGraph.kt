@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.mbjc.R
+import ly.david.mbjc.data.network.toMusicBrainzResource
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
@@ -131,6 +132,33 @@ internal fun NavigationGraph(
             SearchScreenScaffold(
                 openDrawer = openDrawer,
                 onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            route = "${Destination.LOOKUP.route}?query={query}&type={type}",
+            arguments = listOf(
+                navArgument("query") {
+                    type = NavType.StringType
+                },
+                navArgument("type") {
+                    type = NavType.StringType
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://${Destination.LOOKUP.route}?query={query}&type={type}"
+                }
+            )
+        ) { entry ->
+            val query = entry.arguments?.getString("query")
+            val type = entry.arguments?.getString("type")?.toMusicBrainzResource()
+
+            SearchScreenScaffold(
+                openDrawer = openDrawer,
+                onItemClick = onLookupItemClick,
+                searchQuery = query,
+                searchOption = type
             )
         }
 

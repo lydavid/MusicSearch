@@ -72,3 +72,6 @@ internal val searchableResources: List<MusicBrainzResource>
         MusicBrainzResource.SERIES,
         MusicBrainzResource.WORK,
     )
+
+internal fun String.toMusicBrainzResource(): MusicBrainzResource? =
+    MusicBrainzResource.values().firstOrNull { this == it.resourceName }
