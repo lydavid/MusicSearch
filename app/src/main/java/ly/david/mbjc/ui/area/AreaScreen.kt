@@ -54,9 +54,6 @@ internal fun AreaScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-        prependedItems = {
-
-        }
     ) { uiModel: UiModel? ->
 
         when (uiModel) {

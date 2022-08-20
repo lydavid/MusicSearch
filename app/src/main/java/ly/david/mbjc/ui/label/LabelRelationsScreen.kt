@@ -54,9 +54,6 @@ internal fun LabelRelationsScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-        prependedItems = {
-
-        }
     ) { uiModel: UiModel? ->
 
         when (uiModel) {

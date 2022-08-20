@@ -57,7 +57,6 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
-    prependedItems: @Composable (LazyItemScope.() -> Unit)? = null,
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
 
@@ -85,11 +84,9 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                 state = lazyListState,
             ) {
 
-                // TODO: can't have additional item or it will scroll to top on config change
-                //  it works fine in ArtistStatsScreen
-                //  best way is to use headers and add them as part of lazypadingitems
+                // Note that if we prepend/append items, it will cause scroll to top on config change.
 //                item {
-//                        Text(text = "dd")
+//                    Text(text = "blah")
 //                }
 
                 itemsIndexed(lazyPagingItems) { index: Int, value: T? ->

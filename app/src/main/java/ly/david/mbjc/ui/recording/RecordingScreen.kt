@@ -62,9 +62,6 @@ internal fun RecordingScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-        prependedItems = {
-
-        }
     ) { uiModel: UiModel? ->
 
         when (uiModel) {

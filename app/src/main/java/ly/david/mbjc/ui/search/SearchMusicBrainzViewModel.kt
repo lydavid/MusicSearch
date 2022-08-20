@@ -51,7 +51,6 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
                         )
                     }
                 ).flow.map { pagingData ->
-                    // TODO: instead of footer here, we could use the one in PagingLoadingAndErrorHandler
                     pagingData.insertFooterItemForNonEmpty(item = EndOfList)
                 }
             }

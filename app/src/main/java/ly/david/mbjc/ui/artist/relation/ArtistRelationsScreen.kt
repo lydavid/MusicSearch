@@ -51,9 +51,6 @@ internal fun ArtistRelationsScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-        prependedItems = {
-
-        }
     ) { uiModel: UiModel? ->
 
         when (uiModel) {
