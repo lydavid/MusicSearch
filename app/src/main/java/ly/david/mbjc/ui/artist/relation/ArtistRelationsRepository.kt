@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.artist.relation
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.network.Lookup
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.RelationDao
@@ -31,7 +30,6 @@ internal class ArtistRelationsRepository @Inject constructor(
 
             val artistMusicBrainzModel = musicBrainzApiService.lookupArtist(
                 artistId = artistId,
-                include = Lookup.ARTIST_INC_DEFAULT
             )
 
             if (artistRoomModel == null) {

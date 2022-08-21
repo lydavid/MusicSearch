@@ -2,6 +2,25 @@
 
 ## Some deeplinks for testing
 
+<details><summary>work</summary><blockquote>
+
+### https://musicbrainz.org/relationships/work-work
+
+- arrangements
+
+```shell
+adb shell am start -d "mbjc://work/c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3" -a android.intent.action.VIEW
+```
+
+- arrangement of
+
+```shell
+adb shell am start -d "mbjc://work/7a7d89a4-ddb9-44af-a293-cf3b7ad59cf3" -a android.intent.action.VIEW
+```
+
+</blockquote></details>
+
+
 <details><summary>area</summary><blockquote>
 
 ### Kenya

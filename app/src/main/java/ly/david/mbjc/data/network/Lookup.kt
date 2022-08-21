@@ -19,7 +19,7 @@ internal interface Lookup {
     @GET("artist/{artistId}")
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = ARTIST_INC_DEFAULT
     ): ArtistMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")
