@@ -2,6 +2,17 @@
 
 ## Some deeplinks for testing
 
+
+### Search
+
+Note the `'`. Need to include this when building uri with `&`.
+
+```shell
+adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.intent.action.VIEW
+```
+
+
+
 <details><summary>work</summary><blockquote>
 
 ### https://musicbrainz.org/relationships/work-work
