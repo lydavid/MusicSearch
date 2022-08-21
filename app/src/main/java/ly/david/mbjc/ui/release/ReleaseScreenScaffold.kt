@@ -36,6 +36,7 @@ internal fun ReleaseScreenScaffold(
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
+                resource = MusicBrainzResource.RELEASE,
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,

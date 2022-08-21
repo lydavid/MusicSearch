@@ -15,7 +15,7 @@ adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.i
 
 <details><summary>work</summary><blockquote>
 
-### https://musicbrainz.org/relationships/work-work
+### イニシエノウタ
 
 - arrangements
 

@@ -64,6 +64,7 @@ internal fun ReleaseGroupScreenScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
+                resource = MusicBrainzResource.RELEASE_GROUP,
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,

@@ -31,6 +31,7 @@ internal fun PlaceScaffold(
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
+                resource = MusicBrainzResource.PLACE,
                 title = titleState,
                 onBack = onBack,
                 dropdownMenuItems = {

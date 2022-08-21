@@ -34,12 +34,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
 internal fun TopAppBarWithSearch(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
+    resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
     showSearchIcon: Boolean = true,
@@ -131,6 +133,7 @@ internal fun TopAppBarWithSearch(
         ScrollableTopAppBar(
             onBack = onBack,
             openDrawer = openDrawer,
+            resource = resource,
             title = title,
             subtitle = subtitle,
             mainAction = {

@@ -32,6 +32,7 @@ internal fun RecordingScaffold(
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
+                resource = MusicBrainzResource.RECORDING,
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,

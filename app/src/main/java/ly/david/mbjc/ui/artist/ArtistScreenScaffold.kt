@@ -68,6 +68,7 @@ internal fun ArtistScreenScaffold(
         topBar = {
             TopAppBarWithSearch(
                 onBack = onBack,
+                resource = MusicBrainzResource.ARTIST,
                 title = artistName,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 dropdownMenuItems = {

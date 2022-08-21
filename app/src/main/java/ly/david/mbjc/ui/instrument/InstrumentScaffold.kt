@@ -31,6 +31,7 @@ internal fun InstrumentScaffold(
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
+                resource = MusicBrainzResource.INSTRUMENT,
                 title = titleState,
                 onBack = onBack,
                 dropdownMenuItems = {

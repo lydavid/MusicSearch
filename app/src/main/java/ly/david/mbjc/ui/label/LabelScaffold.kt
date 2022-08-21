@@ -31,6 +31,7 @@ internal fun LabelScaffold(
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
+                resource = MusicBrainzResource.LABEL,
                 title = titleState,
                 onBack = onBack,
                 dropdownMenuItems = {

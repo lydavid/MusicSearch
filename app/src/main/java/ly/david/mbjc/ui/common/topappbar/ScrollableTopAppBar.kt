@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -25,9 +27,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
@@ -40,10 +46,15 @@ internal interface OverflowMenuScope {
     fun closeMenu()
 }
 
+/**
+ *
+ * @param resource What [MusicBrainzResource]'s icon to display.
+ */
 @Composable
 internal fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
+    resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
     mainAction: @Composable (() -> Unit)? = null,
@@ -58,7 +69,11 @@ internal fun ScrollableTopAppBar(
     Column {
         SmallTopAppBar(
             title = {
-                TitleBar(title = title, subtitle = subtitle)
+                TitleBar(
+                    resource = resource,
+                    title = title,
+                    subtitle = subtitle
+                )
             },
             navigationIcon = {
                 IconButton(onClick = {
@@ -91,6 +106,7 @@ internal fun ScrollableTopAppBar(
 
 @Composable
 private fun TitleBar(
+    resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
 ) {
@@ -110,10 +126,18 @@ private fun TitleBar(
         DotsFlashing()
     } else {
         Column {
-            Text(
-                text = title,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.horizontalScroll(rememberScrollState())
-            )
+            ) {
+                if (resource != null) {
+                    ResourceIcon(
+                        resource = resource,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                }
+                Text(text = title)
+            }
             if (subtitle.isNotEmpty()) {
                 Text(
                     text = subtitle,
@@ -198,9 +222,22 @@ private fun TabsBar(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun ScrollableTopAppBarPreview() {
+private fun ScrollableTopAppBarPreview() {
     PreviewTheme {
         ScrollableTopAppBar(
+            title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            subtitle = "A subtitle that is also very long that will also go off the screen."
+        )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun ScrollableTopAppBarIconPreview() {
+    PreviewTheme {
+        ScrollableTopAppBar(
+            resource = MusicBrainzResource.ARTIST,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen."
         )
