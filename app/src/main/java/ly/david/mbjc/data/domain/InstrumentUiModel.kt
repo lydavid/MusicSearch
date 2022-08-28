@@ -11,7 +11,7 @@ internal data class InstrumentUiModel(
     override val type: String? = null,
 ) : Instrument, UiModel()
 
-internal fun InstrumentMusicBrainzModel.toInstrumentUiModel() =
+internal fun InstrumentMusicBrainzModel.toGenreUiModel() =
     InstrumentUiModel(
         id = id,
         name = name,

@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -21,6 +20,7 @@ import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScreenScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
+import ly.david.mbjc.ui.work.WorkScaffold
 
 private const val ID = "id"
 
@@ -97,6 +97,12 @@ internal fun NavigationGraph(
             }
         }
 
+        val onWorkClick: (String) -> Unit = { workId ->
+            navController.navigate("${Destination.LOOKUP_WORK.route}/$workId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
@@ -107,15 +113,17 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
                 Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
                 Destination.LOOKUP_LABEL -> onLabelClick(id)
+                Destination.LOOKUP_WORK -> onWorkClick(id)
+
+                Destination.LOOKUP_EVENT -> TODO()
+                Destination.LOOKUP_SERIES -> TODO()
+
+                Destination.LOOKUP_GENRE -> TODO()
 
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
                 }
 
-                Destination.LOOKUP_WORK -> TODO()
-                Destination.LOOKUP_EVENT -> TODO()
-                Destination.LOOKUP_SERIES -> TODO()
-                Destination.LOOKUP_GENRE -> TODO()
                 Destination.LOOKUP -> {
                     // Not handled.
                 }
@@ -260,7 +268,11 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val workId = entry.arguments?.getString(ID) ?: return@composable
-            Text("workId=$workId")
+            WorkScaffold(
+                workId = workId,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
         }
 
         composable(

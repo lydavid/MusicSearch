@@ -10,6 +10,7 @@ import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
+import ly.david.mbjc.data.network.WorkMusicBrainzModel
 
 /**
  * Data that can be displayed in our app should extend this.
@@ -47,9 +48,10 @@ internal fun MusicBrainzModel.toUiModel(): UiModel {
         is RecordingMusicBrainzModel -> this.toRecordingUiModel()
         is PlaceMusicBrainzModel -> this.toPlaceUiModel()
         is AreaMusicBrainzModel -> this.toAreaUiModel()
-        is InstrumentMusicBrainzModel -> this.toInstrumentUiModel()
+        is InstrumentMusicBrainzModel -> this.toGenreUiModel()
         is LabelMusicBrainzModel -> this.toLabelUiModel()
+        is WorkMusicBrainzModel -> this.toWorkUiModel()
 
-        is GenreMusicBrainzModel -> this.toInstrumentUiModel()
+        is GenreMusicBrainzModel -> this.toGenreUiModel()
     }
 }

@@ -31,13 +31,14 @@ import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.work.WorkDao
 
 @Database(
-    version = 21,
+    version = 22,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
-        MediumRoomModel::class, TrackRoomModel::class, RecordingRoomModel::class,
+        MediumRoomModel::class, TrackRoomModel::class, RecordingRoomModel::class, WorkRoomModel::class,
         AreaRoomModel::class, PlaceRoomModel::class,
         InstrumentRoomModel::class, LabelRoomModel::class,
 
@@ -72,6 +73,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
         AutoMigration(from = 18, to = 19),
         AutoMigration(from = 19, to = 20),
         AutoMigration(from = 20, to = 21),
+        AutoMigration(from = 21, to = 22),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -103,6 +105,7 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getMediumDao(): MediumDao
     abstract fun getTrackDao(): TrackDao
     abstract fun getRecordingDao(): RecordingDao
+    abstract fun getWorkDao(): WorkDao
     abstract fun getAreaDao(): AreaDao
     abstract fun getPlaceDao(): PlaceDao
     abstract fun getInstrumentDao(): InstrumentDao
@@ -187,6 +190,9 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideRecordingDao(db: MusicBrainzRoomDatabase) = db.getRecordingDao()
+
+    @Provides
+    fun provideWorkDao(db: MusicBrainzRoomDatabase) = db.getWorkDao()
 
     @Provides
     fun provideAreaDao(db: MusicBrainzRoomDatabase) = db.getAreaDao()

@@ -9,7 +9,7 @@ internal data class GenreUiModel(
     override val disambiguation: String? = null,
 ) : Genre, UiModel()
 
-internal fun GenreMusicBrainzModel.toInstrumentUiModel() =
+internal fun GenreMusicBrainzModel.toGenreUiModel() =
     GenreUiModel(
         id = id,
         name = name,

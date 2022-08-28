@@ -37,6 +37,10 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
         TODO("Not yet implemented")
     }
 
+    override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
         TODO("Not yet implemented")
     }
@@ -91,6 +95,10 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun lookupWork(workId: String, include: String): WorkMusicBrainzModel {
         TODO("Not yet implemented")
     }
 

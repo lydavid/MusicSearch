@@ -37,6 +37,13 @@ internal interface Search {
         @Query("offset") offset: Int = 0,
     ): SearchRecordingsResponse
 
+    @GET("work")
+    suspend fun queryWorks(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchWorksResponse
+
     @GET("area")
     suspend fun queryAreas(
         @Query("query") query: String,
@@ -58,7 +65,6 @@ internal interface Search {
         @Query("offset") offset: Int = 0,
     ): SearchInstrumentsResponse
 
-    // TODO: label
     @GET("label")
     suspend fun queryLabels(
         @Query("query") query: String,
@@ -67,8 +73,6 @@ internal interface Search {
     ): SearchLabelsResponse
 
     // TODO: series
-
-    // TODO: work
 
     // TODO: event
 }
@@ -95,6 +99,12 @@ internal data class SearchRecordingsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
+)
+
+internal data class SearchWorksResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "works") val works: List<WorkMusicBrainzModel>
 )
 
 internal data class SearchAreasResponse(

@@ -48,6 +48,7 @@ import ly.david.mbjc.data.domain.RecordingUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.WorkUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.searchableResources
 import ly.david.mbjc.ui.area.AreaCard
@@ -62,6 +63,7 @@ import ly.david.mbjc.ui.place.PlaceCard
 import ly.david.mbjc.ui.recording.RecordingCard
 import ly.david.mbjc.ui.release.ReleaseCard
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
+import ly.david.mbjc.ui.work.WorkCard
 
 @Composable
 internal fun SearchMusicBrainzScreen(
@@ -178,6 +180,11 @@ internal fun SearchMusicBrainzScreen(
                 is RecordingUiModel -> {
                     RecordingCard(recordingUiModel = uiModel) {
                         onItemClick(Destination.LOOKUP_RECORDING, id)
+                    }
+                }
+                is WorkUiModel -> {
+                    WorkCard(workUiModel = uiModel) {
+                        onItemClick(Destination.LOOKUP_WORK, id)
                     }
                 }
                 is AreaUiModel -> {

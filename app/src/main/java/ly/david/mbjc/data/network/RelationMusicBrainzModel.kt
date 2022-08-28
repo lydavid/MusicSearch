@@ -2,7 +2,6 @@ package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.ILifeSpan
-import ly.david.mbjc.data.WorkMusicBrainzModel
 
 internal data class RelationMusicBrainzModel(
 
@@ -13,7 +12,7 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "type-id") val typeId: String,
     @Json(name = "direction") val direction: Direction,
 
-    @Json(name = "target-type") val targetType: MusicBrainzResource, // artist, place, work, label
+    @Json(name = "target-type") val targetType: MusicBrainzResource?, // artist, place, work, label
     @Json(name = "target-credit") val targetCredit: String? = null, // prefer this credit over object's name if it exists
 
     @Json(name = "attributes") val attributes: List<String>? = null, // strings, task

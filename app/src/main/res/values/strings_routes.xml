@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- TODO: Don't need these unless now that we're not listing them in manifest -->
     <!-- Deeplink routes -->
     <string name="deeplink_schema" translatable="false">mbjc</string>
     <string name="deeplink_artist" translatable="false">artist</string>

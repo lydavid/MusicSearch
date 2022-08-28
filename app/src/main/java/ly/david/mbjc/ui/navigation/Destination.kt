@@ -63,9 +63,9 @@ internal fun MusicBrainzResource.toDestination() =
         MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
         MusicBrainzResource.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
         MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
+        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
 
         // TODO: everything below
-        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
         MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
         MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES
 
