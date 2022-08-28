@@ -37,7 +37,6 @@ internal fun ExposedDropdownMenuBox(
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
-    // We want to react on tap/press on TextField to show menu
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
@@ -59,6 +58,8 @@ internal fun ExposedDropdownMenuBox(
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
+
+        // Focusing on this "consumes" a back press, and is independent of onDismissRequest.
         ExposedDropdownMenu(
             modifier = modifier,
             expanded = expanded,

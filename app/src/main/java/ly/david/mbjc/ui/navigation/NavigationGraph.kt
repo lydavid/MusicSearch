@@ -22,10 +22,7 @@ import ly.david.mbjc.ui.release.ReleaseScreenScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScreenScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 
-// TODO: unless we need more parameters, these can all be "id"
 private const val ID = "id"
-private const val RECORDING_ID = "recordingId"
-private const val PLACE_ID = "placeId"
 
 @Composable
 internal fun NavigationGraph(
@@ -163,19 +160,19 @@ internal fun NavigationGraph(
         }
 
         composable(
-            route = "${Destination.LOOKUP_ARTIST.route}/{artistId}",
+            route = "${Destination.LOOKUP_ARTIST.route}/{$ID}",
             arguments = listOf(
-                navArgument("artistId") {
+                navArgument(ID) {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$artistDeeplink/{artistId}"
+                    uriPattern = "$deeplinkSchema://$artistDeeplink/{$ID}"
                 }
             )
         ) { entry ->
-            val artistId = entry.arguments?.getString("artistId") ?: return@composable
+            val artistId = entry.arguments?.getString(ID) ?: return@composable
             ArtistScreenScaffold(
                 artistId = artistId,
                 onReleaseGroupClick = onReleaseGroupClick,
@@ -185,20 +182,20 @@ internal fun NavigationGraph(
         }
 
         composable(
-            route = "${Destination.LOOKUP_RELEASE_GROUP.route}/{releaseGroupId}",
+            route = "${Destination.LOOKUP_RELEASE_GROUP.route}/{$ID}",
             arguments = listOf(
-                navArgument("releaseGroupId") {
+                navArgument(ID) {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             // Example: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$releaseGroupDeeplink/{releaseGroupId}"
+                    uriPattern = "$deeplinkSchema://$releaseGroupDeeplink/{$ID}"
                 }
             )
         ) { entry ->
-            val releaseGroupId = entry.arguments?.getString("releaseGroupId") ?: return@composable
+            val releaseGroupId = entry.arguments?.getString(ID) ?: return@composable
             ReleaseGroupScreenScaffold(
                 releaseGroupId = releaseGroupId,
                 onReleaseClick = onReleaseClick,
@@ -207,20 +204,20 @@ internal fun NavigationGraph(
         }
 
         composable(
-            "${Destination.LOOKUP_RELEASE.route}/{releaseId}",
+            "${Destination.LOOKUP_RELEASE.route}/{$ID}",
             arguments = listOf(
-                navArgument("releaseId") {
+                navArgument(ID) {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             // Example: adb shell am start -d "mbjc://release/165f6643-2edb-4795-9abe-26bd0533e59d" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$releaseDeeplink/{releaseId}"
+                    uriPattern = "$deeplinkSchema://$releaseDeeplink/{$ID}"
                 }
             )
         ) { entry ->
-            val releaseId = entry.arguments?.getString("releaseId") ?: return@composable
+            val releaseId = entry.arguments?.getString(ID) ?: return@composable
             ReleaseScreenScaffold(
                 releaseId = releaseId,
                 onBack = navController::navigateUp,
@@ -229,19 +226,19 @@ internal fun NavigationGraph(
         }
 
         composable(
-            "${Destination.LOOKUP_RECORDING.route}/{$RECORDING_ID}",
+            "${Destination.LOOKUP_RECORDING.route}/{$ID}",
             arguments = listOf(
-                navArgument(RECORDING_ID) {
+                navArgument(ID) {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$recordingDeeplink/{$RECORDING_ID}"
+                    uriPattern = "$deeplinkSchema://$recordingDeeplink/{$ID}"
                 }
             )
         ) { entry ->
-            val recordingId = entry.arguments?.getString(RECORDING_ID) ?: return@composable
+            val recordingId = entry.arguments?.getString(ID) ?: return@composable
             RecordingScaffold(
                 recordingId = recordingId,
                 onBack = navController::navigateUp,
@@ -288,19 +285,19 @@ internal fun NavigationGraph(
         }
 
         composable(
-            "${Destination.LOOKUP_PLACE.route}/{$PLACE_ID}",
+            "${Destination.LOOKUP_PLACE.route}/{$ID}",
             arguments = listOf(
-                navArgument(PLACE_ID) {
+                navArgument(ID) {
                     type = NavType.StringType // Make argument type safe
                 }
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$placeDeeplink/{$PLACE_ID}"
+                    uriPattern = "$deeplinkSchema://$placeDeeplink/{$ID}"
                 }
             )
         ) { entry ->
-            val placeId = entry.arguments?.getString(PLACE_ID) ?: return@composable
+            val placeId = entry.arguments?.getString(ID) ?: return@composable
             PlaceScaffold(
                 placeId = placeId,
                 onBack = navController::navigateUp,
