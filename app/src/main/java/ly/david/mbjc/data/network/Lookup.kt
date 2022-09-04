@@ -29,6 +29,8 @@ internal interface Lookup {
     companion object {
         const val ARTIST_INC_DEFAULT = "$ARTIST+$URL"
         const val WORK_INC_DEFAULT = "$AREA+$ARTIST+$EVENT+$LABEL+$PLACE+$RECORDING+$SERIES+$URL+$WORK"
+        const val EVENT_INC_DEFAULT =
+            "$AREA+$ARTIST+$EVENT+$PLACE+$RECORDING+$RELEASE+$RELEASE_GROUP+$SERIES+$URL+$WORK"
     }
 
     @GET("artist/{artistId}")
@@ -105,4 +107,10 @@ internal interface Lookup {
         @Path("labelId") labelId: String,
         @Query("inc") include: String = "artist-rels+label-rels+url-rels"
     ): LabelMusicBrainzModel
+
+    @GET("event/{eventId}")
+    suspend fun lookupEvent(
+        @Path("eventId") eventId: String,
+        @Query("inc") include: String = EVENT_INC_DEFAULT
+    ): EventMusicBrainzModel
 }

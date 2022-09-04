@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -14,6 +13,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.toMusicBrainzResource
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
+import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
@@ -380,12 +380,11 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val eventId = entry.arguments?.getString(ID) ?: return@composable
-            Text(text = eventId)
-//            LabelScaffold(
-//                labelId = eventId,
-//                onBack = navController::navigateUp,
-//                onItemClick = onLookupItemClick
-//            )
+            EventScaffold(
+                eventId = eventId,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
         }
 
         composable(
