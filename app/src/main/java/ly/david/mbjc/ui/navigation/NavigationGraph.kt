@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -9,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import ly.david.mbjc.R
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.toMusicBrainzResource
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScreenScaffold
@@ -32,7 +34,6 @@ internal fun NavigationGraph(
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
 
     val artistDeeplink = stringResource(id = R.string.deeplink_artist)
-    val releaseGroupDeeplink = stringResource(id = R.string.deeplink_release_group)
     val releaseDeeplink = stringResource(id = R.string.deeplink_release)
     val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
     val workDeeplink = stringResource(id = R.string.deeplink_work)
@@ -103,6 +104,12 @@ internal fun NavigationGraph(
             }
         }
 
+        val onEventClick: (String) -> Unit = { eventId ->
+            navController.navigate("${Destination.LOOKUP_EVENT.route}/$eventId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
@@ -115,7 +122,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_LABEL -> onLabelClick(id)
                 Destination.LOOKUP_WORK -> onWorkClick(id)
 
-                Destination.LOOKUP_EVENT -> TODO()
+                Destination.LOOKUP_EVENT -> onEventClick(id)
                 Destination.LOOKUP_SERIES -> TODO()
 
                 Destination.LOOKUP_GENRE -> TODO()
@@ -199,7 +206,7 @@ internal fun NavigationGraph(
             // Example: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$releaseGroupDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE_GROUP.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -357,6 +364,28 @@ internal fun NavigationGraph(
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )
+        }
+
+        composable(
+            "${Destination.LOOKUP_EVENT.route}/{$ID}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.EVENT.resourceName}/{$ID}"
+                }
+            )
+        ) { entry ->
+            val eventId = entry.arguments?.getString(ID) ?: return@composable
+            Text(text = eventId)
+//            LabelScaffold(
+//                labelId = eventId,
+//                onBack = navController::navigateUp,
+//                onItemClick = onLookupItemClick
+//            )
         }
 
         composable(
