@@ -18,20 +18,20 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
 internal fun EventCard(
-    eventUiModel: EventUiModel,
+    event: EventUiModel,
     onEventClick: EventUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
-        onClick = { onEventClick(eventUiModel) },
+        onClick = { onEventClick(event) },
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            Text(text = eventUiModel.getNameWithDisambiguation())
-            Text(text = eventUiModel.type.orEmpty())
-            Text(text = eventUiModel.lifeSpan.getLifeSpanForDisplay())
+            Text(text = event.getNameWithDisambiguation())
+            Text(text = event.type.orEmpty())
+            Text(text = event.lifeSpan.getLifeSpanForDisplay())
         }
     }
 }
@@ -43,7 +43,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             EventCard(
-                eventUiModel = EventUiModel(
+                event = EventUiModel(
                     id = "1",
                     name = "event name",
                     disambiguation = "that one",

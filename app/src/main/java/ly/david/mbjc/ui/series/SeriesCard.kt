@@ -9,12 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.EventUiModel
 import ly.david.mbjc.data.domain.SeriesUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
-import ly.david.mbjc.ui.event.EventCard
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -55,52 +55,42 @@ internal fun SeriesCard(
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun SeriesPreview() {
-    PreviewTheme {
-        Surface {
-            EventCard(
-                eventUiModel = EventUiModel(
-                    id = "1",
-                    name = "series name",
-                )
-            )
-        }
-    }
+// region Previews
+internal class SeriesPreviewParameterProvider : PreviewParameterProvider<SeriesUiModel> {
+    override val values = sequenceOf(
+        SeriesUiModel(
+            id = "1",
+            name = "series name",
+        ),
+        SeriesUiModel(
+            id = "1",
+            name = "series name",
+            disambiguation = "that one",
+        ),
+        SeriesUiModel(
+            id = "1",
+            name = "series name",
+            type = "Tour",
+        ),
+        SeriesUiModel(
+            id = "1",
+            name = "series name",
+            disambiguation = "that one",
+            type = "Tour",
+        ),
+    )
 }
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun SeriesWithDisambiguationPreview() {
+private fun Preview(
+    @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesUiModel
+) {
     PreviewTheme {
         Surface {
-            EventCard(
-                eventUiModel = EventUiModel(
-                    id = "1",
-                    name = "series name",
-                    disambiguation = "that one",
-                )
-            )
+            SeriesCard(series = series)
         }
     }
 }
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun SeriesWithTypePreview() {
-    PreviewTheme {
-        Surface {
-            EventCard(
-                eventUiModel = EventUiModel(
-                    id = "1",
-                    name = "series name",
-                    type = "Tour",
-                )
-            )
-        }
-    }
-}
+// endregion

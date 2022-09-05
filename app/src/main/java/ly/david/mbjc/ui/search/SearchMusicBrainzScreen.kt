@@ -212,7 +212,7 @@ internal fun SearchMusicBrainzScreen(
                     }
                 }
                 is EventUiModel -> {
-                    EventCard(eventUiModel = uiModel) {
+                    EventCard(event = uiModel) {
                         onItemClick(Destination.LOOKUP_EVENT, id)
                     }
                 }
