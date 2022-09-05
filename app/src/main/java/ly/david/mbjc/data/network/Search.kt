@@ -72,14 +72,19 @@ internal interface Search {
         @Query("offset") offset: Int = 0,
     ): SearchLabelsResponse
 
-    // TODO: series
-
     @GET("event")
     suspend fun queryEvents(
         @Query("query") query: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchEventsResponse
+
+    @GET("series")
+    suspend fun querySeries(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchSeriesResponse
 }
 
 internal data class SearchArtistsResponse(
@@ -140,4 +145,10 @@ internal data class SearchEventsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
     @Json(name = "events") val events: List<EventMusicBrainzModel>
+)
+
+internal data class SearchSeriesResponse(
+    @Json(name = "count") val count: Int, // Total hits
+    @Json(name = "offset") val offset: Int,
+    @Json(name = "series") val series: List<SeriesMusicBrainzModel>
 )

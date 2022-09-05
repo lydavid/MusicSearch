@@ -175,7 +175,17 @@ internal class SearchMusicBrainzPagingSource(
                     queryEvents.events
                 )
             }
-            // TODO: support series
+            MusicBrainzResource.SERIES -> {
+                val queryEvents = musicBrainzApiService.querySeries(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryEvents.offset,
+                    queryEvents.series
+                )
+            }
 
             // TODO: if we switch on MusicBrainzResource, some of them are not query-able...
             //  could use is-cases with MusicBrainzModel

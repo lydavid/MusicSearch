@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -110,6 +111,12 @@ internal fun NavigationGraph(
             }
         }
 
+        val onSeriesClick: (String) -> Unit = { seriesId ->
+            navController.navigate("${Destination.LOOKUP_SERIES.route}/$seriesId") {
+                restoreState = true
+            }
+        }
+
         val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
@@ -121,9 +128,8 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
                 Destination.LOOKUP_LABEL -> onLabelClick(id)
                 Destination.LOOKUP_WORK -> onWorkClick(id)
-
                 Destination.LOOKUP_EVENT -> onEventClick(id)
-                Destination.LOOKUP_SERIES -> TODO()
+                Destination.LOOKUP_SERIES -> onSeriesClick(id)
 
                 Destination.LOOKUP_GENRE -> TODO()
 
@@ -385,6 +391,28 @@ internal fun NavigationGraph(
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )
+        }
+
+        composable(
+            "${Destination.LOOKUP_SERIES.route}/{$ID}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.SERIES.resourceName}/{$ID}"
+                }
+            )
+        ) { entry ->
+            val seriesId = entry.arguments?.getString(ID) ?: return@composable
+            Text(text = seriesId)
+//            SeriesScaffold(
+//                eventId = seriesId,
+//                onBack = navController::navigateUp,
+//                onItemClick = onLookupItemClick
+//            )
         }
 
         composable(

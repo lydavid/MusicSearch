@@ -11,6 +11,7 @@ import ly.david.mbjc.data.network.PlaceMusicBrainzModel
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
+import ly.david.mbjc.data.network.SeriesMusicBrainzModel
 import ly.david.mbjc.data.network.WorkMusicBrainzModel
 
 /**
@@ -53,7 +54,7 @@ internal fun MusicBrainzModel.toUiModel(): UiModel {
         is LabelMusicBrainzModel -> this.toLabelUiModel()
         is WorkMusicBrainzModel -> this.toWorkUiModel()
         is EventMusicBrainzModel -> this.toEventUiModel()
-
+        is SeriesMusicBrainzModel -> this.toSeriesUiModel()
         is GenreMusicBrainzModel -> this.toGenreUiModel()
     }
 }

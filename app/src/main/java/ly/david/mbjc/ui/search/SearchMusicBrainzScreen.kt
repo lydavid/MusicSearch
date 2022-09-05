@@ -48,6 +48,7 @@ import ly.david.mbjc.data.domain.PlaceUiModel
 import ly.david.mbjc.data.domain.RecordingUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.domain.SeriesUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.WorkUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
@@ -65,6 +66,7 @@ import ly.david.mbjc.ui.place.PlaceCard
 import ly.david.mbjc.ui.recording.RecordingCard
 import ly.david.mbjc.ui.release.ReleaseCard
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
+import ly.david.mbjc.ui.series.SeriesCard
 import ly.david.mbjc.ui.work.WorkCard
 
 @Composable
@@ -212,6 +214,11 @@ internal fun SearchMusicBrainzScreen(
                 is EventUiModel -> {
                     EventCard(eventUiModel = uiModel) {
                         onItemClick(Destination.LOOKUP_EVENT, id)
+                    }
+                }
+                is SeriesUiModel -> {
+                    SeriesCard(series = uiModel) {
+                        onItemClick(Destination.LOOKUP_SERIES, id)
                     }
                 }
                 is EndOfList -> {
