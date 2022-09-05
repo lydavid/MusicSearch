@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist.relation
+package ly.david.mbjc.ui.artist.relations
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

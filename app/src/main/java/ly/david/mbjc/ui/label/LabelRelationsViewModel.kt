@@ -6,7 +6,7 @@ import ly.david.mbjc.data.persistence.RelationDao
 import ly.david.mbjc.ui.relation.RelationViewModel
 
 @HiltViewModel
-internal class LabelViewModel @Inject constructor(
+internal class LabelRelationsViewModel @Inject constructor(
     private val labelRepository: LabelRepository,
     relationDao: RelationDao
 ) : RelationViewModel(relationDao) {

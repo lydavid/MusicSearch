@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.artist.releasegroups
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,6 +30,7 @@ import ly.david.mbjc.data.persistence.ArtistDao
 import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
+import ly.david.mbjc.ui.artist.ArtistRepository
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 

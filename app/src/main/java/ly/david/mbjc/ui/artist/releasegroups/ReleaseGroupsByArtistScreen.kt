@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.artist.releasegroups
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -10,6 +10,7 @@ import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistViewModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard

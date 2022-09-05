@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist.relation
+package ly.david.mbjc.ui.artist.relations
 
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState

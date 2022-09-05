@@ -27,7 +27,7 @@ internal fun LabelRelationsScreen(
     labelId: String,
     onTitleUpdate: (title: String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
-    viewModel: LabelViewModel = hiltViewModel()
+    viewModel: LabelRelationsViewModel = hiltViewModel()
 ) {
 
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }

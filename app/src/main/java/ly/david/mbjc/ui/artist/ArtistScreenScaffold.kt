@@ -21,7 +21,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.artist.relation.ArtistRelationsScreen
+import ly.david.mbjc.ui.artist.relations.ArtistRelationsScreen
+import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
+import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistViewModel
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -60,7 +62,7 @@ internal fun ArtistScreenScaffold(
     val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
         .collectAsLazyPagingItems()
 
-    // TODO: this is not enough. Need to hoist lazypagingitems out too
+    // TODO: this is not enough to remember state of Relationships tab. Need to hoist lazypagingitems out too
     val relationshipsLazyListState = rememberLazyListState()
 
     Scaffold(
