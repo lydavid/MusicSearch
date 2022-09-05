@@ -38,9 +38,9 @@ import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistRepository: ArtistRepository,
-    private val releaseGroupDao: ReleaseGroupDao,
-    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val artistDao: ArtistDao,
+    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
+    private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel() {
 
     private data class ViewModelState(
@@ -83,7 +83,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = RoomDataRemoteMediator(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
-                        getLocalResourceCount = { releaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId) },
+                        getLocalResourceCount = { artistDao.getNumberOfReleaseGroupsByArtist(artistId) },
                         deleteLocalResource = {
                             releaseGroupDao.deleteReleaseGroupsByArtist(artistId)
                         },

@@ -30,12 +30,14 @@ import ly.david.mbjc.data.persistence.toReleaseRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
+// TODO: generalize? reuse for releases by label
+//  or make abstract, and override
 @HiltViewModel
 internal class ReleasesByReleaseGroupViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
+    private val releaseGroupRepository: ReleaseGroupRepository,
     private val releaseGroupDao: ReleaseGroupDao,
     private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
-    private val releaseGroupRepository: ReleaseGroupRepository,
     private val releaseDao: ReleaseDao,
 ) : ViewModel() {
 
