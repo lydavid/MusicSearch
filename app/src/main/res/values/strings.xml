@@ -4,4 +4,11 @@
 
     <string name="no_results_found">No results found.</string>
     <string name="no_results_found_search">No results found.\nTry refining your search query.</string>
+
+    <string name="open_in_browser">Open in browser</string>
+
+    <string name="release_groups">Release Groups</string>
+    <string name="releases">Releases</string>
+    <string name="relationships">Relationships</string>
+    <string name="stats">Stats</string>
 </resources>

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label
+package ly.david.mbjc.ui.label.relations
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable

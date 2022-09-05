@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.artist
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -17,9 +18,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
+import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.relations.ArtistRelationsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
@@ -31,16 +34,18 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.navigation.Destination
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
-internal enum class ArtistTab(val title: String) {
-    //    OVERVIEW("Overview"),
-    RELEASE_GROUPS("Release Groups"),
-    RELATIONSHIPS("Relationships"),
-    STATS("Stats")
+
+// Would be nice if we could have an enum of Tabs, then pick a subset of them for each of these scaffolds.
+// Right now, we just have to copy/paste these around.
+private enum class ArtistTab(@StringRes val titleRes: Int) {
+    RELEASE_GROUPS(R.string.release_groups),
+    RELATIONSHIPS(R.string.relationships),
+    STATS(R.string.stats)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ArtistScreenScaffold(
+internal fun ArtistScaffold(
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
@@ -109,7 +114,7 @@ internal fun ArtistScreenScaffold(
                 onSearchTextChange = {
                     searchText = it
                 },
-                tabsTitles = ArtistTab.values().map { it.title },
+                tabsTitles = ArtistTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ArtistTab.values()[it] }
             )

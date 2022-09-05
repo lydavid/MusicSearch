@@ -13,7 +13,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.toMusicBrainzResource
 import ly.david.mbjc.ui.area.AreaScaffold
-import ly.david.mbjc.ui.artist.ArtistScreenScaffold
+import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
@@ -194,7 +194,7 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val artistId = entry.arguments?.getString(ID) ?: return@composable
-            ArtistScreenScaffold(
+            ArtistScaffold(
                 artistId = artistId,
                 onReleaseGroupClick = onReleaseGroupClick,
                 onItemClick = onLookupItemClick,
