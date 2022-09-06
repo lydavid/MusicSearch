@@ -4,8 +4,8 @@ import androidx.compose.runtime.Immutable
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.mbjc.data.persistence.ReleaseGroupArtistCreditRoomModel
-import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
 
 /**
  * Representation of a [ReleaseGroup] for our UI.

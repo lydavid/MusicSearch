@@ -1,10 +1,11 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.history
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import java.util.Date
+import ly.david.mbjc.data.persistence.BaseDao
 
 @Dao
 internal abstract class LookupHistoryDao : BaseDao<LookupHistory> {

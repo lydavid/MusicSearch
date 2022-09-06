@@ -1,10 +1,11 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.recording
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Recording
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
+import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(tableName = "recordings")
 internal data class RecordingRoomModel(
@@ -21,7 +22,7 @@ internal data class RecordingRoomModel(
     override val length: Int? = null,
     @ColumnInfo(name = "video")
     override val video: Boolean = false,
-) : RoomModel(), Recording
+) : RoomModel, Recording
 
 internal fun RecordingMusicBrainzModel.toRecordingRoomModel() =
     RecordingRoomModel(

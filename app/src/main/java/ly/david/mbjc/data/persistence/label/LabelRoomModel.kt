@@ -1,15 +1,14 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.label
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.mbjc.data.Area
-import ly.david.mbjc.data.LifeSpan
-import ly.david.mbjc.data.network.AreaMusicBrainzModel
+import ly.david.mbjc.data.Label
+import ly.david.mbjc.data.network.LabelMusicBrainzModel
+import ly.david.mbjc.data.persistence.RoomModel
 
-@Entity(tableName = "areas")
-internal data class AreaRoomModel(
+@Entity(tableName = "labels")
+internal data class LabelRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
     override val id: String,
@@ -23,15 +22,15 @@ internal data class AreaRoomModel(
     @ColumnInfo(name = "type")
     override val type: String?,
 
-    @Embedded
-    override val lifeSpan: LifeSpan?,
-) : RoomModel(), Area
+    @ColumnInfo(name = "label_code")
+    override val labelCode: Int?,
+) : RoomModel, Label
 
-internal fun AreaMusicBrainzModel.toAreaRoomModel() =
-    AreaRoomModel(
+internal fun LabelMusicBrainzModel.toLabelRoomModel() =
+    LabelRoomModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         type = type,
-        lifeSpan = lifeSpan
+        labelCode = labelCode
     )

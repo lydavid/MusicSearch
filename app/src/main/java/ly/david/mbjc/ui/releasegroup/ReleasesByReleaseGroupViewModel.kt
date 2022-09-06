@@ -21,12 +21,12 @@ import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
+import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
+import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.toReleaseRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 

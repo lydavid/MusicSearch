@@ -8,11 +8,11 @@ import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
-import ly.david.mbjc.data.persistence.LookupHistory
-import ly.david.mbjc.data.persistence.LookupHistoryDao
-import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
+import ly.david.mbjc.data.persistence.history.LookupHistory
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
+import ly.david.mbjc.data.persistence.releasegroup.toReleaseGroupRoomModel
 
 @Singleton
 internal class ReleaseGroupRepository @Inject constructor(

@@ -2,7 +2,7 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
-import ly.david.mbjc.data.persistence.ReleaseRoomModel
+import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 
 internal data class ReleaseUiModel(
     override val id: String,

@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.artist
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.ArtistMusicBrainzModel
+import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(
     tableName = "artists"
@@ -57,7 +58,7 @@ internal data class ArtistRoomModel(
     @ColumnInfo(name = "has_default_relations", defaultValue = "false")
     val hasDefaultRelations: Boolean = false,
 
-) : RoomModel(), Artist
+) : RoomModel, Artist
 
 internal fun ArtistMusicBrainzModel.toArtistRoomModel(
     hasDefaultRelations: Boolean = false,

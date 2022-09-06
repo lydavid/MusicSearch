@@ -57,6 +57,14 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
         TODO("Not yet implemented")
     }
 
+    override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun browseReleaseGroupsByArtist(
         artistId: String,
         limit: Int,
@@ -115,6 +123,10 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun lookupEvent(eventId: String, include: String): EventMusicBrainzModel {
         TODO("Not yet implemented")
     }
 }

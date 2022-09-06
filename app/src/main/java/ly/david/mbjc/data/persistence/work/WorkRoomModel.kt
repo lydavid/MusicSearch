@@ -1,10 +1,11 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.work
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Work
 import ly.david.mbjc.data.network.WorkMusicBrainzModel
+import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(tableName = "works")
 internal data class WorkRoomModel(
@@ -25,7 +26,7 @@ internal data class WorkRoomModel(
     override val language: String?,
 
 //    override val languages: List<String>?,
-) : RoomModel(), Work
+) : RoomModel, Work
 
 internal fun WorkMusicBrainzModel.toWorkRoomModel() =
     WorkRoomModel(

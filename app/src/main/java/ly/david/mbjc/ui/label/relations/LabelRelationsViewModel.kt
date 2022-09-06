@@ -2,7 +2,7 @@ package ly.david.mbjc.ui.label.relations
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.mbjc.data.persistence.RelationDao
+import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.label.LabelRepository
 import ly.david.mbjc.ui.relation.RelationViewModel
 

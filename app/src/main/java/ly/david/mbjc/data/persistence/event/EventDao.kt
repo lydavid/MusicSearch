@@ -3,7 +3,6 @@ package ly.david.mbjc.data.persistence.event
 import androidx.room.Dao
 import androidx.room.Query
 import ly.david.mbjc.data.persistence.BaseDao
-import ly.david.mbjc.data.persistence.EventRoomModel
 
 @Dao
 internal abstract class EventDao : BaseDao<EventRoomModel> {

@@ -1,10 +1,11 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.releasegroup
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(
     tableName = "release_groups",
@@ -37,7 +38,7 @@ internal data class ReleaseGroupRoomModel(
      */
     @ColumnInfo(name = "release_count")
     val releaseCount: Int? = null
-) : RoomModel(), ReleaseGroup
+) : RoomModel, ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
 //@Entity(tableName = "release_groups_fts_table")
@@ -58,7 +59,6 @@ internal data class ReleaseGroupRoomModel(
 //    val secondaryTypes: String = ""
 //)
 
-// TODO: do we really need to build this many mappers? it gives us the most control but maybe we can generalize?
 internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
     id = id,
     name = name,

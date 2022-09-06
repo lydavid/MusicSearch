@@ -19,20 +19,37 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.area.AreaDao
+import ly.david.mbjc.data.persistence.area.AreaRoomModel
+import ly.david.mbjc.data.persistence.artist.ArtistDao
+import ly.david.mbjc.data.persistence.artist.ArtistRoomModel
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.event.EventDao
+import ly.david.mbjc.data.persistence.event.EventRoomModel
+import ly.david.mbjc.data.persistence.history.LookupHistory
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.instrument.InstrumentDao
+import ly.david.mbjc.data.persistence.instrument.InstrumentRoomModel
 import ly.david.mbjc.data.persistence.label.LabelDao
+import ly.david.mbjc.data.persistence.label.LabelRoomModel
 import ly.david.mbjc.data.persistence.place.PlaceDao
+import ly.david.mbjc.data.persistence.place.PlaceRoomModel
 import ly.david.mbjc.data.persistence.recording.RecordingDao
+import ly.david.mbjc.data.persistence.recording.RecordingRoomModel
+import ly.david.mbjc.data.persistence.relation.RelationDao
+import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
+import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.mbjc.data.persistence.work.WorkDao
+import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
     version = 23,

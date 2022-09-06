@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.mbjc.data.persistence.LookupHistory
-import ly.david.mbjc.data.persistence.LookupHistoryDao
+import ly.david.mbjc.data.persistence.history.LookupHistory
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 @HiltViewModel

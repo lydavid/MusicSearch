@@ -17,7 +17,7 @@ import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toRelationUiModel
-import ly.david.mbjc.data.persistence.RelationDao
+import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 /**

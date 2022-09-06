@@ -26,10 +26,10 @@ import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
-import ly.david.mbjc.data.persistence.ArtistDao
-import ly.david.mbjc.data.persistence.ReleaseGroupArtistDao
+import ly.david.mbjc.data.persistence.artist.ArtistDao
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.toReleaseGroupRoomModel
+import ly.david.mbjc.data.persistence.releasegroup.toReleaseGroupRoomModel
 import ly.david.mbjc.ui.artist.ArtistRepository
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator

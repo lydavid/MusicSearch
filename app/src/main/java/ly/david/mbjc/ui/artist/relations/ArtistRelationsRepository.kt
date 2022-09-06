@@ -4,11 +4,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.ArtistDao
-import ly.david.mbjc.data.persistence.RelationDao
-import ly.david.mbjc.data.persistence.RelationRoomModel
-import ly.david.mbjc.data.persistence.toArtistRoomModel
-import ly.david.mbjc.data.persistence.toRelationRoomModel
+import ly.david.mbjc.data.persistence.artist.ArtistDao
+import ly.david.mbjc.data.persistence.artist.toArtistRoomModel
+import ly.david.mbjc.data.persistence.relation.RelationDao
+import ly.david.mbjc.data.persistence.relation.RelationRoomModel
+import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
 
 @Singleton
 internal class ArtistRelationsRepository @Inject constructor(

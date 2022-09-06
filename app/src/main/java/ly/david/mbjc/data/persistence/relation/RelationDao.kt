@@ -1,8 +1,9 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.relation
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
+import ly.david.mbjc.data.persistence.BaseDao
 
 @Dao
 internal abstract class RelationDao : BaseDao<RelationRoomModel> {

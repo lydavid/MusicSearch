@@ -2,7 +2,7 @@ package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Relation
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.RelationRoomModel
+import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 
 internal data class RelationUiModel(
     override val linkedResourceId: String,

@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.release
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,6 +7,7 @@ import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import ly.david.mbjc.data.network.getFormatsForDisplay
 import ly.david.mbjc.data.network.getTracksForDisplay
+import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(tableName = "releases")
 internal data class ReleaseRoomModel(
@@ -41,7 +42,7 @@ internal data class ReleaseRoomModel(
 
     @ColumnInfo(name = "tracks")
     val tracks: String?
-) : RoomModel(), Release
+) : RoomModel, Release
 
 internal fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
     ReleaseRoomModel(

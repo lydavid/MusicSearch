@@ -5,7 +5,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.mbjc.data.persistence.BaseDao
-import ly.david.mbjc.data.persistence.ReleaseGroupRoomModel
 
 @Dao
 internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {

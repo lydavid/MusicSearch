@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.releasegroup
 
 import androidx.room.ColumnInfo
 import ly.david.mbjc.data.ReleaseGroupTypes

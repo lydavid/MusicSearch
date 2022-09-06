@@ -3,7 +3,7 @@ package ly.david.mbjc.data.domain
 import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.ArtistMusicBrainzModel
-import ly.david.mbjc.data.persistence.ArtistRoomModel
+import ly.david.mbjc.data.persistence.artist.ArtistRoomModel
 
 internal data class ArtistUiModel(
     override val id: String,

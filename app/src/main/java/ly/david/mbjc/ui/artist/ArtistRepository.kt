@@ -6,10 +6,10 @@ import ly.david.mbjc.data.Artist
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.ArtistDao
-import ly.david.mbjc.data.persistence.LookupHistory
-import ly.david.mbjc.data.persistence.LookupHistoryDao
-import ly.david.mbjc.data.persistence.toArtistRoomModel
+import ly.david.mbjc.data.persistence.artist.ArtistDao
+import ly.david.mbjc.data.persistence.history.LookupHistory
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.mbjc.data.persistence.artist.toArtistRoomModel
 
 @Singleton
 internal class ArtistRepository @Inject constructor(

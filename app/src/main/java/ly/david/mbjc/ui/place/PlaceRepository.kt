@@ -5,13 +5,13 @@ import javax.inject.Singleton
 import ly.david.mbjc.data.Place
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.LookupHistory
-import ly.david.mbjc.data.persistence.LookupHistoryDao
-import ly.david.mbjc.data.persistence.RelationDao
-import ly.david.mbjc.data.persistence.RelationRoomModel
+import ly.david.mbjc.data.persistence.history.LookupHistory
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.place.PlaceDao
-import ly.david.mbjc.data.persistence.toPlaceRoomModel
-import ly.david.mbjc.data.persistence.toRelationRoomModel
+import ly.david.mbjc.data.persistence.place.toPlaceRoomModel
+import ly.david.mbjc.data.persistence.relation.RelationRoomModel
+import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
 
 @Singleton
 internal class PlaceRepository @Inject constructor(

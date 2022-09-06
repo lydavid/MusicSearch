@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.releasegroup
 
 import androidx.paging.PagingSource
 import androidx.room.Room
@@ -7,7 +7,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import java.io.IOException
 import kotlinx.coroutines.runBlocking
 import ly.david.mbjc.data.network.SEARCH_BROWSE_LIMIT
-import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
+import ly.david.mbjc.data.persistence.artist.ArtistDao
+import ly.david.mbjc.data.persistence.artist.ArtistRoomModel
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before

@@ -3,7 +3,7 @@ package ly.david.mbjc.ui.artist.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.mbjc.data.persistence.ArtistDao
+import ly.david.mbjc.data.persistence.artist.ArtistDao
 
 @HiltViewModel
 internal class ArtistStatsViewModel @Inject constructor(

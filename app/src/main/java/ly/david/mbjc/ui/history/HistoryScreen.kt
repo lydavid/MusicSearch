@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.LookupHistory
+import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler

@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.history
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

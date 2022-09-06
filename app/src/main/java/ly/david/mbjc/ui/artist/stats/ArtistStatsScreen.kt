@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.getDisplayTypes
-import ly.david.mbjc.data.persistence.ReleaseGroupTypeCount
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupTypeCount
 
 @Composable
 internal fun ArtistStatsScreen(

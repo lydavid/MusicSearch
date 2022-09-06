@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.artist
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import ly.david.mbjc.data.ArtistCredit
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.network.RecordingMusicBrainzModel
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
 
 /**
  * An artist's credit for a [ReleaseGroup].

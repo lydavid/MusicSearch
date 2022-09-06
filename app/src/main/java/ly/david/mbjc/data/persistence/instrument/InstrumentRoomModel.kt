@@ -1,10 +1,11 @@
-package ly.david.mbjc.data.persistence
+package ly.david.mbjc.data.persistence.instrument
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Instrument
 import ly.david.mbjc.data.network.InstrumentMusicBrainzModel
+import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(tableName = "instruments")
 internal data class InstrumentRoomModel(
@@ -23,7 +24,7 @@ internal data class InstrumentRoomModel(
 
     @ColumnInfo(name = "description")
     override val description: String?,
-) : RoomModel(), Instrument
+) : RoomModel, Instrument
 
 internal fun InstrumentMusicBrainzModel.toInstrumentRoomModel() =
     InstrumentRoomModel(
