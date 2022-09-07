@@ -4,19 +4,19 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val AREA = "area-rels"
-private const val ARTIST = "artist-rels"
-private const val EVENT = "event-rels"
-private const val GENRE = "genre-rels"
-private const val INSTRUMENT = "instrument-rels"
-private const val LABEL = "label-rels"
-private const val PLACE = "place-rels"
-private const val RECORDING = "recording-rels"
-private const val RELEASE = "release-rels"
-private const val RELEASE_GROUP = "release-group-rels"
-private const val SERIES = "series-rels"
-private const val URL = "url-rels"
-private const val WORK = "work-rels"
+private const val AREA_REL = "area-rels"
+private const val ARTIST_REL = "artist-rels"
+private const val EVENT_REL = "event-rels"
+private const val GENRE_REL = "genre-rels"
+private const val INSTRUMENT_REL = "instrument-rels"
+private const val LABEL_REL = "label-rels"
+private const val PLACE_REL = "place-rels"
+private const val RECORDING_REL = "recording-rels"
+private const val RELEASE_REL = "release-rels"
+private const val RELEASE_GROUP_REL = "release-group-rels"
+private const val SERIES_REL = "series-rels"
+private const val URL_REL = "url-rels"
+private const val WORK_REL = "work-rels"
 
 /**
  * See [lookup API](https://wiki.musicbrainz.org/MusicBrainz_API#Lookups).
@@ -27,16 +27,17 @@ private const val WORK = "work-rels"
 internal interface Lookup {
 
     companion object {
-        const val ARTIST_INC_DEFAULT = "$ARTIST+$URL"
-        const val WORK_INC_DEFAULT = "$AREA+$ARTIST+$EVENT+$LABEL+$PLACE+$RECORDING+$SERIES+$URL+$WORK"
+        const val INC_ALL_RELATIONS = "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+        const val ARTIST_INC_DEFAULT = "$ARTIST_REL+$LABEL_REL+$RELEASE_GROUP_REL+$URL_REL"
+        const val WORK_INC_DEFAULT = "$AREA_REL+$ARTIST_REL+$EVENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$SERIES_REL+$URL_REL+$WORK_REL"
         const val EVENT_INC_DEFAULT =
-            "$AREA+$ARTIST+$EVENT+$PLACE+$RECORDING+$RELEASE+$RELEASE_GROUP+$SERIES+$URL+$WORK"
+            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
     }
 
     @GET("artist/{artistId}")
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
-        @Query("inc") include: String? = ARTIST_INC_DEFAULT
+        @Query("inc") include: String? = null
     ): ArtistMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")

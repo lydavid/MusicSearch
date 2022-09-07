@@ -36,7 +36,9 @@ internal class ReleaseGroupsByArtistRepository @Inject constructor(
                 return roomArtist
             }
 
-            val musicBrainzArtist = musicBrainzApiService.lookupArtist(artistId)
+            val musicBrainzArtist = musicBrainzApiService.lookupArtist(
+                artistId = artistId,
+            )
             artistDao.insert(musicBrainzArtist.toArtistRoomModel())
             incrementOrInsertLookupHistory(musicBrainzArtist)
             musicBrainzArtist

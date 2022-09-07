@@ -37,7 +37,13 @@ internal data class ReleaseGroupRoomModel(
      * When not set, it means we have not queried for the number of releases in this release group.
      */
     @ColumnInfo(name = "release_count")
-    val releaseCount: Int? = null
+    val releaseCount: Int? = null,
+
+    /**
+     * Flag to determine whether we should fetch their relationships from MB.
+     */
+    @ColumnInfo(name = "has_default_relations", defaultValue = "false")
+    val hasDefaultRelations: Boolean = false,
 ) : RoomModel, ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
@@ -59,12 +65,14 @@ internal data class ReleaseGroupRoomModel(
 //    val secondaryTypes: String = ""
 //)
 
-internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
+internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(
+    hasDefaultRelations: Boolean = false,
+): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
     id = id,
     name = name,
     firstReleaseDate = firstReleaseDate,
     disambiguation = disambiguation,
-
     primaryType = primaryType,
-    secondaryTypes = secondaryTypes
+    secondaryTypes = secondaryTypes,
+    hasDefaultRelations = hasDefaultRelations
 )

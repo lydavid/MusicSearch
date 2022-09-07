@@ -32,7 +32,9 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     @Json(name = "release")
     RELEASE("Release", "release"),
 
-    @Json(name = "release-group")
+    // Note that target-type uses release_group, while uri uses release-group.
+    // For our internal resource, we will use release-group.
+    @Json(name = "release_group")
     RELEASE_GROUP("Release Group", "release-group"),
 
     @Json(name = "series")

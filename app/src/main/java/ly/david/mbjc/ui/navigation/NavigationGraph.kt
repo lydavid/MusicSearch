@@ -220,6 +220,7 @@ internal fun NavigationGraph(
             ReleaseGroupScaffold(
                 releaseGroupId = releaseGroupId,
                 onReleaseClick = onReleaseClick,
+                onItemClick = onLookupItemClick,
                 onBack = navController::navigateUp
             )
         }

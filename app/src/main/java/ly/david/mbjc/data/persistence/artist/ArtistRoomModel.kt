@@ -53,24 +53,22 @@ internal data class ArtistRoomModel(
     val releaseGroupsCount: Int? = null,
 
     /**
-     * Flag to determine whether we should fetch their default relations.
+     * Flag to determine whether we should fetch their relationships from MB.
      */
     @ColumnInfo(name = "has_default_relations", defaultValue = "false")
     val hasDefaultRelations: Boolean = false,
-
 ) : RoomModel, Artist
 
 internal fun ArtistMusicBrainzModel.toArtistRoomModel(
     hasDefaultRelations: Boolean = false,
-) =
-    ArtistRoomModel(
-        id = id,
-        name = name,
-        sortName = sortName,
-        disambiguation = disambiguation,
-        type = type,
-        gender = gender,
-        countryCode = countryCode,
-        lifeSpan = lifeSpan,
-        hasDefaultRelations = hasDefaultRelations
-    )
+) = ArtistRoomModel(
+    id = id,
+    name = name,
+    sortName = sortName,
+    disambiguation = disambiguation,
+    type = type,
+    gender = gender,
+    countryCode = countryCode,
+    lifeSpan = lifeSpan,
+    hasDefaultRelations = hasDefaultRelations
+)

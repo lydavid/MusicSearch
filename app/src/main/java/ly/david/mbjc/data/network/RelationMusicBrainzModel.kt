@@ -12,7 +12,7 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "type-id") val typeId: String,
     @Json(name = "direction") val direction: Direction,
 
-    @Json(name = "target-type") val targetType: MusicBrainzResource?, // artist, place, work, label
+    @Json(name = "target-type") val targetType: MusicBrainzResource?,
     @Json(name = "target-credit") val targetCredit: String? = null, // prefer this credit over object's name if it exists
 
     @Json(name = "attributes") val attributes: List<String>? = null, // strings, task
@@ -23,6 +23,7 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "ended") override val ended: Boolean?,
 
     @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
+    @Json(name = "release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
     @Json(name = "label") val label: LabelMusicBrainzModel? = null,
     @Json(name = "work") val work: WorkMusicBrainzModel? = null,
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,

@@ -42,6 +42,8 @@ internal data class ReleaseGroupMusicBrainzModel(
     // lookup only, inc=releases
     @Json(name = "releases")
     val releases: List<ReleaseMusicBrainzModel>? = null,
+
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), ReleaseGroup
 
 // TODO: unit test

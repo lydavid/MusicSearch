@@ -90,6 +90,17 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
             disambiguation = artist.disambiguation
             additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
         }
+        MusicBrainzResource.RELEASE_GROUP -> {
+            if (releaseGroup == null) return null
+            linkedResourceId = releaseGroup.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                releaseGroup.name
+            } else {
+                targetCredit
+            }
+            disambiguation = releaseGroup.disambiguation
+            additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+        }
         MusicBrainzResource.RECORDING -> {
             if (recording == null) return null
             linkedResourceId = recording.id

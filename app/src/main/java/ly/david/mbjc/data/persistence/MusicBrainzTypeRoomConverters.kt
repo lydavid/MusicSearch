@@ -6,7 +6,6 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
-
 internal class MusicBrainzRoomTypeConverters {
 
     // For things like "secondary-types" which does not need its own table.
@@ -40,3 +39,4 @@ internal class MusicBrainzRoomTypeConverters {
     @TypeConverter
     fun fromDate(date: Date): Long = date.time
 }
+

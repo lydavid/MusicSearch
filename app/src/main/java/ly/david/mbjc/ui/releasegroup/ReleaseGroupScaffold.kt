@@ -29,12 +29,15 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.releasegroup.relations.ReleaseGroupRelationsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupViewModel
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
 private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
     RELEASES(R.string.releases),
+    RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats),
 }
 
@@ -48,6 +51,7 @@ private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
 internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
     onReleaseClick: (String) -> Unit = {},
+    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     onBack: () -> Unit,
     viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel()
 ) {
@@ -65,6 +69,9 @@ internal fun ReleaseGroupScaffold(
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 
+    // TODO: this is not enough to remember state of Relationships tab. Need to hoist lazypagingitems out too
+    val relationshipsLazyListState = rememberLazyListState()
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
@@ -80,17 +87,20 @@ internal fun ReleaseGroupScaffold(
                             context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
                             closeMenu()
                         })
-                    DropdownMenuItem(
-                        text = {
-                            Text(stringResource(id = R.string.refresh))
-                        },
-                        onClick = {
-                            closeMenu()
-                            coroutineScope.launch {
-                                releasesLazyListState.scrollToItem(0)
-                                releasesLazyPagingItems.refresh()
-                            }
-                        })
+
+                    if (selectedTab == ReleaseGroupTab.RELEASES) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(stringResource(id = R.string.refresh))
+                            },
+                            onClick = {
+                                closeMenu()
+                                coroutineScope.launch {
+                                    releasesLazyListState.scrollToItem(0)
+                                    releasesLazyPagingItems.refresh()
+                                }
+                            })
+                    }
                 },
                 tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
@@ -119,6 +129,13 @@ internal fun ReleaseGroupScaffold(
                     viewModel = viewModel,
                     lazyListState = releasesLazyListState,
                     lazyPagingItems = releasesLazyPagingItems
+                )
+            }
+            ReleaseGroupTab.RELATIONSHIPS -> {
+                ReleaseGroupRelationsScreen(
+                    releaseGroupId = releaseGroupId,
+                    onItemClick = onItemClick,
+                    lazyListState = relationshipsLazyListState
                 )
             }
             ReleaseGroupTab.STATS -> {

@@ -13,15 +13,23 @@ Note the `'`. Need to include this when building uri with `&`.
 adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.intent.action.VIEW
 ```
 
-<details><summary>event</summary><blockquote>
+## Release Group
+
+Death Magnetic
+- has relationships
+
+```sh
+adb shell am start -d "mbjc://release-group/5c8a25bf-4764-3cce-8f37-30af79d3b101" -a android.intent.action.VIEW
+```
 
 
+
+## Event
 
 ```shell
 adb shell am start -d "mbjc://event/3d6f84e1-bb1b-4caa-9abf-db67a4c2c055" -a android.intent.action.VIEW
 ```
 
-</blockquote></details>
 
 
 
