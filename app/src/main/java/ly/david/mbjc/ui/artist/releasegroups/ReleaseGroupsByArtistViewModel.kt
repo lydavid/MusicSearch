@@ -30,14 +30,13 @@ import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.toReleaseGroupRoomModel
-import ly.david.mbjc.ui.artist.ArtistRepository
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val artistRepository: ArtistRepository,
+    private val releaseGroupsByArtistRepository: ReleaseGroupsByArtistRepository,
     private val artistDao: ArtistDao,
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val releaseGroupDao: ReleaseGroupDao,
@@ -61,7 +60,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     )
 
     suspend fun lookupArtist(artistId: String) =
-        artistRepository.lookupArtist(artistId)
+        releaseGroupsByArtistRepository.lookupArtist(artistId)
 
     fun updateArtistId(artistId: String) {
         this.artistId.value = artistId

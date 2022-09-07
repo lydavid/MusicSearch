@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.releasegroup
+package ly.david.mbjc.ui.releasegroup.releases
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarHostState

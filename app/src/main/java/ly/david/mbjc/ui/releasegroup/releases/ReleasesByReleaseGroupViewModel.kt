@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.releasegroup
+package ly.david.mbjc.ui.releasegroup.releases
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,15 +23,18 @@ import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
-import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
-import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
 
 // TODO: generalize? reuse for releases by label
 //  or make abstract, and override
+
+// TODO: for releases by release group, and releases by label, we can just literally use the same VM/screen
+//  but change out what id to use, and what daos to use
 @HiltViewModel
 internal class ReleasesByReleaseGroupViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
@@ -71,9 +74,9 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = RoomDataRemoteMediator(
                         getRemoteResourceCount = { releaseGroupDao.getReleaseGroup(releaseGroupId)?.releaseCount },
-                        getLocalResourceCount = { releaseDao.getNumberOfReleasesInReleaseGroup(releaseGroupId) },
+                        getLocalResourceCount = { releasesReleaseGroupsDao.getNumberOfReleasesInReleaseGroup(releaseGroupId) },
                         deleteLocalResource = {
-                            releaseDao.deleteReleasesInReleaseGroup(releaseGroupId)
+                            releasesReleaseGroupsDao.deleteReleasesInReleaseGroup(releaseGroupId)
                         },
                         browseResource = { offset ->
                             browseReleasesAndStore(releaseGroupId, offset)
@@ -113,10 +116,10 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
 
     private fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
         query.isEmpty() -> {
-            releaseDao.getReleasesInReleaseGroup(releaseGroupId)
+            releasesReleaseGroupsDao.getReleasesInReleaseGroup(releaseGroupId)
         }
         else -> {
-            releaseDao.getReleasesInReleaseGroupFiltered(
+            releasesReleaseGroupsDao.getReleasesInReleaseGroupFiltered(
                 releaseGroupId = releaseGroupId,
                 query = "%$query%"
             )

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.artist.releasegroups
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -7,12 +7,12 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.artist.ArtistDao
+import ly.david.mbjc.data.persistence.artist.toArtistRoomModel
 import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.artist.toArtistRoomModel
 
 @Singleton
-internal class ArtistRepository @Inject constructor(
+internal class ReleaseGroupsByArtistRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
     private val lookupHistoryDao: LookupHistoryDao

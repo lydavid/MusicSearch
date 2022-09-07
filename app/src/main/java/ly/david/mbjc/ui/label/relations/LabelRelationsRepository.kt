@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label
+package ly.david.mbjc.ui.label.relations
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +14,7 @@ import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
 
 @Singleton
-internal class LabelRepository @Inject constructor(
+internal class LabelRelationsRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val labelDao: LabelDao,
     private val relationDao: RelationDao,

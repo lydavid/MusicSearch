@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.releasegroup
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -17,20 +18,24 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
+import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
+import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupViewModel
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
-private enum class ReleaseGroupTab(val title: String) {
-    RELEASES("Releases"),
-    STATS("Stats"),
+private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
+    RELEASES(R.string.releases),
+    STATS(R.string.stats),
 }
 
 /**
@@ -40,7 +45,7 @@ private enum class ReleaseGroupTab(val title: String) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ReleaseGroupScreenScaffold(
+internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
     onReleaseClick: (String) -> Unit = {},
     onBack: () -> Unit,
@@ -70,14 +75,14 @@ internal fun ReleaseGroupScreenScaffold(
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
-                        text = { Text("Open in browser") },
+                        text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
                             context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
                             closeMenu()
                         })
                     DropdownMenuItem(
                         text = {
-                            Text("Refresh")
+                            Text(stringResource(id = R.string.refresh))
                         },
                         onClick = {
                             closeMenu()
@@ -87,7 +92,7 @@ internal fun ReleaseGroupScreenScaffold(
                             }
                         })
                 },
-                tabsTitles = ReleaseGroupTab.values().map { it.title },
+                tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] },
                 showSearchIcon = selectedTab == ReleaseGroupTab.RELEASES,

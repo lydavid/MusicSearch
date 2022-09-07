@@ -21,7 +21,7 @@ import ly.david.mbjc.ui.label.LabelScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScreenScaffold
-import ly.david.mbjc.ui.releasegroup.ReleaseGroupScreenScaffold
+import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 
@@ -217,7 +217,7 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val releaseGroupId = entry.arguments?.getString(ID) ?: return@composable
-            ReleaseGroupScreenScaffold(
+            ReleaseGroupScaffold(
                 releaseGroupId = releaseGroupId,
                 onReleaseClick = onReleaseClick,
                 onBack = navController::navigateUp

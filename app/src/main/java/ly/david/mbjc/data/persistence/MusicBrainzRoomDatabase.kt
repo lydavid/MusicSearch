@@ -42,12 +42,12 @@ import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
-import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroups
-import ly.david.mbjc.data.persistence.release.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
@@ -65,8 +65,9 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
 //        ReleaseGroupFts::class,
 
         // Relationship tables
-        ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
         RelationRoomModel::class,
+        ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
+//        ReleasesLabels::class,
 
         // Additional features tables
         LookupHistory::class
@@ -119,17 +120,27 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     abstract fun getArtistDao(): ArtistDao
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
+
     abstract fun getReleaseGroupDao(): ReleaseGroupDao
     abstract fun getReleasesReleaseGroupsDao(): ReleasesReleaseGroupsDao
+
     abstract fun getReleaseDao(): ReleaseDao
     abstract fun getMediumDao(): MediumDao
     abstract fun getTrackDao(): TrackDao
+
     abstract fun getRecordingDao(): RecordingDao
+
     abstract fun getWorkDao(): WorkDao
+
     abstract fun getAreaDao(): AreaDao
+
     abstract fun getPlaceDao(): PlaceDao
+
     abstract fun getInstrumentDao(): InstrumentDao
+
     abstract fun getLabelDao(): LabelDao
+//    abstract fun getReleasesLabelsDao(): ReleasesLabelsDao
+
     abstract fun getEventDao(): EventDao
 
     abstract fun getRelationDao(): RelationDao
@@ -226,6 +237,9 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideLabelDao(db: MusicBrainzRoomDatabase) = db.getLabelDao()
+
+//    @Provides
+//    fun provideReleasesLabelsDao(db: MusicBrainzRoomDatabase) = db.getReleasesLabelsDao()
 
     @Provides
     fun provideEventDao(db: MusicBrainzRoomDatabase) = db.getEventDao()

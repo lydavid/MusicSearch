@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.releasegroup
+package ly.david.mbjc.ui.releasegroup.releases
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -8,9 +8,9 @@ import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.toReleaseGroupRoomModel
 
