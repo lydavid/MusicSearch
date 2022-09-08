@@ -12,7 +12,6 @@ import ly.david.mbjc.ui.relation.RelationViewModel
 
 @HiltViewModel
 internal class ReleaseGroupRelationsViewModel @Inject constructor(
-    private val releaseGroupRelationsRepository: ReleaseGroupRelationsRepository,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseGroupDao: ReleaseGroupDao,
     private val relationDao: RelationDao

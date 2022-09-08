@@ -19,8 +19,8 @@ import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toRelationUiModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
+import ly.david.mbjc.ui.common.paging.LookupRelationsRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
-import ly.david.mbjc.ui.common.paging.RelationsRemoteMediator
 
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].
@@ -34,7 +34,7 @@ internal abstract class RelationViewModel(relationDao: RelationDao) : ViewModel(
         resourceId.flatMapLatest { resourceId ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
-                remoteMediator = RelationsRemoteMediator(
+                remoteMediator = LookupRelationsRemoteMediator(
                     hasRelationsBeenStored = { hasRelationsBeenStored() },
                     lookupRelations = { lookupRelationsAndStore(resourceId) }
                 ),

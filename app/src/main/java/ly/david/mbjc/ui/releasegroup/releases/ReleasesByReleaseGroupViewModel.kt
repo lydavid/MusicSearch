@@ -28,7 +28,7 @@ import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
 import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
-import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
+import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 
 // TODO: generalize? reuse for releases by label
 //  or make abstract, and override
@@ -72,7 +72,7 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
             .flatMapLatest { (releaseGroupId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = RoomDataRemoteMediator(
+                    remoteMediator = BrowseResourceRemoteMediator(
                         getRemoteResourceCount = { releaseGroupDao.getReleaseGroup(releaseGroupId)?.releaseCount },
                         getLocalResourceCount = { releasesReleaseGroupsDao.getNumberOfReleasesInReleaseGroup(releaseGroupId) },
                         deleteLocalResource = {

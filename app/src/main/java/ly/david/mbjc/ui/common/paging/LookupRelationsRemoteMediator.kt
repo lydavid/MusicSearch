@@ -7,7 +7,7 @@ import androidx.paging.RemoteMediator
 import ly.david.mbjc.data.persistence.RoomModel
 
 @OptIn(ExperimentalPagingApi::class)
-internal class RelationsRemoteMediator<RM : RoomModel>(
+internal class LookupRelationsRemoteMediator<RM : RoomModel>(
     private val hasRelationsBeenStored: suspend () -> Boolean,
 //    private val deleteLocalResource: suspend () -> Unit,
     private val lookupRelations: suspend () -> Unit

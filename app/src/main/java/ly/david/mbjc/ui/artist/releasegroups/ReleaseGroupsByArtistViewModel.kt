@@ -31,7 +31,7 @@ import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.toReleaseGroupRoomModel
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
-import ly.david.mbjc.ui.common.paging.RoomDataRemoteMediator
+import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -80,7 +80,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
             .flatMapLatest { (artistId, query, isSorted) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = RoomDataRemoteMediator(
+                    remoteMediator = BrowseResourceRemoteMediator(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
                         getLocalResourceCount = { artistDao.getNumberOfReleaseGroupsByArtist(artistId) },
                         deleteLocalResource = {

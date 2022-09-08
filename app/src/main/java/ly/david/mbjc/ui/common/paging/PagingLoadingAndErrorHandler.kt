@@ -79,8 +79,6 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
             FullScreenText(noResultsText)
         }
         else -> {
-            // TODO: relation screens seems to fall through here with a Header item
-            //
             LazyColumn(
                 modifier = modifier,
                 state = lazyListState,
@@ -110,8 +108,6 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                                     RetryButton(lazyPagingItems = lazyPagingItems)
                                 }
                             }
-                            // TODO: and falls all the way through here
-                            //  its refresh/append is never Error
                             else -> {
                                 Spacer(
                                     modifier = Modifier
