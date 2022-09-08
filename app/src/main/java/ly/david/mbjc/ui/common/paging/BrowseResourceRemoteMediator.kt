@@ -20,7 +20,7 @@ import ly.david.mbjc.data.persistence.RoomModel
  *  Expects back the number of returned resources.
  */
 @OptIn(ExperimentalPagingApi::class)
-internal class RoomDataRemoteMediator<RM : RoomModel>(
+internal class BrowseResourceRemoteMediator<RM : RoomModel>(
     private val getRemoteResourceCount: suspend () -> Int?,
     private val getLocalResourceCount: suspend () -> Int,
     private val deleteLocalResource: suspend () -> Unit,
