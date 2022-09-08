@@ -42,7 +42,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 /**
  * Handles loading and errors for paging screens.
  *
- * @param modifier For lazy column containing [content].
+ * @param modifier For lazy column containing [itemContent].
  * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.
  *  Although this should be decoupled, some screens' paged contents relies on a lookup that feeds data into Room,
  *  which is then loaded with pagination.
@@ -79,6 +79,8 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
             FullScreenText(noResultsText)
         }
         else -> {
+            // TODO: relation screens seems to fall through here with a Header item
+            //
             LazyColumn(
                 modifier = modifier,
                 state = lazyListState,
@@ -108,6 +110,8 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                                     RetryButton(lazyPagingItems = lazyPagingItems)
                                 }
                             }
+                            // TODO: and falls all the way through here
+                            //  its refresh/append is never Error
                             else -> {
                                 Spacer(
                                     modifier = Modifier

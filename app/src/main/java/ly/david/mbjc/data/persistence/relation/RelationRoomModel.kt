@@ -10,6 +10,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.RelationMusicBrainzModel
 import ly.david.mbjc.data.network.getFormattedAttributesForDisplay
 import ly.david.mbjc.data.network.getHeader
+import ly.david.mbjc.data.persistence.RoomModel
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 // TODO: recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.
@@ -62,7 +63,7 @@ internal data class RelationRoomModel(
      */
     @ColumnInfo(name = "additional_info")
     override val additionalInfo: String? = null,
-) : Relation
+) : Relation, RoomModel
 
 /**
  * We cannot guarantee that a [RelationRoomModel] will be created in the scenario that target-type points to a resource

@@ -13,6 +13,13 @@ Note the `'`. Need to include this when building uri with `&`.
 adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.intent.action.VIEW
 ```
 
+## Artist
+
+```sh
+adb shell am start -d "mbjc://artist/d044577e-aa22-43b7-ab29-cabee5f6643c" -a android.intent.action.VIEW
+```
+
+
 ## Release Group
 
 Death Magnetic
@@ -21,6 +28,14 @@ Death Magnetic
 ```sh
 adb shell am start -d "mbjc://release-group/5c8a25bf-4764-3cce-8f37-30af79d3b101" -a android.intent.action.VIEW
 ```
+
+Heaven Shall Burn… When We Are Gathered
+- artist-rel `inspired the name of`
+
+```sh
+adb shell am start -d "mbjc://release-group/807d9a32-e55c-317a-8a97-c4d5eaaa38b0" -a android.intent.action.VIEW
+```
+
 
 
 
