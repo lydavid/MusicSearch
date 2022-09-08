@@ -58,8 +58,8 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
         releaseGroupRepository.lookupReleaseGroup(releaseGroupId)
 
-    fun updateReleaseGroupId(artistId: String) {
-        this.releaseGroupId.value = artistId
+    fun updateReleaseGroupId(releaseGroupId: String) {
+        this.releaseGroupId.value = releaseGroupId
     }
 
     fun updateQuery(query: String) {

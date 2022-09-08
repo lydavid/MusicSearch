@@ -33,9 +33,11 @@ internal fun ReleaseGroupRelationsScreen(
     LaunchedEffect(key1 = releaseGroupId) {
 
         try {
-            viewModel.lookupReleaseGroupRelations(releaseGroupId)
+//            viewModel.lookupReleaseGroupRelations(releaseGroupId)
+            viewModel.resourceId.value = releaseGroupId
         } catch (ex: Exception) {
             // TODO: is error already handled below? apparently not...
+            //  handle errors when relation screen is the starting tab, and when it isn't
             Log.d("Remove This", "ReleaseGroupRelationsScreen: lookup failed")
         }
         lookupInProgress = false
