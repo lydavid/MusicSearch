@@ -30,9 +30,10 @@ import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.toReleaseGroupRoomModel
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
+import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
+// TODO: instantiate in ReleaseGroupsByArtistScreen instead of Scaffold, and hoist paging items
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
