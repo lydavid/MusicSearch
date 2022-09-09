@@ -25,8 +25,9 @@ import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].
  */
-internal abstract class RelationViewModel(relationDao: RelationDao) : ViewModel() {
+internal abstract class RelationViewModel(private val relationDao: RelationDao) : ViewModel() {
 
+    // TODO: private, call the fun instead so it reads more intuitively
     val resourceId: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
@@ -36,7 +37,8 @@ internal abstract class RelationViewModel(relationDao: RelationDao) : ViewModel(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 remoteMediator = LookupRelationsRemoteMediator(
                     hasRelationsBeenStored = { hasRelationsBeenStored() },
-                    lookupRelations = { lookupRelationsAndStore(resourceId) }
+                    lookupRelations = { lookupRelationsAndStore(resourceId) },
+                    deleteLocalResource = { deleteLocalRelations(resourceId) }
                 ),
                 pagingSourceFactory = {
                     relationDao.getRelationsForResource(resourceId)
@@ -53,6 +55,13 @@ internal abstract class RelationViewModel(relationDao: RelationDao) : ViewModel(
             .cachedIn(viewModelScope)
 
     /**
+     * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
+     */
+    fun fetchRelationsForResource(resourceId: String) {
+        this.resourceId.value = resourceId
+    }
+
+    /**
      * This will determine whether we will call [lookupRelationsAndStore].
      *
      * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
@@ -62,7 +71,9 @@ internal abstract class RelationViewModel(relationDao: RelationDao) : ViewModel(
     /**
      * Query to delete resource relationships in Room.
      */
-//    open suspend fun deleteLocalRelations() {}
+    private suspend fun deleteLocalRelations(resourceId: String) {
+        relationDao.deleteRelationsByResource(resourceId)
+    }
 
     /**
      * This is responsible for making a lookup request for this resource's relationships,

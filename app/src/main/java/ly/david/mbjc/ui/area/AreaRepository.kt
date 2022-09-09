@@ -5,11 +5,11 @@ import javax.inject.Singleton
 import ly.david.mbjc.data.Area
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.persistence.area.AreaDao
+import ly.david.mbjc.data.persistence.area.toAreaRoomModel
 import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.relation.RelationDao
-import ly.david.mbjc.data.persistence.area.AreaDao
-import ly.david.mbjc.data.persistence.area.toAreaRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
 
@@ -22,6 +22,9 @@ internal class AreaRepository @Inject constructor(
 ) {
     private var area: Area? = null
 
+    // TODO: need to deal with screens that starts on relationship tab
+    //  they need to return their resource in order to set the title.
+    //  Can we generalize so that even relation screens can set it? since it already does a lookup
     suspend fun lookupArea(areaId: String): Area =
         area ?: run {
 

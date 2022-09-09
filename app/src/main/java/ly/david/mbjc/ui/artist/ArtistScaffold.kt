@@ -20,9 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.relations.ArtistRelationsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
@@ -67,8 +72,11 @@ internal fun ArtistScaffold(
     val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
         .collectAsLazyPagingItems()
 
-    // TODO: this is not enough to remember state of Relationships tab. Need to hoist lazypagingitems out too
-    val relationshipsLazyListState = rememberLazyListState()
+    val relationsLazyListState = rememberLazyListState()
+    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+        rememberFlowWithLifecycleStarted(pagedRelations)
+            .collectAsLazyPagingItems()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -95,19 +103,28 @@ internal fun ArtistScaffold(
                                 closeMenu()
                                 // TODO: disclaimer when turning on sort if we have not gotten all release groups
                                 isSorted = !isSorted
-                            })
+                            }
+                        )
+                    }
 
+                    if (selectedTab == ArtistTab.RELEASE_GROUPS || selectedTab == ArtistTab.RELATIONSHIPS) {
                         DropdownMenuItem(
                             text = {
-                                Text("Refresh")
+                                Text(stringResource(id = R.string.refresh))
                             },
                             onClick = {
                                 closeMenu()
                                 coroutineScope.launch {
-                                    releaseGroupsLazyListState.scrollToItem(0)
-                                    releaseGroupsLazyPagingItems.refresh()
+                                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
+                                        releaseGroupsLazyListState.scrollToItem(0)
+                                        releaseGroupsLazyPagingItems.refresh()
+                                    } else {
+                                        relationsLazyListState.scrollToItem(0)
+                                        relationsLazyPagingItems.refresh()
+                                    }
                                 }
-                            })
+                            }
+                        )
                     }
                 },
                 searchText = searchText,
@@ -142,7 +159,11 @@ internal fun ArtistScaffold(
                 ArtistRelationsScreen(
                     artistId = artistId,
                     onItemClick = onItemClick,
-                    lazyListState = relationshipsLazyListState
+                    lazyListState = relationsLazyListState,
+                    lazyPagingItems = relationsLazyPagingItems,
+                    onPagedRelationsChange = {
+                        pagedRelations = it
+                    }
                 )
             }
             ArtistTab.STATS -> {

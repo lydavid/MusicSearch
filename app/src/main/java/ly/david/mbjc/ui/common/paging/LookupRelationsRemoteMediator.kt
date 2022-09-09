@@ -9,12 +9,20 @@ import ly.david.mbjc.data.persistence.RoomModel
 @OptIn(ExperimentalPagingApi::class)
 internal class LookupRelationsRemoteMediator<RM : RoomModel>(
     private val hasRelationsBeenStored: suspend () -> Boolean,
-//    private val deleteLocalResource: suspend () -> Unit,
-    private val lookupRelations: suspend () -> Unit
+    private val lookupRelations: suspend () -> Unit,
+    private val deleteLocalResource: suspend () -> Unit
 ) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
-        return InitializeAction.LAUNCH_INITIAL_REFRESH
+        return try {
+            if (hasRelationsBeenStored()) {
+                InitializeAction.SKIP_INITIAL_REFRESH
+            } else {
+                InitializeAction.LAUNCH_INITIAL_REFRESH
+            }
+        } catch (ex: Exception) {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
     }
 
     override suspend fun load(
@@ -25,11 +33,14 @@ internal class LookupRelationsRemoteMediator<RM : RoomModel>(
         return try {
             if (!hasRelationsBeenStored()) {
                 lookupRelations()
+            } else if (loadType == LoadType.REFRESH) {
+                deleteLocalResource()
+                lookupRelations()
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
-        } catch (e: Exception) {
-            MediatorResult.Error(e)
+        } catch (ex: Exception) {
+            MediatorResult.Error(ex)
         }
     }
 }
