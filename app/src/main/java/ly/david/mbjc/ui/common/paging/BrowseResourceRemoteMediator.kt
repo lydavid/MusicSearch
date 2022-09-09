@@ -34,7 +34,7 @@ internal class BrowseResourceRemoteMediator<RM : RoomModel>(
             } else {
                 InitializeAction.SKIP_INITIAL_REFRESH
             }
-        } catch (e: Exception) {
+        } catch (ex: Exception) {
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
@@ -70,8 +70,8 @@ internal class BrowseResourceRemoteMediator<RM : RoomModel>(
 
             // Assuming all Browse uses this limit.
             MediatorResult.Success(endOfPaginationReached = browseResource(nextOffset) < SEARCH_BROWSE_LIMIT)
-        } catch (e: Exception) {
-            MediatorResult.Error(e)
+        } catch (ex: Exception) {
+            MediatorResult.Error(ex)
         }
     }
 }

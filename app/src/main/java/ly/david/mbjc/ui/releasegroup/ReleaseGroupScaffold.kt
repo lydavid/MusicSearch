@@ -20,11 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -72,6 +76,11 @@ internal fun ReleaseGroupScaffold(
     // TODO: this is not enough to remember state of Relationships tab. Need to hoist lazypagingitems out too
     val relationshipsLazyListState = rememberLazyListState()
 
+    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(flow {  }) }
+    val lazyPagingItems: LazyPagingItems<UiModel> =
+        rememberFlowWithLifecycleStarted(pagedRelations)
+            .collectAsLazyPagingItems()
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
@@ -88,7 +97,7 @@ internal fun ReleaseGroupScaffold(
                             closeMenu()
                         })
 
-                    if (selectedTab == ReleaseGroupTab.RELEASES) {
+                    if (selectedTab == ReleaseGroupTab.RELEASES || selectedTab == ReleaseGroupTab.RELATIONSHIPS) {
                         DropdownMenuItem(
                             text = {
                                 Text(stringResource(id = R.string.refresh))
@@ -96,8 +105,13 @@ internal fun ReleaseGroupScaffold(
                             onClick = {
                                 closeMenu()
                                 coroutineScope.launch {
-                                    releasesLazyListState.scrollToItem(0)
-                                    releasesLazyPagingItems.refresh()
+                                    if (selectedTab == ReleaseGroupTab.RELEASES) {
+                                        releasesLazyListState.scrollToItem(0)
+                                        releasesLazyPagingItems.refresh()
+                                    } else {
+                                        relationshipsLazyListState.scrollToItem(0)
+                                        lazyPagingItems.refresh()
+                                    }
                                 }
                             })
                     }
@@ -135,7 +149,11 @@ internal fun ReleaseGroupScaffold(
                 ReleaseGroupRelationsScreen(
                     releaseGroupId = releaseGroupId,
                     onItemClick = onItemClick,
-                    lazyListState = relationshipsLazyListState
+                    lazyListState = relationshipsLazyListState,
+                    lazyPagingItems = lazyPagingItems,
+                    onPagedRelationsChange = {
+                        pagedRelations = it
+                    }
                 )
             }
             ReleaseGroupTab.STATS -> {

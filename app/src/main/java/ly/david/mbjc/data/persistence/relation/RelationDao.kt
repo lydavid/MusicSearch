@@ -19,4 +19,11 @@ internal abstract class RelationDao : BaseDao<RelationRoomModel> {
     abstract fun getRelationsForResource(
         resourceId: String
     ): PagingSource<Int, RelationRoomModel>
+
+    @Query(
+        """
+        DELETE FROM relations WHERE resource_id = :resourceId
+        """
+    )
+    abstract suspend fun deleteRelationsByResource(resourceId: String)
 }
