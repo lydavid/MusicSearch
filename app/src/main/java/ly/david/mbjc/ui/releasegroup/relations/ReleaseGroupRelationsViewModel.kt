@@ -17,33 +17,16 @@ internal class ReleaseGroupRelationsViewModel @Inject constructor(
     private val relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
 
-//    suspend fun lookupReleaseGroupRelations(releaseGroupId: String): ReleaseGroup =
-//        releaseGroupRelationsRepository.lookupReleaseGroupRelations(releaseGroupId).also {
-//            this.resourceId.value = it.id
-//        }
-
     override suspend fun hasRelationsBeenStored(): Boolean {
         return releaseGroupDao.getReleaseGroup(resourceId.value)?.hasDefaultRelations == true
     }
 
     override suspend fun lookupRelationsAndStore(resourceId: String) {
-        // Use cached model.
-//        val releaseGroupRoomModel = releaseGroupDao.getReleaseGroup(resourceId)
-//
-//        if (releaseGroupRoomModel != null && releaseGroupRoomModel.hasDefaultRelations) {
-//            return releaseGroupRoomModel
-//        }
 
         val releaseGroupMusicBrainzModel = musicBrainzApiService.lookupReleaseGroup(
             releaseGroupId = resourceId,
             include = Lookup.INC_ALL_RELATIONS
         )
-
-//        if (releaseGroupRoomModel == null) {
-//            releaseGroupDao.insert(releaseGroupMusicBrainzModel.toReleaseGroupRoomModel(hasDefaultRelations = true))
-//        } else {
-            releaseGroupDao.setHasDefaultRelations(releaseGroupId = resourceId, hasDefaultRelations = true)
-//        }
 
         val relations = mutableListOf<RelationRoomModel>()
         releaseGroupMusicBrainzModel.relations?.forEachIndexed { index, relationMusicBrainzModel ->
@@ -55,5 +38,8 @@ internal class ReleaseGroupRelationsViewModel @Inject constructor(
             }
         }
         relationDao.insertAll(relations)
+
+        // Called last so that we only flag it after everything else succeeded.
+        releaseGroupDao.setHasDefaultRelations(releaseGroupId = resourceId, hasDefaultRelations = true)
     }
 }

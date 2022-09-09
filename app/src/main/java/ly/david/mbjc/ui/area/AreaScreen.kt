@@ -37,7 +37,7 @@ internal fun AreaScreen(
 
     LaunchedEffect(key1 = areaId) {
         try {
-            area = viewModel.lookupArea(areaId)
+            area = viewModel.getArea(areaId)
             onTitleUpdate(area?.getNameWithDisambiguation() ?: "[should not happen]")
         } catch (ex: Exception) {
             onTitleUpdate("[Area lookup failed]")
