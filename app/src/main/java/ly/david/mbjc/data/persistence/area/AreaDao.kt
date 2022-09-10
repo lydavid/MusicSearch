@@ -9,4 +9,14 @@ internal abstract class AreaDao : BaseDao<AreaRoomModel> {
 
     @Query("SELECT * FROM areas WHERE id = :areaId")
     abstract suspend fun getArea(areaId: String): AreaRoomModel?
+
+    @Query(
+        """
+        UPDATE areas
+        SET has_default_relations = :hasDefaultRelations
+        WHERE id = :areaId
+        """
+    )
+    abstract suspend fun setHasDefaultRelations(areaId: String, hasDefaultRelations: Boolean)
+
 }
