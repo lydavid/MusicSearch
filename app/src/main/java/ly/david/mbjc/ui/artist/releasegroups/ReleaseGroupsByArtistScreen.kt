@@ -5,12 +5,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import kotlinx.coroutines.flow.Flow
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistViewModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
@@ -23,22 +24,15 @@ internal fun ReleaseGroupsByArtistScreen(
     isSorted: Boolean,
     snackbarHostState: SnackbarHostState,
     onReleaseGroupClick: (String) -> Unit = {},
-    onTitleUpdate: (title: String) -> Unit = {},
-    viewModel: ReleaseGroupsByArtistViewModel,
     lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<UiModel>
+    lazyPagingItems: LazyPagingItems<UiModel>,
+    onPagedReleaseGroupsChange: (Flow<PagingData<UiModel>>) -> Unit,
+    viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
 
     LaunchedEffect(key1 = artistId) {
         viewModel.updateArtistId(artistId)
-        onTitleUpdate(
-            try {
-                viewModel.lookupArtist(artistId).getNameWithDisambiguation()
-            } catch (ex: Exception) {
-                // Technically, we could fallback to artist name from card in previous screen.
-                "[Artist lookup failed]"
-            }
-        )
+        onPagedReleaseGroupsChange(viewModel.pagedReleaseGroups)
     }
 
     viewModel.updateQuery(query = searchText)

@@ -50,11 +50,21 @@ internal fun AreaScaffold(
         rememberFlowWithLifecycleStarted(pagedRelations)
             .collectAsLazyPagingItems()
 
+    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+
     // TODO: how about not doing lookup api if we don't have it stored locally to avoid a redundant api call
     LaunchedEffect(key1 = Unit) {
         val area = viewModel.getArea(areaId)
         titleState = area.getNameWithDisambiguation()
-        viewModel.recordLookupHistory(area)
+
+        if (!recordedLookup) {
+            viewModel.recordLookupHistory(
+                resourceId = area.id,
+                resource = MusicBrainzResource.AREA,
+                summary = titleState
+            )
+            recordedLookup = true
+        }
     }
 
     Scaffold(

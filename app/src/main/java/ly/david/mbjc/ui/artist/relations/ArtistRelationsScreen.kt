@@ -20,9 +20,9 @@ internal fun ArtistRelationsScreen(
     artistId: String,
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     lazyListState: LazyListState,
-    viewModel: ArtistRelationsViewModel = hiltViewModel(),
     lazyPagingItems: LazyPagingItems<UiModel>,
     onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,
+    viewModel: ArtistRelationsViewModel = hiltViewModel(),
 ) {
 
     LaunchedEffect(key1 = artistId) {

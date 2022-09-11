@@ -10,6 +10,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,10 +29,10 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.relations.ArtistRelationsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
-import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistViewModel
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -55,11 +56,11 @@ internal fun ArtistScaffold(
     onReleaseGroupClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     onBack: () -> Unit,
-    viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
+    viewModel: ArtistViewModel = hiltViewModel()
 ) {
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
-    var artistName by rememberSaveable { mutableStateOf("") }
+    var titleState by rememberSaveable { mutableStateOf("") }
     var searchText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
 
@@ -69,7 +70,8 @@ internal fun ArtistScaffold(
 
     // This is sufficient to preserve scroll position when switching tabs
     val releaseGroupsLazyListState = rememberLazyListState()
-    val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedReleaseGroups)
+    var pagedReleaseGroups: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+    val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
         .collectAsLazyPagingItems()
 
     val relationsLazyListState = rememberLazyListState()
@@ -78,13 +80,30 @@ internal fun ArtistScaffold(
         rememberFlowWithLifecycleStarted(pagedRelations)
             .collectAsLazyPagingItems()
 
+    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = Unit) {
+        val artist = viewModel.getArtist(artistId)
+        titleState = artist.getNameWithDisambiguation()
+
+        // Following experience of Firefox's visit count, which doesn't record back as visits.
+        if (!recordedLookup) {
+            viewModel.recordLookupHistory(
+                resourceId = artist.id,
+                resource = MusicBrainzResource.ARTIST,
+                summary = titleState
+            )
+            recordedLookup = true
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
                 onBack = onBack,
                 resource = MusicBrainzResource.ARTIST,
-                title = artistName,
+                title = titleState,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 dropdownMenuItems = {
                     DropdownMenuItem(
@@ -147,12 +166,11 @@ internal fun ArtistScaffold(
                     isSorted = isSorted,
                     snackbarHostState = snackbarHostState,
                     onReleaseGroupClick = onReleaseGroupClick,
-                    onTitleUpdate = {
-                        artistName = it
-                    },
-                    viewModel = viewModel,
                     lazyListState = releaseGroupsLazyListState,
-                    lazyPagingItems = releaseGroupsLazyPagingItems
+                    lazyPagingItems = releaseGroupsLazyPagingItems,
+                    onPagedReleaseGroupsChange = {
+                        pagedReleaseGroups = it
+                    }
                 )
             }
             ArtistTab.RELATIONSHIPS -> {
