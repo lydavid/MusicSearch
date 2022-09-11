@@ -26,4 +26,27 @@ internal abstract class RelationDao : BaseDao<RelationRoomModel> {
         """
     )
     abstract suspend fun deleteRelationsByResource(resourceId: String)
+
+    @Query(
+        """
+        SELECT IFNULL(
+            (SELECT COUNT(*)
+            FROM relations
+            WHERE resource_id = :resourceId
+            ),
+            0
+        ) AS count
+    """
+    )
+    abstract suspend fun getNumberOfRelationsByResource(resourceId: String): Int
+
+    @Query(
+        """
+        SELECT linked_resource, COUNT(resource_id) as count
+        FROM relations
+        WHERE resource_id = :resourceId
+        GROUP BY linked_resource
+    """
+    )
+    abstract suspend fun getCountOfEachRelationshipType(resourceId: String): List<RelationTypeCount>
 }

@@ -59,6 +59,8 @@ internal fun ArtistScaffold(
     viewModel: ArtistViewModel = hiltViewModel()
 ) {
 
+    val resource = MusicBrainzResource.ARTIST
+
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var titleState by rememberSaveable { mutableStateOf("") }
     var searchText by rememberSaveable { mutableStateOf("") }
@@ -76,9 +78,8 @@ internal fun ArtistScaffold(
 
     val relationsLazyListState = rememberLazyListState()
     var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> =
-        rememberFlowWithLifecycleStarted(pagedRelations)
-            .collectAsLazyPagingItems()
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+        .collectAsLazyPagingItems()
 
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
@@ -90,7 +91,7 @@ internal fun ArtistScaffold(
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
                 resourceId = artist.id,
-                resource = MusicBrainzResource.ARTIST,
+                resource = resource,
                 summary = titleState
             )
             recordedLookup = true
@@ -102,14 +103,14 @@ internal fun ArtistScaffold(
         topBar = {
             TopAppBarWithSearch(
                 onBack = onBack,
-                resource = MusicBrainzResource.ARTIST,
+                resource = resource,
                 title = titleState,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 dropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text("Open in browser") },
                         onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.ARTIST, artistId)
+                            context.lookupInBrowser(resource, artistId)
                             closeMenu()
                         })
 

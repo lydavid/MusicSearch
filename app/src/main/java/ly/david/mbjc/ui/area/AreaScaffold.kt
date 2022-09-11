@@ -41,14 +41,15 @@ internal fun AreaScaffold(
     viewModel: AreaViewModel = hiltViewModel(),
 ) {
 
+    val resource = MusicBrainzResource.AREA
+
     var titleState by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
     val relationsLazyListState = rememberLazyListState()
     var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> =
-        rememberFlowWithLifecycleStarted(pagedRelations)
-            .collectAsLazyPagingItems()
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+        .collectAsLazyPagingItems()
 
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
@@ -60,7 +61,7 @@ internal fun AreaScaffold(
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
                 resourceId = area.id,
-                resource = MusicBrainzResource.AREA,
+                resource = resource,
                 summary = titleState
             )
             recordedLookup = true
@@ -70,14 +71,14 @@ internal fun AreaScaffold(
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
-                resource = MusicBrainzResource.AREA,
+                resource = resource,
                 title = titleState,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.AREA, areaId)
+                            context.lookupInBrowser(resource, areaId)
                             closeMenu()
                         }
                     )
