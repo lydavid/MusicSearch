@@ -127,6 +127,7 @@ internal fun ArtistScaffold(
                         )
                     }
 
+                    // TODO: With swiperefresh, we don't really need this
                     if (selectedTab == ArtistTab.RELEASE_GROUPS || selectedTab == ArtistTab.RELATIONSHIPS) {
                         DropdownMenuItem(
                             text = {

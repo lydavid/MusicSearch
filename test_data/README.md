@@ -4,6 +4,7 @@ Use this instead of top-level README to collect test deeplinks.
 
 Also use this folder to store example JSON.
 
+Use this as a sort of checklist for what features we support.
 
 ## Search
 

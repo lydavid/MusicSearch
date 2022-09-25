@@ -27,12 +27,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.flow.flowOf
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
@@ -41,6 +46,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
  * Handles loading and errors for paging screens.
+ *
+ * Also handles swipe to refresh. The source for [lazyPagingItems] is expected to implement refresh behaviour.
+ * This can be done using one of [BrowseResourceRemoteMediator] or [LookupRelationsRemoteMediator].
  *
  * @param modifier For lazy column containing [itemContent].
  * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.
@@ -79,41 +87,54 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
             FullScreenText(noResultsText)
         }
         else -> {
-            LazyColumn(
-                modifier = modifier,
-                state = lazyListState,
+            val swipeRefreshState = rememberSwipeRefreshState(false)
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = { lazyPagingItems.refresh() },
+                indicator = { state: SwipeRefreshState, refreshTrigger: Dp ->
+                    SwipeRefreshIndicator(
+                        state = state,
+                        refreshTriggerDistance = refreshTrigger,
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                }
             ) {
+                LazyColumn(
+                    modifier = modifier,
+                    state = lazyListState,
+                ) {
 
-                // Note that if we prepend/append items, it will cause scroll to top on config change.
+                    // Note that if we prepend/append items, it will cause scroll to top on config change.
 //                item {
 //                    Text(text = "blah")
 //                }
 
-                itemsIndexed(lazyPagingItems) { index: Int, value: T? ->
-                    itemContent(value)
+                    itemsIndexed(lazyPagingItems) { index: Int, value: T? ->
+                        itemContent(value)
 
-                    // Is this inefficient? At least it preserves list state on configuration change.
-                    if (index == lazyPagingItems.itemCount - 1) {
-                        when (lazyPagingItems.loadState.append) {
-                            is LoadState.Loading -> {
-                                FooterLoadingIndicator()
-                            }
-                            is LoadState.Error -> {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    RetryButton(lazyPagingItems = lazyPagingItems)
+                        // Is this inefficient? At least it preserves list state on configuration change.
+                        if (index == lazyPagingItems.itemCount - 1) {
+                            when (lazyPagingItems.loadState.append) {
+                                is LoadState.Loading -> {
+                                    FooterLoadingIndicator()
                                 }
-                            }
-                            else -> {
-                                Spacer(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp)
-                                )
+                                is LoadState.Error -> {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(8.dp),
+                                        horizontalArrangement = Arrangement.Center
+                                    ) {
+                                        RetryButton(lazyPagingItems = lazyPagingItems)
+                                    }
+                                }
+                                else -> {
+                                    Spacer(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp)
+                                    )
+                                }
                             }
                         }
                     }
