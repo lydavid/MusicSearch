@@ -369,6 +369,7 @@ internal fun NavigationGraph(
             LabelScaffold(
                 labelId = labelId,
                 onBack = navController::navigateUp,
+                onReleaseClick = onReleaseClick,
                 onItemClick = onLookupItemClick
             )
         }

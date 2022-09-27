@@ -32,6 +32,8 @@ import ly.david.mbjc.data.persistence.instrument.InstrumentDao
 import ly.david.mbjc.data.persistence.instrument.InstrumentRoomModel
 import ly.david.mbjc.data.persistence.label.LabelDao
 import ly.david.mbjc.data.persistence.label.LabelRoomModel
+import ly.david.mbjc.data.persistence.label.ReleasesLabels
+import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao
 import ly.david.mbjc.data.persistence.place.PlaceDao
 import ly.david.mbjc.data.persistence.place.PlaceRoomModel
 import ly.david.mbjc.data.persistence.recording.RecordingDao
@@ -52,7 +54,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 25,
+    version = 26,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -67,7 +69,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         // Relationship tables
         RelationRoomModel::class,
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
-//        ReleasesLabels::class,
+        ReleasesLabels::class,
 
         // Additional features tables
         LookupHistory::class
@@ -97,6 +99,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 22, to = 23),
         AutoMigration(from = 23, to = 24),
         AutoMigration(from = 24, to = 25),
+        AutoMigration(from = 25, to = 26),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -141,7 +144,7 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getInstrumentDao(): InstrumentDao
 
     abstract fun getLabelDao(): LabelDao
-//    abstract fun getReleasesLabelsDao(): ReleasesLabelsDao
+    abstract fun getReleasesLabelsDao(): ReleasesLabelsDao
 
     abstract fun getEventDao(): EventDao
 
@@ -240,8 +243,8 @@ internal object DatabaseDaoModule {
     @Provides
     fun provideLabelDao(db: MusicBrainzRoomDatabase) = db.getLabelDao()
 
-//    @Provides
-//    fun provideReleasesLabelsDao(db: MusicBrainzRoomDatabase) = db.getReleasesLabelsDao()
+    @Provides
+    fun provideReleasesLabelsDao(db: MusicBrainzRoomDatabase) = db.getReleasesLabelsDao()
 
     @Provides
     fun provideEventDao(db: MusicBrainzRoomDatabase) = db.getEventDao()

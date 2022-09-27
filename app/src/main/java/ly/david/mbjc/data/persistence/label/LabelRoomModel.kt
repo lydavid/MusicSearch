@@ -24,6 +24,9 @@ internal data class LabelRoomModel(
 
     @ColumnInfo(name = "label_code")
     override val labelCode: Int?,
+
+    @ColumnInfo(name = "release_count", defaultValue = "null")
+    val releaseCount: Int? = null,
 ) : RoomModel, Label
 
 internal fun LabelMusicBrainzModel.toLabelRoomModel() =
