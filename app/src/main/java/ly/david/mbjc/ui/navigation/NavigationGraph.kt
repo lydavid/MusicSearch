@@ -15,6 +15,7 @@ import ly.david.mbjc.data.network.toMusicBrainzResource
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold
+import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
@@ -26,6 +27,7 @@ import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 
 private const val ID = "id"
+private const val TITLE = "title"
 
 @Composable
 internal fun NavigationGraph(
@@ -106,7 +108,15 @@ internal fun NavigationGraph(
             }
         }
 
-        val onLookupItemClick: (Destination, String) -> Unit = { destination, id ->
+        val onGenreClick: (String, String?) -> Unit = { genreId, title ->
+            var route = "${Destination.LOOKUP_GENRE.route}/$genreId"
+            if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
+            navController.navigate(route) {
+                restoreState = true
+            }
+        }
+
+        val onLookupItemClick: (Destination, String, String?) -> Unit = { destination, id, title ->
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
@@ -120,7 +130,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_EVENT -> onEventClick(id)
                 Destination.LOOKUP_SERIES -> onSeriesClick(id)
 
-                Destination.LOOKUP_GENRE -> TODO()
+                Destination.LOOKUP_GENRE -> onGenreClick(id, title)
 
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
@@ -404,6 +414,35 @@ internal fun NavigationGraph(
 //                onBack = navController::navigateUp,
 //                onItemClick = onLookupItemClick
 //            )
+        }
+
+        composable(
+            // TODO: can we make route the same as deeplink pattern?
+            "${Destination.LOOKUP_GENRE.route}/{$ID}?$TITLE={$TITLE}",
+            arguments = listOf(
+                navArgument(ID) {
+                    type = NavType.StringType
+                },
+                navArgument(TITLE) {
+                    nullable = true
+                    defaultValue = null
+                    type = NavType.StringType
+                },
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.GENRE.resourceName}/{$ID}?$TITLE={$TITLE}"
+                }
+            )
+        ) { entry ->
+            val genreId = entry.arguments?.getString(ID) ?: return@composable
+            val title = entry.arguments?.getString(TITLE)
+
+            GenreScaffold(
+                genreId = genreId,
+                title = title,
+                onBack = navController::navigateUp
+            )
         }
 
         composable(

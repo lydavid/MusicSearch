@@ -65,8 +65,8 @@ internal fun MusicBrainzResource.toDestination() =
         MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
         MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
 
-        // TODO: everything below
         MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
+        // TODO: everything below
         MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES
 
         MusicBrainzResource.GENRE -> Destination.LOOKUP_GENRE

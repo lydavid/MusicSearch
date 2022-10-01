@@ -54,7 +54,7 @@ private enum class ArtistTab(@StringRes val titleRes: Int) {
 internal fun ArtistScaffold(
     artistId: String,
     onReleaseGroupClick: (String) -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
     viewModel: ArtistViewModel = hiltViewModel()
 ) {

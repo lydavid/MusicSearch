@@ -30,7 +30,7 @@ internal fun EventScreen(
     modifier: Modifier = Modifier,
     eventId: String,
     onTitleUpdate: (title: String) -> Unit = { },
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: EventViewModel = hiltViewModel()
 ) {
 

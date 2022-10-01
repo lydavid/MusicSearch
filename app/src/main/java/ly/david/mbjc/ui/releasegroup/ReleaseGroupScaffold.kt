@@ -54,7 +54,7 @@ private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
 internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
     onReleaseClick: (String) -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
     viewModel: ReleaseGroupViewModel = hiltViewModel()
 ) {

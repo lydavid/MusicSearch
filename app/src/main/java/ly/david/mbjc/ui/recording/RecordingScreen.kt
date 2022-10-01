@@ -32,7 +32,7 @@ internal fun RecordingScreen(
     modifier: Modifier = Modifier,
     recordingId: String,
     onTitleUpdate: (title: String, subtitle: String) -> Unit = { _, _ -> },
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: RecordingViewModel = hiltViewModel()
 ) {
 

@@ -49,7 +49,7 @@ internal fun LabelScaffold(
     labelId: String,
     onBack: () -> Unit,
     onReleaseClick: (String) -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: LabelViewModel = hiltViewModel()
 ) {
 
@@ -72,6 +72,7 @@ internal fun LabelScaffold(
     LaunchedEffect(key1 = labelId) {
         viewModel.updateLabelId(labelId)
         title = try {
+            // TODO: when returning to screen, we are doing lookup again, and recording any visit
             val label = viewModel.lookupLabel(labelId)
             label.getNameWithDisambiguation()
         } catch (e: Exception) {

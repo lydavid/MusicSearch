@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Piano
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.TheaterComedy
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ internal fun ResourceIcon(
             MusicBrainzResource.EVENT -> Icons.Default.Event
             MusicBrainzResource.SERIES -> Icons.Default.List
             MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
+            MusicBrainzResource.GENRE -> Icons.Default.TheaterComedy
             else -> {
                 // Non-searchable resources like Genre, URL
                 // No icons.

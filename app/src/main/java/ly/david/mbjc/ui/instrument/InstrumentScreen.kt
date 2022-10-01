@@ -26,7 +26,7 @@ internal fun InstrumentScreen(
     modifier: Modifier = Modifier,
     instrumentId: String,
     onTitleUpdate: (title: String) -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: InstrumentViewModel = hiltViewModel()
 ) {
 

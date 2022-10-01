@@ -73,7 +73,7 @@ import ly.david.mbjc.ui.work.WorkCard
 internal fun SearchMusicBrainzScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     searchQuery: String? = null,
     searchOption: MusicBrainzResource? = null,
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
@@ -167,58 +167,58 @@ internal fun SearchMusicBrainzScreen(
             when (uiModel) {
                 is ArtistUiModel -> {
                     ArtistCard(artist = uiModel) {
-                        onItemClick(Destination.LOOKUP_ARTIST, id)
+                        onItemClick(Destination.LOOKUP_ARTIST, id, null)
                     }
                 }
                 is ReleaseGroupUiModel -> {
                     // TODO: should see album type rather than year
                     ReleaseGroupCard(releaseGroup = uiModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, id)
+                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, null)
                     }
                 }
                 is ReleaseUiModel -> {
                     ReleaseCard(releaseUiModel = uiModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE, id)
+                        onItemClick(Destination.LOOKUP_RELEASE, id, null)
                     }
                 }
                 is RecordingUiModel -> {
                     RecordingCard(recordingUiModel = uiModel) {
-                        onItemClick(Destination.LOOKUP_RECORDING, id)
+                        onItemClick(Destination.LOOKUP_RECORDING, id, null)
                     }
                 }
                 is WorkUiModel -> {
                     WorkCard(workUiModel = uiModel) {
-                        onItemClick(Destination.LOOKUP_WORK, id)
+                        onItemClick(Destination.LOOKUP_WORK, id, null)
                     }
                 }
                 is AreaUiModel -> {
                     AreaCard(area = uiModel) {
-                        onItemClick(Destination.LOOKUP_AREA, id)
+                        onItemClick(Destination.LOOKUP_AREA, id, null)
                     }
                 }
                 is PlaceUiModel -> {
                     PlaceCard(place = uiModel) {
-                        onItemClick(Destination.LOOKUP_PLACE, id)
+                        onItemClick(Destination.LOOKUP_PLACE, id, null)
                     }
                 }
                 is InstrumentUiModel -> {
                     InstrumentCard(instrument = uiModel) {
-                        onItemClick(Destination.LOOKUP_INSTRUMENT, id)
+                        onItemClick(Destination.LOOKUP_INSTRUMENT, id, null)
                     }
                 }
                 is LabelUiModel -> {
                     LabelCard(label = uiModel) {
-                        onItemClick(Destination.LOOKUP_LABEL, id)
+                        onItemClick(Destination.LOOKUP_LABEL, id, null)
                     }
                 }
                 is EventUiModel -> {
                     EventCard(event = uiModel) {
-                        onItemClick(Destination.LOOKUP_EVENT, id)
+                        onItemClick(Destination.LOOKUP_EVENT, id, null)
                     }
                 }
                 is SeriesUiModel -> {
                     SeriesCard(series = uiModel) {
-                        onItemClick(Destination.LOOKUP_SERIES, id)
+                        onItemClick(Destination.LOOKUP_SERIES, id, null)
                     }
                 }
                 is EndOfList -> {

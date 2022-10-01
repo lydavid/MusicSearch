@@ -37,7 +37,7 @@ import ly.david.mbjc.ui.navigation.Destination
 internal fun AreaScaffold(
     areaId: String,
     onBack: () -> Unit,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: AreaViewModel = hiltViewModel(),
 ) {
 

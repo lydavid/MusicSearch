@@ -55,6 +55,12 @@ adb shell am start -d "mbjc://event/3d6f84e1-bb1b-4caa-9abf-db67a4c2c055" -a and
 ```
 
 
+## Genre
+
+```shell
+adb shell am start -d "mbjc://genre/911c7bbb-172d-4df8-9478-dbff4296e791?title=Pop" -a android.intent.action.VIEW
+```
+
 
 
 <details><summary>work</summary><blockquote>

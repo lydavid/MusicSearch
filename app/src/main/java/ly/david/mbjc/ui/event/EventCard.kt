@@ -16,6 +16,7 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 
+// TODO: pretty up
 @Composable
 internal fun EventCard(
     event: EventUiModel,

@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.navigation.Destination
 internal fun PlaceScaffold(
     placeId: String,
     onBack: () -> Unit,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }

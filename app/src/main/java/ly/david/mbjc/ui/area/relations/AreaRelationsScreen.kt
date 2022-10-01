@@ -23,7 +23,7 @@ internal fun AreaRelationsScreen(
     modifier: Modifier = Modifier,
     areaId: String,
     onTitleUpdate: (title: String) -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<UiModel>,
     onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,

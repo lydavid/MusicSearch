@@ -18,7 +18,7 @@ import ly.david.mbjc.ui.relation.RelationCard
 internal fun LabelRelationsScreen(
     modifier: Modifier = Modifier,
     labelId: String,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,
     viewModel: LabelRelationsViewModel = hiltViewModel(),
     onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,

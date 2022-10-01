@@ -41,7 +41,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryScreenScaffold(
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     openDrawer: () -> Unit = {},
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
@@ -73,7 +73,7 @@ internal fun HistoryScreenScaffold(
 @Composable
 internal fun HistoryScreen(
     lazyPagingItems: LazyPagingItems<LookupHistory>,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     PagingLoadingAndErrorHandler(
@@ -96,11 +96,11 @@ internal fun HistoryScreen(
 @Composable
 private fun HistoryEntry(
     lookupHistory: LookupHistory,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     ClickableListItem(
         onClick = {
-            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid)
+            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid, null)
         },
     ) {
         Column(

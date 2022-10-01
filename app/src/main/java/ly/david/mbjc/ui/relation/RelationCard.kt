@@ -26,7 +26,7 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun RelationCard(
     relation: RelationUiModel,
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     val context = LocalContext.current
@@ -36,7 +36,7 @@ internal fun RelationCard(
         if (destination == Destination.LOOKUP_URL) {
             context.openUrl(relation.name)
         } else {
-            onItemClick(destination, relation.linkedResourceId)
+            onItemClick(destination, relation.linkedResourceId, relation.name)
         }
     }) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {

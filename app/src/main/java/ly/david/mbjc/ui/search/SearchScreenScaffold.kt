@@ -18,7 +18,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun SearchScreenScaffold(
     openDrawer: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     searchQuery: String? = null,
     searchOption: MusicBrainzResource? = null,
 ) {
