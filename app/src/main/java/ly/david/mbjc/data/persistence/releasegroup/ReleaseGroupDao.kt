@@ -31,6 +31,7 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
             ORDER BY rga.rowid
         """
 
+        // The date format YYYY-MM-DD can be correctly sorted by SQLite.
         private const val ORDER_BY_TYPES_AND_DATE = """
             ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date
         """

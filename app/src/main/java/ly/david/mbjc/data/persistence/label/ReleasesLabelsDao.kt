@@ -28,9 +28,8 @@ internal abstract class ReleasesLabelsDao : BaseDao<ReleasesLabels> {
             $RELEASES_BY_LABEL
         """
 
-        // TODO: order by date
-        private const val ORDER_BY_RELEASE_GROUP_LINKING_TABLE = """
-            ORDER BY rl.rowid
+        private const val ORDER_BY_DATE_AND_TITLE = """
+            ORDER BY r.date, r.name
         """
 
         private const val FILTERED = """
@@ -75,7 +74,7 @@ internal abstract class ReleasesLabelsDao : BaseDao<ReleasesLabels> {
     @Query(
         """
         $SELECT_RELEASES_BY_LABEL
-        $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
+        $ORDER_BY_DATE_AND_TITLE
     """
     )
     abstract fun getReleasesByLabel(labelId: String): PagingSource<Int, ReleaseRoomModel>
