@@ -37,7 +37,15 @@ Heaven Shall Burn… When We Are Gathered
 adb shell am start -d "mbjc://release-group/807d9a32-e55c-317a-8a97-c4d5eaaa38b0" -a android.intent.action.VIEW
 ```
 
+## Label
 
+
+Warner Records
+- some 1000 releases
+
+```sh
+adb shell am start -d "mbjc://label/d4cd174f-784d-48d7-91c6-7427bd5d57fe" -a android.intent.action.VIEW
+```
 
 
 ## Event

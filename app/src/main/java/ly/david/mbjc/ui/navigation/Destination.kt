@@ -11,7 +11,7 @@ private const val TOP_LEVEL_HISTORY = "history"
 private const val DIVIDER = "/"
 
 private const val ARTIST = "artist"
-private const val RELEASE_GROUP = "release-group"
+private const val RELEASE_GROUP = "release-group" // TODO: besides release_group, these match exactly to MusicBrainzResource
 private const val RELEASE = "release"
 private const val RECORDING = "recording"
 private const val AREA = "area"

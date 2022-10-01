@@ -76,6 +76,17 @@ internal class SearchMusicBrainzPagingSource(
         limit: Int
     ): QueryResults {
         return when (resource) {
+            MusicBrainzResource.ARTIST -> {
+                val queryArtists = musicBrainzApiService.queryArtists(
+                    query = queryString,
+                    offset = currentOffset,
+                    limit = limit
+                )
+                QueryResults(
+                    queryArtists.offset,
+                    queryArtists.artists
+                )
+            }
             MusicBrainzResource.RELEASE_GROUP -> {
                 val queryReleaseGroups = musicBrainzApiService.queryReleaseGroups(
                     query = queryString,
@@ -187,20 +198,9 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
 
-            // TODO: if we switch on MusicBrainzResource, some of them are not query-able...
-            //  could use is-cases with MusicBrainzModel
-            else -> {
-                // Artist; until we implement them all
-                val queryArtists = musicBrainzApiService.queryArtists(
-                    query = queryString,
-                    offset = currentOffset,
-                    limit = limit
-                )
-                QueryResults(
-                    queryArtists.offset,
-                    queryArtists.artists
-                )
-            }
+            // TODO: The following are not queryable. Is there a better model to switch on?
+            MusicBrainzResource.GENRE -> TODO()
+            MusicBrainzResource.URL -> TODO()
         }
     }
 }

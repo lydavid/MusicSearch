@@ -20,7 +20,7 @@ internal abstract class LabelDao : BaseDao<LabelRoomModel> {
     abstract suspend fun setReleaseCount(labelId: String, releaseCount: Int)
 
     // TODO: assuming mbid are unique between tables, we can extract hasDefaultRelations to its own table
-    //  or we can use "artist:9388cee2-7d57-4598-905f-106019b267d3"
+        //  or we can use "artist:9388cee2-7d57-4598-905f-106019b267d3"
     @Query(
         """
         UPDATE labels

@@ -34,17 +34,6 @@ internal fun NavigationGraph(
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
 
-    val artistDeeplink = stringResource(id = R.string.deeplink_artist)
-    val releaseDeeplink = stringResource(id = R.string.deeplink_release)
-    val recordingDeeplink = stringResource(id = R.string.deeplink_recording)
-    val workDeeplink = stringResource(id = R.string.deeplink_work)
-
-    val areaDeeplink = stringResource(id = R.string.deeplink_area)
-    val placeDeeplink = stringResource(id = R.string.deeplink_place)
-
-    val instrumentDeeplink = stringResource(id = R.string.deeplink_instrument)
-    val labelDeeplink = stringResource(id = R.string.deeplink_label)
-
     NavHost(
         navController = navController,
         startDestination = Destination.LOOKUP.route,
@@ -189,7 +178,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$artistDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.ARTIST.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -235,7 +224,7 @@ internal fun NavigationGraph(
             // Example: adb shell am start -d "mbjc://release/165f6643-2edb-4795-9abe-26bd0533e59d" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$releaseDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -256,7 +245,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$recordingDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RECORDING.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -277,7 +266,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$workDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.WORK.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -298,7 +287,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$areaDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.AREA.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -319,7 +308,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$placeDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.PLACE.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -340,7 +329,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$instrumentDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.INSTRUMENT.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
@@ -361,7 +350,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://$labelDeeplink/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.LABEL.resourceName}/{$ID}"
                 }
             )
         ) { entry ->
