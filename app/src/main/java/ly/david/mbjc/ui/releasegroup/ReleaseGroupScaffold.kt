@@ -25,7 +25,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
@@ -72,13 +72,10 @@ internal fun ReleaseGroupScaffold(
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 
-    // TODO: this is not enough to remember state of Relationships tab. Need to hoist lazypagingitems out too
-    val relationshipsLazyListState = rememberLazyListState()
-
-    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(flow {  }) }
-    val lazyPagingItems: LazyPagingItems<UiModel> =
-        rememberFlowWithLifecycleStarted(pagedRelations)
-            .collectAsLazyPagingItems()
+    val relationsLazyListState = rememberLazyListState()
+    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+        .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.updateReleaseGroupId(releaseGroupId)
@@ -121,8 +118,8 @@ internal fun ReleaseGroupScaffold(
                                         releasesLazyListState.scrollToItem(0)
                                         releasesLazyPagingItems.refresh()
                                     } else {
-                                        relationshipsLazyListState.scrollToItem(0)
-                                        lazyPagingItems.refresh()
+                                        relationsLazyListState.scrollToItem(0)
+                                        relationsLazyPagingItems.refresh()
                                     }
                                 }
                             })
@@ -155,8 +152,8 @@ internal fun ReleaseGroupScaffold(
                 ReleaseGroupRelationsScreen(
                     releaseGroupId = releaseGroupId,
                     onItemClick = onItemClick,
-                    lazyListState = relationshipsLazyListState,
-                    lazyPagingItems = lazyPagingItems,
+                    lazyListState = relationsLazyListState,
+                    lazyPagingItems = relationsLazyPagingItems,
                     onPagedRelationsChange = {
                         pagedRelations = it
                     }

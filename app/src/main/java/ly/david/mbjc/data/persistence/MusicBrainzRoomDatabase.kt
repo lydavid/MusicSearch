@@ -54,7 +54,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 26,
+    version = 27,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -100,6 +100,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 23, to = 24),
         AutoMigration(from = 24, to = 25),
         AutoMigration(from = 25, to = 26),
+        AutoMigration(from = 26, to = 27),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

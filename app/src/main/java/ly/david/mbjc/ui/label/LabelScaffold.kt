@@ -19,10 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
@@ -30,6 +34,7 @@ import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.label.relations.LabelRelationsScreen
+import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 import ly.david.mbjc.ui.navigation.Destination
 
 private enum class LabelTab(@StringRes val titleRes: Int) {
@@ -58,6 +63,11 @@ internal fun LabelScaffold(
     val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
+
+    val relationsLazyListState = rememberLazyListState()
+    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+        .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = labelId) {
         viewModel.updateLabelId(labelId)
@@ -109,16 +119,17 @@ internal fun LabelScaffold(
             }
             LabelTab.RELATIONSHIPS -> {
                 LabelRelationsScreen(
-                    modifier = Modifier.padding(innerPadding),
                     labelId = labelId,
-                    onTitleUpdate = {
-                        title = it
-                    },
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
+                    lazyListState = relationsLazyListState,
+                    lazyPagingItems = relationsLazyPagingItems,
+                    onPagedRelationsChange = {
+                        pagedRelations = it
+                    }
                 )
             }
             LabelTab.STATS -> {
-                Text(text = stringResource(id = R.string.stats))
+                LabelStatsScreen(labelId = labelId)
             }
         }
     }

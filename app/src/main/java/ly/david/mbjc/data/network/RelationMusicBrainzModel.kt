@@ -24,6 +24,7 @@ internal data class RelationMusicBrainzModel(
 
     @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
     @Json(name = "release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
+    @Json(name = "release") val release: ReleaseMusicBrainzModel? = null,
     @Json(name = "label") val label: LabelMusicBrainzModel? = null,
     @Json(name = "work") val work: WorkMusicBrainzModel? = null,
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,
