@@ -10,6 +10,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,14 +30,14 @@ import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.releasegroup.relations.ReleaseGroupRelationsScreen
-import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
-import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupViewModel
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
 private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
@@ -46,9 +47,7 @@ private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
 }
 
 /**
- * Equivalent of a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
- *
- * Displays a list of releases under this release group.
+ * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,12 +56,12 @@ internal fun ReleaseGroupScaffold(
     onReleaseClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
     onBack: () -> Unit,
-    viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel()
+    viewModel: ReleaseGroupViewModel = hiltViewModel()
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    var titleState by rememberSaveable { mutableStateOf("") }
-    var subtitleState by rememberSaveable { mutableStateOf("") }
+    var title by rememberSaveable { mutableStateOf("") }
+    var subtitle by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     var searchText by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
@@ -81,13 +80,26 @@ internal fun ReleaseGroupScaffold(
         rememberFlowWithLifecycleStarted(pagedRelations)
             .collectAsLazyPagingItems()
 
+    LaunchedEffect(key1 = releaseGroupId) {
+        viewModel.updateReleaseGroupId(releaseGroupId)
+        try {
+            val releaseGroup = viewModel.lookupReleaseGroup(releaseGroupId)
+            title = releaseGroup.getNameWithDisambiguation()
+            subtitle = "Release Group by ${releaseGroup.artistCredits}"
+
+        } catch (e: Exception) {
+            title = "[Release group lookup failed]"
+            subtitle = "[error]"
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
                 resource = MusicBrainzResource.RELEASE_GROUP,
-                title = titleState,
-                subtitle = subtitleState,
+                title = title,
+                subtitle = subtitle,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
@@ -123,6 +135,7 @@ internal fun ReleaseGroupScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
+                    viewModel.updateQuery(query = searchText)
                 },
             )
         },
@@ -130,17 +143,10 @@ internal fun ReleaseGroupScaffold(
 
         when (selectedTab) {
             ReleaseGroupTab.RELEASES -> {
-                ReleasesByReleaseGroupScreen(
+                ReleasesListScreen(
                     modifier = Modifier.padding(innerPadding),
-                    releaseGroupId = releaseGroupId,
-                    onTitleUpdate = { title, subtitle ->
-                        titleState = title
-                        subtitleState = subtitle
-                    },
                     snackbarHostState = snackbarHostState,
                     onReleaseClick = onReleaseClick,
-                    searchText = searchText,
-                    viewModel = viewModel,
                     lazyListState = releasesLazyListState,
                     lazyPagingItems = releasesLazyPagingItems
                 )
