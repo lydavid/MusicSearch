@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label.releases
+package ly.david.mbjc.ui.releasegroup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,44 +17,50 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.Label
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.label.LabelDao
-import ly.david.mbjc.data.persistence.label.ReleasesLabels
-import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.mbjc.ui.releasegroup.releases.ReleaseGroupRepository
 
+// TODO: generalize? reuse for releases by label
+//  or make abstract, and override
+
+// TODO: for releases by release group, and releases by label, we can just literally use the same VM/screen
+//  but change out what id to use, and what daos to use
 @HiltViewModel
-internal class ReleasesByLabelViewModel @Inject constructor(
+internal class ReleaseGroupViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val labelRepository: LabelRepository,
-    private val labelDao: LabelDao,
-    private val releasesLabelsDao: ReleasesLabelsDao,
+    private val releaseGroupRepository: ReleaseGroupRepository,
+    private val releaseGroupDao: ReleaseGroupDao,
+    private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
     private val releaseDao: ReleaseDao,
 ) : ViewModel() {
 
     private data class ViewModelState(
-        val labelId: String = "",
+        val releaseGroupId: String = "",
         val query: String = ""
     )
 
-    private val labelId: MutableStateFlow<String> = MutableStateFlow("")
+    private val releaseGroupId: MutableStateFlow<String> = MutableStateFlow("")
     private val query: MutableStateFlow<String> = MutableStateFlow("")
-    private val paramState = combine(labelId, query) { labelId, query ->
-        ViewModelState(labelId, query)
+    private val paramState = combine(releaseGroupId, query) { releaseGroupId, query ->
+        ViewModelState(releaseGroupId, query)
     }.distinctUntilChanged()
 
-    suspend fun lookupLabel(labelId: String): Label =
-        labelRepository.lookupLabel(labelId)
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
+        releaseGroupRepository.lookupReleaseGroup(releaseGroupId)
 
-    fun updateLabelId(labelId: String) {
-        this.labelId.value = labelId
+    fun updateReleaseGroupId(releaseGroupId: String) {
+        this.releaseGroupId.value = releaseGroupId
     }
 
     fun updateQuery(query: String) {
@@ -63,21 +69,21 @@ internal class ReleasesByLabelViewModel @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
-        paramState.filterNot { it.labelId.isEmpty() }
-            .flatMapLatest { (labelId, query) ->
+        paramState.filterNot { it.releaseGroupId.isEmpty() }
+            .flatMapLatest { (releaseGroupId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { labelDao.getLabel(labelId)?.releaseCount },
-                        getLocalResourceCount = { releasesLabelsDao.getNumberOfReleasesByLabel(labelId) },
+                        getRemoteResourceCount = { releaseGroupDao.getReleaseGroup(releaseGroupId)?.releaseCount },
+                        getLocalResourceCount = { releasesReleaseGroupsDao.getNumberOfReleasesInReleaseGroup(releaseGroupId) },
                         deleteLocalResource = {
-                            releasesLabelsDao.deleteReleasesByLabel(labelId)
+                            releasesReleaseGroupsDao.deleteReleasesInReleaseGroup(releaseGroupId)
                         },
                         browseResource = { offset ->
-                            browseReleasesAndStore(labelId, offset)
+                            browseReleasesAndStore(releaseGroupId, offset)
                         }
                     ),
-                    pagingSourceFactory = { getPagingSource(labelId, query) }
+                    pagingSourceFactory = { getPagingSource(releaseGroupId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toReleaseUiModel()
@@ -87,35 +93,35 @@ internal class ReleasesByLabelViewModel @Inject constructor(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    private suspend fun browseReleasesAndStore(labelId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByLabel(
-            labelId = labelId,
+    private suspend fun browseReleasesAndStore(releaseGroupId: String, nextOffset: Int): Int {
+        val response = musicBrainzApiService.browseReleasesByReleaseGroup(
+            releaseGroupId = releaseGroupId,
             offset = nextOffset
         )
 
         // Only need to update it the first time we ever browse this artist's release groups.
         if (response.offset == 0) {
-            labelDao.setReleaseCount(labelId, response.count)
+            releaseGroupDao.setReleaseCount(releaseGroupId, response.count)
         }
 
         val musicBrainzReleases = response.releases
         releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
-        releasesLabelsDao.insertAll(
+        releasesReleaseGroupsDao.insertAll(
             musicBrainzReleases.map { release ->
-                ReleasesLabels(release.id, labelId)
+                ReleasesReleaseGroups(release.id, releaseGroupId)
             }
         )
 
         return musicBrainzReleases.size
     }
 
-    private fun getPagingSource(labelId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
+    private fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
         query.isEmpty() -> {
-            releasesLabelsDao.getReleasesByLabel(labelId)
+            releasesReleaseGroupsDao.getReleasesInReleaseGroup(releaseGroupId)
         }
         else -> {
-            releasesLabelsDao.getReleasesByLabelFiltered(
-                labelId = labelId,
+            releasesReleaseGroupsDao.getReleasesInReleaseGroupFiltered(
+                releaseGroupId = releaseGroupId,
                 query = "%$query%"
             )
         }

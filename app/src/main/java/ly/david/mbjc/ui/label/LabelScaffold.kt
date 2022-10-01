@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,13 +23,13 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.label.relations.LabelRelationsScreen
-import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
-import ly.david.mbjc.ui.label.releases.ReleasesByLabelViewModel
 import ly.david.mbjc.ui.navigation.Destination
 
 private enum class LabelTab(@StringRes val titleRes: Int) {
@@ -44,26 +45,35 @@ internal fun LabelScaffold(
     onBack: () -> Unit,
     onReleaseClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
-    viewModel: ReleasesByLabelViewModel = hiltViewModel()
+    viewModel: LabelViewModel = hiltViewModel()
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    var titleState by rememberSaveable { mutableStateOf("") }
+    var title by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
     val context = LocalContext.current
     var searchText by rememberSaveable { mutableStateOf("") }
-
 
     val releasesLazyListState = rememberLazyListState()
     val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 
+    LaunchedEffect(key1 = labelId) {
+        viewModel.updateLabelId(labelId)
+        title = try {
+            val label = viewModel.lookupLabel(labelId)
+            label.getNameWithDisambiguation()
+        } catch (e: Exception) {
+            "[Label lookup failed]"
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBarWithSearch(
                 resource = MusicBrainzResource.LABEL,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
@@ -81,6 +91,7 @@ internal fun LabelScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
+                    viewModel.updateQuery(query = searchText)
                 },
             )
         },
@@ -88,16 +99,10 @@ internal fun LabelScaffold(
 
         when (selectedTab) {
             LabelTab.RELEASES -> {
-                ReleasesByLabelScreen(
+                ReleasesListScreen(
                     modifier = Modifier.padding(innerPadding),
-                    labelId = labelId,
-                    onTitleUpdate = { title ->
-                        titleState = title
-                    },
                     snackbarHostState = snackbarHostState,
                     onReleaseClick = onReleaseClick,
-                    searchText = searchText,
-                    viewModel = viewModel,
                     lazyListState = releasesLazyListState,
                     lazyPagingItems = releasesLazyPagingItems
                 )
@@ -106,8 +111,8 @@ internal fun LabelScaffold(
                 LabelRelationsScreen(
                     modifier = Modifier.padding(innerPadding),
                     labelId = labelId,
-                    onTitleUpdate = { title ->
-                        titleState = title
+                    onTitleUpdate = {
+                        title = it
                     },
                     onItemClick = onItemClick
                 )
