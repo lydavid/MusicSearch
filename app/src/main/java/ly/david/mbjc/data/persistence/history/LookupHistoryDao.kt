@@ -19,7 +19,7 @@ internal abstract class LookupHistoryDao : BaseDao<LookupHistory> {
         """
         SELECT * 
         FROM lookup_history
-        WHERE title LIKE :query
+        WHERE title LIKE :query OR resource LIKE :query
         ORDER BY last_accessed DESC
         """
     )
