@@ -4,7 +4,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.mbjc.data.network.Lookup
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.label.LabelDao
+import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
@@ -13,12 +13,11 @@ import ly.david.mbjc.ui.relation.RelationViewModel
 @HiltViewModel
 internal class LabelRelationsViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val labelDao: LabelDao,
     private val relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
 
     override suspend fun hasRelationsBeenStored(): Boolean {
-        return labelDao.getLabel(resourceId.value)?.hasDefaultRelations == true
+        return relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
     }
 
     override suspend fun lookupRelationsAndStore(resourceId: String) {
@@ -40,6 +39,11 @@ internal class LabelRelationsViewModel @Inject constructor(
         relationDao.insertAll(relations)
 
         // Called last so that we only flag it after everything else succeeded.
-        labelDao.setHasDefaultRelations(labelId = resourceId, hasDefaultRelations = true)
+        relationDao.markResourceHasRelations(
+            hasRelationsRoomModel = HasRelationsRoomModel(
+                resourceId = resourceId,
+                hasRelations = true
+            )
+        )
     }
 }

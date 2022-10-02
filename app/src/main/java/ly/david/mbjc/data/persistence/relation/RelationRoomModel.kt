@@ -13,8 +13,15 @@ import ly.david.mbjc.data.network.getHeader
 import ly.david.mbjc.data.persistence.RoomModel
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
-// TODO: recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.
+// TODO: [low priority] recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.
 //  web doesn't display it twice, so maybe we shouldn't either.
+
+/**
+ * The existence of this model for a [resourceId] should be enough to indicate that we have locally stored
+ * all of its relationships since there's no pagination for relationships.
+ * That's not actually true because it won't handle the case where a resource has no relationships.
+ * It would make us always true to fetch it even though we've discovered there are none.
+ */
 @Entity(
     tableName = "relations",
     primaryKeys = ["resource_id", "linked_resource_id", "order"],
@@ -190,11 +197,9 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
             disambiguation = null
         }
 
-        // TODO: handle rest
-
-        else -> {
-            return null
-        }
+        MusicBrainzResource.EVENT -> TODO()
+        MusicBrainzResource.SERIES -> TODO()
+        null -> return null
     }
 
     return RelationRoomModel(

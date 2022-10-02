@@ -38,6 +38,7 @@ import ly.david.mbjc.data.persistence.place.PlaceDao
 import ly.david.mbjc.data.persistence.place.PlaceRoomModel
 import ly.david.mbjc.data.persistence.recording.RecordingDao
 import ly.david.mbjc.data.persistence.recording.RecordingRoomModel
+import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
@@ -54,7 +55,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 28,
+    version = 32,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -68,6 +69,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
         // Relationship tables
         RelationRoomModel::class,
+        HasRelationsRoomModel::class,
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
         ReleasesLabels::class,
 
@@ -79,16 +81,16 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4),
-        AutoMigration(from = 4, to = 5, spec = MusicBrainzRoomDatabase.RenameCountry::class),
-        AutoMigration(from = 5, to = 6, spec = MusicBrainzRoomDatabase.RenameReleasesCountryToCountryCode::class),
+        AutoMigration(from = 4, to = 5, spec = RenameCountry::class),
+        AutoMigration(from = 5, to = 6, spec = RenameReleasesCountryToCountryCode::class),
         AutoMigration(from = 6, to = 7),
         AutoMigration(from = 7, to = 8),
         AutoMigration(from = 8, to = 9),
         AutoMigration(from = 9, to = 10),
         AutoMigration(from = 11, to = 12),
-        AutoMigration(from = 12, to = 13, spec = MusicBrainzRoomDatabase.GeneralizeRecordingRelation::class),
-        AutoMigration(from = 13, to = 14, spec = MusicBrainzRoomDatabase.RenameResourceId::class),
-        AutoMigration(from = 14, to = 15, spec = MusicBrainzRoomDatabase.DeleteResource::class),
+        AutoMigration(from = 12, to = 13, spec = GeneralizeRecordingRelation::class),
+        AutoMigration(from = 13, to = 14, spec = RenameResourceId::class),
+        AutoMigration(from = 14, to = 15, spec = DeleteResource::class),
         AutoMigration(from = 15, to = 16),
         AutoMigration(from = 16, to = 17),
         AutoMigration(from = 17, to = 18),
@@ -101,32 +103,15 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 24, to = 25),
         AutoMigration(from = 25, to = 26),
         AutoMigration(from = 26, to = 27),
-        AutoMigration(from = 27, to = 28, spec = MusicBrainzRoomDatabase.RenameHistorySummaryToTitle::class),
+        AutoMigration(from = 27, to = 28, spec = RenameHistorySummaryToTitle::class),
+        AutoMigration(from = 28, to = 29),
+        AutoMigration(from = 30, to = 31),
+        AutoMigration(from = 31, to = 32, spec = DeleteHasRelationsFromLabel::class),
+
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
-
-    // region Migrations
-    @RenameColumn(tableName = "artists", fromColumnName = "country", toColumnName = "country_code")
-    class RenameCountry : AutoMigrationSpec
-
-    @RenameColumn(tableName = "releases", fromColumnName = "country", toColumnName = "country_code")
-    class RenameReleasesCountryToCountryCode : AutoMigrationSpec
-
-    @RenameTable(fromTableName = "recordings_relations", toTableName = "relations")
-    @RenameColumn(tableName = "recordings_relations", fromColumnName = "resource", toColumnName = "linked_resource")
-    class GeneralizeRecordingRelation : AutoMigrationSpec
-
-    @RenameColumn(tableName = "relations", fromColumnName = "recording_id", toColumnName = "resource_id")
-    class RenameResourceId : AutoMigrationSpec
-
-    @DeleteColumn(tableName = "relations", columnName = "resource")
-    class DeleteResource : AutoMigrationSpec
-
-    @RenameColumn(tableName = "lookup_history", fromColumnName = "summary", toColumnName = "title")
-    class RenameHistorySummaryToTitle : AutoMigrationSpec
-    // endregion
 
     abstract fun getArtistDao(): ArtistDao
     abstract fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
@@ -156,6 +141,26 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getRelationDao(): RelationDao
     abstract fun getLookupHistoryDao(): LookupHistoryDao
 }
+
+// region Migrations
+@RenameColumn(tableName = "artists", fromColumnName = "country", toColumnName = "country_code")
+class RenameCountry : AutoMigrationSpec
+
+@RenameColumn(tableName = "releases", fromColumnName = "country", toColumnName = "country_code")
+class RenameReleasesCountryToCountryCode : AutoMigrationSpec
+
+@RenameTable(fromTableName = "recordings_relations", toTableName = "relations")
+@RenameColumn(tableName = "recordings_relations", fromColumnName = "resource", toColumnName = "linked_resource")
+class GeneralizeRecordingRelation : AutoMigrationSpec
+
+@RenameColumn(tableName = "relations", fromColumnName = "recording_id", toColumnName = "resource_id")
+class RenameResourceId : AutoMigrationSpec
+
+@DeleteColumn(tableName = "relations", columnName = "resource")
+class DeleteResource : AutoMigrationSpec
+
+@RenameColumn(tableName = "lookup_history", fromColumnName = "summary", toColumnName = "title")
+class RenameHistorySummaryToTitle : AutoMigrationSpec
 
 val MIGRATION_10_11 = object : Migration(10, 11) {
     override fun migrate(database: SupportSQLiteDatabase) {
@@ -189,6 +194,23 @@ val MIGRATION_10_11 = object : Migration(10, 11) {
     }
 }
 
+val MIGRATION_29_30 = object : Migration(29, 30) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+                INSERT INTO has_relations ( resource_id, has_relations )
+                SELECT id, has_default_relations
+                FROM labels
+            """
+        )
+    }
+}
+
+@DeleteColumn(tableName = "labels", columnName = "has_default_relations")
+private class DeleteHasRelationsFromLabel : AutoMigrationSpec
+
+// endregion
+
 private const val DATABASE_NAME = "mbjc.db"
 
 @InstallIn(SingletonComponent::class)
@@ -201,6 +223,7 @@ internal object DatabaseModule {
     ): MusicBrainzRoomDatabase {
         return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
             .addMigrations(MIGRATION_10_11)
+            .addMigrations(MIGRATION_29_30)
             .fallbackToDestructiveMigration()
             .build()
     }

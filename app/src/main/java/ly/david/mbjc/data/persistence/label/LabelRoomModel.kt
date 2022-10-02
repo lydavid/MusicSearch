@@ -27,12 +27,6 @@ internal data class LabelRoomModel(
 
     @ColumnInfo(name = "release_count", defaultValue = "null")
     val releaseCount: Int? = null,
-
-    /**
-     * Flag to determine whether we should fetch their relationships from MB.
-     */
-    @ColumnInfo(name = "has_default_relations", defaultValue = "false")
-    val hasDefaultRelations: Boolean = false,
 ) : RoomModel, Label
 
 internal fun LabelMusicBrainzModel.toLabelRoomModel() =

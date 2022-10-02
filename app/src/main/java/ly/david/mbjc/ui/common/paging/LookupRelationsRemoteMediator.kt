@@ -6,6 +6,8 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import ly.david.mbjc.data.persistence.RoomModel
 
+// TODO: can be generalized for tracks
+//  this works for anything that is "looked up" in a single call
 @OptIn(ExperimentalPagingApi::class)
 internal class LookupRelationsRemoteMediator<RM : RoomModel>(
     private val hasRelationsBeenStored: suspend () -> Boolean,
