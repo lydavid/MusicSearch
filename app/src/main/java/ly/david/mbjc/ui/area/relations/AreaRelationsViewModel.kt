@@ -17,11 +17,6 @@ internal class AreaRelationsViewModel @Inject constructor(
     private val areaDao: AreaDao,
     private val relationDao: RelationDao,
 ) : RelationViewModel(relationDao) {
-
-    override suspend fun hasRelationsBeenStored(): Boolean {
-        return areaDao.getArea(resourceId.value)?.hasDefaultRelations == true
-    }
-
     override suspend fun lookupRelationsAndStore(resourceId: String) {
 
         val areaMusicBrainzModel = musicBrainzApiService.lookupArea(
@@ -45,7 +40,6 @@ internal class AreaRelationsViewModel @Inject constructor(
         }
         relationDao.insertAll(relations)
 
-        // Called last so that we only flag it after everything else succeeded.
-        areaDao.setHasDefaultRelations(areaId = resourceId, hasDefaultRelations = true)
+        markResourceHasRelations()
     }
 }

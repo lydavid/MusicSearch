@@ -26,12 +26,6 @@ internal data class AreaRoomModel(
 
     @Embedded
     override val lifeSpan: LifeSpan?,
-
-    /**
-     * Flag to determine whether we should fetch their relationships from MB.
-     */
-    @ColumnInfo(name = "has_default_relations", defaultValue = "false")
-    val hasDefaultRelations: Boolean = false,
 ) : RoomModel, Area
 
 internal fun AreaMusicBrainzModel.toAreaRoomModel() =
