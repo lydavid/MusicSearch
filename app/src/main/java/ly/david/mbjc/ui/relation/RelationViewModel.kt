@@ -18,6 +18,7 @@ import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toRelationUiModel
+import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.LookupRelationsRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
@@ -27,7 +28,7 @@ import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
  */
 internal abstract class RelationViewModel(private val relationDao: RelationDao) : ViewModel() {
 
-    // TODO: private, call the fun instead so it reads more intuitively
+    // TODO: make private, call the fun instead so it reads more intuitively
     val resourceId: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
@@ -66,7 +67,8 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
      *
      * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
      */
-    open suspend fun hasRelationsBeenStored(): Boolean = false
+    open suspend fun hasRelationsBeenStored(): Boolean =
+        relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
 
     /**
      * Query to delete resource relationships in Room.
@@ -82,4 +84,16 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
      * Unlike browse requests, this is expected to only be called once.
      */
     open suspend fun lookupRelationsAndStore(resourceId: String) {}
+
+    /**
+     * Indicate that we've stored a resource's relationships successfully.
+     */
+    suspend fun markResourceHasRelations() {
+        relationDao.markResourceHasRelations(
+            hasRelationsRoomModel = HasRelationsRoomModel(
+                resourceId = resourceId.value,
+                hasRelations = true
+            )
+        )
+    }
 }

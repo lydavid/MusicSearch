@@ -55,7 +55,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 32,
+    version = 34,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -107,6 +107,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 28, to = 29),
         AutoMigration(from = 30, to = 31),
         AutoMigration(from = 31, to = 32, spec = DeleteHasRelationsFromLabel::class),
+        AutoMigration(from = 33, to = 34, spec = DeleteHasRelationsFromReleaseGroup::class),
 
     ]
 )
@@ -209,6 +210,22 @@ val MIGRATION_29_30 = object : Migration(29, 30) {
 @DeleteColumn(tableName = "labels", columnName = "has_default_relations")
 private class DeleteHasRelationsFromLabel : AutoMigrationSpec
 
+val MIGRATION_32_33 = object : Migration(32, 33) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+                INSERT INTO has_relations ( resource_id, has_relations )
+                SELECT id, has_default_relations
+                FROM release_groups
+            """
+        )
+    }
+}
+
+// ALTER TABLE DROP COLUMN isn't supported but @DeleteColumn automigration is
+@DeleteColumn(tableName = "release_groups", columnName = "has_default_relations")
+private class DeleteHasRelationsFromReleaseGroup : AutoMigrationSpec
+
 // endregion
 
 private const val DATABASE_NAME = "mbjc.db"
@@ -224,6 +241,7 @@ internal object DatabaseModule {
         return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
             .addMigrations(MIGRATION_10_11)
             .addMigrations(MIGRATION_29_30)
+            .addMigrations(MIGRATION_32_33)
             .fallbackToDestructiveMigration()
             .build()
     }

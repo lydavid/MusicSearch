@@ -4,7 +4,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.mbjc.data.network.Lookup
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
@@ -15,11 +14,6 @@ internal class LabelRelationsViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
-
-    override suspend fun hasRelationsBeenStored(): Boolean {
-        return relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
-    }
-
     override suspend fun lookupRelationsAndStore(resourceId: String) {
 
         val labelMusicBrainzModel = musicBrainzApiService.lookupLabel(
@@ -38,12 +32,6 @@ internal class LabelRelationsViewModel @Inject constructor(
         }
         relationDao.insertAll(relations)
 
-        // Called last so that we only flag it after everything else succeeded.
-        relationDao.markResourceHasRelations(
-            hasRelationsRoomModel = HasRelationsRoomModel(
-                resourceId = resourceId,
-                hasRelations = true
-            )
-        )
+        markResourceHasRelations()
     }
 }

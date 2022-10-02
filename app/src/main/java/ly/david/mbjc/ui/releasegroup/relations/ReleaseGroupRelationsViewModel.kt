@@ -7,20 +7,13 @@ import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
-import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.ui.relation.RelationViewModel
 
 @HiltViewModel
 internal class ReleaseGroupRelationsViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val releaseGroupDao: ReleaseGroupDao,
     private val relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
-
-    override suspend fun hasRelationsBeenStored(): Boolean {
-        return releaseGroupDao.getReleaseGroup(resourceId.value)?.hasDefaultRelations == true
-    }
-
     override suspend fun lookupRelationsAndStore(resourceId: String) {
 
         val releaseGroupMusicBrainzModel = musicBrainzApiService.lookupReleaseGroup(
@@ -39,7 +32,6 @@ internal class ReleaseGroupRelationsViewModel @Inject constructor(
         }
         relationDao.insertAll(relations)
 
-        // Called last so that we only flag it after everything else succeeded.
-        releaseGroupDao.setHasDefaultRelations(releaseGroupId = resourceId, hasDefaultRelations = true)
+        markResourceHasRelations()
     }
 }

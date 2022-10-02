@@ -118,15 +118,6 @@ internal abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
 
     @Query(
         """
-        UPDATE release_groups
-        SET has_default_relations = :hasDefaultRelations
-        WHERE id = :releaseGroupId
-        """
-    )
-    abstract suspend fun setHasDefaultRelations(releaseGroupId: String, hasDefaultRelations: Boolean)
-
-    @Query(
-        """
         DELETE from release_groups
         WHERE id in
         (SELECT rg.id

@@ -9,7 +9,6 @@ import ly.david.mbjc.data.persistence.RoomModel
 
 @Entity(
     tableName = "release_groups",
-//    foreignKeys = []
 )
 internal data class ReleaseGroupRoomModel(
 
@@ -38,12 +37,6 @@ internal data class ReleaseGroupRoomModel(
      */
     @ColumnInfo(name = "release_count")
     val releaseCount: Int? = null,
-
-    /**
-     * Flag to determine whether we should fetch their relationships from MB.
-     */
-    @ColumnInfo(name = "has_default_relations", defaultValue = "false")
-    val hasDefaultRelations: Boolean = false,
 ) : RoomModel, ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
@@ -65,14 +58,12 @@ internal data class ReleaseGroupRoomModel(
 //    val secondaryTypes: String = ""
 //)
 
-internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(
-    hasDefaultRelations: Boolean = false,
-): ReleaseGroupRoomModel = ReleaseGroupRoomModel(
-    id = id,
-    name = name,
-    firstReleaseDate = firstReleaseDate,
-    disambiguation = disambiguation,
-    primaryType = primaryType,
-    secondaryTypes = secondaryTypes,
-    hasDefaultRelations = hasDefaultRelations
-)
+internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel =
+    ReleaseGroupRoomModel(
+        id = id,
+        name = name,
+        firstReleaseDate = firstReleaseDate,
+        disambiguation = disambiguation,
+        primaryType = primaryType,
+        secondaryTypes = secondaryTypes,
+    )
