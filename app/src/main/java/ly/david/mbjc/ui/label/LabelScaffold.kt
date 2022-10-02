@@ -52,11 +52,14 @@ internal fun LabelScaffold(
     viewModel: LabelViewModel = hiltViewModel()
 ) {
 
+    val resource = MusicBrainzResource.LABEL
+
     val snackbarHostState = remember { SnackbarHostState() }
     var title by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
     val context = LocalContext.current
     var searchText by rememberSaveable { mutableStateOf("") }
+    var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
     val releasesLazyListState = rememberLazyListState()
     val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
@@ -70,26 +73,30 @@ internal fun LabelScaffold(
 
     LaunchedEffect(key1 = labelId) {
         viewModel.updateLabelId(labelId)
-        title = try {
-            // TODO: when returning to screen, we are doing lookup again, and recording any visit
-            val label = viewModel.lookupLabel(labelId)
-            label.getNameWithDisambiguation()
-        } catch (e: Exception) {
-            "[Label lookup failed]"
+        val label = viewModel.lookupLabel(labelId)
+        title = label.getNameWithDisambiguation()
+
+        if (!recordedLookup) {
+            viewModel.recordLookupHistory(
+                resourceId = labelId,
+                resource = resource,
+                summary = title
+            )
+            recordedLookup = true
         }
     }
 
     Scaffold(
         topBar = {
             TopAppBarWithSearch(
-                resource = MusicBrainzResource.LABEL,
+                resource = resource,
                 title = title,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.LABEL, labelId)
+                            context.lookupInBrowser(resource, labelId)
                             closeMenu()
                         }
                     )

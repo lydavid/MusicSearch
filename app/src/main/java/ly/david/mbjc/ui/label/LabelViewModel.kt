@@ -21,12 +21,14 @@ import ly.david.mbjc.data.Label
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.label.LabelDao
 import ly.david.mbjc.data.persistence.label.ReleasesLabels
 import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
+import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.label.releases.LabelRepository
@@ -38,7 +40,8 @@ internal class LabelViewModel @Inject constructor(
     private val labelDao: LabelDao,
     private val releasesLabelsDao: ReleasesLabelsDao,
     private val releaseDao: ReleaseDao,
-) : ViewModel() {
+    override val lookupHistoryDao: LookupHistoryDao
+) : ViewModel(), RecordLookupHistory {
 
     private data class ViewModelState(
         val labelId: String = "",

@@ -54,13 +54,13 @@ internal fun AreaScaffold(
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
     // TODO: how about not doing lookup api if we don't have it stored locally to avoid a redundant api call
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = areaId) {
         val area = viewModel.getArea(areaId)
         titleState = area.getNameWithDisambiguation()
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
-                resourceId = area.id,
+                resourceId = areaId,
                 resource = resource,
                 summary = titleState
             )
