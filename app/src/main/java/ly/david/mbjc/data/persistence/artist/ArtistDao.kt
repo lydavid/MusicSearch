@@ -22,15 +22,6 @@ internal abstract class ArtistDao : BaseDao<ArtistRoomModel> {
 
     @Query(
         """
-        UPDATE artists
-        SET has_default_relations = :hasDefaultRelations
-        WHERE id = :artistId
-        """
-    )
-    abstract suspend fun setHasDefaultRelations(artistId: String, hasDefaultRelations: Boolean)
-
-    @Query(
-        """
         SELECT IFNULL(
             (SELECT COUNT(*)
             FROM release_groups rg

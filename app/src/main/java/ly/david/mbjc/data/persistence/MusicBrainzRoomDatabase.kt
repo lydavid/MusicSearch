@@ -55,7 +55,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 36,
+    version = 38,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -109,6 +109,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 31, to = 32, spec = DeleteHasRelationsFromLabel::class),
         AutoMigration(from = 33, to = 34, spec = DeleteHasRelationsFromReleaseGroup::class),
         AutoMigration(from = 35, to = 36, spec = DeleteHasRelationsFromArea::class),
+        AutoMigration(from = 37, to = 38, spec = DeleteHasRelationsFromArtist::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -240,6 +241,21 @@ private val MIGRATION_34_35 = object : Migration(34, 35) {
 
 @DeleteColumn(tableName = "areas", columnName = "has_default_relations")
 private class DeleteHasRelationsFromArea : AutoMigrationSpec
+
+private val MIGRATION_36_37 = object : Migration(36, 37) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+                INSERT INTO has_relations ( resource_id, has_relations )
+                SELECT id, has_default_relations
+                FROM artists
+            """
+        )
+    }
+}
+
+@DeleteColumn(tableName = "artists", columnName = "has_default_relations")
+private class DeleteHasRelationsFromArtist : AutoMigrationSpec
 // endregion
 
 private const val DATABASE_NAME = "mbjc.db"
@@ -257,6 +273,7 @@ internal object DatabaseModule {
             .addMigrations(MIGRATION_29_30)
             .addMigrations(MIGRATION_32_33)
             .addMigrations(MIGRATION_34_35)
+            .addMigrations(MIGRATION_36_37)
             .fallbackToDestructiveMigration()
             .build()
     }

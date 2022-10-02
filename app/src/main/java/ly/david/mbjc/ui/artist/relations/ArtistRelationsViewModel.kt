@@ -4,7 +4,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.mbjc.data.network.Lookup
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
@@ -13,14 +12,8 @@ import ly.david.mbjc.ui.relation.RelationViewModel
 @HiltViewModel
 internal class ArtistRelationsViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val artistDao: ArtistDao,
     private val relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
-
-    override suspend fun hasRelationsBeenStored(): Boolean {
-        return artistDao.getArtist(resourceId.value)?.hasDefaultRelations == true
-    }
-
     override suspend fun lookupRelationsAndStore(resourceId: String) {
 
         val artistMusicBrainzModel = musicBrainzApiService.lookupArtist(
@@ -40,6 +33,6 @@ internal class ArtistRelationsViewModel @Inject constructor(
         relationDao.insertAll(relations)
 
         // Called last so that we only flag it after everything else succeeded.
-        artistDao.setHasDefaultRelations(artistId = resourceId, hasDefaultRelations = true)
+        markResourceHasRelations()
     }
 }
