@@ -1,20 +1,46 @@
 package ly.david.mbjc.ui.release
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import ly.david.mbjc.R
+import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
+
+private enum class ReleaseTab(@StringRes val titleRes: Int) {
+    TRACKS(R.string.tracks),
+    RELATIONSHIPS(R.string.relationships),
+
+    // TODO: release events
+    STATS(R.string.stats)
+}
 
 /**
  * Equivalent of a screen like: https://musicbrainz.org/release/f171e0ae-bea8-41e6-bb41-4c7af7977f50
@@ -26,40 +52,92 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 internal fun ReleaseScreenScaffold(
     releaseId: String,
     onBack: () -> Unit,
-    onRecordingClick: (String) -> Unit = {}
+    onRecordingClick: (String) -> Unit = {},
+    viewModel: ReleaseViewModel = hiltViewModel()
 ) {
+    val resource = MusicBrainzResource.RELEASE
+
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
-    val context = LocalContext.current
+    var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.TRACKS) }
+    var filterText by rememberSaveable { mutableStateOf("") }
+    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = releaseId) {
+        viewModel.updateReleaseId(releaseId)
+        val release = viewModel.lookupRelease(releaseId)
+        titleState = release.getNameWithDisambiguation()
+
+//        if (!recordedLookup) {
+//            viewModel.recordLookupHistory(
+//                resourceId = release.id,
+//                resource = resource,
+//                summary = titleState
+//            )
+//            recordedLookup = true
+//        }
+    }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            ScrollableTopAppBar(
-                resource = MusicBrainzResource.RELEASE,
+            TopAppBarWithSearch(
+                resource = resource,
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
-                        text = { Text("Open in browser") },
+                        text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.RELEASE, releaseId)
+                            context.lookupInBrowser(resource, releaseId)
                             closeMenu()
                         }
                     )
                 },
+                tabsTitles = ReleaseTab.values().map { stringResource(id = it.titleRes) },
+                selectedTabIndex = selectedTab.ordinal,
+                onSelectTabIndex = { selectedTab = ReleaseTab.values()[it] },
+                showSearchIcon = selectedTab == ReleaseTab.TRACKS,
+                searchText = filterText,
+                onSearchTextChange = {
+                    filterText = it
+                    viewModel.updateQuery(query = filterText)
+                },
             )
         },
     ) { innerPadding ->
-        TracksInReleaseScreen(
-            modifier = Modifier.padding(innerPadding),
-            releaseId = releaseId,
-            onTitleUpdate = { title, subtitle ->
-                titleState = title
-                subtitleState = subtitle
-            },
-            onRecordingClick = onRecordingClick
-        )
+
+        val tracksLazyListState = rememberLazyListState()
+        val tracksLazyPagingItems: LazyPagingItems<UiModel> =
+            rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
+                .collectAsLazyPagingItems()
+
+        val relationsLazyListState = rememberLazyListState()
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+            rememberFlowWithLifecycleStarted(pagedRelations)
+                .collectAsLazyPagingItems()
+
+        when (selectedTab) {
+            ReleaseTab.TRACKS -> {
+                TracksInReleaseScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = tracksLazyListState,
+                    lazyPagingItems = tracksLazyPagingItems,
+                    onRecordingClick = onRecordingClick
+                )
+            }
+            ReleaseTab.RELATIONSHIPS -> {
+
+            }
+            ReleaseTab.STATS -> {
+
+            }
+        }
     }
 }

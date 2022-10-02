@@ -9,6 +9,7 @@ internal data class TrackUiModel(
     override val number: String,
     override val title: String,
     override val length: Int?,
+    val mediumId: Long,
     val recordingId: String
 ) : UiModel(), Track
 
@@ -19,5 +20,6 @@ internal fun TrackRoomModel.toTrackUiModel() =
         number = number,
         title = title,
         length = length,
+        mediumId = mediumId,
         recordingId = recordingId
     )

@@ -14,7 +14,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
@@ -58,24 +56,15 @@ internal fun ReleaseGroupScaffold(
     onBack: () -> Unit,
     viewModel: ReleaseGroupViewModel = hiltViewModel()
 ) {
+    val resource = MusicBrainzResource.RELEASE_GROUP
 
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
+
     var title by rememberSaveable { mutableStateOf("") }
     var subtitle by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
-    var searchText by rememberSaveable { mutableStateOf("") }
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-
-    val releasesLazyListState = rememberLazyListState()
-    val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
-        rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
-            .collectAsLazyPagingItems()
-
-    val relationsLazyListState = rememberLazyListState()
-    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
-        .collectAsLazyPagingItems()
+    var filterText by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.updateReleaseGroupId(releaseGroupId)
@@ -94,7 +83,7 @@ internal fun ReleaseGroupScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
-                resource = MusicBrainzResource.RELEASE_GROUP,
+                resource = resource,
                 title = title,
                 subtitle = subtitle,
                 onBack = onBack,
@@ -102,50 +91,42 @@ internal fun ReleaseGroupScaffold(
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
-                            context.lookupInBrowser(MusicBrainzResource.RELEASE_GROUP, releaseGroupId)
+                            context.lookupInBrowser(resource, releaseGroupId)
                             closeMenu()
                         })
-
-                    if (selectedTab == ReleaseGroupTab.RELEASES || selectedTab == ReleaseGroupTab.RELATIONSHIPS) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(stringResource(id = R.string.refresh))
-                            },
-                            onClick = {
-                                closeMenu()
-                                coroutineScope.launch {
-                                    if (selectedTab == ReleaseGroupTab.RELEASES) {
-                                        releasesLazyListState.scrollToItem(0)
-                                        releasesLazyPagingItems.refresh()
-                                    } else {
-                                        relationsLazyListState.scrollToItem(0)
-                                        relationsLazyPagingItems.refresh()
-                                    }
-                                }
-                            })
-                    }
                 },
                 tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] },
                 showSearchIcon = selectedTab == ReleaseGroupTab.RELEASES,
-                searchText = searchText,
+                searchText = filterText,
                 onSearchTextChange = {
-                    searchText = it
-                    viewModel.updateQuery(query = searchText)
+                    filterText = it
+                    viewModel.updateQuery(query = filterText)
                 },
             )
         },
     ) { innerPadding ->
+
+        val releasesLazyListState = rememberLazyListState()
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
+            rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+                .collectAsLazyPagingItems()
+
+        val relationsLazyListState = rememberLazyListState()
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+            rememberFlowWithLifecycleStarted(pagedRelations)
+                .collectAsLazyPagingItems()
 
         when (selectedTab) {
             ReleaseGroupTab.RELEASES -> {
                 ReleasesListScreen(
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    onReleaseClick = onReleaseClick,
                     lazyListState = releasesLazyListState,
-                    lazyPagingItems = releasesLazyPagingItems
+                    lazyPagingItems = releasesLazyPagingItems,
+                    onReleaseClick = onReleaseClick
                 )
             }
             ReleaseGroupTab.RELATIONSHIPS -> {

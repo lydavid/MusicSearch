@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.common.paging
 
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,11 +11,11 @@ import ly.david.mbjc.ui.release.ReleaseCard
 
 @Composable
 internal fun ReleasesListScreen(
-    modifier: Modifier,
-    snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    lazyListState: LazyListState = rememberLazyListState(),
+    lazyPagingItems: LazyPagingItems<ReleaseUiModel>,
     onReleaseClick: (String) -> Unit = {},
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<ReleaseUiModel>
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -34,3 +35,21 @@ internal fun ReleasesListScreen(
         }
     }
 }
+
+// TODO: Previewing compose paging currently not supported: https://issuetracker.google.com/issues/194544557#comment18
+//@Preview
+//@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+//@Composable
+//private fun Preview() {
+//    PreviewTheme {
+//        ReleasesListScreen(
+//            lazyPagingItems = flowOf(PagingData.from(listOf(
+//                ReleaseUiModel(
+//                    id = "1",
+//                    name = "Some Release",
+//                    disambiguation = "That one"
+//                )
+//            ))).collectAsLazyPagingItems()
+//        )
+//    }
+//}

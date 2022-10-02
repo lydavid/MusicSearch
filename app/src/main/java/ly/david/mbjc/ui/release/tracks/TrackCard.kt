@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.release
+package ly.david.mbjc.ui.release.tracks
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -12,8 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.network.WorkMusicBrainzModel
 import ly.david.mbjc.data.domain.TrackUiModel
+import ly.david.mbjc.data.network.WorkMusicBrainzModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun TrackCard(
     track: TrackUiModel,
-    showTrackArtists: Boolean = false,
+//    showTrackArtists: Boolean = false,
     onRecordingClick: (String) -> Unit = {},
     onWorkClick: (WorkMusicBrainzModel) -> Unit = {},
     // no onTrackClick needed since Tracks exists in the context of a Release
@@ -52,13 +52,13 @@ internal fun TrackCard(
                     style = TextStyles.getCardTitleTextStyle(),
 
                     )
-                if (showTrackArtists) {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodyTextStyle(),
-                        text = "TODO"//uiTrack.artistCredits.getDisplayNames()
-                    )
-                }
+//                if (showTrackArtists) {
+//                    Text(
+//                        modifier = Modifier.padding(top = 4.dp),
+//                        style = TextStyles.getCardBodyTextStyle(),
+//                        text = "TODO"//uiTrack.artistCredits.getDisplayNames()
+//                    )
+//                }
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -81,6 +81,7 @@ private val testTrack = TrackUiModel(
     position = 1,
     number = "123",
     length = 25300000,
+    mediumId = 1L,
     recordingId = "r1"
 )
 
@@ -92,7 +93,7 @@ private fun TrackCardPreview() {
         Surface {
             TrackCard(
                 track = testTrack,
-                showTrackArtists = true
+//                showTrackArtists = true
             )
         }
     }

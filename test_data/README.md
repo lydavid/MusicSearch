@@ -37,6 +37,13 @@ Heaven Shall Burn… When We Are Gathered
 adb shell am start -d "mbjc://release-group/807d9a32-e55c-317a-8a97-c4d5eaaa38b0" -a android.intent.action.VIEW
 ```
 
+SMITHEREENS
+- Released in many regions at once
+```sh
+adb shell am start -d "mbjc://release-group/f2b2abf8-09af-4d45-aee9-b0c99d4fcabc" -a android.intent.action.VIEW
+```
+
+
 ## Label
 
 

@@ -49,6 +49,7 @@ private enum class ArtistTab(@StringRes val titleRes: Int) {
     STATS(R.string.stats)
 }
 
+// TODO: either align ReleaseGroupScaffold to be like this, or align this
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ArtistScaffold(
@@ -56,6 +57,9 @@ internal fun ArtistScaffold(
     onReleaseGroupClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
+
+    // This can be hoisted up which would normally let us preview this,
+    // but because it relies on compose paging, we can't preview.
     viewModel: ArtistViewModel = hiltViewModel()
 ) {
 
@@ -108,7 +112,7 @@ internal fun ArtistScaffold(
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 dropdownMenuItems = {
                     DropdownMenuItem(
-                        text = { Text("Open in browser") },
+                        text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
                             context.lookupInBrowser(resource, artistId)
                             closeMenu()

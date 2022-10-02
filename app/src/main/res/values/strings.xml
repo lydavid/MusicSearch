@@ -12,5 +12,6 @@
     <string name="release_groups">Release Groups</string>
     <string name="releases">Releases</string>
     <string name="relationships">Relationships</string>
+    <string name="tracks">Tracks</string>
     <string name="stats">Stats</string>
 </resources>
