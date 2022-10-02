@@ -32,6 +32,8 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.release.relations.ReleaseRelationsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
 private enum class ReleaseTab(@StringRes val titleRes: Int) {
@@ -54,7 +56,7 @@ internal fun ReleaseScreenScaffold(
     releaseId: String,
     onBack: () -> Unit,
     title: String? = null,
-    onRecordingClick: (String) -> Unit = {},
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: ReleaseViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE
@@ -140,11 +142,21 @@ internal fun ReleaseScreenScaffold(
                     snackbarHostState = snackbarHostState,
                     lazyListState = tracksLazyListState,
                     lazyPagingItems = tracksLazyPagingItems,
-                    onRecordingClick = onRecordingClick
+                    onRecordingClick = { id, title ->
+                        onItemClick(Destination.LOOKUP_RECORDING, id, title)
+                    }
                 )
             }
             ReleaseTab.RELATIONSHIPS -> {
-
+                ReleaseRelationsScreen(
+                    releaseId = releaseId,
+                    onItemClick = onItemClick,
+                    lazyListState = relationsLazyListState,
+                    lazyPagingItems = relationsLazyPagingItems,
+                    onPagedRelationsChange = {
+                        pagedRelations = it
+                    }
+                )
             }
             ReleaseTab.STATS -> {
 

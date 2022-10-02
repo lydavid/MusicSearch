@@ -23,14 +23,14 @@ import ly.david.mbjc.ui.theme.TextStyles
 internal fun TrackCard(
     track: TrackUiModel,
 //    showTrackArtists: Boolean = false,
-    onRecordingClick: (String) -> Unit = {},
+    onRecordingClick: (String, String) -> Unit = { _, _ -> },
     onWorkClick: (WorkMusicBrainzModel) -> Unit = {},
     // no onTrackClick needed since Tracks exists in the context of a Release
 ) {
 
     // TODO: constraint
     ClickableListItem(
-        onClick = { onRecordingClick(track.recordingId) },
+        onClick = { onRecordingClick(track.recordingId, track.title) },
     ) {
         Row(
             modifier = Modifier.padding(vertical = 16.dp),

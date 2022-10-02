@@ -24,7 +24,7 @@ internal fun TracksInReleaseScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<UiModel>,
-    onRecordingClick: (String) -> Unit = {},
+    onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,

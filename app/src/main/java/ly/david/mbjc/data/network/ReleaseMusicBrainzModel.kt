@@ -26,8 +26,6 @@ internal data class ReleaseMusicBrainzModel(
 
     @Json(name = "release-events") val releaseEvents: List<ReleaseEvent>? = null,
 
-    //   "relations": [],
-
     // inc=media
     @Json(name = "media") val media: List<MediumMusicBrainzModel>? = null,
 
@@ -36,6 +34,8 @@ internal data class ReleaseMusicBrainzModel(
 
     // inc=label
     @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
+
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), Release
 
 internal data class CoverArtArchive(

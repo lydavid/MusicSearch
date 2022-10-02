@@ -250,7 +250,7 @@ internal fun NavigationGraph(
                 releaseId = releaseId,
                 onBack = navController::navigateUp,
                 title = title,
-                onRecordingClick = onRecordingClick
+                onItemClick = onLookupItemClick,
             )
         }
 
