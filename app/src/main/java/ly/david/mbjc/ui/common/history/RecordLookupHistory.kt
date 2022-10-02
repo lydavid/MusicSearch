@@ -14,7 +14,7 @@ internal interface RecordLookupHistory {
     ) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = summary,
+                title = summary,
                 resource = resource,
                 mbid = resourceId
             )

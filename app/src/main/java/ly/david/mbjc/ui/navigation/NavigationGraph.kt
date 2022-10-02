@@ -54,8 +54,10 @@ internal fun NavigationGraph(
             }
         }
 
-        val onReleaseClick: (String) -> Unit = { releaseId ->
-            navController.navigate("${Destination.LOOKUP_RELEASE.route}/$releaseId") {
+        val onReleaseClick: (String, String?) -> Unit = { releaseId, title ->
+            var route = "${Destination.LOOKUP_RELEASE.route}/$releaseId"
+            if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
+            navController.navigate(route) {
                 restoreState = true
             }
         }
@@ -120,7 +122,7 @@ internal fun NavigationGraph(
             when (destination) {
                 Destination.LOOKUP_ARTIST -> onArtistClick(id)
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
-                Destination.LOOKUP_RELEASE -> onReleaseClick(id)
+                Destination.LOOKUP_RELEASE -> onReleaseClick(id, title)
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
                 Destination.LOOKUP_AREA -> onAreaClick(id)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
@@ -218,30 +220,36 @@ internal fun NavigationGraph(
             val releaseGroupId = entry.arguments?.getString(ID) ?: return@composable
             ReleaseGroupScaffold(
                 releaseGroupId = releaseGroupId,
-                onReleaseClick = onReleaseClick,
                 onItemClick = onLookupItemClick,
                 onBack = navController::navigateUp
             )
         }
 
         composable(
-            "${Destination.LOOKUP_RELEASE.route}/{$ID}",
+            "${Destination.LOOKUP_RELEASE.route}/{$ID}?$TITLE={$TITLE}",
             arguments = listOf(
                 navArgument(ID) {
                     type = NavType.StringType // Make argument type safe
-                }
+                },
+                navArgument(TITLE) {
+                    nullable = true
+                    defaultValue = null
+                    type = NavType.StringType
+                },
             ),
             // Example: adb shell am start -d "mbjc://release/165f6643-2edb-4795-9abe-26bd0533e59d" -a android.intent.action.VIEW
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE.resourceName}/{$ID}"
+                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE.resourceName}/{$ID}?$TITLE={$TITLE}"
                 }
             )
         ) { entry ->
             val releaseId = entry.arguments?.getString(ID) ?: return@composable
+            val title = entry.arguments?.getString(TITLE)
             ReleaseScreenScaffold(
                 releaseId = releaseId,
                 onBack = navController::navigateUp,
+                title = title,
                 onRecordingClick = onRecordingClick
             )
         }
@@ -368,7 +376,6 @@ internal fun NavigationGraph(
             LabelScaffold(
                 labelId = labelId,
                 onBack = navController::navigateUp,
-                onReleaseClick = onReleaseClick,
                 onItemClick = onLookupItemClick
             )
         }

@@ -23,19 +23,21 @@ import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
+import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
-
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
     private val releaseRepository: ReleaseRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
-) : ViewModel() {
+    override val lookupHistoryDao: LookupHistoryDao
+) : ViewModel(), RecordLookupHistory {
 
     private data class ViewModelState(
         val releaseId: String = "",
@@ -48,8 +50,9 @@ internal class ReleaseViewModel @Inject constructor(
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
 
-    suspend fun lookupRelease(releaseId: String): Release =
-        releaseRepository.lookupRelease(releaseId)
+    suspend fun lookupRelease(releaseId: String): Release {
+        return releaseRepository.lookupRelease(releaseId)
+    }
 
     fun updateReleaseId(releaseId: String) {
         this.releaseId.value = releaseId
@@ -100,3 +103,4 @@ internal class ReleaseViewModel @Inject constructor(
         }
     }
 }
+

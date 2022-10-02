@@ -22,8 +22,8 @@ internal data class LookupHistory(
     @ColumnInfo(name = "id")
     val id: Long = 0,
 
-    @ColumnInfo(name = "summary")
-    val summary: String = "",
+    @ColumnInfo(name = "title")
+    val title: String = "",
 
     @ColumnInfo(name = "resource")
     val resource: MusicBrainzResource,

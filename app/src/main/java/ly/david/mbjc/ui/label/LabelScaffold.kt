@@ -48,7 +48,6 @@ private enum class LabelTab(@StringRes val titleRes: Int) {
 internal fun LabelScaffold(
     labelId: String,
     onBack: () -> Unit,
-    onReleaseClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: LabelViewModel = hiltViewModel()
 ) {
@@ -113,9 +112,11 @@ internal fun LabelScaffold(
                 ReleasesListScreen(
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    onReleaseClick = onReleaseClick,
                     lazyListState = releasesLazyListState,
-                    lazyPagingItems = releasesLazyPagingItems
+                    lazyPagingItems = releasesLazyPagingItems,
+                    onReleaseClick = { id, title ->
+                        onItemClick(Destination.LOOKUP_RELEASE, id, title)
+                    }
                 )
             }
             LabelTab.RELATIONSHIPS -> {

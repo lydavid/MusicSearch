@@ -39,6 +39,7 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
 
     // TODO: release events
+
     STATS(R.string.stats)
 }
 
@@ -52,6 +53,7 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
 internal fun ReleaseScreenScaffold(
     releaseId: String,
     onBack: () -> Unit,
+    title: String? = null,
     onRecordingClick: (String) -> Unit = {},
     viewModel: ReleaseViewModel = hiltViewModel()
 ) {
@@ -66,19 +68,28 @@ internal fun ReleaseScreenScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
+    if (!title.isNullOrEmpty()) {
+        titleState = title
+    }
+
     LaunchedEffect(key1 = releaseId) {
         viewModel.updateReleaseId(releaseId)
         val release = viewModel.lookupRelease(releaseId)
-        titleState = release.getNameWithDisambiguation()
 
-//        if (!recordedLookup) {
-//            viewModel.recordLookupHistory(
-//                resourceId = release.id,
-//                resource = resource,
-//                summary = titleState
-//            )
-//            recordedLookup = true
-//        }
+        if (title.isNullOrEmpty()) {
+            titleState = release.getNameWithDisambiguation()
+        }
+
+        subtitleState = "Release by [TODO]"
+
+        if (!recordedLookup) {
+            viewModel.recordLookupHistory(
+                resourceId = release.id,
+                resource = resource,
+                summary = titleState
+            )
+            recordedLookup = true
+        }
     }
 
     Scaffold(

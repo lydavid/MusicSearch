@@ -100,7 +100,7 @@ private fun HistoryEntry(
 ) {
     ClickableListItem(
         onClick = {
-            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid, null)
+            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid, lookupHistory.title)
         },
     ) {
         Column(
@@ -116,7 +116,7 @@ private fun HistoryEntry(
                 val resourceDescription =
                     lookupHistory.resource.displayText.transformThisIfNotNullOrEmpty { "$it: " }
                 Text(
-                    text = "$resourceDescription${lookupHistory.summary}",
+                    text = "$resourceDescription${lookupHistory.title}",
                     style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -148,18 +148,18 @@ private fun Date.toDisplayDate(): String {
 
 private val testData = listOf(
     LookupHistory(
-        summary = "欠けた心象、世のよすがみ",
+        title = "欠けた心象、世のよすがみ",
         resource = MusicBrainzResource.RELEASE_GROUP,
         mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
         numberOfVisits = 9999
     ),
     LookupHistory(
-        summary = "欠けた心象、世のよすが",
+        title = "欠けた心象、世のよすが",
         resource = MusicBrainzResource.RELEASE,
         mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
     ),
     LookupHistory(
-        summary = "月詠み",
+        title = "月詠み",
         resource = MusicBrainzResource.ARTIST,
         mbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
     )

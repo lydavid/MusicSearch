@@ -79,6 +79,7 @@ internal abstract class ReleasesReleaseGroupsDao : BaseDao<ReleasesReleaseGroups
         """
         $SELECT_RELEASES_IN_RELEASE_GROUP
         $FILTERED
+        $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
     """
     )
     abstract fun getReleasesInReleaseGroupFiltered(

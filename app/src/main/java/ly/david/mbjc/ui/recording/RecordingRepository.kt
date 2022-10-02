@@ -55,7 +55,7 @@ internal class RecordingRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(recording: Recording) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = recording.name,
+                title = recording.name,
                 resource = MusicBrainzResource.RECORDING,
                 mbid = recording.id
             )

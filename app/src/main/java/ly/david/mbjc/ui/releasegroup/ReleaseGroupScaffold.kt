@@ -51,7 +51,6 @@ private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
 @Composable
 internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
-    onReleaseClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
     viewModel: ReleaseGroupViewModel = hiltViewModel()
@@ -126,7 +125,9 @@ internal fun ReleaseGroupScaffold(
                     snackbarHostState = snackbarHostState,
                     lazyListState = releasesLazyListState,
                     lazyPagingItems = releasesLazyPagingItems,
-                    onReleaseClick = onReleaseClick
+                    onReleaseClick = { id, title ->
+                        onItemClick(Destination.LOOKUP_RELEASE, id, title)
+                    }
                 )
             }
             ReleaseGroupTab.RELATIONSHIPS -> {

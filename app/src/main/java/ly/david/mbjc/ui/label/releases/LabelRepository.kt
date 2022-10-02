@@ -41,7 +41,7 @@ internal class LabelRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(label: Label) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = label.name,
+                title = label.name,
                 resource = MusicBrainzResource.LABEL,
                 mbid = label.id
             )

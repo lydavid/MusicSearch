@@ -51,7 +51,7 @@ internal class ReleaseGroupRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(releaseGroup: ReleaseGroup) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = releaseGroup.name,
+                title = releaseGroup.name,
                 resource = MusicBrainzResource.RELEASE_GROUP,
                 mbid = releaseGroup.id
             )

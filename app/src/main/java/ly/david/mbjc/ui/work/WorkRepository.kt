@@ -53,7 +53,7 @@ internal class WorkRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(work: Work) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = work.name,
+                title = work.name,
                 resource = MusicBrainzResource.WORK,
                 mbid = work.id
             )

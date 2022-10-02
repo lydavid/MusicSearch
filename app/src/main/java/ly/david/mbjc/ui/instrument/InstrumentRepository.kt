@@ -53,7 +53,7 @@ internal class InstrumentRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(instrument: Instrument) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = instrument.name,
+                title = instrument.name,
                 resource = MusicBrainzResource.INSTRUMENT,
                 mbid = instrument.id
             )

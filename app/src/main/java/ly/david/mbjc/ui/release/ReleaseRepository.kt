@@ -6,9 +6,6 @@ import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.history.LookupHistory
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.TrackDao
@@ -22,7 +19,6 @@ internal class ReleaseRepository @Inject constructor(
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
-    private val lookupHistoryDao: LookupHistoryDao
 ) {
     private var release: ReleaseUiModel? = null
 
@@ -31,8 +27,6 @@ internal class ReleaseRepository @Inject constructor(
 
             val roomRelease = releaseDao.getRelease(releaseId)
             if (roomRelease?.formats != null && roomRelease.tracks != null) {
-                incrementOrInsertLookupHistory(roomRelease)
-
                 return roomRelease.toReleaseUiModel()
             }
 
@@ -47,18 +41,6 @@ internal class ReleaseRepository @Inject constructor(
                 trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
             }
 
-            incrementOrInsertLookupHistory(musicBrainzRelease)
-
             musicBrainzRelease
         }
-
-    private suspend fun incrementOrInsertLookupHistory(release: Release) {
-        lookupHistoryDao.incrementOrInsertLookupHistory(
-            LookupHistory(
-                summary = release.name,
-                resource = MusicBrainzResource.RELEASE,
-                mbid = release.id
-            )
-        )
-    }
 }

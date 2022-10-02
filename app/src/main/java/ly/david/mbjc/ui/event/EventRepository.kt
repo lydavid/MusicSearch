@@ -53,7 +53,7 @@ internal class EventRepository @Inject constructor(
     private suspend fun incrementOrInsertLookupHistory(event: Event) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
-                summary = event.name,
+                title = event.name,
                 resource = MusicBrainzResource.EVENT,
                 mbid = event.id
             )

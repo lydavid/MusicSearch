@@ -54,7 +54,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 27,
+    version = 28,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -101,6 +101,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 24, to = 25),
         AutoMigration(from = 25, to = 26),
         AutoMigration(from = 26, to = 27),
+        AutoMigration(from = 27, to = 28, spec = MusicBrainzRoomDatabase.RenameHistorySummaryToTitle::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -122,6 +123,9 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
 
     @DeleteColumn(tableName = "relations", columnName = "resource")
     class DeleteResource : AutoMigrationSpec
+
+    @RenameColumn(tableName = "lookup_history", fromColumnName = "summary", toColumnName = "title")
+    class RenameHistorySummaryToTitle : AutoMigrationSpec
     // endregion
 
     abstract fun getArtistDao(): ArtistDao
