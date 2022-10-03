@@ -14,7 +14,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.launch
 import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
@@ -65,26 +63,13 @@ internal fun ArtistScaffold(
 
     val resource = MusicBrainzResource.ARTIST
 
+    val context = LocalContext.current
+
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var titleState by rememberSaveable { mutableStateOf("") }
     var searchText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
-
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-
-    // This is sufficient to preserve scroll position when switching tabs
-    val releaseGroupsLazyListState = rememberLazyListState()
-    var pagedReleaseGroups: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
-        .collectAsLazyPagingItems()
-
-    val relationsLazyListState = rememberLazyListState()
-    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
-        .collectAsLazyPagingItems()
-
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = Unit) {
@@ -130,27 +115,6 @@ internal fun ArtistScaffold(
                             }
                         )
                     }
-
-                    // TODO: With swiperefresh, we don't really need this
-                    if (selectedTab == ArtistTab.RELEASE_GROUPS || selectedTab == ArtistTab.RELATIONSHIPS) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(stringResource(id = R.string.refresh))
-                            },
-                            onClick = {
-                                closeMenu()
-                                coroutineScope.launch {
-                                    if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                                        releaseGroupsLazyListState.scrollToItem(0)
-                                        releaseGroupsLazyPagingItems.refresh()
-                                    } else {
-                                        relationsLazyListState.scrollToItem(0)
-                                        relationsLazyPagingItems.refresh()
-                                    }
-                                }
-                            }
-                        )
-                    }
                 },
                 searchText = searchText,
                 onSearchTextChange = {
@@ -162,6 +126,20 @@ internal fun ArtistScaffold(
             )
         },
     ) { innerPadding ->
+
+        // This is sufficient to preserve scroll position when switching tabs
+        val releaseGroupsLazyListState = rememberLazyListState()
+        var pagedReleaseGroups: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
+            .collectAsLazyPagingItems()
+
+        val relationsLazyListState = rememberLazyListState()
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+            rememberFlowWithLifecycleStarted(pagedRelations)
+                .collectAsLazyPagingItems()
+
+        val statsLazyListState = rememberLazyListState()
 
         when (selectedTab) {
             ArtistTab.RELEASE_GROUPS -> {
@@ -191,7 +169,10 @@ internal fun ArtistScaffold(
                 )
             }
             ArtistTab.STATS -> {
-                ArtistStatsScreen(artistId = artistId)
+                ArtistStatsScreen(
+                    artistId = artistId,
+                    lazyListState = statsLazyListState
+                )
             }
         }
     }
