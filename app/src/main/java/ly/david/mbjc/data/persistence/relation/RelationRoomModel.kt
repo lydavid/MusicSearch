@@ -197,8 +197,26 @@ internal fun RelationMusicBrainzModel.toRelationRoomModel(
             disambiguation = null
         }
 
-        MusicBrainzResource.EVENT -> TODO()
-        MusicBrainzResource.SERIES -> TODO()
+        MusicBrainzResource.EVENT -> {
+            if (event == null) return null
+            linkedResourceId = event.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                event.name
+            } else {
+                targetCredit
+            }
+            disambiguation = event.disambiguation
+        }
+        MusicBrainzResource.SERIES -> {
+            if (series == null) return null
+            linkedResourceId = series.id
+            name = if (targetCredit.isNullOrEmpty()) {
+                series.name
+            } else {
+                targetCredit
+            }
+            disambiguation = series.disambiguation
+        }
         null -> return null
     }
 

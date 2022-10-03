@@ -17,6 +17,10 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     @Json(name = "event")
     EVENT("Event", "event"),
 
+    // Not searchable, but lookupable
+    @Json(name = "genre")
+    GENRE("Genre", "genre"),
+
     @Json(name = "instrument")
     INSTRUMENT("Instrument", "instrument"),
 
@@ -43,11 +47,7 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     @Json(name = "work")
     WORK("Work", "work"),
 
-    // These are not searchable, but they are lookupable
-    @Json(name = "genre")
-    GENRE("Genre", "genre"),
-
-    // These are not searchable, but they are lookupable
+    // Not searchable, but lookupable
     @Json(name = "url")
     URL("URL", "url"),
 
@@ -56,8 +56,6 @@ internal enum class MusicBrainzResource(val displayText: String, val resourceNam
     // Other non-core resources with API: rating, tag, collection
 
     // Other lookupable: discid, isrc, iswc
-
-    // TODO: for non-first-class resources, maybe they shouldn't be in this enum
 }
 
 internal val searchableResources: List<MusicBrainzResource>

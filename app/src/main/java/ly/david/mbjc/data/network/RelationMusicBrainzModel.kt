@@ -22,18 +22,20 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "end") override val end: String?,
     @Json(name = "ended") override val ended: Boolean?,
 
-    @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
-    @Json(name = "release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
-    @Json(name = "release") val release: ReleaseMusicBrainzModel? = null,
-    @Json(name = "label") val label: LabelMusicBrainzModel? = null,
-    @Json(name = "work") val work: WorkMusicBrainzModel? = null,
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,
-    @Json(name = "place") val place: PlaceMusicBrainzModel? = null,
-    @Json(name = "url") val url: UrlMusicBrainzModel? = null,
-    @Json(name = "recording") val recording: RecordingMusicBrainzModel? = null,
-    @Json(name = "instrument") val instrument: InstrumentMusicBrainzModel? = null,
-
+    @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
+    @Json(name = "event") val event: EventMusicBrainzModel? = null,
     @Json(name = "genre") val genre: GenreMusicBrainzModel? = null,
+    @Json(name = "instrument") val instrument: InstrumentMusicBrainzModel? = null,
+    @Json(name = "label") val label: LabelMusicBrainzModel? = null,
+    @Json(name = "place") val place: PlaceMusicBrainzModel? = null,
+    @Json(name = "recording") val recording: RecordingMusicBrainzModel? = null,
+    @Json(name = "release") val release: ReleaseMusicBrainzModel? = null,
+    @Json(name = "release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
+    @Json(name = "series") val series: SeriesMusicBrainzModel? = null,
+    @Json(name = "work") val work: WorkMusicBrainzModel? = null,
+    @Json(name = "url") val url: UrlMusicBrainzModel? = null,
+
 ) : ILifeSpan
 
 internal enum class Direction {
