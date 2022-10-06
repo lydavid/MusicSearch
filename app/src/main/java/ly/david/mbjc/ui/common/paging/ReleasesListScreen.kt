@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.mbjc.data.domain.ReleaseUiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.release.ReleaseCard
 
 @Composable
@@ -26,7 +27,7 @@ internal fun ReleasesListScreen(
         when (releaseUiModel) {
             is ReleaseUiModel -> {
                 ReleaseCard(releaseUiModel = releaseUiModel) {
-                    onReleaseClick(id, name)
+                    onReleaseClick(id, getNameWithDisambiguation())
                 }
             }
             else -> {
