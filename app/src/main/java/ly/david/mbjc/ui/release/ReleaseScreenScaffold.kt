@@ -38,6 +38,7 @@ import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
 private enum class ReleaseTab(@StringRes val titleRes: Int) {
     TRACKS(R.string.tracks),
+    DETAILS(R.string.details),
     RELATIONSHIPS(R.string.relationships),
 
     // TODO: release events
@@ -69,6 +70,7 @@ internal fun ReleaseScreenScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.TRACKS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var covertArtUrl: String? by rememberSaveable { mutableStateOf(null) }
 
     if (!title.isNullOrEmpty()) {
         titleState = title
@@ -91,6 +93,10 @@ internal fun ReleaseScreenScaffold(
                 summary = titleState
             )
             recordedLookup = true
+        }
+
+        if (release.coverArtArchive.count > 0) {
+            covertArtUrl = viewModel.getCoverArtUrl()
         }
     }
 
@@ -139,6 +145,7 @@ internal fun ReleaseScreenScaffold(
             ReleaseTab.TRACKS -> {
                 TracksInReleaseScreen(
                     modifier = Modifier.padding(innerPadding),
+                    url = covertArtUrl,
                     snackbarHostState = snackbarHostState,
                     lazyListState = tracksLazyListState,
                     lazyPagingItems = tracksLazyPagingItems,
@@ -146,6 +153,10 @@ internal fun ReleaseScreenScaffold(
                         onItemClick(Destination.LOOKUP_RECORDING, id, title)
                     }
                 )
+            }
+            ReleaseTab.DETAILS -> {
+
+
             }
             ReleaseTab.RELATIONSHIPS -> {
                 ReleaseRelationsScreen(

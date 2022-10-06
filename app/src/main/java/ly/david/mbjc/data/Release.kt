@@ -1,5 +1,7 @@
 package ly.david.mbjc.data
 
+import ly.david.mbjc.data.network.CoverArtArchive
+
 /**
  * Defines common properties between domain, network and persistence model.
  */
@@ -16,7 +18,7 @@ internal interface Release : NameWithDisambiguation {
     val packagingId: String?
     val asin: String?
     val quality: String?
-//    val coverArtArchive: CoverArtArchive = CoverArtArchive(),
+    val coverArtArchive: CoverArtArchive
 //    val textRepresentation: TextRepresentation? = null,
 //    val releaseEvents: List<ReleaseEvent>? = null,
 

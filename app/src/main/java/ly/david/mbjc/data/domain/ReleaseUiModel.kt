@@ -1,6 +1,7 @@
 package ly.david.mbjc.data.domain
 
 import ly.david.mbjc.data.Release
+import ly.david.mbjc.data.network.CoverArtArchive
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 
@@ -18,9 +19,10 @@ internal data class ReleaseUiModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
-    val formats: String? = null,
-    val tracks: String? = null
+    override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
 
+    val formats: String? = null,
+    val tracks: String? = null,
 ) : UiModel(), Release
 
 internal fun ReleaseMusicBrainzModel.toReleaseUiModel() =
@@ -35,6 +37,7 @@ internal fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         countryCode = countryCode,
         packaging = packaging,
         packagingId = packagingId,
+        coverArtArchive = coverArtArchive,
         asin = asin,
         quality = quality
     )
@@ -53,6 +56,7 @@ internal fun ReleaseRoomModel.toReleaseUiModel() =
         packagingId = packagingId,
         asin = asin,
         quality = quality,
+        coverArtArchive = coverArtArchive,
         formats = formats,
         tracks = tracks
     )

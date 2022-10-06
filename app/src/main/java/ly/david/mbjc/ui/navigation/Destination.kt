@@ -4,6 +4,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"
+private const val TOP_LEVEL_EXPERIMENTAL = "experimental"
 
 /**
  * This divider should be the same used for dividing parameters such as {artistId} passed to navigation.
@@ -11,7 +12,8 @@ private const val TOP_LEVEL_HISTORY = "history"
 private const val DIVIDER = "/"
 
 private const val ARTIST = "artist"
-private const val RELEASE_GROUP = "release-group" // TODO: besides release_group, these match exactly to MusicBrainzResource
+private const val RELEASE_GROUP =
+    "release-group" // TODO: besides release_group, these match exactly to MusicBrainzResource
 private const val RELEASE = "release"
 private const val RECORDING = "recording"
 private const val AREA = "area"
@@ -50,26 +52,24 @@ internal enum class Destination(val route: String, val musicBrainzResource: Musi
     LOOKUP_GENRE("$TOP_LEVEL_LOOKUP$DIVIDER$GENRE", MusicBrainzResource.GENRE),
     LOOKUP_URL("$TOP_LEVEL_LOOKUP$DIVIDER$URL", MusicBrainzResource.URL),
 
-    HISTORY(TOP_LEVEL_HISTORY, null)
+    HISTORY(TOP_LEVEL_HISTORY, null),
+    EXPERIMENTAL(TOP_LEVEL_EXPERIMENTAL, null)
 }
 
 internal fun MusicBrainzResource.toDestination() =
     when (this) {
-        MusicBrainzResource.ARTIST -> Destination.LOOKUP_ARTIST
-        MusicBrainzResource.RELEASE_GROUP -> Destination.LOOKUP_RELEASE_GROUP
-        MusicBrainzResource.RELEASE -> Destination.LOOKUP_RELEASE
-        MusicBrainzResource.RECORDING -> Destination.LOOKUP_RECORDING
         MusicBrainzResource.AREA -> Destination.LOOKUP_AREA
-        MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
+        MusicBrainzResource.ARTIST -> Destination.LOOKUP_ARTIST
+        MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
+        MusicBrainzResource.GENRE -> Destination.LOOKUP_GENRE
         MusicBrainzResource.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
         MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
-        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
-
-        MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
-        // TODO: everything below
+        MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
+        MusicBrainzResource.RECORDING -> Destination.LOOKUP_RECORDING
+        MusicBrainzResource.RELEASE -> Destination.LOOKUP_RELEASE
+        MusicBrainzResource.RELEASE_GROUP -> Destination.LOOKUP_RELEASE_GROUP
         MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES
-
-        MusicBrainzResource.GENRE -> Destination.LOOKUP_GENRE
+        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
         MusicBrainzResource.URL -> Destination.LOOKUP_URL
     }
 
@@ -83,5 +83,6 @@ internal fun String.getTopLevelRoute(): String = this.split(DIVIDER).first()
  */
 internal fun String.getTopLevelDestination(): Destination = when (this) {
     TOP_LEVEL_HISTORY -> Destination.HISTORY
+    TOP_LEVEL_EXPERIMENTAL -> Destination.EXPERIMENTAL
     else -> Destination.LOOKUP
 }

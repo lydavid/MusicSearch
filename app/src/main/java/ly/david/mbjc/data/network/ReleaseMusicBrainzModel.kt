@@ -1,5 +1,6 @@
 package ly.david.mbjc.data.network
 
+import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
 import ly.david.mbjc.data.NameWithDisambiguation
 import ly.david.mbjc.data.Release
@@ -20,8 +21,8 @@ internal data class ReleaseMusicBrainzModel(
     @Json(name = "asin") override val asin: String? = null,
     @Json(name = "quality") override val quality: String? = null,
 
-    // TODO: these can be embedded for room model
-    @Json(name = "cover-art-archive") val coverArtArchive: CoverArtArchive = CoverArtArchive(),
+    // If there exists at least one `count`, then we should request CAA for its cover art.
+    @Json(name = "cover-art-archive") override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
     @Json(name = "text-representation") val textRepresentation: TextRepresentation? = null,
 
     @Json(name = "release-events") val releaseEvents: List<ReleaseEvent>? = null,
@@ -39,11 +40,14 @@ internal data class ReleaseMusicBrainzModel(
 ) : MusicBrainzModel(), Release
 
 internal data class CoverArtArchive(
-    @Json(name = "darkened") val darkened: Boolean = false,
-    @Json(name = "artwork") val artwork: Boolean = false,
-    @Json(name = "back") val back: Boolean = false,
-    @Json(name = "front") val front: Boolean = false,
-    @Json(name = "count") val count: Int = 0
+//    @Json(name = "darkened") val darkened: Boolean = false,
+//    @Json(name = "artwork") val artwork: Boolean = false,
+//    @Json(name = "back") val back: Boolean = false,
+//    @Json(name = "front") val front: Boolean = false,
+
+    @ColumnInfo(name = "cover_art_count", defaultValue = "0")
+    @Json(name = "count")
+    val count: Int = 0
 )
 
 internal data class TextRepresentation(

@@ -13,7 +13,10 @@ private const val MUSIC_BRAINZ_BASE_URL = "https://coverartarchive.org/"
 internal interface CoverArtArchiveApiService {
 
     @GET("release-group/{id}")
-    suspend fun getCoverArts(@Path("id") releaseGroupId: String): CoverArtsResponse
+    suspend fun getReleaseGroupCoverArts(@Path("id") releaseGroupId: String): CoverArtsResponse
+
+    @GET("release/{id}")
+    suspend fun getReleaseCoverArts(@Path("id") releaseId: String): CoverArtsResponse
 
     companion object {
 

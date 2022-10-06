@@ -1,9 +1,11 @@
 package ly.david.mbjc.data.persistence.release
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.mbjc.data.Release
+import ly.david.mbjc.data.network.CoverArtArchive
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import ly.david.mbjc.data.network.getFormatsForDisplay
 import ly.david.mbjc.data.network.getTracksForDisplay
@@ -37,6 +39,9 @@ internal data class ReleaseRoomModel(
     @ColumnInfo(name = "quality")
     override val quality: String?,
 
+    @Embedded
+    override val coverArtArchive: CoverArtArchive,
+
     @ColumnInfo(name = "formats")
     val formats: String?,
 
@@ -58,6 +63,7 @@ internal fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
         packagingId = packagingId,
         asin = asin,
         quality = quality,
+        coverArtArchive = coverArtArchive,
         formats = media?.getFormatsForDisplay(),
         tracks = media?.getTracksForDisplay()
     )

@@ -55,7 +55,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 38,
+    version = 39,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -110,6 +110,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 33, to = 34, spec = DeleteHasRelationsFromReleaseGroup::class),
         AutoMigration(from = 35, to = 36, spec = DeleteHasRelationsFromArea::class),
         AutoMigration(from = 37, to = 38, spec = DeleteHasRelationsFromArtist::class),
+        AutoMigration(from = 38, to = 39),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

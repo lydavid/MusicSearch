@@ -19,10 +19,13 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.Release
+import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
+import ly.david.mbjc.data.network.coverart.CoverArtArchiveApiService
+import ly.david.mbjc.data.network.coverart.getSmallCoverArtUrl
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
@@ -31,12 +34,14 @@ import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
+
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
     private val releaseRepository: ReleaseRepository,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
-    override val lookupHistoryDao: LookupHistoryDao
+    override val lookupHistoryDao: LookupHistoryDao,
+    private val coverArtArchiveApiService: CoverArtArchiveApiService
 ) : ViewModel(), RecordLookupHistory {
 
     private data class ViewModelState(
@@ -85,6 +90,8 @@ internal class ReleaseViewModel @Inject constructor(
                         } else {
                             null
                         }
+                    }.insertSeparators { before: UiModel?, _: UiModel? ->
+                        if (before == null) Header else null
                     }
                 }
             }
@@ -102,5 +109,8 @@ internal class ReleaseViewModel @Inject constructor(
             )
         }
     }
-}
 
+    suspend fun getCoverArtUrl(): String? {
+        return coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl()
+    }
+}

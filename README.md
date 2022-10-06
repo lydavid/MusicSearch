@@ -26,13 +26,6 @@ That screen would have multiple tabs, which may include:
 - Stats: information about its other tabs such as how many relationships it has with each resource
 - Releases: release resources associated with it
 
-
-A first-class resource is one that can be searched, and looked up.
-
-A second-class resource can only be searched, or only looked up. 
-
-We plan to store all first-class resources in our local database.
-
 ## Generate unit test coverage
 
 `Run anything` -> `gradle app:createDebugUnitTestCoverageReport`

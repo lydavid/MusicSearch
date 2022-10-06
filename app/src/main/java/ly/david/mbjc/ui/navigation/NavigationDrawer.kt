@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.theme.PreviewTheme
 
@@ -64,6 +66,21 @@ internal fun NavigationDrawer(
             ) {
                 navigateToTopLevelDestination(Destination.HISTORY)
                 closeDrawer()
+            }
+
+            if (BuildConfig.DEBUG) {
+
+                Divider(modifier = Modifier.padding(vertical = 16.dp))
+
+                NavigationDrawerItem(
+                    icon = Icons.Default.Science,
+                    iconDescription = "",
+                    label = "Experimental",
+                    isSelected = selectedTopLevelDestination == Destination.EXPERIMENTAL
+                ) {
+                    navigateToTopLevelDestination(Destination.EXPERIMENTAL)
+                    closeDrawer()
+                }
             }
         }
     }

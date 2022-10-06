@@ -1,10 +1,5 @@
 package ly.david.mbjc.data.network
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -36,12 +31,4 @@ internal interface MusicBrainzApiServiceImpl : MusicBrainzApiService {
             return retrofit.create(MusicBrainzApiService::class.java)
         }
     }
-}
-
-@InstallIn(SingletonComponent::class)
-@Module
-internal object MusicBrainzApiModule {
-    @Singleton
-    @Provides
-    fun provideMusicBrainzApi(): MusicBrainzApiService = MusicBrainzApiServiceImpl.create()
 }

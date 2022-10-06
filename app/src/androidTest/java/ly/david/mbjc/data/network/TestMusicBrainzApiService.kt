@@ -82,6 +82,10 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
         TODO("Not yet implemented")
     }
 
+    override suspend fun browseReleasesByLabel(labelId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun browseRecordingsByRelease(
         releaseId: String,
         limit: Int,

@@ -11,6 +11,7 @@
 /.idea/deploymentTargetDropDown.xml
 /.idea/gradle.xml
 /.idea/misc.xml
+/.idea/androidTestResultsUserPreferences.xml
 
 .DS_Store
 /build
