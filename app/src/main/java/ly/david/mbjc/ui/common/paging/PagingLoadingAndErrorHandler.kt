@@ -48,7 +48,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  * Handles loading and errors for paging screens.
  *
  * Also handles swipe to refresh. The source for [lazyPagingItems] is expected to implement refresh behaviour.
- * This can be done using one of [BrowseResourceRemoteMediator] or [LookupRelationsRemoteMediator].
+ * This can be done using one of [BrowseResourceRemoteMediator] or [LookupResourceRemoteMediator].
  *
  * @param modifier For lazy column containing [itemContent].
  * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.

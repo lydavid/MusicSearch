@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.release.tracks
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,9 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import coil.compose.SubcomposeAsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Scale
+import coil.size.Size
 import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.TrackUiModel
@@ -21,6 +28,7 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.useHttps
+import okhttp3.Headers
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.
@@ -37,6 +45,20 @@ internal fun TracksInReleaseScreen(
     lazyPagingItems: LazyPagingItems<UiModel>,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
+
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url?.useHttps())
+            .headers(Headers.headersOf("Cache-Control", "no-cache"))
+            .size(Size.ORIGINAL)
+            .scale(Scale.FIT)
+            .crossfade(true)
+            .build()
+    )
+
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyListState = lazyListState,
@@ -47,46 +69,29 @@ internal fun TracksInReleaseScreen(
             is Header -> {
                 if (!url.isNullOrEmpty()) {
 
-                    // TODO: seems like the reason why it's so slow loading the loading indicator is because of our
-                    //  structure. It's instant in our Experimental screen
-                    //  One solution is to load it outside of here, and pass either the loading indicator or
-                    //  painter here.
-                    SubcomposeAsyncImage(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentScale = ContentScale.FillWidth,
-                        model = url.useHttps(),
-                        contentDescription = "Cover art for [TODO]",
-                        loading = {
+                    when (painter.state) {
+                        is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
                             Box(
                                 modifier = Modifier
-                                    .height(250.dp)
+                                    .height(screenWidth)
                                     .fillMaxWidth(),
                                 contentAlignment = Alignment.Center
                             ) {
                                 CircularProgressIndicator()
                             }
                         }
-                    )
-
-//                    val painter: AsyncImagePainter = rememberAsyncImagePainter(
-//                        model = ImageRequest.Builder(LocalContext.current)
-//                            .data(url.useHttps())
-//                            .size(Size.ORIGINAL)
-//                            .crossfade(true)
-//                            .build()
-//                    )
-//                    if (painter.state is AsyncImagePainter.State.Loading) {
-//                        CircularProgressIndicator()
-//                    } else {
-//                        Image(
-////                        modifier = Modifier.size(250.dp),
-//                            painter = painter,
-//                            contentDescription = null,
-////                        contentScale = ContentScale.FillWidth,
-//                        )
-//
-//                    }
-
+                        is AsyncImagePainter.State.Success -> {
+                            Image(
+                                modifier = Modifier.fillMaxWidth(),
+                                painter = painter,
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                            )
+                        }
+                        is AsyncImagePainter.State.Error -> {
+                            // TODO: handle error
+                        }
+                    }
                 }
             }
             is TrackUiModel -> {

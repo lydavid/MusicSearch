@@ -78,27 +78,30 @@ internal fun ReleaseScreenScaffold(
 
     LaunchedEffect(key1 = releaseId) {
         viewModel.updateReleaseId(releaseId)
-        val release = viewModel.lookupRelease(releaseId)
 
+
+        val release = viewModel.lookupRelease(releaseId)
+        if (release.coverArtArchive.count > 0) {
+            covertArtUrl = viewModel.getCoverArtUrl()
+        }
         if (title.isNullOrEmpty()) {
             titleState = release.getNameWithDisambiguation()
+            subtitleState = "Release by [TODO]"
         }
-
-        subtitleState = "Release by [TODO]"
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
-                resourceId = release.id,
+                resourceId = releaseId,
                 resource = resource,
                 summary = titleState
             )
             recordedLookup = true
         }
-
-        if (release.coverArtArchive.count > 0) {
-            covertArtUrl = viewModel.getCoverArtUrl()
-        }
     }
+//    LaunchedEffect(key1 = releaseId) {
+//
+//    }
+
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -155,7 +158,6 @@ internal fun ReleaseScreenScaffold(
                 )
             }
             ReleaseTab.DETAILS -> {
-
 
             }
             ReleaseTab.RELATIONSHIPS -> {

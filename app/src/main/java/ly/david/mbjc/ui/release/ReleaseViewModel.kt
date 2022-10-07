@@ -2,10 +2,12 @@ package ly.david.mbjc.ui.release
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
+import androidx.paging.insertHeaderItem
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,21 +25,30 @@ import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
+import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.coverart.CoverArtArchiveApiService
 import ly.david.mbjc.data.network.coverart.getSmallCoverArtUrl
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.mbjc.data.persistence.release.CoverArtsRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
+import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
+import ly.david.mbjc.data.persistence.release.toMediumRoomModel
+import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
+import ly.david.mbjc.data.persistence.release.toTrackRoomModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
-    private val releaseRepository: ReleaseRepository,
+    private val musicBrainzApiService: MusicBrainzApiService,
+    private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     override val lookupHistoryDao: LookupHistoryDao,
@@ -55,8 +66,12 @@ internal class ReleaseViewModel @Inject constructor(
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
 
+    /**
+     * If title wasn't given, then we need to lookup for it.
+     */
     suspend fun lookupRelease(releaseId: String): Release {
-        return releaseRepository.lookupRelease(releaseId)
+        val roomRelease = releaseDao.getRelease(releaseId)
+        return roomRelease?.toReleaseUiModel() ?: musicBrainzApiService.lookupRelease(releaseId)
     }
 
     fun updateReleaseId(releaseId: String) {
@@ -67,12 +82,33 @@ internal class ReleaseViewModel @Inject constructor(
         this.query.value = query
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     val pagedTracks: Flow<PagingData<UiModel>> =
         paramState.filterNot { it.releaseId.isEmpty() }
             .flatMapLatest { (releaseId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
+                    remoteMediator = LookupResourceRemoteMediator(
+                        hasResourceBeenStored = {
+                            val roomRelease = releaseDao.getRelease(releaseId)
+                            roomRelease == null || roomRelease.formats != null && roomRelease.tracks != null
+                        },
+                        lookupResource = {
+                            val musicBrainzRelease = musicBrainzApiService.lookupRelease(releaseId)
+
+                            releaseDao.insert(musicBrainzRelease.toReleaseRoomModel())
+
+                            // TODO: doing these inserts will slow down loading the title. could we do these async?
+                            musicBrainzRelease.media?.forEach { medium ->
+                                val mediumId = mediumDao.insert(medium.toMediumRoomModel(musicBrainzRelease.id))
+
+                                trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
+                            }
+                        },
+                        deleteLocalResource = {
+                            // TODO:
+                        }
+                    ),
                     pagingSourceFactory = {
                         getPagingSource(releaseId, query)
                     }
@@ -90,9 +126,7 @@ internal class ReleaseViewModel @Inject constructor(
                         } else {
                             null
                         }
-                    }.insertSeparators { before: UiModel?, _: UiModel? ->
-                        if (before == null) Header else null
-                    }
+                    }.insertHeaderItem(item = Header)
                 }
             }
             .distinctUntilChanged()
@@ -111,6 +145,13 @@ internal class ReleaseViewModel @Inject constructor(
     }
 
     suspend fun getCoverArtUrl(): String? {
-        return coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl()
+        val url = releaseDao.getReleaseCoverArt(releaseId.value)
+        return if (url == null) {
+            val newUrl = coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl()
+            releaseDao.insertReleaseCoverArt(CoverArtsRoomModel(id = releaseId.value, newUrl.orEmpty()))
+            newUrl
+        } else {
+            url
+        }
     }
 }

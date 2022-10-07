@@ -20,7 +20,7 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toRelationUiModel
 import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.LookupRelationsRemoteMediator
+import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 /**
@@ -36,9 +36,9 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
         resourceId.flatMapLatest { resourceId ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
-                remoteMediator = LookupRelationsRemoteMediator(
-                    hasRelationsBeenStored = { hasRelationsBeenStored() },
-                    lookupRelations = { lookupRelationsAndStore(resourceId) },
+                remoteMediator = LookupResourceRemoteMediator(
+                    hasResourceBeenStored = { hasRelationsBeenStored() },
+                    lookupResource = { lookupRelationsAndStore(resourceId) },
                     deleteLocalResource = { deleteLocalRelations(resourceId) }
                 ),
                 pagingSourceFactory = {

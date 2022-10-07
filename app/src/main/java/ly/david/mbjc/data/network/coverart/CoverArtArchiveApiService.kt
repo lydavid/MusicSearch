@@ -10,11 +10,16 @@ import retrofit2.http.Path
 
 private const val MUSIC_BRAINZ_BASE_URL = "https://coverartarchive.org/"
 
+
 internal interface CoverArtArchiveApiService {
 
     @GET("release-group/{id}")
     suspend fun getReleaseGroupCoverArts(@Path("id") releaseGroupId: String): CoverArtsResponse
 
+    /**
+     * This is used to get the URLs for this release. So after calling this, we need to make another API call
+     * based on the retrieved URLs.
+     */
     @GET("release/{id}")
     suspend fun getReleaseCoverArts(@Path("id") releaseId: String): CoverArtsResponse
 

@@ -6,18 +6,16 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import ly.david.mbjc.data.persistence.RoomModel
 
-// TODO: can be generalized for tracks
-//  this works for anything that is "looked up" in a single call
 @OptIn(ExperimentalPagingApi::class)
-internal class LookupRelationsRemoteMediator<RM : RoomModel>(
-    private val hasRelationsBeenStored: suspend () -> Boolean,
-    private val lookupRelations: suspend () -> Unit,
+internal class LookupResourceRemoteMediator<RM : RoomModel>(
+    private val hasResourceBeenStored: suspend () -> Boolean,
+    private val lookupResource: suspend () -> Unit,
     private val deleteLocalResource: suspend () -> Unit
 ) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
         return try {
-            if (hasRelationsBeenStored()) {
+            if (hasResourceBeenStored()) {
                 InitializeAction.SKIP_INITIAL_REFRESH
             } else {
                 InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -33,11 +31,11 @@ internal class LookupRelationsRemoteMediator<RM : RoomModel>(
     ): MediatorResult {
 
         return try {
-            if (!hasRelationsBeenStored()) {
-                lookupRelations()
+            if (!hasResourceBeenStored()) {
+                lookupResource()
             } else if (loadType == LoadType.REFRESH) {
                 deleteLocalResource()
-                lookupRelations()
+                lookupResource()
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
