@@ -28,7 +28,6 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.useHttps
-import okhttp3.Headers
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.
@@ -46,24 +45,9 @@ internal fun TracksInReleaseScreen(
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
 
-//    val context = LocalContext.current
-
     val painter = rememberAsyncImagePainter(
-        // TODO: by adding this imageloader, its causes every read to fetch from network
-        //  that is because we're creating a new imageloader each time.
-        //  the default one isn't recreated
-        //  we probably want to create one with dagger and inject it
-//        imageLoader = ImageLoader.Builder(context)
-//            .diskCache {
-//                DiskCache.Builder()
-//                    .directory(context.cacheDir.resolve("image_cache"))
-//                    .build()
-//            }
-//            .build(),
         model = ImageRequest.Builder(LocalContext.current)
             .data(coverArtUrl.useHttps())
-            // Make sure we don't use okhttp cache.
-            .headers(Headers.headersOf("Cache-Control", "no-cache"))
             .size(Size.ORIGINAL)
             .scale(Scale.FIT)
             .crossfade(true)
