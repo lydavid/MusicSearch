@@ -6,6 +6,11 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import ly.david.mbjc.data.persistence.RoomModel
 
+/**
+ *
+ * When using [LoadType.REFRESH], [hasResourceBeenStored] does not need to be checked.
+ * A refresh load will always call [lookupResource].
+ */
 @OptIn(ExperimentalPagingApi::class)
 internal class LookupResourceRemoteMediator<RM : RoomModel>(
     private val hasResourceBeenStored: suspend () -> Boolean,

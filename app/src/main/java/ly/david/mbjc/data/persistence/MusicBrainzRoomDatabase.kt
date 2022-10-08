@@ -41,7 +41,6 @@ import ly.david.mbjc.data.persistence.recording.RecordingRoomModel
 import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
 import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
-import ly.david.mbjc.data.persistence.release.CoverArtsRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
@@ -56,7 +55,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 40,
+    version = 41,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -71,7 +70,6 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         // Relationship tables
         RelationRoomModel::class,
         HasRelationsRoomModel::class,
-        CoverArtsRoomModel::class,
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
         ReleasesLabels::class,
 
@@ -260,6 +258,32 @@ private val MIGRATION_36_37 = object : Migration(36, 37) {
 
 @DeleteColumn(tableName = "artists", columnName = "has_default_relations")
 private class DeleteHasRelationsFromArtist : AutoMigrationSpec
+
+private val MOVE_COVER_ART_URL_TO_RELEASES = object : Migration(40, 41) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+            ALTER TABLE releases
+            ADD COLUMN cover_art_url TEXT DEFAULT null
+        """
+        )
+        database.execSQL(
+            """
+                UPDATE releases
+                SET cover_art_url = (
+                    SELECT ca.small_url
+                    FROM cover_arts ca
+                    WHERE ca.resource_id = releases.id
+                )
+            """
+        )
+        database.execSQL(
+            """
+                DROP TABLE cover_arts
+            """
+        )
+    }
+}
 // endregion
 
 private const val DATABASE_NAME = "mbjc.db"
@@ -278,6 +302,7 @@ internal object DatabaseModule {
             .addMigrations(MIGRATION_32_33)
             .addMigrations(MIGRATION_34_35)
             .addMigrations(MIGRATION_36_37)
+            .addMigrations(MOVE_COVER_ART_URL_TO_RELEASES)
             .fallbackToDestructiveMigration()
             .build()
     }

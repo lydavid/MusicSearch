@@ -25,13 +25,11 @@ import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.ListSeparator
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.coverart.CoverArtArchiveApiService
 import ly.david.mbjc.data.network.coverart.getSmallCoverArtUrl
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.release.CoverArtsRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
@@ -71,7 +69,7 @@ internal class ReleaseViewModel @Inject constructor(
      */
     suspend fun lookupRelease(releaseId: String): Release {
         val roomRelease = releaseDao.getRelease(releaseId)
-        return roomRelease?.toReleaseUiModel() ?: musicBrainzApiService.lookupRelease(releaseId)
+        return roomRelease ?: musicBrainzApiService.lookupRelease(releaseId)
     }
 
     fun updateReleaseId(releaseId: String) {
@@ -89,16 +87,12 @@ internal class ReleaseViewModel @Inject constructor(
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = LookupResourceRemoteMediator(
-                        hasResourceBeenStored = {
-                            val roomRelease = releaseDao.getRelease(releaseId)
-                            roomRelease == null || roomRelease.formats != null && roomRelease.tracks != null
-                        },
+                        hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
                         lookupResource = {
                             val musicBrainzRelease = musicBrainzApiService.lookupRelease(releaseId)
 
                             releaseDao.insert(musicBrainzRelease.toReleaseRoomModel())
 
-                            // TODO: doing these inserts will slow down loading the title. could we do these async?
                             musicBrainzRelease.media?.forEach { medium ->
                                 val mediumId = mediumDao.insert(medium.toMediumRoomModel(musicBrainzRelease.id))
 
@@ -106,7 +100,8 @@ internal class ReleaseViewModel @Inject constructor(
                             }
                         },
                         deleteLocalResource = {
-                            // TODO:
+                            // TODO: refresh cover art as well?
+                            releaseDao.deleteMediaAndTracksInRelease(releaseId)
                         }
                     ),
                     pagingSourceFactory = {
@@ -132,6 +127,11 @@ internal class ReleaseViewModel @Inject constructor(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
+    private suspend fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
+        val roomRelease = releaseDao.getRelease(releaseId)
+        return roomRelease?.formats != null && roomRelease.tracks != null
+    }
+
     private fun getPagingSource(releaseId: String, query: String): PagingSource<Int, TrackRoomModel> = when {
         query.isEmpty() -> {
             trackDao.getTracksInRelease(releaseId)
@@ -144,14 +144,9 @@ internal class ReleaseViewModel @Inject constructor(
         }
     }
 
-    suspend fun getCoverArtUrl(): String? {
-        val url = releaseDao.getReleaseCoverArt(releaseId.value)
-        return if (url == null) {
-            val newUrl = coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl()
-            releaseDao.insertReleaseCoverArt(CoverArtsRoomModel(id = releaseId.value, newUrl.orEmpty()))
-            newUrl
-        } else {
-            url
-        }
+    suspend fun getCoverArtUrlFromNetwork(): String {
+        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl().orEmpty()
+        releaseDao.setReleaseCoverArtUrl(releaseId.value, url)
+        return url
     }
 }

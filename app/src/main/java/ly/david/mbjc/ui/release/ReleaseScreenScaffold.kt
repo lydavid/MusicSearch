@@ -29,6 +29,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
@@ -70,7 +71,7 @@ internal fun ReleaseScreenScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.TRACKS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var covertArtUrl: String? by rememberSaveable { mutableStateOf(null) }
+    var coverArtUrl: String by rememberSaveable { mutableStateOf("") }
 
     if (!title.isNullOrEmpty()) {
         titleState = title
@@ -79,15 +80,17 @@ internal fun ReleaseScreenScaffold(
     LaunchedEffect(key1 = releaseId) {
         viewModel.updateReleaseId(releaseId)
 
-
         val release = viewModel.lookupRelease(releaseId)
-        if (release.coverArtArchive.count > 0) {
-            covertArtUrl = viewModel.getCoverArtUrl()
+        if (release is ReleaseRoomModel && release.coverArtUrl != null) {
+            coverArtUrl = release.coverArtUrl
+        } else if (release.coverArtArchive.count > 0) {
+            coverArtUrl = viewModel.getCoverArtUrlFromNetwork()
         }
+
         if (title.isNullOrEmpty()) {
             titleState = release.getNameWithDisambiguation()
-            subtitleState = "Release by [TODO]"
         }
+        subtitleState = "Release by [TODO]"
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
@@ -101,7 +104,6 @@ internal fun ReleaseScreenScaffold(
 //    LaunchedEffect(key1 = releaseId) {
 //
 //    }
-
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -148,7 +150,7 @@ internal fun ReleaseScreenScaffold(
             ReleaseTab.TRACKS -> {
                 TracksInReleaseScreen(
                     modifier = Modifier.padding(innerPadding),
-                    url = covertArtUrl,
+                    coverArtUrl = coverArtUrl,
                     snackbarHostState = snackbarHostState,
                     lazyListState = tracksLazyListState,
                     lazyPagingItems = tracksLazyPagingItems,

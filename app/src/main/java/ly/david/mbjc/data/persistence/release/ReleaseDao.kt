@@ -1,8 +1,6 @@
 package ly.david.mbjc.data.persistence.release
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ly.david.mbjc.data.persistence.BaseDao
 
@@ -15,16 +13,29 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
 
     @Query(
         """
-            SELECT small_url
-            FROM cover_arts ca
-            INNER JOIN releases r
-            ON ca.resource_id = r.id
-            WHERE r.id = :releaseId
+        DELETE FROM releases WHERE id = :releaseId
         """
     )
-    abstract suspend fun getReleaseCoverArt(releaseId: String): String?
+    abstract suspend fun deleteReleaseById(releaseId: String)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertReleaseCoverArt(coverArtsRoomModel: CoverArtsRoomModel): Long
+    @Query(
+        """
+        DELETE FROM media WHERE id IN (
+        SELECT m.id
+        FROM media m
+        INNER JOIN releases r ON m.release_id = r.id
+        WHERE r.id = :releaseId
+        )
+        """
+    )
+    abstract suspend fun deleteMediaAndTracksInRelease(releaseId: String)
 
+    @Query(
+        """
+            UPDATE releases
+            SET cover_art_url = :coverArtUrl
+            WHERE id = :releaseId
+        """
+    )
+    abstract suspend fun setReleaseCoverArtUrl(releaseId: String, coverArtUrl: String)
 }

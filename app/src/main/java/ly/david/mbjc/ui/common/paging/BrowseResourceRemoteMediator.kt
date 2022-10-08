@@ -12,6 +12,9 @@ import ly.david.mbjc.data.persistence.RoomModel
 /**
  * Generic RemoteMediator for loading remote data into [RoomModel].
  *
+ * When using [LoadType.REFRESH], [getRemoteResourceCount] does not need to be checked.
+ * A refresh load will always call [browseResource].
+ *
  * @param getRemoteResourceCount Computes total number of this resource in MusicBrainz's server.
  *  If null, then we don't know yet.
  * @param getLocalResourceCount Computes total number of this resource in our local database.

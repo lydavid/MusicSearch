@@ -39,16 +39,30 @@ import okhttp3.Headers
 @Composable
 internal fun TracksInReleaseScreen(
     modifier: Modifier = Modifier,
-    url: String? = null,
+    coverArtUrl: String = "",
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<UiModel>,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
 
+//    val context = LocalContext.current
+
     val painter = rememberAsyncImagePainter(
+        // TODO: by adding this imageloader, its causes every read to fetch from network
+        //  that is because we're creating a new imageloader each time.
+        //  the default one isn't recreated
+        //  we probably want to create one with dagger and inject it
+//        imageLoader = ImageLoader.Builder(context)
+//            .diskCache {
+//                DiskCache.Builder()
+//                    .directory(context.cacheDir.resolve("image_cache"))
+//                    .build()
+//            }
+//            .build(),
         model = ImageRequest.Builder(LocalContext.current)
-            .data(url?.useHttps())
+            .data(coverArtUrl.useHttps())
+            // Make sure we don't use okhttp cache.
             .headers(Headers.headersOf("Cache-Control", "no-cache"))
             .size(Size.ORIGINAL)
             .scale(Scale.FIT)
@@ -67,7 +81,7 @@ internal fun TracksInReleaseScreen(
     ) { uiModel: UiModel? ->
         when (uiModel) {
             is Header -> {
-                if (!url.isNullOrEmpty()) {
+                if (coverArtUrl.isNotEmpty()) {
 
                     when (painter.state) {
                         is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {

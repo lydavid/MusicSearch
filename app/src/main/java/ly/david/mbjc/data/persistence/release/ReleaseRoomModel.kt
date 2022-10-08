@@ -11,24 +11,6 @@ import ly.david.mbjc.data.network.getFormatsForDisplay
 import ly.david.mbjc.data.network.getTracksForDisplay
 import ly.david.mbjc.data.persistence.RoomModel
 
-@Entity(tableName = "cover_arts")
-internal data class CoverArtsRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "resource_id")
-    val id: String,
-
-    /**
-     * Empty means we there were no url associated with this resource.
-     *
-     * We shouldn't even get to the point where we have to check that since we first check for whether a release
-     * has any cover arts through [coverArtArchive.count]
-     * There should not be an entry for resources without a cover art.
-     */
-    @ColumnInfo(name = "small_url")
-    val smallUrl: String,
-)
-
-
 @Entity(tableName = "releases")
 internal data class ReleaseRoomModel(
     @PrimaryKey
@@ -64,7 +46,16 @@ internal data class ReleaseRoomModel(
     val formats: String?,
 
     @ColumnInfo(name = "tracks")
-    val tracks: String?
+    val tracks: String?,
+
+    /**
+     * May be one of:
+     * - `null`: Have not requested cover art
+     * - Empty: Requested but did not find any
+     * - string url: URL to cover art
+     */
+    @ColumnInfo(name = "cover_art_url", defaultValue = "null")
+    val coverArtUrl: String? = null,
 ) : RoomModel, Release
 
 internal fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
