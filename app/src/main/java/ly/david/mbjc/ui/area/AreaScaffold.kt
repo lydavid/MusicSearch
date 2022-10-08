@@ -36,6 +36,7 @@ import ly.david.mbjc.ui.navigation.Destination
 @Composable
 internal fun AreaScaffold(
     areaId: String,
+    titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: AreaViewModel = hiltViewModel(),
@@ -43,7 +44,7 @@ internal fun AreaScaffold(
 
     val resource = MusicBrainzResource.AREA
 
-    var titleState by rememberSaveable { mutableStateOf("") }
+    var title by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
     val relationsLazyListState = rememberLazyListState()
@@ -53,16 +54,18 @@ internal fun AreaScaffold(
 
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
-    // TODO: how about not doing lookup api if we don't have it stored locally to avoid a redundant api call
-    LaunchedEffect(key1 = areaId) {
-        val area = viewModel.getArea(areaId)
-        titleState = area.getNameWithDisambiguation()
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        title = titleWithDisambiguation
+    }
+
+    LaunchedEffect(key1 = title) {
+        if (title.isEmpty()) return@LaunchedEffect
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
                 resourceId = areaId,
                 resource = resource,
-                summary = titleState
+                summary = title
             )
             recordedLookup = true
         }
@@ -72,7 +75,7 @@ internal fun AreaScaffold(
         topBar = {
             ScrollableTopAppBar(
                 resource = resource,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 dropdownMenuItems = {
                     DropdownMenuItem(
@@ -89,14 +92,16 @@ internal fun AreaScaffold(
         AreaRelationsScreen(
             modifier = Modifier.padding(innerPadding),
             areaId = areaId,
-//            onTitleUpdate = { title ->
-//                titleState = title
-//            },
             onItemClick = onItemClick,
             lazyListState = relationsLazyListState,
             lazyPagingItems = relationsLazyPagingItems,
             onPagedRelationsChange = {
                 pagedRelations = it
+            },
+            onAreaLookup = {
+                if (titleWithDisambiguation.isNullOrEmpty()) {
+                    title = it.getNameWithDisambiguation()
+                }
             }
         )
     }

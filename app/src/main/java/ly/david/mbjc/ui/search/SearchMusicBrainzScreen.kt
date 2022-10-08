@@ -51,6 +51,7 @@ import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.SeriesUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.WorkUiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.searchableResources
 import ly.david.mbjc.ui.area.AreaCard
@@ -173,52 +174,52 @@ internal fun SearchMusicBrainzScreen(
                 is ReleaseGroupUiModel -> {
                     // TODO: should see album type rather than year
                     ReleaseGroupCard(releaseGroup = uiModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, null)
+                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, getNameWithDisambiguation())
                     }
                 }
                 is ReleaseUiModel -> {
                     ReleaseCard(releaseUiModel = uiModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE, id, null)
+                        onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
                     }
                 }
                 is RecordingUiModel -> {
                     RecordingCard(recordingUiModel = uiModel) {
-                        onItemClick(Destination.LOOKUP_RECORDING, id, null)
+                        onItemClick(Destination.LOOKUP_RECORDING, id, getNameWithDisambiguation())
                     }
                 }
                 is WorkUiModel -> {
                     WorkCard(workUiModel = uiModel) {
-                        onItemClick(Destination.LOOKUP_WORK, id, null)
+                        onItemClick(Destination.LOOKUP_WORK, id, getNameWithDisambiguation())
                     }
                 }
                 is AreaUiModel -> {
                     AreaCard(area = uiModel) {
-                        onItemClick(Destination.LOOKUP_AREA, id, null)
+                        onItemClick(Destination.LOOKUP_AREA, id, getNameWithDisambiguation())
                     }
                 }
                 is PlaceUiModel -> {
                     PlaceCard(place = uiModel) {
-                        onItemClick(Destination.LOOKUP_PLACE, id, null)
+                        onItemClick(Destination.LOOKUP_PLACE, id, getNameWithDisambiguation())
                     }
                 }
                 is InstrumentUiModel -> {
                     InstrumentCard(instrument = uiModel) {
-                        onItemClick(Destination.LOOKUP_INSTRUMENT, id, null)
+                        onItemClick(Destination.LOOKUP_INSTRUMENT, id, getNameWithDisambiguation())
                     }
                 }
                 is LabelUiModel -> {
                     LabelCard(label = uiModel) {
-                        onItemClick(Destination.LOOKUP_LABEL, id, null)
+                        onItemClick(Destination.LOOKUP_LABEL, id, getNameWithDisambiguation())
                     }
                 }
                 is EventUiModel -> {
                     EventCard(event = uiModel) {
-                        onItemClick(Destination.LOOKUP_EVENT, id, null)
+                        onItemClick(Destination.LOOKUP_EVENT, id, getNameWithDisambiguation())
                     }
                 }
                 is SeriesUiModel -> {
                     SeriesCard(series = uiModel) {
-                        onItemClick(Destination.LOOKUP_SERIES, id, null)
+                        onItemClick(Destination.LOOKUP_SERIES, id, getNameWithDisambiguation())
                     }
                 }
                 is EndOfList -> {

@@ -56,8 +56,8 @@ internal data class TextRepresentation(
 )
 
 internal data class ReleaseEvent(
-    @Json(name = "date") val date: String? = null,
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,
+    @Json(name = "date") val date: String? = null,
     @Json(name = "type") val type: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
     @Json(name = "sort-name") val sortName: String? = null,

@@ -11,7 +11,7 @@ internal class EventViewModel @Inject constructor(
     relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
 
-    suspend fun lookupEvent(workId: String) = eventRepository.lookupEvent(workId).also {
+    suspend fun lookupEvent(eventId: String) = eventRepository.lookupEvent(eventId).also {
         this.resourceId.value = it.id
     }
 }

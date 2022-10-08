@@ -3,6 +3,8 @@ package ly.david.mbjc.ui.navigation
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,7 +24,7 @@ import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
-import ly.david.mbjc.ui.release.ReleaseScreenScaffold
+import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
@@ -69,8 +71,10 @@ internal fun NavigationGraph(
             }
         }
 
-        val onAreaClick: (String) -> Unit = { recordingId ->
-            navController.navigate("${Destination.LOOKUP_AREA.route}/$recordingId") {
+        val onAreaClick: (String, String?) -> Unit = { areaId, title ->
+            var route = "${Destination.LOOKUP_AREA.route}/$areaId"
+            if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
+            navController.navigate(route) {
                 restoreState = true
             }
         }
@@ -125,7 +129,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
                 Destination.LOOKUP_RELEASE -> onReleaseClick(id, title)
                 Destination.LOOKUP_RECORDING -> onRecordingClick(id)
-                Destination.LOOKUP_AREA -> onAreaClick(id)
+                Destination.LOOKUP_AREA -> onAreaClick(id, title)
                 Destination.LOOKUP_PLACE -> onPlaceClick(id)
                 Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
                 Destination.LOOKUP_LABEL -> onLabelClick(id)
@@ -247,13 +251,13 @@ internal fun NavigationGraph(
                     uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE.resourceName}/{$ID}?$TITLE={$TITLE}"
                 }
             )
-        ) { entry ->
+        ) { entry: NavBackStackEntry ->
             val releaseId = entry.arguments?.getString(ID) ?: return@composable
             val title = entry.arguments?.getString(TITLE)
-            ReleaseScreenScaffold(
+            ReleaseScaffold(
                 releaseId = releaseId,
                 onBack = navController::navigateUp,
-                title = title,
+                titleWithDisambiguation = title,
                 onItemClick = onLookupItemClick,
             )
         }
@@ -300,22 +304,13 @@ internal fun NavigationGraph(
             )
         }
 
-        composable(
-            "${Destination.LOOKUP_AREA.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.AREA.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val areaId = entry.arguments?.getString(ID) ?: return@composable
+        addResourceScreen(
+            resource = MusicBrainzResource.AREA,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
             AreaScaffold(
-                areaId = areaId,
+                areaId = resourceId,
+                titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )
@@ -470,5 +465,34 @@ internal fun NavigationGraph(
         ) {
             ExperimentalScreen()
         }
+    }
+}
+
+private fun NavGraphBuilder.addResourceScreen(
+    resource: MusicBrainzResource,
+    deeplinkSchema: String,
+    scaffold: @Composable (resourceId: String, titleWithDisambiguation: String?) -> Unit
+) {
+    composable(
+        "${resource.toDestination().route}/{$ID}?$TITLE={$TITLE}",
+        arguments = listOf(
+            navArgument(ID) {
+                type = NavType.StringType // Make argument type safe
+            },
+            navArgument(TITLE) {
+                nullable = true
+                defaultValue = null
+                type = NavType.StringType
+            },
+        ),
+        deepLinks = listOf(
+            navDeepLink {
+                uriPattern = "$deeplinkSchema://${resource.resourceName}/{$ID}?$TITLE={$TITLE}"
+            }
+        )
+    ) { entry: NavBackStackEntry ->
+        val resourceId = entry.arguments?.getString(ID) ?: return@composable
+        val title = entry.arguments?.getString(TITLE)
+        scaffold(resourceId, title)
     }
 }

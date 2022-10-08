@@ -54,10 +54,10 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ReleaseScreenScaffold(
+internal fun ReleaseScaffold(
     releaseId: String,
     onBack: () -> Unit,
-    title: String? = null,
+    titleWithDisambiguation: String? = null,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: ReleaseViewModel = hiltViewModel()
 ) {
@@ -66,15 +66,15 @@ internal fun ReleaseScreenScaffold(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var titleState by rememberSaveable { mutableStateOf("") }
+    var title by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.TRACKS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var coverArtUrl: String by rememberSaveable { mutableStateOf("") }
 
-    if (!title.isNullOrEmpty()) {
-        titleState = title
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        title = titleWithDisambiguation
     }
 
     LaunchedEffect(key1 = releaseId) {
@@ -87,8 +87,8 @@ internal fun ReleaseScreenScaffold(
             coverArtUrl = viewModel.getCoverArtUrlFromNetwork()
         }
 
-        if (title.isNullOrEmpty()) {
-            titleState = release.getNameWithDisambiguation()
+        if (titleWithDisambiguation.isNullOrEmpty()) {
+            title = release.getNameWithDisambiguation()
         }
         subtitleState = "Release by [TODO]"
 
@@ -96,7 +96,7 @@ internal fun ReleaseScreenScaffold(
             viewModel.recordLookupHistory(
                 resourceId = releaseId,
                 resource = resource,
-                summary = titleState
+                summary = title
             )
             recordedLookup = true
         }
@@ -110,7 +110,7 @@ internal fun ReleaseScreenScaffold(
         topBar = {
             TopAppBarWithSearch(
                 resource = resource,
-                title = titleState,
+                title = title,
                 subtitle = subtitleState,
                 onBack = onBack,
                 dropdownMenuItems = {

@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.domain.RelationUiModel
+import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
@@ -36,7 +37,7 @@ internal fun RelationCard(
         if (destination == Destination.LOOKUP_URL) {
             context.openUrl(relation.name)
         } else {
-            onItemClick(destination, relation.linkedResourceId, relation.name)
+            onItemClick(destination, relation.linkedResourceId, relation.getNameWithDisambiguation())
         }
     }) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {

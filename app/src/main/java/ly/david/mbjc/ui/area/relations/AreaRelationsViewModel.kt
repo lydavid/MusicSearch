@@ -1,7 +1,10 @@
 package ly.david.mbjc.ui.area.relations
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.mbjc.data.Area
 import ly.david.mbjc.data.network.Lookup
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.area.AreaDao
@@ -17,6 +20,9 @@ internal class AreaRelationsViewModel @Inject constructor(
     private val areaDao: AreaDao,
     private val relationDao: RelationDao,
 ) : RelationViewModel(relationDao) {
+
+    var area: MutableState<Area?> = mutableStateOf(null)
+
     override suspend fun lookupRelationsAndStore(resourceId: String) {
 
         val areaMusicBrainzModel = musicBrainzApiService.lookupArea(
@@ -24,7 +30,10 @@ internal class AreaRelationsViewModel @Inject constructor(
             include = Lookup.INC_ALL_RELATIONS
         )
 
-        // Also store this Area.
+        area.value = areaMusicBrainzModel
+
+        // Store this Area.
+        // We null check because this function is expected to be called again on refresh.
         if (areaDao.getArea(resourceId) == null) {
             areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
         }

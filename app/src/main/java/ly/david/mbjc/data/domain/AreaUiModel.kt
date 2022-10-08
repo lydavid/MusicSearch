@@ -7,9 +7,9 @@ import ly.david.mbjc.data.network.AreaMusicBrainzModel
 internal data class AreaUiModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String?,
-    override val type: String?,
-    override val lifeSpan: LifeSpan?
+    override val disambiguation: String? = "",
+    override val type: String? = "",
+    override val lifeSpan: LifeSpan? = null
 ) : Area, UiModel()
 
 internal fun AreaMusicBrainzModel.toAreaUiModel() =
