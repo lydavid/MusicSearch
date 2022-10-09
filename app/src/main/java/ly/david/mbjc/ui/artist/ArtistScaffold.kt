@@ -116,9 +116,6 @@ internal fun ArtistScaffold(
                         )
                     }
                 },
-                subtitleDropdownMenuItems = {
-                    // TODO: it was crashing without this...
-                },
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it

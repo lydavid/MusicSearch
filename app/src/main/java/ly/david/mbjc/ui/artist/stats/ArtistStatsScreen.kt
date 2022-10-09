@@ -25,6 +25,7 @@ import ly.david.mbjc.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupTypeCount
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -97,28 +98,10 @@ internal fun ArtistStatsScreen(
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.padding(8.dp))
-            ListSeparatorHeader(text = stringResource(id = R.string.relationships))
-
-
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                style = TextStyles.getCardBodyTextStyle(),
-                text = if (totalRelations == null) {
-                    "No relationship stats available. Visit Relationships tab to download this artist's relationships."
-                } else {
-                    "Total number of relationships: $totalRelations"
-                }
-            )
-        }
-        items(relationTypeCounts) {
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                style = TextStyles.getCardBodyTextStyle(),
-                text = "${it.linkedResource.displayText}: ${it.count}"
-            )
-        }
+        addRelationshipsSection(
+            totalRelations = totalRelations,
+            relationTypeCounts = relationTypeCounts
+        )
 
         item {
             Spacer(modifier = Modifier.padding(8.dp))
@@ -147,38 +130,6 @@ private fun Preview() {
                     RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, 17),
                     RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, 397),
                 )
-            )
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun NoRelations() {
-    PreviewTheme {
-        Surface {
-            ArtistStatsScreen(
-                totalRemote = 0,
-                totalLocal = 0,
-                releaseGroupTypeCounts = listOf(),
-                totalRelations = 0,
-                relationTypeCounts = listOf()
-            )
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun NullRelations() {
-    PreviewTheme {
-        Surface {
-            ArtistStatsScreen(
-                totalRemote = 0,
-                totalLocal = 0,
-                releaseGroupTypeCounts = listOf(),
-                totalRelations = null,
-                relationTypeCounts = listOf()
             )
         }
     }

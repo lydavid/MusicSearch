@@ -38,6 +38,7 @@ internal abstract class RelationDao : BaseDao<RelationRoomModel> {
     )
     abstract suspend fun deleteRelationsByResource(resourceId: String)
 
+    // TODO: it never actually returns null
     /**
      * Null means we have not tried fetching its relationships.
      */
