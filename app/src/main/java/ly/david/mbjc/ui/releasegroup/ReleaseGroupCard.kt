@@ -15,7 +15,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.getYear
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -52,7 +54,7 @@ internal fun ReleaseGroupCard(
 
             if (releaseGroup.artistCredits.isNotEmpty()) {
                 Text(
-                    text = releaseGroup.artistCredits,
+                    text = releaseGroup.artistCredits.getDisplayNames(),
                     modifier = Modifier.fillMaxWidth(),
                     style = TextStyles.getCardBodyTextStyle()
                 )
@@ -66,7 +68,21 @@ private val testReleaseGroup = ReleaseGroupUiModel(
     name = "欠けた心象、世のよすが",
     primaryType = "EP",
     firstReleaseDate = "2021-09-08",
-    artistCredits = "Some artist feat. some other artist"
+    artistCredits = listOf(
+        ReleaseGroupArtistCreditRoomModel(
+            releaseGroupId = "1",
+            artistId = "2",
+            name = "Some artist",
+            joinPhrase = " feat. ",
+            order = 0
+        ),
+        ReleaseGroupArtistCreditRoomModel(
+            releaseGroupId = "1",
+            artistId = "3",
+            name = "some other artist",
+            order = 1
+        )
+    )
 )
 
 @Preview

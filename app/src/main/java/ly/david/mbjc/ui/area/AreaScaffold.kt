@@ -77,7 +77,7 @@ internal fun AreaScaffold(
                 resource = resource,
                 title = title,
                 onBack = onBack,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {

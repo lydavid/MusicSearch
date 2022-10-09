@@ -14,6 +14,9 @@ internal abstract class LookupHistoryDao : BaseDao<LookupHistory> {
     @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")
     abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistory>
 
+    // TODO: can't search "release group", need to use "release_group" or "release-group"
+    //  rather than having the user type "artist" to filter artist, use pills or something
+    //  reserving text search for title only
     @Transaction
     @Query(
         """

@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.common.topappbar
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
@@ -58,7 +57,8 @@ internal fun ScrollableTopAppBar(
     title: String,
     subtitle: String = "",
     mainAction: @Composable (() -> Unit)? = null,
-    dropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
     // TODO: Can we split these concerns somehow?
     tabsTitles: List<String> = listOf(),
@@ -72,7 +72,8 @@ internal fun ScrollableTopAppBar(
                 TitleBar(
                     resource = resource,
                     title = title,
-                    subtitle = subtitle
+                    subtitle = subtitle,
+                    subtitleDropdownMenuItems = subtitleDropdownMenuItems
                 )
             },
             navigationIcon = {
@@ -92,7 +93,7 @@ internal fun ScrollableTopAppBar(
             },
             actions = {
                 mainAction?.invoke()
-                OverflowMenu(dropdownMenuItems = dropdownMenuItems)
+                OverflowMenu(overflowDropdownMenuItems = overflowDropdownMenuItems)
             }
         )
 
@@ -109,7 +110,20 @@ private fun TitleBar(
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {
+
+    // TODO: can we generalize adding a dropdown menu to a clickable composable?
+    //  this was copy/pasted from OverflowMenu
+    var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    val scope = remember {
+        object : OverflowMenuScope {
+            override fun closeMenu() {
+                showMenu = false
+            }
+        }
+    }
 
     var showLoading by rememberSaveable { mutableStateOf(false) }
 
@@ -120,6 +134,20 @@ private fun TitleBar(
         } else {
             false
         }
+    }
+
+    if (subtitleDropdownMenuItems != null) {
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = { showMenu = false },
+            content = {
+                // We lose out on the ability to control these items within a Column,
+                // but now each item can close itself.
+                Column {
+                    subtitleDropdownMenuItems.invoke(scope)
+                }
+            }
+        )
     }
 
     if (showLoading) {
@@ -153,8 +181,7 @@ private fun TitleBar(
                         // MB website has "(see all versions of this release, 6 available)" to allow up navigation
                         // to release group screen.
                         .clickable {
-                            // TODO: clicking this should show a dialog, allowing user to deeplink to this screen
-                            Log.d("Remove This", "ScrollableTopAppBar: hello from subtitle")
+                            showMenu = !showMenu
                         }
                 )
             }
@@ -164,7 +191,7 @@ private fun TitleBar(
 
 @Composable
 private fun OverflowMenu(
-    dropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null
+    overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null
 ) {
     var showMenu by rememberSaveable { mutableStateOf(false) }
 
@@ -176,7 +203,7 @@ private fun OverflowMenu(
         }
     }
 
-    if (dropdownMenuItems != null) {
+    if (overflowDropdownMenuItems != null) {
         IconButton(onClick = { showMenu = !showMenu }) {
             Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
         }
@@ -187,7 +214,7 @@ private fun OverflowMenu(
                 // We lose out on the ability to control these items within a Column,
                 // but now each item can close itself.
                 Column {
-                    dropdownMenuItems.invoke(scope)
+                    overflowDropdownMenuItems.invoke(scope)
                 }
             }
         )

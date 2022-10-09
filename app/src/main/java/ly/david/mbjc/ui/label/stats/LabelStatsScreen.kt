@@ -27,7 +27,7 @@ internal fun LabelStatsScreen(
     viewModel: LabelStatsViewModel = hiltViewModel()
 ) {
 
-    var totalRelations by rememberSaveable { mutableStateOf(0) }
+    var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
     var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = totalRelations) {

@@ -2,8 +2,8 @@ package ly.david.mbjc.data.domain
 
 import androidx.compose.runtime.Immutable
 import ly.david.mbjc.data.ReleaseGroup
-import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
 
@@ -23,9 +23,7 @@ internal data class ReleaseGroupUiModel(
     // Since this is just a list of primitives, we will mark this class immutable.
     override val secondaryTypes: List<String>? = null,
 
-    // TODO: if we keep it as MusicBrainzArtistCredit, then we can deeplink to each artist's page from a dropdown
-    //  if we join table with artists, we could also get the artist object
-    val artistCredits: String = ""
+    val artistCredits: List<ReleaseGroupArtistCreditRoomModel> = listOf()
 ): UiModel(), ReleaseGroup
 
 internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
@@ -38,7 +36,7 @@ internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupU
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
 
-        artistCredits = artistCredits.getDisplayNames()
+        artistCredits = getRoomReleaseGroupArtistCredit()
     )
 }
 
@@ -52,6 +50,6 @@ internal fun ReleaseGroupRoomModel.toReleaseGroupUiModel(releaseGroupArtistCredi
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
 
-        artistCredits = releaseGroupArtistCreditRoomModels.getDisplayNames()
+        artistCredits = releaseGroupArtistCreditRoomModels
     )
 }

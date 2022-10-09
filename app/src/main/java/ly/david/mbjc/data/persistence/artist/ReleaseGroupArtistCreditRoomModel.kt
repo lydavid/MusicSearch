@@ -40,7 +40,7 @@ internal data class ReleaseGroupArtistCreditRoomModel(
     override val name: String,
 
     @ColumnInfo(name = "join_phrase")
-    override val joinPhrase: String?,
+    override val joinPhrase: String? = null,
 
     @ColumnInfo(name = "order")
     val order: Int

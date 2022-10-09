@@ -26,10 +26,13 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.mbjc.R
+import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -65,13 +68,16 @@ internal fun ReleaseGroupScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     var filterText by rememberSaveable { mutableStateOf("") }
 
+    var releaseGroup: ReleaseGroupUiModel? by remember { mutableStateOf(null) }
+
+
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.updateReleaseGroupId(releaseGroupId)
         try {
-            val releaseGroup = viewModel.lookupReleaseGroup(releaseGroupId)
-            title = releaseGroup.getNameWithDisambiguation()
-            subtitle = "Release Group by ${releaseGroup.artistCredits}"
-
+            val releaseGroupUiModel = viewModel.lookupReleaseGroup(releaseGroupId)
+            title = releaseGroupUiModel.getNameWithDisambiguation()
+            subtitle = "Release Group by ${releaseGroupUiModel.artistCredits.getDisplayNames()}"
+            releaseGroup = releaseGroupUiModel
         } catch (e: Exception) {
             title = "[Release group lookup failed]"
             subtitle = "[error]"
@@ -93,6 +99,18 @@ internal fun ReleaseGroupScaffold(
                             context.lookupInBrowser(resource, releaseGroupId)
                             closeMenu()
                         })
+                },
+                subtitleDropdownMenuItems = {
+                    releaseGroup?.artistCredits?.forEach { artistCredit ->
+                        DropdownMenuItem(
+                            text = { Text(artistCredit.name) },
+                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
+                            onClick = {
+                                // Don't pass a title, because the name used here may not be the name used for the
+                                // the artist's page.
+                                onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
+                            })
+                    }
                 },
                 tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

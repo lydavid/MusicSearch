@@ -36,7 +36,7 @@ internal fun RecordingScaffold(
                 title = titleState,
                 subtitle = subtitleState,
                 onBack = onBack,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text("Open in browser") },
                         onClick = {

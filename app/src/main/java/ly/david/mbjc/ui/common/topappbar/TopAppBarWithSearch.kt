@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.common.topappbar
 
-import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -33,8 +32,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
@@ -46,6 +45,7 @@ internal fun TopAppBarWithSearch(
     subtitle: String = "",
     showSearchIcon: Boolean = true,
     dropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     searchText: String = "",
     onSearchTextChange: (String) -> Unit = {},
     tabsTitles: List<String> = listOf(),
@@ -145,7 +145,8 @@ internal fun TopAppBarWithSearch(
                     }
                 }
             },
-            dropdownMenuItems = dropdownMenuItems,
+            overflowDropdownMenuItems = dropdownMenuItems,
+            subtitleDropdownMenuItems = subtitleDropdownMenuItems,
             tabsTitles = tabsTitles,
             selectedTabIndex = selectedTabIndex,
             onSelectTabIndex = onSelectTabIndex
@@ -153,10 +154,9 @@ internal fun TopAppBarWithSearch(
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
-fun My() {
+private fun Preview() {
     PreviewTheme {
         Surface {
             TopAppBarWithSearch(title = "Title")

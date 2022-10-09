@@ -34,7 +34,7 @@ internal fun InstrumentScaffold(
                 resource = MusicBrainzResource.INSTRUMENT,
                 title = titleState,
                 onBack = onBack,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text("Open in browser") },
                         onClick = {

@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.artist.stats
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.R
@@ -26,6 +24,7 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupTypeCount
 import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -39,7 +38,7 @@ internal fun ArtistStatsScreen(
     var totalLocal by rememberSaveable { mutableStateOf(0) }
     var releaseGroupTypeCounts by rememberSaveable { mutableStateOf(listOf<ReleaseGroupTypeCount>()) }
 
-    var totalRelations by rememberSaveable { mutableStateOf(0) }
+    var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
     var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = totalRemote, key2 = totalLocal) {
@@ -69,7 +68,7 @@ internal fun ArtistStatsScreen(
     totalRemote: Int,
     totalLocal: Int,
     releaseGroupTypeCounts: List<ReleaseGroupTypeCount>,
-    totalRelations: Int,
+    totalRelations: Int?,
     relationTypeCounts: List<RelationTypeCount>
 ) {
     LazyColumn(
@@ -101,10 +100,16 @@ internal fun ArtistStatsScreen(
         item {
             Spacer(modifier = Modifier.padding(8.dp))
             ListSeparatorHeader(text = stringResource(id = R.string.relationships))
+
+
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 style = TextStyles.getCardBodyTextStyle(),
-                text = "Total number of relationships: $totalRelations"
+                text = if (totalRelations == null) {
+                    "No relationship stats available. Visit Relationships tab to download this artist's relationships."
+                } else {
+                    "Total number of relationships: $totalRelations"
+                }
             )
         }
         items(relationTypeCounts) {
@@ -121,8 +126,7 @@ internal fun ArtistStatsScreen(
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
 private fun Preview() {
     PreviewTheme {
@@ -132,13 +136,49 @@ private fun Preview() {
                 totalLocal = 279,
                 releaseGroupTypeCounts = listOf(
                     ReleaseGroupTypeCount(primaryType = "Album", count = 13),
-                    ReleaseGroupTypeCount(primaryType = "Album", secondaryTypes = listOf("Compilation", "Demo"), count = 1),
+                    ReleaseGroupTypeCount(
+                        primaryType = "Album",
+                        secondaryTypes = listOf("Compilation", "Demo"),
+                        count = 1
+                    ),
                 ),
                 totalRelations = 696,
                 relationTypeCounts = listOf(
                     RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, 17),
                     RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, 397),
                 )
+            )
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun NoRelations() {
+    PreviewTheme {
+        Surface {
+            ArtistStatsScreen(
+                totalRemote = 0,
+                totalLocal = 0,
+                releaseGroupTypeCounts = listOf(),
+                totalRelations = 0,
+                relationTypeCounts = listOf()
+            )
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun NullRelations() {
+    PreviewTheme {
+        Surface {
+            ArtistStatsScreen(
+                totalRemote = 0,
+                totalLocal = 0,
+                releaseGroupTypeCounts = listOf(),
+                totalRelations = null,
+                relationTypeCounts = listOf()
             )
         }
     }

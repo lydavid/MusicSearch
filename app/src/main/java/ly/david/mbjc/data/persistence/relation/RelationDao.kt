@@ -38,18 +38,17 @@ internal abstract class RelationDao : BaseDao<RelationRoomModel> {
     )
     abstract suspend fun deleteRelationsByResource(resourceId: String)
 
+    /**
+     * Null means we have not tried fetching its relationships.
+     */
     @Query(
         """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
+            SELECT COUNT(*)
             FROM relations
             WHERE resource_id = :resourceId
-            ),
-            0
-        ) AS count
     """
     )
-    abstract suspend fun getNumberOfRelationsByResource(resourceId: String): Int
+    abstract suspend fun getNumberOfRelationsByResource(resourceId: String): Int?
 
     @Query(
         """

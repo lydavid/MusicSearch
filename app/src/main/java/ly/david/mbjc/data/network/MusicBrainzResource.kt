@@ -2,6 +2,7 @@ package ly.david.mbjc.data.network
 
 import com.squareup.moshi.Json
 
+// TODO: displayText should be translated
 /**
  * These are resources available for lookup requests. Many of them are query-able as well.
  *
