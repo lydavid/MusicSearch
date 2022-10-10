@@ -16,4 +16,13 @@ internal abstract class MediumDao : BaseDao<MediumRoomModel> {
         WHERE t.id = :trackId
     """)
     abstract suspend fun getMediumForTrack(trackId: String): MediumRoomModel
+
+    @Transaction
+    @Query("""
+        SELECT m.*
+        FROM media m
+        INNER JOIN tracks t ON t.medium_id = m.id
+        WHERE t.id = :trackId
+    """)
+    abstract suspend fun getMediaCountForRelease(trackId: String): MediumRoomModel
 }

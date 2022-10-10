@@ -2,21 +2,21 @@
 
 ## Implemented features
 
-| Resource | Search | Lookup | Browse by |
-|---|---|---|---|
-| area | x | x |
-| artist | x | x |
-| event | x | x |
-| genre | | x |
-| instrument | x | x |
-| label | x | x |
-| place | x | x |
-| recording | x | x |
-| release | x | x | label, release-group |
-| release-group | x | x | artist |
-| series | x | WIP |
-| work | x | x |
-| url | | x |
+| Resource      | Search | Lookup | Browse by            |
+|---------------|--------|--------|----------------------|
+| area          | x      | x      |
+| artist        | x      | x      |
+| event         | x      | x      |
+| genre         |        | x      |
+| instrument    | x      | x      |
+| label         | x      | x      |
+| place         | x      | x      |
+| recording     | x      | x      |
+| release       | x      | x      | label, release-group |
+| release-group | x      | x      | artist               |
+| series        | x      | WIP    |
+| work          | x      | x      |
+| url           |        | x      |
 
 Implemented search means we can query for that resource using text.
 

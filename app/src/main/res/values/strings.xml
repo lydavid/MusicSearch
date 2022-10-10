@@ -14,5 +14,6 @@
     <string name="releases">Releases</string>
     <string name="relationships">Relationships</string>
     <string name="tracks">Tracks</string>
+    <string name="format">Format</string>
     <string name="stats">Stats</string>
 </resources>

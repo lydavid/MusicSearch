@@ -16,6 +16,8 @@ internal data class ReleaseMusicBrainzModel(
     @Json(name = "status") override val status: String? = null,
     @Json(name = "barcode") override val barcode: String? = null,
     @Json(name = "status-id") override val statusId: String? = null,
+
+    // TODO: rather than using this field, use the first release-event
     @Json(name = "country") override val countryCode: String? = null,
     @Json(name = "packaging") override val packaging: String? = null,
     @Json(name = "packaging-id") override val packagingId: String? = null,

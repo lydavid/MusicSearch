@@ -37,6 +37,7 @@ import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.release.relations.ReleaseRelationsScreen
+import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
 private enum class ReleaseTab(@StringRes val titleRes: Int) {
@@ -195,7 +196,10 @@ internal fun ReleaseScaffold(
                 )
             }
             ReleaseTab.STATS -> {
-
+                ReleaseStatsScreen(
+                    releaseId = releaseId,
+                    releaseUiModel = release
+                )
             }
         }
     }

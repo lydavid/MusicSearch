@@ -22,22 +22,27 @@ internal data class ReleaseRoomModel(
     override val disambiguation: String,
     @ColumnInfo(name = "date")
     override val date: String?,
-    @ColumnInfo(name = "status")
-    override val status: String?,
     @ColumnInfo(name = "barcode")
     override val barcode: String?,
-    @ColumnInfo(name = "status_id")
-    override val statusId: String?,
-    @ColumnInfo(name = "country_code")
-    override val countryCode: String?,
-    @ColumnInfo(name = "packaging")
-    override val packaging: String?,
-    @ColumnInfo(name = "packaging_id")
-    override val packagingId: String?,
     @ColumnInfo(name = "asin")
     override val asin: String?,
     @ColumnInfo(name = "quality")
     override val quality: String?,
+
+    @ColumnInfo(name = "country_code")
+    override val countryCode: String?,
+
+    // TODO: separate table
+    @ColumnInfo(name = "status")
+    override val status: String?,
+    @ColumnInfo(name = "status_id")
+    override val statusId: String?,
+
+    // TODO: separate table
+    @ColumnInfo(name = "packaging")
+    override val packaging: String?,
+    @ColumnInfo(name = "packaging_id")
+    override val packagingId: String?,
 
     @Embedded
     override val coverArtArchive: CoverArtArchive,
