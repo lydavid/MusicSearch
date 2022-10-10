@@ -56,7 +56,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 43,
+    version = 44,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -115,6 +115,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 38, to = 39),
         AutoMigration(from = 39, to = 40),
         AutoMigration(from = 41, to = 43),
+//        AutoMigration(from = 43, to = 44),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -287,6 +288,34 @@ private val MOVE_COVER_ART_URL_TO_RELEASES = object : Migration(40, 41) {
         )
     }
 }
+
+private val ADD_FK_TO_RELEASES_RELEASE_GROUPS = object : Migration(43, 44) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS new_rrg (`release_id` TEXT NOT NULL, `release_group_id` TEXT NOT NULL,
+            PRIMARY KEY(`release_id`, `release_group_id`), FOREIGN KEY(`release_id`) REFERENCES `releases`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+        """
+        )
+        database.execSQL(
+            """
+                INSERT INTO new_rrg (release_id, release_group_id)
+                SELECT release_id, release_group_id
+                FROM releases_release_groups
+            """
+        )
+        database.execSQL(
+            """
+                DROP TABLE releases_release_groups
+            """
+        )
+        database.execSQL(
+            """
+                ALTER TABLE new_rrg RENAME TO releases_release_groups
+            """
+        )
+    }
+}
 // endregion
 
 private const val DATABASE_NAME = "mbjc.db"
@@ -306,6 +335,7 @@ internal object DatabaseModule {
             .addMigrations(MIGRATION_34_35)
             .addMigrations(MIGRATION_36_37)
             .addMigrations(MOVE_COVER_ART_URL_TO_RELEASES)
+            .addMigrations(ADD_FK_TO_RELEASES_RELEASE_GROUPS)
             .fallbackToDestructiveMigration()
             .build()
     }

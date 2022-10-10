@@ -43,6 +43,16 @@ internal abstract class ReleasesReleaseGroupsDao : BaseDao<ReleasesReleaseGroups
 
     @Query(
         """
+            SELECT rrg.release_group_id
+            FROM releases r
+            INNER JOIN releases_release_groups rrg ON r.id = rrg.release_id
+            WHERE r.id = :releaseId
+        """
+    )
+    abstract suspend fun getReleaseReleaseGroup(releaseId: String): String?
+
+    @Query(
+        """
         DELETE FROM releases WHERE id IN (
         $SELECT_RELEASES_ID_IN_RELEASE_GROUP
         )

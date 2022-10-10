@@ -22,18 +22,6 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
 
     @Query(
         """
-        DELETE FROM media WHERE id IN (
-        SELECT m.id
-        FROM media m
-        INNER JOIN releases r ON m.release_id = r.id
-        WHERE r.id = :releaseId
-        )
-        """
-    )
-    abstract suspend fun deleteMediaAndTracksInRelease(releaseId: String)
-
-    @Query(
-        """
             UPDATE releases
             SET cover_art_url = :coverArtUrl
             WHERE id = :releaseId

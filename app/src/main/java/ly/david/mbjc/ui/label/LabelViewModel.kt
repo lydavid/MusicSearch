@@ -84,7 +84,7 @@ internal class LabelViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(labelId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toReleaseUiModel(listOf())
+                        it.toReleaseUiModel()
                     }
                 }
             }

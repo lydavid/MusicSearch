@@ -27,7 +27,8 @@ internal data class ReleaseUiModel(
 
     val formats: String? = null,
     val tracks: String? = null,
-    val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf()
+    val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf(),
+    val releaseGroupId: String? = null
 ) : UiModel(), Release
 
 internal fun ReleaseMusicBrainzModel.toReleaseUiModel() =
@@ -46,26 +47,36 @@ internal fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         asin = asin,
         quality = quality,
         coverArtUrl = null,
-        artistCredits = getReleaseArtistCreditRoomModels()
+        artistCredits = getReleaseArtistCreditRoomModels(),
+        releaseGroupId = releaseGroup?.id
     )
 
-internal fun ReleaseRoomModel.toReleaseUiModel(releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel>) =
-    ReleaseUiModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        date = date,
-        status = status,
-        barcode = barcode,
-        statusId = statusId,
-        countryCode = countryCode,
-        packaging = packaging,
-        packagingId = packagingId,
-        asin = asin,
-        quality = quality,
-        coverArtArchive = coverArtArchive,
-        formats = formats,
-        tracks = tracks,
-        coverArtUrl = coverArtUrl,
-        artistCredits = releaseArtistCreditRoomModel
+internal fun ReleaseRoomModel.toReleaseUiModel() =
+    this.toReleaseUiModel(
+        releaseArtistCreditRoomModel = listOf(),
+        releaseGroupId = null
     )
+
+internal fun ReleaseRoomModel.toReleaseUiModel(
+    releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel>,
+    releaseGroupId: String?
+) = ReleaseUiModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    date = date,
+    status = status,
+    barcode = barcode,
+    statusId = statusId,
+    countryCode = countryCode,
+    packaging = packaging,
+    packagingId = packagingId,
+    asin = asin,
+    quality = quality,
+    coverArtArchive = coverArtArchive,
+    formats = formats,
+    tracks = tracks,
+    coverArtUrl = coverArtUrl,
+    artistCredits = releaseArtistCreditRoomModel,
+    releaseGroupId = releaseGroupId
+)

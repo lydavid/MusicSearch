@@ -61,14 +61,10 @@ internal class ReleaseViewModel @Inject constructor(
     }.distinctUntilChanged()
 
     /**
-     * If title wasn't given, then we need to lookup for it.
+     * Call this to load the title, subtitle, and paged tracks.
      */
-    suspend fun lookupRelease(releaseId: String): ReleaseUiModel {
-        return releaseRepository.getRelease(releaseId)
-    }
-
-    fun updateReleaseId(releaseId: String) {
-        this.releaseId.value = releaseId
+    suspend fun lookupReleaseThenUpdateReleaseId(releaseId: String): ReleaseUiModel {
+        return releaseRepository.getRelease(releaseId).also { this.releaseId.value = releaseId }
     }
 
     fun updateQuery(query: String) {

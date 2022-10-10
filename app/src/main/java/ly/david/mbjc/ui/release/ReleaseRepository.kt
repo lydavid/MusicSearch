@@ -12,6 +12,8 @@ import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.toMediumRoomModel
 import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.toTrackRoomModel
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 
 @Singleton
 internal class ReleaseRepository @Inject constructor(
@@ -19,6 +21,7 @@ internal class ReleaseRepository @Inject constructor(
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
+    private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
 ) {
 
     /**
@@ -27,16 +30,25 @@ internal class ReleaseRepository @Inject constructor(
     suspend fun getRelease(releaseId: String): ReleaseUiModel {
         val releaseRoomModel = releaseDao.getRelease(releaseId)
         val artistCredits = releaseDao.getReleaseArtistCredits(releaseId)
-        if (releaseRoomModel != null && artistCredits.isNotEmpty()) {
+        val releaseGroupId = releasesReleaseGroupsDao.getReleaseReleaseGroup(releaseId)
+        if (releaseRoomModel != null && artistCredits.isNotEmpty() && releaseGroupId != null) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
-            return releaseRoomModel.toReleaseUiModel(artistCredits)
+            return releaseRoomModel.toReleaseUiModel(artistCredits, releaseGroupId)
         }
 
         // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
         releaseDao.insert(releaseMusicBrainzModel.toReleaseRoomModel())
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
+        releaseMusicBrainzModel.releaseGroup?.let { releaseGroup ->
+            releasesReleaseGroupsDao.insert(
+                ReleasesReleaseGroups(
+                    releaseId = releaseId,
+                    releaseGroupId = releaseGroup.id
+                )
+            )
+        }
 
         releaseMusicBrainzModel.media?.forEach { medium ->
             val mediumId = mediumDao.insert(medium.toMediumRoomModel(releaseMusicBrainzModel.id))

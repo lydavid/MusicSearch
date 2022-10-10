@@ -82,8 +82,7 @@ internal fun ReleaseScaffold(
 
     LaunchedEffect(key1 = releaseId) {
 
-        val releaseUiModel = viewModel.lookupRelease(releaseId)
-        viewModel.updateReleaseId(releaseId)
+        val releaseUiModel = viewModel.lookupReleaseThenUpdateReleaseId(releaseId)
         if (releaseUiModel.coverArtUrl != null) {
             coverArtUrl = releaseUiModel.coverArtUrl
         } else if (releaseUiModel.coverArtArchive.count > 0) {
@@ -130,10 +129,19 @@ internal fun ReleaseScaffold(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
                             onClick = {
+                                closeMenu()
                                 onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
                             })
                     }
-                    // TODO: release group
+                    release?.releaseGroupId?.let {
+                        DropdownMenuItem(
+                            text = { Text(text = release?.name.orEmpty()) },
+                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.RELEASE_GROUP) },
+                            onClick = {
+                                closeMenu()
+                                onItemClick(Destination.LOOKUP_RELEASE_GROUP, it, null)
+                            })
+                    }
                 },
                 tabsTitles = ReleaseTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

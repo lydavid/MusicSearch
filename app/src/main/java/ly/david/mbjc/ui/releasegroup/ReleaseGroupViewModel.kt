@@ -89,7 +89,7 @@ internal class ReleaseGroupViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(releaseGroupId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toReleaseUiModel(listOf())
+                        it.toReleaseUiModel()
                     }
                 }
             }
