@@ -3,6 +3,8 @@ package ly.david.mbjc.data.domain
 import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.network.CoverArtArchive
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
+import ly.david.mbjc.data.network.getReleaseArtistCreditRoomModels
+import ly.david.mbjc.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 
 internal data class ReleaseUiModel(
@@ -19,10 +21,13 @@ internal data class ReleaseUiModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
+    // TODO: ui doesn't need this
     override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
+    val coverArtUrl: String? = null,
 
     val formats: String? = null,
     val tracks: String? = null,
+    val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf()
 ) : UiModel(), Release
 
 internal fun ReleaseMusicBrainzModel.toReleaseUiModel() =
@@ -39,10 +44,12 @@ internal fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         packagingId = packagingId,
         coverArtArchive = coverArtArchive,
         asin = asin,
-        quality = quality
+        quality = quality,
+        coverArtUrl = null,
+        artistCredits = getReleaseArtistCreditRoomModels()
     )
 
-internal fun ReleaseRoomModel.toReleaseUiModel() =
+internal fun ReleaseRoomModel.toReleaseUiModel(releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel>) =
     ReleaseUiModel(
         id = id,
         name = name,
@@ -58,5 +65,7 @@ internal fun ReleaseRoomModel.toReleaseUiModel() =
         quality = quality,
         coverArtArchive = coverArtArchive,
         formats = formats,
-        tracks = tracks
+        tracks = tracks,
+        coverArtUrl = coverArtUrl,
+        artistCredits = releaseArtistCreditRoomModel
     )

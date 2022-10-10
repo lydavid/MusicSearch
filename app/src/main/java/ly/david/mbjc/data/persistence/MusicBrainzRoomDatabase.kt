@@ -43,6 +43,7 @@ import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel
+import ly.david.mbjc.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.TrackDao
@@ -55,7 +56,7 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 41,
+    version = 43,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -71,6 +72,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         RelationRoomModel::class,
         HasRelationsRoomModel::class,
         ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
+        ReleaseArtistCreditRoomModel::class,
         ReleasesLabels::class,
 
         // Additional features tables
@@ -112,6 +114,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 37, to = 38, spec = DeleteHasRelationsFromArtist::class),
         AutoMigration(from = 38, to = 39),
         AutoMigration(from = 39, to = 40),
+        AutoMigration(from = 41, to = 43),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

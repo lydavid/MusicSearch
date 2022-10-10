@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 private const val ARTIST_1_NAME = "Artist Name"
-private const val ARTIST_1_JOIN_PHRASE = "Artist Name"
+private const val ARTIST_1_JOIN_PHRASE = " feat. "
 private const val ARTIST_2_NAME = "Other Artist"
 
 internal class ArtistCreditTest {

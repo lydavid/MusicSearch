@@ -50,7 +50,7 @@ internal data class ReleaseGroupMusicBrainzModel(
 /**
  * Returns all artist credits for this release group for caching in database.
  */
-internal fun ReleaseGroupMusicBrainzModel.getRoomReleaseGroupArtistCredit(): List<ReleaseGroupArtistCreditRoomModel> =
+internal fun ReleaseGroupMusicBrainzModel.getReleaseGroupArtistCreditRoomModels(): List<ReleaseGroupArtistCreditRoomModel> =
     artistCredits?.mapIndexed { index, artistCredit ->
         ReleaseGroupArtistCreditRoomModel(
             releaseGroupId = id,

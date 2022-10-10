@@ -25,7 +25,7 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
@@ -121,7 +121,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
         releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toReleaseGroupRoomModel() })
         releaseGroupArtistDao.insertAll(
             musicBrainzReleaseGroups.flatMap { releaseGroup ->
-                releaseGroup.getRoomReleaseGroupArtistCredit()
+                releaseGroup.getReleaseGroupArtistCreditRoomModels()
             }
         )
 

@@ -51,7 +51,9 @@ internal interface Lookup {
     suspend fun lookupRelease(
         @Path("releaseId") releaseId: String,
 //        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels+place-rels+label-rels"
-        @Query("inc") include: String = "recordings"
+        // TODO: artists only includes artist-credit for the release itself
+        //  artist-credits includes artist-credit for each recording as well (it acts on subqueries)
+        @Query("inc") include: String = "artists+labels+recordings+release-groups"
     ): ReleaseMusicBrainzModel
 
     @GET("recording/{recordingId}")

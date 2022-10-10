@@ -20,13 +20,12 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.Release
 import ly.david.mbjc.data.domain.Header
 import ly.david.mbjc.data.domain.ListSeparator
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
-import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.coverart.CoverArtArchiveApiService
 import ly.david.mbjc.data.network.coverart.getSmallCoverArtUrl
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
@@ -35,9 +34,6 @@ import ly.david.mbjc.data.persistence.release.MediumRoomModel
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
-import ly.david.mbjc.data.persistence.release.toMediumRoomModel
-import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
-import ly.david.mbjc.data.persistence.release.toTrackRoomModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
@@ -45,12 +41,12 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     override val lookupHistoryDao: LookupHistoryDao,
-    private val coverArtArchiveApiService: CoverArtArchiveApiService
+    private val coverArtArchiveApiService: CoverArtArchiveApiService,
+    private val releaseRepository: ReleaseRepository
 ) : ViewModel(), RecordLookupHistory {
 
     private data class ViewModelState(
@@ -67,9 +63,8 @@ internal class ReleaseViewModel @Inject constructor(
     /**
      * If title wasn't given, then we need to lookup for it.
      */
-    suspend fun lookupRelease(releaseId: String): Release {
-        val roomRelease = releaseDao.getRelease(releaseId)
-        return roomRelease ?: musicBrainzApiService.lookupRelease(releaseId)
+    suspend fun lookupRelease(releaseId: String): ReleaseUiModel {
+        return releaseRepository.getRelease(releaseId)
     }
 
     fun updateReleaseId(releaseId: String) {
@@ -88,20 +83,10 @@ internal class ReleaseViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = LookupResourceRemoteMediator(
                         hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                        lookupResource = {
-                            val musicBrainzRelease = musicBrainzApiService.lookupRelease(releaseId)
-
-                            releaseDao.insert(musicBrainzRelease.toReleaseRoomModel())
-
-                            musicBrainzRelease.media?.forEach { medium ->
-                                val mediumId = mediumDao.insert(medium.toMediumRoomModel(musicBrainzRelease.id))
-
-                                trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
-                            }
-                        },
+                        lookupResource = { releaseRepository.getRelease(releaseId) },
                         deleteLocalResource = {
-                            // TODO: refresh cover art as well?
-                            releaseDao.deleteMediaAndTracksInRelease(releaseId)
+                            // TODO: invalidate cover art cache and refresh
+                            releaseDao.deleteReleaseById(releaseId)
                         }
                     ),
                     pagingSourceFactory = {

@@ -1,6 +1,8 @@
 package ly.david.mbjc.data.persistence.release
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ly.david.mbjc.data.persistence.BaseDao
 
@@ -38,4 +40,18 @@ internal abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
         """
     )
     abstract suspend fun setReleaseCoverArtUrl(releaseId: String, coverArtUrl: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertAllArtistCredits(artistCredits: List<ReleaseArtistCreditRoomModel>)
+
+    @Query(
+        """
+        SELECT ra.*
+        FROM releases r
+        INNER JOIN releases_artists ra ON r.id = ra.release_id
+        where r.id = :releaseId
+        ORDER BY ra.`order`
+    """
+    )
+    abstract suspend fun getReleaseArtistCredits(releaseId: String): List<ReleaseArtistCreditRoomModel>
 }

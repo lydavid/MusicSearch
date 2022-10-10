@@ -3,7 +3,7 @@ package ly.david.mbjc.data.domain
 import androidx.compose.runtime.Immutable
 import ly.david.mbjc.data.ReleaseGroup
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.mbjc.data.network.getRoomReleaseGroupArtistCredit
+import ly.david.mbjc.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
 
@@ -36,7 +36,7 @@ internal fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupU
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
 
-        artistCredits = getRoomReleaseGroupArtistCredit()
+        artistCredits = getReleaseGroupArtistCreditRoomModels()
     )
 }
 

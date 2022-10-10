@@ -26,10 +26,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.mbjc.R
+import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
+import ly.david.mbjc.data.getDisplayNames
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
@@ -72,25 +74,28 @@ internal fun ReleaseScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var coverArtUrl: String by rememberSaveable { mutableStateOf("") }
+    var release: ReleaseUiModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         title = titleWithDisambiguation
     }
 
     LaunchedEffect(key1 = releaseId) {
-        viewModel.updateReleaseId(releaseId)
 
-        val release = viewModel.lookupRelease(releaseId)
-        if (release is ReleaseRoomModel && release.coverArtUrl != null) {
-            coverArtUrl = release.coverArtUrl
-        } else if (release.coverArtArchive.count > 0) {
+        val releaseUiModel = viewModel.lookupRelease(releaseId)
+        viewModel.updateReleaseId(releaseId)
+        if (releaseUiModel.coverArtUrl != null) {
+            coverArtUrl = releaseUiModel.coverArtUrl
+        } else if (releaseUiModel.coverArtArchive.count > 0) {
             coverArtUrl = viewModel.getCoverArtUrlFromNetwork()
         }
 
         if (titleWithDisambiguation.isNullOrEmpty()) {
-            title = release.getNameWithDisambiguation()
+            title = releaseUiModel.getNameWithDisambiguation()
         }
-        subtitleState = "Release by [TODO]"
+        subtitleState = "Release by ${releaseUiModel.artistCredits.getDisplayNames()}"
+
+        release = releaseUiModel
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
@@ -101,9 +106,6 @@ internal fun ReleaseScaffold(
             recordedLookup = true
         }
     }
-//    LaunchedEffect(key1 = releaseId) {
-//
-//    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -121,6 +123,17 @@ internal fun ReleaseScaffold(
                             closeMenu()
                         }
                     )
+                },
+                subtitleDropdownMenuItems = {
+                    release?.artistCredits?.forEach { artistCredit ->
+                        DropdownMenuItem(
+                            text = { Text(artistCredit.name) },
+                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
+                            onClick = {
+                                onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
+                            })
+                    }
+                    // TODO: release group
                 },
                 tabsTitles = ReleaseTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

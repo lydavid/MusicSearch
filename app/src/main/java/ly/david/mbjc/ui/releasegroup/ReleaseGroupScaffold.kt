@@ -67,9 +67,8 @@ internal fun ReleaseGroupScaffold(
     var subtitle by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     var filterText by rememberSaveable { mutableStateOf("") }
-
+    var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var releaseGroup: ReleaseGroupUiModel? by remember { mutableStateOf(null) }
-
 
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.updateReleaseGroupId(releaseGroupId)
@@ -81,6 +80,15 @@ internal fun ReleaseGroupScaffold(
         } catch (e: Exception) {
             title = "[Release group lookup failed]"
             subtitle = "[error]"
+        }
+
+        if (!recordedLookup) {
+            viewModel.recordLookupHistory(
+                resourceId = releaseGroupId,
+                resource = resource,
+                summary = title
+            )
+            recordedLookup = true
         }
     }
 
