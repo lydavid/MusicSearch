@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label.releases
+package ly.david.mbjc.ui.label
 
 import javax.inject.Inject
 import javax.inject.Singleton

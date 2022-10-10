@@ -1,28 +1,20 @@
 package ly.david.mbjc.ui.releasegroup.stats
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.relation.RelationTypeCount
-import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
+import ly.david.mbjc.ui.release.stats.addReleasesSection
 import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
 internal fun ReleaseGroupStatsScreen(
@@ -59,22 +51,10 @@ internal fun ReleaseGroupStatsScreen(
     relationTypeCounts: List<RelationTypeCount>
 ) {
     LazyColumn {
-        item {
-            ListSeparatorHeader(text = stringResource(id = R.string.releases))
-
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp),
-            ) {
-                Text(
-                    style = TextStyles.getCardBodyTextStyle(),
-                    text = "Releases on MusicBrainz network: $totalRemote"
-                )
-                Text(
-                    style = TextStyles.getCardBodyTextStyle(),
-                    text = "Releases in local database: $totalLocal"
-                )
-            }
-        }
+        addReleasesSection(
+            totalRemote = totalRemote,
+            totalLocal = totalLocal
+        )
 
         addRelationshipsSection(
             totalRelations = totalRelations,

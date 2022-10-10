@@ -31,7 +31,6 @@ import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
-import ly.david.mbjc.ui.label.releases.LabelRepository
 
 @HiltViewModel
 internal class LabelViewModel @Inject constructor(
@@ -74,9 +73,7 @@ internal class LabelViewModel @Inject constructor(
                     remoteMediator = BrowseResourceRemoteMediator(
                         getRemoteResourceCount = { labelDao.getLabel(labelId)?.releaseCount },
                         getLocalResourceCount = { releasesLabelsDao.getNumberOfReleasesByLabel(labelId) },
-                        deleteLocalResource = {
-                            releasesLabelsDao.deleteReleasesByLabel(labelId)
-                        },
+                        deleteLocalResource = { releasesLabelsDao.deleteReleasesByLabel(labelId) },
                         browseResource = { offset ->
                             browseReleasesAndStore(labelId, offset)
                         }
