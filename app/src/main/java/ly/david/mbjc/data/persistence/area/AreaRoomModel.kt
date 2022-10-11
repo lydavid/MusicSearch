@@ -26,6 +26,9 @@ internal data class AreaRoomModel(
 
     @Embedded
     override val lifeSpan: LifeSpan?,
+
+    @ColumnInfo(name = "release_count", defaultValue = "null")
+    val releaseCount: Int? = null,
 ) : RoomModel, Area
 
 internal fun AreaMusicBrainzModel.toAreaRoomModel() =

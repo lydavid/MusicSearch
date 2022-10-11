@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,25 +19,14 @@ import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.Label
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
-import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.label.LabelDao
-import ly.david.mbjc.data.persistence.label.ReleasesLabels
-import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao
-import ly.david.mbjc.data.persistence.release.ReleaseDao
-import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
-import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class LabelViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
-    private val labelRepository: LabelRepository,
-    private val labelDao: LabelDao,
-    private val releasesLabelsDao: ReleasesLabelsDao,
-    private val releaseDao: ReleaseDao,
+    private val repository: LabelRepository,
     override val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel(), RecordLookupHistory {
 
@@ -47,22 +35,14 @@ internal class LabelViewModel @Inject constructor(
         val query: String = ""
     )
 
-    private val labelId: MutableStateFlow<String> = MutableStateFlow("")
-    private val query: MutableStateFlow<String> = MutableStateFlow("")
+    val labelId: MutableStateFlow<String> = MutableStateFlow("")
+    val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = combine(labelId, query) { labelId, query ->
         ViewModelState(labelId, query)
     }.distinctUntilChanged()
 
     suspend fun lookupLabel(labelId: String): Label =
-        labelRepository.lookupLabel(labelId)
-
-    fun updateLabelId(labelId: String) {
-        this.labelId.value = labelId
-    }
-
-    fun updateQuery(query: String) {
-        this.query.value = query
-    }
+        repository.lookupLabel(labelId)
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
@@ -71,14 +51,14 @@ internal class LabelViewModel @Inject constructor(
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { labelDao.getLabel(labelId)?.releaseCount },
-                        getLocalResourceCount = { releasesLabelsDao.getNumberOfReleasesByLabel(labelId) },
-                        deleteLocalResource = { releasesLabelsDao.deleteReleasesByLabel(labelId) },
+                        getRemoteResourceCount = { repository.getTotalReleases(labelId) },
+                        getLocalResourceCount = { repository.getNumberOfReleasesByLabel(labelId) },
+                        deleteLocalResource = { repository.deleteReleasesByLabel(labelId) },
                         browseResource = { offset ->
-                            browseReleasesAndStore(labelId, offset)
+                            repository.browseReleasesAndStore(labelId, offset)
                         }
                     ),
-                    pagingSourceFactory = { getPagingSource(labelId, query) }
+                    pagingSourceFactory = { repository.getReleasesPagingSource(labelId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toReleaseUiModel()
@@ -87,38 +67,4 @@ internal class LabelViewModel @Inject constructor(
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
-
-    private suspend fun browseReleasesAndStore(labelId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByLabel(
-            labelId = labelId,
-            offset = nextOffset
-        )
-
-        // Only need to update it the first time we ever browse this artist's release groups.
-        if (response.offset == 0) {
-            labelDao.setReleaseCount(labelId, response.count)
-        }
-
-        val musicBrainzReleases = response.releases
-        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
-        releasesLabelsDao.insertAll(
-            musicBrainzReleases.map { release ->
-                ReleasesLabels(release.id, labelId)
-            }
-        )
-
-        return musicBrainzReleases.size
-    }
-
-    private fun getPagingSource(labelId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
-        query.isEmpty() -> {
-            releasesLabelsDao.getReleasesByLabel(labelId)
-        }
-        else -> {
-            releasesLabelsDao.getReleasesByLabelFiltered(
-                labelId = labelId,
-                query = "%$query%"
-            )
-        }
-    }
 }

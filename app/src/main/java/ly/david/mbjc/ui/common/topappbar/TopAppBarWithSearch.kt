@@ -44,7 +44,7 @@ internal fun TopAppBarWithSearch(
     title: String,
     subtitle: String = "",
     showSearchIcon: Boolean = true,
-    dropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     searchText: String = "",
     onSearchTextChange: (String) -> Unit = {},
@@ -145,7 +145,7 @@ internal fun TopAppBarWithSearch(
                     }
                 }
             },
-            overflowDropdownMenuItems = dropdownMenuItems,
+            overflowDropdownMenuItems = overflowDropdownMenuItems,
             subtitleDropdownMenuItems = subtitleDropdownMenuItems,
             tabsTitles = tabsTitles,
             selectedTabIndex = selectedTabIndex,

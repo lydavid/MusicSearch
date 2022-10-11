@@ -25,7 +25,7 @@ import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
         )
     ]
 )
-internal data class ReleasesReleaseGroups(
+internal data class ReleaseReleaseGroup(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
 

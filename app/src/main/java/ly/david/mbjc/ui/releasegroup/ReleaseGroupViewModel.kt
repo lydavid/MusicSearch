@@ -26,7 +26,7 @@ import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
@@ -111,7 +111,7 @@ internal class ReleaseGroupViewModel @Inject constructor(
         releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
         releasesReleaseGroupsDao.insertAll(
             musicBrainzReleases.map { release ->
-                ReleasesReleaseGroups(release.id, releaseGroupId)
+                ReleaseReleaseGroup(release.id, releaseGroupId)
             }
         )
 

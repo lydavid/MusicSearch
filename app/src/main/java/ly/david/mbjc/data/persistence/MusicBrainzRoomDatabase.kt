@@ -20,6 +20,8 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.area.AreaDao
 import ly.david.mbjc.data.persistence.area.AreaRoomModel
+import ly.david.mbjc.data.persistence.area.ReleaseCountry
+import ly.david.mbjc.data.persistence.area.ReleasesCountriesDao
 import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.ArtistRoomModel
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
@@ -32,7 +34,7 @@ import ly.david.mbjc.data.persistence.instrument.InstrumentDao
 import ly.david.mbjc.data.persistence.instrument.InstrumentRoomModel
 import ly.david.mbjc.data.persistence.label.LabelDao
 import ly.david.mbjc.data.persistence.label.LabelRoomModel
-import ly.david.mbjc.data.persistence.label.ReleasesLabels
+import ly.david.mbjc.data.persistence.label.ReleaseLabel
 import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao
 import ly.david.mbjc.data.persistence.place.PlaceDao
 import ly.david.mbjc.data.persistence.place.PlaceRoomModel
@@ -50,13 +52,13 @@ import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.TrackRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupRoomModel
-import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 44,
+    version = 45,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -71,9 +73,10 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         // Relationship tables
         RelationRoomModel::class,
         HasRelationsRoomModel::class,
-        ReleaseGroupArtistCreditRoomModel::class, ReleasesReleaseGroups::class,
+        ReleaseGroupArtistCreditRoomModel::class, ReleaseReleaseGroup::class,
         ReleaseArtistCreditRoomModel::class,
-        ReleasesLabels::class,
+        ReleaseLabel::class,
+        ReleaseCountry::class,
 
         // Additional features tables
         LookupHistory::class
@@ -115,7 +118,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 38, to = 39),
         AutoMigration(from = 39, to = 40),
         AutoMigration(from = 41, to = 43),
-//        AutoMigration(from = 43, to = 44),
+        AutoMigration(from = 44, to = 45),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
@@ -136,6 +139,7 @@ internal abstract class MusicBrainzRoomDatabase : RoomDatabase() {
     abstract fun getWorkDao(): WorkDao
 
     abstract fun getAreaDao(): AreaDao
+    abstract fun getReleasesCountriesDao(): ReleasesCountriesDao
 
     abstract fun getPlaceDao(): PlaceDao
 
@@ -373,6 +377,9 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideAreaDao(db: MusicBrainzRoomDatabase) = db.getAreaDao()
+
+    @Provides
+    fun provideReleasesCountriesDao(db: MusicBrainzRoomDatabase) = db.getReleasesCountriesDao()
 
     @Provides
     fun providePlaceDao(db: MusicBrainzRoomDatabase) = db.getPlaceDao()

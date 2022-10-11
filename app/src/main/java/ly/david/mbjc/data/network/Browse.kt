@@ -40,6 +40,13 @@ internal interface Browse {
         @Query("offset") offset: Int = 0,
     ): BrowseReleasesResponse
 
+    @GET("release")
+    suspend fun browseReleasesByArea(
+        @Query("area") areaId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowseReleasesResponse
+
     @GET("recording")
     suspend fun browseRecordingsByRelease(
         @Query("release") releaseId: String,

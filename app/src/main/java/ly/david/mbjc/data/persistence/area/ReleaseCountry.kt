@@ -1,13 +1,18 @@
-package ly.david.mbjc.data.persistence.release
+package ly.david.mbjc.data.persistence.area
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 
-// TODO:  * A release may be released in the same country multiple times?
-//  that would be the only reason to make this a separate table from releases_areas
+// MB has a country_area table between this and area.
+// Right now we don't have a use for that.
 /**
  * This records a single release event for a release.
+ * Release events seems to always be in a country.
+ *
+ * Note: for area, only countries have a list of releases.
+ * Other area type may have relationships with releases, but they won't be found via browse.
  */
 @Entity(
     tableName = "releases_countries",
@@ -22,12 +27,16 @@ import androidx.room.ForeignKey
         )
     ]
 )
-internal data class ReleasesCountries(
+internal data class ReleaseCountry(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
 
     @ColumnInfo(name = "country_id")
     val countryId: String,
+
+    // Date could be 2022-10-10 or 2022 (or possibly 2022-10)
+    @ColumnInfo(name = "date")
+    val date: String? = null,
 )
 
 // TODO: do we need this table?

@@ -20,8 +20,11 @@ internal data class ReleaseRoomModel(
     override val name: String,
     @ColumnInfo(name = "disambiguation")
     override val disambiguation: String,
+
+    // Date could be 2022-10-10 or 2022 (or possibly 2022-10)
     @ColumnInfo(name = "date")
     override val date: String?,
+
     @ColumnInfo(name = "barcode")
     override val barcode: String?,
     @ColumnInfo(name = "asin")

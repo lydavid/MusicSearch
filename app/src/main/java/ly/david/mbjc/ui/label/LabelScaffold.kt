@@ -54,10 +54,11 @@ internal fun LabelScaffold(
 
     val resource = MusicBrainzResource.LABEL
 
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
+
     var title by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
-    val context = LocalContext.current
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
@@ -72,7 +73,7 @@ internal fun LabelScaffold(
         .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = labelId) {
-        viewModel.updateLabelId(labelId)
+        viewModel.labelId.value = labelId
         val label = viewModel.lookupLabel(labelId)
         title = label.getNameWithDisambiguation()
 
@@ -92,7 +93,7 @@ internal fun LabelScaffold(
                 resource = resource,
                 title = title,
                 onBack = onBack,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
@@ -108,7 +109,7 @@ internal fun LabelScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
-                    viewModel.updateQuery(query = searchText)
+                    viewModel.query.value = searchText
                 },
             )
         },

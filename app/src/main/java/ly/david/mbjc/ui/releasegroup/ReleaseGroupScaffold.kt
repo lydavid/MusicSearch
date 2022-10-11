@@ -100,7 +100,7 @@ internal fun ReleaseGroupScaffold(
                 title = title,
                 subtitle = subtitle,
                 onBack = onBack,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {

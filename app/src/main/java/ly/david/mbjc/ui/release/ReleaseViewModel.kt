@@ -93,6 +93,7 @@ internal class ReleaseViewModel @Inject constructor(
                         track.toTrackUiModel()
                     }.insertSeparators { before: TrackUiModel?, after: TrackUiModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
+                            // TODO: possible race condition: sometimes crashes here will null medium
                             val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
                             ListSeparator(
                                 text = medium.format.orEmpty() +

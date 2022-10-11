@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.mbjc.data.Area
+import ly.david.mbjc.data.domain.AreaUiModel
 import ly.david.mbjc.data.domain.RelationUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -29,7 +30,7 @@ internal fun AreaRelationsScreen(
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<UiModel>,
     onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,
-    onAreaLookup: (Area) -> Unit,
+    onAreaLookup: (AreaUiModel) -> Unit,
     viewModel: AreaRelationsViewModel = hiltViewModel(),
 ) {
 

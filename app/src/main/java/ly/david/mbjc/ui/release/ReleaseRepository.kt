@@ -12,7 +12,7 @@ import ly.david.mbjc.data.persistence.release.TrackDao
 import ly.david.mbjc.data.persistence.release.toMediumRoomModel
 import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.data.persistence.release.toTrackRoomModel
-import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroups
+import ly.david.mbjc.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 
 @Singleton
@@ -43,7 +43,7 @@ internal class ReleaseRepository @Inject constructor(
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
         releaseMusicBrainzModel.releaseGroup?.let { releaseGroup ->
             releasesReleaseGroupsDao.insert(
-                ReleasesReleaseGroups(
+                ReleaseReleaseGroup(
                     releaseId = releaseId,
                     releaseGroupId = releaseGroup.id
                 )

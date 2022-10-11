@@ -8,7 +8,7 @@ import ly.david.mbjc.data.persistence.BaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 
 @Dao
-internal abstract class ReleasesLabelsDao : BaseDao<ReleasesLabels> {
+internal abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel> {
 
     companion object {
         private const val RELEASES_BY_LABEL = """
@@ -84,6 +84,7 @@ internal abstract class ReleasesLabelsDao : BaseDao<ReleasesLabels> {
         """
         $SELECT_RELEASES_BY_LABEL
         $FILTERED
+        $ORDER_BY_DATE_AND_TITLE
     """
     )
     abstract fun getReleasesByLabelFiltered(

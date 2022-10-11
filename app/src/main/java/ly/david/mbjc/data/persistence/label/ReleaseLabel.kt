@@ -7,7 +7,7 @@ import androidx.room.Entity
     tableName = "releases_labels",
     primaryKeys = ["release_id", "label_id"]
 )
-internal data class ReleasesLabels(
+internal data class ReleaseLabel(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
 

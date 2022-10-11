@@ -115,7 +115,7 @@ internal fun ReleaseScaffold(
                 title = title,
                 subtitle = subtitleState,
                 onBack = onBack,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {

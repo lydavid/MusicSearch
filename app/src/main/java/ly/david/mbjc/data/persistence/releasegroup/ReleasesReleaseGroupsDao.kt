@@ -8,7 +8,7 @@ import ly.david.mbjc.data.persistence.BaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
 
 @Dao
-internal abstract class ReleasesReleaseGroupsDao : BaseDao<ReleasesReleaseGroups> {
+internal abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
 
     companion object {
         private const val RELEASES_IN_RELEASE_GROUP = """

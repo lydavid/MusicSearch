@@ -95,7 +95,7 @@ internal fun ArtistScaffold(
                 resource = resource,
                 title = titleState,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
-                dropdownMenuItems = {
+                overflowDropdownMenuItems = {
                     DropdownMenuItem(
                         text = { Text(stringResource(id = R.string.open_in_browser)) },
                         onClick = {
