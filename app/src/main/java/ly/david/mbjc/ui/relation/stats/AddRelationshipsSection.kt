@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.relation.stats
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +17,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -41,11 +43,22 @@ internal fun LazyListScope.addRelationshipsSection(
         )
     }
     items(relationTypeCounts) {
-        Text(
+        Row(
             modifier = Modifier.padding(horizontal = 16.dp),
-            style = TextStyles.getCardBodyTextStyle(),
-            text = "${it.linkedResource.displayText}: ${it.count}"
-        )
+        ) {
+            if (it.linkedResource == MusicBrainzResource.URL) {
+                Spacer(modifier = Modifier.padding(end = 32.dp))
+            } else {
+                ResourceIcon(
+                    modifier = Modifier.padding(end = 8.dp),
+                    resource = it.linkedResource
+                )
+            }
+            Text(
+                style = TextStyles.getCardBodyTextStyle(),
+                text = "${it.linkedResource.displayText}: ${it.count}"
+            )
+        }
     }
 }
 
@@ -60,6 +73,7 @@ private fun Default() {
                     relationTypeCounts = listOf(
                         RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, 17),
                         RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, 397),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.URL, 2),
                     )
                 )
             }
