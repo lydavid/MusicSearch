@@ -39,7 +39,10 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
                 remoteMediator = LookupResourceRemoteMediator(
                     hasResourceBeenStored = { hasRelationsBeenStored() },
                     lookupResource = { lookupRelationsAndStore(resourceId) },
-                    deleteLocalResource = { deleteLocalRelations(resourceId) }
+                    deleteLocalResource = {
+                        deleteLocalRelations(resourceId)
+                        lookupRelationsAndStore(resourceId, forceRefresh = true)
+                    }
                 ),
                 pagingSourceFactory = {
                     relationDao.getRelationsForResource(resourceId)
@@ -83,7 +86,7 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
      *
      * Unlike browse requests, this is expected to only be called once.
      */
-    open suspend fun lookupRelationsAndStore(resourceId: String) {}
+    open suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean = false) {}
 
     /**
      * Indicate that we've stored a resource's relationships successfully.

@@ -44,7 +44,7 @@ internal fun ReleaseGroupStatsScreen(
 }
 
 @Composable
-internal fun ReleaseGroupStatsScreen(
+private fun ReleaseGroupStatsScreen(
     totalRemote: Int,
     totalLocal: Int,
     totalRelations: Int?,

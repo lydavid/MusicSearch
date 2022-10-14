@@ -26,6 +26,8 @@ internal class ReleaseRepository @Inject constructor(
 
     /**
      * Returns a release for display.
+     *
+     * Looks up release and stores its data (excludes relationships).
      */
     suspend fun getRelease(releaseId: String): ReleaseUiModel {
         val releaseRoomModel = releaseDao.getRelease(releaseId)

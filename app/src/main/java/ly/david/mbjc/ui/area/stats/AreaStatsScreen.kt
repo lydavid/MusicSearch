@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label.stats
+package ly.david.mbjc.ui.area.stats
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
@@ -17,9 +17,9 @@ import ly.david.mbjc.ui.release.stats.addReleasesSection
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-internal fun LabelStatsScreen(
-    labelId: String,
-    viewModel: LabelStatsViewModel = hiltViewModel()
+internal fun AreaStatsScreen(
+    areaId: String,
+    viewModel: AreaStatsViewModel = hiltViewModel()
 ) {
     var totalRemote by rememberSaveable { mutableStateOf(0) }
     var totalLocal by rememberSaveable { mutableStateOf(0) }
@@ -28,14 +28,14 @@ internal fun LabelStatsScreen(
     var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRemote = viewModel.getTotalReleases(labelId)
-        totalLocal = viewModel.getNumberOfReleasesByLabel(labelId)
+        totalRemote = viewModel.getTotalReleases(areaId)
+        totalLocal = viewModel.getNumberOfReleasesByLabel(areaId)
 
-        totalRelations = viewModel.getNumberOfRelationsByResource(labelId)
-        relationTypeCounts = viewModel.getCountOfEachRelationshipType(labelId)
+        totalRelations = viewModel.getNumberOfRelationsByResource(areaId)
+        relationTypeCounts = viewModel.getCountOfEachRelationshipType(areaId)
     }
 
-    LabelStatsScreen(
+    AreaStatsScreen(
         totalRemote = totalRemote,
         totalLocal = totalLocal,
         totalRelations = totalRelations,
@@ -44,7 +44,7 @@ internal fun LabelStatsScreen(
 }
 
 @Composable
-private fun LabelStatsScreen(
+private fun AreaStatsScreen(
     totalRemote: Int,
     totalLocal: Int,
     totalRelations: Int?,
@@ -68,7 +68,7 @@ private fun LabelStatsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            LabelStatsScreen(
+            AreaStatsScreen(
                 totalRemote = 1,
                 totalLocal = 2,
                 totalRelations = 3,

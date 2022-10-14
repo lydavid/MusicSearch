@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.area
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -16,36 +15,57 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.mbjc.data.domain.AreaUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.mbjc.ui.relation.RelationViewModel
 
 @HiltViewModel
 internal class AreaViewModel @Inject constructor(
     private val repository: AreaRepository,
+    relationDao: RelationDao,
     override val lookupHistoryDao: LookupHistoryDao
-) : ViewModel(), RecordLookupHistory {
+) : RelationViewModel(relationDao), RecordLookupHistory {
 
     private data class ViewModelState(
         val areaId: String = "",
         val query: String = ""
     )
 
-    val areaId: MutableStateFlow<String> = MutableStateFlow("")
-    val query: MutableStateFlow<String> = MutableStateFlow("")
+    private val areaId: MutableStateFlow<String> = MutableStateFlow("")
+    private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = combine(areaId, query) { areaId, query ->
         ViewModelState(areaId, query)
     }.distinctUntilChanged()
 
-    fun updateAreaId(areaId: String) {
+    fun loadReleases(areaId: String) {
         this.areaId.value = areaId
     }
 
-//    suspend fun lookupArea(areaId: String): Area =
-//        repository.lookupArea(areaId)
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
+
+    /**
+     * Call this to retrieve title, and initiate relations paging.
+     */
+    suspend fun lookupAreaThenLoadRelations(areaId: String): AreaUiModel {
+        return repository.lookupArea(areaId)
+            .also {
+                markResourceHasRelations()
+                fetchRelationsForResource(areaId)
+            }
+    }
+
+    override suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
+        repository.lookupArea(resourceId, forceRefresh = forceRefresh)
+//        markResourceHasRelations()
+    }
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =

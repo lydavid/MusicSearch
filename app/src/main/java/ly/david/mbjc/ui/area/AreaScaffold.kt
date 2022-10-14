@@ -19,11 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.mbjc.R
 import ly.david.mbjc.data.Area
 import ly.david.mbjc.data.domain.ReleaseUiModel
@@ -31,16 +28,22 @@ import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.area.relations.AreaRelationsScreen
+import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.navigation.Destination
 
-// TODO: how to exclude a tab for certain types?
+// TODO: one way to deal with massive number of relationships is
+//  to split them into different tabs
+//  asking for release-rels and recording-rels in a separate tab for area for example
+//  however, we would then need a different indicator to determine whether we've fetched these types of rels
 private enum class AreaTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
     RELEASES(R.string.releases),
+//    RELATIONSHIPS_RELEASES(R.string.relationships_releases),
+//    RELATIONSHIPS_RECORDINGS(R.string.relationships_recordings),
     STATS(R.string.stats)
 }
 
@@ -68,11 +71,10 @@ internal fun AreaScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var areaUiModel: Area? by remember { mutableStateOf(null) }
+    var area: Area? by remember { mutableStateOf(null) }
 
     val relationsLazyListState = rememberLazyListState()
-    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
         .collectAsLazyPagingItems()
 
     val releasesLazyListState = rememberLazyListState()
@@ -84,8 +86,13 @@ internal fun AreaScaffold(
         title = titleWithDisambiguation
     }
 
-    LaunchedEffect(key1 = title) {
-        if (title.isEmpty()) return@LaunchedEffect
+    LaunchedEffect(key1 = areaId) {
+
+        val areaUiModel = viewModel.lookupAreaThenLoadRelations(areaId)
+        if (titleWithDisambiguation.isNullOrEmpty()) {
+            title = areaUiModel.getNameWithDisambiguation()
+        }
+        area = areaUiModel
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
@@ -113,7 +120,7 @@ internal fun AreaScaffold(
                     )
                 },
                 tabsTitles = AreaTab.values()
-//                    .filter { it != AreaTab.RELEASES || areaUiModel?.type == "Country" }
+                    .filter { it != AreaTab.RELEASES || area?.type == "Country" }
                     .map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 // TODO: selecting by index does not allow filtering tabs
@@ -124,7 +131,7 @@ internal fun AreaScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
-                    viewModel.query.value = searchText
+                    viewModel.updateQuery(searchText)
                 },
             )
         },
@@ -134,25 +141,13 @@ internal fun AreaScaffold(
             AreaTab.RELATIONSHIPS -> {
                 AreaRelationsScreen(
                     modifier = Modifier.padding(innerPadding),
-                    areaId = areaId,
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
-                    onPagedRelationsChange = {
-                        pagedRelations = it
-                    },
-                    onAreaLookup = { area ->
-                        // TODO: this is only called after network call
-                        //  returning to this screen will not trigger this
-                        areaUiModel = area
-                        if (titleWithDisambiguation.isNullOrEmpty()) {
-                            title = area.getNameWithDisambiguation()
-                        }
-                    }
                 )
             }
             AreaTab.RELEASES -> {
-                viewModel.updateAreaId(areaId)
+                viewModel.loadReleases(areaId)
 
                 ReleasesListScreen(
                     modifier = Modifier.padding(innerPadding),
@@ -164,8 +159,13 @@ internal fun AreaScaffold(
                     }
                 )
             }
+//            AreaTab.RELATIONSHIPS_RELEASES -> {
+//            }
+//            AreaTab.RELATIONSHIPS_RECORDINGS -> {
+//
+//            }
             AreaTab.STATS -> {
-
+                AreaStatsScreen(areaId = areaId)
             }
         }
     }

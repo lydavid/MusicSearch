@@ -61,9 +61,9 @@ internal class ReleaseViewModel @Inject constructor(
     }.distinctUntilChanged()
 
     /**
-     * Call this to load the title, subtitle, and paged tracks.
+     * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
-    suspend fun lookupReleaseThenUpdateReleaseId(releaseId: String): ReleaseUiModel {
+    suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseUiModel {
         return releaseRepository.getRelease(releaseId).also { this.releaseId.value = releaseId }
     }
 
@@ -93,7 +93,7 @@ internal class ReleaseViewModel @Inject constructor(
                         track.toTrackUiModel()
                     }.insertSeparators { before: TrackUiModel?, after: TrackUiModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
-                            // TODO: possible race condition: sometimes crashes here will null medium
+                            // TODO: possible race condition: sometimes crashes here with null medium
                             val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
                             ListSeparator(
                                 text = medium.format.orEmpty() +

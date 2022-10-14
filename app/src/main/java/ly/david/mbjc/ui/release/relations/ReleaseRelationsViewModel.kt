@@ -14,7 +14,7 @@ internal class ReleaseRelationsViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao
 ) : RelationViewModel(relationDao) {
-    override suspend fun lookupRelationsAndStore(resourceId: String) {
+    override suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
 
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(
             releaseId = resourceId,

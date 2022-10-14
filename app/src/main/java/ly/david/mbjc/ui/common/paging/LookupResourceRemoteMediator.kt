@@ -39,6 +39,9 @@ internal class LookupResourceRemoteMediator<RM : RoomModel>(
             if (!hasResourceBeenStored()) {
                 lookupResource()
             } else if (loadType == LoadType.REFRESH) {
+                // TODO: refactor to make it logically simpler
+                //  just have one function which will handle refresh
+                //  it would delete/ then lookup
                 deleteLocalResource()
                 lookupResource()
             }

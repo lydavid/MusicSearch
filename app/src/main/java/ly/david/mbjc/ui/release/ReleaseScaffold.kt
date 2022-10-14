@@ -83,7 +83,7 @@ internal fun ReleaseScaffold(
 
     LaunchedEffect(key1 = releaseId) {
 
-        val releaseUiModel = viewModel.lookupReleaseThenUpdateReleaseId(releaseId)
+        val releaseUiModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
         if (releaseUiModel.coverArtUrl != null) {
             coverArtUrl = releaseUiModel.coverArtUrl
         } else if (releaseUiModel.coverArtArchive.count > 0) {
