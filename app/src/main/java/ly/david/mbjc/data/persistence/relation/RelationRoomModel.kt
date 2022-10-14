@@ -38,8 +38,7 @@ internal data class RelationRoomModel(
     override val linkedResource: MusicBrainzResource,
 
     // TODO: an artist can appear multiple times similar to artist credits
-    //  for now, we'll use order which is the order we insert it. But we probably won't display it in this order.
-    //  This is not necessarily the order it's displayed on MB website.
+    //  how about using label as another key?
     @ColumnInfo(name = "order")
     val order: Int,
 

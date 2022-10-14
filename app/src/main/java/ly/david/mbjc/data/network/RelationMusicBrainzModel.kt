@@ -10,6 +10,8 @@ internal data class RelationMusicBrainzModel(
     //  Maybe we should just use that for future proofing.
     @Json(name = "type") val type: String,
     @Json(name = "type-id") val typeId: String,
+
+    // TODO: we should order with backward relations first
     @Json(name = "direction") val direction: Direction,
 
     @Json(name = "target-type") val targetType: MusicBrainzResource?,
@@ -51,5 +53,8 @@ internal data class AttributeValue(
      * https://musicbrainz.org/relationship/68330a36-44cf-4fa2-84e8-533c6fe3fc23
      */
     @Json(name = "task")
-    val task: String? = null
+    val task: String? = null,
+
+    @Json(name = "number")
+    val number: String? = null
 )

@@ -11,10 +11,16 @@ import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
  */
 internal fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
     attributes?.joinToString(", ") { attribute ->
-        if (attribute == "task") {
-            attribute + attributeValues?.task.transformThisIfNotNullOrEmpty { ": $it" }
-        } else {
-            attribute
+        when (attribute) {
+            "task" -> {
+                attribute + attributeValues?.task.transformThisIfNotNullOrEmpty { ": $it" }
+            }
+            "number" -> {
+                attribute + attributeValues?.number.transformThisIfNotNullOrEmpty { ": $it" }
+            }
+            else -> {
+                attribute
+            }
         }
     }.orEmpty()
 

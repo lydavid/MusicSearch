@@ -24,7 +24,7 @@ internal abstract class RelationDao : BaseDao<RelationRoomModel> {
             SELECT *
             FROM relations
             WHERE resource_id = :resourceId
-            ORDER BY `order`
+            ORDER BY linked_resource, label, `order`
         """
     )
     abstract fun getRelationsForResource(
