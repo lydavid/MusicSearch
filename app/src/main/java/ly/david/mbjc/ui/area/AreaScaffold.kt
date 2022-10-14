@@ -42,7 +42,8 @@ import ly.david.mbjc.ui.navigation.Destination
 private enum class AreaTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
     RELEASES(R.string.releases),
-//    RELATIONSHIPS_RELEASES(R.string.relationships_releases),
+
+    //    RELATIONSHIPS_RELEASES(R.string.relationships_releases),
 //    RELATIONSHIPS_RECORDINGS(R.string.relationships_recordings),
     STATS(R.string.stats)
 }
@@ -67,11 +68,13 @@ internal fun AreaScaffold(
 
     // TODO: api doesn't seem to include area containment
     //  but we could get its parent area via relations "part of" "backward"
+    var area: Area? by remember { mutableStateOf(null) }
     var title by rememberSaveable { mutableStateOf("") }
+    val tabs = AreaTab.values()
+        .filter { it != AreaTab.RELEASES || area?.type == "Country" }
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var area: Area? by remember { mutableStateOf(null) }
 
     val relationsLazyListState = rememberLazyListState()
     val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -119,14 +122,9 @@ internal fun AreaScaffold(
                         }
                     )
                 },
-                tabsTitles = AreaTab.values()
-                    .filter { it != AreaTab.RELEASES || area?.type == "Country" }
-                    .map { stringResource(id = it.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                // TODO: selecting by index does not allow filtering tabs
-                //  using title res may not be the best idea
-                //  how about passing in a list of tabs?
-                onSelectTabIndex = { selectedTab = AreaTab.values()[it] },
+                tabsTitles = tabs.map { stringResource(id = it.titleRes) },
+                selectedTabIndex = tabs.indexOf(selectedTab),
+                onSelectTabIndex = { selectedTab = tabs[it] },
                 showSearchIcon = selectedTab == AreaTab.RELEASES,
                 searchText = searchText,
                 onSearchTextChange = {
