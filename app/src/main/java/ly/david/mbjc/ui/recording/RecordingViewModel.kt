@@ -12,6 +12,6 @@ internal class RecordingViewModel @Inject constructor(
 ) : RelationViewModel(relationDao) {
 
     suspend fun lookupRecording(recordingId: String) = recordingRepository.lookupRecording(recordingId).also {
-        this.resourceId.value = it.id
+        fetchRelationsForResource(it.id)
     }
 }

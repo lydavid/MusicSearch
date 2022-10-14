@@ -12,6 +12,6 @@ internal class PlaceViewModel @Inject constructor(
 ) : RelationViewModel(relationDao) {
 
     suspend fun lookupPlace(placeId: String) = placeRepository.lookupPlace(placeId).also {
-        this.resourceId.value = it.id
+        fetchRelationsForResource(it.id)
     }
 }

@@ -12,6 +12,6 @@ internal class WorkViewModel @Inject constructor(
 ) : RelationViewModel(relationDao) {
 
     suspend fun lookupWork(workId: String) = workRepository.lookupWork(workId).also {
-        this.resourceId.value = it.id
+        fetchRelationsForResource(it.id)
     }
 }

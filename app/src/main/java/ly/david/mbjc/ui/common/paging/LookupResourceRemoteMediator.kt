@@ -9,12 +9,12 @@ import ly.david.mbjc.data.persistence.RoomModel
 /**
  *
  * When using [LoadType.REFRESH], [hasResourceBeenStored] does not need to be checked.
- * A refresh load will always call [lookupResource].
+ * A refresh load will always call [lookupResource] with force refresh flag.
  */
 @OptIn(ExperimentalPagingApi::class)
 internal class LookupResourceRemoteMediator<RM : RoomModel>(
     private val hasResourceBeenStored: suspend () -> Boolean,
-    private val lookupResource: suspend () -> Unit,
+    private val lookupResource: suspend (forceRefresh: Boolean) -> Unit,
     private val deleteLocalResource: suspend () -> Unit
 ) : RemoteMediator<Int, RM>() {
 
@@ -37,13 +37,10 @@ internal class LookupResourceRemoteMediator<RM : RoomModel>(
 
         return try {
             if (!hasResourceBeenStored()) {
-                lookupResource()
+                lookupResource(false)
             } else if (loadType == LoadType.REFRESH) {
-                // TODO: refactor to make it logically simpler
-                //  just have one function which will handle refresh
-                //  it would delete/ then lookup
                 deleteLocalResource()
-                lookupResource()
+                lookupResource(true)
             }
 
             MediatorResult.Success(endOfPaginationReached = true)

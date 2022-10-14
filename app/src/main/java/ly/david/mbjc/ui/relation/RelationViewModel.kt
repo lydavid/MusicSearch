@@ -28,8 +28,7 @@ import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
  */
 internal abstract class RelationViewModel(private val relationDao: RelationDao) : ViewModel() {
 
-    // TODO: make private, call the fun instead so it reads more intuitively
-    val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    private val resourceId: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     val pagedRelations: Flow<PagingData<UiModel>> =
@@ -38,10 +37,11 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
                 config = MusicBrainzPagingConfig.pagingConfig,
                 remoteMediator = LookupResourceRemoteMediator(
                     hasResourceBeenStored = { hasRelationsBeenStored() },
-                    lookupResource = { lookupRelationsAndStore(resourceId) },
+                    lookupResource = { forceRefresh ->
+                        lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
+                    },
                     deleteLocalResource = {
                         deleteLocalRelations(resourceId)
-                        lookupRelationsAndStore(resourceId, forceRefresh = true)
                     }
                 ),
                 pagingSourceFactory = {
