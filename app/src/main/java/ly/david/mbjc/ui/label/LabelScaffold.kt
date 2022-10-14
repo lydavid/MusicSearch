@@ -3,11 +3,9 @@ package ly.david.mbjc.ui.label
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
@@ -29,9 +26,9 @@ import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.label.relations.LabelRelationsScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
@@ -54,7 +51,6 @@ internal fun LabelScaffold(
 
     val resource = MusicBrainzResource.LABEL
 
-    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     var title by rememberSaveable { mutableStateOf("") }
@@ -94,13 +90,7 @@ internal fun LabelScaffold(
                 title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.open_in_browser)) },
-                        onClick = {
-                            context.lookupInBrowser(resource, labelId)
-                            closeMenu()
-                        }
-                    )
+                    OpenInBrowserMenuItem(resource = MusicBrainzResource.LABEL, resourceId = labelId)
                 },
                 tabsTitles = LabelTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

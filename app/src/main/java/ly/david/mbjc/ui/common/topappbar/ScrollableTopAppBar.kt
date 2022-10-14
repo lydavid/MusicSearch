@@ -41,10 +41,6 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 private const val DELAY_LOADING_MS = 300L
 
-internal interface OverflowMenuScope {
-    fun closeMenu()
-}
-
 /**
  *
  * @param resource What [MusicBrainzResource]'s icon to display.

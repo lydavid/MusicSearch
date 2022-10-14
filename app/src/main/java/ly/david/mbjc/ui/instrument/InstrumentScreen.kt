@@ -33,7 +33,6 @@ internal fun InstrumentScreen(
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }
     var instrument: Instrument? by remember { mutableStateOf(null) }
     val lazyListState = rememberLazyListState()
-//    val context = LocalContext.current
 
     LaunchedEffect(key1 = instrumentId) {
         try {

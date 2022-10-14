@@ -3,11 +3,9 @@ package ly.david.mbjc.ui.area
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
@@ -29,9 +26,9 @@ import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.area.relations.AreaRelationsScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
-import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.navigation.Destination
 
@@ -63,7 +60,6 @@ internal fun AreaScaffold(
 
     val resource = MusicBrainzResource.AREA
 
-    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     // TODO: api doesn't seem to include area containment
@@ -114,13 +110,7 @@ internal fun AreaScaffold(
                 title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.open_in_browser)) },
-                        onClick = {
-                            context.lookupInBrowser(resource, areaId)
-                            closeMenu()
-                        }
-                    )
+                    OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
                 },
                 tabsTitles = tabs.map { stringResource(id = it.titleRes) },
                 selectedTabIndex = tabs.indexOf(selectedTab),

@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
@@ -32,8 +31,8 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.relations.ArtistRelationsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
-import ly.david.mbjc.ui.common.lookupInBrowser
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.navigation.Destination
 
@@ -62,8 +61,6 @@ internal fun ArtistScaffold(
 ) {
 
     val resource = MusicBrainzResource.ARTIST
-
-    val context = LocalContext.current
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var titleState by rememberSaveable { mutableStateOf("") }
@@ -96,12 +93,7 @@ internal fun ArtistScaffold(
                 title = titleState,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 overflowDropdownMenuItems = {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.open_in_browser)) },
-                        onClick = {
-                            context.lookupInBrowser(resource, artistId)
-                            closeMenu()
-                        })
+                    OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
 
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                         DropdownMenuItem(
