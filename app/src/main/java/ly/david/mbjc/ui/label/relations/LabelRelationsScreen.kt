@@ -26,7 +26,7 @@ internal fun LabelRelationsScreen(
 ) {
 
     LaunchedEffect(key1 = labelId) {
-        viewModel.fetchRelationsForResource(labelId)
+        viewModel.loadRelations(labelId)
         onPagedRelationsChange(viewModel.pagedRelations)
     }
 

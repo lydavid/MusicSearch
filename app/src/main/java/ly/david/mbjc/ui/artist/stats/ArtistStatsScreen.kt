@@ -23,6 +23,7 @@ import ly.david.mbjc.data.getDisplayTypes
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupTypeCount
+import ly.david.mbjc.ui.area.stats.addSpacer
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
@@ -98,6 +99,7 @@ internal fun ArtistStatsScreen(
             )
         }
 
+        addSpacer()
         addRelationshipsSection(
             totalRelations = totalRelations,
             relationTypeCounts = relationTypeCounts

@@ -26,7 +26,7 @@ internal fun ReleaseGroupRelationsScreen(
 ) {
 
     LaunchedEffect(key1 = releaseGroupId) {
-        viewModel.fetchRelationsForResource(releaseGroupId)
+        viewModel.loadRelations(releaseGroupId)
         onPagedRelationsChange(viewModel.pagedRelations)
     }
 

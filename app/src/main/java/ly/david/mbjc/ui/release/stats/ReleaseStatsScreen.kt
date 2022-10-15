@@ -19,6 +19,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.relation.RelationTypeCount
+import ly.david.mbjc.ui.area.stats.addSpacer
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
@@ -88,7 +89,7 @@ internal fun ReleaseStatsScreen(
                 )
             }
         }
-
+        addSpacer()
         addRelationshipsSection(
             totalRelations = totalRelations,
             relationTypeCounts = relationTypeCounts

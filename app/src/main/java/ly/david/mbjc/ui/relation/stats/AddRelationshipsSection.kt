@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
@@ -25,11 +24,8 @@ import ly.david.mbjc.ui.theme.TextStyles
 internal fun LazyListScope.addRelationshipsSection(
     totalRelations: Int?,
     relationTypeCounts: List<RelationTypeCount>,
-    topMargin: Dp = 16.dp
 ) {
     item {
-        Spacer(modifier = Modifier.padding(top = topMargin))
-
         ListSeparatorHeader(text = stringResource(id = R.string.relationships))
 
         Text(

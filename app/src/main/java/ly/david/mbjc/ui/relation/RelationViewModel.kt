@@ -61,7 +61,7 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
     /**
      * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
      */
-    fun fetchRelationsForResource(resourceId: String) {
+    fun loadRelations(resourceId: String) {
         this.resourceId.value = resourceId
     }
 

@@ -58,7 +58,7 @@ internal class AreaViewModel @Inject constructor(
         return repository.lookupArea(areaId)
             .also {
                 markResourceHasRelations()
-                fetchRelationsForResource(areaId)
+                loadRelations(areaId)
             }
     }
 

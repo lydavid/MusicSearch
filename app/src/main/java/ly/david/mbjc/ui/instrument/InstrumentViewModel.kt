@@ -12,6 +12,6 @@ internal class InstrumentViewModel @Inject constructor(
 ) : RelationViewModel(relationDao) {
 
     suspend fun lookupInstrument(instrumentId: String) = instrumentRepository.lookupInstrument(instrumentId).also {
-        fetchRelationsForResource(it.id)
+        loadRelations(it.id)
     }
 }

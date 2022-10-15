@@ -26,7 +26,7 @@ internal fun ArtistRelationsScreen(
 ) {
 
     LaunchedEffect(key1 = artistId) {
-        viewModel.fetchRelationsForResource(artistId)
+        viewModel.loadRelations(artistId)
         onPagedRelationsChange(viewModel.pagedRelations)
     }
 

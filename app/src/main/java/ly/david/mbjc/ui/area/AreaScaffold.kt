@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -87,11 +88,15 @@ internal fun AreaScaffold(
 
     LaunchedEffect(key1 = areaId) {
 
-        val areaUiModel = viewModel.lookupAreaThenLoadRelations(areaId)
-        if (titleWithDisambiguation.isNullOrEmpty()) {
-            title = areaUiModel.getNameWithDisambiguation()
+        try {
+            val areaUiModel = viewModel.lookupAreaThenLoadRelations(areaId)
+            if (titleWithDisambiguation.isNullOrEmpty()) {
+                title = areaUiModel.getNameWithDisambiguation()
+            }
+            area = areaUiModel
+        } catch (ex: Exception) {
+            viewModel.loadRelations(areaId)
         }
-        area = areaUiModel
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
@@ -104,6 +109,7 @@ internal fun AreaScaffold(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithSearch(
                 resource = resource,
@@ -129,6 +135,7 @@ internal fun AreaScaffold(
             AreaTab.RELATIONSHIPS -> {
                 AreaRelationsScreen(
                     modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
@@ -153,7 +160,10 @@ internal fun AreaScaffold(
 //
 //            }
             AreaTab.STATS -> {
-                AreaStatsScreen(areaId = areaId)
+                AreaStatsScreen(
+                    areaId = areaId,
+                    showReleases = area?.type == "Country"
+                )
             }
         }
     }

@@ -97,7 +97,7 @@ internal fun ReleaseScaffold(
         } catch (ex: Exception) {
             // If any of the above calls failed, we still want to update the release id so that
             // TracksInReleaseScreen will give us a Retry button.
-            viewModel.updateReleaseId(releaseId)
+            viewModel.loadTracks(releaseId)
         }
 
         if (!recordedLookup) {

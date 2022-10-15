@@ -64,10 +64,10 @@ internal class ReleaseViewModel @Inject constructor(
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
     suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseUiModel {
-        return releaseRepository.getRelease(releaseId).also { this.releaseId.value = releaseId }
+        return releaseRepository.getRelease(releaseId).also { loadTracks(releaseId) }
     }
 
-    fun updateReleaseId(releaseId: String) {
+    fun loadTracks(releaseId: String) {
         this.releaseId.value = releaseId
     }
 
