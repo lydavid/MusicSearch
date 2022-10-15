@@ -32,6 +32,10 @@ internal abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> 
             ORDER BY rrg.rowid
         """
 
+        private const val ORDER_BY_DATE_AND_NAME = """
+            ORDER BY r.date, r.name
+        """
+
         private const val FILTERED = """
             AND (
                 r.name LIKE :query OR r.disambiguation LIKE :query

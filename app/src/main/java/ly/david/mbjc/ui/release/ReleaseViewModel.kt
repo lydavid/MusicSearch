@@ -67,6 +67,10 @@ internal class ReleaseViewModel @Inject constructor(
         return releaseRepository.getRelease(releaseId).also { this.releaseId.value = releaseId }
     }
 
+    fun updateReleaseId(releaseId: String) {
+        this.releaseId.value = releaseId
+    }
+
     fun updateQuery(query: String) {
         this.query.value = query
     }

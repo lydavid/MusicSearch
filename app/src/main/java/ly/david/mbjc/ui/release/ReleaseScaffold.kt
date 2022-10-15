@@ -81,19 +81,24 @@ internal fun ReleaseScaffold(
 
     LaunchedEffect(key1 = releaseId) {
 
-        val releaseUiModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
-        if (releaseUiModel.coverArtUrl != null) {
-            coverArtUrl = releaseUiModel.coverArtUrl
-        } else if (releaseUiModel.coverArtArchive.count > 0) {
-            coverArtUrl = viewModel.getCoverArtUrlFromNetwork()
-        }
+        try {
+            val releaseUiModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
+            if (releaseUiModel.coverArtUrl != null) {
+                coverArtUrl = releaseUiModel.coverArtUrl
+            } else if (releaseUiModel.coverArtArchive.count > 0) {
+                coverArtUrl = viewModel.getCoverArtUrlFromNetwork()
+            }
 
-        if (titleWithDisambiguation.isNullOrEmpty()) {
-            title = releaseUiModel.getNameWithDisambiguation()
+            if (titleWithDisambiguation.isNullOrEmpty()) {
+                title = releaseUiModel.getNameWithDisambiguation()
+            }
+            subtitleState = "Release by ${releaseUiModel.artistCredits.getDisplayNames()}"
+            release = releaseUiModel
+        } catch (ex: Exception) {
+            // If any of the above calls failed, we still want to update the release id so that
+            // TracksInReleaseScreen will give us a Retry button.
+            viewModel.updateReleaseId(releaseId)
         }
-        subtitleState = "Release by ${releaseUiModel.artistCredits.getDisplayNames()}"
-
-        release = releaseUiModel
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(

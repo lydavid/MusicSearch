@@ -75,9 +75,11 @@ internal fun ReleaseGroupScaffold(
             title = releaseGroupUiModel.getNameWithDisambiguation()
             subtitle = "Release Group by ${releaseGroupUiModel.artistCredits.getDisplayNames()}"
             releaseGroup = releaseGroupUiModel
-        } catch (e: Exception) {
-            title = "[Release group lookup failed]"
-            subtitle = "[error]"
+        } catch (ex: Exception) {
+//            title = "[Release group lookup failed]"
+//            subtitle = "[error]"
+            // TODO: the only time we would need an error state in the title is if we deeplinked in
+            //  in which case, we would also want to handle filling in the title after a successful retry
         }
 
         if (!recordedLookup) {

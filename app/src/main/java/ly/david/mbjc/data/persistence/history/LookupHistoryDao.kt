@@ -30,22 +30,36 @@ internal abstract class LookupHistoryDao : BaseDao<LookupHistory> {
 
     @Query(
         """
-        UPDATE lookup_history 
-        SET number_of_visits = number_of_visits + 1,
-            last_accessed = :lastAccessed
+        SELECT * 
+        FROM lookup_history
         WHERE mbid = :mbid
-        """
+    """
     )
-    abstract suspend fun incrementVisitAndDateAccessed(mbid: String, lastAccessed: Date = Date()): Int
+    abstract suspend fun getLookupHistory(mbid: String): LookupHistory?
 
     /**
      * Insert new [LookupHistory] if it doesn't exist, otherwise increment its visited count
      * and its last visited timestamp.
      */
     suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistory) {
-        val numUpdated = incrementVisitAndDateAccessed(lookupHistory.mbid)
-        if (numUpdated == 0) {
+        val historyRecord = getLookupHistory(lookupHistory.mbid)
+        if (historyRecord == null) {
             insert(lookupHistory)
+        } else if (historyRecord.title.isEmpty()) {
+            insert(
+                historyRecord.copy(
+                    title = lookupHistory.title,
+                    numberOfVisits = historyRecord.numberOfVisits + 1,
+                    lastAccessed = Date()
+                )
+            )
+        } else {
+            insert(
+                historyRecord.copy(
+                    numberOfVisits = historyRecord.numberOfVisits + 1,
+                    lastAccessed = Date()
+                )
+            )
         }
     }
 }

@@ -45,8 +45,9 @@ internal enum class Direction {
     @Json(name = "forward") FORWARD
 }
 
-// TODO: rest of attributes that have a corresponding value
-//  would be nice if we didn't need a field for each one, seeing as how they all have a string value...
+// TODO: add the rest of relationship attributes
+//  there isn't actually that many of them
+//  https://musicbrainz.org/relationship-attributes
 internal data class AttributeValue(
 
     /**
