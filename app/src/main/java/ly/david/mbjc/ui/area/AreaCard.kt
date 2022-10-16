@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import ly.david.mbjc.data.AreaType
 import ly.david.mbjc.data.domain.AreaUiModel
-import ly.david.mbjc.data.domain.COUNTRY
 import ly.david.mbjc.data.getLifeSpanForDisplay
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -36,7 +36,7 @@ internal fun AreaCard(
         ) {
             val type = area.type
 
-            val areaName = if (type == COUNTRY) {
+            val areaName = if (type == AreaType.COUNTRY) {
                 val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
                 flags.transformThisIfNotNullOrEmpty { "$it " } + area.getNameWithDisambiguation()
             } else {

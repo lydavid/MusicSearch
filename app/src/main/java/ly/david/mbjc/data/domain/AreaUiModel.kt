@@ -5,8 +5,6 @@ import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.AreaMusicBrainzModel
 import ly.david.mbjc.data.persistence.area.AreaRoomModel
 
-internal const val COUNTRY = "Country"
-
 internal data class AreaUiModel(
     override val id: String,
     override val name: String,
