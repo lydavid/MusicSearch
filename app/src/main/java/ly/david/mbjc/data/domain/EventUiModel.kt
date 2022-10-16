@@ -10,10 +10,6 @@ internal data class EventUiModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val lifeSpan: LifeSpan? = null,
-
-    // TODO: display relations that come with search API (artists/location)
-    //  perhaps don't display too much data in search card. These data can be found after clicking into it
-    //  Mobile experience doesn't have to be 1-to-1 with web.
 ) : Event, UiModel()
 
 internal fun EventMusicBrainzModel.toEventUiModel() =

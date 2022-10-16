@@ -4,6 +4,12 @@ import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
 import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
+internal interface ILifeSpan {
+    val begin: String?
+    val end: String?
+    val ended: Boolean?
+}
+
 /**
  * Used by both network and persistence models.
  */
@@ -23,12 +29,6 @@ internal data class LifeSpan(
     @Json(name = "ended")
     override val ended: Boolean? = null
 ): ILifeSpan
-
-internal interface ILifeSpan {
-    val begin: String?
-    val end: String?
-    val ended: Boolean?
-}
 
 internal fun ILifeSpan?.getLifeSpanForDisplay(): String {
     if (this == null) return ""

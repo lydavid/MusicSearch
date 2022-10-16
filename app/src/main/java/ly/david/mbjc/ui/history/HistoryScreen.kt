@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.history
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,8 +15,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
@@ -30,9 +31,9 @@ import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.navigation.toDestination
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -113,10 +114,9 @@ private fun HistoryEntry(
                     modifier = Modifier.padding(end = 8.dp)
                 )
 
-                val resourceDescription =
-                    lookupHistory.resource.displayText.transformThisIfNotNullOrEmpty { "$it: " }
+                val resourceDescription = stringResource(id = lookupHistory.resource.displayTextRes)
                 Text(
-                    text = "$resourceDescription${lookupHistory.title}",
+                    text = "$resourceDescription: ${lookupHistory.title}",
                     style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -146,32 +146,35 @@ private fun Date.toDisplayDate(): String {
     return dateFormat.format(this)
 }
 
-private val testData = listOf(
-    LookupHistory(
-        title = "欠けた心象、世のよすがみ",
-        resource = MusicBrainzResource.RELEASE_GROUP,
-        mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-        numberOfVisits = 9999
-    ),
-    LookupHistory(
-        title = "欠けた心象、世のよすが",
-        resource = MusicBrainzResource.RELEASE,
-        mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
-    ),
-    LookupHistory(
-        title = "月詠み",
-        resource = MusicBrainzResource.ARTIST,
-        mbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
+internal class LookupHistoryPreviewParameterProvider : PreviewParameterProvider<LookupHistory> {
+    override val values: Sequence<LookupHistory> = sequenceOf(
+        LookupHistory(
+            title = "欠けた心象、世のよすがみ",
+            resource = MusicBrainzResource.RELEASE_GROUP,
+            mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            numberOfVisits = 9999
+        ),
+        LookupHistory(
+            title = "欠けた心象、世のよすが",
+            resource = MusicBrainzResource.RELEASE,
+            mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
+        ),
+        LookupHistory(
+            title = "月詠み",
+            resource = MusicBrainzResource.ARTIST,
+            mbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
+        )
     )
-)
+}
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
-internal fun ArtistCardPreview() {
+private fun Preview(
+    @PreviewParameter(LookupHistoryPreviewParameterProvider::class) history: LookupHistory
+) {
     PreviewTheme {
         Surface {
-            HistoryEntry(testData.first())
+            HistoryEntry(history)
         }
     }
 }

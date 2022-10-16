@@ -1,6 +1,19 @@
 package ly.david.mbjc.ui.navigation
 
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.RESOURCE_AREA
+import ly.david.mbjc.data.network.RESOURCE_ARTIST
+import ly.david.mbjc.data.network.RESOURCE_EVENT
+import ly.david.mbjc.data.network.RESOURCE_GENRE
+import ly.david.mbjc.data.network.RESOURCE_INSTRUMENT
+import ly.david.mbjc.data.network.RESOURCE_LABEL
+import ly.david.mbjc.data.network.RESOURCE_PLACE
+import ly.david.mbjc.data.network.RESOURCE_RECORDING
+import ly.david.mbjc.data.network.RESOURCE_RELEASE
+import ly.david.mbjc.data.network.RESOURCE_RELEASE_GROUP
+import ly.david.mbjc.data.network.RESOURCE_SERIES
+import ly.david.mbjc.data.network.RESOURCE_URL
+import ly.david.mbjc.data.network.RESOURCE_WORK
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"
@@ -10,21 +23,6 @@ private const val TOP_LEVEL_EXPERIMENTAL = "experimental"
  * This divider should be the same used for dividing parameters such as {artistId} passed to navigation.
  */
 private const val DIVIDER = "/"
-
-private const val ARTIST = "artist"
-private const val RELEASE_GROUP =
-    "release-group" // TODO: besides release_group, these match exactly to MusicBrainzResource
-private const val RELEASE = "release"
-private const val RECORDING = "recording"
-private const val AREA = "area"
-private const val PLACE = "place"
-private const val WORK = "work"
-private const val LABEL = "label"
-private const val INSTRUMENT = "instrument"
-private const val EVENT = "event"
-private const val SERIES = "series"
-private const val GENRE = "genre"
-private const val URL = "url"
 
 /**
  * A navigation destination in the app.
@@ -36,21 +34,19 @@ private const val URL = "url"
 internal enum class Destination(val route: String, val musicBrainzResource: MusicBrainzResource?) {
     LOOKUP(TOP_LEVEL_LOOKUP, null),
 
-    LOOKUP_ARTIST("$TOP_LEVEL_LOOKUP$DIVIDER$ARTIST", MusicBrainzResource.ARTIST),
-    LOOKUP_RELEASE_GROUP("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE_GROUP", MusicBrainzResource.RELEASE_GROUP),
-    LOOKUP_RELEASE("$TOP_LEVEL_LOOKUP$DIVIDER$RELEASE", MusicBrainzResource.RELEASE),
-    LOOKUP_RECORDING("$TOP_LEVEL_LOOKUP$DIVIDER$RECORDING", MusicBrainzResource.RECORDING),
-    LOOKUP_WORK("$TOP_LEVEL_LOOKUP$DIVIDER$WORK", MusicBrainzResource.WORK),
-
-    LOOKUP_AREA("$TOP_LEVEL_LOOKUP$DIVIDER$AREA", MusicBrainzResource.AREA),
-    LOOKUP_PLACE("$TOP_LEVEL_LOOKUP$DIVIDER$PLACE", MusicBrainzResource.PLACE),
-    LOOKUP_INSTRUMENT("$TOP_LEVEL_LOOKUP$DIVIDER$INSTRUMENT", MusicBrainzResource.INSTRUMENT),
-    LOOKUP_LABEL("$TOP_LEVEL_LOOKUP$DIVIDER$LABEL", MusicBrainzResource.LABEL),
-
-    LOOKUP_EVENT("$TOP_LEVEL_LOOKUP$DIVIDER$EVENT", MusicBrainzResource.EVENT),
-    LOOKUP_SERIES("$TOP_LEVEL_LOOKUP$DIVIDER$SERIES", MusicBrainzResource.SERIES),
-    LOOKUP_GENRE("$TOP_LEVEL_LOOKUP$DIVIDER$GENRE", MusicBrainzResource.GENRE),
-    LOOKUP_URL("$TOP_LEVEL_LOOKUP$DIVIDER$URL", MusicBrainzResource.URL),
+    LOOKUP_AREA("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_AREA", MusicBrainzResource.AREA),
+    LOOKUP_ARTIST("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_ARTIST", MusicBrainzResource.ARTIST),
+    LOOKUP_EVENT("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_EVENT", MusicBrainzResource.EVENT),
+    LOOKUP_RELEASE_GROUP("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_RELEASE_GROUP", MusicBrainzResource.RELEASE_GROUP),
+    LOOKUP_RELEASE("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_RELEASE", MusicBrainzResource.RELEASE),
+    LOOKUP_RECORDING("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_RECORDING", MusicBrainzResource.RECORDING),
+    LOOKUP_WORK("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_WORK", MusicBrainzResource.WORK),
+    LOOKUP_PLACE("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_PLACE", MusicBrainzResource.PLACE),
+    LOOKUP_INSTRUMENT("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_INSTRUMENT", MusicBrainzResource.INSTRUMENT),
+    LOOKUP_LABEL("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_LABEL", MusicBrainzResource.LABEL),
+    LOOKUP_SERIES("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_SERIES", MusicBrainzResource.SERIES),
+    LOOKUP_GENRE("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_GENRE", MusicBrainzResource.GENRE),
+    LOOKUP_URL("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_URL", MusicBrainzResource.URL),
 
     HISTORY(TOP_LEVEL_HISTORY, null),
     EXPERIMENTAL(TOP_LEVEL_EXPERIMENTAL, null)

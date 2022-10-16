@@ -109,6 +109,7 @@ internal fun ReleaseGroupScaffold(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
                             onClick = {
+                                closeMenu()
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
                                 onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)

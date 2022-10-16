@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
@@ -48,7 +49,7 @@ internal fun ExposedDropdownMenuBox(
             modifier = modifier.fillMaxWidth(),
             readOnly = true,
             shape = RectangleShape,
-            value = selectedOption.displayText,
+            value = stringResource(id = selectedOption.displayTextRes),
             onValueChange = { },
             label = { Text("Resource") },
             trailingIcon = {
@@ -84,7 +85,7 @@ internal fun ExposedDropdownMenuBox(
                                     modifier = Modifier.padding(end = 8.dp),
                                     resource = option
                                 )
-                                Text(text = option.displayText)
+                                Text(text = stringResource(id = option.displayTextRes))
                             }
                         },
                         onClick = {

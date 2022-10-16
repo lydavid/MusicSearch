@@ -52,7 +52,7 @@ internal fun LazyListScope.addRelationshipsSection(
             }
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
-                text = "${it.linkedResource.displayText}: ${it.count}"
+                text = "${stringResource(id = it.linkedResource.displayTextRes)}: ${it.count}"
             )
         }
     }

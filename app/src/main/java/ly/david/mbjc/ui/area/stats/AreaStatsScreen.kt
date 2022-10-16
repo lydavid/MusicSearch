@@ -1,9 +1,6 @@
 package ly.david.mbjc.ui.area.stats
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,12 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.relation.RelationTypeCount
+import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
 import ly.david.mbjc.ui.release.stats.addReleasesSection
@@ -51,12 +46,6 @@ internal fun AreaStatsScreen(
     )
 }
 
-internal fun LazyListScope.addSpacer(spacing: Dp = 16.dp) {
-    item {
-        Spacer(modifier = Modifier.padding(top = spacing))
-    }
-}
-
 @Composable
 private fun AreaStatsScreen(
     showReleases: Boolean,
@@ -81,6 +70,7 @@ private fun AreaStatsScreen(
     }
 }
 
+// region Previews
 @DefaultPreviews
 @Composable
 private fun Preview() {
@@ -116,3 +106,4 @@ private fun PreviewNoReleases() {
         }
     }
 }
+// endregion

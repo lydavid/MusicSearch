@@ -21,7 +21,6 @@ internal data class ReleaseUiModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
-    // TODO: ui doesn't need this
     override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
     val coverArtUrl: String? = null,
 

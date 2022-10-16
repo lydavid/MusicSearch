@@ -3,6 +3,20 @@
     <string name="app_name">MBJC</string>
     <string name="deeplink_schema" translatable="false">mbjc</string>
 
+    <string name="area">Area</string>
+    <string name="artist">Artist</string>
+    <string name="event">Event</string>
+    <string name="genre">Genre</string>
+    <string name="instrument">Instrument</string>
+    <string name="label">Label</string>
+    <string name="place">Place</string>
+    <string name="recording">Recording</string>
+    <string name="release">Release</string>
+    <string name="release_group">Release Group</string>
+    <string name="series">Series</string>
+    <string name="work">Work</string>
+    <string name="url">URL</string>
+
     <string name="no_results_found">No results found.</string>
     <string name="no_results_found_search">No results found.\nTry refining your search query.</string>
 
