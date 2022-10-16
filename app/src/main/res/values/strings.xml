@@ -21,6 +21,8 @@
     <string name="back">Back</string>
     <string name="open_in_browser">Open in browser</string>
     <string name="refresh">Refresh</string>
+    <string name="filter">Filter</string>
+    <string name="exit_filter">Exit filter</string>
     <string name="clear_filter">Clear filter text</string>
 
     <string name="search_musicbrainz">Search MusicBrainz</string>

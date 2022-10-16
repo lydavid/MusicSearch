@@ -95,7 +95,7 @@ internal fun TopAppBarWithSearch(
                             isSearchAndFilterMode = false
                             onSearchTextChange("")
                         }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.back))
+                            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.exit_filter))
                         }
                     },
                     placeholder = { Text(stringResource(id = R.string.search)) },
@@ -143,7 +143,10 @@ internal fun TopAppBarWithSearch(
                     IconButton(onClick = {
                         isSearchAndFilterMode = true
                     }) {
-                        Icon(Icons.Default.Search, "")
+                        Icon(
+                            Icons.Default.Search,
+                            stringResource(id = R.string.filter)
+                        )
                     }
                 }
             },
@@ -156,12 +159,42 @@ internal fun TopAppBarWithSearch(
     }
 }
 
+// region Previews
 @DefaultPreviews
 @Composable
 private fun Preview() {
     PreviewTheme {
         Surface {
+            // TODO: Low: animation crashes in interactive mode
             TopAppBarWithSearch(title = "Title")
         }
     }
 }
+
+@DefaultPreviews
+@Composable
+private fun PreviewNoSearch() {
+    PreviewTheme {
+        Surface {
+            TopAppBarWithSearch(
+                title = "Title",
+                showSearchIcon = false
+            )
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun PreviewWithTabs() {
+    PreviewTheme {
+        Surface {
+            TopAppBarWithSearch(
+                title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+                tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
+                selectedTabIndex = 1
+            )
+        }
+    }
+}
+// endregion
