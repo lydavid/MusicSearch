@@ -1,5 +1,7 @@
 package ly.david.mbjc.data.network
 
+// If instrumentation tests just says 0 pass without showing any tests ran/failed,
+//  then chances are we forgot to implement something here. It just doesn't tell us...
 internal class TestMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
         return SearchArtistsResponse(
@@ -83,6 +85,10 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun browseReleasesByLabel(labelId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun browseReleasesByArea(areaId: String, limit: Int, offset: Int): BrowseReleasesResponse {
         TODO("Not yet implemented")
     }
 
