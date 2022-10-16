@@ -28,9 +28,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -81,9 +83,9 @@ internal fun ScrollableTopAppBar(
                     }
                 }) {
                     if (openDrawer == null) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.back))
                     } else {
-                        Icon(Icons.Default.Menu, contentDescription = "Open navigation drawer")
+                        Icon(Icons.Default.Menu, contentDescription = stringResource(id = R.string.open_nav_drawer))
                     }
                 }
             },

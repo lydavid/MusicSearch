@@ -117,8 +117,8 @@ internal fun SearchMusicBrainzScreen(
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
                 value = text,
-                label = { Text("Search") },
-                placeholder = { Text("Search") },
+                label = { Text(stringResource(id = R.string.search)) },
+                placeholder = { Text(stringResource(id = R.string.search)) },
                 maxLines = 1, // TODO: Seems like this is currently broken
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
@@ -141,7 +141,7 @@ internal fun SearchMusicBrainzScreen(
                         text = ""
                         focusRequester.requestFocus()
                     }) {
-                        Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
+                        Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_search))
                     }
                 },
                 onValueChange = { newText ->

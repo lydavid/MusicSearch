@@ -17,11 +17,21 @@
     <string name="work">Work</string>
     <string name="url">URL</string>
 
+    <string name="open_nav_drawer">Open navigation drawer</string>
+    <string name="back">Back</string>
+    <string name="open_in_browser">Open in browser</string>
+    <string name="refresh">Refresh</string>
+    <string name="clear_filter">Clear filter text</string>
+
+    <string name="search_musicbrainz">Search MusicBrainz</string>
+    <string name="history">History</string>
+
+    <string name="search">Search</string>
+    <string name="clear_search">Clear search field</string>
     <string name="no_results_found">No results found.</string>
     <string name="no_results_found_search">No results found.\nTry refining your search query.</string>
 
-    <string name="open_in_browser">Open in browser</string>
-    <string name="refresh">Refresh</string>
+    <string name="recent_history">Recent History</string>
 
     <string name="details">Details</string>
     <string name="release_groups">Release Groups</string>

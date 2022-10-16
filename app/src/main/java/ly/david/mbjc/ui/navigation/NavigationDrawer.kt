@@ -52,7 +52,7 @@ internal fun NavigationDrawer(
             NavigationDrawerItem(
                 icon = Icons.Default.Search,
                 iconDescription = "",
-                label = "Search MusicBrainz",
+                label = stringResource(id = R.string.search_musicbrainz),
                 isSelected = selectedTopLevelDestination == Destination.LOOKUP
             ) {
                 navigateToTopLevelDestination(Destination.LOOKUP)
@@ -61,7 +61,7 @@ internal fun NavigationDrawer(
             NavigationDrawerItem(
                 icon = Icons.Default.History,
                 iconDescription = "",
-                label = "History",
+                label = stringResource(id = R.string.history),
                 isSelected = selectedTopLevelDestination == Destination.HISTORY
             ) {
                 navigateToTopLevelDestination(Destination.HISTORY)

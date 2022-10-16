@@ -3,8 +3,12 @@ package ly.david.mbjc
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -78,49 +82,78 @@ internal class NavigationTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun openNavigationDrawer_goToHistory() {
-        composeTestRule
-            .onNodeWithContentDescription("Open navigation drawer")
-            .performClick()
+    fun openNavigationDrawer_goToHistory_returnToSearch() {
 
-        // TODO: there has to be a way to get these strings from resources...
+        // Main title
         composeTestRule
-            .onNodeWithText("MBJC (Debug)")
+            .onAllNodesWithText(getSearchDrawerLabel())
+            .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("History")
+            .onNodeWithContentDescription(getNavDrawerIconContentDescription())
             .performClick()
 
         composeTestRule
-            .onNodeWithContentDescription("Open navigation drawer")
+            .onNodeWithText(getAppName())
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("Recent History")
+            .onNodeWithText(getHistoryDrawerLabel())
+            .performClick()
+
+        // Confirm that the drawer has closed.
+        composeTestRule
+            .onNodeWithContentDescription(getNavDrawerIconContentDescription())
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(getHistoryScreenTitle())
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithContentDescription(getNavDrawerIconContentDescription())
+            .performClick()
+
+        composeTestRule
+            .onAllNodesWithText(getSearchDrawerLabel())
+            .filterToOne(matcher = hasClickAction())
+            .performClick()
+
+        composeTestRule
+            .onAllNodesWithText(getSearchDrawerLabel())
+            .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
     }
-
-
 
     @Test
     fun enterSearchText_thenClear() {
         composeTestRule
-            .onNodeWithText("Search")
+            .onNodeWithText(getSearchLabel())
             .assert(hasText(""))
             .performTextInput("Hello there")
 
         composeTestRule
-            .onNodeWithContentDescription("Clear search field.")
+            .onNodeWithContentDescription(getClearSearchContentDescription())
             .assertIsDisplayed()
             .performClick()
 
         composeTestRule
-            .onNodeWithContentDescription("Clear search field.")
+            .onNodeWithContentDescription(getClearSearchContentDescription())
             .assertDoesNotExist()
 
         composeTestRule
-            .onNodeWithText("Search")
+            .onNodeWithText(getSearchLabel())
             .assert(hasText(""))
     }
+
+    private fun getSearchDrawerLabel() = composeTestRule.activity.resources.getString(R.string.search_musicbrainz)
+    private fun getSearchLabel() = composeTestRule.activity.resources.getString(R.string.search)
+    private fun getClearSearchContentDescription() = composeTestRule.activity.resources.getString(R.string.clear_search)
+    private fun getAppName() = composeTestRule.activity.resources.getString(R.string.app_name)
+    private fun getNavDrawerIconContentDescription() =
+        composeTestRule.activity.resources.getString(R.string.open_nav_drawer)
+
+    private fun getHistoryDrawerLabel() = composeTestRule.activity.resources.getString(R.string.history)
+    private fun getHistoryScreenTitle() = composeTestRule.activity.resources.getString(R.string.recent_history)
 }

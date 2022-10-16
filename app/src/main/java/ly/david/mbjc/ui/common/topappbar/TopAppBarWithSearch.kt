@@ -31,7 +31,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -93,17 +95,17 @@ internal fun TopAppBarWithSearch(
                             isSearchAndFilterMode = false
                             onSearchTextChange("")
                         }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.back))
                         }
                     },
-                    placeholder = { Text("Search") },
+                    placeholder = { Text(stringResource(id = R.string.search)) },
                     trailingIcon = {
                         if (searchText.isEmpty()) return@TextField
                         IconButton(onClick = {
                             onSearchTextChange("")
                             focusRequester.requestFocus()
                         }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Clear search field.")
+                            Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_filter))
                         }
                     },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),

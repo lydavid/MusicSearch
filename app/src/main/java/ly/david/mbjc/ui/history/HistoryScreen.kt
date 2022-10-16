@@ -26,6 +26,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -55,7 +56,7 @@ internal fun HistoryScreenScaffold(
         topBar = {
             TopAppBarWithSearch(
                 openDrawer = openDrawer,
-                title = "Recent History",
+                title = stringResource(id = R.string.recent_history),
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it

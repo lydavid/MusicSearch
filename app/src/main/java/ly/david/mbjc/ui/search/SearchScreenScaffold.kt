@@ -8,7 +8,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import ly.david.mbjc.R
 import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.navigation.Destination
@@ -30,7 +32,7 @@ internal fun SearchScreenScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ScrollableTopAppBar(
-                title = "Search Music Brainz",
+                title = stringResource(id = R.string.search_musicbrainz),
                 openDrawer = openDrawer
             )
         },
