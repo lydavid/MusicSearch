@@ -8,6 +8,7 @@ import ly.david.mbjc.data.domain.toAreaUiModel
 import ly.david.mbjc.data.network.Lookup.Companion.INC_ALL_RELATIONS
 import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.area.AreaDao
+import ly.david.mbjc.data.persistence.area.Iso3166_1
 import ly.david.mbjc.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.data.persistence.area.ReleasesCountriesDao
 import ly.david.mbjc.data.persistence.area.toAreaRoomModel
@@ -37,8 +38,9 @@ internal class AreaRepository @Inject constructor(
      */
     suspend fun lookupArea(areaId: String, forceRefresh: Boolean = false): AreaUiModel {
         val areaRoomModel = areaDao.getArea(areaId)
+        val countryCodes = areaDao.getCountryCodes(areaId)
         if (!forceRefresh && areaRoomModel != null) {
-            return areaRoomModel.toAreaUiModel()
+            return areaRoomModel.toAreaUiModel(countryCodes?.map { it.code })
         }
 
         val areaMusicBrainzModel = musicBrainzApiService.lookupArea(
@@ -56,6 +58,7 @@ internal class AreaRepository @Inject constructor(
         }
         relationDao.insertAll(relations)
         areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
+        areaDao.insertAllCountryCodes(areaMusicBrainzModel.iso_3166_1_codes?.map { Iso3166_1(areaId, it) }.orEmpty())
         return areaMusicBrainzModel.toAreaUiModel()
     }
 

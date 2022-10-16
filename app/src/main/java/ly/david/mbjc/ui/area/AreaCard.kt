@@ -11,10 +11,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.data.domain.AreaUiModel
+import ly.david.mbjc.data.domain.COUNTRY
 import ly.david.mbjc.data.getLifeSpanForDisplay
 import ly.david.mbjc.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.mbjc.ui.common.toFlagEmoji
+import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -31,12 +34,20 @@ internal fun AreaCard(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
+            val type = area.type
+
+            val areaName = if (type == COUNTRY) {
+                val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
+                flags.transformThisIfNotNullOrEmpty { "$it " } + area.getNameWithDisambiguation()
+            } else {
+                area.getNameWithDisambiguation()
+            }
+
             Text(
-                text = area.getNameWithDisambiguation(),
+                text = areaName,
                 style = TextStyles.getCardTitleTextStyle()
             )
 
-            val type = area.type
             if (!type.isNullOrEmpty()) {
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
@@ -74,6 +85,7 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaU
             name = "Area Name",
             disambiguation = "That one",
             type = "Country",
+            iso_3166_1_codes = listOf("GB")
         ),
     )
 }

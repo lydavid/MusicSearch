@@ -27,7 +27,22 @@ internal class ToFlagEmojiTest {
     }
 
     @Test
-    fun `invalid country code`() {
+    fun `invalid country code, 3 letters`() {
         assertEquals("CAN", "CAN".toFlagEmoji())
+    }
+
+    @Test
+    fun `invalid country code, 1 letter`() {
+        assertEquals("C", "C".toFlagEmoji())
+    }
+
+    @Test
+    fun `invalid country code, first character is not letter`() {
+        assertEquals("#C", "#C".toFlagEmoji())
+    }
+
+    @Test
+    fun `invalid country code, second character is not letter`() {
+        assertEquals("C3", "C3".toFlagEmoji())
     }
 }

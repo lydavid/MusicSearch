@@ -20,6 +20,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.mbjc.data.persistence.area.AreaDao
 import ly.david.mbjc.data.persistence.area.AreaRoomModel
+import ly.david.mbjc.data.persistence.area.Iso3166_1
 import ly.david.mbjc.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.data.persistence.area.ReleasesCountriesDao
 import ly.david.mbjc.data.persistence.artist.ArtistDao
@@ -58,14 +59,18 @@ import ly.david.mbjc.data.persistence.work.WorkDao
 import ly.david.mbjc.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 45,
+    version = 46,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
-        MediumRoomModel::class, TrackRoomModel::class, RecordingRoomModel::class, WorkRoomModel::class,
+        RecordingRoomModel::class, WorkRoomModel::class,
         AreaRoomModel::class, PlaceRoomModel::class,
         InstrumentRoomModel::class, LabelRoomModel::class,
         EventRoomModel::class,
+
+        // Other tables
+        MediumRoomModel::class, TrackRoomModel::class,
+        Iso3166_1::class,
 
         // Full-Text Search (FTS) tables
 //        ReleaseGroupFts::class,
@@ -119,6 +124,7 @@ import ly.david.mbjc.data.persistence.work.WorkRoomModel
         AutoMigration(from = 39, to = 40),
         AutoMigration(from = 41, to = 43),
         AutoMigration(from = 44, to = 45),
+        AutoMigration(from = 45, to = 46),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

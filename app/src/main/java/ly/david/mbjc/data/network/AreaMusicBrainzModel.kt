@@ -10,7 +10,8 @@ internal data class AreaMusicBrainzModel(
     @Json(name = "disambiguation") override val disambiguation: String? = null,
     @Json(name = "type") override val type: String? = null,
 
-//    @Json(name = "iso-3166-1-codes") val isoCodes: List<String>? = null,
+    // TODO: what is an example of a country with more than 1 code?
+    @Json(name = "iso-3166-1-codes") val iso_3166_1_codes: List<String>? = null,
 
 //    @Json(name = "type_id")
 //    override val typeId: String? = null,

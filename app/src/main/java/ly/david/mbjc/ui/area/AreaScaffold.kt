@@ -21,6 +21,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.mbjc.R
 import ly.david.mbjc.data.Area
+import ly.david.mbjc.data.domain.COUNTRY
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.getNameWithDisambiguation
@@ -68,7 +69,7 @@ internal fun AreaScaffold(
     var area: Area? by remember { mutableStateOf(null) }
     var title by rememberSaveable { mutableStateOf("") }
     val tabs = AreaTab.values()
-        .filter { it != AreaTab.RELEASES || area?.type == "Country" }
+        .filter { it != AreaTab.RELEASES || area?.type == COUNTRY }
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
@@ -162,7 +163,7 @@ internal fun AreaScaffold(
             AreaTab.STATS -> {
                 AreaStatsScreen(
                     areaId = areaId,
-                    showReleases = area?.type == "Country"
+                    showReleases = area?.type == COUNTRY
                 )
             }
         }

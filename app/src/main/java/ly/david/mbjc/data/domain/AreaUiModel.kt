@@ -5,12 +5,15 @@ import ly.david.mbjc.data.LifeSpan
 import ly.david.mbjc.data.network.AreaMusicBrainzModel
 import ly.david.mbjc.data.persistence.area.AreaRoomModel
 
+internal const val COUNTRY = "Country"
+
 internal data class AreaUiModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = "",
     override val type: String? = "",
-    override val lifeSpan: LifeSpan? = null
+    override val lifeSpan: LifeSpan? = null,
+    val iso_3166_1_codes: List<String>? = null,
 ) : Area, UiModel()
 
 internal fun AreaMusicBrainzModel.toAreaUiModel() =
@@ -19,14 +22,16 @@ internal fun AreaMusicBrainzModel.toAreaUiModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan,
+        iso_3166_1_codes = iso_3166_1_codes
     )
 
-internal fun AreaRoomModel.toAreaUiModel() =
+internal fun AreaRoomModel.toAreaUiModel(iso_3166_1_codes: List<String>? = null) =
     AreaUiModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         type = type,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan,
+        iso_3166_1_codes = iso_3166_1_codes
     )
