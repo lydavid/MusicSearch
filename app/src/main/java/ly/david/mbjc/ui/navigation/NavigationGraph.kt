@@ -32,6 +32,12 @@ import ly.david.mbjc.ui.work.WorkScaffold
 private const val ID = "id"
 private const val TITLE = "title"
 
+internal fun NavHostController.goTo(destination: Destination, id: String, title: String? = null) {
+    var route = "${destination.route}/$id"
+    if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
+    this.navigate(route)
+}
+
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
@@ -44,100 +50,24 @@ internal fun NavigationGraph(
         startDestination = Destination.LOOKUP.route,
     ) {
 
-        val onArtistClick: (String) -> Unit = { artistId ->
-            // TODO: these should be built by Destination
-            navController.navigate("${Destination.LOOKUP_ARTIST.route}/$artistId") {
-                restoreState = true
-            }
-        }
-
         val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId") {
-                restoreState = true
-            }
-        }
-
-        val onReleaseClick: (String, String?) -> Unit = { releaseId, title ->
-            var route = "${Destination.LOOKUP_RELEASE.route}/$releaseId"
-            if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
-            navController.navigate(route) {
-                restoreState = true
-            }
-        }
-
-        val onRecordingClick: (String) -> Unit = { recordingId ->
-            navController.navigate("${Destination.LOOKUP_RECORDING.route}/$recordingId") {
-                restoreState = true
-            }
-        }
-
-        val onAreaClick: (String, String?) -> Unit = { areaId, title ->
-            var route = "${Destination.LOOKUP_AREA.route}/$areaId"
-            if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
-            navController.navigate(route) {
-                restoreState = true
-            }
-        }
-
-        val onPlaceClick: (String) -> Unit = { placeId ->
-            navController.navigate("${Destination.LOOKUP_PLACE.route}/$placeId") {
-                restoreState = true
-            }
-        }
-
-        val onInstrumentClick: (String) -> Unit = { instrumentId ->
-            navController.navigate("${Destination.LOOKUP_INSTRUMENT.route}/$instrumentId") {
-                restoreState = true
-            }
-        }
-
-        val onLabelClick: (String) -> Unit = { labelId ->
-            navController.navigate("${Destination.LOOKUP_LABEL.route}/$labelId") {
-                restoreState = true
-            }
-        }
-
-        val onWorkClick: (String) -> Unit = { workId ->
-            navController.navigate("${Destination.LOOKUP_WORK.route}/$workId") {
-                restoreState = true
-            }
-        }
-
-        val onEventClick: (String) -> Unit = { eventId ->
-            navController.navigate("${Destination.LOOKUP_EVENT.route}/$eventId") {
-                restoreState = true
-            }
-        }
-
-        val onSeriesClick: (String) -> Unit = { seriesId ->
-            navController.navigate("${Destination.LOOKUP_SERIES.route}/$seriesId") {
-                restoreState = true
-            }
-        }
-
-        val onGenreClick: (String, String?) -> Unit = { genreId, title ->
-            var route = "${Destination.LOOKUP_GENRE.route}/$genreId"
-            if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
-            navController.navigate(route) {
-                restoreState = true
-            }
+            navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId")
         }
 
         val onLookupItemClick: (Destination, String, String?) -> Unit = { destination, id, title ->
             when (destination) {
-                Destination.LOOKUP_ARTIST -> onArtistClick(id)
-                Destination.LOOKUP_RELEASE_GROUP -> onReleaseGroupClick(id)
-                Destination.LOOKUP_RELEASE -> onReleaseClick(id, title)
-                Destination.LOOKUP_RECORDING -> onRecordingClick(id)
-                Destination.LOOKUP_AREA -> onAreaClick(id, title)
-                Destination.LOOKUP_PLACE -> onPlaceClick(id)
-                Destination.LOOKUP_INSTRUMENT -> onInstrumentClick(id)
-                Destination.LOOKUP_LABEL -> onLabelClick(id)
-                Destination.LOOKUP_WORK -> onWorkClick(id)
-                Destination.LOOKUP_EVENT -> onEventClick(id)
-                Destination.LOOKUP_SERIES -> onSeriesClick(id)
-
-                Destination.LOOKUP_GENRE -> onGenreClick(id, title)
+                Destination.LOOKUP_ARTIST,
+                Destination.LOOKUP_RELEASE_GROUP,
+                Destination.LOOKUP_RELEASE,
+                Destination.LOOKUP_RECORDING,
+                Destination.LOOKUP_AREA,
+                Destination.LOOKUP_PLACE,
+                Destination.LOOKUP_INSTRUMENT,
+                Destination.LOOKUP_LABEL,
+                Destination.LOOKUP_WORK,
+                Destination.LOOKUP_EVENT,
+                Destination.LOOKUP_SERIES,
+                Destination.LOOKUP_GENRE -> navController.goTo(destination, id, title)
 
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
