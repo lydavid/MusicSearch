@@ -37,6 +37,13 @@ internal abstract class LookupHistoryDao : BaseDao<LookupHistory> {
     )
     abstract suspend fun getLookupHistory(mbid: String): LookupHistory?
 
+    @Query(
+        """
+            DELETE FROM lookup_history
+        """
+    )
+    abstract suspend fun deleteAllHistory()
+
     /**
      * Insert new [LookupHistory] if it doesn't exist, otherwise increment its visited count
      * and its last visited timestamp.

@@ -15,25 +15,59 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
+import ly.david.mbjc.data.persistence.area.AreaDao
+import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.MainActivity
 import ly.david.mbjc.ui.MainApp
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.theme.PreviewTheme
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
+@RunWith(AndroidJUnit4::class)
+//@UninstallModules(DatabaseModule::class)
+//@HiltAndroidTest
 internal class NavigationRouteTest {
+
+//    @get:Rule(order = 0)
+//    val hiltRule: HiltAndroidRule = HiltAndroidRule(this)
+//
+//    @get:Rule(order = 1)
+//    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
+
     lateinit var navController: NavHostController
+
+    private lateinit var db: MusicBrainzRoomDatabase
+    private lateinit var areaDao: AreaDao
+    private lateinit var lookupHistoryDao: LookupHistoryDao
+//    private lateinit var relationDao: RelationDao
 
     @Before
     fun setupApp() {
+//        hiltRule.inject()
+
+        // TODO: the disadvantage of this is it will include any existing test data
+        db = Room.inMemoryDatabaseBuilder(
+            ApplicationProvider.getApplicationContext(),
+            MusicBrainzRoomDatabase::class.java
+        ).build()
+        areaDao = db.getAreaDao()
+        lookupHistoryDao = db.getLookupHistoryDao()
+
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
@@ -42,11 +76,18 @@ internal class NavigationRouteTest {
         }
     }
 
+    @After
+    @Throws(IOException::class)
+    fun tearDown() {
+        db.close()
+    }
+
     @Test
     fun navigateToHistoryWithRoute() {
 
         runBlocking {
             withContext(Dispatchers.Main) {
+//                lookupHistoryDao.deleteAllHistory()
                 composeTestRule.awaitIdle()
                 navController.navigate(Destination.HISTORY.route)
             }
@@ -55,23 +96,36 @@ internal class NavigationRouteTest {
         composeTestRule
             .onNodeWithText("Recent History")
             .assertIsDisplayed()
+
+//        composeTestRule
+//            .onNodeWithText("No results found.")
+//            .assertIsDisplayed()
     }
 
-//    @Test
-//    fun navigateToAreaWithRoute() {
-//
-//        runBlocking {
-//            withContext(Dispatchers.Main) {
-//                composeTestRule.awaitIdle()
-//                val areaId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
-//                navController.navigate("${Destination.LOOKUP_ARTIST.route}/$areaId")
-//            }
-//        }
-//
-//        composeTestRule
-//            .onNodeWithText("Recent History")
-//            .assertIsDisplayed()
-//    }
+    @Test
+    fun navigateToAreaWithCustomTitle() {
+        val title = "Custom Title"
+        runBlocking {
+//            areaDao.insert(
+//                AreaRoomModel(
+//                    id = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62",
+//                    name = "Test",
+//                    disambiguation = "Yes",
+//                    type = "Country",
+//                    lifeSpan = null,
+//                )
+//            )
+            withContext(Dispatchers.Main) {
+                composeTestRule.awaitIdle()
+                val areaId = "1"
+                navController.navigate("${Destination.LOOKUP_AREA.route}/$areaId?title=$title")
+            }
+        }
+
+        composeTestRule
+            .onNodeWithText(title)
+            .assertIsDisplayed()
+    }
 }
 
 internal class NavigationTest {

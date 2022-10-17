@@ -95,7 +95,7 @@ internal fun TopAppBarWithSearch(
                             isSearchAndFilterMode = false
                             onSearchTextChange("")
                         }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.exit_filter))
+                            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
                         }
                     },
                     placeholder = { Text(stringResource(id = R.string.search)) },
