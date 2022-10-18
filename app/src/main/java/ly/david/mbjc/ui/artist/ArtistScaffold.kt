@@ -51,6 +51,7 @@ private enum class ArtistTab(@StringRes val titleRes: Int) {
 @Composable
 internal fun ArtistScaffold(
     artistId: String,
+    titleWithDisambiguation: String? = null,
     onReleaseGroupClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
@@ -63,22 +64,28 @@ internal fun ArtistScaffold(
     val resource = MusicBrainzResource.ARTIST
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
-    var titleState by rememberSaveable { mutableStateOf("") }
+    var title by rememberSaveable { mutableStateOf("") }
     var searchText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = Unit) {
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        title = titleWithDisambiguation
+    }
+
+    LaunchedEffect(key1 = artistId) {
         val artist = viewModel.getArtist(artistId)
-        titleState = artist.getNameWithDisambiguation()
+        if (titleWithDisambiguation.isNullOrEmpty()) {
+            title = artist.getNameWithDisambiguation()
+        }
 
         // Following experience of Firefox's visit count, which doesn't record back as visits.
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
-                resourceId = artist.id,
+                resourceId = artistId,
                 resource = resource,
-                summary = titleState
+                summary = title
             )
             recordedLookup = true
         }
@@ -90,7 +97,7 @@ internal fun ArtistScaffold(
             TopAppBarWithSearch(
                 onBack = onBack,
                 resource = resource,
-                title = titleState,
+                title = title,
                 showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)

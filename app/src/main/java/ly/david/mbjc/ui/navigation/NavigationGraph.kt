@@ -119,22 +119,25 @@ internal fun NavigationGraph(
             )
         }
 
-        composable(
-            route = "${Destination.LOOKUP_ARTIST.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.ARTIST.resourceName}/{$ID}"
-                }
+        addResourceScreen(
+            resource = MusicBrainzResource.AREA,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            AreaScaffold(
+                areaId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
             )
-        ) { entry ->
-            val artistId = entry.arguments?.getString(ID) ?: return@composable
+        }
+
+        addResourceScreen(
+            resource = MusicBrainzResource.ARTIST,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
             ArtistScaffold(
-                artistId = artistId,
+                artistId = resourceId,
+                titleWithDisambiguation = title,
                 onReleaseGroupClick = onReleaseGroupClick,
                 onItemClick = onLookupItemClick,
                 onBack = navController::navigateUp,
@@ -229,18 +232,6 @@ internal fun NavigationGraph(
             val workId = entry.arguments?.getString(ID) ?: return@composable
             WorkScaffold(
                 workId = workId,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
-            )
-        }
-
-        addResourceScreen(
-            resource = MusicBrainzResource.AREA,
-            deeplinkSchema = deeplinkSchema
-        ) { resourceId, title ->
-            AreaScaffold(
-                areaId = resourceId,
-                titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )

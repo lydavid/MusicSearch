@@ -73,7 +73,7 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
         offset: Int,
         include: String
     ): BrowseReleaseGroupsResponse {
-        TODO("Not yet implemented")
+        return browseReleaseGroupsResponse
     }
 
     override suspend fun browseReleasesByReleaseGroup(
@@ -101,11 +101,11 @@ internal class TestMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
-        TODO("Not yet implemented")
+        return artistMusicBrainzModel
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
-        TODO("Not yet implemented")
+        return releaseGroupMusicBrainzModel
     }
 
     override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
