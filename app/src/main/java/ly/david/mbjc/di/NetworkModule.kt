@@ -48,15 +48,21 @@ internal object NetworkModule {
             .build()
     }
 
-    @Singleton
-    @Provides
-    fun provideMusicBrainzApi(
-        okHttpClient: OkHttpClient
-    ): MusicBrainzApiService = MusicBrainzApiServiceImpl.create(okHttpClient)
+
 
     @Singleton
     @Provides
     fun provideCoverArtArchiveApi(
         okHttpClient: OkHttpClient
     ): CoverArtArchiveApiService = CoverArtArchiveApiService.create(okHttpClient)
+}
+
+@InstallIn(SingletonComponent::class)
+@Module
+internal object MusicBrainzNetworkModule {
+    @Singleton
+    @Provides
+    fun provideMusicBrainzApi(
+        okHttpClient: OkHttpClient
+    ): MusicBrainzApiService = MusicBrainzApiServiceImpl.create(okHttpClient)
 }

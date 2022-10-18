@@ -22,29 +22,101 @@ import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
 import ly.david.mbjc.data.persistence.area.AreaDao
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.MainActivity
 import ly.david.mbjc.ui.MainApp
 import ly.david.mbjc.ui.navigation.Destination
+import ly.david.mbjc.ui.navigation.goTo
+import ly.david.mbjc.ui.navigation.toDestination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
-@RunWith(AndroidJUnit4::class)
-//@UninstallModules(DatabaseModule::class)
+// A custom runner to set up the instrumented application class for tests.
+//class CustomTestRunner : AndroidJUnitRunner() {
+//
+//    override fun newApplication(cl: ClassLoader?, name: String?, context: Context?): Application {
+//        return super.newApplication(cl, HiltTestApplication::class.java.name, context)
+//    }
+//}
+
+//@TestInstallIn(
+//    components = [SingletonComponent::class],
+//    replaces = [MusicBrainzNetworkModule::class]
+//)
+////    @InstallIn(SingletonComponent::class)
+//@Module
+//internal object FakeMusicBrainzNetworkModule {
+//    @Singleton
+//    @Provides
+//    fun provideMusicBrainzApi(): MusicBrainzApiService = TestMusicBrainzApiService()
+//}
+
+// TODO: currently flaky without injecting our test api service
+//  and sometimes it will just stall
+//@UninstallModules(MusicBrainzNetworkModule::class)
 //@HiltAndroidTest
-internal class NavigationRouteTest {
+//@Config(application = HiltTestApplication::class)
+@RunWith(Parameterized::class)
+internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) {
+
+    companion object {
+        @JvmStatic
+        @Parameterized.Parameters(name = "{0}")
+        fun data(): Collection<MusicBrainzResource> {
+            return MusicBrainzResource.values().filterNot { it == MusicBrainzResource.URL }
+        }
+    }
+
+//    @get:Rule(order = 0)
+//    val timeout = CoroutinesTimeout.seconds(5)
 
 //    @get:Rule(order = 0)
 //    val hiltRule: HiltAndroidRule = HiltAndroidRule(this)
-//
-//    @get:Rule(order = 1)
-//    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule//(order = 1)
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
+
+    private lateinit var navController: NavHostController
+
+    @Before
+    fun setupApp() {
+//        hiltRule.inject()
+
+        composeTestRule.activity.setContent {
+            navController = rememberNavController()
+            PreviewTheme {
+                MainApp(navController)
+            }
+        }
+    }
+
+    @Test
+    fun navigateToEachResourceScreenWithCustomTitle() {
+        val title = resource.resourceName
+        runBlocking {
+            withContext(Dispatchers.Main) {
+                composeTestRule.awaitIdle()
+                val areaId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
+                navController.goTo(destination = resource.toDestination(), id = areaId, title = title)
+            }
+        }
+
+        composeTestRule
+            .onNodeWithText(title)
+            .assertIsDisplayed()
+    }
+}
+
+@RunWith(AndroidJUnit4::class)
+internal class NavigationRouteTest {
 
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
@@ -100,31 +172,6 @@ internal class NavigationRouteTest {
 //        composeTestRule
 //            .onNodeWithText("No results found.")
 //            .assertIsDisplayed()
-    }
-
-    @Test
-    fun navigateToAreaWithCustomTitle() {
-        val title = "Custom Title"
-        runBlocking {
-//            areaDao.insert(
-//                AreaRoomModel(
-//                    id = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62",
-//                    name = "Test",
-//                    disambiguation = "Yes",
-//                    type = "Country",
-//                    lifeSpan = null,
-//                )
-//            )
-            withContext(Dispatchers.Main) {
-                composeTestRule.awaitIdle()
-                val areaId = "1"
-                navController.navigate("${Destination.LOOKUP_AREA.route}/$areaId?title=$title")
-            }
-        }
-
-        composeTestRule
-            .onNodeWithText(title)
-            .assertIsDisplayed()
     }
 }
 
