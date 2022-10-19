@@ -67,7 +67,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
         }
 
         composeTestRule
-            .onNodeWithText(getHistoryScreenTitle())
+            .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
 //        composeTestRule

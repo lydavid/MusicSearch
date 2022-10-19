@@ -24,42 +24,42 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
 
         // Main title
         composeTestRule
-            .onAllNodesWithText(getSearchDrawerLabel())
+            .onAllNodesWithText(searchDrawerLabel)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithContentDescription(getNavDrawerIconContentDescription())
+            .onNodeWithContentDescription(navDrawerIconContentDescription)
             .performClick()
 
         composeTestRule
-            .onNodeWithText(getAppName())
+            .onNodeWithText(appName)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(getHistoryDrawerLabel())
+            .onNodeWithText(historyDrawerLabel)
             .performClick()
 
         // Confirm that the drawer has closed.
         composeTestRule
-            .onNodeWithContentDescription(getNavDrawerIconContentDescription())
+            .onNodeWithContentDescription(navDrawerIconContentDescription)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(getHistoryScreenTitle())
+            .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithContentDescription(getNavDrawerIconContentDescription())
+            .onNodeWithContentDescription(navDrawerIconContentDescription)
             .performClick()
 
         composeTestRule
-            .onAllNodesWithText(getSearchDrawerLabel())
+            .onAllNodesWithText(searchDrawerLabel)
             .filterToOne(matcher = hasClickAction())
             .performClick()
 
         composeTestRule
-            .onAllNodesWithText(getSearchDrawerLabel())
+            .onAllNodesWithText(searchDrawerLabel)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
     }
@@ -67,21 +67,21 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
     @Test
     fun enterSearchText_thenClear() {
         composeTestRule
-            .onNodeWithText(getSearchLabel())
+            .onNodeWithText(searchLabel)
             .assert(hasText(""))
             .performTextInput("Hello there")
 
         composeTestRule
-            .onNodeWithContentDescription(getClearSearchContentDescription())
+            .onNodeWithContentDescription(clearSearchContentDescription)
             .assertIsDisplayed()
             .performClick()
 
         composeTestRule
-            .onNodeWithContentDescription(getClearSearchContentDescription())
+            .onNodeWithContentDescription(clearSearchContentDescription)
             .assertDoesNotExist()
 
         composeTestRule
-            .onNodeWithText(getSearchLabel())
+            .onNodeWithText(searchLabel)
             .assert(hasText(""))
     }
 }

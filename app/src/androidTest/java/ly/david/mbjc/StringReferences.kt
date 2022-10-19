@@ -7,11 +7,18 @@ import ly.david.mbjc.ui.MainActivity
 internal interface StringReferences {
     val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 
-    fun getSearchDrawerLabel() = composeTestRule.activity.resources.getString(R.string.search_musicbrainz)
-    fun getSearchLabel() = composeTestRule.activity.resources.getString(R.string.search)
-    fun getClearSearchContentDescription() = composeTestRule.activity.resources.getString(R.string.clear_search)
-    fun getAppName() = composeTestRule.activity.resources.getString(R.string.app_name)
-    fun getNavDrawerIconContentDescription() = composeTestRule.activity.resources.getString(R.string.open_nav_drawer)
-    fun getHistoryDrawerLabel() = composeTestRule.activity.resources.getString(R.string.history)
-    fun getHistoryScreenTitle() = composeTestRule.activity.resources.getString(R.string.recent_history)
+    val searchDrawerLabel
+        get() = composeTestRule.activity.resources.getString(R.string.search_musicbrainz)
+    val searchLabel
+        get() = composeTestRule.activity.resources.getString(R.string.search)
+    val clearSearchContentDescription
+        get() = composeTestRule.activity.resources.getString(R.string.clear_search)
+    val appName
+        get() = composeTestRule.activity.resources.getString(R.string.app_name)
+    val navDrawerIconContentDescription
+        get() = composeTestRule.activity.resources.getString(R.string.open_nav_drawer)
+    val historyDrawerLabel
+        get() = composeTestRule.activity.resources.getString(R.string.history)
+    val historyScreenTitle
+        get() = composeTestRule.activity.resources.getString(R.string.recent_history)
 }
