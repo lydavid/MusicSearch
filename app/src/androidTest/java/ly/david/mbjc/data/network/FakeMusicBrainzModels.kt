@@ -1,5 +1,7 @@
 package ly.david.mbjc.data.network
 
+import ly.david.mbjc.data.network.api.BrowseReleaseGroupsResponse
+
 internal val artistMusicBrainzModel = ArtistMusicBrainzModel(
     id = "1",
     name = "Artist Name",

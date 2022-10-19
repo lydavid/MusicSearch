@@ -1,4 +1,18 @@
-package ly.david.mbjc.data.network
+package ly.david.mbjc.data.network.api
+
+import ly.david.mbjc.data.network.AreaMusicBrainzModel
+import ly.david.mbjc.data.network.ArtistMusicBrainzModel
+import ly.david.mbjc.data.network.EventMusicBrainzModel
+import ly.david.mbjc.data.network.InstrumentMusicBrainzModel
+import ly.david.mbjc.data.network.LabelMusicBrainzModel
+import ly.david.mbjc.data.network.PlaceMusicBrainzModel
+import ly.david.mbjc.data.network.RecordingMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
+import ly.david.mbjc.data.network.WorkMusicBrainzModel
+import ly.david.mbjc.data.network.artistMusicBrainzModel
+import ly.david.mbjc.data.network.browseReleaseGroupsResponse
+import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
 
 internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {

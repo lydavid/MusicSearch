@@ -24,7 +24,7 @@ import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toReleaseGroupUiModel
 import ly.david.mbjc.data.getDisplayTypes
-import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistDao

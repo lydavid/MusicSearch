@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import java.io.IOException
 import kotlinx.coroutines.runBlocking
-import ly.david.mbjc.data.network.SEARCH_BROWSE_LIMIT
+import ly.david.mbjc.data.network.api.SEARCH_BROWSE_LIMIT
 import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
 import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.ArtistRoomModel

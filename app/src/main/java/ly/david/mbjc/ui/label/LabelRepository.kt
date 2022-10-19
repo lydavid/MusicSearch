@@ -6,7 +6,7 @@ import javax.inject.Singleton
 import ly.david.mbjc.data.Label
 import ly.david.mbjc.data.domain.LabelUiModel
 import ly.david.mbjc.data.domain.toLabelUiModel
-import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.label.LabelDao
 import ly.david.mbjc.data.persistence.label.ReleaseLabel
 import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao

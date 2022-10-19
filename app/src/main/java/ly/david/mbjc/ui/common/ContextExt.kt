@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import ly.david.mbjc.data.Coordinates
-import ly.david.mbjc.data.network.MUSIC_BRAINZ_BASE_URL
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.api.MUSIC_BRAINZ_BASE_URL
 
 /**
  * Launches web browser for MusicBrainz's page for [resource] with [musicBrainzId].

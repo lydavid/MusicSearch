@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.EndOfList
 import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 

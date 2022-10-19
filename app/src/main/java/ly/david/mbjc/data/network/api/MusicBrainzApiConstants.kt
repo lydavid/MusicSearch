@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.network
+package ly.david.mbjc.data.network.api
 
 /**
  * MusicBrainz base url for API and web.
@@ -19,8 +19,3 @@ internal const val STARTING_OFFSET = 0
  * Limit for search/browse requests. This is the max size.
  */
 internal const val SEARCH_BROWSE_LIMIT = 100
-
-/**
- * Specifically chosen so that we don't fetch multiple pages before loading footer disappears.
- */
-internal const val PREFETCH_DISTANCE = 1

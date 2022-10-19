@@ -5,8 +5,8 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kotlinx.coroutines.delay
-import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
-import ly.david.mbjc.data.network.SEARCH_BROWSE_LIMIT
+import ly.david.mbjc.data.network.api.DELAY_PAGED_API_CALLS_MS
+import ly.david.mbjc.data.network.api.SEARCH_BROWSE_LIMIT
 import ly.david.mbjc.data.persistence.RoomModel
 
 /**

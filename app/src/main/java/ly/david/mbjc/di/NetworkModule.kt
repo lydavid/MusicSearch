@@ -8,9 +8,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
-import ly.david.mbjc.data.network.MusicBrainzApiService
-import ly.david.mbjc.data.network.MusicBrainzApiServiceImpl
-import ly.david.mbjc.data.network.coverart.CoverArtArchiveApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiServiceImpl
+import ly.david.mbjc.data.network.api.coverart.CoverArtArchiveApiService
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 
@@ -19,8 +19,8 @@ private const val USER_AGENT_VALUE = "MusicBrainzJetpackCompose/0.1.0"
 private const val ACCEPT = "Accept"
 private const val ACCEPT_VALUE = "application/json"
 
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 internal object NetworkModule {
 
     @Singleton
@@ -57,8 +57,8 @@ internal object NetworkModule {
     ): CoverArtArchiveApiService = CoverArtArchiveApiService.create(okHttpClient)
 }
 
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 internal object MusicBrainzNetworkModule {
     @Singleton
     @Provides

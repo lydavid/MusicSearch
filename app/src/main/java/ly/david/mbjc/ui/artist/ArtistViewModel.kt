@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.mbjc.data.Artist
-import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.artist.ArtistDao
 import ly.david.mbjc.data.persistence.artist.toArtistRoomModel
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao

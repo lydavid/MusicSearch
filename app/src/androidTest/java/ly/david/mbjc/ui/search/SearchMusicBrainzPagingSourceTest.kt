@@ -5,8 +5,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
-import ly.david.mbjc.data.network.FakeMusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.api.FakeMusicBrainzApiService
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

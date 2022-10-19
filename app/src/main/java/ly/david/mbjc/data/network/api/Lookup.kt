@@ -1,5 +1,15 @@
-package ly.david.mbjc.data.network
+package ly.david.mbjc.data.network.api
 
+import ly.david.mbjc.data.network.AreaMusicBrainzModel
+import ly.david.mbjc.data.network.ArtistMusicBrainzModel
+import ly.david.mbjc.data.network.EventMusicBrainzModel
+import ly.david.mbjc.data.network.InstrumentMusicBrainzModel
+import ly.david.mbjc.data.network.LabelMusicBrainzModel
+import ly.david.mbjc.data.network.PlaceMusicBrainzModel
+import ly.david.mbjc.data.network.RecordingMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
+import ly.david.mbjc.data.network.WorkMusicBrainzModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

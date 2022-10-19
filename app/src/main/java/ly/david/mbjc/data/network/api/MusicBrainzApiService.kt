@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.network
+package ly.david.mbjc.data.network.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

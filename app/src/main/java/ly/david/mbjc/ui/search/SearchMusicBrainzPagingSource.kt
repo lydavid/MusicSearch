@@ -6,11 +6,11 @@ import java.io.IOException
 import kotlinx.coroutines.delay
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toUiModel
-import ly.david.mbjc.data.network.DELAY_PAGED_API_CALLS_MS
-import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzModel
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.network.STARTING_OFFSET
+import ly.david.mbjc.data.network.api.DELAY_PAGED_API_CALLS_MS
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.STARTING_OFFSET
 import retrofit2.HttpException
 
 internal class SearchMusicBrainzPagingSource(

@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
-import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao
 import ly.david.mbjc.data.persistence.release.ReleaseRoomModel

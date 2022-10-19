@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.recording
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.Recording
-import ly.david.mbjc.data.network.MusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.relation.RelationDao

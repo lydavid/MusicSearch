@@ -4,7 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
-import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.network.getReleaseArtistCreditRoomModels
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.ReleaseDao

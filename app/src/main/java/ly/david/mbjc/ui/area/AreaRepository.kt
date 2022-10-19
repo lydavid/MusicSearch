@@ -5,8 +5,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.mbjc.data.domain.AreaUiModel
 import ly.david.mbjc.data.domain.toAreaUiModel
-import ly.david.mbjc.data.network.Lookup.Companion.INC_ALL_RELATIONS
-import ly.david.mbjc.data.network.MusicBrainzApiService
+import ly.david.mbjc.data.network.api.Lookup.Companion.INC_ALL_RELATIONS
+import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.area.AreaDao
 import ly.david.mbjc.data.persistence.area.Iso3166_1
 import ly.david.mbjc.data.persistence.area.ReleaseCountry

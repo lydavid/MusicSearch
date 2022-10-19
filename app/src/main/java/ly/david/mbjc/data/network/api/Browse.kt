@@ -1,6 +1,9 @@
-package ly.david.mbjc.data.network
+package ly.david.mbjc.data.network.api
 
 import com.squareup.moshi.Json
+import ly.david.mbjc.data.network.RecordingMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

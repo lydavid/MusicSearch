@@ -26,8 +26,8 @@ import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.TrackUiModel
 import ly.david.mbjc.data.domain.UiModel
 import ly.david.mbjc.data.domain.toTrackUiModel
-import ly.david.mbjc.data.network.coverart.CoverArtArchiveApiService
-import ly.david.mbjc.data.network.coverart.getSmallCoverArtUrl
+import ly.david.mbjc.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.mbjc.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.data.persistence.release.MediumDao
 import ly.david.mbjc.data.persistence.release.MediumRoomModel

@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.network.coverart
+package ly.david.mbjc.data.network.api.coverart
 
 import com.squareup.moshi.Json
 
