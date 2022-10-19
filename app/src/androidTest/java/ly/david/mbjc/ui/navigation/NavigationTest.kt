@@ -13,11 +13,11 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import dagger.hilt.android.testing.HiltAndroidTest
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.R
+import ly.david.mbjc.StringReferences
 import org.junit.Test
 
 @HiltAndroidTest
-internal class NavigationTest : MainActivityTest() {
+internal class NavigationTest : MainActivityTest(), StringReferences {
 
     @Test
     fun openNavigationDrawer_goToHistory_returnToSearch() {
@@ -84,14 +84,4 @@ internal class NavigationTest : MainActivityTest() {
             .onNodeWithText(getSearchLabel())
             .assert(hasText(""))
     }
-
-    private fun getSearchDrawerLabel() = composeTestRule.activity.resources.getString(R.string.search_musicbrainz)
-    private fun getSearchLabel() = composeTestRule.activity.resources.getString(R.string.search)
-    private fun getClearSearchContentDescription() = composeTestRule.activity.resources.getString(R.string.clear_search)
-    private fun getAppName() = composeTestRule.activity.resources.getString(R.string.app_name)
-    private fun getNavDrawerIconContentDescription() =
-        composeTestRule.activity.resources.getString(R.string.open_nav_drawer)
-
-    private fun getHistoryDrawerLabel() = composeTestRule.activity.resources.getString(R.string.history)
-    private fun getHistoryScreenTitle() = composeTestRule.activity.resources.getString(R.string.recent_history)
 }

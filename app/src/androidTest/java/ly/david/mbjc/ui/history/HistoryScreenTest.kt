@@ -13,8 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import ly.david.mbjc.MainActivityTest
+import ly.david.mbjc.StringReferences
 import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
-import ly.david.mbjc.data.persistence.area.AreaDao
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.MainApp
 import ly.david.mbjc.ui.navigation.Destination
@@ -24,14 +24,12 @@ import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class HistoryScreenTest : MainActivityTest() {
+internal class HistoryScreenTest : MainActivityTest(), StringReferences {
 
     lateinit var navController: NavHostController
 
     private lateinit var db: MusicBrainzRoomDatabase
-    private lateinit var areaDao: AreaDao
     private lateinit var lookupHistoryDao: LookupHistoryDao
-//    private lateinit var relationDao: RelationDao
 
     @Before
     fun setupApp() {
@@ -42,7 +40,6 @@ internal class HistoryScreenTest : MainActivityTest() {
             ApplicationProvider.getApplicationContext(),
             MusicBrainzRoomDatabase::class.java
         ).build()
-        areaDao = db.getAreaDao()
         lookupHistoryDao = db.getLookupHistoryDao()
 
         composeTestRule.activity.setContent {
@@ -64,14 +61,13 @@ internal class HistoryScreenTest : MainActivityTest() {
 
         runBlocking {
             withContext(Dispatchers.Main) {
-//                lookupHistoryDao.deleteAllHistory()
                 composeTestRule.awaitIdle()
                 navController.navigate(Destination.HISTORY.route)
             }
         }
 
         composeTestRule
-            .onNodeWithText("Recent History")
+            .onNodeWithText(getHistoryScreenTitle())
             .assertIsDisplayed()
 
 //        composeTestRule
