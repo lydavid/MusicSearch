@@ -20,6 +20,7 @@ import ly.david.mbjc.data.Label
 import ly.david.mbjc.data.domain.ReleaseUiModel
 import ly.david.mbjc.data.domain.toReleaseUiModel
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.mbjc.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig

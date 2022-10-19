@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.releasegroup.releases
+package ly.david.mbjc.data.repository
 
 import javax.inject.Inject
 import javax.inject.Singleton

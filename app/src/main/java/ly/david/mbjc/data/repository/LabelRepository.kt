@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label
+package ly.david.mbjc.data.repository
 
 import androidx.paging.PagingSource
 import javax.inject.Inject

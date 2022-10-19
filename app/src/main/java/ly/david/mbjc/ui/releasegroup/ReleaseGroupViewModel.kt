@@ -28,10 +28,10 @@ import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
+import ly.david.mbjc.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
-import ly.david.mbjc.ui.releasegroup.releases.ReleaseGroupRepository
 
 // TODO: generalize? reuse for releases by label
 //  or make abstract, and override

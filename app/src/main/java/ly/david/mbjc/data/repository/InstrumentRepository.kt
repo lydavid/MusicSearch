@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.instrument
+package ly.david.mbjc.data.repository
 
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -7,9 +7,9 @@ import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.data.network.api.MusicBrainzApiService
 import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.instrument.InstrumentDao
 import ly.david.mbjc.data.persistence.instrument.toInstrumentRoomModel
+import ly.david.mbjc.data.persistence.relation.RelationDao
 import ly.david.mbjc.data.persistence.relation.RelationRoomModel
 import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
 
