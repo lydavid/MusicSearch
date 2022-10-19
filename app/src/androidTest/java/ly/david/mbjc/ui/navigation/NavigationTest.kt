@@ -1,106 +1,23 @@
 package ly.david.mbjc.ui.navigation
 
-import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import java.io.IOException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import dagger.hilt.android.testing.HiltAndroidTest
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.R
-import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
-import ly.david.mbjc.data.persistence.area.AreaDao
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.ui.MainActivity
-import ly.david.mbjc.ui.MainApp
-import ly.david.mbjc.ui.theme.PreviewTheme
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-internal class NavigationRouteTest {
-
-    @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
-
-    lateinit var navController: NavHostController
-
-    private lateinit var db: MusicBrainzRoomDatabase
-    private lateinit var areaDao: AreaDao
-    private lateinit var lookupHistoryDao: LookupHistoryDao
-//    private lateinit var relationDao: RelationDao
-
-    @Before
-    fun setupApp() {
-//        hiltRule.inject()
-
-        // TODO: the disadvantage of this is it will include any existing test data
-        db = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            MusicBrainzRoomDatabase::class.java
-        ).build()
-        areaDao = db.getAreaDao()
-        lookupHistoryDao = db.getLookupHistoryDao()
-
-        composeTestRule.activity.setContent {
-            navController = rememberNavController()
-            PreviewTheme {
-                MainApp(navController)
-            }
-        }
-    }
-
-    @After
-    @Throws(IOException::class)
-    fun tearDown() {
-        db.close()
-    }
-
-    @Test
-    fun navigateToHistoryWithRoute() {
-
-        runBlocking {
-            withContext(Dispatchers.Main) {
-//                lookupHistoryDao.deleteAllHistory()
-                composeTestRule.awaitIdle()
-                navController.navigate(Destination.HISTORY.route)
-            }
-        }
-
-        composeTestRule
-            .onNodeWithText("Recent History")
-            .assertIsDisplayed()
-
-//        composeTestRule
-//            .onNodeWithText("No results found.")
-//            .assertIsDisplayed()
-    }
-}
-
-internal class NavigationTest {
-
-    // val composeTestRule = createComposeRule() if we don't need activity
-    //  great for testing individual UI pieces
-    @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+@HiltAndroidTest
+internal class NavigationTest : MainActivityTest() {
 
     @Test
     fun openNavigationDrawer_goToHistory_returnToSearch() {

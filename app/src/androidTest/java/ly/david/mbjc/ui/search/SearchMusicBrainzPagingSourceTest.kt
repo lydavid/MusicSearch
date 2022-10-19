@@ -5,8 +5,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.mbjc.data.domain.ArtistUiModel
 import ly.david.mbjc.data.domain.ReleaseGroupUiModel
+import ly.david.mbjc.data.network.FakeMusicBrainzApiService
 import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.network.TestMusicBrainzApiService
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -16,7 +16,7 @@ internal class SearchMusicBrainzPagingSourceTest {
     @Test
     fun loadOneArtist() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
-            TestMusicBrainzApiService(),
+            FakeMusicBrainzApiService(),
             MusicBrainzResource.ARTIST,
             ""
         )
@@ -44,7 +44,7 @@ internal class SearchMusicBrainzPagingSourceTest {
     @Test
     fun loadOneReleaseGroup() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
-            TestMusicBrainzApiService(),
+            FakeMusicBrainzApiService(),
             MusicBrainzResource.RELEASE_GROUP,
             ""
         )

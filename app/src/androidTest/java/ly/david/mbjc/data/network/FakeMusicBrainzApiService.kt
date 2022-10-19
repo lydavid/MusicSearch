@@ -1,8 +1,6 @@
 package ly.david.mbjc.data.network
 
-// If instrumentation tests just says 0 pass without showing any tests ran/failed,
-//  then chances are we forgot to implement something here. It just doesn't tell us...
-internal class TestMusicBrainzApiService : MusicBrainzApiService {
+internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
         return SearchArtistsResponse(
             1,
