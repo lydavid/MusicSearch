@@ -8,11 +8,11 @@ import javax.inject.Singleton
 import ly.david.mbjc.data.network.api.FakeMusicBrainzApiService
 import ly.david.mbjc.data.network.api.MusicBrainzApiService
 
+@Module
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [MusicBrainzNetworkModule::class]
 )
-@Module
 internal object FakeMusicBrainzNetworkModule {
     @Singleton
     @Provides

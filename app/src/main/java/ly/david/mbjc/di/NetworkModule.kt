@@ -48,8 +48,6 @@ internal object NetworkModule {
             .build()
     }
 
-
-
     @Singleton
     @Provides
     fun provideCoverArtArchiveApi(

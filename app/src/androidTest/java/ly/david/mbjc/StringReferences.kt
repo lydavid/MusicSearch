@@ -21,4 +21,6 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.history)
     val historyScreenTitle
         get() = composeTestRule.activity.resources.getString(R.string.recent_history)
+    val noResultsFound
+        get() = composeTestRule.activity.resources.getString(R.string.no_results_found)
 }

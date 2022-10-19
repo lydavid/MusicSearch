@@ -28,7 +28,7 @@ internal class ReleaseGroupDaoTest {
     private lateinit var releaseGroupArtistDao: ReleaseGroupArtistDao
     private lateinit var artistDao: ArtistDao
 
-    // TODO: do this for all daos in a parent class
+    // TODO: hilt
     @Before
     fun setUp() {
         db = Room.inMemoryDatabaseBuilder(

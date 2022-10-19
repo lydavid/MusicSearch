@@ -5,41 +5,34 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.testing.HiltAndroidTest
-import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.data.persistence.MusicBrainzRoomDatabase
+import ly.david.mbjc.data.network.lookupHistory
+import ly.david.mbjc.data.persistence.MusicBrainzDatabase
 import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.MainApp
 import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.theme.PreviewTheme
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
 internal class HistoryScreenTest : MainActivityTest(), StringReferences {
 
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
 
-    private lateinit var db: MusicBrainzRoomDatabase
+    @Inject
+    lateinit var db: MusicBrainzDatabase
     private lateinit var lookupHistoryDao: LookupHistoryDao
 
     @Before
     fun setupApp() {
         hiltRule.inject()
-
-        // TODO: the disadvantage of this is it will include any existing test data
-        db = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            MusicBrainzRoomDatabase::class.java
-        ).build()
         lookupHistoryDao = db.getLookupHistoryDao()
 
         composeTestRule.activity.setContent {
@@ -50,15 +43,8 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
         }
     }
 
-    @After
-    @Throws(IOException::class)
-    fun tearDown() {
-        db.close()
-    }
-
     @Test
-    fun navigateToHistoryWithRoute() {
-
+    fun emptyLookupHistory() {
         runBlocking {
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
@@ -70,8 +56,29 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
             .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
-//        composeTestRule
-//            .onNodeWithText("No results found.")
-//            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(noResultsFound)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun lookupHistoryWithAnItem() {
+        runBlocking {
+            withContext(Dispatchers.Main) {
+                lookupHistoryDao.insert(lookupHistory)
+                composeTestRule.awaitIdle()
+                navController.navigate(Destination.HISTORY.route)
+            }
+        }
+
+        composeTestRule
+            .onNodeWithText(historyScreenTitle)
+            .assertIsDisplayed()
+
+        // TODO: don't do this
+        val resourceDescription = composeTestRule.activity.getString(lookupHistory.resource.displayTextRes)
+        composeTestRule
+            .onNodeWithText("$resourceDescription: ${lookupHistory.title}")
+            .assertIsDisplayed()
     }
 }
