@@ -18,8 +18,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
-// TODO: install test database so that each test doesn't start with our current data
-//@UninstallModules(MusicBrainzNetworkModule::class)
 @HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class NavigateWithTitleTest(private val resource: MusicBrainzResource): MainActivityTest() {

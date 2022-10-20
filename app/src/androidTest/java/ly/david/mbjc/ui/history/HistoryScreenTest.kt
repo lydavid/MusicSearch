@@ -75,7 +75,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
             .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
-        // TODO: don't do this
+        // TODO: could we search semantics with wildcards?
         val resourceDescription = composeTestRule.activity.getString(lookupHistory.resource.displayTextRes)
         composeTestRule
             .onNodeWithText("$resourceDescription: ${lookupHistory.title}")

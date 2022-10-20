@@ -3,6 +3,11 @@ package ly.david.mbjc.data.network
 import ly.david.mbjc.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.mbjc.data.persistence.history.LookupHistory
 
+internal val areaMusicBrainzModel = AreaMusicBrainzModel(
+    id = "1",
+    name = "Area Name"
+)
+
 internal val artistMusicBrainzModel = ArtistMusicBrainzModel(
     id = "1",
     name = "Artist Name",

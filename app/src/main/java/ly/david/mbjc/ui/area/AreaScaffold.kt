@@ -55,7 +55,7 @@ private enum class AreaTab(@StringRes val titleRes: Int) {
 internal fun AreaScaffold(
     areaId: String,
     titleWithDisambiguation: String? = null,
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: AreaViewModel = hiltViewModel(),
 ) {
