@@ -22,7 +22,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
-
-# Make sure all POJOs are under this directory.
--keep class ly.david.mbjc.data.** { *; }
--keepclassmembers class ly.david.mbjc.data.** { *; }
