@@ -11,9 +11,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import ly.david.data.navigation.Destination
+import ly.david.data.navigation.toDestination
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.toMusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.network.toMusicBrainzResource
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold

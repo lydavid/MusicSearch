@@ -4,15 +4,16 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import java.io.IOException
 import kotlinx.coroutines.delay
-import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.toUiModel
-import ly.david.mbjc.data.network.MusicBrainzModel
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.network.api.DELAY_PAGED_API_CALLS_MS
-import ly.david.mbjc.data.network.api.MusicBrainzApiService
-import ly.david.mbjc.data.network.api.STARTING_OFFSET
+import ly.david.data.domain.UiModel
+import ly.david.data.domain.toUiModel
+import ly.david.data.network.MusicBrainzModel
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.api.DELAY_PAGED_API_CALLS_MS
+import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.STARTING_OFFSET
 import retrofit2.HttpException
 
+// TODO: can just pass Search interface
 internal class SearchMusicBrainzPagingSource(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val resource: MusicBrainzResource,

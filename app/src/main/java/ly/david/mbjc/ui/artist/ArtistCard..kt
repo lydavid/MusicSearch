@@ -14,12 +14,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import ly.david.mbjc.data.LifeSpan
-import ly.david.mbjc.data.domain.ArtistUiModel
-import ly.david.mbjc.data.getLifeSpanForDisplay
+import ly.david.data.LifeSpan
+import ly.david.data.common.toFlagEmoji
+import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.domain.ArtistUiModel
+import ly.david.data.getLifeSpanForDisplay
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.toFlagEmoji
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -52,9 +52,10 @@ internal fun ArtistCard(
                     }
             )
 
-            if (!artist.countryCode.isNullOrEmpty()) {
+            val countryCodeText = artist.countryCode
+            if (!countryCodeText.isNullOrEmpty()) {
                 Text(
-                    text = "${artist.countryCode.toFlagEmoji()} ${artist.countryCode}",
+                    text = "${countryCodeText.toFlagEmoji()} ${artist.countryCode}",
                     style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier
                         .constrainAs(countryCode) {
@@ -87,9 +88,10 @@ internal fun ArtistCard(
                 })
             }
 
-            if (!artist.type.isNullOrEmpty()) {
+            val artistType = artist.type
+            if (!artistType.isNullOrEmpty()) {
                 Text(
-                    text = artist.type,
+                    text = artistType,
                     style = TextStyles.getCardBodySubTextStyle(),
                     modifier = Modifier
                         .constrainAs(type) {

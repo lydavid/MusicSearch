@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.domain.Header
-import ly.david.mbjc.data.domain.RelationUiModel
-import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.toRelationUiModel
-import ly.david.mbjc.data.persistence.relation.HasRelationsRoomModel
-import ly.david.mbjc.data.persistence.relation.RelationDao
+import ly.david.data.domain.Header
+import ly.david.data.domain.RelationUiModel
+import ly.david.data.domain.UiModel
+import ly.david.data.domain.toRelationUiModel
+import ly.david.data.persistence.relation.HasRelationsRoomModel
+import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 

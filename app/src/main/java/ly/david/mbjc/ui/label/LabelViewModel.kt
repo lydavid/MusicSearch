@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.Label
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.domain.toReleaseUiModel
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.repository.LabelRepository
+import ly.david.data.domain.LabelUiModel
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.toReleaseUiModel
+import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.persistence.history.LookupHistoryDao
+import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
@@ -42,7 +42,7 @@ internal class LabelViewModel @Inject constructor(
         ViewModelState(labelId, query)
     }.distinctUntilChanged()
 
-    suspend fun lookupLabel(labelId: String): Label =
+    suspend fun lookupLabel(labelId: String): LabelUiModel =
         repository.lookupLabel(labelId)
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)

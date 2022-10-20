@@ -6,8 +6,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.release.ReleaseCard
 
 @Composable

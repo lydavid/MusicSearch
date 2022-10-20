@@ -5,10 +5,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.mbjc.data.domain.RelationUiModel
-import ly.david.mbjc.data.domain.UiModel
+import ly.david.data.domain.RelationUiModel
+import ly.david.data.domain.UiModel
+import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.relation.RelationCard
 
 @Composable

@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.AreaType
-import ly.david.mbjc.data.domain.AreaUiModel
-import ly.david.mbjc.data.getLifeSpanForDisplay
-import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.data.AreaType
+import ly.david.data.common.toFlagEmoji
+import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.domain.AreaUiModel
+import ly.david.data.getLifeSpanForDisplay
+import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.common.toFlagEmoji
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 

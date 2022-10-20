@@ -10,13 +10,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import ly.david.data.navigation.Destination
+import ly.david.data.persistence.MusicBrainzDatabase
+import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.data.network.lookupHistory
-import ly.david.mbjc.data.persistence.MusicBrainzDatabase
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.MainApp
-import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test

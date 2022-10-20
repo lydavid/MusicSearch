@@ -9,8 +9,9 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import ly.david.data.navigation.toDestination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.MainApp
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before

@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.RecordingUiModel
+import ly.david.data.common.toDisplayTime
+import ly.david.data.domain.RecordingUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
- * Compare with [ly.david.mbjc.ui.release.TrackCard].
+ * Compare with [ly.david.mbjc.ui.release.tracks.TrackCard].
  */
 @Composable
 internal fun RecordingCard(
@@ -53,7 +53,8 @@ internal fun RecordingCardPreview() {
                 disambiguation = "that one",
                 length = 25300000,
                 video = false
-            ))
+            )
+            )
         }
     }
 }

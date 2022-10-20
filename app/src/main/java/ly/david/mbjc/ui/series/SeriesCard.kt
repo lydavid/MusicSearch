@@ -12,9 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.SeriesUiModel
+import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.domain.SeriesUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -45,9 +45,10 @@ internal fun SeriesCard(
                 )
             }
 
-            if (!series.type.isNullOrEmpty()) {
+            val type = series.type
+            if (!type.isNullOrEmpty()) {
                 Text(
-                    text = series.type,
+                    text = type,
                     style = TextStyles.getCardBodySubTextStyle(),
                 )
             }

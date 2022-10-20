@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.relation.stats
 
-import ly.david.mbjc.data.persistence.relation.RelationDao
+import ly.david.data.persistence.relation.RelationDao
 
 internal interface RelationsStats {
     val relationDao: RelationDao

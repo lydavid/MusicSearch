@@ -1,0 +1,19 @@
+package ly.david.data.network
+
+import com.squareup.moshi.Json
+import ly.david.data.Track
+
+/**
+ * A [Track] in [MediumMusicBrainzModel].
+ */
+data class TrackMusicBrainzModel(
+    @Json(name = "id") override val id: String,
+    @Json(name = "position") override val position: Int,
+    @Json(name = "number") override val number: String, // Usually a string of `position`, but could be things like `A1`
+    @Json(name = "title") override val title: String,
+    @Json(name = "length") override val length: Int? = null,
+
+    @Json(name = "artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
+    @Json(name = "recording") val recording: RecordingMusicBrainzModel,
+//    @Json(name = "relations") val relations: List<Relation>? = null,
+) : Track

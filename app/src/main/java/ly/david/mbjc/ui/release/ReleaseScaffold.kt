@@ -24,17 +24,15 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.getDisplayNames
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.getDisplayNames
-import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
-import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.release.relations.ReleaseRelationsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
@@ -72,8 +70,8 @@ internal fun ReleaseScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.TRACKS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var coverArtUrl: String by rememberSaveable { mutableStateOf("") }
-    var release: ReleaseUiModel? by remember { mutableStateOf(null) }
+    var url: String by rememberSaveable { mutableStateOf("") }
+    var release: ly.david.data.domain.ReleaseUiModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         title = titleWithDisambiguation
@@ -83,10 +81,11 @@ internal fun ReleaseScaffold(
 
         try {
             val releaseUiModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
-            if (releaseUiModel.coverArtUrl != null) {
-                coverArtUrl = releaseUiModel.coverArtUrl
+            val coverArtUrl = releaseUiModel.coverArtUrl
+            if (coverArtUrl != null) {
+                url = coverArtUrl
             } else if (releaseUiModel.coverArtArchive.count > 0) {
-                coverArtUrl = viewModel.getCoverArtUrlFromNetwork()
+                url = viewModel.getCoverArtUrlFromNetwork()
             }
 
             if (titleWithDisambiguation.isNullOrEmpty()) {
@@ -155,13 +154,13 @@ internal fun ReleaseScaffold(
     ) { innerPadding ->
 
         val tracksLazyListState = rememberLazyListState()
-        val tracksLazyPagingItems: LazyPagingItems<UiModel> =
+        val tracksLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+        var pagedRelations: Flow<PagingData<ly.david.data.domain.UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
             rememberFlowWithLifecycleStarted(pagedRelations)
                 .collectAsLazyPagingItems()
 
@@ -169,7 +168,7 @@ internal fun ReleaseScaffold(
             ReleaseTab.TRACKS -> {
                 TracksInReleaseScreen(
                     modifier = Modifier.padding(innerPadding),
-                    coverArtUrl = coverArtUrl,
+                    coverArtUrl = url,
                     snackbarHostState = snackbarHostState,
                     lazyListState = tracksLazyListState,
                     lazyPagingItems = tracksLazyPagingItems,

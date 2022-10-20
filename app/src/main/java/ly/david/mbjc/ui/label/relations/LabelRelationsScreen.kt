@@ -8,10 +8,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.mbjc.data.domain.RelationUiModel
-import ly.david.mbjc.data.domain.UiModel
+import ly.david.data.domain.RelationUiModel
+import ly.david.data.domain.UiModel
+import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.relation.RelationCard
 
 @Composable

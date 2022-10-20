@@ -8,10 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.mbjc.data.domain.RelationUiModel
-import ly.david.mbjc.data.domain.UiModel
+import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.relation.RelationCard
 
 @Composable
@@ -20,8 +18,8 @@ internal fun ArtistRelationsScreen(
     artistId: String,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<UiModel>,
-    onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,
+    lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel>,
+    onPagedRelationsChange: (Flow<PagingData<ly.david.data.domain.UiModel>>) -> Unit,
     viewModel: ArtistRelationsViewModel = hiltViewModel(),
 ) {
 
@@ -34,10 +32,10 @@ internal fun ArtistRelationsScreen(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
-    ) { uiModel: UiModel? ->
+    ) { uiModel: ly.david.data.domain.UiModel? ->
 
         when (uiModel) {
-            is RelationUiModel -> {
+            is ly.david.data.domain.RelationUiModel -> {
                 RelationCard(
                     relation = uiModel,
                     onItemClick = onItemClick,

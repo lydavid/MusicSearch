@@ -14,20 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.ReleaseGroupUiModel
-import ly.david.mbjc.data.getDisplayNames
-import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.data.common.getYear
+import ly.david.data.getDisplayNames
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.getYear
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 @Composable
 internal fun ReleaseGroupCard(
-    releaseGroup: ReleaseGroupUiModel,
-    onClick: ReleaseGroupUiModel.() -> Unit = {}
+    releaseGroup: ly.david.data.domain.ReleaseGroupUiModel,
+    onClick: ly.david.data.domain.ReleaseGroupUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
@@ -63,7 +62,7 @@ internal fun ReleaseGroupCard(
     }
 }
 
-private val testReleaseGroup = ReleaseGroupUiModel(
+private val testReleaseGroup = ly.david.data.domain.ReleaseGroupUiModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     name = "欠けた心象、世のよすが",
     primaryType = "EP",

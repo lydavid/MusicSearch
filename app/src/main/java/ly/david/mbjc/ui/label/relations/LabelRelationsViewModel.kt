@@ -2,11 +2,11 @@ package ly.david.mbjc.ui.label.relations
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.mbjc.data.network.api.Lookup
-import ly.david.mbjc.data.network.api.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.relation.RelationDao
-import ly.david.mbjc.data.persistence.relation.RelationRoomModel
-import ly.david.mbjc.data.persistence.relation.toRelationRoomModel
+import ly.david.data.network.api.Lookup
+import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.persistence.relation.RelationRoomModel
+import ly.david.data.persistence.relation.toRelationRoomModel
 import ly.david.mbjc.ui.relation.RelationViewModel
 
 @HiltViewModel

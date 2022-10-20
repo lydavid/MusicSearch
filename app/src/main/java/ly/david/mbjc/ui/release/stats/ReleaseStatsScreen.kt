@@ -15,12 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.R
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.relation.RelationTypeCount
-import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
 import ly.david.mbjc.ui.theme.PreviewTheme

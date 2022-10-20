@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.R
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.preview.DefaultPreviews

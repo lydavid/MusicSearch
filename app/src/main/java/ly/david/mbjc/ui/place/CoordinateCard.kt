@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.Coordinates
-import ly.david.mbjc.data.formatForDisplay
+import ly.david.data.Coordinates
+import ly.david.data.formatForDisplay
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.showMap
 import ly.david.mbjc.ui.theme.PreviewTheme

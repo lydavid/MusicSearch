@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.SubcomposeAsyncImage
-import ly.david.mbjc.ui.common.useHttps
+import ly.david.data.common.useHttps
 
 @Composable
 internal fun ExperimentalScreen() {

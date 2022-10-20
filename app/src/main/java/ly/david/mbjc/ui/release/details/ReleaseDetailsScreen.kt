@@ -1,11 +1,10 @@
 package ly.david.mbjc.ui.release.details
 
 import androidx.compose.runtime.Composable
-import ly.david.mbjc.data.domain.ReleaseUiModel
 
 @Composable
 internal fun ReleaseDetailsScreen(
-    releaseUiModel: ReleaseUiModel
+    releaseUiModel: ly.david.data.domain.ReleaseUiModel
 ) {
 
     // TODO: page release events

@@ -1,8 +1,8 @@
 package ly.david.mbjc.ui.common.history
 
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.history.LookupHistory
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.persistence.history.LookupHistory
+import ly.david.data.persistence.history.LookupHistoryDao
 
 internal interface RecordLookupHistory {
     val lookupHistoryDao: LookupHistoryDao

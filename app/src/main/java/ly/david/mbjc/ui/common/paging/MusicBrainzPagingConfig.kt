@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.common.paging
 
 import androidx.paging.PagingConfig
-import ly.david.mbjc.data.network.api.SEARCH_BROWSE_LIMIT
+import ly.david.data.network.api.SEARCH_BROWSE_LIMIT
 
 internal object MusicBrainzPagingConfig {
 

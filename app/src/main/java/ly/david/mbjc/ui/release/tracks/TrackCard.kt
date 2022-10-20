@@ -12,10 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.TrackUiModel
-import ly.david.mbjc.data.network.WorkMusicBrainzModel
+import ly.david.data.common.toDisplayTime
+import ly.david.data.domain.TrackUiModel
+import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.mbjc.ui.common.toDisplayTime
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 

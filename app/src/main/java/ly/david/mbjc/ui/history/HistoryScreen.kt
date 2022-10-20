@@ -26,17 +26,17 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import ly.david.data.navigation.Destination
+import ly.david.data.navigation.toDestination
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.persistence.history.LookupHistory
 import ly.david.mbjc.R
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.history.LookupHistory
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
-import ly.david.mbjc.ui.navigation.Destination
-import ly.david.mbjc.ui.navigation.toDestination
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 

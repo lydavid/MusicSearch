@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.label.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.mbjc.data.persistence.label.LabelDao
-import ly.david.mbjc.data.persistence.label.ReleasesLabelsDao
-import ly.david.mbjc.data.persistence.relation.RelationDao
+import ly.david.data.persistence.label.LabelDao
+import ly.david.data.persistence.label.ReleasesLabelsDao
+import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.relation.stats.RelationsStats
 
 @HiltViewModel

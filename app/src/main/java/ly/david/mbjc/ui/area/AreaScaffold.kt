@@ -19,20 +19,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.AreaType
+import ly.david.data.domain.AreaUiModel
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.data.Area
-import ly.david.mbjc.data.AreaType
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.area.relations.AreaRelationsScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
-import ly.david.mbjc.ui.navigation.Destination
 
 // TODO: one way to deal with massive number of relationships is
 //  to split them into different tabs
@@ -66,7 +64,7 @@ internal fun AreaScaffold(
 
     // TODO: api doesn't seem to include area containment
     //  but we could get its parent area via relations "part of" "backward"
-    var area: Area? by remember { mutableStateOf(null) }
+    var area: AreaUiModel? by remember { mutableStateOf(null) }
     var title by rememberSaveable { mutableStateOf("") }
     val tabs = AreaTab.values()
         .filter { it != AreaTab.RELEASES || area?.type == AreaType.COUNTRY }
@@ -75,11 +73,11 @@ internal fun AreaScaffold(
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
     val relationsLazyListState = rememberLazyListState()
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+    val relationsLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
         .collectAsLazyPagingItems()
 
     val releasesLazyListState = rememberLazyListState()
-    val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
+    val releasesLazyPagingItems: LazyPagingItems<ly.david.data.domain.ReleaseUiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 

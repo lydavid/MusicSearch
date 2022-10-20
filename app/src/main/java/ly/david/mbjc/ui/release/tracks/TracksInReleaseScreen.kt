@@ -21,13 +21,10 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
-import ly.david.mbjc.data.domain.Header
-import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.TrackUiModel
-import ly.david.mbjc.data.domain.UiModel
+import ly.david.data.common.useHttps
+import ly.david.data.domain.UiModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.useHttps
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.
@@ -62,9 +59,9 @@ internal fun TracksInReleaseScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { uiModel: UiModel? ->
+    ) { uiModel: ly.david.data.domain.UiModel? ->
         when (uiModel) {
-            is Header -> {
+            is ly.david.data.domain.Header -> {
                 if (coverArtUrl.isNotEmpty()) {
 
                     when (painter.state) {
@@ -92,14 +89,14 @@ internal fun TracksInReleaseScreen(
                     }
                 }
             }
-            is TrackUiModel -> {
+            is ly.david.data.domain.TrackUiModel -> {
                 TrackCard(
                     track = uiModel,
 //                            showTrackArtists = shouldShowTrackArtists,
                     onRecordingClick = onRecordingClick
                 )
             }
-            is ListSeparator -> {
+            is ly.david.data.domain.ListSeparator -> {
                 ListSeparatorHeader(text = uiModel.text)
             }
             else -> {

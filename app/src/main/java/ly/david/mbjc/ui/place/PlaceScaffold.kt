@@ -10,10 +10,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import ly.david.mbjc.data.network.MusicBrainzResource
+import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.mbjc.ui.navigation.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

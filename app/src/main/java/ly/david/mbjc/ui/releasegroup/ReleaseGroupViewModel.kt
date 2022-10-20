@@ -17,20 +17,19 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.domain.ReleaseGroupUiModel
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.domain.toReleaseUiModel
-import ly.david.mbjc.data.network.api.MusicBrainzApiService
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.release.ReleaseDao
-import ly.david.mbjc.data.persistence.release.ReleaseRoomModel
-import ly.david.mbjc.data.persistence.release.toReleaseRoomModel
-import ly.david.mbjc.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.data.persistence.releasegroup.ReleaseReleaseGroup
-import ly.david.mbjc.data.persistence.releasegroup.ReleasesReleaseGroupsDao
-import ly.david.mbjc.data.repository.ReleaseGroupRepository
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.toReleaseUiModel
+import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.persistence.history.LookupHistoryDao
+import ly.david.data.persistence.release.ReleaseDao
+import ly.david.data.persistence.release.ReleaseRoomModel
+import ly.david.data.persistence.release.toReleaseRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.persistence.releasegroup.ReleaseReleaseGroup
+import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
+import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.BrowseResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 // TODO: generalize? reuse for releases by label
@@ -59,7 +58,7 @@ internal class ReleaseGroupViewModel @Inject constructor(
         ViewModelState(releaseGroupId, query)
     }.distinctUntilChanged()
 
-    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ly.david.data.domain.ReleaseGroupUiModel =
         releaseGroupRepository.lookupReleaseGroup(releaseGroupId)
 
     fun updateReleaseGroupId(releaseGroupId: String) {

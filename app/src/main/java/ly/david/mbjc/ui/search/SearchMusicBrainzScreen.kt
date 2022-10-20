@@ -37,23 +37,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
+import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.ArtistUiModel
+import ly.david.data.domain.EndOfList
+import ly.david.data.domain.EventUiModel
+import ly.david.data.domain.InstrumentUiModel
+import ly.david.data.domain.LabelUiModel
+import ly.david.data.domain.PlaceUiModel
+import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.ReleaseGroupUiModel
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.SeriesUiModel
+import ly.david.data.domain.WorkUiModel
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.searchableResources
 import ly.david.mbjc.R
-import ly.david.mbjc.data.domain.AreaUiModel
-import ly.david.mbjc.data.domain.ArtistUiModel
-import ly.david.mbjc.data.domain.EndOfList
-import ly.david.mbjc.data.domain.EventUiModel
-import ly.david.mbjc.data.domain.InstrumentUiModel
-import ly.david.mbjc.data.domain.LabelUiModel
-import ly.david.mbjc.data.domain.PlaceUiModel
-import ly.david.mbjc.data.domain.RecordingUiModel
-import ly.david.mbjc.data.domain.ReleaseGroupUiModel
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.domain.SeriesUiModel
-import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.WorkUiModel
-import ly.david.mbjc.data.getNameWithDisambiguation
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.network.searchableResources
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
@@ -62,7 +62,6 @@ import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.event.EventCard
 import ly.david.mbjc.ui.instrument.InstrumentCard
 import ly.david.mbjc.ui.label.LabelCard
-import ly.david.mbjc.ui.navigation.Destination
 import ly.david.mbjc.ui.place.PlaceCard
 import ly.david.mbjc.ui.recording.RecordingCard
 import ly.david.mbjc.ui.release.ReleaseCard
@@ -80,7 +79,7 @@ internal fun SearchMusicBrainzScreen(
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
+    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> = rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
         .collectAsLazyPagingItems()
 
     var text by rememberSaveable { mutableStateOf("") }
@@ -164,7 +163,7 @@ internal fun SearchMusicBrainzScreen(
             lazyListState = lazyListState,
             snackbarHostState = snackbarHostState,
             noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) { uiModel: UiModel? ->
+        ) { uiModel: ly.david.data.domain.UiModel? ->
             when (uiModel) {
                 is ArtistUiModel -> {
                     ArtistCard(artist = uiModel) {

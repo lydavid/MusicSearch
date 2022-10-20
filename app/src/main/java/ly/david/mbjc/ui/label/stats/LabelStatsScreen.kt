@@ -9,8 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.mbjc.data.network.MusicBrainzResource
-import ly.david.mbjc.data.persistence.relation.RelationTypeCount
+import ly.david.data.network.MusicBrainzResource
+import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection

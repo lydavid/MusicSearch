@@ -20,25 +20,20 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.mbjc.data.domain.Header
-import ly.david.mbjc.data.domain.ListSeparator
-import ly.david.mbjc.data.domain.ReleaseUiModel
-import ly.david.mbjc.data.domain.TrackUiModel
-import ly.david.mbjc.data.domain.UiModel
-import ly.david.mbjc.data.domain.toTrackUiModel
-import ly.david.mbjc.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.mbjc.data.network.api.coverart.getSmallCoverArtUrl
-import ly.david.mbjc.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.data.persistence.release.MediumDao
-import ly.david.mbjc.data.persistence.release.MediumRoomModel
-import ly.david.mbjc.data.persistence.release.ReleaseDao
-import ly.david.mbjc.data.persistence.release.TrackDao
-import ly.david.mbjc.data.persistence.release.TrackRoomModel
-import ly.david.mbjc.data.repository.ReleaseRepository
+import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.domain.toTrackUiModel
+import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.getSmallCoverArtUrl
+import ly.david.data.persistence.history.LookupHistoryDao
+import ly.david.data.persistence.release.MediumDao
+import ly.david.data.persistence.release.MediumRoomModel
+import ly.david.data.persistence.release.ReleaseDao
+import ly.david.data.persistence.release.TrackDao
+import ly.david.data.persistence.release.TrackRoomModel
+import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
 import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
-import ly.david.mbjc.ui.common.transformThisIfNotNullOrEmpty
 
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
@@ -64,7 +59,7 @@ internal class ReleaseViewModel @Inject constructor(
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
-    suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseUiModel {
+    suspend fun lookupReleaseThenLoadTracks(releaseId: String): ly.david.data.domain.ReleaseUiModel {
         return releaseRepository.getRelease(releaseId).also { loadTracks(releaseId) }
     }
 
@@ -77,7 +72,7 @@ internal class ReleaseViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
-    val pagedTracks: Flow<PagingData<UiModel>> =
+    val pagedTracks: Flow<PagingData<ly.david.data.domain.UiModel>> =
         paramState.filterNot { it.releaseId.isEmpty() }
             .flatMapLatest { (releaseId, query) ->
                 Pager(
@@ -96,11 +91,11 @@ internal class ReleaseViewModel @Inject constructor(
                 ).flow.map { pagingData ->
                     pagingData.map { track: TrackRoomModel ->
                         track.toTrackUiModel()
-                    }.insertSeparators { before: TrackUiModel?, after: TrackUiModel? ->
+                    }.insertSeparators { before: ly.david.data.domain.TrackUiModel?, after: ly.david.data.domain.TrackUiModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
                             // TODO: possible race condition: sometimes crashes here with null medium
                             val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
-                            ListSeparator(
+                            ly.david.data.domain.ListSeparator(
                                 text = medium.format.orEmpty() +
                                     (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
                                     medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
@@ -108,7 +103,7 @@ internal class ReleaseViewModel @Inject constructor(
                         } else {
                             null
                         }
-                    }.insertHeaderItem(item = Header)
+                    }.insertHeaderItem(item = ly.david.data.domain.Header)
                 }
             }
             .distinctUntilChanged()

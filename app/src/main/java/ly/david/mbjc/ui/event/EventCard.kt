@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.data.domain.EventUiModel
-import ly.david.mbjc.data.getLifeSpanForDisplay
-import ly.david.mbjc.data.getNameWithDisambiguation
+import ly.david.data.domain.EventUiModel
+import ly.david.data.getLifeSpanForDisplay
+import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 
