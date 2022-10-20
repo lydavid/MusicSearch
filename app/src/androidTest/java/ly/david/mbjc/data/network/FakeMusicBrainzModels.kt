@@ -1,11 +1,29 @@
 package ly.david.mbjc.data.network
 
+import ly.david.mbjc.data.AreaType
 import ly.david.mbjc.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.mbjc.data.persistence.history.LookupHistory
 
-internal val areaMusicBrainzModel = AreaMusicBrainzModel(
+internal val fakeCountryAreaMusicBrainzModel = AreaMusicBrainzModel(
+    id = "2",
+    name = "Country Name",
+    type = AreaType.COUNTRY
+)
+
+internal val fakeAreaAreaRelationship = RelationMusicBrainzModel(
+    type = "doesn't matter",
+    typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
+    direction = Direction.BACKWARD,
+    targetType = MusicBrainzResource.AREA,
+    area = fakeCountryAreaMusicBrainzModel
+)
+
+internal val fakeAreaMusicBrainzModel = AreaMusicBrainzModel(
     id = "1",
-    name = "Area Name"
+    name = "Area Name",
+    relations = listOf(
+        fakeAreaAreaRelationship
+    )
 )
 
 internal val artistMusicBrainzModel = ArtistMusicBrainzModel(

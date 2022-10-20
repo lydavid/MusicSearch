@@ -10,9 +10,9 @@ import ly.david.mbjc.data.network.RecordingMusicBrainzModel
 import ly.david.mbjc.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.mbjc.data.network.ReleaseMusicBrainzModel
 import ly.david.mbjc.data.network.WorkMusicBrainzModel
-import ly.david.mbjc.data.network.areaMusicBrainzModel
 import ly.david.mbjc.data.network.artistMusicBrainzModel
 import ly.david.mbjc.data.network.browseReleaseGroupsResponse
+import ly.david.mbjc.data.network.fakeAreaMusicBrainzModel
 import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
 
 internal class FakeMusicBrainzApiService : MusicBrainzApiService {
@@ -134,7 +134,7 @@ internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {
-        return areaMusicBrainzModel
+        return fakeAreaMusicBrainzModel
     }
 
     override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {

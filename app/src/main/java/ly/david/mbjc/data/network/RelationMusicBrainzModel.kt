@@ -20,9 +20,9 @@ internal data class RelationMusicBrainzModel(
     @Json(name = "attributes") val attributes: List<String>? = null, // strings, task
     @Json(name = "attribute-values") val attributeValues: AttributeValue? = null, // "director & organizer"
 
-    @Json(name = "begin") override val begin: String?,
-    @Json(name = "end") override val end: String?,
-    @Json(name = "ended") override val ended: Boolean?,
+    @Json(name = "begin") override val begin: String? = null,
+    @Json(name = "end") override val end: String? = null,
+    @Json(name = "ended") override val ended: Boolean? = null,
 
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,
     @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
