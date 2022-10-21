@@ -21,6 +21,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.AreaType
 import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
@@ -73,11 +75,11 @@ internal fun AreaScaffold(
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
     val relationsLazyListState = rememberLazyListState()
-    val relationsLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
         .collectAsLazyPagingItems()
 
     val releasesLazyListState = rememberLazyListState()
-    val releasesLazyPagingItems: LazyPagingItems<ly.david.data.domain.ReleaseUiModel> =
+    val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenContent
-import ly.david.mbjc.ui.common.lookupInBrowser
+import ly.david.data.common.lookupInBrowser
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles

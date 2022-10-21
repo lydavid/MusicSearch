@@ -2,7 +2,7 @@ package ly.david.mbjc.ui.label.relations
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.network.api.Lookup
+import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
@@ -18,7 +18,7 @@ internal class LabelRelationsViewModel @Inject constructor(
 
         val labelMusicBrainzModel = musicBrainzApiService.lookupLabel(
             labelId = resourceId,
-            include = Lookup.INC_ALL_RELATIONS
+            include = LookupApi.INC_ALL_RELATIONS
         )
 
         val relations = mutableListOf<RelationRoomModel>()

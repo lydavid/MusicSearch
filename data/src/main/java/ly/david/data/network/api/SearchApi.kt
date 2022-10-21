@@ -18,42 +18,7 @@ import retrofit2.http.Query
 /**
  * Search for MusicBrainz entities using text.
  */
-interface Search {
-
-    @GET("artist")
-    suspend fun queryArtists(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-    ): SearchArtistsResponse
-
-    @GET("release-group")
-    suspend fun queryReleaseGroups(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-    ): SearchReleaseGroupsResponse
-
-    @GET("release")
-    suspend fun queryReleases(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-    ): SearchReleasesResponse
-
-    @GET("recording")
-    suspend fun queryRecordings(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-    ): SearchRecordingsResponse
-
-    @GET("work")
-    suspend fun queryWorks(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-    ): SearchWorksResponse
+interface SearchApi {
 
     @GET("area")
     suspend fun queryAreas(
@@ -62,12 +27,19 @@ interface Search {
         @Query("offset") offset: Int = 0,
     ): SearchAreasResponse
 
-    @GET("place")
-    suspend fun queryPlaces(
+    @GET("artist")
+    suspend fun queryArtists(
         @Query("query") query: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-    ): SearchPlacesResponse
+    ): SearchArtistsResponse
+
+    @GET("event")
+    suspend fun queryEvents(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchEventsResponse
 
     @GET("instrument")
     suspend fun queryInstruments(
@@ -83,12 +55,33 @@ interface Search {
         @Query("offset") offset: Int = 0,
     ): SearchLabelsResponse
 
-    @GET("event")
-    suspend fun queryEvents(
+    @GET("place")
+    suspend fun queryPlaces(
         @Query("query") query: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-    ): SearchEventsResponse
+    ): SearchPlacesResponse
+
+    @GET("recording")
+    suspend fun queryRecordings(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchRecordingsResponse
+
+    @GET("release")
+    suspend fun queryReleases(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchReleasesResponse
+
+    @GET("release-group")
+    suspend fun queryReleaseGroups(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchReleaseGroupsResponse
 
     @GET("series")
     suspend fun querySeries(
@@ -96,6 +89,13 @@ interface Search {
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): SearchSeriesResponse
+
+    @GET("work")
+    suspend fun queryWorks(
+        @Query("query") query: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): SearchWorksResponse
 }
 
 data class SearchArtistsResponse(

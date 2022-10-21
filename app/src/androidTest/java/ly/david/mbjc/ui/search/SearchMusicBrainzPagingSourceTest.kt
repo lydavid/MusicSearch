@@ -6,10 +6,12 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.ArtistUiModel
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.paging.SearchMusicBrainzPagingSource
 import ly.david.mbjc.data.network.api.FakeMusicBrainzApiService
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
+// TODO: hilt
 internal class SearchMusicBrainzPagingSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)

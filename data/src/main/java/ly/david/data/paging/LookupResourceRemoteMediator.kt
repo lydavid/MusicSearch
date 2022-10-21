@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.data.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -12,7 +12,7 @@ import ly.david.data.persistence.RoomModel
  * A refresh load will always call [lookupResource] with force refresh flag.
  */
 @OptIn(ExperimentalPagingApi::class)
-internal class LookupResourceRemoteMediator<RM : RoomModel>(
+class LookupResourceRemoteMediator<RM : RoomModel>(
     private val hasResourceBeenStored: suspend () -> Boolean,
     private val lookupResource: suspend (forceRefresh: Boolean) -> Unit,
     private val deleteLocalResource: suspend () -> Unit

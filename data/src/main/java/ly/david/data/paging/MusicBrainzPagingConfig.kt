@@ -1,9 +1,9 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.data.paging
 
 import androidx.paging.PagingConfig
 import ly.david.data.network.api.SEARCH_BROWSE_LIMIT
 
-internal object MusicBrainzPagingConfig {
+object MusicBrainzPagingConfig {
 
     /**
      * Specifically chosen so that we don't fetch multiple pages before loading footer disappears.

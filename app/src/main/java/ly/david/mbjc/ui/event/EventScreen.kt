@@ -15,6 +15,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.EventUiModel
+import ly.david.data.domain.Header
+import ly.david.data.domain.RelationUiModel
+import ly.david.data.domain.UiModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -47,7 +50,7 @@ internal fun EventScreen(
         lookupInProgress = false
     }
 
-    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+    val lazyPagingItems: LazyPagingItems<UiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
             .collectAsLazyPagingItems()
 
@@ -56,16 +59,16 @@ internal fun EventScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-    ) { uiModel: ly.david.data.domain.UiModel? ->
+    ) { uiModel: UiModel? ->
 
         when (uiModel) {
-            is ly.david.data.domain.Header -> {
+            is Header -> {
                 Column {
                     Text(text = event?.type.orEmpty())
                     Text(text = event?.lifeSpan.getLifeSpanForDisplay())
                 }
             }
-            is ly.david.data.domain.RelationUiModel -> {
+            is RelationUiModel -> {
                 RelationCard(
                     relation = uiModel,
                     onItemClick = onItemClick,

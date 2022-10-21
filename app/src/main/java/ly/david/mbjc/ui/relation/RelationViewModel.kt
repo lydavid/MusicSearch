@@ -18,10 +18,10 @@ import ly.david.data.domain.Header
 import ly.david.data.domain.RelationUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toRelationUiModel
+import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.MusicBrainzPagingConfig
 
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].

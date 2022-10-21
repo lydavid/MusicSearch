@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.data.common
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
 /**
  * Launches web browser for MusicBrainz's page for [resource] with [musicBrainzId].
  */
-internal fun Context.lookupInBrowser(resource: MusicBrainzResource, musicBrainzId: String) {
+fun Context.lookupInBrowser(resource: MusicBrainzResource, musicBrainzId: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${resource.resourceName}/${musicBrainzId}")
@@ -23,7 +23,7 @@ private const val ZOOM_LEVEL = 16
 /**
  * Launch user's map application with given [coordinates].
  */
-internal fun Context.showMap(coordinates: Coordinates, label: String?) {
+fun Context.showMap(coordinates: Coordinates, label: String?) {
     val latitude = coordinates.latitude ?: return
     val longitude = coordinates.longitude ?: return
     startActivity(
@@ -45,7 +45,7 @@ internal fun Context.showMap(coordinates: Coordinates, label: String?) {
  * Eg. if the user has Spotify, and clicks on [https://open.spotify.com/artist/38WbKH6oKAZskBhqDFA8Uj],
  * it will open this artist in Spotify.
  */
-internal fun Context.openUrl(url: String) {
+fun Context.openUrl(url: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(url)

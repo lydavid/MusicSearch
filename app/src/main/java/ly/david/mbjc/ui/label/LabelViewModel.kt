@@ -23,7 +23,7 @@ import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class LabelViewModel @Inject constructor(

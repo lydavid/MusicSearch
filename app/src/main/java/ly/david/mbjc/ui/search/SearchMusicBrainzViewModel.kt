@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.SearchMusicBrainzPagingSource
 import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel
@@ -43,7 +44,7 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     pagingSourceFactory = {
                         SearchMusicBrainzPagingSource(
-                            musicBrainzApiService = musicBrainzApiService,
+                            searchApi = musicBrainzApiService,
                             resource = viewModelState.resource,
                             queryString = viewModelState.query,
                         )

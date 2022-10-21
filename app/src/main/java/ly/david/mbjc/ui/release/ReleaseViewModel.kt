@@ -32,8 +32,8 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.LookupResourceRemoteMediator
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.LookupResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(

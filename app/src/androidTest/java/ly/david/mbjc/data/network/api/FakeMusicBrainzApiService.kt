@@ -25,10 +25,19 @@ import ly.david.data.network.api.SearchReleaseGroupsResponse
 import ly.david.data.network.api.SearchReleasesResponse
 import ly.david.data.network.api.SearchSeriesResponse
 import ly.david.data.network.api.SearchWorksResponse
+import ly.david.mbjc.data.network.areaMusicBrainzModel
 import ly.david.mbjc.data.network.artistMusicBrainzModel
+import ly.david.mbjc.data.network.browseRecordingsResponse
 import ly.david.mbjc.data.network.browseReleaseGroupsResponse
-import ly.david.mbjc.data.network.fakeAreaMusicBrainzModel
+import ly.david.mbjc.data.network.browseReleasesResponse
+import ly.david.mbjc.data.network.eventMusicBrainzModel
+import ly.david.mbjc.data.network.instrumentMusicBrainzModel
+import ly.david.mbjc.data.network.labelMusicBrainzResource
+import ly.david.mbjc.data.network.placeMusicBrainzModel
+import ly.david.mbjc.data.network.recordingMusicBrainzModel
 import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
+import ly.david.mbjc.data.network.releaseMusicBrainzModel
+import ly.david.mbjc.data.network.workGroupMusicBrainzModel
 
 internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
@@ -109,15 +118,15 @@ internal class FakeMusicBrainzApiService : MusicBrainzApiService {
         limit: Int,
         offset: Int
     ): BrowseReleasesResponse {
-        TODO("Not yet implemented")
+        return browseReleasesResponse
     }
 
     override suspend fun browseReleasesByLabel(labelId: String, limit: Int, offset: Int): BrowseReleasesResponse {
-        TODO("Not yet implemented")
+        return browseReleasesResponse
     }
 
     override suspend fun browseReleasesByArea(areaId: String, limit: Int, offset: Int): BrowseReleasesResponse {
-        TODO("Not yet implemented")
+        return browseReleasesResponse
     }
 
     override suspend fun browseRecordingsByRelease(
@@ -125,46 +134,46 @@ internal class FakeMusicBrainzApiService : MusicBrainzApiService {
         limit: Int,
         offset: Int
     ): BrowseRecordingsResponse {
-        TODO("Not yet implemented")
+        return browseRecordingsResponse
+    }
+
+    override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {
+        return areaMusicBrainzModel
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
         return artistMusicBrainzModel
     }
 
+    override suspend fun lookupEvent(eventId: String, include: String): EventMusicBrainzModel {
+        return eventMusicBrainzModel
+    }
+
+    override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
+        return instrumentMusicBrainzModel
+    }
+
+    override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
+        return labelMusicBrainzResource
+    }
+
+    override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {
+        return placeMusicBrainzModel
+    }
+
+    override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
+        return recordingMusicBrainzModel
+    }
+
+    override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
+        return releaseMusicBrainzModel
+    }
+
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
         return releaseGroupMusicBrainzModel
     }
 
-    override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun lookupWork(workId: String, include: String): WorkMusicBrainzModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {
-        return fakeAreaMusicBrainzModel
-    }
-
-    override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun lookupEvent(eventId: String, include: String): EventMusicBrainzModel {
-        TODO("Not yet implemented")
+        return workGroupMusicBrainzModel
     }
 }

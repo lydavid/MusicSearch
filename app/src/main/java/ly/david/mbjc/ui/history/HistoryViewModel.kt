@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class HistoryViewModel @Inject constructor(

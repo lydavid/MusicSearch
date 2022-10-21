@@ -7,10 +7,10 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import ly.david.data.common.lookupInBrowser
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.lookupInBrowser
 
 internal interface OverflowMenuScope {
     fun closeMenu()

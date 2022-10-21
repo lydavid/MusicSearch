@@ -21,6 +21,7 @@ import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseRoomModel
@@ -30,7 +31,6 @@ import ly.david.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 
 // TODO: generalize? reuse for releases by label
 //  or make abstract, and override

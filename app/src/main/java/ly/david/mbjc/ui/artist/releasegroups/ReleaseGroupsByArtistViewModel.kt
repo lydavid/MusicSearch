@@ -28,7 +28,7 @@ import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
+import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(

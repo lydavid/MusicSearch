@@ -9,7 +9,7 @@ private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 /**
  * Contract for MusicBrainz API.
  */
-interface MusicBrainzApiService : Search, Browse, Lookup
+interface MusicBrainzApiService : SearchApi, BrowseApi, LookupApi
 
 /**
  * Implementation of MusicBrainz API.

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ly.david.data.common.openUrl
 import ly.david.data.domain.RelationUiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -19,7 +20,6 @@ import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.openUrl
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor

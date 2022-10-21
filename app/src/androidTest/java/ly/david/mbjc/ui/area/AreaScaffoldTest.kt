@@ -16,7 +16,7 @@ import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.data.network.fakeAreaMusicBrainzModel
+import ly.david.mbjc.data.network.areaMusicBrainzModel
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -54,9 +54,9 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
 
     @Test
     fun firstTimeVisit() {
-        setArea(fakeAreaMusicBrainzModel)
+        setArea(areaMusicBrainzModel)
         composeTestRule
-            .onNodeWithText(fakeAreaMusicBrainzModel.name)
+            .onNodeWithText(areaMusicBrainzModel.name)
             .assertIsDisplayed()
 
         // todo: don't test like this
@@ -72,16 +72,16 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
 
     @Test
     fun repeatVisit() {
-        setArea(fakeAreaMusicBrainzModel)
+        setArea(areaMusicBrainzModel)
         runBlocking {
 //            withContext(Dispatchers.Main) {
 //            }
-            areaDao.insert(fakeAreaMusicBrainzModel.toAreaRoomModel())
+            areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
             composeTestRule.awaitIdle()
         }
 
         composeTestRule
-            .onNodeWithText(fakeAreaMusicBrainzModel.name)
+            .onNodeWithText(areaMusicBrainzModel.name)
             .assertIsDisplayed()
 
         composeTestRule

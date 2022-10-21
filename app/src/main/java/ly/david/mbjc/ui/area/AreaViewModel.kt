@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.repository.AreaRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.MusicBrainzPagingConfig
 import ly.david.mbjc.ui.relation.RelationViewModel
 
 @HiltViewModel

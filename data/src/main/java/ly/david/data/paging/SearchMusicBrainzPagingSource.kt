@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -9,13 +9,12 @@ import ly.david.data.domain.toUiModel
 import ly.david.data.network.MusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.DELAY_PAGED_API_CALLS_MS
-import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.STARTING_OFFSET
+import ly.david.data.network.api.SearchApi
 import retrofit2.HttpException
 
-// TODO: can just pass Search interface
-internal class SearchMusicBrainzPagingSource(
-    private val musicBrainzApiService: MusicBrainzApiService,
+class SearchMusicBrainzPagingSource(
+    private val searchApi: SearchApi,
     private val resource: MusicBrainzResource,
     private val queryString: String,
 ) : PagingSource<Int, UiModel>() {
@@ -39,7 +38,7 @@ internal class SearchMusicBrainzPagingSource(
         val limit = params.loadSize
         return try {
             val response = getQueryResults(
-                musicBrainzApiService = musicBrainzApiService,
+                searchApi = searchApi,
                 resource = resource,
                 queryString = queryString,
                 currentOffset = currentOffset,
@@ -70,7 +69,7 @@ internal class SearchMusicBrainzPagingSource(
     )
 
     private suspend fun getQueryResults(
-        musicBrainzApiService: MusicBrainzApiService,
+        searchApi: SearchApi,
         resource: MusicBrainzResource,
         queryString: String,
         currentOffset: Int,
@@ -78,7 +77,7 @@ internal class SearchMusicBrainzPagingSource(
     ): QueryResults {
         return when (resource) {
             MusicBrainzResource.ARTIST -> {
-                val queryArtists = musicBrainzApiService.queryArtists(
+                val queryArtists = searchApi.queryArtists(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -89,7 +88,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.RELEASE_GROUP -> {
-                val queryReleaseGroups = musicBrainzApiService.queryReleaseGroups(
+                val queryReleaseGroups = searchApi.queryReleaseGroups(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -100,7 +99,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.RELEASE -> {
-                val queryReleases = musicBrainzApiService.queryReleases(
+                val queryReleases = searchApi.queryReleases(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -111,7 +110,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.RECORDING -> {
-                val queryRecordings = musicBrainzApiService.queryRecordings(
+                val queryRecordings = searchApi.queryRecordings(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -122,7 +121,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.WORK -> {
-                val queryWorks = musicBrainzApiService.queryWorks(
+                val queryWorks = searchApi.queryWorks(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -133,7 +132,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.AREA -> {
-                val queryAreas = musicBrainzApiService.queryAreas(
+                val queryAreas = searchApi.queryAreas(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -144,7 +143,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.PLACE -> {
-                val queryPlaces = musicBrainzApiService.queryPlaces(
+                val queryPlaces = searchApi.queryPlaces(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -155,7 +154,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.INSTRUMENT -> {
-                val queryInstruments = musicBrainzApiService.queryInstruments(
+                val queryInstruments = searchApi.queryInstruments(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -166,7 +165,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.LABEL -> {
-                val queryLabels = musicBrainzApiService.queryLabels(
+                val queryLabels = searchApi.queryLabels(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -177,7 +176,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.EVENT -> {
-                val queryEvents = musicBrainzApiService.queryEvents(
+                val queryEvents = searchApi.queryEvents(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
@@ -188,7 +187,7 @@ internal class SearchMusicBrainzPagingSource(
                 )
             }
             MusicBrainzResource.SERIES -> {
-                val queryEvents = musicBrainzApiService.querySeries(
+                val queryEvents = searchApi.querySeries(
                     query = queryString,
                     offset = currentOffset,
                     limit = limit
