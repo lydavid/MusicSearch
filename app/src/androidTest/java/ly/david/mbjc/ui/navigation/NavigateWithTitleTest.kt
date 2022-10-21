@@ -21,13 +21,25 @@ import org.junit.runners.Parameterized
 
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class NavigateWithTitleTest(private val resource: MusicBrainzResource): MainActivityTest() {
+internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) : MainActivityTest() {
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
-            return MusicBrainzResource.values().filterNot { it == MusicBrainzResource.URL }
+            return MusicBrainzResource.values().filterNot {
+                listOf(
+                    MusicBrainzResource.URL,
+                    MusicBrainzResource.INSTRUMENT,
+                    MusicBrainzResource.GENRE,
+                    MusicBrainzResource.PLACE,
+                    MusicBrainzResource.RECORDING,
+                    MusicBrainzResource.LABEL,
+                    MusicBrainzResource.RELEASE_GROUP,
+                    MusicBrainzResource.SERIES,
+                    MusicBrainzResource.WORK,
+                ).contains(it)
+            }
         }
     }
 

@@ -29,4 +29,7 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.stats)
     val relationships
         get() = composeTestRule.activity.resources.getString(R.string.relationships)
+    val resourceLabel
+        get() = composeTestRule.activity.resources.getString(R.string.resource)
+
 }

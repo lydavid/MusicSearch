@@ -37,35 +37,17 @@ import ly.david.mbjc.data.network.placeMusicBrainzModel
 import ly.david.mbjc.data.network.recordingMusicBrainzModel
 import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
 import ly.david.mbjc.data.network.releaseMusicBrainzModel
+import ly.david.mbjc.data.network.searchArtistsResponse
+import ly.david.mbjc.data.network.searchReleaseGroupsResponse
 import ly.david.mbjc.data.network.workGroupMusicBrainzModel
 
 internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
-        return SearchArtistsResponse(
-            1,
-            0,
-            listOf(
-                ArtistMusicBrainzModel(
-                    id = "1",
-                    name = "artist name",
-                    sortName = "sort name"
-                )
-            )
-        )
+        return searchArtistsResponse
     }
 
     override suspend fun queryReleaseGroups(query: String, limit: Int, offset: Int): SearchReleaseGroupsResponse {
-        return SearchReleaseGroupsResponse(
-            1,
-            0,
-            listOf(
-                ReleaseGroupMusicBrainzModel(
-                    id = "1",
-                    name = "release group name",
-                    firstReleaseDate = "2022-03-14"
-                )
-            )
-        )
+        return searchReleaseGroupsResponse
     }
 
     override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {

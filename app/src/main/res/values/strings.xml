@@ -29,6 +29,7 @@
     <string name="history">History</string>
 
     <string name="search">Search</string>
+    <string name="resource">Resource</string>
     <string name="clear_search">Clear search field</string>
     <string name="no_results_found">No results found.</string>
     <string name="no_results_found_search">No results found.\nTry refining your search query.</string>

@@ -1,6 +1,7 @@
 package ly.david.mbjc.data.network
 
 import ly.david.data.AreaType
+import ly.david.data.NameWithDisambiguation
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.Direction
@@ -13,10 +14,13 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.network.api.BrowseReleasesResponse
+import ly.david.data.network.api.SearchArtistsResponse
+import ly.david.data.network.api.SearchReleaseGroupsResponse
 import ly.david.data.persistence.history.LookupHistory
 
 internal val countryAreaMusicBrainzModel = AreaMusicBrainzModel(
@@ -81,10 +85,32 @@ internal val releaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzModel(
     name = "Release Group Name",
 )
 
+internal val seriesGroupMusicBrainzModel = SeriesMusicBrainzModel(
+    id = "1",
+    name = "Series Name",
+)
+
 internal val workGroupMusicBrainzModel = WorkMusicBrainzModel(
     id = "1",
     name = "Work Name",
 )
+
+internal fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
+    when (this) {
+        MusicBrainzResource.AREA -> areaMusicBrainzModel
+        MusicBrainzResource.ARTIST -> artistMusicBrainzModel
+        MusicBrainzResource.EVENT -> eventMusicBrainzModel
+        MusicBrainzResource.GENRE -> TODO()
+        MusicBrainzResource.INSTRUMENT -> instrumentMusicBrainzModel
+        MusicBrainzResource.LABEL -> labelMusicBrainzResource
+        MusicBrainzResource.PLACE -> placeMusicBrainzModel
+        MusicBrainzResource.RECORDING -> recordingMusicBrainzModel
+        MusicBrainzResource.RELEASE -> releaseMusicBrainzModel
+        MusicBrainzResource.RELEASE_GROUP -> releaseGroupMusicBrainzModel
+        MusicBrainzResource.SERIES -> seriesGroupMusicBrainzModel
+        MusicBrainzResource.WORK -> workGroupMusicBrainzModel
+        MusicBrainzResource.URL -> TODO()
+    }
 
 internal val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     count = 1,
@@ -102,6 +128,18 @@ internal val browseRecordingsResponse = BrowseRecordingsResponse(
     count = 1,
     offset = 0,
     recordings = listOf(recordingMusicBrainzModel)
+)
+
+internal val searchArtistsResponse = SearchArtistsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = artistMusicBrainzModel)
+)
+
+internal val searchReleaseGroupsResponse = SearchReleaseGroupsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = releaseGroupMusicBrainzModel)
 )
 
 internal val lookupHistory = LookupHistory(

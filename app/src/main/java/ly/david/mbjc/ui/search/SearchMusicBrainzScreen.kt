@@ -79,8 +79,9 @@ internal fun SearchMusicBrainzScreen(
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> = rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
-        .collectAsLazyPagingItems()
+    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+        rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
+            .collectAsLazyPagingItems()
 
     var text by rememberSaveable { mutableStateOf("") }
     var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }

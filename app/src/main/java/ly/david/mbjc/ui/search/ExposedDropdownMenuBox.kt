@@ -21,8 +21,11 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
@@ -51,7 +54,7 @@ internal fun ExposedDropdownMenuBox(
             shape = RectangleShape,
             value = stringResource(id = selectedOption.displayTextRes),
             onValueChange = { },
-            label = { Text("Resource") },
+            label = { Text(stringResource(id = R.string.resource)) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
@@ -78,7 +81,9 @@ internal fun ExposedDropdownMenuBox(
                     }
                 ) {
                     DropdownMenuItem(
-                        modifier = modifier,
+                        modifier = modifier.semantics {
+                            testTag = option.resourceName
+                        },
                         text = {
                             Row(verticalAlignment = CenterVertically) {
                                 ResourceIcon(
