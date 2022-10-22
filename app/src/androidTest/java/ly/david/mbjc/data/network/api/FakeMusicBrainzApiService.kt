@@ -32,16 +32,26 @@ import ly.david.mbjc.data.network.browseReleaseGroupsResponse
 import ly.david.mbjc.data.network.browseReleasesResponse
 import ly.david.mbjc.data.network.eventMusicBrainzModel
 import ly.david.mbjc.data.network.instrumentMusicBrainzModel
-import ly.david.mbjc.data.network.labelMusicBrainzResource
+import ly.david.mbjc.data.network.labelMusicBrainzModel
 import ly.david.mbjc.data.network.placeMusicBrainzModel
 import ly.david.mbjc.data.network.recordingMusicBrainzModel
 import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
 import ly.david.mbjc.data.network.releaseMusicBrainzModel
+import ly.david.mbjc.data.network.searchAreasResponse
 import ly.david.mbjc.data.network.searchArtistsResponse
+import ly.david.mbjc.data.network.searchEventsResponse
+import ly.david.mbjc.data.network.searchInstrumentsResponse
+import ly.david.mbjc.data.network.searchLabelsResponse
+import ly.david.mbjc.data.network.searchPlacesResponse
+import ly.david.mbjc.data.network.searchRecordingsResponse
 import ly.david.mbjc.data.network.searchReleaseGroupsResponse
-import ly.david.mbjc.data.network.workGroupMusicBrainzModel
+import ly.david.mbjc.data.network.searchReleasesResponse
+import ly.david.mbjc.data.network.searchSeriesResponse
+import ly.david.mbjc.data.network.searchWorksResponse
+import ly.david.mbjc.data.network.workMusicBrainzModel
 
 internal class FakeMusicBrainzApiService : MusicBrainzApiService {
+    // region Search
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
         return searchArtistsResponse
     }
@@ -51,40 +61,41 @@ internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
-        TODO("Not yet implemented")
+        return searchReleasesResponse
     }
 
     override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
-        TODO("Not yet implemented")
+        return searchRecordingsResponse
     }
 
     override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
-        TODO("Not yet implemented")
+        return searchWorksResponse
     }
 
     override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
-        TODO("Not yet implemented")
+        return searchAreasResponse
     }
 
     override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
-        TODO("Not yet implemented")
+        return searchPlacesResponse
     }
 
     override suspend fun queryInstruments(query: String, limit: Int, offset: Int): SearchInstrumentsResponse {
-        TODO("Not yet implemented")
+        return searchInstrumentsResponse
     }
 
     override suspend fun queryLabels(query: String, limit: Int, offset: Int): SearchLabelsResponse {
-        TODO("Not yet implemented")
+        return searchLabelsResponse
     }
 
     override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
-        TODO("Not yet implemented")
+        return searchEventsResponse
     }
 
     override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
-        TODO("Not yet implemented")
+        return searchSeriesResponse
     }
+    // endregion
 
     override suspend fun browseReleaseGroupsByArtist(
         artistId: String,
@@ -136,7 +147,7 @@ internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
-        return labelMusicBrainzResource
+        return labelMusicBrainzModel
     }
 
     override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {
@@ -156,6 +167,6 @@ internal class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupWork(workId: String, include: String): WorkMusicBrainzModel {
-        return workGroupMusicBrainzModel
+        return workMusicBrainzModel
     }
 }

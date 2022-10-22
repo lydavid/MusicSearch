@@ -28,6 +28,7 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
             return MusicBrainzResource.values().filterNot {
+                // TODO: only url
                 listOf(
                     MusicBrainzResource.URL,
                     MusicBrainzResource.INSTRUMENT,

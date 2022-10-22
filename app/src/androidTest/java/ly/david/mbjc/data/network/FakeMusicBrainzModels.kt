@@ -19,10 +19,20 @@ import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.network.api.BrowseReleasesResponse
+import ly.david.data.network.api.SearchAreasResponse
 import ly.david.data.network.api.SearchArtistsResponse
+import ly.david.data.network.api.SearchEventsResponse
+import ly.david.data.network.api.SearchInstrumentsResponse
+import ly.david.data.network.api.SearchLabelsResponse
+import ly.david.data.network.api.SearchPlacesResponse
+import ly.david.data.network.api.SearchRecordingsResponse
 import ly.david.data.network.api.SearchReleaseGroupsResponse
+import ly.david.data.network.api.SearchReleasesResponse
+import ly.david.data.network.api.SearchSeriesResponse
+import ly.david.data.network.api.SearchWorksResponse
 import ly.david.data.persistence.history.LookupHistory
 
+// region Lookup
 internal val countryAreaMusicBrainzModel = AreaMusicBrainzModel(
     id = "2",
     name = "Country Name",
@@ -55,7 +65,7 @@ internal val eventMusicBrainzModel = EventMusicBrainzModel(
     name = "Event Name"
 )
 
-internal val labelMusicBrainzResource = LabelMusicBrainzModel(
+internal val labelMusicBrainzModel = LabelMusicBrainzModel(
     id = "1",
     name = "Label Name"
 )
@@ -85,12 +95,12 @@ internal val releaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzModel(
     name = "Release Group Name",
 )
 
-internal val seriesGroupMusicBrainzModel = SeriesMusicBrainzModel(
+internal val seriesMusicBrainzModel = SeriesMusicBrainzModel(
     id = "1",
     name = "Series Name",
 )
 
-internal val workGroupMusicBrainzModel = WorkMusicBrainzModel(
+internal val workMusicBrainzModel = WorkMusicBrainzModel(
     id = "1",
     name = "Work Name",
 )
@@ -102,16 +112,18 @@ internal fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguatio
         MusicBrainzResource.EVENT -> eventMusicBrainzModel
         MusicBrainzResource.GENRE -> TODO()
         MusicBrainzResource.INSTRUMENT -> instrumentMusicBrainzModel
-        MusicBrainzResource.LABEL -> labelMusicBrainzResource
+        MusicBrainzResource.LABEL -> labelMusicBrainzModel
         MusicBrainzResource.PLACE -> placeMusicBrainzModel
         MusicBrainzResource.RECORDING -> recordingMusicBrainzModel
         MusicBrainzResource.RELEASE -> releaseMusicBrainzModel
         MusicBrainzResource.RELEASE_GROUP -> releaseGroupMusicBrainzModel
-        MusicBrainzResource.SERIES -> seriesGroupMusicBrainzModel
-        MusicBrainzResource.WORK -> workGroupMusicBrainzModel
+        MusicBrainzResource.SERIES -> seriesMusicBrainzModel
+        MusicBrainzResource.WORK -> workMusicBrainzModel
         MusicBrainzResource.URL -> TODO()
     }
+// endregion
 
+// region Browse
 internal val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     count = 1,
     offset = 0,
@@ -129,6 +141,14 @@ internal val browseRecordingsResponse = BrowseRecordingsResponse(
     offset = 0,
     recordings = listOf(recordingMusicBrainzModel)
 )
+// endregion
+
+// region Search
+internal val searchAreasResponse = SearchAreasResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = areaMusicBrainzModel)
+)
 
 internal val searchArtistsResponse = SearchArtistsResponse(
     count = 1,
@@ -136,11 +156,61 @@ internal val searchArtistsResponse = SearchArtistsResponse(
     listOf(element = artistMusicBrainzModel)
 )
 
+internal val searchEventsResponse = SearchEventsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = eventMusicBrainzModel)
+)
+
+internal val searchInstrumentsResponse = SearchInstrumentsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = instrumentMusicBrainzModel)
+)
+
+internal val searchLabelsResponse = SearchLabelsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = labelMusicBrainzModel)
+)
+
+internal val searchPlacesResponse = SearchPlacesResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = placeMusicBrainzModel)
+)
+
+internal val searchRecordingsResponse = SearchRecordingsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = recordingMusicBrainzModel)
+)
+
+internal val searchReleasesResponse = SearchReleasesResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = releaseMusicBrainzModel)
+)
+
 internal val searchReleaseGroupsResponse = SearchReleaseGroupsResponse(
     count = 1,
     offset = 0,
     listOf(element = releaseGroupMusicBrainzModel)
 )
+
+internal val searchSeriesResponse = SearchSeriesResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = seriesMusicBrainzModel)
+)
+
+internal val searchWorksResponse = SearchWorksResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = workMusicBrainzModel)
+)
+// endregion
+
 
 internal val lookupHistory = LookupHistory(
     title = "欠けた心象、世のよすが",

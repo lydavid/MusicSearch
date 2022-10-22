@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.searchableResources
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.data.network.toFakeMusicBrainzModel
@@ -31,10 +32,7 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
-            return MusicBrainzResource.values().filter {
-                it == MusicBrainzResource.ARTIST ||
-                    it == MusicBrainzResource.RELEASE_GROUP
-            }
+            return searchableResources
         }
     }
 

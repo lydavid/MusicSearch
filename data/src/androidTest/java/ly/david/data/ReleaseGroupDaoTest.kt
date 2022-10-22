@@ -23,14 +23,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 internal class ReleaseGroupDaoTest {
 
-    // TODO: Should use a test database if we need mocking
-    //  otherwise we can just use this, since it doesn't actually alter our real database.
+    // TODO: Should use a fake database with hilt
     private lateinit var db: MusicBrainzRoomDatabase
     private lateinit var releaseGroupDao: ReleaseGroupDao
     private lateinit var releaseGroupArtistDao: ReleaseGroupArtistDao
     private lateinit var artistDao: ArtistDao
 
-    // TODO: hilt
     @Before
     fun setUp() {
         db = Room.inMemoryDatabaseBuilder(
