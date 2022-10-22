@@ -10,6 +10,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+
 private val DarkColorScheme = darkColorScheme(
     primary = Orange200,
 //    primaryVariant = Orange700,
@@ -57,6 +59,7 @@ internal fun BaseTheme(context: Context, darkTheme: Boolean = isSystemInDarkThem
 /**
  * Theme for previews/tests and devices below Android 12.
  */
+@ExcludeFromJacocoGeneratedReport
 @Composable
 internal fun PreviewTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colorSchemes = if (darkTheme) {

@@ -16,6 +16,7 @@ import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.getNameWithDisambiguation
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -68,7 +69,10 @@ internal fun AreaCard(
     }
 }
 
+
+
 // Cannot be private.
+@ExcludeFromJacocoGeneratedReport
 internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaUiModel> {
     override val values = sequenceOf(
         AreaUiModel(
@@ -90,6 +94,7 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaU
     )
 }
 
+@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun AreaCardPreview(
