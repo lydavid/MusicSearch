@@ -92,8 +92,8 @@ internal fun SearchMusicBrainzScreen(
 
     if (showAlertDialog) {
         SimpleAlertDialog(
-            title = "Search cannot be empty",
-            confirmText = "OK",
+            title = stringResource(id = R.string.search_cannot_be_empty),
+            confirmText = stringResource(id = R.string.ok),
             onDismiss = { showAlertDialog = false }
         )
     }

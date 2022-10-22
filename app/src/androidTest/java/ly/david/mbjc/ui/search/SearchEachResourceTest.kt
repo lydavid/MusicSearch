@@ -24,6 +24,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
+/**
+ * Test interacting with each [searchableResources] from the search screen.
+ */
 @HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class SearchEachResourceTest(private val resource: MusicBrainzResource) : MainActivityTest(), StringReferences {

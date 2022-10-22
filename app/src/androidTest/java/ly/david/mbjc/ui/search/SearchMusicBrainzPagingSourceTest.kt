@@ -13,7 +13,7 @@ import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-// TODO: hilt
+// TODO: hilt and can this be a unit test?
 internal class SearchMusicBrainzPagingSourceTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)

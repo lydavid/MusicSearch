@@ -31,6 +31,7 @@
     <string name="search">Search</string>
     <string name="resource">Resource</string>
     <string name="clear_search">Clear search field</string>
+    <string name="search_cannot_be_empty">Search cannot be empty</string>
     <string name="no_results_found">No results found.</string>
     <string name="no_results_found_search">No results found.\nTry refining your search query.</string>
 
@@ -45,4 +46,6 @@
     <string name="tracks">Tracks</string>
     <string name="format">Format</string>
     <string name="stats">Stats</string>
+
+    <string name="ok">OK</string>
 </resources>

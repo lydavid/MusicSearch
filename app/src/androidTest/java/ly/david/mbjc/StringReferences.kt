@@ -13,6 +13,8 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.search)
     val clearSearchContentDescription
         get() = composeTestRule.activity.resources.getString(R.string.clear_search)
+    val emptySearchWarning
+        get() = composeTestRule.activity.resources.getString(R.string.search_cannot_be_empty)
     val appName
         get() = composeTestRule.activity.resources.getString(R.string.app_name)
     val navDrawerIconContentDescription
@@ -31,5 +33,7 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.relationships)
     val resourceLabel
         get() = composeTestRule.activity.resources.getString(R.string.resource)
+    val ok
+        get() = composeTestRule.activity.resources.getString(R.string.ok)
 
 }
