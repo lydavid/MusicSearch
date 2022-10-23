@@ -47,6 +47,7 @@ class AreaRepository @Inject constructor(
             areaId = areaId,
             include = INC_ALL_RELATIONS
         )
+
         val relations = mutableListOf<RelationRoomModel>()
         areaMusicBrainzModel.relations?.forEachIndexed { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationRoomModel(
@@ -57,8 +58,11 @@ class AreaRepository @Inject constructor(
             }
         }
         relationDao.insertAll(relations)
-        areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
+
         areaDao.insertAllCountryCodes(areaMusicBrainzModel.iso_3166_1_codes?.map { Iso3166_1(areaId, it) }.orEmpty())
+
+        areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
+
         return areaMusicBrainzModel.toAreaUiModel()
     }
 
@@ -78,7 +82,8 @@ class AreaRepository @Inject constructor(
             musicBrainzReleases.map { release ->
                 ReleaseCountry(
                     releaseId = release.id,
-                    countryId = areaId
+                    countryId = areaId,
+                    date = release.date
                 )
             }
         )

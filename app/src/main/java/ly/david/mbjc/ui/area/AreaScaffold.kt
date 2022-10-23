@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.AreaType
+import ly.david.data.AreaType.COUNTRY
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
@@ -38,7 +39,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 //  to split them into different tabs
 //  asking for release-rels and recording-rels in a separate tab for area for example
 //  however, we would then need a different indicator to determine whether we've fetched these types of rels
-private enum class AreaTab(@StringRes val titleRes: Int) {
+internal enum class AreaTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
     RELEASES(R.string.releases),
 
@@ -50,7 +51,6 @@ private enum class AreaTab(@StringRes val titleRes: Int) {
 /**
  * A screen that starts on relationships tab.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AreaScaffold(
     areaId: String,
@@ -59,42 +59,36 @@ internal fun AreaScaffold(
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: AreaViewModel = hiltViewModel(),
 ) {
-
     val resource = MusicBrainzResource.AREA
-
-    val snackbarHostState = remember { SnackbarHostState() }
 
     // TODO: api doesn't seem to include area containment
     //  but we could get its parent area via relations "part of" "backward"
     var area: AreaUiModel? by remember { mutableStateOf(null) }
     var title by rememberSaveable { mutableStateOf("") }
-    val tabs = AreaTab.values()
-        .filter { it != AreaTab.RELEASES || area?.type == AreaType.COUNTRY }
-    var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var tabs: List<AreaTab> by rememberSaveable { mutableStateOf(AreaTab.values().filter { it != AreaTab.RELEASES }) }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
-    val relationsLazyListState = rememberLazyListState()
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
-        .collectAsLazyPagingItems()
-
-    val releasesLazyListState = rememberLazyListState()
     val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
+
+    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+        .collectAsLazyPagingItems()
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         title = titleWithDisambiguation
     }
 
     LaunchedEffect(key1 = areaId) {
-
         try {
             val areaUiModel = viewModel.lookupAreaThenLoadRelations(areaId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
                 title = areaUiModel.getNameWithDisambiguation()
             }
             area = areaUiModel
+            if (areaUiModel.type == COUNTRY) {
+                tabs = AreaTab.values().toList()
+            }
         } catch (ex: Exception) {
             viewModel.loadRelations(areaId)
         }
@@ -108,6 +102,48 @@ internal fun AreaScaffold(
             recordedLookup = true
         }
     }
+
+    AreaScaffold(
+        areaId = areaId,
+        onBack = onBack,
+        onItemClick = onItemClick,
+        releasesLazyPagingItems = releasesLazyPagingItems,
+        relationsLazyPagingItems = relationsLazyPagingItems,
+        resource = resource,
+        title = title,
+        tabs = tabs,
+        showReleases = area?.type == AreaType.COUNTRY,
+        onUpdateQuery = { searchText ->
+            viewModel.updateQuery(searchText)
+        },
+        loadReleases =  {
+            viewModel.loadReleases(areaId)
+        },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AreaScaffold(
+    areaId: String,
+    onBack: () -> Unit = {},
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    resource: MusicBrainzResource,
+    title: String,
+    tabs: List<AreaTab>,
+    releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel>,
+    relationsLazyPagingItems: LazyPagingItems<UiModel>,
+    showReleases: Boolean,
+    onUpdateQuery: (String) -> Unit,
+    loadReleases: () -> Unit,
+) {
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
+    var searchText by rememberSaveable { mutableStateOf("") }
+
+    val relationsLazyListState = rememberLazyListState()
+    val releasesLazyListState = rememberLazyListState()
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -126,7 +162,7 @@ internal fun AreaScaffold(
                 searchText = searchText,
                 onSearchTextChange = {
                     searchText = it
-                    viewModel.updateQuery(searchText)
+                    onUpdateQuery(searchText)
                 },
             )
         },
@@ -143,7 +179,7 @@ internal fun AreaScaffold(
                 )
             }
             AreaTab.RELEASES -> {
-                viewModel.loadReleases(areaId)
+                loadReleases()
 
                 ReleasesListScreen(
                     modifier = Modifier.padding(innerPadding),
@@ -163,7 +199,7 @@ internal fun AreaScaffold(
             AreaTab.STATS -> {
                 AreaStatsScreen(
                     areaId = areaId,
-                    showReleases = area?.type == AreaType.COUNTRY
+                    showReleases = showReleases
                 )
             }
         }

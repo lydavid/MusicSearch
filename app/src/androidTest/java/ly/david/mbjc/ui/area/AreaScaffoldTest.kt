@@ -29,8 +29,6 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     private lateinit var relationDao: RelationDao
     private lateinit var areaDao: AreaDao
 
-    private lateinit var area: AreaMusicBrainzModel
-
     @Before
     fun setupApp() {
         hiltRule.inject()
@@ -42,7 +40,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     private fun setArea(areaMusicBrainzModel: AreaMusicBrainzModel) {
-        area = areaMusicBrainzModel
+        val area = areaMusicBrainzModel
         composeTestRule.activity.setContent {
             PreviewTheme {
                 AreaScaffold(areaId = area.id)
@@ -98,7 +96,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
 
 //    @Test
 //    fun hasReleases() {
-//        setArea(fakeCountryAreaMusicBrainzModel)
+//        setArea(countryAreaMusicBrainzModel)
 //
 //        composeTestRule.onRoot(useUnmergedTree = true).printToLog("currentLabelExists")
 //

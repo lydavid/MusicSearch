@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
@@ -54,7 +55,7 @@ internal class AreaViewModel @Inject constructor(
     /**
      * Call this to retrieve title, and initiate relations paging.
      */
-    suspend fun lookupAreaThenLoadRelations(areaId: String): ly.david.data.domain.AreaUiModel {
+    suspend fun lookupAreaThenLoadRelations(areaId: String): AreaUiModel {
         return repository.lookupArea(areaId)
             .also {
                 markResourceHasRelations()
