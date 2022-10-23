@@ -1,8 +1,8 @@
 plugins {
     id "com.android.application"
     id "org.jetbrains.kotlin.android"
-    id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
+    id "kotlin-kapt"
 }
 
 // https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
@@ -73,10 +73,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    // TODO: Not working on Windows 10: https://issuetracker.google.com/issues/249111286
 //    testOptions {
 //        managedDevices {
 //            devices {
-//                pixel2api30 (ManagedVirtualDevice) {
+//                pixel2api30 (com.android.build.api.dsl.ManagedVirtualDevice) {
 //                    // Use device profiles you typically see in Android Studio.
 //                    device = "Pixel 2"
 //                    // Use only API levels 27 and higher.
