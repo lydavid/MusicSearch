@@ -2,10 +2,16 @@ package ly.david.data.repository
 
 import javax.inject.Inject
 import javax.inject.Singleton
+import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseArtistCreditRoomModels
+import ly.david.data.persistence.area.AreaDao
+import ly.david.data.persistence.area.ReleasesCountriesDao
+import ly.david.data.persistence.area.getAreaCountryCodes
+import ly.david.data.persistence.area.getReleaseCountries
+import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
@@ -22,6 +28,8 @@ class ReleaseRepository @Inject constructor(
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
+    private val releasesCountriesDao: ReleasesCountriesDao,
+    private val areaDao: AreaDao
 ) {
 
     /**
@@ -42,7 +50,9 @@ class ReleaseRepository @Inject constructor(
         // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
         releaseDao.insert(releaseMusicBrainzModel.toReleaseRoomModel())
+
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
+
         releaseMusicBrainzModel.releaseGroup?.let { releaseGroup ->
             releasesReleaseGroupsDao.insert(
                 ReleaseReleaseGroup(
@@ -56,6 +66,27 @@ class ReleaseRepository @Inject constructor(
             val mediumId = mediumDao.insert(medium.toMediumRoomModel(releaseMusicBrainzModel.id))
             trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
         }
+
+        // TODO: this will cause this release to appear on top of Area's Releases tab
+        //  since it's inserting before the rest
+        releasesCountriesDao.insertAll(releaseMusicBrainzModel.getReleaseCountries())
+
+        areaDao.insertAll(
+            releaseMusicBrainzModel.releaseEvents?.mapNotNull {
+                // release events returns null type, but we know they are countries
+                it.area?.toAreaRoomModel()?.copy(type = AreaType.COUNTRY)
+            }.orEmpty()
+        )
+
+        areaDao.insertAllCountryCodes(
+            releaseMusicBrainzModel.releaseEvents?.flatMap { releaseEvent ->
+                releaseEvent.area?.getAreaCountryCodes().orEmpty()
+            }.orEmpty()
+        )
+
+        // TODO: create the area as well, which only needs id/name/type (always country)
+        //  when we navigate to area for the first time via here, how can we make sure to still fetch relations?
+
         return releaseMusicBrainzModel.toReleaseUiModel()
     }
 }

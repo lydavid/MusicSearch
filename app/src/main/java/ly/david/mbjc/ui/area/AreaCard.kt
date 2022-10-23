@@ -25,6 +25,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun AreaCard(
     area: AreaUiModel,
+    showType: Boolean = true,
     onAreaClick: AreaUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
@@ -49,7 +50,7 @@ internal fun AreaCard(
                 style = TextStyles.getCardTitleTextStyle()
             )
 
-            if (!type.isNullOrEmpty()) {
+            if (showType && !type.isNullOrEmpty()) {
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
                     text = type,
@@ -69,7 +70,14 @@ internal fun AreaCard(
     }
 }
 
-
+@ExcludeFromJacocoGeneratedReport
+private val area3 = AreaUiModel(
+    id = "3",
+    name = "Area Name",
+    disambiguation = "That one",
+    type = "Country",
+    iso_3166_1_codes = listOf("GB")
+)
 
 // Cannot be private.
 @ExcludeFromJacocoGeneratedReport
@@ -84,13 +92,7 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaU
             name = "Area Name",
             disambiguation = "That one",
         ),
-        AreaUiModel(
-            id = "3",
-            name = "Area Name",
-            disambiguation = "That one",
-            type = "Country",
-            iso_3166_1_codes = listOf("GB")
-        ),
+        area3
     )
 }
 
@@ -103,6 +105,19 @@ private fun AreaCardPreview(
     PreviewTheme {
         Surface {
             AreaCard(area)
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun DoNotShowTypePreview() {
+    PreviewTheme {
+        Surface {
+            AreaCard(
+                area = area3,
+                showType = false
+            )
         }
     }
 }

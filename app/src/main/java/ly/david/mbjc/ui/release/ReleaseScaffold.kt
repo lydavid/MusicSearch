@@ -24,6 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -33,6 +34,7 @@ import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.relations.ReleaseRelationsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
@@ -154,13 +156,18 @@ internal fun ReleaseScaffold(
     ) { innerPadding ->
 
         val tracksLazyListState = rememberLazyListState()
-        val tracksLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+        val tracksLazyPagingItems: LazyPagingItems<UiModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
                 .collectAsLazyPagingItems()
 
+        val detailsLazyListState = rememberLazyListState()
+        val detailsLazyPagingItems: LazyPagingItems<UiModel> =
+            rememberFlowWithLifecycleStarted(viewModel.pagedDetails)
+                .collectAsLazyPagingItems()
+
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<ly.david.data.domain.UiModel>> by remember { mutableStateOf(emptyFlow()) }
-        val relationsLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
             rememberFlowWithLifecycleStarted(pagedRelations)
                 .collectAsLazyPagingItems()
 
@@ -178,7 +185,14 @@ internal fun ReleaseScaffold(
                 )
             }
             ReleaseTab.DETAILS -> {
-
+                ReleaseDetailsScreen(
+                    lazyPagingItems = detailsLazyPagingItems,
+                    lazyListState = detailsLazyListState,
+                    snackbarHostState = snackbarHostState,
+                    onAreaClick = {
+                        onItemClick(Destination.LOOKUP_AREA, id, name)
+                    }
+                )
             }
             ReleaseTab.RELATIONSHIPS -> {
                 ReleaseRelationsScreen(

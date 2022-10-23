@@ -24,7 +24,7 @@ internal fun AreaMusicBrainzModel.toAreaUiModel() =
         iso_3166_1_codes = iso_3166_1_codes
     )
 
-internal fun AreaRoomModel.toAreaUiModel(iso_3166_1_codes: List<String>? = null) =
+fun AreaRoomModel.toAreaUiModel(iso_3166_1_codes: List<String>? = null) =
     AreaUiModel(
         id = id,
         name = name,

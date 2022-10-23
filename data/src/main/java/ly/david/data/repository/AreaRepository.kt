@@ -8,9 +8,9 @@ import ly.david.data.domain.toAreaUiModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.area.ReleasesCountriesDao
+import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
@@ -36,10 +36,15 @@ class AreaRepository @Inject constructor(
      * This makes the assumption that after the first call, we have stored
      * all relationships as well.
      */
-    suspend fun lookupArea(areaId: String, forceRefresh: Boolean = false): AreaUiModel {
+    suspend fun lookupArea(
+        areaId: String,
+        forceRefresh: Boolean = false,
+        hasRelationsBeenStored: suspend () -> Boolean,
+        markResourceHasRelations: suspend () -> Unit
+    ): AreaUiModel {
         val areaRoomModel = areaDao.getArea(areaId)
         val countryCodes = areaDao.getCountryCodes(areaId)
-        if (!forceRefresh && areaRoomModel != null) {
+        if (!forceRefresh && areaRoomModel != null && hasRelationsBeenStored()) {
             return areaRoomModel.toAreaUiModel(countryCodes?.map { it.code })
         }
 
@@ -59,9 +64,11 @@ class AreaRepository @Inject constructor(
         }
         relationDao.insertAll(relations)
 
-        areaDao.insertAllCountryCodes(areaMusicBrainzModel.iso_3166_1_codes?.map { Iso3166_1(areaId, it) }.orEmpty())
+        areaDao.insertAllCountryCodes(areaMusicBrainzModel.getAreaCountryCodes())
 
         areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
+
+        markResourceHasRelations()
 
         return areaMusicBrainzModel.toAreaUiModel()
     }

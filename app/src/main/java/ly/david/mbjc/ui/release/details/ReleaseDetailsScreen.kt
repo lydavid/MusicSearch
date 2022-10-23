@@ -1,11 +1,45 @@
 package ly.david.mbjc.ui.release.details
 
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.paging.compose.LazyPagingItems
+import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.Header
+import ly.david.data.domain.UiModel
+import ly.david.mbjc.ui.area.AreaCard
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 @Composable
 internal fun ReleaseDetailsScreen(
-    releaseUiModel: ly.david.data.domain.ReleaseUiModel
+//    releaseUiModel: ly.david.data.domain.ReleaseUiModel,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    lazyListState: LazyListState = rememberLazyListState(),
+    lazyPagingItems: LazyPagingItems<UiModel>,
+    onAreaClick: AreaUiModel.() -> Unit = {}
 ) {
+    PagingLoadingAndErrorHandler(
+        lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
+        snackbarHostState = snackbarHostState
+    ) { uiModel: UiModel? ->
+        when (uiModel) {
+            is Header -> {
+
+            }
+            is AreaUiModel -> {
+                AreaCard(
+                    area = uiModel,
+                    showType = false,
+                    onAreaClick = onAreaClick
+                )
+            }
+            else -> {
+                // Do nothing.
+            }
+        }
+    }
 
     // TODO: page release events
     //  release_events not releases_events

@@ -44,6 +44,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         """
     }
 
+    // region by Area
     @Query(
         """
         DELETE FROM releases WHERE id IN (
@@ -89,4 +90,23 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         areaId: String,
         query: String
     ): PagingSource<Int, ReleaseRoomModel>
+    // endregion
+
+    // region by Release
+
+    // TODO: then refactor releases to not include country_code
+    //  if we do this, will we always join releases with countries to get their flag?
+    @Transaction
+    @Query(
+        """
+        SELECT a.*
+        FROM areas a
+        INNER JOIN releases_countries rc ON rc.country_id = a.id
+        INNER JOIN releases r ON r.id = rc.release_id
+        WHERE r.id = :releaseId
+        ORDER BY a.name
+    """
+    )
+    abstract fun getCountriesReleasedIn(releaseId: String): PagingSource<Int, AreaRoomModel>
+    // endregion
 }

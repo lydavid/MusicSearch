@@ -56,16 +56,24 @@ internal class AreaViewModel @Inject constructor(
      * Call this to retrieve title, and initiate relations paging.
      */
     suspend fun lookupAreaThenLoadRelations(areaId: String): AreaUiModel {
-        return repository.lookupArea(areaId)
+        return repository.lookupArea(
+            areaId = areaId,
+            hasRelationsBeenStored = { hasRelationsBeenStored() },
+            // TODO: need to include this check, or we will not query for relations when coming from Release's Details
+            markResourceHasRelations = { markResourceHasRelations() }
+        )
             .also {
-                markResourceHasRelations()
                 loadRelations(areaId)
             }
     }
 
     override suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
-        repository.lookupArea(resourceId, forceRefresh = forceRefresh)
-//        markResourceHasRelations()
+        repository.lookupArea(
+            areaId = resourceId,
+            forceRefresh = forceRefresh,
+            hasRelationsBeenStored = { hasRelationsBeenStored() },
+            markResourceHasRelations = { markResourceHasRelations() }
+        )
     }
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)

@@ -22,6 +22,9 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
+import ly.david.data.domain.Header
+import ly.david.data.domain.ListSeparator
+import ly.david.data.domain.TrackUiModel
 import ly.david.data.domain.UiModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -59,9 +62,9 @@ internal fun TracksInReleaseScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { uiModel: ly.david.data.domain.UiModel? ->
+    ) { uiModel: UiModel? ->
         when (uiModel) {
-            is ly.david.data.domain.Header -> {
+            is Header -> {
                 if (coverArtUrl.isNotEmpty()) {
 
                     when (painter.state) {
@@ -89,14 +92,14 @@ internal fun TracksInReleaseScreen(
                     }
                 }
             }
-            is ly.david.data.domain.TrackUiModel -> {
+            is TrackUiModel -> {
                 TrackCard(
                     track = uiModel,
 //                            showTrackArtists = shouldShowTrackArtists,
                     onRecordingClick = onRecordingClick
                 )
             }
-            is ly.david.data.domain.ListSeparator -> {
+            is ListSeparator -> {
                 ListSeparatorHeader(text = uiModel.text)
             }
             else -> {

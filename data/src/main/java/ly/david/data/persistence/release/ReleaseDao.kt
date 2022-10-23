@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.area.ReleaseCountry
 
 @Dao
 abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
@@ -42,4 +43,7 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     """
     )
     abstract suspend fun getReleaseArtistCredits(releaseId: String): List<ReleaseArtistCreditRoomModel>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertAllReleaseEvents(releaseCountries: List<ReleaseCountry>)
 }

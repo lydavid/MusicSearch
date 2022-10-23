@@ -3,6 +3,7 @@ package ly.david.data.persistence.area
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.persistence.release.ReleaseRoomModel
 
 // MB has a country_area table between this and area.
@@ -15,6 +16,9 @@ import ly.david.data.persistence.release.ReleaseRoomModel
  * Other area type may have relationships with releases, but they won't be found via browse.
  */
 @Entity(
+    // releases_countries suggests this is many-to-many between releases and countries (areas)
+    // however we currently only have release as a primary key
+    // In order to also have area as a primary key, we need to store all areas from a release's release events
     tableName = "releases_countries",
     primaryKeys = ["release_id", "country_id"],
     foreignKeys = [
@@ -27,7 +31,9 @@ import ly.david.data.persistence.release.ReleaseRoomModel
         )
     ]
 )
-internal data class ReleaseCountry(
+// TODO: test inserting these from area releases tab first
+//  then test inserting these from release details tab
+data class ReleaseCountry(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
 
@@ -38,6 +44,20 @@ internal data class ReleaseCountry(
     @ColumnInfo(name = "date")
     val date: String? = null,
 )
+
+fun ReleaseMusicBrainzModel.getReleaseCountries(): List<ReleaseCountry> =
+    releaseEvents?.mapNotNull { releaseEvent ->
+        val countryId = releaseEvent.area?.id
+        if (countryId == null) {
+            null
+        } else {
+            ReleaseCountry(
+                releaseId = id,
+                countryId = countryId,
+                date = releaseEvent.date
+            )
+        }
+    }.orEmpty()
 
 // TODO: do we need this table?
 //@Entity(
