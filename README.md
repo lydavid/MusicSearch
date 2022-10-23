@@ -26,6 +26,12 @@ That screen would have multiple tabs, which may include:
 - Stats: information about its other tabs such as how many relationships it has with each resource
 - Releases: release resources associated with it
 
-## Generate unit test coverage
+## Code Coverage
 
-`Run anything` -> `gradle app:createDebugUnitTestCoverageReport`
+Instrumented test coverage for `app`
+`Run anything` -> `gradle app:createDebugAndroidTestCoverageReport`
+
+Unit test coverage for `data`
+`Run anything` -> `gradle data:createDebugUnitTestCoverageReport`
+
+TODO: Merge instrumented and unit test coverage. And merge all module reports.

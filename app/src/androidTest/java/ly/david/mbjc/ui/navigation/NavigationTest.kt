@@ -60,6 +60,4 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
     }
-
-
 }

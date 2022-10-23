@@ -265,4 +265,3 @@ adb shell am start -d "mbjc://recording/ac474974-600b-497e-902e-3b85b62cf58f" -a
 ```shell
 adb shell am start -d "mbjc://place/4d43b9d8-162d-4ac5-8068-dfb009722484" -a android.intent.action.VIEW
 ```
-

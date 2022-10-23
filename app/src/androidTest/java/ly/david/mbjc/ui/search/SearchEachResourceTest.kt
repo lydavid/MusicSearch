@@ -78,5 +78,6 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
         composeTestRule
             .onNodeWithText(resource.toFakeMusicBrainzModel().name ?: "should fail")
             .assertIsDisplayed()
+            .performClick()
     }
 }
