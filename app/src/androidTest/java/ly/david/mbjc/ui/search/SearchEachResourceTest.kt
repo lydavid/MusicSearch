@@ -14,10 +14,11 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
+import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -64,7 +65,7 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
             .performClick()
 
         composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(resource.displayTextRes))
+            .onNodeWithText(composeTestRule.activity.getString(resource.getDisplayTextRes()))
             .assertIsDisplayed()
 
         composeTestRule

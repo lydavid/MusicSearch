@@ -14,12 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.data.common.toDisplayTime
 import ly.david.mbjc.ui.relation.RelationCard
 
 // TODO: Do we want to generalize this for places? and any screens that uses relations?
@@ -50,7 +51,7 @@ internal fun RecordingScreen(
         lookupInProgress = false
     }
 
-    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+    val lazyPagingItems: LazyPagingItems<UiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
             .collectAsLazyPagingItems()
 
@@ -59,7 +60,7 @@ internal fun RecordingScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-    ) { uiModel: ly.david.data.domain.UiModel? ->
+    ) { uiModel: UiModel? ->
 
         when (uiModel) {
             is ly.david.data.domain.Header -> {

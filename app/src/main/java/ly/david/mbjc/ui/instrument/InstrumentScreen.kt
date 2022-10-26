@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.InstrumentUiModel
+import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -42,7 +43,7 @@ internal fun InstrumentScreen(
         lookupInProgress = false
     }
 
-    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+    val lazyPagingItems: LazyPagingItems<UiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
             .collectAsLazyPagingItems()
 
@@ -51,7 +52,7 @@ internal fun InstrumentScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-    ) { uiModel: ly.david.data.domain.UiModel? ->
+    ) { uiModel: UiModel? ->
 
         when (uiModel) {
             is ly.david.data.domain.RelationUiModel -> {

@@ -67,25 +67,24 @@ class ReleaseRepository @Inject constructor(
             trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
         }
 
-        // TODO: this will cause this release to appear on top of Area's Releases tab
-        //  since it's inserting before the rest
+        // Note that if you visit a release's screen before its country's releases page,
+        // you will most likely see this release on top (at least until the rest of the releases
+        // are loaded, then it should be sorted by whatever method we chose.
+        // We will consider this the expected behaviour.
         releasesCountriesDao.insertAll(releaseMusicBrainzModel.getReleaseCountries())
 
         areaDao.insertAll(
             releaseMusicBrainzModel.releaseEvents?.mapNotNull {
                 // release events returns null type, but we know they are countries
+                // Except in the case of [Worldwide], but it will replace itself when we first visit it.
                 it.area?.toAreaRoomModel()?.copy(type = AreaType.COUNTRY)
             }.orEmpty()
         )
-
         areaDao.insertAllCountryCodes(
             releaseMusicBrainzModel.releaseEvents?.flatMap { releaseEvent ->
                 releaseEvent.area?.getAreaCountryCodes().orEmpty()
             }.orEmpty()
         )
-
-        // TODO: create the area as well, which only needs id/name/type (always country)
-        //  when we navigate to area for the first time via here, how can we make sure to still fetch relations?
 
         return releaseMusicBrainzModel.toReleaseUiModel()
     }

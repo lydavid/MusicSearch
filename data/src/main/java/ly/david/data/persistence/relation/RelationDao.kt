@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.BaseDao
 
@@ -20,6 +21,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel> {
     @Query("SELECT * FROM has_relations WHERE resource_id = :resourceId")
     abstract suspend fun getHasRelationsModel(resourceId: String): HasRelationsRoomModel?
 
+    @Transaction
     @Query(
         """
             SELECT *
@@ -74,15 +76,6 @@ abstract class RelationDao : BaseDao<RelationRoomModel> {
     )
     abstract suspend fun getBrowseResourceOffset(resourceId: String, browseResource: MusicBrainzResource): BrowseResourceOffset?
 
-//    @Query(
-//        """
-//            UPDATE browse_resource_counts
-//            SET remote_count = :remoteCount
-//            WHERE resource_id = :resourceId
-//        """
-//    )
-//    abstract suspend fun updateRemoteCountForResource(resourceId: String, browseResource: MusicBrainzResource, remoteCount: Int)
-
     @Query(
         """
             UPDATE browse_resource_counts
@@ -92,7 +85,8 @@ abstract class RelationDao : BaseDao<RelationRoomModel> {
     )
     abstract suspend fun updateLocalCountForResource(resourceId: String, browseResource: MusicBrainzResource, localCount: Int)
 
-    suspend fun incrementOffsetForResource(resourceId: String, browseResource: MusicBrainzResource, additionalOffset: Int) {
+    @Transaction
+    open suspend fun incrementOffsetForResource(resourceId: String, browseResource: MusicBrainzResource, additionalOffset: Int) {
         val currentOffset = getBrowseResourceOffset(resourceId, browseResource)?.localCount ?: 0
         updateLocalCountForResource(resourceId, browseResource, currentOffset + additionalOffset)
     }

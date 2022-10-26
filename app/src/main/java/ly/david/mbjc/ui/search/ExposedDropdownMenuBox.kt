@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.getDisplayTextRes
 
 // https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
 
@@ -52,7 +53,7 @@ internal fun ExposedDropdownMenuBox(
             modifier = modifier.fillMaxWidth(),
             readOnly = true,
             shape = RectangleShape,
-            value = stringResource(id = selectedOption.displayTextRes),
+            value = stringResource(id = selectedOption.getDisplayTextRes()),
             onValueChange = { },
             label = { Text(stringResource(id = R.string.resource)) },
             trailingIcon = {
@@ -90,7 +91,7 @@ internal fun ExposedDropdownMenuBox(
                                     modifier = Modifier.padding(end = 8.dp),
                                     resource = option
                                 )
-                                Text(text = stringResource(id = option.displayTextRes))
+                                Text(text = stringResource(id = option.getDisplayTextRes()))
                             }
                         },
                         onClick = {

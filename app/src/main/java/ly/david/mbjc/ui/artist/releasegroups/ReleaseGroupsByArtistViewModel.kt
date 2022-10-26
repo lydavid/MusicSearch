@@ -19,16 +19,17 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import ly.david.data.domain.UiModel
 import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
-import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
@@ -68,7 +69,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    val pagedReleaseGroups: Flow<PagingData<ly.david.data.domain.UiModel>> =
+    val pagedReleaseGroups: Flow<PagingData<UiModel>> =
         paramState.filterNot { it.artistId.isEmpty() }
             .flatMapLatest { (artistId, query, isSorted) ->
                 Pager(

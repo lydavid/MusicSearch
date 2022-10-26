@@ -7,9 +7,8 @@ import ly.david.data.domain.toArtistUiModel
 import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.paging.SearchMusicBrainzPagingSource
-import ly.david.mbjc.data.network.api.FakeMusicBrainzApiService
-import ly.david.mbjc.data.network.artistMusicBrainzModel
-import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
+import ly.david.data.network.artistMusicBrainzModel
+import ly.david.data.network.releaseGroupMusicBrainzModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -20,7 +19,7 @@ internal class SearchMusicBrainzPagingSourceTest {
     @Test
     fun loadOneArtist() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
-            FakeMusicBrainzApiService(),
+            ly.david.data.network.api.FakeMusicBrainzApiService(),
             MusicBrainzResource.ARTIST,
             ""
         )
@@ -44,7 +43,7 @@ internal class SearchMusicBrainzPagingSourceTest {
     @Test
     fun loadOneReleaseGroup() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
-            FakeMusicBrainzApiService(),
+            ly.david.data.network.api.FakeMusicBrainzApiService(),
             MusicBrainzResource.RELEASE_GROUP,
             ""
         )

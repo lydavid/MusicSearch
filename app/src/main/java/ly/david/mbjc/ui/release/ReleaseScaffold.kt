@@ -24,6 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
@@ -32,6 +33,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
@@ -73,7 +75,7 @@ internal fun ReleaseScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var url: String by rememberSaveable { mutableStateOf("") }
-    var release: ly.david.data.domain.ReleaseUiModel? by remember { mutableStateOf(null) }
+    var release: ReleaseUiModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         title = titleWithDisambiguation
@@ -121,6 +123,7 @@ internal fun ReleaseScaffold(
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE, resourceId = releaseId)
+                    CopyToClipboardMenuItem(resourceId = releaseId)
                 },
                 subtitleDropdownMenuItems = {
                     release?.artistCredits?.forEach { artistCredit ->
@@ -186,6 +189,7 @@ internal fun ReleaseScaffold(
             }
             ReleaseTab.DETAILS -> {
                 ReleaseDetailsScreen(
+                    releaseUiModel = release,
                     lazyPagingItems = detailsLazyPagingItems,
                     lazyListState = detailsLazyListState,
                     snackbarHostState = snackbarHostState,

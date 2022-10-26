@@ -24,6 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
@@ -127,13 +128,13 @@ internal fun ArtistScaffold(
 
         // This is sufficient to preserve scroll position when switching tabs
         val releaseGroupsLazyListState = rememberLazyListState()
-        var pagedReleaseGroups: Flow<PagingData<ly.david.data.domain.UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        var pagedReleaseGroups: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
         val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
             .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<ly.david.data.domain.UiModel>> by remember { mutableStateOf(emptyFlow()) }
-        val relationsLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
             rememberFlowWithLifecycleStarted(pagedRelations)
                 .collectAsLazyPagingItems()
 

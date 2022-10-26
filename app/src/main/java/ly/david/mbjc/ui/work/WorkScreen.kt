@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.UiModel
 import ly.david.data.domain.WorkUiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -47,7 +48,7 @@ internal fun WorkScreen(
         lookupInProgress = false
     }
 
-    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+    val lazyPagingItems: LazyPagingItems<UiModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
             .collectAsLazyPagingItems()
 
@@ -56,7 +57,7 @@ internal fun WorkScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-    ) { uiModel: ly.david.data.domain.UiModel? ->
+    ) { uiModel: UiModel? ->
 
         when (uiModel) {
             is ly.david.data.domain.Header -> {

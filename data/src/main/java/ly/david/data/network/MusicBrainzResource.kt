@@ -1,8 +1,6 @@
 package ly.david.data.network
 
-import androidx.annotation.StringRes
 import com.squareup.moshi.Json
-import ly.david.data.R
 
 internal const val RESOURCE_AREA = "area"
 internal const val RESOURCE_ARTIST = "artist"
@@ -25,49 +23,49 @@ internal const val RESOURCE_URL = "url"
  *
  * @param resourceName The resource to use for query/lookup request to MusicBrainz.
  */
-enum class MusicBrainzResource(@StringRes val displayTextRes: Int, val resourceName: String) {
+enum class MusicBrainzResource(val resourceName: String) {
     @Json(name = "area")
-    AREA(R.string.area, RESOURCE_AREA),
+    AREA(RESOURCE_AREA),
 
     @Json(name = "artist")
-    ARTIST(R.string.artist, RESOURCE_ARTIST),
+    ARTIST(RESOURCE_ARTIST),
 
     @Json(name = "event")
-    EVENT(R.string.event, RESOURCE_EVENT),
+    EVENT(RESOURCE_EVENT),
 
     // Not searchable, but lookupable
     @Json(name = "genre")
-    GENRE(R.string.genre, RESOURCE_GENRE),
+    GENRE(RESOURCE_GENRE),
 
     @Json(name = "instrument")
-    INSTRUMENT(R.string.instrument, RESOURCE_INSTRUMENT),
+    INSTRUMENT(RESOURCE_INSTRUMENT),
 
     @Json(name = "label")
-    LABEL(R.string.label, RESOURCE_LABEL),
+    LABEL(RESOURCE_LABEL),
 
     @Json(name = "place")
-    PLACE(R.string.place, RESOURCE_PLACE),
+    PLACE(RESOURCE_PLACE),
 
     @Json(name = "recording")
-    RECORDING(R.string.recording, RESOURCE_RECORDING),
+    RECORDING(RESOURCE_RECORDING),
 
     @Json(name = "release")
-    RELEASE(R.string.release, RESOURCE_RELEASE),
+    RELEASE(RESOURCE_RELEASE),
 
     // Note that target-type uses release_group, while uri uses release-group.
     // For our internal resource, we will use release-group.
     @Json(name = "release_group")
-    RELEASE_GROUP(R.string.release_group, RESOURCE_RELEASE_GROUP),
+    RELEASE_GROUP(RESOURCE_RELEASE_GROUP),
 
     @Json(name = "series")
-    SERIES(R.string.series, RESOURCE_SERIES),
+    SERIES(RESOURCE_SERIES),
 
     @Json(name = "work")
-    WORK(R.string.work, RESOURCE_WORK),
+    WORK(RESOURCE_WORK),
 
     // Not searchable, but lookupable
     @Json(name = "url")
-    URL(R.string.url, RESOURCE_URL),
+    URL(RESOURCE_URL),
 
     // Other searchable: annotation, tag, cd stub, editor, documentation
 

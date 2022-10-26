@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
+import ly.david.data.domain.UiModel
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.relation.RelationCard
@@ -19,8 +20,8 @@ internal fun ReleaseRelationsScreen(
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,
     viewModel: ReleaseRelationsViewModel = hiltViewModel(),
-    onPagedRelationsChange: (Flow<PagingData<ly.david.data.domain.UiModel>>) -> Unit,
-    lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel>
+    onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,
+    lazyPagingItems: LazyPagingItems<UiModel>
 ) {
 
     LaunchedEffect(key1 = releaseId) {
@@ -32,7 +33,7 @@ internal fun ReleaseRelationsScreen(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
-    ) { uiModel: ly.david.data.domain.UiModel? ->
+    ) { uiModel: UiModel? ->
 
         when (uiModel) {
             is ly.david.data.domain.RelationUiModel -> {

@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id "kotlin-kapt"
+}
+
+android {
+    namespace 'ly.david.data'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            consumerProguardFiles 'consumer-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    api project(path: ':data')
+
+    implementation "androidx.room:room-runtime:2.4.3"
+
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-android-compiler:2.44"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
+    implementation "com.google.dagger:hilt-android-testing:2.44"
+}

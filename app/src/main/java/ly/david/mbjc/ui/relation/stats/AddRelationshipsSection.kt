@@ -17,6 +17,7 @@ import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -52,7 +53,7 @@ internal fun LazyListScope.addRelationshipsSection(
             }
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
-                text = "${stringResource(id = it.linkedResource.displayTextRes)}: ${it.count}"
+                text = "${stringResource(id = it.linkedResource.getDisplayTextRes())}: ${it.count}"
             )
         }
     }

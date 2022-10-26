@@ -48,6 +48,7 @@ import ly.david.data.domain.RecordingUiModel
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.SeriesUiModel
+import ly.david.data.domain.UiModel
 import ly.david.data.domain.WorkUiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -79,7 +80,7 @@ internal fun SearchMusicBrainzScreen(
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+    val lazyPagingItems: LazyPagingItems<UiModel> =
         rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
             .collectAsLazyPagingItems()
 
@@ -164,7 +165,7 @@ internal fun SearchMusicBrainzScreen(
             lazyListState = lazyListState,
             snackbarHostState = snackbarHostState,
             noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) { uiModel: ly.david.data.domain.UiModel? ->
+        ) { uiModel: UiModel? ->
             when (uiModel) {
                 is ArtistUiModel -> {
                     ArtistCard(artist = uiModel) {

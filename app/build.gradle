@@ -92,8 +92,8 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':data')
-    androidTestImplementation project(path: ':data')
+    implementation project(path: ':data-android')
+    androidTestImplementation project(path: ':test-data')
 
     implementation "androidx.core:core-ktx:1.9.0"
 

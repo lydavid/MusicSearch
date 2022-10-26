@@ -1,4 +1,4 @@
-package ly.david.mbjc.data.network.api
+package ly.david.data.network.api
 
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
@@ -10,47 +10,32 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.api.BrowseRecordingsResponse
-import ly.david.data.network.api.BrowseReleaseGroupsResponse
-import ly.david.data.network.api.BrowseReleasesResponse
-import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.api.SearchAreasResponse
-import ly.david.data.network.api.SearchArtistsResponse
-import ly.david.data.network.api.SearchEventsResponse
-import ly.david.data.network.api.SearchInstrumentsResponse
-import ly.david.data.network.api.SearchLabelsResponse
-import ly.david.data.network.api.SearchPlacesResponse
-import ly.david.data.network.api.SearchRecordingsResponse
-import ly.david.data.network.api.SearchReleaseGroupsResponse
-import ly.david.data.network.api.SearchReleasesResponse
-import ly.david.data.network.api.SearchSeriesResponse
-import ly.david.data.network.api.SearchWorksResponse
-import ly.david.mbjc.data.network.areaMusicBrainzModel
-import ly.david.mbjc.data.network.artistMusicBrainzModel
-import ly.david.mbjc.data.network.browseRecordingsResponse
-import ly.david.mbjc.data.network.browseReleaseGroupsResponse
-import ly.david.mbjc.data.network.browseReleasesResponse
-import ly.david.mbjc.data.network.eventMusicBrainzModel
-import ly.david.mbjc.data.network.instrumentMusicBrainzModel
-import ly.david.mbjc.data.network.labelMusicBrainzModel
-import ly.david.mbjc.data.network.placeMusicBrainzModel
-import ly.david.mbjc.data.network.recordingMusicBrainzModel
-import ly.david.mbjc.data.network.releaseGroupMusicBrainzModel
-import ly.david.mbjc.data.network.releaseMusicBrainzModel
-import ly.david.mbjc.data.network.searchAreasResponse
-import ly.david.mbjc.data.network.searchArtistsResponse
-import ly.david.mbjc.data.network.searchEventsResponse
-import ly.david.mbjc.data.network.searchInstrumentsResponse
-import ly.david.mbjc.data.network.searchLabelsResponse
-import ly.david.mbjc.data.network.searchPlacesResponse
-import ly.david.mbjc.data.network.searchRecordingsResponse
-import ly.david.mbjc.data.network.searchReleaseGroupsResponse
-import ly.david.mbjc.data.network.searchReleasesResponse
-import ly.david.mbjc.data.network.searchSeriesResponse
-import ly.david.mbjc.data.network.searchWorksResponse
-import ly.david.mbjc.data.network.workMusicBrainzModel
+import ly.david.data.network.areaMusicBrainzModel
+import ly.david.data.network.artistMusicBrainzModel
+import ly.david.data.network.browseRecordingsResponse
+import ly.david.data.network.browseReleaseGroupsResponse
+import ly.david.data.network.browseReleasesResponse
+import ly.david.data.network.eventMusicBrainzModel
+import ly.david.data.network.instrumentMusicBrainzModel
+import ly.david.data.network.labelMusicBrainzModel
+import ly.david.data.network.placeMusicBrainzModel
+import ly.david.data.network.recordingMusicBrainzModel
+import ly.david.data.network.releaseGroupMusicBrainzModel
+import ly.david.data.network.releaseMusicBrainzModel
+import ly.david.data.network.searchAreasResponse
+import ly.david.data.network.searchArtistsResponse
+import ly.david.data.network.searchEventsResponse
+import ly.david.data.network.searchInstrumentsResponse
+import ly.david.data.network.searchLabelsResponse
+import ly.david.data.network.searchPlacesResponse
+import ly.david.data.network.searchRecordingsResponse
+import ly.david.data.network.searchReleaseGroupsResponse
+import ly.david.data.network.searchReleasesResponse
+import ly.david.data.network.searchSeriesResponse
+import ly.david.data.network.searchWorksResponse
+import ly.david.data.network.workMusicBrainzModel
 
-internal class FakeMusicBrainzApiService : MusicBrainzApiService {
+class FakeMusicBrainzApiService : MusicBrainzApiService {
     // region Search
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
         return searchArtistsResponse

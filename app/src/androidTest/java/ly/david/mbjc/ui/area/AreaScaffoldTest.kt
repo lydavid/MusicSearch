@@ -10,13 +10,13 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import ly.david.data.network.AreaMusicBrainzModel
+import ly.david.data.network.areaMusicBrainzModel
 import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.data.network.areaMusicBrainzModel
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test

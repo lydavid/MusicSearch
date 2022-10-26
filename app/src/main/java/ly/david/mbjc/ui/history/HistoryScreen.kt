@@ -33,6 +33,7 @@ import ly.david.data.persistence.history.LookupHistory
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -115,7 +116,7 @@ private fun HistoryEntry(
                     modifier = Modifier.padding(end = 8.dp)
                 )
 
-                val resourceDescription = stringResource(id = lookupHistory.resource.displayTextRes)
+                val resourceDescription = stringResource(id = lookupHistory.resource.getDisplayTextRes())
                 Text(
                     text = "$resourceDescription: ${lookupHistory.title}",
                     style = TextStyles.getCardTitleTextStyle(),

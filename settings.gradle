@@ -5,13 +5,15 @@ pluginManagement {
         mavenCentral()
     }
 }
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
+//dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//    repositories {
+//        google()
+//        mavenCentral()
+//    }
+//}
 rootProject.name = "MusicBrainzJetpackCompose"
 include ':app'
+include ':data-android'
 include ':data'
+include ':test-data'
