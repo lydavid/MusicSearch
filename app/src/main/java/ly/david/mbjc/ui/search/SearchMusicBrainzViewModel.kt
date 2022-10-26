@@ -37,6 +37,7 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
         viewModelState.value = ViewModelState(resource, query)
     }
 
+    // TODO: refresh not implemented
     @OptIn(ExperimentalCoroutinesApi::class)
     val searchResultsUiModel: Flow<PagingData<UiModel>> =
         viewModelState.filterNot { it.query.isEmpty() }
