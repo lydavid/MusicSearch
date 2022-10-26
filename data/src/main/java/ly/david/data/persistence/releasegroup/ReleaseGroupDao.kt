@@ -109,15 +109,6 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel> {
 
     @Query(
         """
-        UPDATE release_groups 
-        SET release_count = :releaseCount
-        WHERE id = :releaseGroupId
-        """
-    )
-    abstract suspend fun setReleaseCount(releaseGroupId: String, releaseCount: Int)
-
-    @Query(
-        """
         DELETE from release_groups
         WHERE id in
         (SELECT rg.id

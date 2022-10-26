@@ -82,12 +82,14 @@ class AreaRepository @Inject constructor(
         )
 
         if (response.offset == 0) {
-            relationDao.insertBrowseResource(browseResourceRoomModel = BrowseResourceOffset(
-                resourceId = areaId,
-                browseResource = MusicBrainzResource.RELEASE,
-                localCount = response.releases.size,
-                remoteCount = response.count
-            ))
+            relationDao.insertBrowseResource(
+                browseResourceRoomModel = BrowseResourceOffset(
+                    resourceId = areaId,
+                    browseResource = MusicBrainzResource.RELEASE,
+                    localCount = response.releases.size,
+                    remoteCount = response.count
+                )
+            )
         } else {
             relationDao.incrementOffsetForResource(areaId, MusicBrainzResource.RELEASE, response.releases.size)
         }

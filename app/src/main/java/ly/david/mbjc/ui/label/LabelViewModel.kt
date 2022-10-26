@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -20,10 +21,10 @@ import ly.david.data.domain.LabelUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class LabelViewModel @Inject constructor(
@@ -45,15 +46,15 @@ internal class LabelViewModel @Inject constructor(
     suspend fun lookupLabel(labelId: String): LabelUiModel =
         repository.lookupLabel(labelId)
 
-    @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
         paramState.filterNot { it.labelId.isEmpty() }
             .flatMapLatest { (labelId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getTotalReleases(labelId) },
-                        getLocalResourceCount = { repository.getNumberOfReleasesByLabel(labelId) },
+                        getRemoteResourceCount = { repository.getRemoteReleasesByLabelCount(labelId) },
+                        getLocalResourceCount = { repository.getLocalReleasesByLabelCount(labelId) },
                         deleteLocalResource = { repository.deleteReleasesByLabel(labelId) },
                         browseResource = { offset ->
                             repository.browseReleasesAndStore(labelId, offset)

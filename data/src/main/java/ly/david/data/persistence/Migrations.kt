@@ -175,4 +175,8 @@ internal object Migrations {
         }
     }
 
+    @DeleteColumn(tableName = "areas", columnName = "release_count")
+    @DeleteColumn(tableName = "labels", columnName = "release_count")
+    @DeleteColumn(tableName = "release_groups", columnName = "release_count")
+    class DeleteReleaseCount : AutoMigrationSpec
 }

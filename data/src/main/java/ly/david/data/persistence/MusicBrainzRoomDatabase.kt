@@ -28,7 +28,7 @@ import ly.david.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 47,
+    version = 48,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -96,6 +96,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 44, to = 45),
         AutoMigration(from = 45, to = 46),
         AutoMigration(from = 46, to = 47),
+        AutoMigration(from = 47, to = 48, spec = Migrations.DeleteReleaseCount::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

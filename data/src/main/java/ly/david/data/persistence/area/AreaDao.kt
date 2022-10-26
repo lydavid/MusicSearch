@@ -12,15 +12,6 @@ abstract class AreaDao : BaseDao<AreaRoomModel> {
     @Query("SELECT * FROM areas WHERE id = :areaId")
     abstract suspend fun getArea(areaId: String): AreaRoomModel?
 
-    @Query(
-        """
-        UPDATE areas 
-        SET release_count = :releaseCount
-        WHERE id = :areaId
-        """
-    )
-    abstract suspend fun setReleaseCount(areaId: String, releaseCount: Int)
-
     // We don't expect these to change.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertAllCountryCodes(iso31661s: List<Iso3166_1>)

@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.releasegroup.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
@@ -16,7 +17,7 @@ internal class ReleaseGroupStatsViewModel @Inject constructor(
 ) : ViewModel(), RelationsStats {
 
     suspend fun getTotalReleases(releaseGroupId: String) =
-        releaseGroupDao.getReleaseGroup(releaseGroupId)?.releaseCount ?: 0
+        relationDao.getBrowseResourceOffset(releaseGroupId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getNumberOfReleasesInReleaseGroup(releaseGroupId: String) =
         releasesReleaseGroupsDao.getNumberOfReleasesInReleaseGroup(releaseGroupId)

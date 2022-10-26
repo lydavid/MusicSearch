@@ -27,16 +27,6 @@ data class ReleaseGroupRoomModel(
 
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
-
-    /**
-     * The total number of releases in this release group in Music Brainz's database.
-     *
-     * We track this number so that we know whether or not we've collected them all in our local database.
-     *
-     * When not set, it means we have not queried for the number of releases in this release group.
-     */
-    @ColumnInfo(name = "release_count")
-    val releaseCount: Int? = null,
 ) : RoomModel, ReleaseGroup
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)

@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -38,7 +39,6 @@ internal class AreaViewModel @Inject constructor(
         val query: String = ""
     )
 
-    // TODO: we're doing a lookup with "" areaid
     private val areaId: MutableStateFlow<String> = MutableStateFlow("")
     private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = combine(areaId, query) { areaId, query ->
@@ -77,7 +77,7 @@ internal class AreaViewModel @Inject constructor(
         )
     }
 
-    @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
         paramState.filterNot { it.areaId.isEmpty() }
             .flatMapLatest { (areaId, query) ->
