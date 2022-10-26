@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.api.MusicBrainzApiService
@@ -58,7 +59,7 @@ internal class ReleaseGroupViewModel @Inject constructor(
         ViewModelState(releaseGroupId, query)
     }.distinctUntilChanged()
 
-    suspend fun lookupReleaseGroup(releaseGroupId: String): ly.david.data.domain.ReleaseGroupUiModel =
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
         releaseGroupRepository.lookupReleaseGroup(releaseGroupId)
 
     fun updateReleaseGroupId(releaseGroupId: String) {

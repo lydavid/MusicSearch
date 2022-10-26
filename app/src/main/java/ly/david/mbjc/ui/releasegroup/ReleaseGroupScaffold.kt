@@ -24,11 +24,13 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import ly.david.mbjc.R
+import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -127,13 +129,13 @@ internal fun ReleaseGroupScaffold(
     ) { innerPadding ->
 
         val releasesLazyListState = rememberLazyListState()
-        val releasesLazyPagingItems: LazyPagingItems<ly.david.data.domain.ReleaseUiModel> =
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<ly.david.data.domain.UiModel>> by remember { mutableStateOf(emptyFlow()) }
-        val relationsLazyPagingItems: LazyPagingItems<ly.david.data.domain.UiModel> =
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
             rememberFlowWithLifecycleStarted(pagedRelations)
                 .collectAsLazyPagingItems()
 

@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.AreaType
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.showReleases
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
@@ -38,7 +38,8 @@ internal fun AreaCard(
         ) {
             val type = area.type
 
-            val areaName = if (type == AreaType.COUNTRY) {
+            // Misnomer here, but it's the same condition to show this tab and to show flags
+            val areaName = if (area.showReleases()) {
                 val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
                 flags.transformThisIfNotNullOrEmpty { "$it " } + area.getNameWithDisambiguation()
             } else {

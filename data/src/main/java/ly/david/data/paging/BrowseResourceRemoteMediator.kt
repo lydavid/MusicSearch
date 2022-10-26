@@ -51,8 +51,10 @@ class BrowseResourceRemoteMediator<RM : RoomModel>(
 
             val nextOffset: Int = when (loadType) {
                 LoadType.REFRESH -> {
-                    // TODO: can we somehow support delta refresh? Might need Dropbox Store
-                    deleteLocalResource()
+                    // We want to start with LAUNCH_INITIAL_REFRESH but we don't want to delete on this initial refresh
+                    if (getRemoteResourceCount() != null) {
+                        deleteLocalResource()
+                    }
                     0
                 }
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)

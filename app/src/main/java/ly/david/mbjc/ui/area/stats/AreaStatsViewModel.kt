@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.area.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.relation.RelationDao
@@ -16,7 +17,7 @@ internal class AreaStatsViewModel @Inject constructor(
 ) : ViewModel(), RelationsStats {
 
     suspend fun getTotalReleases(areaId: String) =
-        areaDao.getArea(areaId)?.releaseCount ?: 0
+        relationDao.getBrowseResourceOffset(areaId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getNumberOfReleasesByLabel(areaId: String) =
         releasesCountriesDao.getNumberOfReleasesFromCountry(areaId)

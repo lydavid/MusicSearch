@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.BaseDao
 
 @Dao
@@ -60,4 +61,47 @@ abstract class RelationDao : BaseDao<RelationRoomModel> {
     """
     )
     abstract suspend fun getCountOfEachRelationshipType(resourceId: String): List<RelationTypeCount>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun insertBrowseResource(browseResourceRoomModel: BrowseResourceOffset): Long
+
+    @Query(
+        """
+            SELECT *
+            FROM browse_resource_counts
+            WHERE resource_id = :resourceId AND browse_resource = :browseResource
+        """
+    )
+    abstract suspend fun getBrowseResourceOffset(resourceId: String, browseResource: MusicBrainzResource): BrowseResourceOffset?
+
+//    @Query(
+//        """
+//            UPDATE browse_resource_counts
+//            SET remote_count = :remoteCount
+//            WHERE resource_id = :resourceId
+//        """
+//    )
+//    abstract suspend fun updateRemoteCountForResource(resourceId: String, browseResource: MusicBrainzResource, remoteCount: Int)
+
+    @Query(
+        """
+            UPDATE browse_resource_counts
+            SET local_count = :localCount
+            WHERE resource_id = :resourceId AND browse_resource = :browseResource
+        """
+    )
+    abstract suspend fun updateLocalCountForResource(resourceId: String, browseResource: MusicBrainzResource, localCount: Int)
+
+    suspend fun incrementOffsetForResource(resourceId: String, browseResource: MusicBrainzResource, additionalOffset: Int) {
+        val currentOffset = getBrowseResourceOffset(resourceId, browseResource)?.localCount ?: 0
+        updateLocalCountForResource(resourceId, browseResource, currentOffset + additionalOffset)
+    }
+
+    @Query(
+        """
+        DELETE FROM browse_resource_counts 
+        WHERE resource_id = :resourceId AND browse_resource = :browseResource
+        """
+    )
+    abstract suspend fun deleteBrowseResourceOffsetByResource(resourceId: String, browseResource: MusicBrainzResource)
 }

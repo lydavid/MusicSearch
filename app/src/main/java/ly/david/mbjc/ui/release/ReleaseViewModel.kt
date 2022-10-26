@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
+import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.TrackUiModel
 import ly.david.data.domain.UiModel
@@ -67,9 +68,9 @@ internal class ReleaseViewModel @Inject constructor(
     private val tracksParamState = combine(releaseId, query) { releaseId, query ->
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
-    private val detailsParamState = combine(releaseId, query) { releaseId, query ->
-        ViewModelState(releaseId, query)
-    }.distinctUntilChanged()
+//    private val detailsParamState = combine(releaseId, query) { releaseId, query ->
+//        ViewModelState(releaseId, query)
+//    }.distinctUntilChanged()
 
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
@@ -86,6 +87,7 @@ internal class ReleaseViewModel @Inject constructor(
         this.query.value = query
     }
 
+    // TODO: tracks refresh broken
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     val pagedTracks: Flow<PagingData<UiModel>> =
         tracksParamState.filterNot { it.releaseId.isEmpty() }
@@ -110,7 +112,7 @@ internal class ReleaseViewModel @Inject constructor(
                         if (before?.mediumId != after?.mediumId && after != null) {
                             // TODO: possible race condition: sometimes crashes here with null medium
                             val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
-                            ly.david.data.domain.ListSeparator(
+                            ListSeparator(
                                 text = medium.format.orEmpty() +
                                     (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
                                     medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
@@ -131,17 +133,17 @@ internal class ReleaseViewModel @Inject constructor(
      */
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     val pagedDetails: Flow<PagingData<UiModel>> =
-        detailsParamState.filterNot { it.releaseId.isEmpty() }
-            .flatMapLatest { (releaseId, query) ->
+        releaseId.filterNot { it.isEmpty() }
+            .flatMapLatest { releaseId ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = LookupResourceRemoteMediator(
                         hasResourceBeenStored = {
-                            // TODO:
+                            // Currently uses the same condition, since it uses the same lookup anyways
                             hasReleaseTracksBeenStored(releaseId)
                         },
                         lookupResource = {
-                            // Uses the same call as above
+                            // Uses the same lookup call as pagedTracks
                             releaseRepository.getRelease(releaseId)
                         },
                         deleteLocalResource = {

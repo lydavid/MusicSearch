@@ -38,6 +38,7 @@ internal class AreaViewModel @Inject constructor(
         val query: String = ""
     )
 
+    // TODO: we're doing a lookup with "" areaid
     private val areaId: MutableStateFlow<String> = MutableStateFlow("")
     private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = combine(areaId, query) { areaId, query ->
@@ -83,8 +84,8 @@ internal class AreaViewModel @Inject constructor(
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getTotalReleases(areaId) },
-                        getLocalResourceCount = { repository.getNumberOfReleasesByArea(areaId) },
+                        getRemoteResourceCount = { repository.getRemoteReleasesByAreaCount(areaId) },
+                        getLocalResourceCount = { repository.getLocalReleasesByAreaCount(areaId) },
                         deleteLocalResource = { repository.deleteReleasesByArea(areaId) },
                         browseResource = { offset ->
                             repository.browseReleasesAndStore(areaId, offset)

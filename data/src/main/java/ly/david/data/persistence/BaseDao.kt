@@ -7,6 +7,8 @@ import androidx.room.Update
 
 internal interface BaseDao<in T> {
 
+    // Replace strategy let us replace a release with additional information such as formats/tracks data
+    // when doing a lookup vs when first inserting it via release group browse screen.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: T): Long
 

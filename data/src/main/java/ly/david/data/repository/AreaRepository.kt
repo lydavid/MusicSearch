@@ -5,6 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.toAreaUiModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.AreaDao
@@ -12,6 +13,7 @@ import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.toAreaRoomModel
+import ly.david.data.persistence.relation.BrowseResourceOffset
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
@@ -64,9 +66,9 @@ class AreaRepository @Inject constructor(
         }
         relationDao.insertAll(relations)
 
-        areaDao.insertAllCountryCodes(areaMusicBrainzModel.getAreaCountryCodes())
-
         areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
+
+        areaDao.insertAllCountryCodes(areaMusicBrainzModel.getAreaCountryCodes())
 
         markResourceHasRelations()
 
@@ -80,7 +82,14 @@ class AreaRepository @Inject constructor(
         )
 
         if (response.offset == 0) {
-            areaDao.setReleaseCount(areaId, response.count)
+            relationDao.insertBrowseResource(browseResourceRoomModel = BrowseResourceOffset(
+                resourceId = areaId,
+                browseResource = MusicBrainzResource.RELEASE,
+                localCount = response.releases.size,
+                remoteCount = response.count
+            ))
+        } else {
+            relationDao.incrementOffsetForResource(areaId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
         val musicBrainzReleases = response.releases
@@ -98,15 +107,16 @@ class AreaRepository @Inject constructor(
         return musicBrainzReleases.size
     }
 
-    // Only difference between this and the stats one is this can return null
-    suspend fun getTotalReleases(areaId: String): Int? =
-        areaDao.getArea(areaId)?.releaseCount
+    suspend fun getRemoteReleasesByAreaCount(areaId: String): Int? =
+        relationDao.getBrowseResourceOffset(areaId, MusicBrainzResource.RELEASE)?.remoteCount
 
-    suspend fun getNumberOfReleasesByArea(areaId: String) =
-        releasesCountriesDao.getNumberOfReleasesFromCountry(areaId)
+    suspend fun getLocalReleasesByAreaCount(areaId: String) =
+        relationDao.getBrowseResourceOffset(areaId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
-    suspend fun deleteReleasesByArea(areaId: String) =
+    suspend fun deleteReleasesByArea(areaId: String) {
         releasesCountriesDao.deleteReleasesFromCountry(areaId)
+        relationDao.deleteBrowseResourceOffsetByResource(areaId, MusicBrainzResource.RELEASE)
+    }
 
     fun getReleasesPagingSource(areaId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
         query.isEmpty() -> {

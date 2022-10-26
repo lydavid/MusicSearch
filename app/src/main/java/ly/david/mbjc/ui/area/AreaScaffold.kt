@@ -19,11 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.AreaType
-import ly.david.data.AreaType.COUNTRY
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
+import ly.david.data.domain.showReleases
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
@@ -32,6 +31,7 @@ import ly.david.mbjc.ui.area.relations.AreaRelationsScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 
@@ -86,7 +86,7 @@ internal fun AreaScaffold(
                 title = areaUiModel.getNameWithDisambiguation()
             }
             area = areaUiModel
-            if (areaUiModel.type == COUNTRY) {
+            if (areaUiModel.showReleases()) {
                 tabs = AreaTab.values().toList()
             }
         } catch (ex: Exception) {
@@ -112,7 +112,7 @@ internal fun AreaScaffold(
         resource = resource,
         title = title,
         tabs = tabs,
-        showReleases = area?.type == AreaType.COUNTRY,
+        showReleases = area?.showReleases() ?: false,
         onUpdateQuery = { searchText ->
             viewModel.updateQuery(searchText)
         },
@@ -154,6 +154,7 @@ private fun AreaScaffold(
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
+                    CopyToClipboardMenuItem(areaId)
                 },
                 tabsTitles = tabs.map { stringResource(id = it.titleRes) },
                 selectedTabIndex = tabs.indexOf(selectedTab),

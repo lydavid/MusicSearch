@@ -54,6 +54,11 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
     )
     abstract suspend fun deleteReleasesFromCountry(areaId: String)
 
+    /**
+     * This is the actual number of releases from this country (area) stored locally.
+     *
+     * When doing browse pagination, we should not use this.
+     */
     @Query(
         """
         SELECT IFNULL(
