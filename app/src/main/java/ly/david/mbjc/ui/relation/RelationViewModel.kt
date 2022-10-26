@@ -12,6 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.domain.Header
@@ -19,9 +20,9 @@ import ly.david.data.domain.RelationUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toRelationUiModel
 import ly.david.data.paging.LookupResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.paging.MusicBrainzPagingConfig
 
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].
@@ -32,29 +33,30 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     val pagedRelations: Flow<PagingData<UiModel>> =
-        resourceId.flatMapLatest { resourceId ->
-            Pager(
-                config = MusicBrainzPagingConfig.pagingConfig,
-                remoteMediator = LookupResourceRemoteMediator(
-                    hasResourceBeenStored = { hasRelationsBeenStored() },
-                    lookupResource = { forceRefresh ->
-                        lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
-                    },
-                    deleteLocalResource = {
-                        deleteLocalRelations(resourceId)
+        resourceId.filterNot { it.isEmpty() }
+            .flatMapLatest { resourceId ->
+                Pager(
+                    config = MusicBrainzPagingConfig.pagingConfig,
+                    remoteMediator = LookupResourceRemoteMediator(
+                        hasResourceBeenStored = { hasRelationsBeenStored() },
+                        lookupResource = { forceRefresh ->
+                            lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
+                        },
+                        deleteLocalResource = {
+                            deleteLocalRelations(resourceId)
+                        }
+                    ),
+                    pagingSourceFactory = {
+                        relationDao.getRelationsForResource(resourceId)
                     }
-                ),
-                pagingSourceFactory = {
-                    relationDao.getRelationsForResource(resourceId)
-                }
-            ).flow.map { pagingData ->
-                pagingData.map { relation ->
-                    relation.toRelationUiModel()
-                }.insertSeparators { before: RelationUiModel?, _: RelationUiModel? ->
-                    if (before == null) Header else null
+                ).flow.map { pagingData ->
+                    pagingData.map { relation ->
+                        relation.toRelationUiModel()
+                    }.insertSeparators { before: RelationUiModel?, _: RelationUiModel? ->
+                        if (before == null) Header else null
+                    }
                 }
             }
-        }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
