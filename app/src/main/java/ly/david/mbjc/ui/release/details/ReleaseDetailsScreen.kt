@@ -6,12 +6,15 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
+import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 @Composable
@@ -52,6 +55,7 @@ internal fun ReleaseDetailsScreen(
                         quality?.let {
                             Text(text = it)
                         }
+                        ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                     }
                 }
             }

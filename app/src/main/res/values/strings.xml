@@ -47,5 +47,8 @@
     <string name="format">Format</string>
     <string name="stats">Stats</string>
 
+    <string name="release_events">Release events</string>
+
     <string name="ok">OK</string>
+    <string name="retry">Retry</string>
 </resources>

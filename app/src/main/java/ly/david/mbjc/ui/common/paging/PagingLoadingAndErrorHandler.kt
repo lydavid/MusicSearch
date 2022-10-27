@@ -87,6 +87,8 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
             FullScreenText(noResultsText)
         }
         else -> {
+            // https://android-review.googlesource.com/c/platform/frameworks/support/+/2193512/19/compose/material/material/samples/src/main/java/androidx/compose/material/samples/PullRefreshSamples.kt#58
+            // New rememberPullRefreshState is out, but seems to not work as nicely right now
             val swipeRefreshState = rememberSwipeRefreshState(false)
             SwipeRefresh(
                 state = swipeRefreshState,
@@ -172,7 +174,7 @@ private fun <T : Any> RetryButton(lazyPagingItems: LazyPagingItems<T>) {
         Text(
             modifier = Modifier.padding(start = 8.dp),
             style = MaterialTheme.typography.headlineMedium,
-            text = "Retry"
+            text = stringResource(id = R.string.retry)
         )
     }
 }

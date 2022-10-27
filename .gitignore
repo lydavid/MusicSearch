@@ -12,6 +12,7 @@
 /.idea/gradle.xml
 /.idea/misc.xml
 /.idea/androidTestResultsUserPreferences.xml
+/.idea/jarRepositories.xml
 
 .DS_Store
 /build
