@@ -10,18 +10,19 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.areaMusicBrainzModel
 import ly.david.data.network.artistMusicBrainzModel
 import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
 import ly.david.data.network.eventMusicBrainzModel
+import ly.david.data.network.fakeArea
+import ly.david.data.network.fakeAreas
+import ly.david.data.network.fakeRelease
 import ly.david.data.network.instrumentMusicBrainzModel
 import ly.david.data.network.labelMusicBrainzModel
 import ly.david.data.network.placeMusicBrainzModel
 import ly.david.data.network.recordingMusicBrainzModel
 import ly.david.data.network.releaseGroupMusicBrainzModel
-import ly.david.data.network.releaseMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
 import ly.david.data.network.searchEventsResponse
@@ -116,7 +117,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {
-        return areaMusicBrainzModel
+        return fakeAreas.firstOrNull { it.id == areaId } ?: fakeArea
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
@@ -144,7 +145,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
-        return releaseMusicBrainzModel
+        return fakeRelease
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
