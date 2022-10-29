@@ -1,11 +1,14 @@
 package ly.david.mbjc.ui.area
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -22,6 +25,9 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
+/**
+ * Also used for release event cards since their Destination is also an Area.
+ */
 @Composable
 internal fun AreaCard(
     area: AreaUiModel,
@@ -31,54 +37,59 @@ internal fun AreaCard(
     ClickableListItem(
         onClick = { onAreaClick(area) },
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            val type = area.type
+            Column {
+                val type = area.type
 
-            // Misnomer here, but it's the same condition to show this tab and to show flags
-            val areaName = if (area.showReleases()) {
-                val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
-                flags.transformThisIfNotNullOrEmpty { "$it " } + area.getNameWithDisambiguation()
-            } else {
-                area.getNameWithDisambiguation()
+                // Misnomer here, but it's the same condition to show this tab and to show flags
+                val areaName = if (area.showReleases()) {
+                    val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
+                    flags.transformThisIfNotNullOrEmpty { "$it " } + area.getNameWithDisambiguation()
+                } else {
+                    area.getNameWithDisambiguation()
+                }
+
+                Text(
+                    text = areaName,
+                    style = TextStyles.getCardTitleTextStyle()
+                )
+
+                if (showType && !type.isNullOrEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = type,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                val lifeSpan = area.lifeSpan.getLifeSpanForDisplay()
+                if (lifeSpan.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = lifeSpan,
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
             }
 
-            Text(
-                text = areaName,
-                style = TextStyles.getCardTitleTextStyle()
-            )
-
-            if (showType && !type.isNullOrEmpty()) {
+            val date = area.date
+            if (!date.isNullOrEmpty()) {
+                Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = type,
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = date,
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }
-
-            val lifeSpan = area.lifeSpan.getLifeSpanForDisplay()
-            if (lifeSpan.isNotEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = lifeSpan,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
-            }
         }
+
     }
 }
-
-@ExcludeFromJacocoGeneratedReport
-private val area3 = AreaUiModel(
-    id = "3",
-    name = "Area Name",
-    disambiguation = "That one",
-    type = "Country",
-    iso_3166_1_codes = listOf("GB")
-)
 
 // Cannot be private.
 @ExcludeFromJacocoGeneratedReport
@@ -93,7 +104,13 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaU
             name = "Area Name",
             disambiguation = "That one",
         ),
-        area3
+        AreaUiModel(
+            id = "3",
+            name = "Area Name",
+            disambiguation = "That one",
+            type = "Country",
+            iso_3166_1_codes = listOf("GB")
+        )
     )
 }
 
@@ -110,13 +127,20 @@ private fun AreaCardPreview(
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-private fun DoNotShowTypePreview() {
+private fun ReleaseEventPreview() {
     PreviewTheme {
         Surface {
             AreaCard(
-                area = area3,
+                area = AreaUiModel(
+                    id = "4",
+                    name = "Area Name",
+                    iso_3166_1_codes = listOf("KR"),
+                    date = "2022-10-29",
+                    type = "Country",
+                ),
                 showType = false
             )
         }

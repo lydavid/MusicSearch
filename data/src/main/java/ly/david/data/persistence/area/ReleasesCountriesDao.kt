@@ -104,7 +104,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
     @Transaction
     @Query(
         """
-        SELECT a.*
+        SELECT a.*, rc.date
         FROM areas a
         INNER JOIN releases_countries rc ON rc.country_id = a.id
         INNER JOIN releases r ON r.id = rc.release_id
@@ -112,6 +112,6 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         ORDER BY a.name
     """
     )
-    abstract fun getCountriesReleasedIn(releaseId: String): PagingSource<Int, AreaRoomModel>
+    abstract fun getAreasWithReleaseDate(releaseId: String): PagingSource<Int, AreaWithReleaseDate>
     // endregion
 }

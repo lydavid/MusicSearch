@@ -34,7 +34,7 @@ import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.AreaRoomModel
+import ly.david.data.persistence.area.AreaWithReleaseDate
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -152,12 +152,11 @@ internal class ReleaseViewModel @Inject constructor(
                         }
                     ),
                     pagingSourceFactory = {
-                        releasesCountriesDao.getCountriesReleasedIn(releaseId)
+                        releasesCountriesDao.getAreasWithReleaseDate(releaseId)
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map { area: AreaRoomModel ->
-                        val countryCodes = areaDao.getCountryCodes(area.id)
-                        area.toAreaUiModel(countryCodes?.map { it.code })
+                    pagingData.map { areaWithReleaseDate: AreaWithReleaseDate ->
+                        areaWithReleaseDate.toAreaUiModel()
                     }.insertSeparators { before: AreaUiModel?, _: AreaUiModel? ->
                         if (before == null) Header else null
                     } // .insertHeaderItem(item = Header) // not working

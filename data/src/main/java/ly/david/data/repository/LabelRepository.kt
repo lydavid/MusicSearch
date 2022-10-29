@@ -57,15 +57,15 @@ class LabelRepository @Inject constructor(
             relationDao.incrementOffsetForResource(labelId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
-        val musicBrainzReleases = response.releases
-        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
+        val releaseMusicBrainzModels = response.releases
+        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
         releasesLabelsDao.insertAll(
-            musicBrainzReleases.map { release ->
+            releaseMusicBrainzModels.map { release ->
                 ReleaseLabel(release.id, labelId)
             }
         )
 
-        return musicBrainzReleases.size
+        return releaseMusicBrainzModels.size
     }
 
     // Only difference between this and the stats one is this can return null

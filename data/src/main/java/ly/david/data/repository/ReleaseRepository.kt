@@ -14,6 +14,7 @@ import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.artist.ReleaseGroupArtistDao
+import ly.david.data.persistence.label.LabelDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
@@ -32,7 +33,8 @@ class ReleaseRepository @Inject constructor(
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
-    private val areaDao: AreaDao
+    private val areaDao: AreaDao,
+    private val labelDao: LabelDao,
 ) {
 
     /**
@@ -46,7 +48,7 @@ class ReleaseRepository @Inject constructor(
 
         // Empty artist credits is sufficient to indicate we've never done a lookup
         // if it's no longer the case, then check for formats/tracks
-        if (releaseRoomModel != null && artistCredits.isNotEmpty()) {
+        if (releaseRoomModel != null && artistCredits.isNotEmpty() && releaseRoomModel.releaseGroupId != null) {
             val releaseGroup = releaseGroupDao.getReleaseGroup(releaseRoomModel.releaseGroupId)
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
@@ -57,17 +59,16 @@ class ReleaseRepository @Inject constructor(
         // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
 
-        // Insert RG first due to FK constraint
         releaseMusicBrainzModel.releaseGroup?.let {
             releaseGroupDao.insert(it.toReleaseGroupRoomModel())
             releaseGroupArtistDao.insertAll(it.getReleaseGroupArtistCreditRoomModels())
         }
 
         releaseDao.insertReplace(releaseMusicBrainzModel.toReleaseRoomModel())
-
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
 
-        // TODO: labels
+        // TODO: insert labels and insert releases_labels
+//        labelDao.insertAll(releaseMusicBrainzModel.labelInfoList.map {  })
 
         releaseMusicBrainzModel.media?.forEach { medium ->
             val mediumId = mediumDao.insert(medium.toMediumRoomModel(releaseMusicBrainzModel.id))

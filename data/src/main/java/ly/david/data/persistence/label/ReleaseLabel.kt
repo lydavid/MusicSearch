@@ -13,4 +13,6 @@ data class ReleaseLabel(
 
     @ColumnInfo(name = "label_id")
     val labelId: String,
+
+    // TODO: catalogue number
 )
