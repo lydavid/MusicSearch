@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.releaseGroupMusicBrainzModel
+import ly.david.data.network.fakeReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.MainApp
@@ -133,7 +133,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
         }
 
         composeTestRule
-            .onNodeWithText(releaseGroupMusicBrainzModel.name)
+            .onNodeWithText(fakeReleaseGroup.name)
             .assertIsDisplayed()
     }
 }

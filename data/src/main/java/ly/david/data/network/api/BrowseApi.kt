@@ -7,6 +7,8 @@ import ly.david.data.network.ReleaseMusicBrainzModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+internal const val RELEASE_GROUPS = "release-groups"
+
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
  *
@@ -30,6 +32,7 @@ interface BrowseApi {
         @Query("release-group") releaseGroupId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = RELEASE_GROUPS
         // artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
         // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
 //        @Query("inc") include: String = "media"
@@ -41,6 +44,7 @@ interface BrowseApi {
         @Query("label") labelId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = RELEASE_GROUPS
     ): BrowseReleasesResponse
 
     @GET("release")
@@ -48,6 +52,7 @@ interface BrowseApi {
         @Query("area") areaId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = RELEASE_GROUPS
     ): BrowseReleasesResponse
 
     @GET("recording")

@@ -18,7 +18,9 @@ data class ReleaseMusicBrainzModel(
     @Json(name = "status-id") override val statusId: String? = null,
 
     // TODO: rather than using this field, use the first release-event
+    //  or make a query to avoid storing redundant info
     @Json(name = "country") override val countryCode: String? = null,
+
     @Json(name = "packaging") override val packaging: String? = null,
     @Json(name = "packaging-id") override val packagingId: String? = null,
     @Json(name = "asin") override val asin: String? = null,
@@ -39,6 +41,7 @@ data class ReleaseMusicBrainzModel(
     // inc=labels
     @Json(name = "label-info") val labelInfoList: List<LabelInfo>? = null,
 
+    // inc=release-groups
     @Json(name = "release-group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
 
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null

@@ -1,6 +1,7 @@
 package ly.david.data.persistence
 
 import androidx.room.DeleteColumn
+import androidx.room.DeleteTable
 import androidx.room.RenameColumn
 import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
@@ -179,4 +180,7 @@ internal object Migrations {
     @DeleteColumn(tableName = "labels", columnName = "release_count")
     @DeleteColumn(tableName = "release_groups", columnName = "release_count")
     class DeleteReleaseCount : AutoMigrationSpec
+
+    @DeleteTable(tableName = "releases_release_groups")
+    class DeleteReleasesReleaseGroups : AutoMigrationSpec
 }

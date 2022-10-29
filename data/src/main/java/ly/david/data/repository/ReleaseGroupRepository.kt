@@ -15,7 +15,6 @@ import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 
@@ -70,11 +69,6 @@ class ReleaseGroupRepository @Inject constructor(
 
         val musicBrainzReleases = response.releases
         releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
-        releasesReleaseGroupsDao.insertAll(
-            musicBrainzReleases.map { release ->
-                ReleaseReleaseGroup(release.id, releaseGroupId)
-            }
-        )
 
         return musicBrainzReleases.size
     }

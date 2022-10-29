@@ -7,27 +7,30 @@ import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseArtistCreditRoomModels
+import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
+import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.toMediumRoomModel
 import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.release.toTrackRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseReleaseGroup
-import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
+import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 
 @Singleton
 class ReleaseRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
+    private val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
-    private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val areaDao: AreaDao
 ) {
@@ -40,27 +43,31 @@ class ReleaseRepository @Inject constructor(
     suspend fun getRelease(releaseId: String): ReleaseUiModel {
         val releaseRoomModel = releaseDao.getRelease(releaseId)
         val artistCredits = releaseDao.getReleaseArtistCredits(releaseId)
-        val releaseGroupId = releasesReleaseGroupsDao.getReleaseReleaseGroup(releaseId)
-        if (releaseRoomModel != null && artistCredits.isNotEmpty() && releaseGroupId != null) {
+
+        // Empty artist credits is sufficient to indicate we've never done a lookup
+        // if it's no longer the case, then check for formats/tracks
+        if (releaseRoomModel != null && artistCredits.isNotEmpty()) {
+            val releaseGroup = releaseGroupDao.getReleaseGroup(releaseRoomModel.releaseGroupId)
+
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
-            return releaseRoomModel.toReleaseUiModel(artistCredits, releaseGroupId)
+            return releaseRoomModel.toReleaseUiModel(artistCredits, releaseGroup?.id)
         }
 
         // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
-        releaseDao.insert(releaseMusicBrainzModel.toReleaseRoomModel())
+
+        // Insert RG first due to FK constraint
+        releaseMusicBrainzModel.releaseGroup?.let {
+            releaseGroupDao.insert(it.toReleaseGroupRoomModel())
+            releaseGroupArtistDao.insertAll(it.getReleaseGroupArtistCreditRoomModels())
+        }
+
+        releaseDao.insertReplace(releaseMusicBrainzModel.toReleaseRoomModel())
 
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
 
-        releaseMusicBrainzModel.releaseGroup?.let { releaseGroup ->
-            releasesReleaseGroupsDao.insert(
-                ReleaseReleaseGroup(
-                    releaseId = releaseId,
-                    releaseGroupId = releaseGroup.id
-                )
-            )
-        }
+        // TODO: labels
 
         releaseMusicBrainzModel.media?.forEach { medium ->
             val mediumId = mediumDao.insert(medium.toMediumRoomModel(releaseMusicBrainzModel.id))

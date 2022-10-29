@@ -4,17 +4,17 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.release.ReleaseRoomModel
 
+// TODO: put this in release group dao? only used by ReleaseGroupRepository
+//  artist should hold release groups by artist
 @Dao
-abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
+abstract class ReleasesReleaseGroupsDao {
 
     companion object {
         private const val RELEASES_IN_RELEASE_GROUP = """
             FROM releases r
-            INNER JOIN releases_release_groups rrg ON r.id = rrg.release_id
-            INNER JOIN release_groups rg ON rg.id = rrg.release_group_id
+            INNER JOIN release_groups rg ON rg.id = r.release_group_id
             WHERE rg.id = :releaseGroupId
         """
 
@@ -26,10 +26,6 @@ abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
         private const val SELECT_RELEASES_ID_IN_RELEASE_GROUP = """
             SELECT r.id
             $RELEASES_IN_RELEASE_GROUP
-        """
-
-        private const val ORDER_BY_RELEASE_GROUP_LINKING_TABLE = """
-            ORDER BY rrg.rowid
         """
 
         private const val ORDER_BY_DATE_AND_NAME = """
@@ -47,16 +43,6 @@ abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
 
     @Query(
         """
-            SELECT rrg.release_group_id
-            FROM releases r
-            INNER JOIN releases_release_groups rrg ON r.id = rrg.release_id
-            WHERE r.id = :releaseId
-        """
-    )
-    abstract suspend fun getReleaseReleaseGroup(releaseId: String): String?
-
-    @Query(
-        """
         DELETE FROM releases WHERE id IN (
         $SELECT_RELEASES_ID_IN_RELEASE_GROUP
         )
@@ -69,8 +55,7 @@ abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
         SELECT IFNULL(
             (SELECT COUNT(*)
             FROM releases r
-            INNER JOIN releases_release_groups rrg ON r.id = rrg.release_id
-            INNER JOIN release_groups rg ON rg.id = rrg.release_group_id
+            INNER JOIN release_groups rg ON rg.id = r.release_group_id
             WHERE rg.id = :releaseGroupId
             GROUP BY rg.id),
             0
@@ -79,11 +64,12 @@ abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
     )
     abstract suspend fun getNumberOfReleasesInReleaseGroup(releaseGroupId: String): Int
 
+    // TODO: based on r's release_group_id
     @Transaction
     @Query(
         """
         $SELECT_RELEASES_IN_RELEASE_GROUP
-        $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
+        $ORDER_BY_DATE_AND_NAME
     """
     )
     abstract fun getReleasesInReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseRoomModel>
@@ -93,7 +79,7 @@ abstract class ReleasesReleaseGroupsDao : BaseDao<ReleaseReleaseGroup> {
         """
         $SELECT_RELEASES_IN_RELEASE_GROUP
         $FILTERED
-        $ORDER_BY_RELEASE_GROUP_LINKING_TABLE
+        $ORDER_BY_DATE_AND_NAME
     """
     )
     abstract fun getReleasesInReleaseGroupFiltered(

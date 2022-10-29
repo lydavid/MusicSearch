@@ -44,8 +44,6 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     fun setupApp() {
         hiltRule.inject()
 
-        // TODO: eventually we won't have access to dao directly
-        //  instead provide a test module that provides fakes and methods to set up database to certain states
         relationDao = db.getRelationDao()
         areaDao = db.getAreaDao()
     }
@@ -145,6 +143,9 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(customName)
             .assertIsDisplayed()
     }
+
+    // TODO: visit, check history count is 1, visit again, go to release, return, return, check history count is 2
+
     // endregion
 
     // region Country

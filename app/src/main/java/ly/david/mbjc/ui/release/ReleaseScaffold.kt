@@ -60,7 +60,7 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
 @Composable
 internal fun ReleaseScaffold(
     releaseId: String,
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
     titleWithDisambiguation: String? = null,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: ReleaseViewModel = hiltViewModel()
@@ -100,6 +100,8 @@ internal fun ReleaseScaffold(
         } catch (ex: Exception) {
             // If any of the above calls failed, we still want to update the release id so that
             // TracksInReleaseScreen will give us a Retry button.
+
+            // TODO: all tests hitting this
             viewModel.loadTracks(releaseId)
         }
 

@@ -37,12 +37,15 @@ private const val WORK_REL = "work-rels"
 interface LookupApi {
 
     companion object {
-        const val INC_ALL_RELATIONS = "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+        const val INC_ALL_RELATIONS =
+            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
 
         // TODO: use this if we decide to split area relations lookup
-        const val AREA_DEFAULT_RELS = "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+        const val AREA_DEFAULT_RELS =
+            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
         const val ARTIST_INC_DEFAULT = "$ARTIST_REL+$LABEL_REL+$RELEASE_GROUP_REL+$URL_REL"
-        const val WORK_INC_DEFAULT = "$AREA_REL+$ARTIST_REL+$EVENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+        const val WORK_INC_DEFAULT =
+            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$SERIES_REL+$URL_REL+$WORK_REL"
         const val EVENT_INC_DEFAULT =
             "$AREA_REL+$ARTIST_REL+$EVENT_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
     }
@@ -59,14 +62,13 @@ interface LookupApi {
         @Query("inc") include: String = "artists" // "releases+artists+media"
     ): ReleaseGroupMusicBrainzModel
 
-    // TODO: screen should have information similar to: https://musicbrainz.org/release/85363599-44b3-4eb2-b976-382a23d7f1ba
     @GET("release/{releaseId}")
     suspend fun lookupRelease(
         @Path("releaseId") releaseId: String,
-//        @Query("inc") include: String = "artist-credits+labels+recordings+recording-level-rels+work-rels+work-level-rels+artist-rels+place-rels+label-rels"
-        // TODO: artists only includes artist-credit for the release itself
-        //  artist-credits includes artist-credit for each recording as well (it acts on subqueries)
-        @Query("inc") include: String = "artists+labels+recordings+release-groups"
+        @Query("inc") include: String = "artist-credits" +
+            "+labels" + // gives us labels (alternatively, we can get them from rels)
+            "+recordings" + // gives us tracks
+            "+release-groups" // gives us types
     ): ReleaseMusicBrainzModel
 
     @GET("recording/{recordingId}")

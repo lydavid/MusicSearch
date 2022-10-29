@@ -6,9 +6,9 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.toArtistUiModel
 import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.fakeArtist
+import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.paging.SearchMusicBrainzPagingSource
-import ly.david.data.network.artistMusicBrainzModel
-import ly.david.data.network.releaseGroupMusicBrainzModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -26,7 +26,7 @@ internal class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    artistMusicBrainzModel.toArtistUiModel()
+                    fakeArtist.toArtistUiModel()
                 ),
                 prevKey = 1,
                 nextKey = 2
@@ -50,7 +50,7 @@ internal class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    releaseGroupMusicBrainzModel.toReleaseGroupUiModel()
+                    fakeReleaseGroup.toReleaseGroupUiModel()
                 ),
                 prevKey = 1,
                 nextKey = 2

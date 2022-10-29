@@ -20,10 +20,7 @@ import ly.david.data.persistence.history.LookupHistory
 // region Lookup
 
 
-val artistMusicBrainzModel = ArtistMusicBrainzModel(
-    id = "1",
-    name = "Artist Name",
-)
+
 
 val eventMusicBrainzModel = EventMusicBrainzModel(
     id = "1",
@@ -50,15 +47,8 @@ val recordingMusicBrainzModel = RecordingMusicBrainzModel(
     name = "Recording Name",
 )
 
-val fakeRelease = ReleaseMusicBrainzModel(
-    id = "1",
-    name = "Release Name",
-)
 
-val releaseGroupMusicBrainzModel = ReleaseGroupMusicBrainzModel(
-    id = "1",
-    name = "Release Group Name",
-)
+
 
 val seriesMusicBrainzModel = SeriesMusicBrainzModel(
     id = "1",
@@ -73,7 +63,7 @@ val workMusicBrainzModel = WorkMusicBrainzModel(
 fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
     when (this) {
         MusicBrainzResource.AREA -> fakeArea
-        MusicBrainzResource.ARTIST -> artistMusicBrainzModel
+        MusicBrainzResource.ARTIST -> fakeArtist
         MusicBrainzResource.EVENT -> eventMusicBrainzModel
         MusicBrainzResource.GENRE -> TODO()
         MusicBrainzResource.INSTRUMENT -> instrumentMusicBrainzModel
@@ -81,7 +71,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.PLACE -> placeMusicBrainzModel
         MusicBrainzResource.RECORDING -> recordingMusicBrainzModel
         MusicBrainzResource.RELEASE -> fakeRelease
-        MusicBrainzResource.RELEASE_GROUP -> releaseGroupMusicBrainzModel
+        MusicBrainzResource.RELEASE_GROUP -> fakeReleaseGroup
         MusicBrainzResource.SERIES -> seriesMusicBrainzModel
         MusicBrainzResource.WORK -> workMusicBrainzModel
         MusicBrainzResource.URL -> TODO()
@@ -92,7 +82,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
 val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     count = 1,
     offset = 0,
-    releaseGroups = listOf(releaseGroupMusicBrainzModel)
+    releaseGroups = listOf(fakeReleaseGroup)
 )
 
 val browseReleasesResponse = BrowseReleasesResponse(
@@ -118,7 +108,7 @@ val searchAreasResponse = SearchAreasResponse(
 val searchArtistsResponse = SearchArtistsResponse(
     count = 1,
     offset = 0,
-    listOf(element = artistMusicBrainzModel)
+    listOf(element = fakeArtist)
 )
 
 val searchEventsResponse = SearchEventsResponse(
@@ -160,7 +150,7 @@ val searchReleasesResponse = SearchReleasesResponse(
 val searchReleaseGroupsResponse = SearchReleaseGroupsResponse(
     count = 1,
     offset = 0,
-    listOf(element = releaseGroupMusicBrainzModel)
+    listOf(element = fakeReleaseGroup)
 )
 
 val searchSeriesResponse = SearchSeriesResponse(

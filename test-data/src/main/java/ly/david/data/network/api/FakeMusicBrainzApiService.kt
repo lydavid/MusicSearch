@@ -10,19 +10,19 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.artistMusicBrainzModel
 import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
 import ly.david.data.network.eventMusicBrainzModel
 import ly.david.data.network.fakeArea
 import ly.david.data.network.fakeAreas
+import ly.david.data.network.fakeArtist
 import ly.david.data.network.fakeRelease
+import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.instrumentMusicBrainzModel
 import ly.david.data.network.labelMusicBrainzModel
 import ly.david.data.network.placeMusicBrainzModel
 import ly.david.data.network.recordingMusicBrainzModel
-import ly.david.data.network.releaseGroupMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
 import ly.david.data.network.searchEventsResponse
@@ -95,16 +95,27 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
+        include: String
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
 
-    override suspend fun browseReleasesByLabel(labelId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+    override suspend fun browseReleasesByLabel(
+        labelId: String,
+        limit: Int,
+        offset: Int,
+        include: String
+    ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
 
-    override suspend fun browseReleasesByArea(areaId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+    override suspend fun browseReleasesByArea(
+        areaId: String,
+        limit: Int,
+        offset: Int,
+        include: String
+    ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
 
@@ -121,7 +132,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
-        return artistMusicBrainzModel
+        return fakeArtist
     }
 
     override suspend fun lookupEvent(eventId: String, include: String): EventMusicBrainzModel {
@@ -149,7 +160,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
-        return releaseGroupMusicBrainzModel
+        return fakeReleaseGroup
     }
 
     override suspend fun lookupWork(workId: String, include: String): WorkMusicBrainzModel {

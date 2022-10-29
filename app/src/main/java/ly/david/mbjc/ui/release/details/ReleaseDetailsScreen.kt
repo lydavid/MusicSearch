@@ -34,15 +34,18 @@ internal fun ReleaseDetailsScreen(
             is Header -> {
                 releaseUiModel?.run {
                     Column {
-                        formats?.let {
-                            Text(text = it)
-                        }
-                        tracks?.let {
-                            Text(text = it)
-                        }
+                        ListSeparatorHeader(text = "Release information")
                         barcode?.let {
                             Text(text = it)
                         }
+                        formats?.let {
+                            Text(text = it)
+                        }
+
+                        // TODO: sum track length if it does not contain any ?:??
+
+
+                        ListSeparatorHeader(text = "Additional details")
                         status?.let {
                             Text(text = it)
                         }
