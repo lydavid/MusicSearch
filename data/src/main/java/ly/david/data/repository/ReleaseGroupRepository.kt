@@ -12,7 +12,7 @@ import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.data.persistence.relation.BrowseResourceOffset
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseRoomModel
+import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
@@ -84,12 +84,12 @@ class ReleaseGroupRepository @Inject constructor(
         relationDao.deleteBrowseResourceOffsetByResource(releaseGroupId, MusicBrainzResource.RELEASE)
     }
 
-    fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
+    fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
-            releasesReleaseGroupsDao.getReleasesInReleaseGroup(releaseGroupId)
+            releasesReleaseGroupsDao.getReleasesByReleaseGroup(releaseGroupId)
         }
         else -> {
-            releasesReleaseGroupsDao.getReleasesInReleaseGroupFiltered(
+            releasesReleaseGroupsDao.getReleasesByReleaseGroupFiltered(
                 releaseGroupId = releaseGroupId,
                 query = "%$query%"
             )

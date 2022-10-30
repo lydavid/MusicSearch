@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.release.ReleaseRoomModel
+import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 
 @Dao
 abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
@@ -81,7 +81,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesFromCountry(areaId: String): PagingSource<Int, ReleaseRoomModel>
+    abstract fun getReleasesFromCountry(areaId: String): PagingSource<Int, ReleaseWithReleaseCountries>
 
     @Transaction
     @Query(
@@ -94,7 +94,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
     abstract fun getReleasesFromCountryFiltered(
         areaId: String,
         query: String
-    ): PagingSource<Int, ReleaseRoomModel>
+    ): PagingSource<Int, ReleaseWithReleaseCountries>
     // endregion
 
     // region by Release

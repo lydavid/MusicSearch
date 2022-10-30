@@ -19,6 +19,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -99,8 +100,16 @@ internal fun ReleaseCard(
                         if (!uiDate.isNullOrEmpty()) {
                             Spacer(modifier = Modifier.padding(4.dp))
                         }
+
+                        // Since we don't store release events when browsing releases, releaseEvents will be empty until
+                        // after we've clicked into it
+                        val additionalReleaseEvents = if (releaseUiModel.releaseEvents.size > 1) {
+                            "+ ${releaseUiModel.releaseEvents.size - 1}"
+                        } else {
+                            ""
+                        }
                         Text(
-                            text = "${uiCountry.toFlagEmoji()} $uiCountry",
+                            text = "${uiCountry.toFlagEmoji()} $uiCountry $additionalReleaseEvents",
                             style = TextStyles.getCardBodyTextStyle(),
                         )
                     }
@@ -188,6 +197,17 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             name = "Release title",
             date = "2022-04-03",
             disambiguation = "",
+        ),
+        ReleaseUiModel(
+            id = "1",
+            name = "Release title",
+            disambiguation = "",
+            countryCode = "DZ",
+            releaseEvents = listOf(
+                ReleaseCountry("1", countryId = "2"),
+                ReleaseCountry("1", countryId = "3"),
+                ReleaseCountry("1", countryId = "4"),
+            )
         ),
     )
 }

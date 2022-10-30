@@ -18,7 +18,7 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseRoomModel
+import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
 
 @Singleton
@@ -120,7 +120,7 @@ class AreaRepository @Inject constructor(
         relationDao.deleteBrowseResourceOffsetByResource(areaId, MusicBrainzResource.RELEASE)
     }
 
-    fun getReleasesPagingSource(areaId: String, query: String): PagingSource<Int, ReleaseRoomModel> = when {
+    fun getReleasesPagingSource(areaId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
             releasesCountriesDao.getReleasesFromCountry(areaId)
         }
