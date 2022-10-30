@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -161,26 +162,30 @@ private fun TitleBar(
                         modifier = Modifier.padding(end = 8.dp)
                     )
                 }
-                Text(text = title)
+                SelectionContainer {
+                    Text(text = title)
+                }
             }
             if (subtitle.isNotEmpty()) {
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier
-                        .horizontalScroll(rememberScrollState())
-                        // As long as tap and scroll does not trigger a click, we can use this
-                        // as a way to "navigate up".
-                        // When a user searches for a release group, they can't return to the artist by
-                        // pressing back.
-                        // This will allow them to click the subtitle to go to the artist's page.
-                        // From release screen, the subtitle is usually "Release by [Artist]".
-                        // MB website has "(see all versions of this release, 6 available)" to allow up navigation
-                        // to release group screen.
-                        .clickable {
-                            showMenu = !showMenu
-                        }
-                )
+                SelectionContainer {
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier
+                            .horizontalScroll(rememberScrollState())
+                            // As long as tap and scroll does not trigger a click, we can use this
+                            // as a way to "navigate up".
+                            // When a user searches for a release group, they can't return to the artist by
+                            // pressing back.
+                            // This will allow them to click the subtitle to go to the artist's page.
+                            // From release screen, the subtitle is usually "Release by [Artist]".
+                            // MB website has "(see all versions of this release, 6 available)" to allow up navigation
+                            // to release group screen.
+                            .clickable {
+                                showMenu = !showMenu
+                            }
+                    )
+                }
             }
         }
     }
