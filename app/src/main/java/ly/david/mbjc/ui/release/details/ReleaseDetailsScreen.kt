@@ -45,6 +45,7 @@ internal fun ReleaseDetailsScreen(
         releaseLength = viewModel.getFormattedReleaseLength(releaseUiModel.id)
     }
 
+    // TODO: rather than page on this screen, can we just pass in all release events?
     PagingLoadingAndErrorHandler(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,

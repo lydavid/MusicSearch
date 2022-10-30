@@ -5,7 +5,7 @@ import androidx.room.Entity
 
 @Entity(
     tableName = "releases_labels",
-    primaryKeys = ["release_id", "label_id"]
+    primaryKeys = ["release_id", "label_id", "catalog_number"],
 )
 data class ReleaseLabel(
     @ColumnInfo(name = "release_id")
@@ -15,5 +15,5 @@ data class ReleaseLabel(
     val labelId: String,
 
     @ColumnInfo(name = "catalog_number")
-    val catalogNumber: String? = null
+    val catalogNumber: String = ""
 )

@@ -99,6 +99,7 @@ internal class ReleaseViewModel @Inject constructor(
                         lookupResource = { releaseRepository.getRelease(releaseId) },
                         deleteLocalResource = {
                             // TODO: invalidate cover art cache and refresh
+                            // TODO: delete release_label
                             releaseDao.deleteReleaseById(releaseId)
                         }
                     ),

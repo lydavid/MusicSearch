@@ -49,7 +49,7 @@ fun List<LabelInfo>.toReleaseLabels(releaseId: String, labelId: String? = null):
             if (label == null) {
                 null
             } else {
-                ReleaseLabel(releaseId, label.id, labelInfo.catalogNumber)
+                ReleaseLabel(releaseId, label.id, labelInfo.catalogNumber.orEmpty())
             }
         }
 }

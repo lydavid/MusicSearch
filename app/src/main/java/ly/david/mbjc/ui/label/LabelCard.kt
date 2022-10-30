@@ -59,6 +59,15 @@ internal fun LabelCard(
             // TODO: area
 
             // TODO: lifespan
+
+            val catalogNumber = label.catalogNumber
+            if (!catalogNumber.isNullOrEmpty()) {
+                Text(
+                    modifier = Modifier.padding(top = 4.dp),
+                    text = catalogNumber,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            }
         }
     }
 }

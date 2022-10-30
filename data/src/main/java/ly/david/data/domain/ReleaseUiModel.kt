@@ -4,6 +4,7 @@ import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.getReleaseArtistCreditRoomModels
+import ly.david.data.network.toLabelRoomModels
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.data.persistence.release.ReleaseRoomModel
@@ -40,6 +41,9 @@ data class ReleaseUiModel(
     val labels: List<LabelUiModel> = listOf()
 ) : UiModel(), Release
 
+// TODO: with paging, we never convert mb model to ui model, only room model to ui model
+//  that means we don't have to do 2 mappings
+//  can we do something when doing a lookup?
 fun ReleaseMusicBrainzModel.toReleaseUiModel() =
     ReleaseUiModel(
         id = id,
@@ -57,6 +61,11 @@ fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         quality = quality,
         coverArtUrl = null,
         artistCredits = getReleaseArtistCreditRoomModels(),
+
+        // TODO: missing format/tracks
+
+        // TODO: lol gotta be a better way
+        labels = labelInfoList?.toLabelRoomModels()?.map { it.toLabelUiModel() }.orEmpty()
     )
 
 fun ReleaseRoomModel.toReleaseUiModel(

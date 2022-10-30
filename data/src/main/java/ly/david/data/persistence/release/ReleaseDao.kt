@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
 
 @Dao
@@ -13,6 +14,7 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     @Query("SELECT * FROM releases WHERE id = :releaseId")
     abstract suspend fun getRelease(releaseId: String): ReleaseRoomModel?
 
+    @Transaction
     @Query("SELECT * FROM releases WHERE id = :releaseId")
     abstract suspend fun getReleaseWithAllData(releaseId: String): ReleaseWithAllData?
 
@@ -35,6 +37,7 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAllArtistCredits(artistCredits: List<ReleaseArtistCreditRoomModel>)
 
+    @Transaction
     @Query(
         """
         SELECT ra.*

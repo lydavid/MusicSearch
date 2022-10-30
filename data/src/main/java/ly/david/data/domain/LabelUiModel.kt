@@ -3,6 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Label
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.persistence.label.LabelRoomModel
+import ly.david.data.persistence.release.LabelWithCatalog
 
 data class LabelUiModel(
     override val id: String,
@@ -11,8 +12,7 @@ data class LabelUiModel(
     override val type: String? = null,
     override val labelCode: Int? = null,
 
-    // TODO: catalogue: this normally belongs to a release/label, but we would like to display them
-    //  on a label card when viewing a release
+    val catalogNumber: String? = null
 ) : Label, UiModel()
 
 internal fun LabelMusicBrainzModel.toLabelUiModel() =
@@ -31,4 +31,14 @@ internal fun LabelRoomModel.toLabelUiModel() =
         disambiguation = disambiguation,
         type = type,
         labelCode = labelCode
+    )
+
+internal fun LabelWithCatalog.toLabelUiModel() =
+    LabelUiModel(
+        id = label.id,
+        name = label.name,
+        disambiguation = label.disambiguation,
+        type = label.type,
+        labelCode = label.labelCode,
+        catalogNumber = releaseLabel.catalogNumber
     )
