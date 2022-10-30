@@ -10,6 +10,9 @@ data class LabelUiModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val labelCode: Int? = null,
+
+    // TODO: catalogue: this normally belongs to a release/label, but we would like to display them
+    //  on a label card when viewing a release
 ) : Label, UiModel()
 
 internal fun LabelMusicBrainzModel.toLabelUiModel() =

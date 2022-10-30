@@ -3,6 +3,8 @@ package ly.david.data.network
 import com.squareup.moshi.Json
 import ly.david.data.Label
 import ly.david.data.LifeSpan
+import ly.david.data.persistence.label.LabelRoomModel
+import ly.david.data.persistence.label.ReleaseLabel
 
 data class LabelInfo(
     @Json(name = "catalog-number") val catalogNumber: String? = null,
@@ -21,3 +23,33 @@ data class LabelMusicBrainzModel(
     @Json(name = "life-span") val lifeSpan: LifeSpan? = null,
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : Label, MusicBrainzModel()
+
+fun List<LabelInfo>.toLabelRoomModels(): List<LabelRoomModel> {
+    return this.mapNotNull { labelInfo ->
+        val label = labelInfo.label
+        if (label == null) {
+            null
+        } else {
+            LabelRoomModel(
+                id = label.id,
+                name = label.name,
+                disambiguation = label.disambiguation,
+                type = label.type,
+                labelCode = label.labelCode
+            )
+        }
+    }
+}
+
+fun List<LabelInfo>.toReleaseLabels(releaseId: String, labelId: String? = null): List<ReleaseLabel> {
+    return this
+        .filter { it.label?.id == labelId || labelId == null }
+        .mapNotNull { labelInfo ->
+            val label = labelInfo.label
+            if (label == null) {
+                null
+            } else {
+                ReleaseLabel(releaseId, label.id, labelInfo.catalogNumber)
+            }
+        }
+}

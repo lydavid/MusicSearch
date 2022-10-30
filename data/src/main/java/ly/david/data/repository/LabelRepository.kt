@@ -7,8 +7,8 @@ import ly.david.data.domain.LabelUiModel
 import ly.david.data.domain.toLabelUiModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.toReleaseLabels
 import ly.david.data.persistence.label.LabelDao
-import ly.david.data.persistence.label.ReleaseLabel
 import ly.david.data.persistence.label.ReleasesLabelsDao
 import ly.david.data.persistence.label.toLabelRoomModel
 import ly.david.data.persistence.relation.BrowseResourceOffset
@@ -60,8 +60,8 @@ class LabelRepository @Inject constructor(
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
         releasesLabelsDao.insertAll(
-            releaseMusicBrainzModels.map { release ->
-                ReleaseLabel(release.id, labelId)
+            releaseMusicBrainzModels.flatMap { release ->
+                release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = labelId).orEmpty()
             }
         )
 

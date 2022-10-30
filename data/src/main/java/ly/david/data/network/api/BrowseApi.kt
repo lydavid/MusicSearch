@@ -8,6 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 internal const val RELEASE_GROUPS = "release-groups"
+internal const val LABELS = "labels"
 
 /**
  * See [browse API](https://wiki.musicbrainz.org/MusicBrainz_API#Browse).
@@ -37,12 +38,12 @@ interface BrowseApi {
         // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
     ): BrowseReleasesResponse
 
-    // TODO: can this be same fun as above? with nullable query
     @GET("release")
     suspend fun browseReleasesByLabel(
         @Query("label") labelId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = LABELS
     ): BrowseReleasesResponse
 
     @GET("release")

@@ -77,7 +77,6 @@ internal class AreaViewModel @Inject constructor(
         )
     }
 
-    // TODO: crashing
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
         paramState.filterNot { it.areaId.isEmpty() }

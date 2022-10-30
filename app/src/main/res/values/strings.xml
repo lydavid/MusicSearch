@@ -37,6 +37,7 @@
 
     <string name="recent_history">Recent History</string>
 
+    <string name="labels">Labels</string>
     <string name="details">Details</string>
     <string name="release_groups">Release Groups</string>
     <string name="releases">Releases</string>

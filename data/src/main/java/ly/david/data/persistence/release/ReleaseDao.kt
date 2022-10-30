@@ -13,6 +13,9 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     @Query("SELECT * FROM releases WHERE id = :releaseId")
     abstract suspend fun getRelease(releaseId: String): ReleaseRoomModel?
 
+    @Query("SELECT * FROM releases WHERE id = :releaseId")
+    abstract suspend fun getReleaseWithAllData(releaseId: String): ReleaseWithAllData?
+
     @Query(
         """
         DELETE FROM releases WHERE id = :releaseId

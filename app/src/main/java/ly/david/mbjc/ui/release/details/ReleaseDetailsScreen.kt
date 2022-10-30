@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
+import ly.david.data.domain.LabelUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayTypes
@@ -24,6 +25,7 @@ import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.label.LabelCard
 
 @Composable
 internal fun ReleaseDetailsScreen(
@@ -31,6 +33,7 @@ internal fun ReleaseDetailsScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<UiModel>,
+    onLabelClick: LabelUiModel.() -> Unit = {},
     onAreaClick: AreaUiModel.() -> Unit = {},
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
@@ -84,6 +87,14 @@ internal fun ReleaseDetailsScreen(
                             asin?.let {
                                 TextWithHeading(headingRes = R.string.asin, text = it)
                             }
+
+                            if (labels.isNotEmpty()) {
+                                ListSeparatorHeader(text = stringResource(id = R.string.labels))
+                                labels.forEach {
+                                    LabelCard(label = it, onLabelClick = onLabelClick)
+                                }
+                            }
+
                             ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                         }
                     }

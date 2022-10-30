@@ -14,5 +14,6 @@ data class ReleaseLabel(
     @ColumnInfo(name = "label_id")
     val labelId: String,
 
-    // TODO: catalogue number
+    @ColumnInfo(name = "catalog_number")
+    val catalogNumber: String? = null
 )

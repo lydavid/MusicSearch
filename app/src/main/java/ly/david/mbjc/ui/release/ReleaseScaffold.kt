@@ -195,6 +195,9 @@ internal fun ReleaseScaffold(
                     lazyPagingItems = detailsLazyPagingItems,
                     lazyListState = detailsLazyListState,
                     snackbarHostState = snackbarHostState,
+                    onLabelClick = {
+                        onItemClick(Destination.LOOKUP_LABEL, id, name)
+                    },
                     onAreaClick = {
                         onItemClick(Destination.LOOKUP_AREA, id, name)
                     }

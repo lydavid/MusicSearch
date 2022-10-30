@@ -128,7 +128,6 @@ internal fun ReleaseCard(
                     )
                 }
 
-                // TODO: rename so it isn't named like our data class
                 val uiTracks = releaseUiModel.tracks
                 if (!uiTracks.isNullOrEmpty()) {
                     Text(

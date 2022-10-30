@@ -8,7 +8,6 @@ import java.util.Date
 import ly.david.data.network.MusicBrainzResource
 
 // TODO: We can probably make this stable by mapping it to a ui model
-//  but is that worth it?
 /**
  * Record of which Lookup screen a user has visited.
  * We can use this to let them deeplink back to this screen.

@@ -7,6 +7,7 @@ import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.data.persistence.release.ReleaseRoomModel
+import ly.david.data.persistence.release.ReleaseWithAllData
 import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 
 data class ReleaseUiModel(
@@ -28,10 +29,15 @@ data class ReleaseUiModel(
 
     val formats: String? = null,
     val tracks: String? = null,
+
+    // TODO: minor: consider mapping to a ui model
+    //  which should make this stable (except lists aren't stable...)
+    //  but we can at least make a model that only holds relevant info
+    //  in this case, we don't need release_id and order (since we return them ordered)
     val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf(),
-//    val releaseGroupId: String? = null,
     val releaseGroup: ReleaseGroupUiModel? = null,
-    val releaseEvents: List<ReleaseCountry> = listOf()
+    val releaseEvents: List<ReleaseCountry> = listOf(),
+    val labels: List<LabelUiModel> = listOf()
 ) : UiModel(), Release
 
 fun ReleaseMusicBrainzModel.toReleaseUiModel() =
@@ -51,13 +57,6 @@ fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         quality = quality,
         coverArtUrl = null,
         artistCredits = getReleaseArtistCreditRoomModels(),
-//        releaseGroupId = releaseGroup?.id
-    )
-
-fun ReleaseRoomModel.toReleaseUiModel() =
-    this.toReleaseUiModel(
-        releaseArtistCreditRoomModel = listOf(),
-        releaseGroup = null
     )
 
 fun ReleaseRoomModel.toReleaseUiModel(
@@ -84,7 +83,10 @@ fun ReleaseRoomModel.toReleaseUiModel(
     releaseGroup = releaseGroup
 )
 
-fun ReleaseWithReleaseCountries.toReleaseUiModel() = ReleaseUiModel(
+fun ReleaseWithReleaseCountries.toReleaseUiModel(
+    releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel> = listOf(),
+    releaseGroup: ReleaseGroupUiModel? = null
+) = ReleaseUiModel(
     id = release.id,
     name = release.name,
     disambiguation = release.disambiguation,
@@ -101,5 +103,33 @@ fun ReleaseWithReleaseCountries.toReleaseUiModel() = ReleaseUiModel(
     formats = release.formats,
     tracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
-    releaseEvents = releaseEvents
+    releaseEvents = releaseEvents,
+    artistCredits = releaseArtistCreditRoomModel,
+    releaseGroup = releaseGroup
+)
+
+fun ReleaseWithAllData.toReleaseUiModel(
+    releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel> = listOf(),
+    releaseGroup: ReleaseGroupUiModel? = null
+) = ReleaseUiModel(
+    id = release.id,
+    name = release.name,
+    disambiguation = release.disambiguation,
+    date = release.date,
+    status = release.status,
+    barcode = release.barcode,
+    statusId = release.statusId,
+    countryCode = release.countryCode,
+    packaging = release.packaging,
+    packagingId = release.packagingId,
+    asin = release.asin,
+    quality = release.quality,
+    coverArtArchive = release.coverArtArchive,
+    formats = release.formats,
+    tracks = release.tracks,
+    coverArtUrl = release.coverArtUrl,
+    releaseEvents = releaseEvents,
+    artistCredits = releaseArtistCreditRoomModel,
+    releaseGroup = releaseGroup,
+    labels = labels.map { it.toLabelUiModel() }
 )

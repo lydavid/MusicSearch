@@ -9,6 +9,8 @@ import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
+import ly.david.data.network.toLabelRoomModels
+import ly.david.data.network.toReleaseLabels
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.area.getAreaCountryCodes
@@ -16,6 +18,7 @@ import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.data.persistence.label.LabelDao
+import ly.david.data.persistence.label.ReleasesLabelsDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
@@ -36,6 +39,7 @@ class ReleaseRepository @Inject constructor(
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
+    private val releasesLabelsDao: ReleasesLabelsDao
 ) {
 
     /**
@@ -44,17 +48,18 @@ class ReleaseRepository @Inject constructor(
      * Looks up release and stores its data (excludes relationships).
      */
     suspend fun getRelease(releaseId: String): ReleaseUiModel {
-        val releaseRoomModel = releaseDao.getRelease(releaseId)
+        // TODO: could we use @Relation even if some of these are not FK?
+        val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
         val artistCredits = releaseDao.getReleaseArtistCredits(releaseId)
 
         // Empty artist credits is sufficient to indicate we've never done a lookup
         // if it's no longer the case, then check for formats/tracks
-        if (releaseRoomModel != null && artistCredits.isNotEmpty() && releaseRoomModel.releaseGroupId != null) {
-            val releaseGroup = releaseGroupDao.getReleaseGroup(releaseRoomModel.releaseGroupId)
+        if (releaseWithAllData != null && artistCredits.isNotEmpty() && releaseWithAllData.release.releaseGroupId != null) {
+            val releaseGroup = releaseGroupDao.getReleaseGroup(releaseWithAllData.release.releaseGroupId)
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
-            return releaseRoomModel.toReleaseUiModel(artistCredits, releaseGroup?.toReleaseGroupUiModel())
+            return releaseWithAllData.toReleaseUiModel(artistCredits, releaseGroup?.toReleaseGroupUiModel())
         }
 
         // Fetch from network. Store all relevant models.
@@ -68,20 +73,17 @@ class ReleaseRepository @Inject constructor(
         releaseDao.insertReplace(releaseMusicBrainzModel.toReleaseRoomModel())
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
 
-        // TODO: insert labels and insert releases_labels
-//        labelDao.insertAll(releaseMusicBrainzModel.labelInfoList.map {  })
+        labelDao.insertAll(releaseMusicBrainzModel.labelInfoList?.toLabelRoomModels().orEmpty())
+        releasesLabelsDao.insertAll(
+            releaseMusicBrainzModel.labelInfoList?.toReleaseLabels(releaseId = releaseId).orEmpty()
+        )
 
         releaseMusicBrainzModel.media?.forEach { medium ->
             val mediumId = mediumDao.insert(medium.toMediumRoomModel(releaseMusicBrainzModel.id))
             trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
         }
 
-        // Note that if you visit a release's screen before its country's releases page,
-        // you will most likely see this release on top (at least until the rest of the releases
-        // are loaded, then it should be sorted by whatever method we chose.
-        // We will consider this the expected behaviour.
         releasesCountriesDao.insertAll(releaseMusicBrainzModel.getReleaseCountries())
-
         areaDao.insertAll(
             releaseMusicBrainzModel.releaseEvents?.mapNotNull {
                 // release events returns null type, but we know they are countries
