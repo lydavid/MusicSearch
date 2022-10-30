@@ -53,7 +53,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistory> {
         if (historyRecord == null) {
             insert(lookupHistory)
         } else if (historyRecord.title.isEmpty()) {
-            insert(
+            insertReplace(
                 historyRecord.copy(
                     title = lookupHistory.title,
                     numberOfVisits = historyRecord.numberOfVisits + 1,
@@ -61,7 +61,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistory> {
                 )
             )
         } else {
-            insert(
+            insertReplace(
                 historyRecord.copy(
                     numberOfVisits = historyRecord.numberOfVisits + 1,
                     lastAccessed = Date()
