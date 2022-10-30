@@ -4,6 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseArtistCreditRoomModels
@@ -53,7 +54,7 @@ class ReleaseRepository @Inject constructor(
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
-            return releaseRoomModel.toReleaseUiModel(artistCredits, releaseGroup?.id)
+            return releaseRoomModel.toReleaseUiModel(artistCredits, releaseGroup?.toReleaseGroupUiModel())
         }
 
         // Fetch from network. Store all relevant models.

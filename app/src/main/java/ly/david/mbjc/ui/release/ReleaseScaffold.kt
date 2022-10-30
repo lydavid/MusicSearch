@@ -137,13 +137,13 @@ internal fun ReleaseScaffold(
                                 onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
                             })
                     }
-                    release?.releaseGroupId?.let {
+                    release?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(
-                            text = { Text(text = release?.name.orEmpty()) },
+                            text = { Text(text = releaseGroup.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.RELEASE_GROUP) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(Destination.LOOKUP_RELEASE_GROUP, it, null)
+                                onItemClick(Destination.LOOKUP_RELEASE_GROUP, releaseGroup.id, null)
                             })
                     }
                 },

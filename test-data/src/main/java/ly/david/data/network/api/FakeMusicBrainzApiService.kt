@@ -95,8 +95,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int,
-        offset: Int,
-        include: String
+        offset: Int
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -104,8 +103,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByLabel(
         labelId: String,
         limit: Int,
-        offset: Int,
-        include: String
+        offset: Int
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -113,8 +111,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByArea(
         areaId: String,
         limit: Int,
-        offset: Int,
-        include: String
+        offset: Int
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }

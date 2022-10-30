@@ -47,7 +47,18 @@
     <string name="format">Format</string>
     <string name="stats">Stats</string>
 
+    <string name="barcode">Barcode</string>
+    <string name="length">Length</string>
+    <string name="type">Type</string>
+    <string name="packaging">Packaging</string>
+    <string name="status">Status</string>
+    <string name="language">Language</string>
+    <string name="script">Script</string>
+    <string name="data_quality">Data Quality</string>
+    <string name="asin">ASIN</string>
     <string name="release_events">Release events</string>
+    <string name="release_information">Release information</string>
+    <string name="additional_details">Additional details</string>
 
     <string name="ok">OK</string>
     <string name="retry">Retry</string>

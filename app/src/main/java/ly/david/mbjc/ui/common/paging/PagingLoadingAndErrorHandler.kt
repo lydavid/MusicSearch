@@ -84,6 +84,9 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
             FullScreenErrorWithRetry(lazyPagingItems = lazyPagingItems)
         }
         lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
+            // TODO: cannot refresh
+            //  also there should be a difference between 0 out of 0, and 0 out of 1 found
+            //  the latter should offer a retry button
             FullScreenText(noResultsText)
         }
         else -> {

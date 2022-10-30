@@ -41,7 +41,9 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     )
 }
 
-fun ReleaseGroupRoomModel.toReleaseGroupUiModel(releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel>): ReleaseGroupUiModel {
+fun ReleaseGroupRoomModel.toReleaseGroupUiModel(
+    releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel> = listOf()
+): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,

@@ -71,7 +71,7 @@ data class ReleaseRoomModel(
     val releaseGroupId: String? = null
 ) : RoomModel, Release
 
-fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
+fun ReleaseMusicBrainzModel.toReleaseRoomModel(releaseGroupId: String?) =
     ReleaseRoomModel(
         id = id,
         name = name,
@@ -88,5 +88,8 @@ fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
         coverArtArchive = coverArtArchive,
         formats = media?.getFormatsForDisplay(),
         tracks = media?.getTracksForDisplay(),
-        releaseGroupId = releaseGroup?.id
+        releaseGroupId = releaseGroupId
     )
+
+fun ReleaseMusicBrainzModel.toReleaseRoomModel() =
+    this.toReleaseRoomModel(releaseGroup?.id)

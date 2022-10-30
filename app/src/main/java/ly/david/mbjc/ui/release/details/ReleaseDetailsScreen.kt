@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.release.details
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
@@ -12,9 +12,11 @@ import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
+import ly.david.data.getDisplayTypes
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 @Composable
@@ -33,32 +35,40 @@ internal fun ReleaseDetailsScreen(
         when (uiModel) {
             is Header -> {
                 releaseUiModel?.run {
-                    Column {
-                        ListSeparatorHeader(text = "Release information")
-                        barcode?.let {
-                            Text(text = it)
-                        }
-                        formats?.let {
-                            Text(text = it)
-                        }
+                    SelectionContainer {
+                        Column {
+                            ListSeparatorHeader(text = stringResource(id = R.string.release_information))
+                            barcode?.let {
+                                TextWithHeading(headingRes = R.string.barcode, text = it)
+                            }
+                            formats?.let {
+                                TextWithHeading(headingRes = R.string.format, text = it)
+                            }
+                            tracks?.let {
+                                TextWithHeading(headingRes = R.string.tracks, text = it)
+                            }
+                            // TODO: sum track length if it does not contain any ?:??
 
-                        // TODO: sum track length if it does not contain any ?:??
-
-
-                        ListSeparatorHeader(text = "Additional details")
-                        status?.let {
-                            Text(text = it)
+                            ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
+                            releaseGroup?.let {
+                                TextWithHeading(headingRes = R.string.type, text = it.getDisplayTypes())
+                            }
+                            packaging?.let {
+                                TextWithHeading(headingRes = R.string.packaging, text = it)
+                            }
+                            status?.let {
+                                TextWithHeading(headingRes = R.string.status, text = it)
+                            }
+                            // TODO: language : need to convert abbr to text
+                            // TODO: script
+                            quality?.let {
+                                TextWithHeading(headingRes = R.string.data_quality, text = it)
+                            }
+                            asin?.let {
+                                TextWithHeading(headingRes = R.string.asin, text = it)
+                            }
+                            ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                         }
-                        packaging?.let {
-                            Text(text = it)
-                        }
-                        asin?.let {
-                            Text(text = it)
-                        }
-                        quality?.let {
-                            Text(text = it)
-                        }
-                        ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                     }
                 }
             }

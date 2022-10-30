@@ -27,7 +27,8 @@ data class ReleaseUiModel(
     val formats: String? = null,
     val tracks: String? = null,
     val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf(),
-    val releaseGroupId: String? = null
+//    val releaseGroupId: String? = null,
+    val releaseGroup: ReleaseGroupUiModel? = null
 ) : UiModel(), Release
 
 fun ReleaseMusicBrainzModel.toReleaseUiModel() =
@@ -47,18 +48,18 @@ fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         quality = quality,
         coverArtUrl = null,
         artistCredits = getReleaseArtistCreditRoomModels(),
-        releaseGroupId = releaseGroup?.id
+//        releaseGroupId = releaseGroup?.id
     )
 
 fun ReleaseRoomModel.toReleaseUiModel() =
     this.toReleaseUiModel(
         releaseArtistCreditRoomModel = listOf(),
-        releaseGroupId = null
+        releaseGroup = null
     )
 
 fun ReleaseRoomModel.toReleaseUiModel(
     releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel>,
-    releaseGroupId: String?
+    releaseGroup: ReleaseGroupUiModel?
 ) = ReleaseUiModel(
     id = id,
     name = name,
@@ -77,5 +78,5 @@ fun ReleaseRoomModel.toReleaseUiModel(
     tracks = tracks,
     coverArtUrl = coverArtUrl,
     artistCredits = releaseArtistCreditRoomModel,
-    releaseGroupId = releaseGroupId
+    releaseGroup = releaseGroup
 )

@@ -68,7 +68,7 @@ class ReleaseGroupRepository @Inject constructor(
         }
 
         val musicBrainzReleases = response.releases
-        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
+        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel(releaseGroupId) })
 
         return musicBrainzReleases.size
     }
