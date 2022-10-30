@@ -17,7 +17,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel> {
             WHERE r.id = :releaseId
         """
 
-        private const val SELECT_RELEASES_IN_RELEASE_GROUP = """
+        private const val SELECT_TRACKS_IN_RELEASE = """
             SELECT t.*
             $TRACKS_IN_RELEASE
         """
@@ -32,7 +32,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel> {
     @Transaction
     @Query(
         """
-        $SELECT_RELEASES_IN_RELEASE_GROUP
+        $SELECT_TRACKS_IN_RELEASE
     """
     )
     abstract fun getTracksInRelease(releaseId: String): PagingSource<Int, TrackRoomModel>
@@ -40,7 +40,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel> {
     @Transaction
     @Query(
         """
-        $SELECT_RELEASES_IN_RELEASE_GROUP
+        $SELECT_TRACKS_IN_RELEASE
         $FILTERED
     """
     )
@@ -48,4 +48,23 @@ abstract class TrackDao : BaseDao<TrackRoomModel> {
         releaseId: String,
         query: String
     ): PagingSource<Int, TrackRoomModel>
+
+    @Transaction
+    @Query(
+        """
+        SELECT SUM(t.length)
+        $TRACKS_IN_RELEASE
+    """
+    )
+    abstract suspend fun getReleaseTracksLength(releaseId: String): Int?
+
+    @Transaction
+    @Query(
+        """
+        SELECT COUNT(t.id)
+        $TRACKS_IN_RELEASE
+        AND t.length IS NULL
+    """
+    )
+    abstract suspend fun getReleaseTracksWithNullLength(releaseId: String): Int
 }

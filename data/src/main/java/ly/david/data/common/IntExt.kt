@@ -4,9 +4,11 @@ private const val MS = 1000
 private const val SECONDS_IN_MINUTE = 60
 private const val MINUTES_IN_HOUR = 60
 
+const val UNKNOWN_TIME = "?:??"
+
 fun Int?.toDisplayTime(): String {
 
-    if (this == null || this < 0) return "?:??"
+    if (this == null || this < 0) return UNKNOWN_TIME
 
     val timeWithoutMs = this / MS
     var minutes = timeWithoutMs / SECONDS_IN_MINUTE

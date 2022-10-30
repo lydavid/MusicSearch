@@ -37,6 +37,7 @@ internal fun AreaCard(
     ClickableListItem(
         onClick = { onAreaClick(area) },
     ) {
+        // TODO: constraint layout
         Row(
             modifier = Modifier
                 .fillMaxWidth()

@@ -6,7 +6,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
@@ -25,8 +31,17 @@ internal fun ReleaseDetailsScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<UiModel>,
-    onAreaClick: AreaUiModel.() -> Unit = {}
+    onAreaClick: AreaUiModel.() -> Unit = {},
+    viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
+
+    var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
+
+    LaunchedEffect(key1 = releaseUiModel) {
+        if (releaseUiModel == null) return@LaunchedEffect
+        releaseLength = viewModel.getFormattedReleaseLength(releaseUiModel.id)
+    }
+
     PagingLoadingAndErrorHandler(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
@@ -47,7 +62,9 @@ internal fun ReleaseDetailsScreen(
                             tracks?.let {
                                 TextWithHeading(headingRes = R.string.tracks, text = it)
                             }
-                            // TODO: sum track length if it does not contain any ?:??
+                            releaseLength?.let {
+                                TextWithHeading(headingRes = R.string.length, text = it)
+                            }
 
                             ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
                             releaseGroup?.let {
@@ -84,20 +101,4 @@ internal fun ReleaseDetailsScreen(
             }
         }
     }
-
-    // TODO: page release events
-    //  release_events not releases_events
-    //  - release_id, date, area_id (though not FK?)
-    //  Clicking on card goes to Area, where we will actually fetch/insert it
-    //  Deleting release will delete release_event
-    //  Deleting area will not delete release_event
-
-    // TODO: should we make a single release lookup call when landing in release screen?
-    //  otherwise this screen will make a 2nd call just for labels
-    //  release events are always included already
-
-    // TODO: note that having ~200 release events is an exception
-    //  normally, it would just be XW, but some releases are released everywhere except a few countries
-    //  So handling it in a paged list could be too much bloat
-    //  Could we do something similar to web, where there's an option to see more
 }
