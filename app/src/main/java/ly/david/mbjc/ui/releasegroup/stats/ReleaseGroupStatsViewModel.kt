@@ -19,6 +19,6 @@ internal class ReleaseGroupStatsViewModel @Inject constructor(
     suspend fun getTotalReleases(releaseGroupId: String) =
         relationDao.getBrowseResourceOffset(releaseGroupId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
-    suspend fun getNumberOfReleasesInReleaseGroup(releaseGroupId: String) =
-        releasesReleaseGroupsDao.getNumberOfReleasesInReleaseGroup(releaseGroupId)
+    suspend fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String) =
+        releasesReleaseGroupsDao.getNumberOfReleasesByReleaseGroup(releaseGroupId)
 }

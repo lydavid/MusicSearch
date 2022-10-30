@@ -48,7 +48,7 @@ abstract class ReleasesReleaseGroupsDao {
         )
         """
     )
-    abstract suspend fun deleteReleasesInReleaseGroup(releaseGroupId: String)
+    abstract suspend fun deleteReleasesByReleaseGroup(releaseGroupId: String)
 
     @Query(
         """
@@ -62,7 +62,7 @@ abstract class ReleasesReleaseGroupsDao {
         ) AS count
     """
     )
-    abstract suspend fun getNumberOfReleasesInReleaseGroup(releaseGroupId: String): Int
+    abstract suspend fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String): Int
 
     // TODO: based on r's release_group_id
     @Transaction

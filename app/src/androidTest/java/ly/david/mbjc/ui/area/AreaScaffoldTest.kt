@@ -70,6 +70,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
             .performClick()
     }
 
+    // TODO: sometimes fails, is our database not cleared between tests?
     @Test
     fun repeatVisit() {
         setArea(fakeArea)

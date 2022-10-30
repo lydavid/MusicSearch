@@ -80,7 +80,7 @@ class ReleaseGroupRepository @Inject constructor(
         relationDao.getBrowseResourceOffset(releaseGroupId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     suspend fun deleteReleasesByReleaseGroup(releaseGroupId: String) {
-        releasesReleaseGroupsDao.deleteReleasesInReleaseGroup(releaseGroupId)
+        releasesReleaseGroupsDao.deleteReleasesByReleaseGroup(releaseGroupId)
         relationDao.deleteBrowseResourceOffsetByResource(releaseGroupId, MusicBrainzResource.RELEASE)
     }
 

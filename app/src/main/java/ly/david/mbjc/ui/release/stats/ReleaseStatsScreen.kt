@@ -24,14 +24,10 @@ internal fun ReleaseStatsScreen(
 ) {
 //    var totalRemote by rememberSaveable { mutableStateOf(0) }
 //    var totalLocal by rememberSaveable { mutableStateOf(0) }
-//
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
     var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
-//
+
     LaunchedEffect(key1 = Unit) {
-//        totalRemote = viewModel.getTotalReleases(releaseId)
-//        totalLocal = viewModel.getNumberOfReleasesInReleaseGroup(releaseId)
-//
         totalRelations = viewModel.getNumberOfRelationsByResource(releaseId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(releaseId)
     }
