@@ -18,8 +18,9 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel> {
             WHERE l.id = :labelId
         """
 
+        // DISTINCT because junction table can repeat due to different catalog number for same release/label
         private const val SELECT_RELEASES_BY_LABEL = """
-            SELECT r.*
+            SELECT DISTINCT r.*
             $RELEASES_BY_LABEL
         """
 
