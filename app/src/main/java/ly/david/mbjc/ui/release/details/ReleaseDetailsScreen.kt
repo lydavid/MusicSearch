@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
 import ly.david.data.domain.LabelUiModel
@@ -57,16 +58,16 @@ internal fun ReleaseDetailsScreen(
                     SelectionContainer {
                         Column {
                             ListSeparatorHeader(text = stringResource(id = R.string.release_information))
-                            barcode?.let {
+                            barcode?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.barcode, text = it)
                             }
-                            formats?.let {
+                            formats?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.format, text = it)
                             }
-                            tracks?.let {
+                            tracks?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.tracks, text = it)
                             }
-                            releaseLength?.let {
+                            releaseLength?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.length, text = it)
                             }
 
@@ -74,25 +75,25 @@ internal fun ReleaseDetailsScreen(
                             releaseGroup?.let {
                                 TextWithHeading(headingRes = R.string.type, text = it.getDisplayTypes())
                             }
-                            packaging?.let {
+                            packaging?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.packaging, text = it)
                             }
-                            status?.let {
+                            status?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.status, text = it)
                             }
                             // TODO: language : need to convert abbr to text
                             // TODO: script
-                            quality?.let {
+                            quality?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.data_quality, text = it)
                             }
-                            asin?.let {
+                            asin?.ifNotNullOrEmpty {
                                 TextWithHeading(headingRes = R.string.asin, text = it)
                             }
 
-                            if (labels.isNotEmpty()) {
+                            labels.ifNotNullOrEmpty {
                                 ListSeparatorHeader(text = stringResource(id = R.string.labels))
-                                labels.forEach {
-                                    LabelCard(label = it, onLabelClick = onLabelClick)
+                                it.forEach { label ->
+                                    LabelCard(label = label, onLabelClick = onLabelClick)
                                 }
                             }
 

@@ -103,7 +103,8 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByLabel(
         labelId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
+        include: String
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }

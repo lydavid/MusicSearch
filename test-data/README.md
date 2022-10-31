@@ -20,6 +20,45 @@ adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.i
 adb shell am start -d "mbjc://artist/d044577e-aa22-43b7-ab29-cabee5f6643c" -a android.intent.action.VIEW
 ```
 
+## Recording
+
+Recording with recording
+
+```shell
+adb shell am start -d "mbjc://recording/a53c97d7-5501-443b-baa3-cb282fc64275" -a android.intent.action.VIEW
+```
+Recording with artist, label, place, work rels
+
+https://musicbrainz.org/recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea
+```shell
+adb shell am start -d "mbjc://recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea" -a android.intent.action.VIEW
+```
+
+Recording with url
+
+```shell
+adb shell am start -d "mbjc://recording/ac474974-600b-497e-902e-3b85b62cf58f" -a android.intent.action.VIEW
+```
+
+Recording with many artist credits
+
+```shell
+adb shell am start -d "mbjc://recording/dd21677f-d6ae-4dc2-b576-cb4cb5a66b79" -a android.intent.action.VIEW
+```
+
+
+
+## Release
+
+
+Has label multiple labels, and has multiple catalog numbers from the same label
+
+```sh
+adb shell am start -d "mbjc://release/e56065c8-709e-4df8-952b-57031c352a03" -a android.intent.action.VIEW
+```
+
+
+
 
 ## Release Group
 
@@ -42,6 +81,8 @@ SMITHEREENS
 ```sh
 adb shell am start -d "mbjc://release-group/f2b2abf8-09af-4d45-aee9-b0c99d4fcabc" -a android.intent.action.VIEW
 ```
+
+
 
 
 ## Label
@@ -176,12 +217,6 @@ adb shell am start -d "mbjc://place/ed121457-87f6-4df9-a24b-d3f1bab1fdad" -a and
 
 
 
-### Recording with recording
-
-
-```shell
-adb shell am start -d "mbjc://recording/a53c97d7-5501-443b-baa3-cb282fc64275" -a android.intent.action.VIEW
-```
 
 
 ### release with misc: miscellaneous support: task
@@ -243,20 +278,6 @@ adb shell am start -d "mbjc://release/3cd31605-0f7e-45ee-aacb-637a53e4c367" -a a
 ```
 
 
-### Recording with artist, label, place, work rels
-
-https://musicbrainz.org/recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea
-```shell
-adb shell am start -d "mbjc://recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea" -a android.intent.action.VIEW
-```
-
-
-### Recording with url
-
-
-```shell
-adb shell am start -d "mbjc://recording/ac474974-600b-497e-902e-3b85b62cf58f" -a android.intent.action.VIEW
-```
 
 
 ### Place with url
