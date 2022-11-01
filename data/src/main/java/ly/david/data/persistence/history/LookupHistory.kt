@@ -35,5 +35,8 @@ data class LookupHistory(
     val numberOfVisits: Int = 1,
 
     @ColumnInfo(name = "last_accessed")
-    val lastAccessed: Date = Date()
+    val lastAccessed: Date = Date(),
+
+    @ColumnInfo(name = "search_hint", defaultValue = "")
+    val searchHint: String = ""
 )

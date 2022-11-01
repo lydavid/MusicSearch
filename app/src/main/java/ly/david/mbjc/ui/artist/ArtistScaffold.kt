@@ -85,7 +85,8 @@ internal fun ArtistScaffold(
             viewModel.recordLookupHistory(
                 resourceId = artistId,
                 resource = resource,
-                summary = title
+                summary = title,
+                searchHint = artist.sortName
             )
             recordedLookup = true
         }

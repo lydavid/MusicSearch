@@ -11,12 +11,14 @@ internal interface RecordLookupHistory {
         resourceId: String,
         resource: MusicBrainzResource,
         summary: String,
+        searchHint: String = ""
     ) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistory(
                 title = summary,
                 resource = resource,
-                mbid = resourceId
+                mbid = resourceId,
+                searchHint = searchHint
             )
         )
     }
