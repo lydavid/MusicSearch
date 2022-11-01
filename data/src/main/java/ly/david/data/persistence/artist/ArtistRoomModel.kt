@@ -19,7 +19,7 @@ data class ArtistRoomModel(
 
     @ColumnInfo(name = "name")
     override val name: String = "",
-    @ColumnInfo(name = "sort-name")
+    @ColumnInfo(name = "sort_name")
     override val sortName: String = "",
     @ColumnInfo(name = "disambiguation")
     override val disambiguation: String? = null,

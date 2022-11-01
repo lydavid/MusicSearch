@@ -183,4 +183,7 @@ internal object Migrations {
 
     @DeleteTable(tableName = "releases_release_groups")
     class DeleteReleasesReleaseGroups : AutoMigrationSpec
+
+    @RenameColumn(tableName = "artists", fromColumnName = "sort-name", toColumnName = "sort_name")
+    class RenameSortName : AutoMigrationSpec
 }

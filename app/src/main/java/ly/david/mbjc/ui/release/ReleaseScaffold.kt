@@ -101,7 +101,6 @@ internal fun ReleaseScaffold(
             // If any of the above calls failed, we still want to update the release id so that
             // TracksInReleaseScreen will give us a Retry button.
 
-            // TODO: all tests hitting this
             viewModel.loadTracks(releaseId)
         }
 

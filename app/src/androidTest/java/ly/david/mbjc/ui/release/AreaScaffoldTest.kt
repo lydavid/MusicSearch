@@ -36,9 +36,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     private lateinit var relationDao: RelationDao
     private lateinit var releaseDao: ReleaseDao
 
-    // TODO: need to fake CAA service
 
-    // TODO: fake loader: https://coil-kt.github.io/coil/image_loaders/#testing
 
     @Before
     fun setupApp() {
@@ -57,6 +55,8 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule.onRoot(useUnmergedTree = true).printToLog("ReleaseScaffoldTest")
     }
 
+    // TODO: need to fake CAA service
+    // TODO: fake loader: https://coil-kt.github.io/coil/image_loaders/#testing
     @Test
     fun firstTimeVisit() {
         setRelease(fakeRelease)
