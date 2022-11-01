@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import ly.david.data.common.ifNotNull
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.LabelUiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -37,21 +39,19 @@ internal fun LabelCard(
                 style = TextStyles.getCardTitleTextStyle()
             )
 
-            val type = label.type
-            if (!type.isNullOrEmpty()) {
+            label.type?.ifNotNullOrEmpty {
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = type,
+                    text = it,
                     color = getSubTextColor(),
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }
 
-            val labelCode = label.labelCode
-            if (labelCode != null) {
+            label.labelCode?.ifNotNull {
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = "LC $labelCode",
+                    text = "LC $it",
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }
@@ -60,11 +60,10 @@ internal fun LabelCard(
 
             // TODO: lifespan
 
-            val catalogNumber = label.catalogNumber
-            if (!catalogNumber.isNullOrEmpty()) {
+            label.catalogNumber.ifNotNullOrEmpty {
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = catalogNumber,
+                    text = it,
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }

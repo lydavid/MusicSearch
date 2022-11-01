@@ -13,6 +13,8 @@ data class AreaMusicBrainzModel(
     // TODO: what is an example of a country with more than 1 code?
     @Json(name = "iso-3166-1-codes") val iso_3166_1_codes: List<String>? = null,
 
+    // TODO: fd6d47bd-d574-49a1-97d3-b8e5431cd25d uses "iso-3166-2-codes"
+
 //    @Json(name = "type_id")
 //    override val typeId: String? = null,
 
