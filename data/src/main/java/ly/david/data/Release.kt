@@ -1,6 +1,7 @@
 package ly.david.data
 
 import ly.david.data.network.CoverArtArchive
+import ly.david.data.network.TextRepresentation
 
 /**
  * Defines common properties between domain, network and persistence model.
@@ -19,7 +20,7 @@ internal interface Release : NameWithDisambiguation {
     val asin: String?
     val quality: String?
     val coverArtArchive: CoverArtArchive
-//    val textRepresentation: TextRepresentation? = null,
+    val textRepresentation: TextRepresentation?
 //    val releaseEvents: List<ReleaseEvent>? = null,
 
 //    val media: List<Medium>? = null,

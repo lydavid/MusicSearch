@@ -3,6 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.TextRepresentation
 import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.network.toLabelRoomModels
 import ly.david.data.persistence.area.ReleaseCountry
@@ -26,6 +27,7 @@ data class ReleaseUiModel(
     override val quality: String? = null,
 
     override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
+    override val textRepresentation: TextRepresentation? = null,
     val coverArtUrl: String? = null,
 
     val formats: String? = null,
@@ -57,6 +59,7 @@ fun ReleaseMusicBrainzModel.toReleaseUiModel() =
         packaging = packaging,
         packagingId = packagingId,
         coverArtArchive = coverArtArchive,
+        textRepresentation = textRepresentation,
         asin = asin,
         quality = quality,
         coverArtUrl = null,
@@ -109,6 +112,7 @@ fun ReleaseWithReleaseCountries.toReleaseUiModel(
     asin = release.asin,
     quality = release.quality,
     coverArtArchive = release.coverArtArchive,
+    textRepresentation = release.textRepresentation,
     formats = release.formats,
     tracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
@@ -134,6 +138,7 @@ fun ReleaseWithAllData.toReleaseUiModel(
     asin = release.asin,
     quality = release.quality,
     coverArtArchive = release.coverArtArchive,
+    textRepresentation = release.textRepresentation,
     formats = release.formats,
     tracks = release.tracks,
     coverArtUrl = release.coverArtUrl,

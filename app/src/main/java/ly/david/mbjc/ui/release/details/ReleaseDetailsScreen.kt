@@ -1,5 +1,7 @@
 package ly.david.mbjc.ui.release.details
 
+import android.icu.lang.UScript
+import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -13,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
+import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
@@ -79,8 +82,21 @@ internal fun ReleaseDetailsScreen(
                         status?.ifNotNullOrEmpty {
                             TextWithHeading(headingRes = R.string.status, text = it)
                         }
-                        // TODO: language : need to convert abbr to text
-                        // TODO: script
+                        textRepresentation?.language?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.language, text = Locale(it).displayLanguage)
+                        }
+                        textRepresentation?.script?.ifNotNullOrEmpty {
+                            val scriptOrCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                // TODO: Works for Latn but not Jpan or Kore
+                                UScript.getName(UScript.getCodeFromName(it))
+                            } else {
+                                it
+                            }
+                            TextWithHeading(
+                                headingRes = R.string.script,
+                                text = scriptOrCode
+                            )
+                        }
                         quality?.ifNotNullOrEmpty {
                             TextWithHeading(headingRes = R.string.data_quality, text = it)
                         }

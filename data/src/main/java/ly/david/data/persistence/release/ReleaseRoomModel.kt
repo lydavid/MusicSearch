@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.TextRepresentation
 import ly.david.data.network.getFormatsForDisplay
 import ly.david.data.network.getTracksForDisplay
 import ly.david.data.persistence.RoomModel
@@ -52,6 +53,9 @@ data class ReleaseRoomModel(
     @Embedded
     override val coverArtArchive: CoverArtArchive,
 
+    @Embedded
+    override val textRepresentation: TextRepresentation?,
+
     @ColumnInfo(name = "formats")
     val formats: String?,
 
@@ -86,6 +90,7 @@ fun ReleaseMusicBrainzModel.toReleaseRoomModel(releaseGroupId: String?) =
         asin = asin,
         quality = quality,
         coverArtArchive = coverArtArchive,
+        textRepresentation = textRepresentation,
         formats = media?.getFormatsForDisplay(),
         tracks = media?.getTracksForDisplay(),
         releaseGroupId = releaseGroupId

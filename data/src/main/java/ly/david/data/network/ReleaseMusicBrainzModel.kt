@@ -28,7 +28,7 @@ data class ReleaseMusicBrainzModel(
 
     // If there exists at least one `count`, then we should request CAA for its cover art.
     @Json(name = "cover-art-archive") override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
-    @Json(name = "text-representation") val textRepresentation: TextRepresentation? = null,
+    @Json(name = "text-representation") override val textRepresentation: TextRepresentation? = null,
 
     @Json(name = "release-events") val releaseEvents: List<ReleaseEvent>? = null,
 
@@ -59,8 +59,19 @@ data class CoverArtArchive(
 )
 
 data class TextRepresentation(
-    @Json(name = "script") val script: String? = null,
-    @Json(name = "language") val language: String? = null,
+    /**
+     * See: https://en.wikipedia.org/wiki/ISO_15924
+     */
+    @ColumnInfo(name = "script")
+    @Json(name = "script")
+    val script: String? = null,
+
+    /**
+     * See: https://en.wikipedia.org/wiki/ISO_639-3
+     */
+    @ColumnInfo(name = "language")
+    @Json(name = "language")
+    val language: String? = null,
 )
 
 data class ReleaseEvent(
