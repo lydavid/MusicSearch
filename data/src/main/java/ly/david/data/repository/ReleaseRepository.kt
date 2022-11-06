@@ -58,7 +58,10 @@ class ReleaseRepository @Inject constructor(
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
-            return releaseWithAllData.toReleaseUiModel(artistCredits, releaseGroup?.toReleaseGroupUiModel())
+            return releaseWithAllData.toReleaseUiModel(
+                releaseArtistCreditRoomModel = artistCredits,
+                releaseGroup = releaseGroup?.toReleaseGroupUiModel()
+            )
         }
 
         // Fetch from network. Store all relevant models.
@@ -96,6 +99,8 @@ class ReleaseRepository @Inject constructor(
             }.orEmpty()
         )
 
-        return releaseMusicBrainzModel.toReleaseUiModel()
+        return releaseMusicBrainzModel.toReleaseUiModel(
+            releaseGroup = releaseMusicBrainzModel.releaseGroup?.toReleaseGroupUiModel()
+        )
     }
 }

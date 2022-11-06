@@ -44,11 +44,15 @@ data class ReleaseUiModel(
     val labels: List<LabelUiModel> = listOf()
 ) : UiModel(), Release
 
+fun ReleaseMusicBrainzModel.toReleaseUiModel() =
+    toReleaseUiModel(releaseGroup = null)
+
 // TODO: with paging, we never convert mb model to ui model, only room model to ui model
 //  that means we don't have to do 2 mappings
 //  can we do something when doing a lookup?
-fun ReleaseMusicBrainzModel.toReleaseUiModel() =
-    ReleaseUiModel(
+fun ReleaseMusicBrainzModel.toReleaseUiModel(
+    releaseGroup: ReleaseGroupUiModel? = null
+) = ReleaseUiModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -68,7 +72,7 @@ fun ReleaseMusicBrainzModel.toReleaseUiModel() =
 
         // TODO: missing format/tracks
 
-        // TODO: lol gotta be a better way
+        releaseGroup = releaseGroup,
         labels = labelInfoList?.toLabelRoomModels()?.map { it.toLabelUiModel() }.orEmpty()
     )
 
