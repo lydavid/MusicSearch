@@ -137,6 +137,9 @@ dependencies {
     implementation("io.coil-kt:coil:2.2.2")
     implementation("io.coil-kt:coil-compose:2.2.2")
 
+    // Tried this for UScript.getName(UScript.getCodeFromName(it))
+//    implementation "com.ibm.icu:icu4j:72.1"
+
     // Test - General
     testImplementation "junit:junit:4.13.2"
 //    androidTestImplementation "io.mockk:mockk:1.13.2"

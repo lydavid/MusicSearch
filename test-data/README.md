@@ -77,12 +77,15 @@ adb shell am start -d "mbjc://release-group/807d9a32-e55c-317a-8a97-c4d5eaaa38b0
 ```
 
 SMITHEREENS
-- Released in many regions at once
+- Release event with null area
 ```sh
 adb shell am start -d "mbjc://release-group/f2b2abf8-09af-4d45-aee9-b0c99d4fcabc" -a android.intent.action.VIEW
 ```
 
-
+- Released in many regions
+```sh
+adb shell am start -d "mbjc://release/777279a4-efe9-4ab6-99ce-b2263913c93d" -a android.intent.action.VIEW
+```
 
 
 ## Label

@@ -5,11 +5,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.common.UNKNOWN_TIME
 import ly.david.data.common.toDisplayTime
+import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.release.TrackDao
 
 @HiltViewModel
 internal class ReleaseDetailsViewModel @Inject constructor(
-    private val trackDao: TrackDao
+    private val trackDao: TrackDao,
+    private val releasesCountriesDao: ReleasesCountriesDao
 ) : ViewModel() {
     suspend fun getFormattedReleaseLength(releaseId: String): String {
 
@@ -22,4 +24,6 @@ internal class ReleaseDetailsViewModel @Inject constructor(
             releaseLength
         }
     }
+
+    suspend fun getAreasWithReleaseDate(releaseId: String) = releasesCountriesDao.getAreasWithReleaseDate(releaseId)
 }

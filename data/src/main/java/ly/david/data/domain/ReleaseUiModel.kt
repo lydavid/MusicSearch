@@ -38,6 +38,7 @@ data class ReleaseUiModel(
     //  but we can at least make a model that only holds relevant info
     //  in this case, we don't need release_id and order (since we return them ordered)
     val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf(),
+
     val releaseGroup: ReleaseGroupUiModel? = null,
     val releaseEvents: List<ReleaseCountry> = listOf(),
     val labels: List<LabelUiModel> = listOf()

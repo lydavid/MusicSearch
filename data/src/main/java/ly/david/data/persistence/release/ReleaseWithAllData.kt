@@ -35,12 +35,14 @@ data class ReleaseWithAllData(
     @Embedded
     val release: ReleaseRoomModel,
 
+    // TODO: no longer using, since we query for these when we visit details
     @Relation(
         parentColumn = "id",
         entityColumn = "release_id",
     )
     val releaseEvents: List<ReleaseCountry>,
 
+    // TODO: we can do the same thing for labels
     @Relation(
         parentColumn = "id", // release.id
         entity = LabelWithCatalog::class,

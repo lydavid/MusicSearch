@@ -1,16 +1,9 @@
 plugins {
-//    id 'java-library'
     id "kotlin"
-//    id "kotlin-kapt"
 }
 
-//java {
-//    sourceCompatibility JavaVersion.VERSION_1_8
-//    targetCompatibility JavaVersion.VERSION_1_8
-//}
-
-// TODO: without access to android, we will need to manually apply a jacoco.gradle file
-//  that configures a unit test report
+// See code coverage for non-android modules by right-clicking `test`
+// and selecting `Run Tests in 'MusicBrainzJetpackCompose.data.test' with Coverage`
 
 dependencies {
     // Moshi
@@ -21,17 +14,13 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
     // Room
-//    implementation "androidx.room:room-runtime:2.4.3"
-//    kapt "androidx.room:room-compiler:2.4.3"
     implementation "androidx.room:room-common:2.5.0-beta01"
-//    implementation "androidx.room:room-paging:2.4.3"
-//    testImplementation "androidx.room:room-testing:2.4.3"
 
     // Paging
     implementation "androidx.paging:paging-common-ktx:3.1.1"
 
+    // Hilt
     implementation "com.google.dagger:dagger:2.44"
-//    implementation "com.google.dagger:hilt-android:2.44"
 
     // Test
     testImplementation 'junit:junit:4.13.2'

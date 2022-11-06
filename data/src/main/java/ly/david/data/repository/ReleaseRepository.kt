@@ -48,7 +48,6 @@ class ReleaseRepository @Inject constructor(
      * Looks up release and stores its data (excludes relationships).
      */
     suspend fun getRelease(releaseId: String): ReleaseUiModel {
-        // TODO: could we use @Relation even if some of these are not FK?
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
         val artistCredits = releaseDao.getReleaseArtistCredits(releaseId)
 

@@ -21,22 +21,16 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.Header
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.TrackUiModel
 import ly.david.data.domain.UiModel
-import ly.david.data.domain.toAreaUiModel
 import ly.david.data.domain.toTrackUiModel
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.AreaWithReleaseDate
-import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.MediumRoomModel
@@ -51,9 +45,7 @@ internal class ReleaseViewModel @Inject constructor(
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
-    private val areaDao: AreaDao,
     override val lookupHistoryDao: LookupHistoryDao,
-    private val releasesCountriesDao: ReleasesCountriesDao,
     private val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val releaseRepository: ReleaseRepository
 ) : ViewModel(), RecordLookupHistory {
@@ -122,45 +114,6 @@ internal class ReleaseViewModel @Inject constructor(
                             null
                         }
                     }.insertHeaderItem(item = Header)
-                }
-            }
-            .distinctUntilChanged()
-            .cachedIn(viewModelScope)
-
-    /**
-     * The paging is just for the potential ~200 [ReleaseCountry].
-     *
-     * All other details are inserted as a [Header].
-     */
-    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    val pagedDetails: Flow<PagingData<UiModel>> =
-        releaseId.filterNot { it.isEmpty() }
-            .flatMapLatest { releaseId ->
-                Pager(
-                    config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = LookupResourceRemoteMediator(
-                        hasResourceBeenStored = {
-                            // Currently uses the same condition, since it uses the same lookup anyways
-                            hasReleaseTracksBeenStored(releaseId)
-                        },
-                        lookupResource = {
-                            // Uses the same lookup call as pagedTracks
-                            releaseRepository.getRelease(releaseId)
-                        },
-                        deleteLocalResource = {
-                            // TODO: invalidate cover art cache and refresh
-                            releaseDao.deleteReleaseById(releaseId)
-                        }
-                    ),
-                    pagingSourceFactory = {
-                        releasesCountriesDao.getAreasWithReleaseDate(releaseId)
-                    }
-                ).flow.map { pagingData ->
-                    pagingData.map { areaWithReleaseDate: AreaWithReleaseDate ->
-                        areaWithReleaseDate.toAreaUiModel()
-                    }.insertSeparators { before: AreaUiModel?, _: AreaUiModel? ->
-                        if (before == null) Header else null
-                    } // .insertHeaderItem(item = Header) // not working
                 }
             }
             .distinctUntilChanged()

@@ -164,11 +164,6 @@ internal fun ReleaseScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
                 .collectAsLazyPagingItems()
 
-        val detailsLazyListState = rememberLazyListState()
-        val detailsLazyPagingItems: LazyPagingItems<UiModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedDetails)
-                .collectAsLazyPagingItems()
-
         val relationsLazyListState = rememberLazyListState()
         var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
         val relationsLazyPagingItems: LazyPagingItems<UiModel> =
@@ -191,9 +186,6 @@ internal fun ReleaseScaffold(
             ReleaseTab.DETAILS -> {
                 ReleaseDetailsScreen(
                     releaseUiModel = release,
-                    lazyPagingItems = detailsLazyPagingItems,
-                    lazyListState = detailsLazyListState,
-                    snackbarHostState = snackbarHostState,
                     onLabelClick = {
                         onItemClick(Destination.LOOKUP_LABEL, id, name)
                     },

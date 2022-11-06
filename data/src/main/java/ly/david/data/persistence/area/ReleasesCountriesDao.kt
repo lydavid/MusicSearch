@@ -99,8 +99,6 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
 
     // region by Release
 
-    // TODO: then refactor releases to not include country_code
-    //  if we do this, will we always join releases with countries to get their flag?
     @Transaction
     @Query(
         """
@@ -112,6 +110,6 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         ORDER BY a.name
     """
     )
-    abstract fun getAreasWithReleaseDate(releaseId: String): PagingSource<Int, AreaWithReleaseDate>
+    abstract suspend fun getAreasWithReleaseDate(releaseId: String): List<AreaWithReleaseDate>
     // endregion
 }
