@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.runtime.Composable
@@ -21,6 +22,8 @@ internal fun ClickableListItem(
             .clickable { onClick() }
             .fillMaxWidth(),
     ) {
-        content()
+        SelectionContainer {
+            content()
+        }
     }
 }

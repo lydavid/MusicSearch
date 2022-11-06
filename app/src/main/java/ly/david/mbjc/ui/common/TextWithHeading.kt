@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,22 +24,24 @@ internal fun TextWithHeading(
     @StringRes headingRes: Int,
     text: String
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = "${stringResource(id = headingRes)}: ",
-            style = TextStyles.getCardBodyTextStyle(),
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            modifier = Modifier.padding(start = 8.dp),
-            text = text,
-            style = TextStyles.getCardBodyTextStyle(),
-        )
+    SelectionContainer {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "${stringResource(id = headingRes)}: ",
+                style = TextStyles.getCardBodyTextStyle(),
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                modifier = Modifier.padding(start = 8.dp),
+                text = text,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+        }
     }
 }
 

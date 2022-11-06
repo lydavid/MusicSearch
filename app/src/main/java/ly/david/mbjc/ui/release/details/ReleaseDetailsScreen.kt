@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.release.details
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -55,50 +54,48 @@ internal fun ReleaseDetailsScreen(
         when (uiModel) {
             is Header -> {
                 releaseUiModel?.run {
-                    SelectionContainer {
-                        Column {
-                            ListSeparatorHeader(text = stringResource(id = R.string.release_information))
-                            barcode?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.barcode, text = it)
-                            }
-                            formats?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.format, text = it)
-                            }
-                            tracks?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.tracks, text = it)
-                            }
-                            releaseLength?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.length, text = it)
-                            }
-
-                            ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
-                            releaseGroup?.let {
-                                TextWithHeading(headingRes = R.string.type, text = it.getDisplayTypes())
-                            }
-                            packaging?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.packaging, text = it)
-                            }
-                            status?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.status, text = it)
-                            }
-                            // TODO: language : need to convert abbr to text
-                            // TODO: script
-                            quality?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.data_quality, text = it)
-                            }
-                            asin?.ifNotNullOrEmpty {
-                                TextWithHeading(headingRes = R.string.asin, text = it)
-                            }
-
-                            labels.ifNotNullOrEmpty {
-                                ListSeparatorHeader(text = stringResource(id = R.string.labels))
-                                it.forEach { label ->
-                                    LabelCard(label = label, onLabelClick = onLabelClick)
-                                }
-                            }
-
-                            ListSeparatorHeader(text = stringResource(id = R.string.release_events))
+                    Column {
+                        ListSeparatorHeader(text = stringResource(id = R.string.release_information))
+                        barcode?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.barcode, text = it)
                         }
+                        formats?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.format, text = it)
+                        }
+                        tracks?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.tracks, text = it)
+                        }
+                        releaseLength?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.length, text = it)
+                        }
+
+                        ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
+                        releaseGroup?.let {
+                            TextWithHeading(headingRes = R.string.type, text = it.getDisplayTypes())
+                        }
+                        packaging?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.packaging, text = it)
+                        }
+                        status?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.status, text = it)
+                        }
+                        // TODO: language : need to convert abbr to text
+                        // TODO: script
+                        quality?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.data_quality, text = it)
+                        }
+                        asin?.ifNotNullOrEmpty {
+                            TextWithHeading(headingRes = R.string.asin, text = it)
+                        }
+
+                        labels.ifNotNullOrEmpty {
+                            ListSeparatorHeader(text = stringResource(id = R.string.labels))
+                            it.forEach { label ->
+                                LabelCard(label = label, onLabelClick = onLabelClick)
+                            }
+                        }
+
+                        ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                     }
                 }
             }

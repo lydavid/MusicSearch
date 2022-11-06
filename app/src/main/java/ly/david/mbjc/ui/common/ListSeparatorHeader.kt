@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.common
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,13 +17,15 @@ import ly.david.mbjc.ui.theme.getSubBackgroundColor
 @Composable
 internal fun ListSeparatorHeader(text: String) {
     Surface(color = getSubBackgroundColor()) {
-        Text(
-            text = text,
-            style = TextStyles.getCardBodyTextStyle(),
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 4.dp)
-                .fillMaxWidth()
-        )
+        SelectionContainer {
+            Text(
+                text = text,
+                style = TextStyles.getCardBodyTextStyle(),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                    .fillMaxWidth()
+            )
+        }
     }
 }
 
