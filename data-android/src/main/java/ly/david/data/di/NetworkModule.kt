@@ -11,6 +11,7 @@ import javax.inject.Singleton
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiServiceImpl
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.CoverArtArchiveApiServiceImpl
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 
@@ -48,17 +49,18 @@ internal object NetworkModule {
             )
             .build()
     }
-
-    @Singleton
-    @Provides
-    fun provideCoverArtArchiveApi(
-        okHttpClient: OkHttpClient
-    ): CoverArtArchiveApiService = CoverArtArchiveApiService.create(okHttpClient)
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
 object MusicBrainzNetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideCoverArtArchiveApi(
+        okHttpClient: OkHttpClient
+    ): CoverArtArchiveApiService = CoverArtArchiveApiServiceImpl.create(okHttpClient)
+
     @Singleton
     @Provides
     fun provideMusicBrainzApi(

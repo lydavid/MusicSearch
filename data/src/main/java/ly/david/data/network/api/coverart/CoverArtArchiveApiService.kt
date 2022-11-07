@@ -9,9 +9,7 @@ import retrofit2.http.Path
 
 private const val COVER_ART_ARCHIVE_BASE_URL = "https://coverartarchive.org/"
 
-
 interface CoverArtArchiveApiService {
-
     @GET("release-group/{id}")
     suspend fun getReleaseGroupCoverArts(@Path("id") releaseGroupId: String): CoverArtsResponse
 
@@ -21,13 +19,10 @@ interface CoverArtArchiveApiService {
      */
     @GET("release/{id}")
     suspend fun getReleaseCoverArts(@Path("id") releaseId: String): CoverArtsResponse
+}
 
+interface CoverArtArchiveApiServiceImpl {
     companion object {
-
-//        private val client = OkHttpClient().newBuilder()
-//            .addInterceptor(NetworkUtils.interceptor)
-//            .build()
-
         fun create(client: OkHttpClient): CoverArtArchiveApiService {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))

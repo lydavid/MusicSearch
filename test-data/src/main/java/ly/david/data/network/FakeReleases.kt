@@ -10,14 +10,16 @@ val fakeRelease = ReleaseMusicBrainzModel(
             area = fakeCountry,
             date = "2022-10-29"
         )
-    )
+    ),
+    media = listOf(fakeMedia)
 )
 
 val fakeReleaseWithCoverArt = ReleaseMusicBrainzModel(
     id = "fakeRelease2",
-    name = "Release Name",
+    name = "Release With Cover Art",
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
     releaseGroup = fakeReleaseGroup,
+    media = listOf(fakeMedia),
     coverArtArchive = CoverArtArchive(
         count = 1
     )
@@ -37,4 +39,10 @@ val fakeReleaseWithRelation = ReleaseMusicBrainzModel(
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
     releaseGroup = fakeReleaseGroup,
     relations = listOf(remasterOf)
+)
+
+val fakeReleases = listOf(
+    fakeRelease,
+    fakeReleaseWithRelation,
+    fakeReleaseWithCoverArt
 )

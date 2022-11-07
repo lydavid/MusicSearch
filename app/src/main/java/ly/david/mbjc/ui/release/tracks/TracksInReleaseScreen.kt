@@ -14,10 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
@@ -51,7 +54,8 @@ internal fun TracksInReleaseScreen(
             .size(Size.ORIGINAL)
             .scale(Scale.FIT)
             .crossfade(true)
-            .build()
+            .build(),
+        imageLoader = LocalContext.current.imageLoader
     )
 
     val configuration = LocalConfiguration.current
@@ -80,7 +84,7 @@ internal fun TracksInReleaseScreen(
                         }
                         is AsyncImagePainter.State.Success -> {
                             Image(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth().semantics { testTag = "coverArtImage" },
                                 painter = painter,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth,

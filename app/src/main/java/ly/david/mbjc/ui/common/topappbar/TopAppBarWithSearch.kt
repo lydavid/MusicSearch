@@ -144,8 +144,8 @@ internal fun TopAppBarWithSearch(
                         isSearchAndFilterMode = true
                     }) {
                         Icon(
-                            Icons.Default.Search,
-                            stringResource(id = R.string.filter)
+                            imageVector = Icons.Default.Search,
+                            contentDescription = stringResource(id = R.string.filter)
                         )
                     }
                 }

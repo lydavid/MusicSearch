@@ -42,13 +42,6 @@ val placeMusicBrainzModel = PlaceMusicBrainzModel(
     name = "Place Name",
 )
 
-val recordingMusicBrainzModel = RecordingMusicBrainzModel(
-    id = "1",
-    name = "Recording Name",
-)
-
-
-
 
 val seriesMusicBrainzModel = SeriesMusicBrainzModel(
     id = "1",
@@ -69,7 +62,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.INSTRUMENT -> instrumentMusicBrainzModel
         MusicBrainzResource.LABEL -> labelMusicBrainzModel
         MusicBrainzResource.PLACE -> placeMusicBrainzModel
-        MusicBrainzResource.RECORDING -> recordingMusicBrainzModel
+        MusicBrainzResource.RECORDING -> fakeRecording
         MusicBrainzResource.RELEASE -> fakeRelease
         MusicBrainzResource.RELEASE_GROUP -> fakeReleaseGroup
         MusicBrainzResource.SERIES -> seriesMusicBrainzModel
@@ -94,7 +87,7 @@ val browseReleasesResponse = BrowseReleasesResponse(
 val browseRecordingsResponse = BrowseRecordingsResponse(
     count = 1,
     offset = 0,
-    recordings = listOf(recordingMusicBrainzModel)
+    recordings = listOf(fakeRecording)
 )
 // endregion
 
@@ -138,7 +131,7 @@ val searchPlacesResponse = SearchPlacesResponse(
 val searchRecordingsResponse = SearchRecordingsResponse(
     count = 1,
     offset = 0,
-    listOf(element = recordingMusicBrainzModel)
+    listOf(element = fakeRecording)
 )
 
 val searchReleasesResponse = SearchReleasesResponse(

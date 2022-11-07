@@ -62,15 +62,14 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     fun firstTimeVisit() {
         setArea(fakeArea)
         composeTestRule
-            .onNodeWithText(fakeArea.name)
-            .assertIsDisplayed()
-
-        composeTestRule
             .onNodeWithText(stats)
             .performClick()
+
+        composeTestRule
+            .onNodeWithText(fakeArea.name)
+            .assertIsDisplayed()
     }
 
-    // TODO: sometimes fails, is our database not cleared between tests?
     @Test
     fun repeatVisit() {
         setArea(fakeArea)
@@ -80,12 +79,12 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
         }
 
         composeTestRule
-            .onNodeWithText(fakeArea.name)
-            .assertIsDisplayed()
-
-        composeTestRule
             .onNodeWithText(stats)
             .performClick()
+
+        composeTestRule
+            .onNodeWithText(fakeArea.name)
+            .assertIsDisplayed()
     }
 
     @Test
