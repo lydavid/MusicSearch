@@ -22,7 +22,7 @@ import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleases
 import ly.david.data.network.instrumentMusicBrainzModel
-import ly.david.data.network.labelMusicBrainzModel
+import ly.david.data.network.fakeLabel
 import ly.david.data.network.placeMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
@@ -143,7 +143,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
-        return labelMusicBrainzModel
+        return fakeLabel
     }
 
     override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {

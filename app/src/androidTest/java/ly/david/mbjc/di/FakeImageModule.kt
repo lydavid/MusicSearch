@@ -1,5 +1,6 @@
 package ly.david.mbjc.di
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -16,6 +17,7 @@ import coil.request.ImageResult
 import coil.request.SuccessResult
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
@@ -30,7 +32,9 @@ internal object FakeImageModule {
 
     @Provides
     @Singleton
-    fun providesImageLoaderFactory(): ImageLoaderFactory = ImageLoaderFactory {
+    fun providesImageLoaderFactory(
+        @ApplicationContext context: Context,
+    ) = ImageLoaderFactory {
         FakeImageLoader()
     }
 

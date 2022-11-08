@@ -21,17 +21,16 @@ internal object ImageModule {
     @Singleton
     fun providesImageLoaderFactory(
         @ApplicationContext context: Context,
-    ): ImageLoaderFactory =
-        ImageLoaderFactory {
-            ImageLoader.Builder(context)
-                .okHttpClient {
-                    OkHttpClient.Builder()
-                        // Make sure we don't use okhttp cache.
-                        .addInterceptor(RequestHeaderInterceptor("Cache-Control", "no-cache"))
-                        .build()
-                }
-                .build()
-        }
+    ) = ImageLoaderFactory {
+        ImageLoader.Builder(context)
+            .okHttpClient {
+                OkHttpClient.Builder()
+                    // Make sure we don't use okhttp cache.
+                    .addInterceptor(RequestHeaderInterceptor("Cache-Control", "no-cache"))
+                    .build()
+            }
+            .build()
+    }
 
     private class RequestHeaderInterceptor(
         private val name: String,

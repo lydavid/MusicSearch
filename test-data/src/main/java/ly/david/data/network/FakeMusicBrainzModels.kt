@@ -17,19 +17,9 @@ import ly.david.data.network.api.SearchSeriesResponse
 import ly.david.data.network.api.SearchWorksResponse
 import ly.david.data.persistence.history.LookupHistory
 
-// region Lookup
-
-
-
-
 val eventMusicBrainzModel = EventMusicBrainzModel(
     id = "1",
     name = "Event Name"
-)
-
-val labelMusicBrainzModel = LabelMusicBrainzModel(
-    id = "1",
-    name = "Label Name"
 )
 
 val instrumentMusicBrainzModel = InstrumentMusicBrainzModel(
@@ -60,7 +50,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.EVENT -> eventMusicBrainzModel
         MusicBrainzResource.GENRE -> TODO()
         MusicBrainzResource.INSTRUMENT -> instrumentMusicBrainzModel
-        MusicBrainzResource.LABEL -> labelMusicBrainzModel
+        MusicBrainzResource.LABEL -> fakeLabel
         MusicBrainzResource.PLACE -> placeMusicBrainzModel
         MusicBrainzResource.RECORDING -> fakeRecording
         MusicBrainzResource.RELEASE -> fakeRelease
@@ -69,9 +59,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.WORK -> workMusicBrainzModel
         MusicBrainzResource.URL -> TODO()
     }
-// endregion
 
-// region Browse
 val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     count = 1,
     offset = 0,
@@ -89,9 +77,10 @@ val browseRecordingsResponse = BrowseRecordingsResponse(
     offset = 0,
     recordings = listOf(fakeRecording)
 )
-// endregion
 
-// region Search
+
+
+
 val searchAreasResponse = SearchAreasResponse(
     count = 1,
     offset = 0,
@@ -119,7 +108,7 @@ val searchInstrumentsResponse = SearchInstrumentsResponse(
 val searchLabelsResponse = SearchLabelsResponse(
     count = 1,
     offset = 0,
-    listOf(element = labelMusicBrainzModel)
+    listOf(element = fakeLabel)
 )
 
 val searchPlacesResponse = SearchPlacesResponse(
@@ -157,7 +146,8 @@ val searchWorksResponse = SearchWorksResponse(
     offset = 0,
     listOf(element = workMusicBrainzModel)
 )
-// endregion
+
+
 
 
 val lookupHistory = LookupHistory(

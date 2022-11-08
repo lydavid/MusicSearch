@@ -17,7 +17,7 @@ val fakeTrack = TrackMusicBrainzModel(
 )
 
 val fakeMedia = MediumMusicBrainzModel(
-    position = 0,
+    position = 1,
     title = null,
     trackCount = 1,
     format = "CD",

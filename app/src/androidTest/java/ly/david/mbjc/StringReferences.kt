@@ -41,4 +41,6 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.ok)
     val back
         get() = composeTestRule.activity.resources.getString(R.string.back)
+    val details
+        get() = composeTestRule.activity.resources.getString(R.string.details)
 }

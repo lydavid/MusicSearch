@@ -84,7 +84,9 @@ internal fun TracksInReleaseScreen(
                         }
                         is AsyncImagePainter.State.Success -> {
                             Image(
-                                modifier = Modifier.fillMaxWidth().semantics { testTag = "coverArtImage" },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .semantics { testTag = "coverArtImage" },
                                 painter = painter,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth,

@@ -1,11 +1,11 @@
-package ly.david.data
+package ly.david.data.persistence
 
 import androidx.paging.PagingSource
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import ly.david.data.persistence.MusicBrainzDatabase
+import ly.david.data.HiltTest
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistRoomModel
 import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel

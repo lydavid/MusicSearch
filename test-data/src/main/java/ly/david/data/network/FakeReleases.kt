@@ -11,7 +11,16 @@ val fakeRelease = ReleaseMusicBrainzModel(
             date = "2022-10-29"
         )
     ),
-    media = listOf(fakeMedia)
+    media = listOf(fakeMedia),
+    labelInfoList = listOf(
+        LabelInfo(
+            catalogNumber = "CAT 1",
+            label = fakeLabel
+        ),
+        LabelInfo(
+            label = fakeLabel2
+        )
+    )
 )
 
 val fakeReleaseWithCoverArt = ReleaseMusicBrainzModel(
