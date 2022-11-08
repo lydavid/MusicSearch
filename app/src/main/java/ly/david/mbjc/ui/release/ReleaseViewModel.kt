@@ -136,6 +136,11 @@ internal class ReleaseViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Returns a url to the cover art. Empty if none found.
+     *
+     * Also set it in the release.
+     */
     suspend fun getCoverArtUrlFromNetwork(): String {
         val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl().orEmpty()
         releaseDao.setReleaseCoverArtUrl(releaseId.value, url)

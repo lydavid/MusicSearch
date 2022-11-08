@@ -62,11 +62,6 @@ adb shell am start -d "mbjc://release/e56065c8-709e-4df8-952b-57031c352a03" -a a
 adb shell am start -d "mbjc://release/777279a4-efe9-4ab6-99ce-b2263913c93d" -a android.intent.action.VIEW
 ```
 
-- Failing to display artist/release group
-```sh
-adb shell am start -d "mbjc://release/af7b06b1-1b13-4c0f-88c5-5c5dac79b096" -a android.intent.action.VIEW
-```
-
 
 ## Release Group
 

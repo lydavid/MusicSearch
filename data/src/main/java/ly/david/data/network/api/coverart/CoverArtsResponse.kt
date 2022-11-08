@@ -48,6 +48,10 @@ data class ThumbnailsUrls(
  * Returns an appropriate small [ThumbnailsUrls.resolution250Url].
  */
 fun CoverArtsResponse.getSmallCoverArtUrl(): String? {
-    val frontSmallUrl = coverArtUrls.first { it.front }.thumbnailsUrls?.resolution250Url
+    val frontSmallUrl = coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution250Url
+
+    // TODO: MB doesn't fall back to any non-front covers
+    //  these are images of other things like the CD itself or the back
+    //  Until we support browsing all cover art images, this is fine
     return frontSmallUrl ?: coverArtUrls.first().thumbnailsUrls?.resolution250Url
 }
