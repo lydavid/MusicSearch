@@ -39,7 +39,6 @@ internal fun ReleaseCard(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-
             ConstraintLayout(
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -54,7 +53,6 @@ internal fun ReleaseCard(
                             top.linkTo(parent.top)
                             start.linkTo(parent.start)
                             end.linkTo(countryDate.start)
-
                         }
                 )
 

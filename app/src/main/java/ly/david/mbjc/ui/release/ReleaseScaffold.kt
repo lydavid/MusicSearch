@@ -45,9 +45,6 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
     TRACKS(R.string.tracks),
     DETAILS(R.string.details),
     RELATIONSHIPS(R.string.relationships),
-
-    // TODO: release events
-
     STATS(R.string.stats)
 }
 

@@ -32,7 +32,6 @@ internal fun ArtistCard(
     ClickableListItem(
         onClick = { onArtistClick(artist) },
     ) {
-
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()

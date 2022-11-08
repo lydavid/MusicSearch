@@ -1,29 +1,28 @@
 package ly.david.mbjc.ui.area
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.showReleases
 import ly.david.data.getLifeSpanForDisplay
-import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.mbjc.ui.theme.getSubTextColor
 
 /**
  * Also used for release event cards since their Destination is also an Area.
@@ -37,29 +36,45 @@ internal fun AreaCard(
     ClickableListItem(
         onClick = { onAreaClick(area) },
     ) {
-        // TODO: constraint layout
-        Row(
+        ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .padding(vertical = 16.dp)
         ) {
-            Column {
-                val type = area.type
+            val (mainSection, endSection) = createRefs()
 
+            Column(
+                modifier = Modifier
+                    .constrainAs(mainSection) {
+                        width = Dimension.fillToConstraints
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(endSection.start)
+                    }
+            ) {
                 // Misnomer here, but it's the same condition to show this tab and to show flags
                 val areaName = if (area.showReleases()) {
                     val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
-                    flags.transformThisIfNotNullOrEmpty { "$it " } + area.getNameWithDisambiguation()
+                    flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
                 } else {
-                    area.getNameWithDisambiguation()
+                    area.name
                 }
-
                 Text(
                     text = areaName,
-                    style = TextStyles.getCardTitleTextStyle()
+                    style = TextStyles.getCardTitleTextStyle(),
                 )
 
+                val disambiguation = area.disambiguation
+                if (!disambiguation.isNullOrEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = "($disambiguation)",
+                        color = getSubTextColor(),
+                        style = TextStyles.getCardBodyTextStyle()
+                    )
+                }
+
+                val type = area.type
                 if (showType && !type.isNullOrEmpty()) {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
@@ -80,15 +95,19 @@ internal fun AreaCard(
 
             val date = area.date
             if (!date.isNullOrEmpty()) {
-                Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    modifier = Modifier.padding(start = 4.dp),
                     text = date,
                     style = TextStyles.getCardBodyTextStyle(),
+                    modifier = Modifier
+                        .constrainAs(endSection) {
+                            width = Dimension.wrapContent
+                            top.linkTo(parent.top)
+                            start.linkTo(mainSection.end, margin = 4.dp)
+                            end.linkTo(parent.end)
+                        }
                 )
             }
         }
-
     }
 }
 
@@ -107,7 +126,7 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaU
         ),
         AreaUiModel(
             id = "3",
-            name = "Area Name",
+            name = "Area Name with a very long name",
             disambiguation = "That one",
             type = "Country",
             iso_3166_1_codes = listOf("GB")
@@ -137,7 +156,8 @@ private fun ReleaseEventPreview() {
             AreaCard(
                 area = AreaUiModel(
                     id = "4",
-                    name = "Area Name",
+                    name = "Area Name with a very long name",
+                    disambiguation = "That one",
                     iso_3166_1_codes = listOf("KR"),
                     date = "2022-10-29",
                     type = "Country",
