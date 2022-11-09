@@ -24,7 +24,7 @@ class LabelRepository @Inject constructor(
     private val releasesLabelsDao: ReleasesLabelsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-) {
+): ReleasesListRepository {
     suspend fun lookupLabel(labelId: String): LabelUiModel {
         val roomLabel = labelDao.getLabel(labelId)
         if (roomLabel != null) {
@@ -38,30 +38,30 @@ class LabelRepository @Inject constructor(
         return musicBrainzLabel.toLabelUiModel()
     }
 
-    suspend fun browseReleasesAndStore(labelId: String, nextOffset: Int): Int {
+    override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleasesByLabel(
-            labelId = labelId,
+            labelId = resourceId,
             offset = nextOffset
         )
 
         if (response.offset == 0) {
             relationDao.insertBrowseResource(
                 browseResourceRoomModel = BrowseResourceOffset(
-                    resourceId = labelId,
+                    resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE,
                     localCount = response.releases.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementOffsetForResource(labelId, MusicBrainzResource.RELEASE, response.releases.size)
+            relationDao.incrementOffsetForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
         releasesLabelsDao.insertAll(
             releaseMusicBrainzModels.flatMap { release ->
-                release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = labelId).orEmpty()
+                release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = resourceId).orEmpty()
             }
         )
 
@@ -69,24 +69,24 @@ class LabelRepository @Inject constructor(
     }
 
     // Only difference between this and the stats one is this can return null
-    suspend fun getRemoteReleasesByLabelCount(labelId: String) =
-        relationDao.getBrowseResourceOffset(labelId, MusicBrainzResource.RELEASE)?.remoteCount
+    override suspend fun getRemoteReleasesCountByResource(resourceId: String) =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
 
-    suspend fun getLocalReleasesByLabelCount(labelId: String) =
-        relationDao.getBrowseResourceOffset(labelId, MusicBrainzResource.RELEASE)?.localCount ?: 0
+    override suspend fun getLocalReleasesCountByResource(resourceId: String) =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
-    suspend fun deleteReleasesByLabel(labelId: String) {
-        releasesLabelsDao.deleteReleasesByLabel(labelId)
-        relationDao.deleteBrowseResourceOffsetByResource(labelId, MusicBrainzResource.RELEASE)
+    override suspend fun deleteReleasesByResource(resourceId: String) {
+        releasesLabelsDao.deleteReleasesByLabel(resourceId)
+        relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
-    fun getReleasesPagingSource(labelId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    override fun getReleasesPagingSource(resourceId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
-            releasesLabelsDao.getReleasesByLabel(labelId)
+            releasesLabelsDao.getReleasesByLabel(resourceId)
         }
         else -> {
             releasesLabelsDao.getReleasesByLabelFiltered(
-                labelId = labelId,
+                labelId = resourceId,
                 query = "%$query%"
             )
         }

@@ -70,7 +70,7 @@ internal fun LabelScaffold(
         .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = labelId) {
-        viewModel.labelId.value = labelId
+        viewModel.loadReleases(labelId)
         val label = viewModel.lookupLabel(labelId)
         title = label.getNameWithDisambiguation()
 

@@ -147,84 +147,47 @@ internal fun NavigationGraph(
         }
 
         addResourceScreen(
+            resource = MusicBrainzResource.RECORDING,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            RecordingScaffold(
+                recordingId = resourceId,
+                onBack = navController::navigateUp,
+                titleWithDisambiguation = title,
+                onItemClick = onLookupItemClick,
+            )
+        }
+
+        addResourceScreen(
+            resource = MusicBrainzResource.RELEASE,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            ReleaseScaffold(
+                releaseId = resourceId,
+                onBack = navController::navigateUp,
+                titleWithDisambiguation = title,
+                onItemClick = onLookupItemClick,
+            )
+        }
+        addResourceScreen(
+            resource = MusicBrainzResource.RELEASE_GROUP,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            ReleaseGroupScaffold(
+                releaseGroupId = resourceId,
+                onBack = navController::navigateUp,
+                titleWithDisambiguation = title,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        addResourceScreen(
             resource = MusicBrainzResource.EVENT,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
             EventScaffold(
                 eventId = resourceId,
                 titleWithDisambiguation = title,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
-            )
-        }
-
-        composable(
-            route = "${Destination.LOOKUP_RELEASE_GROUP.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            // Example: adb shell am start -d "mbjc://release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756" -a android.intent.action.VIEW
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE_GROUP.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val releaseGroupId = entry.arguments?.getString(ID) ?: return@composable
-            ReleaseGroupScaffold(
-                releaseGroupId = releaseGroupId,
-                onItemClick = onLookupItemClick,
-                onBack = navController::navigateUp
-            )
-        }
-
-        composable(
-            "${Destination.LOOKUP_RELEASE.route}/{$ID}?$TITLE={$TITLE}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                },
-                navArgument(TITLE) {
-                    nullable = true
-                    defaultValue = null
-                    type = NavType.StringType
-                },
-            ),
-            // Example: adb shell am start -d "mbjc://release/165f6643-2edb-4795-9abe-26bd0533e59d" -a android.intent.action.VIEW
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RELEASE.resourceName}/{$ID}?$TITLE={$TITLE}"
-                }
-            )
-        ) { entry: NavBackStackEntry ->
-            val releaseId = entry.arguments?.getString(ID) ?: return@composable
-            val title = entry.arguments?.getString(TITLE)
-            ReleaseScaffold(
-                releaseId = releaseId,
-                onBack = navController::navigateUp,
-                titleWithDisambiguation = title,
-                onItemClick = onLookupItemClick,
-            )
-        }
-
-        composable(
-            "${Destination.LOOKUP_RECORDING.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.RECORDING.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val recordingId = entry.arguments?.getString(ID) ?: return@composable
-            RecordingScaffold(
-                recordingId = recordingId,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )

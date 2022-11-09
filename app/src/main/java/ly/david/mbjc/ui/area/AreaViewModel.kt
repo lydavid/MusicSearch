@@ -77,6 +77,9 @@ internal class AreaViewModel @Inject constructor(
         )
     }
 
+    // TODO: this part is the same as ReleaseGroupViewModel
+    //  but this VM uses RelationViewModel as well
+    // if we want to generalize, then we might need interfaces
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
         paramState.filterNot { it.areaId.isEmpty() }

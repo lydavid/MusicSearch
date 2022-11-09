@@ -51,7 +51,7 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
 /**
  * Equivalent of a screen like: https://musicbrainz.org/release/f171e0ae-bea8-41e6-bb41-4c7af7977f50
  *
- * Displays the tracks/recordings for this release.
+ * Starts on a screen that displays all of its media/tracks.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,7 +79,6 @@ internal fun ReleaseScaffold(
     }
 
     LaunchedEffect(key1 = releaseId) {
-
         try {
             val releaseUiModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
             val coverArtUrl = releaseUiModel.coverArtUrl

@@ -53,12 +53,12 @@ interface BrowseApi {
         @Query("offset") offset: Int = 0
     ): BrowseReleasesResponse
 
-    @GET("recording")
-    suspend fun browseRecordingsByRelease(
-        @Query("release") releaseId: String,
+    @GET("release")
+    suspend fun browseReleasesByRecording(
+        @Query("recording") recordingId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
-    ): BrowseRecordingsResponse
+    ): BrowseReleasesResponse
 }
 
 /**

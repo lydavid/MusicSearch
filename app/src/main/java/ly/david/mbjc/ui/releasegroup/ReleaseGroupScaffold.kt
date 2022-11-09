@@ -24,6 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
@@ -47,13 +48,16 @@ private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
 
 /**
  * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
+ *
+ * Starts on a screen that displays all of its releases.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
+    onBack: () -> Unit = {},
+    titleWithDisambiguation: String? = null,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onBack: () -> Unit,
     viewModel: ReleaseGroupViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE_GROUP
@@ -65,13 +69,19 @@ internal fun ReleaseGroupScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var releaseGroup: ly.david.data.domain.ReleaseGroupUiModel? by remember { mutableStateOf(null) }
+    var releaseGroup: ReleaseGroupUiModel? by remember { mutableStateOf(null) }
+
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        title = titleWithDisambiguation
+    }
 
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.updateReleaseGroupId(releaseGroupId)
         try {
             val releaseGroupUiModel = viewModel.lookupReleaseGroup(releaseGroupId)
-            title = releaseGroupUiModel.getNameWithDisambiguation()
+            if (titleWithDisambiguation.isNullOrEmpty()) {
+                title = releaseGroupUiModel.getNameWithDisambiguation()
+            }
             subtitle = "Release Group by ${releaseGroupUiModel.artistCredits.getDisplayNames()}"
             releaseGroup = releaseGroupUiModel
         } catch (ex: Exception) {

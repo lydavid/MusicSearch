@@ -10,19 +10,18 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
 import ly.david.data.network.eventMusicBrainzModel
 import ly.david.data.network.fakeArea
 import ly.david.data.network.fakeAreas
 import ly.david.data.network.fakeArtist
+import ly.david.data.network.fakeLabel
 import ly.david.data.network.fakeRecording
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleases
 import ly.david.data.network.instrumentMusicBrainzModel
-import ly.david.data.network.fakeLabel
 import ly.david.data.network.placeMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
@@ -118,12 +117,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browseReleasesResponse
     }
 
-    override suspend fun browseRecordingsByRelease(
-        releaseId: String,
+    override suspend fun browseReleasesByRecording(
+        recordingId: String,
         limit: Int,
         offset: Int
-    ): BrowseRecordingsResponse {
-        return browseRecordingsResponse
+    ): BrowseReleasesResponse {
+        return browseReleasesResponse
     }
 
     override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {

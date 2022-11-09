@@ -23,17 +23,10 @@ import ly.david.data.network.fakeReleaseWithRelation
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
-/**
- * This class should test anything in [AreaScaffold] that we would otherwise have to QA manually.
- *
- * However, try to refrain from testing the details of constituent composables such as its cards.
- * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
- */
 @HiltAndroidTest
 internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
 
