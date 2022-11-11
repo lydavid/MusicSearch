@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.recording
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -20,6 +21,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
+import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
@@ -49,9 +51,10 @@ internal fun RecordingScaffold(
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
-
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.RELEASES) }
     var searchText by rememberSaveable { mutableStateOf("") }
+    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation
@@ -59,9 +62,23 @@ internal fun RecordingScaffold(
 
     LaunchedEffect(key1 = recordingId) {
         try {
+            val recording = viewModel.lookupRecording(recordingId)
+            if (titleWithDisambiguation.isNullOrEmpty()) {
+                titleState = recording.getNameWithDisambiguation()
+            }
+
             viewModel.loadReleases(resourceId = recordingId)
+
+            if (!recordedLookup) {
+                viewModel.recordLookupHistory(
+                    resourceId = recordingId,
+                    resource = resource,
+                    summary = titleState
+                )
+                recordedLookup = true
+            }
         } catch (ex: Exception) {
-            TODO()
+            Log.d("Remove This", "RecordingScaffold: $ex")
         }
     }
 

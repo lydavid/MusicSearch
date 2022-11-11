@@ -35,6 +35,9 @@ internal object DatabaseDaoModule {
     fun provideRecordingDao(db: MusicBrainzDatabase) = db.getRecordingDao()
 
     @Provides
+    fun provideReleasesRecordingsDao(db: MusicBrainzDatabase) = db.getReleasesRecordingsDao()
+
+    @Provides
     fun provideWorkDao(db: MusicBrainzDatabase) = db.getWorkDao()
 
     @Provides

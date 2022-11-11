@@ -11,6 +11,7 @@ import ly.david.data.persistence.label.LabelDao
 import ly.david.data.persistence.label.ReleasesLabelsDao
 import ly.david.data.persistence.place.PlaceDao
 import ly.david.data.persistence.recording.RecordingDao
+import ly.david.data.persistence.recording.ReleasesRecordingsDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -31,6 +32,7 @@ interface MusicBrainzDatabase {
     fun getTrackDao(): TrackDao
 
     fun getRecordingDao(): RecordingDao
+    fun getReleasesRecordingsDao(): ReleasesRecordingsDao
 
     fun getWorkDao(): WorkDao
 

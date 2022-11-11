@@ -59,7 +59,7 @@ internal class ReleasesList @Inject constructor() : IReleasesList {
     lateinit var repository: ReleasesListRepository
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    private val _pagedReleases: Flow<PagingData<ReleaseUiModel>> by lazy {
+    override val pagedReleases: Flow<PagingData<ReleaseUiModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
@@ -82,7 +82,4 @@ internal class ReleasesList @Inject constructor() : IReleasesList {
             .distinctUntilChanged()
             .cachedIn(scope)
     }
-
-    override val pagedReleases: Flow<PagingData<ReleaseUiModel>>
-        get() = _pagedReleases
 }

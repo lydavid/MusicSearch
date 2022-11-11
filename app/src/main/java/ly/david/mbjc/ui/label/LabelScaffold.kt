@@ -46,6 +46,7 @@ private enum class LabelTab(@StringRes val titleRes: Int) {
 internal fun LabelScaffold(
     labelId: String,
     onBack: () -> Unit,
+    titleWithDisambiguation: String? = null,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: LabelViewModel = hiltViewModel()
 ) {
@@ -54,7 +55,7 @@ internal fun LabelScaffold(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var title by rememberSaveable { mutableStateOf("") }
+    var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
@@ -69,16 +70,23 @@ internal fun LabelScaffold(
     val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
         .collectAsLazyPagingItems()
 
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        titleState = titleWithDisambiguation
+    }
+
     LaunchedEffect(key1 = labelId) {
-        viewModel.loadReleases(labelId)
         val label = viewModel.lookupLabel(labelId)
-        title = label.getNameWithDisambiguation()
+        if (titleWithDisambiguation.isNullOrEmpty()) {
+            titleState = label.getNameWithDisambiguation()
+        }
+
+        viewModel.loadReleases(labelId)
 
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
                 resourceId = labelId,
                 resource = resource,
-                summary = title
+                summary = titleState
             )
             recordedLookup = true
         }
@@ -88,7 +96,7 @@ internal fun LabelScaffold(
         topBar = {
             TopAppBarWithSearch(
                 resource = resource,
-                title = title,
+                title = titleState,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.LABEL, resourceId = labelId)

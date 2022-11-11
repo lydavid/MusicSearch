@@ -24,18 +24,19 @@ class LabelRepository @Inject constructor(
     private val releasesLabelsDao: ReleasesLabelsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-): ReleasesListRepository {
+) : ReleasesListRepository {
+
     suspend fun lookupLabel(labelId: String): LabelUiModel {
-        val roomLabel = labelDao.getLabel(labelId)
-        if (roomLabel != null) {
-            return roomLabel.toLabelUiModel()
+        val labelRoomModel = labelDao.getLabel(labelId)
+        if (labelRoomModel != null) {
+            return labelRoomModel.toLabelUiModel()
         }
 
-        val musicBrainzLabel = musicBrainzApiService.lookupLabel(labelId)
+        val labelMusicBrainzModel = musicBrainzApiService.lookupLabel(labelId)
 
-        labelDao.insert(musicBrainzLabel.toLabelRoomModel())
+        labelDao.insert(labelMusicBrainzModel.toLabelRoomModel())
 
-        return musicBrainzLabel.toLabelUiModel()
+        return labelMusicBrainzModel.toLabelUiModel()
     }
 
     override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {
@@ -80,7 +81,10 @@ class LabelRepository @Inject constructor(
         relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
-    override fun getReleasesPagingSource(resourceId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    override fun getReleasesPagingSource(
+        resourceId: String,
+        query: String
+    ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
             releasesLabelsDao.getReleasesByLabel(resourceId)
         }

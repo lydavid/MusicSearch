@@ -147,6 +147,18 @@ internal fun NavigationGraph(
         }
 
         addResourceScreen(
+            resource = MusicBrainzResource.LABEL,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            LabelScaffold(
+                labelId = resourceId,
+                onBack = navController::navigateUp,
+                titleWithDisambiguation = title,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        addResourceScreen(
             resource = MusicBrainzResource.RECORDING,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -251,27 +263,6 @@ internal fun NavigationGraph(
             val instrumentId = entry.arguments?.getString(ID) ?: return@composable
             InstrumentScaffold(
                 instrumentId = instrumentId,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
-            )
-        }
-
-        composable(
-            "${Destination.LOOKUP_LABEL.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.LABEL.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val labelId = entry.arguments?.getString(ID) ?: return@composable
-            LabelScaffold(
-                labelId = labelId,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )
