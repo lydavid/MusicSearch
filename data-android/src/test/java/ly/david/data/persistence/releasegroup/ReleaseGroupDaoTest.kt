@@ -1,4 +1,4 @@
-package ly.david.data.persistence
+package ly.david.data.persistence.releasegroup
 
 import androidx.paging.PagingSource
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -6,18 +6,19 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
+import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistRoomModel
 import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
 import ly.david.data.persistence.artist.ReleaseGroupArtistDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+// TODO: splitting data by data and data-android means we are testing this
+//  in data-android, despite this dao being from data
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseGroupDaoTest : HiltTest() {

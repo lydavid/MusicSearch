@@ -20,9 +20,9 @@ internal fun LabelRelationsScreen(
     labelId: String,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,
-    viewModel: LabelRelationsViewModel = hiltViewModel(),
     onPagedRelationsChange: (Flow<PagingData<UiModel>>) -> Unit,
-    lazyPagingItems: LazyPagingItems<UiModel>
+    lazyPagingItems: LazyPagingItems<UiModel>,
+    viewModel: LabelRelationsViewModel = hiltViewModel()
 ) {
 
     LaunchedEffect(key1 = labelId) {

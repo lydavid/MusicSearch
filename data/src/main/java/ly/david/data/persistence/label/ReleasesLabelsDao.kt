@@ -59,12 +59,13 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel> {
     @Query(
         """
         SELECT IFNULL(
-            (SELECT COUNT(*)
-            FROM releases r
-            INNER JOIN releases_labels rl ON r.id = rl.release_id
-            INNER JOIN labels l ON l.id = rl.label_id
-            WHERE l.id = :labelId
-            GROUP BY l.id),
+            (SELECT COUNT(*) FROM
+                (SELECT DISTINCT rl.release_id, rl.label_id
+                FROM releases r
+                INNER JOIN releases_labels rl ON r.id = rl.release_id
+                INNER JOIN labels l ON l.id = rl.label_id
+                WHERE l.id = :labelId)
+            ),
             0
         ) AS count
     """

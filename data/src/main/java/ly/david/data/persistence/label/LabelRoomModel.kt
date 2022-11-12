@@ -17,13 +17,13 @@ data class LabelRoomModel(
     override val name: String,
 
     @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String?,
+    override val disambiguation: String? = null,
 
     @ColumnInfo(name = "type")
-    override val type: String?,
+    override val type: String? = null,
 
     @ColumnInfo(name = "label_code")
-    override val labelCode: Int?,
+    override val labelCode: Int? = null,
 ) : RoomModel, Label
 
 internal fun LabelMusicBrainzModel.toLabelRoomModel() =

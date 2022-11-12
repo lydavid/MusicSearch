@@ -22,45 +22,45 @@ data class ReleaseRoomModel(
     @ColumnInfo(name = "name")
     override val name: String,
     @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String,
+    override val disambiguation: String = "",
 
     // Date could be 2022-10-10 or 2022 (or possibly 2022-10)
     @ColumnInfo(name = "date")
-    override val date: String?,
+    override val date: String? = null,
 
     @ColumnInfo(name = "barcode")
-    override val barcode: String?,
+    override val barcode: String? = null,
     @ColumnInfo(name = "asin")
-    override val asin: String?,
+    override val asin: String? = null,
     @ColumnInfo(name = "quality")
-    override val quality: String?,
+    override val quality: String? = null,
 
     @ColumnInfo(name = "country_code")
-    override val countryCode: String?,
+    override val countryCode: String? = null,
 
     // TODO: separate table
     @ColumnInfo(name = "status")
-    override val status: String?,
+    override val status: String? = null,
     @ColumnInfo(name = "status_id")
-    override val statusId: String?,
+    override val statusId: String? = null,
 
     // TODO: separate table
     @ColumnInfo(name = "packaging")
-    override val packaging: String?,
+    override val packaging: String? = null,
     @ColumnInfo(name = "packaging_id")
-    override val packagingId: String?,
+    override val packagingId: String? = null,
 
     @Embedded
-    override val coverArtArchive: CoverArtArchive,
+    override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
 
     @Embedded
-    override val textRepresentation: TextRepresentation?,
+    override val textRepresentation: TextRepresentation? = null,
 
     @ColumnInfo(name = "formats")
-    val formats: String?,
+    val formats: String? = null,
 
     @ColumnInfo(name = "tracks")
-    val tracks: String?,
+    val tracks: String? = null,
 
     /**
      * May be one of:
