@@ -17,8 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
@@ -30,6 +33,8 @@ import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.recording.relations.RecordingRelationsScreen
+import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
 private enum class RecordingTab(@StringRes val titleRes: Int) {
     RELEASES(R.string.releases),
@@ -111,9 +116,10 @@ internal fun RecordingScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
                 .collectAsLazyPagingItems()
 
-        val lazyPagingItems: LazyPagingItems<UiModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
-                .collectAsLazyPagingItems()
+        val relationsLazyListState = rememberLazyListState()
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+            .collectAsLazyPagingItems()
 
         when (selectedTab) {
 
@@ -129,18 +135,19 @@ internal fun RecordingScaffold(
                 )
             }
             RecordingTab.RELATIONSHIPS -> {
-                RecordingScreen(
-                    modifier = Modifier.padding(innerPadding),
+                // TODO: only use one vm, the one in scaffold
+                RecordingRelationsScreen(
                     recordingId = recordingId,
-                    onTitleUpdate = { title, subtitle ->
-                        titleState = title
-                        subtitleState = subtitle
-                    },
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
+                    lazyListState = relationsLazyListState,
+                    lazyPagingItems = relationsLazyPagingItems,
+                    onPagedRelationsChange = {
+                        pagedRelations = it
+                    }
                 )
             }
             RecordingTab.STATS -> {
-
+                RecordingStatsScreen(recordingId = recordingId)
             }
         }
     }

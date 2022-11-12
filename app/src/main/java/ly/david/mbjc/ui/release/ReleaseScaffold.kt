@@ -97,6 +97,9 @@ internal fun ReleaseScaffold(
             // If any of the above calls failed, we still want to update the release id so that
             // TracksInReleaseScreen will give us a Retry button.
 
+            // TODO: when we fail any of the above calls, we will end up in a bad state
+            //  where we have the title, but not the tracks/cover/subtitle
+            //  fail more gracefully
             viewModel.loadTracks(releaseId)
         }
 

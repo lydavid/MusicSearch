@@ -71,6 +71,12 @@ internal fun TracksInReleaseScreen(
             is Header -> {
                 if (coverArtUrl.isNotEmpty()) {
 
+                    // TODO: seems like this no longer takes up space before the image is loaded
+                    //  I checkout'd the commit that supposedly fixed this but it also now no longer works
+                    //  It's possible it was never fully fixed
+                    //  Some of the examples I used didn't have enough tracks to actually hide the cover art
+                    //  When viewing a release again from history, loading from cache seems to show the loading
+                    //  indicator and have it take up space, if only briefly.
                     when (painter.state) {
                         is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
                             Box(

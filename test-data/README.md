@@ -52,15 +52,45 @@ adb shell am start -d "mbjc://recording/dd21677f-d6ae-4dc2-b576-cb4cb5a66b79" -a
 
 
 Has label multiple labels, and has multiple catalog numbers from the same label
-
 ```sh
 adb shell am start -d "mbjc://release/e56065c8-709e-4df8-952b-57031c352a03" -a android.intent.action.VIEW
 ```
 
-- Released in many regions (with release date)
+Released in many regions (with release date)
 ```sh
 adb shell am start -d "mbjc://release/777279a4-efe9-4ab6-99ce-b2263913c93d" -a android.intent.action.VIEW
 ```
+
+Medium with name
+```sh
+adb shell am start -d "mbjc://release/30409e91-44c8-4758-a687-b1784c938cc4" -a android.intent.action.VIEW
+```
+
+1 hour+ track
+```sh
+adb shell am start -d "mbjc://release/5a69dd22-6431-40ea-8a2e-b52b3973a60f" -a android.intent.action.VIEW
+```
+
+Release with letters in track's number, tracks by different artist than release's artist
+```sh
+adb shell am start -d "mbjc://release/3cd31605-0f7e-45ee-aacb-637a53e4c367" -a android.intent.action.VIEW
+```
+
+Massive number of tracks in a medium
+500
+```sh
+adb shell am start -d "mbjc://release/e7092039-54ae-4765-84da-732909429c92" -a android.intent.action.VIEW
+```
+1000
+```sh
+adb shell am start -d "mbjc://release/0c86c9de-ecb0-42a7-8808-bd06f7541f53" -a android.intent.action.VIEW
+```
+
+release with misc: miscellaneous support: task
+```sh
+adb shell am start -d "mbjc://release/f6719001-9d2f-4511-88d7-80393524aa23" -a android.intent.action.VIEW
+```
+
 
 
 ## Release Group
@@ -220,13 +250,6 @@ adb shell am start -d "mbjc://place/ed121457-87f6-4df9-a24b-d3f1bab1fdad" -a and
 
 
 
-### release with misc: miscellaneous support: task
-
-
-```sh
-adb shell am start -d "mbjc://release/f6719001-9d2f-4511-88d7-80393524aa23" -a android.intent.action.VIEW
-```
-
 
 
 
@@ -242,16 +265,6 @@ adb shell am start -d "mbjc://release-group/3ea5428d-1d2b-35ee-bbb4-5fb7171a7269
 adb shell am start -d "mbjc://release/18572d3b-b8d6-4ac1-8cda-6951a8f625d5" -a android.intent.action.VIEW
 ```
 
-### massive number of tracks in a medium
-
-500
-```sh
-adb shell am start -d "mbjc://release/e7092039-54ae-4765-84da-732909429c92" -a android.intent.action.VIEW
-```
-1000
-```sh
-adb shell am start -d "mbjc://release/0c86c9de-ecb0-42a7-8808-bd06f7541f53" -a android.intent.action.VIEW
-```
 
 
 ### An artist "The Jackson 5" appears twice in artist credit with different name
@@ -260,23 +273,6 @@ adb shell am start -d "mbjc://release/0c86c9de-ecb0-42a7-8808-bd06f7541f53" -a a
 adb shell am start -d "mbjc://release-group/b5d152fb-8274-3275-b2b9-155859fc0056" -a android.intent.action.VIEW
 ```
 
-### Medium with name
-
-```sh
-adb shell am start -d "mbjc://release/30409e91-44c8-4758-a687-b1784c938cc4" -a android.intent.action.VIEW
-```
-
-### 1 hour+ track
-
-```sh
-adb shell am start -d "mbjc://release/5a69dd22-6431-40ea-8a2e-b52b3973a60f" -a android.intent.action.VIEW
-```
-
-### Release with letters in track's number, tracks by different artist than release's artist
-
-```sh
-adb shell am start -d "mbjc://release/3cd31605-0f7e-45ee-aacb-637a53e4c367" -a android.intent.action.VIEW
-```
 
 
 

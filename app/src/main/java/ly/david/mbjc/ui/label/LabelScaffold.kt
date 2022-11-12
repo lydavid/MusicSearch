@@ -60,16 +60,6 @@ internal fun LabelScaffold(
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
-    val releasesLazyListState = rememberLazyListState()
-    val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
-        rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
-            .collectAsLazyPagingItems()
-
-    val relationsLazyListState = rememberLazyListState()
-    var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
-        .collectAsLazyPagingItems()
-
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation
     }
@@ -114,6 +104,16 @@ internal fun LabelScaffold(
             )
         },
     ) { innerPadding ->
+
+        val releasesLazyListState = rememberLazyListState()
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
+            rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+                .collectAsLazyPagingItems()
+
+        val relationsLazyListState = rememberLazyListState()
+        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
+            .collectAsLazyPagingItems()
 
         when (selectedTab) {
             LabelTab.RELEASES -> {
