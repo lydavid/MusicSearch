@@ -17,11 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
@@ -117,9 +114,9 @@ internal fun RecordingScaffold(
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
-        val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(pagedRelations)
-            .collectAsLazyPagingItems()
+        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+                .collectAsLazyPagingItems()
 
         when (selectedTab) {
 
@@ -135,15 +132,12 @@ internal fun RecordingScaffold(
                 )
             }
             RecordingTab.RELATIONSHIPS -> {
-                // TODO: only use one vm, the one in scaffold
+                viewModel.loadRelations(recordingId)
+
                 RecordingRelationsScreen(
-                    recordingId = recordingId,
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
-                    onPagedRelationsChange = {
-                        pagedRelations = it
-                    }
                 )
             }
             RecordingTab.STATS -> {
