@@ -161,6 +161,7 @@ internal fun ArtistScaffold(
 
                 RelationsScreen(
                     onItemClick = onItemClick,
+                    snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
                 )

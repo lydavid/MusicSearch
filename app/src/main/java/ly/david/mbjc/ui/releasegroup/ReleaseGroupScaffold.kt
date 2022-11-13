@@ -163,6 +163,7 @@ internal fun ReleaseGroupScaffold(
 
                 RelationsScreen(
                     onItemClick = onItemClick,
+                    snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
                 )

@@ -136,6 +136,7 @@ internal fun RecordingScaffold(
 
                 RelationsScreen(
                     onItemClick = onItemClick,
+                    snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
                 )

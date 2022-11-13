@@ -27,8 +27,8 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.area.relations.AreaRelationsScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
+import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -171,7 +171,7 @@ private fun AreaScaffold(
 
         when (selectedTab) {
             AreaTab.RELATIONSHIPS -> {
-                AreaRelationsScreen(
+                RelationsScreen(
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
                     onItemClick = onItemClick,

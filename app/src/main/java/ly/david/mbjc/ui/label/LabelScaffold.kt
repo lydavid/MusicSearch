@@ -129,6 +129,7 @@ internal fun LabelScaffold(
 
                 RelationsScreen(
                     onItemClick = onItemClick,
+                    snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
                 )
