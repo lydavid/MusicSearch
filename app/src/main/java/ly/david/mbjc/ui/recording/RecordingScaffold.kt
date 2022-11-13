@@ -25,12 +25,12 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
-import ly.david.mbjc.ui.recording.relations.RecordingRelationsScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
 private enum class RecordingTab(@StringRes val titleRes: Int) {
@@ -134,7 +134,7 @@ internal fun RecordingScaffold(
             RecordingTab.RELATIONSHIPS -> {
                 viewModel.loadRelations(recordingId)
 
-                RecordingRelationsScreen(
+                RelationsScreen(
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,

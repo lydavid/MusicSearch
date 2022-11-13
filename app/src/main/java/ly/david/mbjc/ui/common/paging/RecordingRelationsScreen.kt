@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.recording.relations
+package ly.david.mbjc.ui.common.paging
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -7,12 +7,10 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.RelationUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.navigation.Destination
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.relation.RelationCard
 
-// TODO: generic
 @Composable
-internal fun RecordingRelationsScreen(
+internal fun RelationsScreen(
     modifier: Modifier = Modifier,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,

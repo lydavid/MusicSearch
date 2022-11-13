@@ -8,6 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
+import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +26,100 @@ import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationDao
 
+internal interface IRelationsList {
+
+    val pagedRelations: Flow<PagingData<UiModel>>
+
+    /**
+     * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
+     */
+    fun loadRelations(resourceId: String)
+
+    /**
+     * Indicate that we've stored a resource's relationships successfully.
+     */
+    suspend fun markResourceHasRelations()
+}
+
+internal class RelationsList @Inject constructor(
+    private val relationDao: RelationDao
+) : IRelationsList {
+
+    interface Delegate {
+        /**
+         * This is responsible for making a lookup request for this resource's relationships,
+         * then storing them into Room.
+         *
+         * Unlike browse requests, this is expected to only be called once.
+         */
+        suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean = false)
+    }
+
+    private val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+
+    lateinit var scope: CoroutineScope
+    lateinit var delegate: Delegate
+
+    @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
+    override val pagedRelations: Flow<PagingData<UiModel>> by lazy {
+        resourceId.filterNot { it.isEmpty() }
+            .flatMapLatest { resourceId ->
+                Pager(
+                    config = MusicBrainzPagingConfig.pagingConfig,
+                    remoteMediator = LookupResourceRemoteMediator(
+                        hasResourceBeenStored = { hasRelationsBeenStored() },
+                        lookupResource = { forceRefresh ->
+                            delegate.lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
+                        },
+                        deleteLocalResource = {
+                            deleteLocalRelations(resourceId)
+                        }
+                    ),
+                    pagingSourceFactory = {
+                        relationDao.getRelationsForResource(resourceId)
+                    }
+                ).flow.map { pagingData ->
+                    pagingData.map { relation ->
+                        relation.toRelationUiModel()
+                    }.insertSeparators { before: RelationUiModel?, _: RelationUiModel? ->
+                        if (before == null) Header else null
+                    }
+                }
+            }
+            .distinctUntilChanged()
+            .cachedIn(scope)
+    }
+
+    override fun loadRelations(resourceId: String) {
+        this.resourceId.value = resourceId
+    }
+
+    override suspend fun markResourceHasRelations() {
+        relationDao.markResourceHasRelations(
+            hasRelationsRoomModel = HasRelationsRoomModel(
+                resourceId = resourceId.value,
+                hasRelations = true
+            )
+        )
+    }
+
+    /**
+     * This will determine whether we will call [Delegate.lookupRelationsAndStore].
+     *
+     * So it makes the most sense for [Delegate.lookupRelationsAndStore] to set this underlying query to true.
+     */
+    private suspend fun hasRelationsBeenStored(): Boolean =
+        relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
+
+    /**
+     * Query to delete resource relationships in Room.
+     */
+    private suspend fun deleteLocalRelations(resourceId: String) {
+        relationDao.deleteRelationsByResource(resourceId)
+    }
+}
+
+// TODO: convert rest
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].
  */

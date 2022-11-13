@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.recording
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -11,7 +12,8 @@ import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
 import ly.david.data.repository.RecordingRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.relation.RelationViewModel
+import ly.david.mbjc.ui.relation.IRelationsList
+import ly.david.mbjc.ui.relation.RelationsList
 import ly.david.mbjc.ui.release.IReleasesList
 import ly.david.mbjc.ui.release.ReleasesList
 
@@ -20,13 +22,19 @@ internal class RecordingViewModel @Inject constructor(
     private val repository: RecordingRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val releasesList: ReleasesList,
+    private val relationsList: RelationsList,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao
-) : RelationViewModel(relationDao), RecordLookupHistory, IReleasesList by releasesList {
+) : ViewModel(), RecordLookupHistory,
+    IReleasesList by releasesList,
+    IRelationsList by relationsList, RelationsList.Delegate {
 
     init {
         releasesList.scope = viewModelScope
         releasesList.repository = repository
+
+        relationsList.scope = viewModelScope
+        relationsList.delegate = this
     }
 
     suspend fun lookupRecording(recordingId: String) =
