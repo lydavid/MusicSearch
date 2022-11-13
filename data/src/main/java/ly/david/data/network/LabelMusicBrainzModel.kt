@@ -21,7 +21,7 @@ data class LabelMusicBrainzModel(
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,
     @Json(name = "life-span") val lifeSpan: LifeSpan? = null,
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
-) : Label, MusicBrainzModel()
+) : MusicBrainzModel(), Label
 
 fun List<LabelInfo>.toLabelRoomModels(): List<LabelRoomModel> {
     return this.mapNotNull { labelInfo ->

@@ -21,24 +21,29 @@ import ly.david.data.domain.Header
 import ly.david.data.domain.RelationUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toRelationUiModel
+import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.persistence.relation.RelationRoomModel
+import ly.david.data.persistence.relation.toRelationRoomModel
 
+/**
+ * The only properties and methods needed in this interface are those
+ * meant to be used/called by the derived class.
+ */
 internal interface IRelationsList {
 
+    /**
+     * Paginated [RelationUiModel] with [Header].
+     */
     val pagedRelations: Flow<PagingData<UiModel>>
 
     /**
      * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
      */
     fun loadRelations(resourceId: String)
-
-    /**
-     * Indicate that we've stored a resource's relationships successfully.
-     */
-    suspend fun markResourceHasRelations()
 }
 
 internal class RelationsList @Inject constructor(
@@ -47,12 +52,10 @@ internal class RelationsList @Inject constructor(
 
     interface Delegate {
         /**
-         * This is responsible for making a lookup request for this resource's relationships,
-         * then storing them into Room.
-         *
-         * Unlike browse requests, this is expected to only be called once.
+         * The [ViewModel] that implements [RelationsList] is responsible for handling
+         * a lookup call for its relationships.
          */
-        suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean = false)
+        suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>?
     }
 
     private val resourceId: MutableStateFlow<String> = MutableStateFlow("")
@@ -69,7 +72,7 @@ internal class RelationsList @Inject constructor(
                     remoteMediator = LookupResourceRemoteMediator(
                         hasResourceBeenStored = { hasRelationsBeenStored() },
                         lookupResource = { forceRefresh ->
-                            delegate.lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
+                            lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
                         },
                         deleteLocalResource = {
                             deleteLocalRelations(resourceId)
@@ -94,7 +97,39 @@ internal class RelationsList @Inject constructor(
         this.resourceId.value = resourceId
     }
 
-    override suspend fun markResourceHasRelations() {
+    /**
+     * This will determine whether we will call [lookupRelationsAndStore].
+     *
+     * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
+     */
+    private suspend fun hasRelationsBeenStored(): Boolean =
+        relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
+
+    /**
+     * This is responsible for making a lookup request for this resource's relationships,
+     * then storing them into Room.
+     *
+     * Unlike browse requests, this is expected to only be called once.
+     */
+    private suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
+        val relations = mutableListOf<RelationRoomModel>()
+        delegate.lookupRelationsFromNetwork(resourceId)?.forEachIndexed { index, relationMusicBrainzModel ->
+            relationMusicBrainzModel.toRelationRoomModel(
+                resourceId = resourceId,
+                order = index
+            )?.let { relationRoomModel ->
+                relations.add(relationRoomModel)
+            }
+        }
+        relationDao.insertAll(relations)
+
+        markResourceHasRelations()
+    }
+
+    /**
+     * Indicate that we've stored a resource's relationships successfully.
+     */
+    private suspend fun markResourceHasRelations() {
         relationDao.markResourceHasRelations(
             hasRelationsRoomModel = HasRelationsRoomModel(
                 resourceId = resourceId.value,
@@ -102,14 +137,6 @@ internal class RelationsList @Inject constructor(
             )
         )
     }
-
-    /**
-     * This will determine whether we will call [Delegate.lookupRelationsAndStore].
-     *
-     * So it makes the most sense for [Delegate.lookupRelationsAndStore] to set this underlying query to true.
-     */
-    private suspend fun hasRelationsBeenStored(): Boolean =
-        relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
 
     /**
      * Query to delete resource relationships in Room.
