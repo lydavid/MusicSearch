@@ -29,9 +29,9 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.artist.relations.ArtistRelationsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
+import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
@@ -134,9 +134,8 @@ internal fun ArtistScaffold(
             .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
         val relationsLazyPagingItems: LazyPagingItems<UiModel> =
-            rememberFlowWithLifecycleStarted(pagedRelations)
+            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
         val statsLazyListState = rememberLazyListState()
@@ -158,14 +157,12 @@ internal fun ArtistScaffold(
                 )
             }
             ArtistTab.RELATIONSHIPS -> {
-                ArtistRelationsScreen(
-                    artistId = artistId,
+                viewModel.loadRelations(artistId)
+
+                RelationsScreen(
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
-                    onPagedRelationsChange = {
-                        pagedRelations = it
-                    }
                 )
             }
             ArtistTab.STATS -> {

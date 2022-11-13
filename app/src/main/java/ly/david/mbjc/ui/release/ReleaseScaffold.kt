@@ -19,11 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
@@ -32,12 +29,12 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
-import ly.david.mbjc.ui.release.relations.ReleaseRelationsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
@@ -164,9 +161,8 @@ internal fun ReleaseScaffold(
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        var pagedRelations: Flow<PagingData<UiModel>> by remember { mutableStateOf(emptyFlow()) }
         val relationsLazyPagingItems: LazyPagingItems<UiModel> =
-            rememberFlowWithLifecycleStarted(pagedRelations)
+            rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
@@ -194,14 +190,12 @@ internal fun ReleaseScaffold(
                 )
             }
             ReleaseTab.RELATIONSHIPS -> {
-                ReleaseRelationsScreen(
-                    releaseId = releaseId,
+                viewModel.loadRelations(releaseId)
+
+                RelationsScreen(
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
-                    onPagedRelationsChange = {
-                        pagedRelations = it
-                    }
                 )
             }
             ReleaseTab.STATS -> {

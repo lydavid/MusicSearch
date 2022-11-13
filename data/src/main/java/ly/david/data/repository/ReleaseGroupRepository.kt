@@ -26,7 +26,7 @@ class ReleaseGroupRepository @Inject constructor(
     private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-) {
+): ReleasesListRepository {
 
     // We need ReleaseGroupUiModel so that we have artist credits
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel {
@@ -48,7 +48,7 @@ class ReleaseGroupRepository @Inject constructor(
         return musicBrainzReleaseGroup.toReleaseGroupUiModel()
     }
 
-    suspend fun browseReleasesAndStore(releaseGroupId: String, nextOffset: Int): Int {
+    override suspend fun browseReleasesAndStore(releaseGroupId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleasesByReleaseGroup(
             releaseGroupId = releaseGroupId,
             offset = nextOffset
@@ -73,24 +73,24 @@ class ReleaseGroupRepository @Inject constructor(
         return musicBrainzReleases.size
     }
 
-    suspend fun getRemoteReleasesByReleaseGroupCount(releaseGroupId: String): Int? =
-        relationDao.getBrowseResourceOffset(releaseGroupId, MusicBrainzResource.RELEASE)?.remoteCount
+    override suspend fun getRemoteReleasesCountByResource(resourceId: String): Int? =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
 
-    suspend fun getLocalReleasesByReleaseGroupCount(releaseGroupId: String) =
-        relationDao.getBrowseResourceOffset(releaseGroupId, MusicBrainzResource.RELEASE)?.localCount ?: 0
+    override suspend fun getLocalReleasesCountByResource(resourceId: String) =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
-    suspend fun deleteReleasesByReleaseGroup(releaseGroupId: String) {
-        releasesReleaseGroupsDao.deleteReleasesByReleaseGroup(releaseGroupId)
-        relationDao.deleteBrowseResourceOffsetByResource(releaseGroupId, MusicBrainzResource.RELEASE)
+    override suspend fun deleteReleasesByResource(resourceId: String) {
+        releasesReleaseGroupsDao.deleteReleasesByReleaseGroup(resourceId)
+        relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
-    fun getPagingSource(releaseGroupId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    override fun getReleasesPagingSource(resourceId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
-            releasesReleaseGroupsDao.getReleasesByReleaseGroup(releaseGroupId)
+            releasesReleaseGroupsDao.getReleasesByReleaseGroup(resourceId)
         }
         else -> {
             releasesReleaseGroupsDao.getReleasesByReleaseGroupFiltered(
-                releaseGroupId = releaseGroupId,
+                releaseGroupId = resourceId,
                 query = "%$query%"
             )
         }

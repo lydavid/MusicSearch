@@ -27,6 +27,9 @@ import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.TrackUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toTrackUiModel
+import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.network.api.LookupApi
+import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
@@ -39,6 +42,8 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import ly.david.mbjc.ui.relation.IRelationsList
+import ly.david.mbjc.ui.relation.RelationsList
 
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
@@ -47,8 +52,11 @@ internal class ReleaseViewModel @Inject constructor(
     private val trackDao: TrackDao,
     override val lookupHistoryDao: LookupHistoryDao,
     private val coverArtArchiveApiService: CoverArtArchiveApiService,
-    private val releaseRepository: ReleaseRepository
-) : ViewModel(), RecordLookupHistory {
+    private val releaseRepository: ReleaseRepository,
+    private val relationsList: RelationsList,
+    private val musicBrainzApiService: MusicBrainzApiService,
+) : ViewModel(), RecordLookupHistory,
+    IRelationsList by relationsList, RelationsList.Delegate {
 
     private data class ViewModelState(
         val releaseId: String = "",
@@ -60,9 +68,18 @@ internal class ReleaseViewModel @Inject constructor(
     private val tracksParamState = combine(releaseId, query) { releaseId, query ->
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
-//    private val detailsParamState = combine(releaseId, query) { releaseId, query ->
-//        ViewModelState(releaseId, query)
-//    }.distinctUntilChanged()
+
+    init {
+        relationsList.scope = viewModelScope
+        relationsList.delegate = this
+    }
+
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+        return musicBrainzApiService.lookupRelease(
+            releaseId = resourceId,
+            include = LookupApi.INC_ALL_RELATIONS
+        ).relations
+    }
 
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.

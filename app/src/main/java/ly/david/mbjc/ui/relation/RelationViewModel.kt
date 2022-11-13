@@ -28,10 +28,10 @@ import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
+import ly.david.mbjc.ui.relation.RelationsList.Delegate
 
 /**
- * The only properties and methods needed in this interface are those
- * meant to be used/called by the derived class.
+ * A [ViewModel] implements this for [pagedRelations].
  */
 internal interface IRelationsList {
 
@@ -46,6 +46,14 @@ internal interface IRelationsList {
     fun loadRelations(resourceId: String)
 }
 
+/**
+ * Delegation that handles all the implementation of [IRelationsList].
+ *
+ * Meant to be injected into a [ViewModel]'s constructor.
+ *
+ * The ViewModel should implement [Delegate].
+ * It should assign [scope] and [delegate] in its init block.
+ */
 internal class RelationsList @Inject constructor(
     private val relationDao: RelationDao
 ) : IRelationsList {
@@ -146,7 +154,7 @@ internal class RelationsList @Inject constructor(
     }
 }
 
-// TODO: convert rest
+// TODO: convert area
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].
  */
