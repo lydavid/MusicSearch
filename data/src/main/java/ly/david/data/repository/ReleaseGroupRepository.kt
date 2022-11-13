@@ -6,6 +6,8 @@ import javax.inject.Singleton
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.persistence.artist.ReleaseGroupArtistDao
@@ -26,7 +28,7 @@ class ReleaseGroupRepository @Inject constructor(
     private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-): ReleasesListRepository {
+) : ReleasesListRepository, RelationsListRepository {
 
     // We need ReleaseGroupUiModel so that we have artist credits
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel {
@@ -48,27 +50,34 @@ class ReleaseGroupRepository @Inject constructor(
         return musicBrainzReleaseGroup.toReleaseGroupUiModel()
     }
 
-    override suspend fun browseReleasesAndStore(releaseGroupId: String, nextOffset: Int): Int {
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+        return musicBrainzApiService.lookupReleaseGroup(
+            releaseGroupId = resourceId,
+            include = LookupApi.INC_ALL_RELATIONS
+        ).relations
+    }
+
+    override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleasesByReleaseGroup(
-            releaseGroupId = releaseGroupId,
+            releaseGroupId = resourceId,
             offset = nextOffset
         )
 
         if (response.offset == 0) {
             relationDao.insertBrowseResource(
                 browseResourceRoomModel = BrowseResourceOffset(
-                    resourceId = releaseGroupId,
+                    resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE,
                     localCount = response.releases.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementOffsetForResource(releaseGroupId, MusicBrainzResource.RELEASE, response.releases.size)
+            relationDao.incrementOffsetForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
         val musicBrainzReleases = response.releases
-        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel(releaseGroupId) })
+        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel(resourceId) })
 
         return musicBrainzReleases.size
     }
@@ -84,7 +93,10 @@ class ReleaseGroupRepository @Inject constructor(
         relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
-    override fun getReleasesPagingSource(resourceId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    override fun getReleasesPagingSource(
+        resourceId: String,
+        query: String
+    ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
             releasesReleaseGroupsDao.getReleasesByReleaseGroup(resourceId)
         }

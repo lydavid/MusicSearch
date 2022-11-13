@@ -131,4 +131,6 @@ interface LookupApi {
         @Path("eventId") eventId: String,
         @Query("inc") include: String = EVENT_INC_DEFAULT
     ): EventMusicBrainzModel
+
+    // TODO: series
 }

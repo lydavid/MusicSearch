@@ -6,6 +6,8 @@ import javax.inject.Singleton
 import ly.david.data.domain.LabelUiModel
 import ly.david.data.domain.toLabelUiModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.toReleaseLabels
 import ly.david.data.persistence.label.LabelDao
@@ -24,7 +26,7 @@ class LabelRepository @Inject constructor(
     private val releasesLabelsDao: ReleasesLabelsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-) : ReleasesListRepository {
+) : ReleasesListRepository, RelationsListRepository {
 
     suspend fun lookupLabel(labelId: String): LabelUiModel {
         val labelRoomModel = labelDao.getLabel(labelId)
@@ -37,6 +39,13 @@ class LabelRepository @Inject constructor(
         labelDao.insert(labelMusicBrainzModel.toLabelRoomModel())
 
         return labelMusicBrainzModel.toLabelUiModel()
+    }
+
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+        return musicBrainzApiService.lookupLabel(
+            labelId = resourceId,
+            include = LookupApi.INC_ALL_RELATIONS
+        ).relations
     }
 
     override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {

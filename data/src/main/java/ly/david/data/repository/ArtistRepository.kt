@@ -17,7 +17,7 @@ class ArtistRepository @Inject constructor(
 //    private val releasesLabelsDao: ReleasesLabelsDao,
 //    private val releaseDao: ReleaseDao,
 //    private val relationDao: RelationDao,
-) {
+): RelationsListRepository {
 
     suspend fun lookupArtist(artistId: String): ArtistUiModel {
         val roomArtist = artistDao.getArtist(artistId)
@@ -32,9 +32,9 @@ class ArtistRepository @Inject constructor(
         return musicBrainzArtist.toArtistUiModel()
     }
 
-    suspend fun lookupArtistWithRelations(artistId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupArtist(
-            artistId = artistId,
+            artistId = resourceId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

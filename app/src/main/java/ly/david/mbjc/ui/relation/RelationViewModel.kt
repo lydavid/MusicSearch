@@ -21,14 +21,13 @@ import ly.david.data.domain.Header
 import ly.david.data.domain.RelationUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toRelationUiModel
-import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
-import ly.david.mbjc.ui.relation.RelationsList.Delegate
+import ly.david.data.repository.RelationsListRepository
 
 /**
  * A [ViewModel] implements this for [pagedRelations].
@@ -55,25 +54,16 @@ internal interface IRelationsList {
  *
  * Meant to be injected into a [ViewModel]'s constructor.
  *
- * The ViewModel should implement [Delegate].
- * It should assign [scope] and [delegate] in its init block.
+ * The ViewModel should should assign [scope] and [repository] in its init block.
  */
 internal class RelationsList @Inject constructor(
     private val relationDao: RelationDao
 ) : IRelationsList {
 
-    interface Delegate {
-        /**
-         * The [ViewModel] that implements [RelationsList] is responsible for handling
-         * a lookup call for its relationships.
-         */
-        suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>?
-    }
-
     private val resourceId: MutableStateFlow<String> = MutableStateFlow("")
 
     lateinit var scope: CoroutineScope
-    lateinit var delegate: Delegate
+    lateinit var repository: RelationsListRepository
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     override val pagedRelations: Flow<PagingData<UiModel>> by lazy {
@@ -124,8 +114,11 @@ internal class RelationsList @Inject constructor(
      * Unlike browse requests, this is expected to only be called once.
      */
     private suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
+
+        // TODO: why was forceRefresh passed here? Currently only used in area
+
         val relations = mutableListOf<RelationRoomModel>()
-        delegate.lookupRelationsFromNetwork(resourceId)?.forEachIndexed { index, relationMusicBrainzModel ->
+        repository.lookupRelationsFromNetwork(resourceId)?.forEachIndexed { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationRoomModel(
                 resourceId = resourceId,
                 order = index

@@ -7,6 +7,8 @@ import ly.david.data.Recording
 import ly.david.data.domain.RecordingUiModel
 import ly.david.data.domain.toRecordingUiModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -28,7 +30,7 @@ class RecordingRepository @Inject constructor(
     private val releaseDao: ReleaseDao,
     private val lookupHistoryDao: LookupHistoryDao,
     private val releasesRecordingsDao: ReleasesRecordingsDao
-) : ReleasesListRepository {
+) : ReleasesListRepository, RelationsListRepository {
 
     suspend fun lookupRecording(recordingId: String): RecordingUiModel {
 
@@ -55,6 +57,13 @@ class RecordingRepository @Inject constructor(
 
         incrementOrInsertLookupHistory(recordingMusicBrainzModel)
         return recordingMusicBrainzModel.toRecordingUiModel()
+    }
+
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+        return musicBrainzApiService.lookupRecording(
+            recordingId = resourceId,
+            include = LookupApi.INC_ALL_RELATIONS
+        ).relations
     }
 
     private suspend fun incrementOrInsertLookupHistory(recording: Recording) {

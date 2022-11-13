@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.ArtistUiModel
-import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.ArtistRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -18,16 +17,13 @@ internal class ArtistViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList
 ) : ViewModel(), RecordLookupHistory,
-    IRelationsList by relationsList, RelationsList.Delegate {
+    IRelationsList by relationsList {
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.delegate = this
+        relationsList.repository = repository
     }
 
     suspend fun lookupArtist(artistId: String): ArtistUiModel =
         repository.lookupArtist(artistId)
-
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? =
-        repository.lookupArtistWithRelations(resourceId)
 }

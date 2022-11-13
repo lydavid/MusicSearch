@@ -27,9 +27,6 @@ import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.TrackUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toTrackUiModel
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.api.LookupApi
-import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
@@ -52,11 +49,10 @@ internal class ReleaseViewModel @Inject constructor(
     private val trackDao: TrackDao,
     override val lookupHistoryDao: LookupHistoryDao,
     private val coverArtArchiveApiService: CoverArtArchiveApiService,
-    private val releaseRepository: ReleaseRepository,
+    private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
-    private val musicBrainzApiService: MusicBrainzApiService,
 ) : ViewModel(), RecordLookupHistory,
-    IRelationsList by relationsList, RelationsList.Delegate {
+    IRelationsList by relationsList {
 
     private data class ViewModelState(
         val releaseId: String = "",
@@ -71,21 +67,14 @@ internal class ReleaseViewModel @Inject constructor(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.delegate = this
-    }
-
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupRelease(
-            releaseId = resourceId,
-            include = LookupApi.INC_ALL_RELATIONS
-        ).relations
+        relationsList.repository = repository
     }
 
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
     suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseUiModel {
-        return releaseRepository.getRelease(releaseId).also { loadTracks(releaseId) }
+        return repository.getRelease(releaseId).also { loadTracks(releaseId) }
     }
 
     fun loadTracks(releaseId: String) {
@@ -105,7 +94,7 @@ internal class ReleaseViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = LookupResourceRemoteMediator(
                         hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                        lookupResource = { releaseRepository.getRelease(releaseId) },
+                        lookupResource = { repository.getRelease(releaseId) },
                         deleteLocalResource = {
                             // TODO: invalidate cover art cache and refresh
                             // TODO: delete release_label

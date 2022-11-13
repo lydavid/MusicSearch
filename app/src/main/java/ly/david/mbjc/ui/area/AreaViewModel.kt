@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.AreaUiModel
-import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.AreaRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -25,12 +24,12 @@ internal class AreaViewModel @Inject constructor(
     private val relationsList: RelationsList,
     private val releasesList: ReleasesList
 ) : ViewModel(), RecordLookupHistory,
-    IRelationsList by relationsList, RelationsList.Delegate,
+    IRelationsList by relationsList,
     IReleasesList by releasesList {
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.delegate = this
+        relationsList.repository = repository
 
         releasesList.scope = viewModelScope
         releasesList.repository = repository
@@ -49,7 +48,4 @@ internal class AreaViewModel @Inject constructor(
             loadRelations(areaId)
         }
     }
-
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? =
-        repository.lookupAreaWithRelations(resourceId)
 }

@@ -29,7 +29,7 @@ class AreaRepository @Inject constructor(
     private val relationDao: RelationDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val releaseDao: ReleaseDao,
-): ReleasesListRepository {
+) : ReleasesListRepository, RelationsListRepository {
 
     /**
      * Returns area for display.
@@ -76,9 +76,9 @@ class AreaRepository @Inject constructor(
         return areaMusicBrainzModel.toAreaUiModel()
     }
 
-    suspend fun lookupAreaWithRelations(areaId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupArea(
-            areaId = areaId,
+            areaId = resourceId,
             include = INC_ALL_RELATIONS
         ).relations
     }
@@ -128,7 +128,10 @@ class AreaRepository @Inject constructor(
         relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
-    override fun getReleasesPagingSource(resourceId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    override fun getReleasesPagingSource(
+        resourceId: String,
+        query: String
+    ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
             releasesCountriesDao.getReleasesFromCountry(resourceId)
         }

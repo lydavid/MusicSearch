@@ -6,6 +6,8 @@ import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.domain.toReleaseUiModel
+import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
@@ -40,7 +42,7 @@ class ReleaseRepository @Inject constructor(
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val releasesLabelsDao: ReleasesLabelsDao
-) {
+): RelationsListRepository {
 
     /**
      * Returns a release for display.
@@ -102,5 +104,12 @@ class ReleaseRepository @Inject constructor(
         return releaseMusicBrainzModel.toReleaseUiModel(
             releaseGroup = releaseMusicBrainzModel.releaseGroup?.toReleaseGroupUiModel()
         )
+    }
+
+    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+        return musicBrainzApiService.lookupRelease(
+            releaseId = resourceId,
+            include = LookupApi.INC_ALL_RELATIONS
+        ).relations
     }
 }
