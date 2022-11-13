@@ -1,56 +1,29 @@
 package ly.david.mbjc.ui.area
 
 import androidx.lifecycle.viewModelScope
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNot
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import ly.david.data.domain.AreaUiModel
-import ly.david.data.domain.ReleaseUiModel
-import ly.david.data.domain.toReleaseUiModel
-import ly.david.data.paging.BrowseResourceRemoteMediator
-import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.repository.AreaRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.relation.RelationViewModel
+import ly.david.mbjc.ui.release.IReleasesList
+import ly.david.mbjc.ui.release.ReleasesList
 
 @HiltViewModel
 internal class AreaViewModel @Inject constructor(
     private val repository: AreaRepository,
     relationDao: RelationDao,
-    override val lookupHistoryDao: LookupHistoryDao
-) : RelationViewModel(relationDao), RecordLookupHistory {
+    override val lookupHistoryDao: LookupHistoryDao,
+    private val releasesList: ReleasesList
+) : RelationViewModel(relationDao), RecordLookupHistory,
+    IReleasesList by releasesList {
 
-    private data class ViewModelState(
-        val areaId: String = "",
-        val query: String = ""
-    )
-
-    private val areaId: MutableStateFlow<String> = MutableStateFlow("")
-    private val query: MutableStateFlow<String> = MutableStateFlow("")
-    private val paramState = combine(areaId, query) { areaId, query ->
-        ViewModelState(areaId, query)
-    }.distinctUntilChanged()
-
-    fun loadReleases(areaId: String) {
-        this.areaId.value = areaId
-    }
-
-    fun updateQuery(query: String) {
-        this.query.value = query
+    init {
+        releasesList.scope = viewModelScope
+        releasesList.repository = repository
     }
 
     /**
@@ -76,31 +49,4 @@ internal class AreaViewModel @Inject constructor(
             markResourceHasRelations = { markResourceHasRelations() }
         )
     }
-
-    // TODO: this part is the same as ReleaseGroupViewModel
-    //  but this VM uses RelationViewModel as well
-    // if we want to generalize, then we might need interfaces
-    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    val pagedReleases: Flow<PagingData<ReleaseUiModel>> =
-        paramState.filterNot { it.areaId.isEmpty() }
-            .flatMapLatest { (areaId, query) ->
-                Pager(
-                    config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getRemoteReleasesByAreaCount(areaId) },
-                        getLocalResourceCount = { repository.getLocalReleasesByAreaCount(areaId) },
-                        deleteLocalResource = { repository.deleteReleasesByArea(areaId) },
-                        browseResource = { offset ->
-                            repository.browseReleasesAndStore(areaId, offset)
-                        }
-                    ),
-                    pagingSourceFactory = { repository.getReleasesPagingSource(areaId, query) }
-                ).flow.map { pagingData ->
-                    pagingData.map {
-                        it.toReleaseUiModel()
-                    }
-                }
-            }
-            .distinctUntilChanged()
-            .cachedIn(viewModelScope)
 }

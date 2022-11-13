@@ -28,7 +28,7 @@ class AreaRepository @Inject constructor(
     private val relationDao: RelationDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val releaseDao: ReleaseDao,
-) {
+): ReleasesListRepository {
 
     /**
      * Returns area for display.
@@ -75,23 +75,23 @@ class AreaRepository @Inject constructor(
         return areaMusicBrainzModel.toAreaUiModel()
     }
 
-    suspend fun browseReleasesAndStore(areaId: String, nextOffset: Int): Int {
+    override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleasesByArea(
-            areaId = areaId,
+            areaId = resourceId,
             offset = nextOffset
         )
 
         if (response.offset == 0) {
             relationDao.insertBrowseResource(
                 browseResourceRoomModel = BrowseResourceOffset(
-                    resourceId = areaId,
+                    resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE,
                     localCount = response.releases.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementOffsetForResource(areaId, MusicBrainzResource.RELEASE, response.releases.size)
+            relationDao.incrementOffsetForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
         val musicBrainzReleases = response.releases
@@ -100,7 +100,7 @@ class AreaRepository @Inject constructor(
             musicBrainzReleases.map { release ->
                 ReleaseCountry(
                     releaseId = release.id,
-                    countryId = areaId,
+                    countryId = resourceId,
                     date = release.date
                 )
             }
@@ -109,24 +109,24 @@ class AreaRepository @Inject constructor(
         return musicBrainzReleases.size
     }
 
-    suspend fun getRemoteReleasesByAreaCount(areaId: String): Int? =
-        relationDao.getBrowseResourceOffset(areaId, MusicBrainzResource.RELEASE)?.remoteCount
+    override suspend fun getRemoteReleasesCountByResource(resourceId: String): Int? =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
 
-    suspend fun getLocalReleasesByAreaCount(areaId: String) =
-        relationDao.getBrowseResourceOffset(areaId, MusicBrainzResource.RELEASE)?.localCount ?: 0
+    override suspend fun getLocalReleasesCountByResource(resourceId: String) =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
-    suspend fun deleteReleasesByArea(areaId: String) {
-        releasesCountriesDao.deleteReleasesFromCountry(areaId)
-        relationDao.deleteBrowseResourceOffsetByResource(areaId, MusicBrainzResource.RELEASE)
+    override suspend fun deleteReleasesByResource(resourceId: String) {
+        releasesCountriesDao.deleteReleasesFromCountry(resourceId)
+        relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
-    fun getReleasesPagingSource(areaId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    override fun getReleasesPagingSource(resourceId: String, query: String): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
-            releasesCountriesDao.getReleasesFromCountry(areaId)
+            releasesCountriesDao.getReleasesFromCountry(resourceId)
         }
         else -> {
             releasesCountriesDao.getReleasesFromCountryFiltered(
-                areaId = areaId,
+                areaId = resourceId,
                 query = "%$query%"
             )
         }
