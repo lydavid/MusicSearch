@@ -9,6 +9,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.ReleaseRecording
 import ly.david.data.persistence.recording.ReleasesRecordingsDao
@@ -29,14 +30,18 @@ class RecordingRepository @Inject constructor(
 ) : ReleasesListRepository, RelationsListRepository {
 
     suspend fun lookupRecording(recordingId: String): RecordingUiModel {
-
         val recordingRoomModel = recordingDao.getRecording(recordingId)
-        if (recordingRoomModel != null) {
-            return recordingRoomModel.toRecordingUiModel()
+        val artistCredits = recordingDao.getRecordingArtistCredits(recordingId)
+
+        if (recordingRoomModel != null && artistCredits.isNotEmpty()) {
+            return recordingRoomModel.toRecordingUiModel(
+                artistCredits = artistCredits
+            )
         }
 
         val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)
         recordingDao.insert(recordingMusicBrainzModel.toRecordingRoomModel())
+        recordingDao.insertAllArtistCredits(recordingMusicBrainzModel.getReleaseArtistCreditRoomModels())
 
         return recordingMusicBrainzModel.toRecordingUiModel()
     }

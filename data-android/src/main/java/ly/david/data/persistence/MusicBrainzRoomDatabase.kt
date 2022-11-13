@@ -8,13 +8,13 @@ import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.artist.ArtistRoomModel
-import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.instrument.InstrumentRoomModel
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
 import ly.david.data.persistence.place.PlaceRoomModel
+import ly.david.data.persistence.recording.RecordingArtistCreditRoomModel
 import ly.david.data.persistence.recording.RecordingRoomModel
 import ly.david.data.persistence.recording.ReleaseRecording
 import ly.david.data.persistence.relation.BrowseResourceOffset
@@ -25,11 +25,12 @@ import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.TrackRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 59,
+    version = 60,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -51,6 +52,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         BrowseResourceOffset::class,
         ReleaseGroupArtistCreditRoomModel::class,
         ReleaseArtistCreditRoomModel::class,
+        RecordingArtistCreditRoomModel::class,
         ReleaseLabel::class,
         ReleaseCountry::class,
         ReleaseRecording::class,
@@ -112,6 +114,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 56, to = 57, spec = Migrations.RenameSortName::class),
         AutoMigration(from = 57, to = 58),
         AutoMigration(from = 58, to = 59),
+        AutoMigration(from = 59, to = 60),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
-import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 
 // TODO: if this is in a non-android module, we can't mark it Immutable

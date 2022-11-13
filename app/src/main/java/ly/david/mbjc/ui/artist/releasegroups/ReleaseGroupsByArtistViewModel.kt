@@ -27,7 +27,7 @@ import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
-import ly.david.data.persistence.artist.ReleaseGroupArtistDao
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 

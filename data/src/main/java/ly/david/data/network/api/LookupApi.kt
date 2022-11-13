@@ -74,10 +74,7 @@ interface LookupApi {
     @GET("recording/{recordingId}")
     suspend fun lookupRecording(
         @Path("recordingId") recordingId: String,
-        @Query("inc") include: String = "artist-rels+work-rels+label-rels+place-rels+area-rels+event-rels" +
-            "+instrument-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels" +
-            "+artist-credits"
-        // "+work-level-rels" // Web displays this in recording screen, but we can reserve it for work screen
+        @Query("inc") include: String = "artist-credits"
     ): RecordingMusicBrainzModel
 
     @GET("work/{workId}")

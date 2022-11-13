@@ -8,9 +8,10 @@ import ly.david.data.network.RecordingMusicBrainzModel
 
 // TODO: Seems pretty inefficient to have a separate table for release groups, releases, and recordings
 //  should look into simplifying later
+//  Doing it this way allows us to cascade delete these on release/rg/recording deletion
 /**
  * An artist's credit for a [Release].
- * A release group can have many artists credits. It can even have the same artist listed twice under different names.
+ * A release can have many artists credits. It can even have the same artist listed twice under different names.
  *
  * An [ArtistCredit] for a [Release] should map to this.
  *

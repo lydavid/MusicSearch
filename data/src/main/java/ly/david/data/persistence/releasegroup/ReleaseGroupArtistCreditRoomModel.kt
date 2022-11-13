@@ -1,11 +1,10 @@
-package ly.david.data.persistence.artist
+package ly.david.data.persistence.releasegroup
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import ly.david.data.ArtistCredit
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 
 /**
  * An artist's credit for a [ReleaseGroup].

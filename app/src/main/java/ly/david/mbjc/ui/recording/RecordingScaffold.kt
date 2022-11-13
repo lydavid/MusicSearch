@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,12 +21,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.RecordingUiModel
 import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.UiModel
+import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -56,7 +61,7 @@ internal fun RecordingScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.RELEASES) }
     var searchText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-
+    var recording: RecordingUiModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation
@@ -64,10 +69,12 @@ internal fun RecordingScaffold(
 
     LaunchedEffect(key1 = recordingId) {
         try {
-            val recording = viewModel.lookupRecording(recordingId)
+            val recordingUiModel = viewModel.lookupRecording(recordingId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = recording.getNameWithDisambiguation()
+                titleState = recordingUiModel.getNameWithDisambiguation()
             }
+            subtitleState = "Recording by ${recordingUiModel.artistCredits.getDisplayNames()}"
+            recording = recordingUiModel
 
             viewModel.loadReleases(resourceId = recordingId)
 
@@ -94,6 +101,17 @@ internal fun RecordingScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = recordingId)
                     CopyToClipboardMenuItem(recordingId)
+                },
+                subtitleDropdownMenuItems = {
+                    recording?.artistCredits?.forEach { artistCredit ->
+                        DropdownMenuItem(
+                            text = { Text(artistCredit.name) },
+                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
+                            onClick = {
+                                closeMenu()
+                                onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
+                            })
+                    }
                 },
                 tabsTitles = RecordingTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

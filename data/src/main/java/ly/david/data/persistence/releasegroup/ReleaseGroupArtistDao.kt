@@ -1,4 +1,4 @@
-package ly.david.data.persistence.artist
+package ly.david.data.persistence.releasegroup
 
 import androidx.room.Dao
 import androidx.room.Query

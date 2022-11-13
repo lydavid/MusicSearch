@@ -2,7 +2,7 @@ package ly.david.data.network
 
 import com.squareup.moshi.Json
 import ly.david.data.ReleaseGroup
-import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 
 data class ReleaseGroupMusicBrainzModel(
 

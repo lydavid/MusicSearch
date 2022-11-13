@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.getYear
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles

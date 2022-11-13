@@ -18,7 +18,6 @@ import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
-import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import ly.david.data.persistence.label.LabelDao
 import ly.david.data.persistence.label.ReleasesLabelsDao
 import ly.david.data.persistence.release.MediumDao
@@ -27,6 +26,7 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.toMediumRoomModel
 import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.release.toTrackRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 

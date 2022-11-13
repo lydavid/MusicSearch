@@ -9,8 +9,6 @@ import ly.david.data.HiltTest
 import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistRoomModel
-import ly.david.data.persistence.artist.ReleaseGroupArtistCreditRoomModel
-import ly.david.data.persistence.artist.ReleaseGroupArtistDao
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals
