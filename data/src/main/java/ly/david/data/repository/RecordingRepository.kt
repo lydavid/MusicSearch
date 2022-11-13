@@ -3,15 +3,12 @@ package ly.david.data.repository
 import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.Recording
 import ly.david.data.domain.RecordingUiModel
 import ly.david.data.domain.toRecordingUiModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.history.LookupHistory
-import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.ReleaseRecording
 import ly.david.data.persistence.recording.ReleasesRecordingsDao
@@ -28,7 +25,6 @@ class RecordingRepository @Inject constructor(
     private val recordingDao: RecordingDao,
     private val relationDao: RelationDao,
     private val releaseDao: ReleaseDao,
-    private val lookupHistoryDao: LookupHistoryDao,
     private val releasesRecordingsDao: ReleasesRecordingsDao
 ) : ReleasesListRepository, RelationsListRepository {
 
@@ -36,26 +32,12 @@ class RecordingRepository @Inject constructor(
 
         val recordingRoomModel = recordingDao.getRecording(recordingId)
         if (recordingRoomModel != null) {
-            incrementOrInsertLookupHistory(recordingRoomModel)
             return recordingRoomModel.toRecordingUiModel()
         }
 
         val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)
         recordingDao.insert(recordingMusicBrainzModel.toRecordingRoomModel())
 
-        // TODO: move relations
-//        val recordingRelations = mutableListOf<RelationRoomModel>()
-//        musicBrainzRecording.relations?.forEachIndexed { index, relationMusicBrainzModel ->
-//            relationMusicBrainzModel.toRelationRoomModel(
-//                resourceId = recordingId,
-//                order = index
-//            )?.let { relationRoomModel ->
-//                recordingRelations.add(relationRoomModel)
-//            }
-//        }
-//        relationDao.insertAll(recordingRelations)
-
-        incrementOrInsertLookupHistory(recordingMusicBrainzModel)
         return recordingMusicBrainzModel.toRecordingUiModel()
     }
 
@@ -64,16 +46,6 @@ class RecordingRepository @Inject constructor(
             recordingId = resourceId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
-    }
-
-    private suspend fun incrementOrInsertLookupHistory(recording: Recording) {
-        lookupHistoryDao.incrementOrInsertLookupHistory(
-            LookupHistory(
-                title = recording.name,
-                resource = MusicBrainzResource.RECORDING,
-                mbid = recording.id
-            )
-        )
     }
 
     override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {
