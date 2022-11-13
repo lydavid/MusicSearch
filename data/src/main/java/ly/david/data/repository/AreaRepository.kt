@@ -6,6 +6,7 @@ import javax.inject.Singleton
 import ly.david.data.domain.AreaUiModel
 import ly.david.data.domain.toAreaUiModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.AreaDao
@@ -73,6 +74,13 @@ class AreaRepository @Inject constructor(
         markResourceHasRelations()
 
         return areaMusicBrainzModel.toAreaUiModel()
+    }
+
+    suspend fun lookupAreaWithRelations(areaId: String): List<RelationMusicBrainzModel>? {
+        return musicBrainzApiService.lookupArea(
+            areaId = areaId,
+            include = INC_ALL_RELATIONS
+        ).relations
     }
 
     override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {

@@ -44,6 +44,10 @@ internal interface IRelationsList {
      * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
      */
     fun loadRelations(resourceId: String)
+
+    suspend fun hasRelationsBeenStored(): Boolean
+
+    suspend fun markResourceHasRelations()
 }
 
 /**
@@ -110,7 +114,7 @@ internal class RelationsList @Inject constructor(
      *
      * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
      */
-    private suspend fun hasRelationsBeenStored(): Boolean =
+    override suspend fun hasRelationsBeenStored(): Boolean =
         relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
 
     /**
@@ -137,7 +141,7 @@ internal class RelationsList @Inject constructor(
     /**
      * Indicate that we've stored a resource's relationships successfully.
      */
-    private suspend fun markResourceHasRelations() {
+    override suspend fun markResourceHasRelations() {
         relationDao.markResourceHasRelations(
             hasRelationsRoomModel = HasRelationsRoomModel(
                 resourceId = resourceId.value,
@@ -154,7 +158,7 @@ internal class RelationsList @Inject constructor(
     }
 }
 
-// TODO: convert area
+// TODO: convert rest
 /**
  * Generic ViewModel that let us fetch [pagedRelations] given a [resourceId].
  */

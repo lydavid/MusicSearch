@@ -75,7 +75,7 @@ internal fun ArtistScaffold(
     }
 
     LaunchedEffect(key1 = artistId) {
-        val artist = viewModel.getArtist(artistId)
+        val artist = viewModel.lookupArtist(artistId)
         if (titleWithDisambiguation.isNullOrEmpty()) {
             title = artist.getNameWithDisambiguation()
         }

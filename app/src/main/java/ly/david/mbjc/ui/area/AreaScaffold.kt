@@ -116,7 +116,7 @@ internal fun AreaScaffold(
         onUpdateQuery = { searchText ->
             viewModel.updateQuery(searchText)
         },
-        loadReleases =  {
+        loadReleases = {
             viewModel.loadReleases(areaId)
         },
     )
@@ -142,9 +142,6 @@ private fun AreaScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
     var searchText by rememberSaveable { mutableStateOf("") }
 
-    val relationsLazyListState = rememberLazyListState()
-    val releasesLazyListState = rememberLazyListState()
-
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
@@ -168,6 +165,9 @@ private fun AreaScaffold(
             )
         },
     ) { innerPadding ->
+
+        val relationsLazyListState = rememberLazyListState()
+        val releasesLazyListState = rememberLazyListState()
 
         when (selectedTab) {
             AreaTab.RELATIONSHIPS -> {
