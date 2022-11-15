@@ -147,53 +147,6 @@ internal fun NavigationGraph(
         }
 
         addResourceScreen(
-            resource = MusicBrainzResource.LABEL,
-            deeplinkSchema = deeplinkSchema
-        ) { resourceId, title ->
-            LabelScaffold(
-                labelId = resourceId,
-                onBack = navController::navigateUp,
-                titleWithDisambiguation = title,
-                onItemClick = onLookupItemClick
-            )
-        }
-
-        addResourceScreen(
-            resource = MusicBrainzResource.RECORDING,
-            deeplinkSchema = deeplinkSchema
-        ) { resourceId, title ->
-            RecordingScaffold(
-                recordingId = resourceId,
-                onBack = navController::navigateUp,
-                titleWithDisambiguation = title,
-                onItemClick = onLookupItemClick,
-            )
-        }
-
-        addResourceScreen(
-            resource = MusicBrainzResource.RELEASE,
-            deeplinkSchema = deeplinkSchema
-        ) { resourceId, title ->
-            ReleaseScaffold(
-                releaseId = resourceId,
-                onBack = navController::navigateUp,
-                titleWithDisambiguation = title,
-                onItemClick = onLookupItemClick,
-            )
-        }
-        addResourceScreen(
-            resource = MusicBrainzResource.RELEASE_GROUP,
-            deeplinkSchema = deeplinkSchema
-        ) { resourceId, title ->
-            ReleaseGroupScaffold(
-                releaseGroupId = resourceId,
-                onBack = navController::navigateUp,
-                titleWithDisambiguation = title,
-                onItemClick = onLookupItemClick
-            )
-        }
-
-        addResourceScreen(
             resource = MusicBrainzResource.EVENT,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -205,117 +158,110 @@ internal fun NavigationGraph(
             )
         }
 
-        composable(
-            "${Destination.LOOKUP_WORK.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.WORK.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val workId = entry.arguments?.getString(ID) ?: return@composable
-            WorkScaffold(
-                workId = workId,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+        addResourceScreen(
+            resource = MusicBrainzResource.GENRE,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            GenreScaffold(
+                genreId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp
             )
         }
 
-        composable(
-            "${Destination.LOOKUP_PLACE.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.PLACE.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val placeId = entry.arguments?.getString(ID) ?: return@composable
-            PlaceScaffold(
-                placeId = placeId,
-                onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
-            )
-        }
-
-        composable(
-            "${Destination.LOOKUP_INSTRUMENT.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType // Make argument type safe
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.INSTRUMENT.resourceName}/{$ID}"
-                }
-            )
-        ) { entry ->
-            val instrumentId = entry.arguments?.getString(ID) ?: return@composable
+        addResourceScreen(
+            resource = MusicBrainzResource.INSTRUMENT,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
             InstrumentScaffold(
-                instrumentId = instrumentId,
+                instrumentId = resourceId,
+                titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupItemClick
             )
         }
 
-        composable(
-            "${Destination.LOOKUP_SERIES.route}/{$ID}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType
-                }
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.SERIES.resourceName}/{$ID}"
-                }
+        addResourceScreen(
+            resource = MusicBrainzResource.LABEL,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            LabelScaffold(
+                labelId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
             )
-        ) { entry ->
-            val seriesId = entry.arguments?.getString(ID) ?: return@composable
-            Text(text = seriesId)
-//            SeriesScaffold(
+        }
+
+        addResourceScreen(
+            resource = MusicBrainzResource.PLACE,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            PlaceScaffold(
+                placeId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        addResourceScreen(
+            resource = MusicBrainzResource.RECORDING,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            RecordingScaffold(
+                recordingId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick,
+            )
+        }
+
+        addResourceScreen(
+            resource = MusicBrainzResource.RELEASE,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            ReleaseScaffold(
+                releaseId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick,
+            )
+        }
+        addResourceScreen(
+            resource = MusicBrainzResource.RELEASE_GROUP,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            ReleaseGroupScaffold(
+                releaseGroupId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        addResourceScreen(
+            resource = MusicBrainzResource.SERIES,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            // TODO:
+            Text(text = resourceId)
+            //            SeriesScaffold(
 //                eventId = seriesId,
 //                onBack = navController::navigateUp,
 //                onItemClick = onLookupItemClick
 //            )
         }
 
-        composable(
-            // TODO: can we make route the same as deeplink pattern?
-            "${Destination.LOOKUP_GENRE.route}/{$ID}?$TITLE={$TITLE}",
-            arguments = listOf(
-                navArgument(ID) {
-                    type = NavType.StringType
-                },
-                navArgument(TITLE) {
-                    nullable = true
-                    defaultValue = null
-                    type = NavType.StringType
-                },
-            ),
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "$deeplinkSchema://${MusicBrainzResource.GENRE.resourceName}/{$ID}?$TITLE={$TITLE}"
-                }
-            )
-        ) { entry ->
-            val genreId = entry.arguments?.getString(ID) ?: return@composable
-            val title = entry.arguments?.getString(TITLE)
-
-            GenreScaffold(
-                genreId = genreId,
-                title = title,
-                onBack = navController::navigateUp
+        addResourceScreen(
+            resource = MusicBrainzResource.WORK,
+            deeplinkSchema = deeplinkSchema
+        ) { resourceId, title ->
+            WorkScaffold(
+                workId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
             )
         }
 

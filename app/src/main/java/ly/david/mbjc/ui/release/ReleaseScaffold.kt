@@ -54,8 +54,8 @@ private enum class ReleaseTab(@StringRes val titleRes: Int) {
 @Composable
 internal fun ReleaseScaffold(
     releaseId: String,
-    onBack: () -> Unit = {},
     titleWithDisambiguation: String? = null,
+    onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: ReleaseViewModel = hiltViewModel()
 ) {

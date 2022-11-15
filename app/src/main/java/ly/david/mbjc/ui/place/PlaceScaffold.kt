@@ -19,12 +19,17 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 @Composable
 internal fun PlaceScaffold(
     placeId: String,
+    titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
+
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        titleState = titleWithDisambiguation
+    }
 
     Scaffold(
         topBar = {
@@ -43,7 +48,9 @@ internal fun PlaceScaffold(
             context = context,
             placeId = placeId,
             onTitleUpdate = { title ->
-                titleState = title
+                if (titleWithDisambiguation.isNullOrEmpty()) {
+                    titleState = title
+                }
             },
             onItemClick = onItemClick
         )

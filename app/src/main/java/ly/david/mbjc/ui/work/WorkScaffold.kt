@@ -18,12 +18,17 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 @Composable
 internal fun WorkScaffold(
     workId: String,
+    titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
+
+    if (!titleWithDisambiguation.isNullOrEmpty()) {
+        titleState = titleWithDisambiguation
+    }
 
     Scaffold(
         topBar = {
@@ -42,7 +47,9 @@ internal fun WorkScaffold(
             modifier = Modifier.padding(innerPadding),
             workId = workId,
             onTitleUpdate = { title, subtitle ->
-                titleState = title
+                if (titleWithDisambiguation.isNullOrEmpty()) {
+                    titleState = title
+                }
                 subtitleState = subtitle
             },
             onItemClick = onItemClick

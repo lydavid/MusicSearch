@@ -31,14 +31,7 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
                 // TODO: only url
                 listOf(
                     MusicBrainzResource.URL,
-                    MusicBrainzResource.INSTRUMENT,
-                    MusicBrainzResource.GENRE,
-                    MusicBrainzResource.PLACE,
-                    MusicBrainzResource.RECORDING,
-                    MusicBrainzResource.LABEL,
-                    MusicBrainzResource.RELEASE_GROUP,
                     MusicBrainzResource.SERIES,
-                    MusicBrainzResource.WORK,
                 ).contains(it)
             }
         }
@@ -64,8 +57,8 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
         runBlocking {
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
-                val areaId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
-                navController.goTo(destination = resource.toDestination(), id = areaId, title = title)
+                val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
+                navController.goTo(destination = resource.toDestination(), id = resourceId, title = title)
             }
         }
 

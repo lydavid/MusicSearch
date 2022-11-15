@@ -18,10 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ly.david.data.common.lookupInBrowser
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenContent
-import ly.david.data.common.lookupInBrowser
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -32,7 +32,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun GenreScaffold(
     genreId: String,
-    title: String? = null,
+    titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
 ) {
 
@@ -42,7 +42,7 @@ internal fun GenreScaffold(
 
     // TODO: viewmodel to record visit kept crashing
     LaunchedEffect(key1 = genreId) {
-        titleState = title ?: "[???]"
+        titleState = titleWithDisambiguation ?: "[???]"
     }
 
     Scaffold(
@@ -77,7 +77,7 @@ private fun Preview() {
     PreviewTheme {
         GenreScaffold(
             genreId = "1",
-            title = "Pop",
+            titleWithDisambiguation = "Pop",
             onBack = { }
         )
     }
