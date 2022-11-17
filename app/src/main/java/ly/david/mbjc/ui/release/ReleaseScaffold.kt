@@ -160,6 +160,8 @@ internal fun ReleaseScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
                 .collectAsLazyPagingItems()
 
+        val detailsLazyListState = rememberLazyListState()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<UiModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -186,7 +188,8 @@ internal fun ReleaseScaffold(
                     },
                     onAreaClick = {
                         onItemClick(Destination.LOOKUP_AREA, id, name)
-                    }
+                    },
+                    lazyListState = detailsLazyListState
                 )
             }
             ReleaseTab.RELATIONSHIPS -> {

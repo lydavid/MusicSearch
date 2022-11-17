@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.release.details
 import android.icu.lang.UScript
 import android.os.Build
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +32,7 @@ internal fun ReleaseDetailsScreen(
     releaseUiModel: ReleaseUiModel?,
     onLabelClick: LabelUiModel.() -> Unit = {},
     onAreaClick: AreaUiModel.() -> Unit = {},
+    lazyListState: LazyListState,
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
 
@@ -43,10 +45,11 @@ internal fun ReleaseDetailsScreen(
         areasWithReleaseDate = viewModel.getAreasWithReleaseDate(releaseUiModel.id)
     }
 
-    // TODO: scroll position not saved
-    releaseUiModel?.run {
-        LazyColumn {
-            item {
+    // TODO: scroll position not saved on tab change
+    //  it is saved on config change at least
+    LazyColumn(state = lazyListState) {
+        item {
+            releaseUiModel?.run {
                 ListSeparatorHeader(text = stringResource(id = R.string.release_information))
                 barcode?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.barcode, text = it)
@@ -107,19 +110,19 @@ internal fun ReleaseDetailsScreen(
                         LabelCard(label = label, onLabelClick = onLabelClick)
                     }
                 }
-
-                if (areasWithReleaseDate.isNotEmpty()) {
-                    ListSeparatorHeader(text = stringResource(id = R.string.release_events))
-                }
             }
 
-            items(areasWithReleaseDate) { item: AreaWithReleaseDate ->
-                AreaCard(
-                    area = item.toAreaUiModel(),
-                    showType = false,
-                    onAreaClick = onAreaClick
-                )
+            if (areasWithReleaseDate.isNotEmpty()) {
+                ListSeparatorHeader(text = stringResource(id = R.string.release_events))
             }
+        }
+
+        items(areasWithReleaseDate) { item: AreaWithReleaseDate ->
+            AreaCard(
+                area = item.toAreaUiModel(),
+                showType = false,
+                onAreaClick = onAreaClick
+            )
         }
     }
 }
