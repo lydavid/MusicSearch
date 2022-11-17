@@ -114,7 +114,7 @@ internal class RelationsList @Inject constructor(
      */
     private suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
 
-        // TODO: why was forceRefresh passed here? Currently only used in area
+        if (!forceRefresh) return
 
         val relations = mutableListOf<RelationRoomModel>()
         repository.lookupRelationsFromNetwork(resourceId)?.forEachIndexed { index, relationMusicBrainzModel ->
