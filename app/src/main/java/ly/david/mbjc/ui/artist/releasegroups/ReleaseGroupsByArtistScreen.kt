@@ -9,6 +9,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
+import ly.david.data.domain.ListSeparator
+import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.UiModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -43,12 +45,12 @@ internal fun ReleaseGroupsByArtistScreen(
         snackbarHostState = snackbarHostState
     ) { uiModel: UiModel? ->
         when (uiModel) {
-            is ly.david.data.domain.ReleaseGroupUiModel -> {
+            is ReleaseGroupUiModel -> {
                 ReleaseGroupCard(releaseGroup = uiModel) {
                     onReleaseGroupClick(id)
                 }
             }
-            is ly.david.data.domain.ListSeparator -> {
+            is ListSeparator -> {
                 ListSeparatorHeader(text = uiModel.text)
             }
             else -> {

@@ -56,6 +56,11 @@ class AreaRepository @Inject constructor(
             include = INC_ALL_RELATIONS
         )
 
+        // TODO: repeated logic
+        //  screens that starts on relationship makes us do this
+        //  We do this to avoid double lookup call
+        //  We could technically load relations first, then look for its title if not provided with it
+        //  at which point, we should be using cached room model
         val relations = mutableListOf<RelationRoomModel>()
         areaMusicBrainzModel.relations?.forEachIndexed { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationRoomModel(
@@ -66,12 +71,10 @@ class AreaRepository @Inject constructor(
             }
         }
         relationDao.insertAll(relations)
+        markResourceHasRelations()
 
         areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
-
         areaDao.insertAllCountryCodes(areaMusicBrainzModel.getAreaCountryCodes())
-
-        markResourceHasRelations()
 
         return areaMusicBrainzModel.toAreaUiModel()
     }

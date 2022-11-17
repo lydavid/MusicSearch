@@ -39,7 +39,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
 //  to split them into different tabs
 //  asking for release-rels and recording-rels in a separate tab for area for example
 //  however, we would then need a different indicator to determine whether we've fetched these types of rels
-internal enum class AreaTab(@StringRes val titleRes: Int) {
+private enum class AreaTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
     RELEASES(R.string.releases),
 
@@ -192,11 +192,6 @@ private fun AreaScaffold(
                     }
                 )
             }
-//            AreaTab.RELATIONSHIPS_RELEASES -> {
-//            }
-//            AreaTab.RELATIONSHIPS_RECORDINGS -> {
-//
-//            }
             AreaTab.STATS -> {
                 AreaStatsScreen(
                     areaId = areaId,

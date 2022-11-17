@@ -41,6 +41,7 @@
     <string name="details">Details</string>
     <string name="release_groups">Release Groups</string>
     <string name="releases">Releases</string>
+    <string name="recordings">Recordings</string>
     <string name="relationships">Relationships</string>
     <string name="relationships_releases">Relationships (Releases)</string>
     <string name="relationships_recordings">Relationships (Recordings)</string>

@@ -43,6 +43,7 @@ internal fun ReleaseDetailsScreen(
         areasWithReleaseDate = viewModel.getAreasWithReleaseDate(releaseUiModel.id)
     }
 
+    // TODO: scroll position not saved
     releaseUiModel?.run {
         LazyColumn {
             item {
