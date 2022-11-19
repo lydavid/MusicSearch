@@ -1,24 +1,34 @@
 package ly.david.data.repository
 
+import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.WorkUiModel
 import ly.david.data.domain.toWorkUiModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.WORK_INC_DEFAULT
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.persistence.recording.RecordingDao
+import ly.david.data.persistence.recording.RecordingRoomModel
+import ly.david.data.persistence.recording.toRecordingRoomModel
+import ly.david.data.persistence.relation.BrowseResourceOffset
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
+import ly.david.data.persistence.work.RecordingWork
+import ly.david.data.persistence.work.RecordingsWorksDao
 import ly.david.data.persistence.work.WorkDao
 import ly.david.data.persistence.work.toWorkRoomModel
 
 @Singleton
 class WorkRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
+    private val recordingDao: RecordingDao,
+    private val recordingsWorksDao: RecordingsWorksDao,
     private val workDao: WorkDao,
     private val relationDao: RelationDao,
-) : RelationsListRepository {
+) : RelationsListRepository, RecordingsListRepository {
 
     suspend fun lookupWork(
         workId: String,
@@ -56,5 +66,64 @@ class WorkRepository @Inject constructor(
             workId = resourceId,
             include = WORK_INC_DEFAULT
         ).relations
+    }
+
+    override suspend fun browseRecordingsAndStore(resourceId: String, nextOffset: Int): Int {
+        val response = musicBrainzApiService.browseRecordingsByWork(
+            workId = resourceId,
+            offset = nextOffset
+        )
+
+        if (response.offset == 0) {
+            relationDao.insertBrowseResource(
+                browseResourceRoomModel = BrowseResourceOffset(
+                    resourceId = resourceId,
+                    browseResource = MusicBrainzResource.RECORDING,
+                    localCount = response.recordings.size,
+                    remoteCount = response.count
+                )
+            )
+        } else {
+            relationDao.incrementOffsetForResource(resourceId, MusicBrainzResource.RECORDING, response.recordings.size)
+        }
+
+        val recordingMusicBrainzModels = response.recordings
+        recordingDao.insertAll(recordingMusicBrainzModels.map { it.toRecordingRoomModel() })
+        recordingsWorksDao.insertAll(
+            recordingMusicBrainzModels.map { recording ->
+                RecordingWork(
+                    recordingId = recording.id,
+                    workId = resourceId
+                )
+            }
+        )
+
+        return recordingMusicBrainzModels.size
+    }
+
+    override suspend fun getRemoteRecordingsCountByResource(resourceId: String): Int? =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RECORDING)?.remoteCount
+
+    override suspend fun getLocalRecordingsCountByResource(resourceId: String) =
+        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RECORDING)?.localCount ?: 0
+
+    override suspend fun deleteRecordingsByResource(resourceId: String) {
+        recordingsWorksDao.deleteRecordingsByWork(resourceId)
+        relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RECORDING)
+    }
+
+    override fun getRecordingsPagingSource(
+        resourceId: String,
+        query: String
+    ): PagingSource<Int, RecordingRoomModel> = when {
+        query.isEmpty() -> {
+            recordingsWorksDao.getRecordingsByWork(resourceId)
+        }
+        else -> {
+            recordingsWorksDao.getRecordingsByWorkFiltered(
+                workId = resourceId,
+                query = "%$query%"
+            )
+        }
     }
 }

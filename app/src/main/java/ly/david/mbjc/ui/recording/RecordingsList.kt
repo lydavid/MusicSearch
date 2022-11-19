@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.release
+package ly.david.mbjc.ui.recording
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -15,13 +15,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.ReleaseUiModel
-import ly.david.data.domain.toReleaseUiModel
+import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.toRecordingUiModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.repository.ReleasesListRepository
+import ly.david.data.repository.RecordingsListRepository
 
-internal interface IReleasesList {
+internal interface IRecordingsList {
     data class ViewModelState(
         val resourceId: String = "",
         val query: String = ""
@@ -31,7 +31,7 @@ internal interface IReleasesList {
     val query: MutableStateFlow<String>
     val paramState: Flow<ViewModelState>
 
-    fun loadReleases(resourceId: String) {
+    fun loadRecordings(resourceId: String) {
         this.resourceId.value = resourceId
     }
 
@@ -39,45 +39,47 @@ internal interface IReleasesList {
         this.query.value = query
     }
 
-    val pagedReleases: Flow<PagingData<ReleaseUiModel>>
+    val pagedRecordings: Flow<PagingData<RecordingUiModel>>
 }
 
 /**
- * Generic implementation for handling paged releases.
+ * Generic implementation for handling paged recordings.
  *
  * Meant to be implemented by a ViewModel through delegation.
  *
  * The ViewModel should should assign [scope] and [repository] in its init block.
  */
-internal class ReleasesList @Inject constructor() : IReleasesList {
+internal class RecordingsList @Inject constructor() : IRecordingsList {
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
     override val paramState = combine(resourceId, query) { resourceId, query ->
-        IReleasesList.ViewModelState(resourceId, query)
+        IRecordingsList.ViewModelState(resourceId, query)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var repository: ReleasesListRepository
+    lateinit var repository: RecordingsListRepository
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedReleases: Flow<PagingData<ReleaseUiModel>> by lazy {
+    override val pagedRecordings: Flow<PagingData<RecordingUiModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getRemoteReleasesCountByResource(resourceId) },
-                        getLocalResourceCount = { repository.getLocalReleasesCountByResource(resourceId) },
-                        deleteLocalResource = { repository.deleteReleasesByResource(resourceId) },
+                        getRemoteResourceCount = { repository.getRemoteRecordingsCountByResource(resourceId) },
+                        getLocalResourceCount = { repository.getLocalRecordingsCountByResource(resourceId) },
+                        deleteLocalResource = { repository.deleteRecordingsByResource(resourceId) },
                         browseResource = { offset ->
-                            repository.browseReleasesAndStore(resourceId, offset)
+                            repository.browseRecordingsAndStore(resourceId, offset)
                         }
                     ),
-                    pagingSourceFactory = { repository.getReleasesPagingSource(resourceId, query) }
+                    pagingSourceFactory = { repository.getRecordingsPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toReleaseUiModel()
+                        it.toRecordingUiModel(
+                            artistCredits = listOf()
+                        )
                     }
                 }
             }

@@ -8,6 +8,8 @@ import ly.david.data.domain.WorkUiModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import ly.david.mbjc.ui.recording.IRecordingsList
+import ly.david.mbjc.ui.recording.RecordingsList
 import ly.david.mbjc.ui.relation.IRelationsList
 import ly.david.mbjc.ui.relation.RelationsList
 
@@ -15,13 +17,18 @@ import ly.david.mbjc.ui.relation.RelationsList
 internal class WorkViewModel @Inject constructor(
     private val repository: WorkRepository,
     private val relationsList: RelationsList,
+    private val recordingsList: RecordingsList,
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(), RecordLookupHistory,
-    IRelationsList by relationsList {
+    IRelationsList by relationsList,
+    IRecordingsList by recordingsList {
 
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
+
+        recordingsList.scope = viewModelScope
+        recordingsList.repository = repository
     }
 
     suspend fun lookupWorkThenLoadRelations(workId: String): WorkUiModel {

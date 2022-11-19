@@ -27,7 +27,7 @@ internal fun RecordingMusicBrainzModel.toRecordingUiModel() =
         artistCredits = getReleaseArtistCreditRoomModels()
     )
 
-internal fun RecordingRoomModel.toRecordingUiModel(
+fun RecordingRoomModel.toRecordingUiModel(
     artistCredits: List<RecordingArtistCreditRoomModel>
 ) = RecordingUiModel(
     id = id,

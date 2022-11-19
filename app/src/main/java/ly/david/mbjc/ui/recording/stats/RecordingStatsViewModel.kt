@@ -17,6 +17,6 @@ internal class RecordingStatsViewModel @Inject constructor(
     suspend fun getTotalReleases(recordingId: String) =
         relationDao.getBrowseResourceOffset(recordingId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
-    suspend fun getNumberOfReleasesByRecording(recordingId: String) =
+    suspend fun getNumberOfLocalReleasesByRecording(recordingId: String) =
         releasesRecordingsDao.getNumberOfReleasesByRecording(recordingId)
 }

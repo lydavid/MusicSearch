@@ -59,10 +59,7 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording> {
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
-            FROM releases rel
-            INNER JOIN releases_recordings rr ON rel.id = rr.release_id
-            INNER JOIN recordings rec ON rec.id = rr.recording_id
-            WHERE rec.id = :recordingId
+            $RELEASES_BY_RECORDING
             GROUP BY rec.id),
             0
         ) AS count

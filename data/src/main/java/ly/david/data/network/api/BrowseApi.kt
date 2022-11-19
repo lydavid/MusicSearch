@@ -18,13 +18,13 @@ internal const val LABELS = "labels"
  */
 interface BrowseApi {
 
-    @GET("release-group")
-    suspend fun browseReleaseGroupsByArtist(
-        @Query("artist") artistId: String,
+    @GET("recording")
+    suspend fun browseRecordingsByWork(
+        @Query("work") workId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = "artist-credits"
-    ): BrowseReleaseGroupsResponse
+//        @Query("inc") include: String = LABELS
+    ): BrowseRecordingsResponse
 
     // can browse by area, artist, collection, label, track, track_artist, recording, release-group
     // currently only browsing by release-group
@@ -59,6 +59,14 @@ interface BrowseApi {
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
     ): BrowseReleasesResponse
+
+    @GET("release-group")
+    suspend fun browseReleaseGroupsByArtist(
+        @Query("artist") artistId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = "artist-credits"
+    ): BrowseReleaseGroupsResponse
 }
 
 /**
@@ -69,11 +77,11 @@ interface Browsable {
     val offset: Int
 }
 
-data class BrowseReleaseGroupsResponse(
-    @Json(name = "release-group-count") override val count: Int,
-    @Json(name = "release-group-offset") override val offset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
-): Browsable
+data class BrowseRecordingsResponse(
+    @Json(name = "recording-count") val count: Int,
+    @Json(name = "recording-offset") val offset: Int,
+    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
+)
 
 data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,
@@ -81,8 +89,8 @@ data class BrowseReleasesResponse(
     @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
 ): Browsable
 
-data class BrowseRecordingsResponse(
-    @Json(name = "recordings-count") val count: Int,
-    @Json(name = "recordings-offset") val offset: Int,
-    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
-)
+data class BrowseReleaseGroupsResponse(
+    @Json(name = "release-group-count") override val count: Int,
+    @Json(name = "release-group-offset") override val offset: Int,
+    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
+): Browsable

@@ -19,12 +19,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.RecordingUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.WorkUiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.paging.RecordingsListScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -52,7 +54,7 @@ internal fun WorkScaffold(
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(WorkTab.RELATIONSHIPS) }
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var work: WorkUiModel? by remember { mutableStateOf(null) }
 
@@ -96,10 +98,10 @@ internal fun WorkScaffold(
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = WorkTab.values()[it] },
                 showSearchIcon = selectedTab == WorkTab.RELATIONSHIPS,
-                searchText = searchText,
+                searchText = filterText,
                 onSearchTextChange = {
-                    searchText = it
-//                    onUpdateQuery(searchText)
+                    filterText = it
+                    viewModel.updateQuery(filterText)
                 },
             )
         },
@@ -108,6 +110,11 @@ internal fun WorkScaffold(
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<UiModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+                .collectAsLazyPagingItems()
+
+        val recordingsLazyListState = rememberLazyListState()
+        val recordingsLazyPagingItems: LazyPagingItems<RecordingUiModel> =
+            rememberFlowWithLifecycleStarted(viewModel.pagedRecordings)
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
@@ -121,7 +128,17 @@ internal fun WorkScaffold(
                 )
             }
             WorkTab.RECORDINGS -> {
+                viewModel.loadRecordings(workId)
 
+                RecordingsListScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = recordingsLazyListState,
+                    lazyPagingItems = recordingsLazyPagingItems,
+                    onRecordingClick = { id, title ->
+                        onItemClick(Destination.LOOKUP_RECORDING, id, title)
+                    }
+                )
             }
             WorkTab.DETAILS -> {
 

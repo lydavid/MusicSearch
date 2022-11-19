@@ -30,7 +30,7 @@ internal fun RecordingStatsScreen(
 
     LaunchedEffect(key1 = Unit) {
         totalRemote = viewModel.getTotalReleases(recordingId)
-        totalLocal = viewModel.getNumberOfReleasesByRecording(recordingId)
+        totalLocal = viewModel.getNumberOfLocalReleasesByRecording(recordingId)
 
         totalRelations = viewModel.getNumberOfRelationsByResource(recordingId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(recordingId)
