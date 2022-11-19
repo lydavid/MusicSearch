@@ -47,8 +47,8 @@ internal fun AreaCard(
                 modifier = Modifier
                     .constrainAs(mainSection) {
                         width = Dimension.fillToConstraints
-                        top.linkTo(parent.top)
                         start.linkTo(parent.start)
+                        top.linkTo(parent.top)
                         end.linkTo(endSection.start)
                     }
             ) {
@@ -101,8 +101,8 @@ internal fun AreaCard(
                     modifier = Modifier
                         .constrainAs(endSection) {
                             width = Dimension.wrapContent
-                            top.linkTo(parent.top)
                             start.linkTo(mainSection.end, margin = 4.dp)
+                            top.linkTo(parent.top)
                             end.linkTo(parent.end)
                         }
                 )

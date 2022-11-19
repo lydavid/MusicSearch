@@ -45,8 +45,8 @@ internal fun ArtistCard(
                 modifier = Modifier
                     .constrainAs(name) {
                         width = Dimension.fillToConstraints
-                        top.linkTo(parent.top)
                         start.linkTo(parent.start)
+                        top.linkTo(parent.top)
                         end.linkTo(countryCode.start)
                     }
             )
@@ -59,8 +59,8 @@ internal fun ArtistCard(
                     modifier = Modifier
                         .constrainAs(countryCode) {
                             width = Dimension.wrapContent
-                            top.linkTo(parent.top)
                             start.linkTo(name.end, margin = 4.dp)
+                            top.linkTo(parent.top)
                             end.linkTo(parent.end)
                         }
                 )
