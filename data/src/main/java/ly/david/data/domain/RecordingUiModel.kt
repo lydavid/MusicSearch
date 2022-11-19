@@ -16,7 +16,7 @@ data class RecordingUiModel(
     val artistCredits: List<RecordingArtistCreditRoomModel> = listOf(),
 ) : UiModel(), Recording
 
-internal fun RecordingMusicBrainzModel.toRecordingUiModel() =
+fun RecordingMusicBrainzModel.toRecordingUiModel() =
     RecordingUiModel(
         id = id,
         name = name,

@@ -23,19 +23,13 @@ interface BrowseApi {
         @Query("work") workId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-//        @Query("inc") include: String = LABELS
     ): BrowseRecordingsResponse
 
-    // can browse by area, artist, collection, label, track, track_artist, recording, release-group
-    // currently only browsing by release-group
     @GET("release")
-    suspend fun browseReleasesByReleaseGroup(
-        @Query("release-group") releaseGroupId: String,
+    suspend fun browseReleasesByArea(
+        @Query("area") areaId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
-//        @Query("inc") include: String = RELEASE_GROUPS
-        // artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
-        // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
     ): BrowseReleasesResponse
 
     @GET("release")
@@ -47,17 +41,20 @@ interface BrowseApi {
     ): BrowseReleasesResponse
 
     @GET("release")
-    suspend fun browseReleasesByArea(
-        @Query("area") areaId: String,
+    suspend fun browseReleasesByRecording(
+        @Query("recording") recordingId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
     ): BrowseReleasesResponse
 
     @GET("release")
-    suspend fun browseReleasesByRecording(
-        @Query("recording") recordingId: String,
+    suspend fun browseReleasesByReleaseGroup(
+        @Query("release-group") releaseGroupId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
+//        @Query("inc") include: String = RELEASE_GROUPS
+        // artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
+        // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
     ): BrowseReleasesResponse
 
     @GET("release-group")
@@ -87,10 +84,10 @@ data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,
     @Json(name = "release-offset") override val offset: Int,
     @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
-): Browsable
+) : Browsable
 
 data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") override val count: Int,
     @Json(name = "release-group-offset") override val offset: Int,
     @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
-): Browsable
+) : Browsable

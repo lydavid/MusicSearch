@@ -44,7 +44,7 @@ val remasterOf = RelationMusicBrainzModel(
 
 val fakeReleaseWithRelation = ReleaseMusicBrainzModel(
     id = "fakeRelease3",
-    name = "Release Name",
+    name = "Fake Release Relationship",
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
     releaseGroup = fakeReleaseGroup,
     relations = listOf(remasterOf)

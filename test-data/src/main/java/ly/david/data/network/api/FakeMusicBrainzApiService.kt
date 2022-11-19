@@ -10,6 +10,7 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
 import ly.david.data.network.eventMusicBrainzModel
@@ -81,7 +82,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
         return searchSeriesResponse
     }
+
     // endregion
+
+    override suspend fun browseRecordingsByWork(workId: String, limit: Int, offset: Int): BrowseRecordingsResponse {
+        return browseRecordingsResponse
+    }
 
     override suspend fun browseReleaseGroupsByArtist(
         artistId: String,
