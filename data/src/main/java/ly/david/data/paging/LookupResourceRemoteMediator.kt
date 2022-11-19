@@ -37,10 +37,12 @@ class LookupResourceRemoteMediator<RM : RoomModel>(
 
         return try {
             if (!hasResourceBeenStored()) {
-                lookupResource(false)
+                lookupResource(true)
             } else if (loadType == LoadType.REFRESH) {
                 deleteLocalResource()
                 lookupResource(true)
+            } else {
+                lookupResource(false)
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
