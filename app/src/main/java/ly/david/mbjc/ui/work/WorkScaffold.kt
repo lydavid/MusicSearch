@@ -97,7 +97,7 @@ internal fun WorkScaffold(
                 tabsTitles = WorkTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = WorkTab.values()[it] },
-                showFilterIcon = selectedTab == WorkTab.RELATIONSHIPS,
+                showFilterIcon = selectedTab == WorkTab.RECORDINGS,
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
