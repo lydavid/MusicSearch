@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.recording
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
@@ -10,11 +11,10 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import ly.david.data.network.RecordingMusicBrainzModel
+import ly.david.data.network.fakeArtistCredit
+import ly.david.data.network.fakeArtistCredit2
 import ly.david.data.network.fakeRecording
-import ly.david.data.persistence.MusicBrainzDatabase
-import ly.david.data.persistence.recording.RecordingDao
-import ly.david.data.persistence.recording.toRecordingRoomModel
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.repository.RecordingRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -25,15 +25,11 @@ import org.junit.Test
 internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
-    lateinit var db: MusicBrainzDatabase
-    private lateinit var relationDao: RelationDao
-    private lateinit var recordingDao: RecordingDao
+    lateinit var recordingRepository: RecordingRepository
 
     @Before
     fun setupApp() {
         hiltRule.inject()
-        relationDao = db.getRelationDao()
-        recordingDao = db.getRecordingDao()
     }
 
     private fun setRecording(recordingMusicBrainzModel: RecordingMusicBrainzModel) {
@@ -46,31 +42,53 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun firstTimeVisit() {
+    fun firstVisit_noLocalData() {
         setRecording(fakeRecording)
+        runBlocking { composeTestRule.awaitIdle() }
+
         composeTestRule
             .onNodeWithText(stats)
             .performClick()
-
         composeTestRule
             .onNodeWithText(fakeRecording.name)
+            .assertIsDisplayed()
+
+        // Confirm that up navigation items exists
+        composeTestRule
+            .onNodeWithTag("TopBarSubtitle")
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakeArtistCredit.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(fakeArtistCredit2.name)
             .assertIsDisplayed()
     }
 
     @Test
-    fun repeatVisit() {
-        setRecording(fakeRecording)
+    fun repeatVisit_localData() {
         runBlocking {
-            recordingDao.insert(fakeRecording.toRecordingRoomModel())
+            recordingRepository.lookupRecording(fakeRecording.id)
+            setRecording(fakeRecording)
             composeTestRule.awaitIdle()
         }
 
         composeTestRule
             .onNodeWithText(stats)
             .performClick()
-
         composeTestRule
             .onNodeWithText(fakeRecording.name)
+            .assertIsDisplayed()
+
+        // Confirm that up navigation items exists
+        composeTestRule
+            .onNodeWithTag("TopBarSubtitle")
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakeArtistCredit.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(fakeArtistCredit2.name)
             .assertIsDisplayed()
     }
 
@@ -89,7 +107,6 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
 //            .onNodeWithText(fakeAreaWithRelation.relations?.first()?.area?.name ?: "")
 //            .assertIsDisplayed()
 //    }
-
 
     @Test
     fun useCustomName() {
