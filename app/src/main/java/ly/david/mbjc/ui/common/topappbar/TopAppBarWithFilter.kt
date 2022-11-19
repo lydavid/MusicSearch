@@ -39,30 +39,30 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-internal fun TopAppBarWithSearch(
+internal fun TopAppBarWithFilter(
     onBack: () -> Unit = {},
     openDrawer: (() -> Unit)? = null,
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
-    showSearchIcon: Boolean = true,
+    showFilterIcon: Boolean = true,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-    searchText: String = "",
-    onSearchTextChange: (String) -> Unit = {},
+    filterText: String = "",
+    onFilterTextChange: (String) -> Unit = {},
     tabsTitles: List<String> = listOf(),
     selectedTabIndex: Int = 0,
     onSelectTabIndex: (Int) -> Unit = {}
 ) {
-    var isSearchAndFilterMode by rememberSaveable { mutableStateOf(false) }
+    var isFilterMode by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
     // TODO: expand out from the icon
     AnimatedVisibility(
-        visible = isSearchAndFilterMode,
+        visible = isFilterMode,
         enter = expandVertically(),
-        exit = shrinkVertically { fullHeight -> fullHeight/2 }
+        exit = shrinkVertically { fullHeight -> fullHeight / 2 }
     ) {
 
         // TODO: when returning, focus is in front of search text
@@ -73,8 +73,8 @@ internal fun TopAppBarWithSearch(
         }
 
         BackHandler {
-            isSearchAndFilterMode = false
-            onSearchTextChange("")
+            isFilterMode = false
+            onFilterTextChange("")
         }
 
         Surface {
@@ -92,17 +92,17 @@ internal fun TopAppBarWithSearch(
                     ),
                     leadingIcon = {
                         IconButton(onClick = {
-                            isSearchAndFilterMode = false
-                            onSearchTextChange("")
+                            isFilterMode = false
+                            onFilterTextChange("")
                         }) {
                             Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
                         }
                     },
-                    placeholder = { Text(stringResource(id = R.string.search)) },
+                    placeholder = { Text(stringResource(id = R.string.filter)) },
                     trailingIcon = {
-                        if (searchText.isEmpty()) return@TextField
+                        if (filterText.isEmpty()) return@TextField
                         IconButton(onClick = {
-                            onSearchTextChange("")
+                            onFilterTextChange("")
                             focusRequester.requestFocus()
                         }) {
                             Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_filter))
@@ -114,9 +114,9 @@ internal fun TopAppBarWithSearch(
                             focusManager.clearFocus()
                         }
                     ),
-                    value = searchText,
+                    value = filterText,
                     onValueChange = {
-                        onSearchTextChange(it)
+                        onFilterTextChange(it)
                     }
                 )
 
@@ -128,8 +128,8 @@ internal fun TopAppBarWithSearch(
     }
 
     AnimatedVisibility(
-        visible = !isSearchAndFilterMode,
-        enter = expandVertically { fullHeight -> fullHeight/2 },
+        visible = !isFilterMode,
+        enter = expandVertically { fullHeight -> fullHeight / 2 },
         exit = shrinkVertically()
     ) {
         ScrollableTopAppBar(
@@ -139,9 +139,9 @@ internal fun TopAppBarWithSearch(
             title = title,
             subtitle = subtitle,
             mainAction = {
-                if (showSearchIcon) {
+                if (showFilterIcon) {
                     IconButton(onClick = {
-                        isSearchAndFilterMode = true
+                        isFilterMode = true
                     }) {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -166,7 +166,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             // TODO: Low: animation crashes in interactive mode
-            TopAppBarWithSearch(title = "Title")
+            TopAppBarWithFilter(title = "Title")
         }
     }
 }
@@ -176,9 +176,9 @@ private fun Preview() {
 private fun PreviewNoSearch() {
     PreviewTheme {
         Surface {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 title = "Title",
-                showSearchIcon = false
+                showFilterIcon = false
             )
         }
     }
@@ -189,7 +189,7 @@ private fun PreviewNoSearch() {
 private fun PreviewWithTabs() {
     PreviewTheme {
         Surface {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
                 tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
                 selectedTabIndex = 1

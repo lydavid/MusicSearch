@@ -34,7 +34,7 @@ import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
 private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
@@ -102,7 +102,7 @@ internal fun ReleaseGroupScaffold(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = title,
                 subtitle = subtitle,
@@ -126,9 +126,9 @@ internal fun ReleaseGroupScaffold(
                 tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] },
-                showSearchIcon = selectedTab == ReleaseGroupTab.RELEASES,
-                searchText = filterText,
-                onSearchTextChange = {
+                showFilterIcon = selectedTab == ReleaseGroupTab.RELEASES,
+                filterText = filterText,
+                onFilterTextChange = {
                     filterText = it
                     viewModel.updateQuery(query = filterText)
                 },

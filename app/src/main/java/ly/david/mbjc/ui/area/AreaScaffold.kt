@@ -33,7 +33,7 @@ import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 // TODO: one way to deal with massive number of relationships is
 //  to split them into different tabs
@@ -113,8 +113,8 @@ internal fun AreaScaffold(
         title = title,
         tabs = tabs,
         showReleases = area?.showReleases() ?: false,
-        onUpdateQuery = { searchText ->
-            viewModel.updateQuery(searchText)
+        onUpdateQuery = { filterText ->
+            viewModel.updateQuery(filterText)
         },
         loadReleases = {
             viewModel.loadReleases(areaId)
@@ -140,12 +140,12 @@ private fun AreaScaffold(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.RELATIONSHIPS) }
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var filterText by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = title,
                 onBack = onBack,
@@ -156,11 +156,11 @@ private fun AreaScaffold(
                 tabsTitles = tabs.map { stringResource(id = it.titleRes) },
                 selectedTabIndex = tabs.indexOf(selectedTab),
                 onSelectTabIndex = { selectedTab = tabs[it] },
-                showSearchIcon = selectedTab == AreaTab.RELEASES,
-                searchText = searchText,
-                onSearchTextChange = {
-                    searchText = it
-                    onUpdateQuery(searchText)
+                showFilterIcon = selectedTab == AreaTab.RELEASES,
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                    onUpdateQuery(filterText)
                 },
             )
         },

@@ -31,7 +31,7 @@ import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 private enum class WorkTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
@@ -86,7 +86,7 @@ internal fun WorkScaffold(
 
     Scaffold(
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = titleState,
                 onBack = onBack,
@@ -97,9 +97,9 @@ internal fun WorkScaffold(
                 tabsTitles = WorkTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = WorkTab.values()[it] },
-                showSearchIcon = selectedTab == WorkTab.RELATIONSHIPS,
-                searchText = filterText,
-                onSearchTextChange = {
+                showFilterIcon = selectedTab == WorkTab.RELATIONSHIPS,
+                filterText = filterText,
+                onFilterTextChange = {
                     filterText = it
                     viewModel.updateQuery(filterText)
                 },

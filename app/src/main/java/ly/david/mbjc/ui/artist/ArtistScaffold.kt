@@ -34,7 +34,7 @@ import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 //        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
 
@@ -65,7 +65,7 @@ internal fun ArtistScaffold(
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
     var title by rememberSaveable { mutableStateOf("") }
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
@@ -95,11 +95,11 @@ internal fun ArtistScaffold(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 onBack = onBack,
                 resource = resource,
                 title = title,
-                showSearchIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
+                showFilterIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
 
@@ -116,9 +116,9 @@ internal fun ArtistScaffold(
                         )
                     }
                 },
-                searchText = searchText,
-                onSearchTextChange = {
-                    searchText = it
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
                 },
                 tabsTitles = ArtistTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
@@ -145,7 +145,7 @@ internal fun ArtistScaffold(
                 ReleaseGroupsByArtistScreen(
                     modifier = Modifier.padding(innerPadding),
                     artistId = artistId,
-                    searchText = searchText,
+                    searchText = filterText,
                     isSorted = isSorted,
                     snackbarHostState = snackbarHostState,
                     onReleaseGroupClick = onReleaseGroupClick,

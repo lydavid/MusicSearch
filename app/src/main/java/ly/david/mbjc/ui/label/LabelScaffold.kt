@@ -29,7 +29,7 @@ import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 
 private enum class LabelTab(@StringRes val titleRes: Int) {
@@ -54,7 +54,7 @@ internal fun LabelScaffold(
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
@@ -81,7 +81,7 @@ internal fun LabelScaffold(
 
     Scaffold(
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = titleState,
                 onBack = onBack,
@@ -92,11 +92,11 @@ internal fun LabelScaffold(
                 tabsTitles = LabelTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = LabelTab.values()[it] },
-                showSearchIcon = selectedTab == LabelTab.RELEASES,
-                searchText = searchText,
-                onSearchTextChange = {
-                    searchText = it
-                    viewModel.query.value = searchText
+                showFilterIcon = selectedTab == LabelTab.RELEASES,
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                    viewModel.query.value = filterText
                 },
             )
         },

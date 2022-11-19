@@ -37,7 +37,7 @@ import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -49,19 +49,19 @@ internal fun HistoryScreenScaffold(
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
 
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.lookUpHistory)
         .collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 openDrawer = openDrawer,
                 title = stringResource(id = R.string.recent_history),
-                searchText = searchText,
-                onSearchTextChange = {
-                    searchText = it
-                    viewModel.updateQuery(query = searchText)
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                    viewModel.updateQuery(query = filterText)
                 },
             )
         },

@@ -33,7 +33,7 @@ import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
@@ -113,7 +113,7 @@ internal fun ReleaseScaffold(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = title,
                 subtitle = subtitleState,
@@ -145,9 +145,9 @@ internal fun ReleaseScaffold(
                 tabsTitles = ReleaseTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ReleaseTab.values()[it] },
-                showSearchIcon = selectedTab == ReleaseTab.TRACKS,
-                searchText = filterText,
-                onSearchTextChange = {
+                showFilterIcon = selectedTab == ReleaseTab.TRACKS,
+                filterText = filterText,
+                onFilterTextChange = {
                     filterText = it
                     viewModel.updateQuery(query = filterText)
                 },

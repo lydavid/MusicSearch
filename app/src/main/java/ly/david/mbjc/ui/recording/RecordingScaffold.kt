@@ -35,7 +35,7 @@ import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithSearch
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
 private enum class RecordingTab(@StringRes val titleRes: Int) {
@@ -59,7 +59,7 @@ internal fun RecordingScaffold(
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.RELEASES) }
-    var searchText by rememberSaveable { mutableStateOf("") }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var recording: RecordingUiModel? by remember { mutableStateOf(null) }
 
@@ -93,7 +93,7 @@ internal fun RecordingScaffold(
 
     Scaffold(
         topBar = {
-            TopAppBarWithSearch(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = titleState,
                 subtitle = subtitleState,
@@ -116,11 +116,11 @@ internal fun RecordingScaffold(
                 tabsTitles = RecordingTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = RecordingTab.values()[it] },
-                showSearchIcon = selectedTab == RecordingTab.RELEASES,
-                searchText = searchText,
-                onSearchTextChange = {
-                    searchText = it
-                    viewModel.updateQuery(searchText)
+                showFilterIcon = selectedTab == RecordingTab.RELEASES,
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                    viewModel.updateQuery(filterText)
                 },
             )
         },
