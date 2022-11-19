@@ -37,6 +37,9 @@ internal fun ReleaseDetailsScreen(
 ) {
 
     var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
+
+    // TODO: this might also be the culprit
+    //  but hoisting every one of these might be too much effort
     var areasWithReleaseDate: List<AreaWithReleaseDate> by rememberSaveable { mutableStateOf(listOf()) }
 
     LaunchedEffect(key1 = releaseUiModel) {
@@ -47,6 +50,10 @@ internal fun ReleaseDetailsScreen(
 
     // TODO: scroll position not saved on tab change
     //  it is saved on config change at least
+    //  workaround for LazyPagingItems: https://issuetracker.google.com/issues/177245496#comment24
+    //  might be able to adapt this or wait for a fix
+    //  It's also possible because releaseUiModel is unstable, we recompose every time
+    //  with no skipping
     LazyColumn(state = lazyListState) {
         item {
             releaseUiModel?.run {
