@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtists
+import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 
 // TODO: if this is in a non-android module, we can't mark it Immutable
 //  We could extract uimodel to data-android or app
@@ -40,7 +40,7 @@ fun ReleaseGroupMusicBrainzModel.toUiModel(): ReleaseGroupUiModel {
     )
 }
 
-fun ReleaseGroupWithArtists.toUiModel(): ReleaseGroupUiModel {
+fun ReleaseGroupWithArtistCredits.toUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = releaseGroup.id,
         name = releaseGroup.name,

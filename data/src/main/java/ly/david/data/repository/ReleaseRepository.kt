@@ -52,7 +52,7 @@ class ReleaseRepository @Inject constructor(
         // Empty artist credits is sufficient to indicate we've never done a lookup
         // if it's no longer the case, then check for formats/tracks
         if (releaseWithAllData != null && artistCredits.isNotEmpty() && releaseWithAllData.release.releaseGroupId != null) {
-            val releaseGroup = releaseGroupDao.getReleaseGroup(releaseWithAllData.release.releaseGroupId)
+            val releaseGroup = releaseGroupDao.getReleaseGroupWithArtistCredits(releaseWithAllData.release.releaseGroupId)
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.

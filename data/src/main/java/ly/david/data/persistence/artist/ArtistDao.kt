@@ -7,10 +7,11 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
 
 @Dao
 abstract class ArtistDao : BaseDao<ArtistRoomModel> {
+
     @Query("SELECT * FROM artists WHERE id = :artistId")
     abstract suspend fun getArtist(artistId: String): ArtistRoomModel?
 
-
+    // TODO: use browse_resources
     @Query(
         """
         UPDATE artists

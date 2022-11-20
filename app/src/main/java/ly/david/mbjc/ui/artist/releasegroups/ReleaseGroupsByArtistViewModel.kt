@@ -29,12 +29,14 @@ import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroup
+import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
+    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel() {
 
@@ -77,7 +79,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
                         getLocalResourceCount = { artistDao.getNumberOfReleaseGroupsByArtist(artistId) },
                         deleteLocalResource = {
-                            releaseGroupDao.deleteReleaseGroupsByArtist(artistId)
+                            artistReleaseGroupDao.deleteReleaseGroupsByArtist(artistId)
                         },
                         browseResource = { offset ->
                             browseReleaseGroupsAndStore(artistId, offset)
@@ -117,7 +119,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
         val musicBrainzReleaseGroups = response.releaseGroups
 
         releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(musicBrainzReleaseGroups)
-        releaseGroupDao.insertAllArtistReleaseGroup(
+        artistReleaseGroupDao.insertAll(
             musicBrainzReleaseGroups.map { releaseGroup ->
                 ArtistReleaseGroup(
                     artistId = artistId,
@@ -131,19 +133,19 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 
     private fun getPagingSource(artistId: String, query: String, isSorted: Boolean) = when {
         isSorted && query.isEmpty() -> {
-            releaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
+            artistReleaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
         }
         isSorted -> {
-            releaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
+            artistReleaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
                 artistId = artistId,
                 query = "%$query%"
             )
         }
         query.isEmpty() -> {
-            releaseGroupDao.getReleaseGroupsByArtist(artistId)
+            artistReleaseGroupDao.getReleaseGroupsByArtist(artistId)
         }
         else -> {
-            releaseGroupDao.getReleaseGroupsByArtistFiltered(
+            artistReleaseGroupDao.getReleaseGroupsByArtistFiltered(
                 artistId = artistId,
                 query = "%$query%"
             )

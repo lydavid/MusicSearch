@@ -28,7 +28,7 @@ class ReleaseGroupRepository @Inject constructor(
 
     // We need ReleaseGroupUiModel so that we have artist credits
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel {
-        val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
+        val roomReleaseGroup = releaseGroupDao.getReleaseGroupWithArtistCredits(releaseGroupId)
         if (roomReleaseGroup != null) {
             return roomReleaseGroup.toUiModel()
         }

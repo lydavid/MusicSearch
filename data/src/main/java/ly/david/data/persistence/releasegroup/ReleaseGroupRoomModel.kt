@@ -33,12 +33,10 @@ data class ReleaseGroupRoomModel(
     override val secondaryTypes: List<String>? = null,
 ) : RoomModel, ReleaseGroup
 
-data class ReleaseGroupWithArtists(
+data class ReleaseGroupWithArtistCredits(
     @Embedded
     val releaseGroup: ReleaseGroupRoomModel,
 
-    // TODO: need view
-    //  want this to have a list of ArtistCreditNameRoomModel
     @Relation(
         parentColumn = "id",
         entityColumn = "resource_id"
