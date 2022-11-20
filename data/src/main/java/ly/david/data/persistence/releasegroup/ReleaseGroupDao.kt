@@ -57,10 +57,6 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditInt
         """
     }
 
-    // TODO: won't work...
-//    @Inject
-//    lateinit var artistCreditDao: ArtistCreditDao
-
     @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllReleaseGroupsWithArtistCredits(releaseGroups: List<ReleaseGroupMusicBrainzModel>) {

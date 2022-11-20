@@ -27,7 +27,7 @@ data class ReleaseGroupUiModel(
     override val secondaryTypes: List<String>? = null,
 
     val artistCredits: List<ArtistCreditUiModel> = listOf()
-): UiModel(), ReleaseGroup
+) : UiModel(), ReleaseGroup
 
 fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
@@ -69,21 +69,3 @@ fun List<ArtistCreditNameRoomModel>?.toUiModels(): List<ArtistCreditUiModel> =
             joinPhrase = artistCredit.joinPhrase
         )
     }.orEmpty()
-
-
-
-//fun ReleaseGroupRoomModel.toReleaseGroupUiModel(
-//    releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel> = listOf()
-//): ReleaseGroupUiModel {
-//    return ReleaseGroupUiModel(
-//        id = id,
-//        name = name,
-//        firstReleaseDate = firstReleaseDate,
-//        disambiguation = disambiguation,
-//
-//        primaryType = primaryType,
-//        secondaryTypes = secondaryTypes,
-//
-//        artistCredits = releaseGroupArtistCreditRoomModels
-//    )
-//}

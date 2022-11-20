@@ -15,7 +15,6 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
-import ly.david.data.persistence.releasegroup.ArtistCreditDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
@@ -25,7 +24,6 @@ import ly.david.data.persistence.work.WorkDao
 interface MusicBrainzDatabase {
     fun getArtistDao(): ArtistDao
     fun getReleaseGroupArtistDao(): ReleaseGroupArtistDao
-    fun getArtistCreditDao(): ArtistCreditDao
 
     fun getReleaseGroupDao(): ReleaseGroupDao
     fun getReleasesReleaseGroupsDao(): ReleasesReleaseGroupsDao

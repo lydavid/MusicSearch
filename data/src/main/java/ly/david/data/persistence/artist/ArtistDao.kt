@@ -25,8 +25,8 @@ abstract class ArtistDao : BaseDao<ArtistRoomModel> {
         SELECT IFNULL(
             (SELECT COUNT(*)
             FROM release_groups rg
-            INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-            INNER JOIN artists a ON a.id = rga.artist_id
+            INNER JOIN artists_release_groups arg ON rg.id = arg.release_group_id
+            INNER JOIN artists a ON a.id = arg.artist_id
             WHERE a.id = :artistId
             GROUP BY a.id),
             0
@@ -39,8 +39,8 @@ abstract class ArtistDao : BaseDao<ArtistRoomModel> {
         """
         SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) as count
         FROM release_groups rg
-        INNER JOIN release_groups_artists rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
+        INNER JOIN artists_release_groups arg ON rg.id = arg.release_group_id
+        INNER JOIN artists a ON a.id = arg.artist_id
         WHERE a.id = :artistId
         GROUP  BY rg.primary_type, rg.secondary_types
     """

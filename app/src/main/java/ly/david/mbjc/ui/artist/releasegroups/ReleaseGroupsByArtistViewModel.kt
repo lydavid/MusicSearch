@@ -29,7 +29,6 @@ import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroup
-import ly.david.data.persistence.releasegroup.ArtistCreditDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
@@ -38,7 +37,6 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
-    private val artistCreditDao: ArtistCreditDao,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel() {
 
@@ -121,15 +119,8 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 
         val musicBrainzReleaseGroups = response.releaseGroups
 
-//        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toReleaseGroupRoomModel() })
         releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(musicBrainzReleaseGroups)
 
-        // TODO: insert linking table here
-//        releaseGroupArtistDao.insertAll(
-//            musicBrainzReleaseGroups.flatMap { releaseGroup ->
-//                releaseGroup.getReleaseGroupArtistCreditRoomModels()
-//            }
-//        )
         releaseGroupDao.insertAllArtistReleaseGroup(
             musicBrainzReleaseGroups.map { releaseGroup ->
                 ArtistReleaseGroup(

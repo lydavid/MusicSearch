@@ -11,7 +11,6 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
 
-// TODO: migrate to 2, then drop, then rename
 @Entity(
     tableName = "release_groups",
 )
@@ -32,41 +31,6 @@ data class ReleaseGroupRoomModel(
 
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
-) : RoomModel, ReleaseGroup
-
-
-@Entity(
-    tableName = "release_groups2",
-//    foreignKeys = [
-//        ForeignKey(
-//            entity = ArtistCreditRoomModel::class,
-//            parentColumns = arrayOf("artist_credit_id"),
-//            childColumns = arrayOf("id"),
-//            onUpdate = ForeignKey.CASCADE,
-//            onDelete = ForeignKey.CASCADE
-//        )
-//    ]
-)
-data class ReleaseGroupRoomModel2(
-
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-    @ColumnInfo(name = "title")
-    override val name: String = "",
-    @ColumnInfo(name = "first_release_date")
-    override val firstReleaseDate: String = "",
-    @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String = "",
-
-    @ColumnInfo(name = "primary_type")
-    override val primaryType: String? = null,
-
-    @ColumnInfo(name = "secondary_types")
-    override val secondaryTypes: List<String>? = null,
-
-    @ColumnInfo(name = "artist_credit_id")
-    val artistCreditId: Long
 ) : RoomModel, ReleaseGroup
 
 data class ReleaseGroupWithArtists(
@@ -127,16 +91,3 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomMode
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
     )
-
-//fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(
-//    artistCreditId: Long
-//): ReleaseGroupRoomModel2 =
-//    ReleaseGroupRoomModel2(
-//        id = id,
-//        name = name,
-//        firstReleaseDate = firstReleaseDate,
-//        disambiguation = disambiguation,
-//        primaryType = primaryType,
-//        secondaryTypes = secondaryTypes,
-//        artistCreditId = artistCreditId
-//    )
