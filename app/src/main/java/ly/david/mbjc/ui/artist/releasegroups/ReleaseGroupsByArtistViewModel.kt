@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.stateIn
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.UiModel
-import ly.david.data.domain.toReleaseGroupUiModel
+import ly.david.data.domain.toUiModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.paging.BrowseResourceRemoteMediator
@@ -88,7 +88,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(artistId, query, isSorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toReleaseGroupUiModel()
+                        it.toUiModel()
                     }
                         .insertSeparators { releaseGroupUiModel: ReleaseGroupUiModel?, releaseGroupUiModel2: ReleaseGroupUiModel? ->
                             if (isSorted && releaseGroupUiModel2 != null &&
@@ -105,7 +105,6 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    // TODO: always making network call, caching broken for this?
     private suspend fun browseReleaseGroupsAndStore(artistId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleaseGroupsByArtist(
             artistId = artistId,
@@ -120,7 +119,6 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
         val musicBrainzReleaseGroups = response.releaseGroups
 
         releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(musicBrainzReleaseGroups)
-
         releaseGroupDao.insertAllArtistReleaseGroup(
             musicBrainzReleaseGroups.map { releaseGroup ->
                 ArtistReleaseGroup(

@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import ly.david.data.ArtistCredit
+import ly.david.data.network.ArtistCreditMusicBrainzModel
 
 /**
  * Stores the artist credits of release groups, releases and recordings.
@@ -47,7 +48,6 @@ data class ArtistCreditNameRoomModel(
     override val joinPhrase: String? = null
 ) : ArtistCredit
 
-// TODO: instead of linking table with each of track/release/rg/rec, we just need them to each have a reference to this table
 @Entity(
     tableName = "artist_credits",
     indices = [Index(value = ["name"], unique = true)]
@@ -60,24 +60,6 @@ data class ArtistCreditRoomModel(
     // The full artist credit name, with all artist names and join phrases combined
     @ColumnInfo(name = "name")
     val name: String,
-
-    // TODO: don't put this here
-    //  or else, we can't reference the same artist credit between release group, release, etc
-    //  However, MB doesn't have a linking table between artist credits and each table
-    //  how do they do it?
-    //  We could make THIS the linking table
-    //  in which case, id should not be autogen
-    //  If we accept redundant name in this table, then we can search this table for name (which would be all names + joinprhases)
-    //  if it exists, use its id and the new resource id
-    //  otherwise insert new
-//    @ColumnInfo(name = "resource_id")
-//    val resourceId: String,
-
-//    @Relation(
-//        parentColumn = "id",
-//        entityColumn = "artist_credit_id"
-//    )
-//    val names: List<ArtistCreditNameRoomModel>
 )
 
 @Entity(
@@ -102,9 +84,16 @@ data class ArtistCreditResource(
     val resourceId: String
 )
 
-data class ArtistCreditUiModel(
-    val position: Int,
-    val artistId: String,
-    override val name: String,
-    override val joinPhrase: String? = null
-) : ArtistCredit
+/**
+ * The receiver must be a list because we need its index.
+ */
+fun List<ArtistCreditMusicBrainzModel>?.toRoomModels(artistCreditId: Long): List<ArtistCreditNameRoomModel> =
+    this?.mapIndexed { index, artistCredit ->
+        ArtistCreditNameRoomModel(
+            artistCreditId = artistCreditId,
+            artistId = artistCredit.artist.id,
+            name = artistCredit.name,
+            joinPhrase = artistCredit.joinPhrase,
+            position = index
+        )
+    }.orEmpty()

@@ -18,7 +18,7 @@ import ly.david.data.common.getYear
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.persistence.artist.ArtistCreditUiModel
+import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles

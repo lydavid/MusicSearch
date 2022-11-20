@@ -45,7 +45,7 @@ class ListSeparator(val text: String) : UiModel()
 fun MusicBrainzModel.toUiModel(): UiModel {
     return when (this) {
         is ArtistMusicBrainzModel -> this.toArtistUiModel()
-        is ReleaseGroupMusicBrainzModel -> this.toReleaseGroupUiModel()
+        is ReleaseGroupMusicBrainzModel -> this.toUiModel()
         is ReleaseMusicBrainzModel -> this.toReleaseUiModel()
         is RecordingMusicBrainzModel -> this.toRecordingUiModel()
         is PlaceMusicBrainzModel -> this.toPlaceUiModel()

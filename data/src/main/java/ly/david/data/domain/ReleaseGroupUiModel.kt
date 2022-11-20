@@ -2,9 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.network.toUiModels
 import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
-import ly.david.data.persistence.artist.ArtistCreditUiModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtists
 
@@ -29,7 +27,7 @@ data class ReleaseGroupUiModel(
     val artistCredits: List<ArtistCreditUiModel> = listOf()
 ) : UiModel(), ReleaseGroup
 
-fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
+fun ReleaseGroupMusicBrainzModel.toUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,
@@ -43,7 +41,7 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
     )
 }
 
-fun ReleaseGroupWithArtists.toReleaseGroupUiModel(): ReleaseGroupUiModel {
+fun ReleaseGroupWithArtists.toUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = releaseGroup.id,
         name = releaseGroup.name,

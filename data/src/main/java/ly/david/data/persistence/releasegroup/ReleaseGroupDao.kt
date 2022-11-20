@@ -8,11 +8,11 @@ import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.getDisplayNames
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.network.toRoomModels
 import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.artist.ArtistCreditResource
 import ly.david.data.persistence.artist.ArtistCreditRoomModel
 import ly.david.data.persistence.artist.ArtistReleaseGroup
+import ly.david.data.persistence.artist.toRoomModels
 
 const val INSERTION_FAILED_DUE_TO_CONFLICT = -1L
 
@@ -57,36 +57,43 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditInt
         """
     }
 
-    @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllReleaseGroupsWithArtistCredits(releaseGroups: List<ReleaseGroupMusicBrainzModel>) {
         releaseGroups.forEach { releaseGroup ->
-            val artistCreditName = releaseGroup.artistCredits.getDisplayNames()
-            var artistCreditId = insertArtistCredit(ArtistCreditRoomModel(name = artistCreditName))
-            if (artistCreditId == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                artistCreditId = getArtistCreditByName(artistCreditName).id
-            } else {
-                insertAllArtistCreditNames(releaseGroup.artistCredits.toRoomModels(artistCreditId))
-            }
-
-            insertArtistCreditResource(ArtistCreditResource(
-                artistCreditId = artistCreditId,
-                resourceId = releaseGroup.id
-            ))
-
-            insert(releaseGroup.toReleaseGroupRoomModel())
+            insertReleaseGroupWithArtistCredits(releaseGroup)
         }
     }
 
-    // TODO: insert a single rg with artist credits
-    //  have above use this
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertReleaseGroupWithArtistCredits(releaseGroup: ReleaseGroupMusicBrainzModel) {
+        val artistCreditName = releaseGroup.artistCredits.getDisplayNames()
+        var artistCreditId = insertArtistCredit(ArtistCreditRoomModel(name = artistCreditName))
+        if (artistCreditId == INSERTION_FAILED_DUE_TO_CONFLICT) {
+            artistCreditId = getArtistCreditByName(artistCreditName).id
+        } else {
+            insertAllArtistCreditNames(releaseGroup.artistCredits.toRoomModels(artistCreditId))
+        }
+
+        insertArtistCreditResource(
+            ArtistCreditResource(
+                artistCreditId = artistCreditId,
+                resourceId = releaseGroup.id
+            )
+        )
+
+        insert(releaseGroup.toReleaseGroupRoomModel())
+    }
 
     // Lookup
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): ReleaseGroupWithArtists?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertAllArtistReleaseGroup(artistReleaseGroup: List<ArtistReleaseGroup>)
+    abstract suspend fun insertArtistReleaseGroup(artistReleaseGroup: ArtistReleaseGroup)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertAllArtistReleaseGroup(artistsReleaseGroups: List<ArtistReleaseGroup>)
 
     // TODO: move all by artist to either artist dao or artist_release_group_dao
     @Query(

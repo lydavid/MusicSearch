@@ -4,7 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseUiModel
-import ly.david.data.domain.toReleaseGroupUiModel
+import ly.david.data.domain.toUiModel
 import ly.david.data.domain.toReleaseUiModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
@@ -62,7 +62,7 @@ class ReleaseRepository @Inject constructor(
             // releases must have artist credits.
             return releaseWithAllData.toReleaseUiModel(
                 releaseArtistCreditRoomModel = artistCredits,
-                releaseGroup = releaseGroup?.toReleaseGroupUiModel()
+                releaseGroup = releaseGroup?.toUiModel()
             )
         }
 
@@ -102,7 +102,7 @@ class ReleaseRepository @Inject constructor(
         )
 
         return releaseMusicBrainzModel.toReleaseUiModel(
-            releaseGroup = releaseMusicBrainzModel.releaseGroup?.toReleaseGroupUiModel()
+            releaseGroup = releaseMusicBrainzModel.releaseGroup?.toUiModel()
         )
     }
 

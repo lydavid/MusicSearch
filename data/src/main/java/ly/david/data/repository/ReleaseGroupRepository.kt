@@ -4,27 +4,23 @@ import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.ReleaseGroupUiModel
-import ly.david.data.domain.toReleaseGroupUiModel
+import ly.david.data.domain.toUiModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.persistence.relation.BrowseResourceOffset
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
-import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 
 @Singleton
 class ReleaseGroupRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
@@ -34,20 +30,12 @@ class ReleaseGroupRepository @Inject constructor(
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel {
         val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
         if (roomReleaseGroup != null) {
-            return roomReleaseGroup.toReleaseGroupUiModel(
-//                releaseGroupArtistDao.getReleaseGroupArtistCredits(
-//                    releaseGroupId
-//                )
-            )
+            return roomReleaseGroup.toUiModel()
         }
 
-        val musicBrainzReleaseGroup = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
-
-        // Whenever we insert a release group, we must always insert all of its artists as well
-        releaseGroupDao.insert(musicBrainzReleaseGroup.toReleaseGroupRoomModel())
-        releaseGroupArtistDao.insertAll(musicBrainzReleaseGroup.getReleaseGroupArtistCreditRoomModels())
-
-        return musicBrainzReleaseGroup.toReleaseGroupUiModel()
+        val releaseGroupMusicBrainzModel = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
+        releaseGroupDao.insertReleaseGroupWithArtistCredits(releaseGroupMusicBrainzModel)
+        return releaseGroupMusicBrainzModel.toUiModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
