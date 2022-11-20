@@ -186,4 +186,7 @@ internal object Migrations {
 
     @RenameColumn(tableName = "artists", fromColumnName = "sort-name", toColumnName = "sort_name")
     class RenameSortName : AutoMigrationSpec
+
+    @DeleteTable(tableName = "release_groups_artists")
+    class DropReleaseGroupsArtists : AutoMigrationSpec
 }

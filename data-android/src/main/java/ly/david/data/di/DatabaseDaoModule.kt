@@ -5,16 +5,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ly.david.data.persistence.MusicBrainzDatabase
-import ly.david.data.persistence.artist.ArtistDao
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object DatabaseDaoModule {
     @Provides
-    fun provideArtistDao(db: MusicBrainzDatabase): ArtistDao = db.getArtistDao()
+    fun provideArtistDao(db: MusicBrainzDatabase) = db.getArtistDao()
 
     @Provides
-    fun provideReleaseGroupArtistDao(db: MusicBrainzDatabase) = db.getReleaseGroupArtistDao()
+    fun provideArtistReleaseGroupDao(db: MusicBrainzDatabase) = db.getArtistReleaseGroupDao()
 
     @Provides
     fun provideReleaseGroupDao(db: MusicBrainzDatabase) = db.getReleaseGroupDao()

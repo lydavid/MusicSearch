@@ -2,9 +2,8 @@ package ly.david.data.domain
 
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 
 // TODO: if this is in a non-android module, we can't mark it Immutable
 //  We could extract uimodel to data-android or app
@@ -24,10 +23,10 @@ data class ReleaseGroupUiModel(
     // Since this is just a list of primitives, we will mark this class immutable.
     override val secondaryTypes: List<String>? = null,
 
-    val artistCredits: List<ReleaseGroupArtistCreditRoomModel> = listOf()
-): UiModel(), ReleaseGroup
+    val artistCredits: List<ArtistCreditUiModel> = listOf()
+) : UiModel(), ReleaseGroup
 
-fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
+fun ReleaseGroupMusicBrainzModel.toUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = id,
         name = name,
@@ -37,22 +36,22 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupUiModel(): ReleaseGroupUiModel {
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
 
-        artistCredits = getReleaseGroupArtistCreditRoomModels()
+        artistCredits = artistCredits.toUiModels()
     )
 }
 
-fun ReleaseGroupRoomModel.toReleaseGroupUiModel(
-    releaseGroupArtistCreditRoomModels: List<ReleaseGroupArtistCreditRoomModel> = listOf()
-): ReleaseGroupUiModel {
+fun ReleaseGroupWithArtistCredits.toUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
-        id = id,
-        name = name,
-        firstReleaseDate = firstReleaseDate,
-        disambiguation = disambiguation,
+        id = releaseGroup.id,
+        name = releaseGroup.name,
+        firstReleaseDate = releaseGroup.firstReleaseDate,
+        disambiguation = releaseGroup.disambiguation,
 
-        primaryType = primaryType,
-        secondaryTypes = secondaryTypes,
+        primaryType = releaseGroup.primaryType,
+        secondaryTypes = releaseGroup.secondaryTypes,
 
-        artistCredits = releaseGroupArtistCreditRoomModels
+        artistCredits = artistCreditNamesWithResources.map {
+            it.artistCreditNameRoomModel.toUiModel()
+        }
     )
 }

@@ -1,11 +1,15 @@
 package ly.david.data.persistence.releasegroup
 
 import androidx.room.ColumnInfo
+import androidx.room.DatabaseView
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.RoomModel
+import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
 
 @Entity(
     tableName = "release_groups",
@@ -28,6 +32,34 @@ data class ReleaseGroupRoomModel(
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
 ) : RoomModel, ReleaseGroup
+
+data class ReleaseGroupWithArtistCredits(
+    @Embedded
+    val releaseGroup: ReleaseGroupRoomModel,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "resource_id"
+    )
+    val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>
+) : RoomModel
+
+@DatabaseView(
+    """
+    SELECT acr.resource_id, acn.*
+    FROM artist_credits_resources acr
+    INNER JOIN artist_credits ac ON ac.id = acr.artist_credit_id
+    INNER JOIN artist_credit_names acn ON acn.artist_credit_id = ac.id
+"""
+)
+data class ArtistCreditNamesWithResource(
+
+    @ColumnInfo(name = "resource_id")
+    val resourceId: String,
+
+    @Embedded
+    val artistCreditNameRoomModel: ArtistCreditNameRoomModel,
+)
 
 //@Fts4(contentEntity = RoomReleaseGroup::class)
 //@Entity(tableName = "release_groups_fts_table")

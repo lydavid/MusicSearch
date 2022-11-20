@@ -19,23 +19,24 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import ly.david.data.domain.ListSeparator
+import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.UiModel
-import ly.david.data.domain.toReleaseGroupUiModel
+import ly.david.data.domain.toUiModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
+import ly.david.data.persistence.artist.ArtistReleaseGroup
+import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
-    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
+    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel() {
 
@@ -78,7 +79,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
                         getLocalResourceCount = { artistDao.getNumberOfReleaseGroupsByArtist(artistId) },
                         deleteLocalResource = {
-                            releaseGroupDao.deleteReleaseGroupsByArtist(artistId)
+                            artistReleaseGroupDao.deleteReleaseGroupsByArtist(artistId)
                         },
                         browseResource = { offset ->
                             browseReleaseGroupsAndStore(artistId, offset)
@@ -87,17 +88,18 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(artistId, query, isSorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toReleaseGroupUiModel(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
-                    }.insertSeparators { releaseGroupUiModel: ly.david.data.domain.ReleaseGroupUiModel?, releaseGroupUiModel2: ly.david.data.domain.ReleaseGroupUiModel? ->
-                        if (isSorted && releaseGroupUiModel2 != null &&
-                            (releaseGroupUiModel?.primaryType != releaseGroupUiModel2.primaryType ||
-                                releaseGroupUiModel?.secondaryTypes != releaseGroupUiModel2.secondaryTypes)
-                        ) {
-                            ly.david.data.domain.ListSeparator(releaseGroupUiModel2.getDisplayTypes())
-                        } else {
-                            null
-                        }
+                        it.toUiModel()
                     }
+                        .insertSeparators { releaseGroupUiModel: ReleaseGroupUiModel?, releaseGroupUiModel2: ReleaseGroupUiModel? ->
+                            if (isSorted && releaseGroupUiModel2 != null &&
+                                (releaseGroupUiModel?.primaryType != releaseGroupUiModel2.primaryType ||
+                                    releaseGroupUiModel?.secondaryTypes != releaseGroupUiModel2.secondaryTypes)
+                            ) {
+                                ListSeparator(releaseGroupUiModel2.getDisplayTypes())
+                            } else {
+                                null
+                            }
+                        }
                 }
             }
             .distinctUntilChanged()
@@ -116,10 +118,13 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 
         val musicBrainzReleaseGroups = response.releaseGroups
 
-        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toReleaseGroupRoomModel() })
-        releaseGroupArtistDao.insertAll(
-            musicBrainzReleaseGroups.flatMap { releaseGroup ->
-                releaseGroup.getReleaseGroupArtistCreditRoomModels()
+        releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(musicBrainzReleaseGroups)
+        artistReleaseGroupDao.insertAll(
+            musicBrainzReleaseGroups.map { releaseGroup ->
+                ArtistReleaseGroup(
+                    artistId = artistId,
+                    releaseGroupId = releaseGroup.id
+                )
             }
         )
 
@@ -128,19 +133,19 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 
     private fun getPagingSource(artistId: String, query: String, isSorted: Boolean) = when {
         isSorted && query.isEmpty() -> {
-            releaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
+            artistReleaseGroupDao.getReleaseGroupsByArtistSorted(artistId)
         }
         isSorted -> {
-            releaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
+            artistReleaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
                 artistId = artistId,
                 query = "%$query%"
             )
         }
         query.isEmpty() -> {
-            releaseGroupDao.getReleaseGroupsByArtist(artistId)
+            artistReleaseGroupDao.getReleaseGroupsByArtist(artistId)
         }
         else -> {
-            releaseGroupDao.getReleaseGroupsByArtistFiltered(
+            artistReleaseGroupDao.getReleaseGroupsByArtistFiltered(
                 artistId = artistId,
                 query = "%$query%"
             )

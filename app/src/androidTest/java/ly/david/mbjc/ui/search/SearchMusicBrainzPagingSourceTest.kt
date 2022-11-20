@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.toArtistUiModel
-import ly.david.data.domain.toReleaseGroupUiModel
+import ly.david.data.domain.toUiModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.fakeArtist
 import ly.david.data.network.fakeReleaseGroup
@@ -50,7 +50,7 @@ internal class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    fakeReleaseGroup.toReleaseGroupUiModel()
+                    fakeReleaseGroup.toUiModel()
                 ),
                 prevKey = 1,
                 nextKey = 2

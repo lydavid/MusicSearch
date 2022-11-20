@@ -7,7 +7,8 @@ val fakeArtist = ArtistMusicBrainzModel(
 
 val fakeArtistCredit = ArtistCreditMusicBrainzModel(
     artist = fakeArtist,
-    name = "Different Artist Name"
+    name = "Different Artist Name",
+    joinPhrase = " feat. "
 )
 
 val fakeArtist2 = ArtistMusicBrainzModel(
@@ -18,5 +19,4 @@ val fakeArtist2 = ArtistMusicBrainzModel(
 val fakeArtistCredit2 = ArtistCreditMusicBrainzModel(
     artist = fakeArtist2,
     name = "Other Artist",
-    joinPhrase = " feat. "
 )

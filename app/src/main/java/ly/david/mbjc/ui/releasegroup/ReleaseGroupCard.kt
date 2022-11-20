@@ -15,9 +15,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.getYear
+import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
+import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -25,8 +26,8 @@ import ly.david.mbjc.ui.theme.TextStyles
 // TODO: have 2 modes: query and browse where some data is displayed differently
 @Composable
 internal fun ReleaseGroupCard(
-    releaseGroup: ly.david.data.domain.ReleaseGroupUiModel,
-    onClick: ly.david.data.domain.ReleaseGroupUiModel.() -> Unit = {}
+    releaseGroup: ReleaseGroupUiModel,
+    onClick: ReleaseGroupUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
@@ -62,24 +63,22 @@ internal fun ReleaseGroupCard(
     }
 }
 
-private val testReleaseGroup = ly.david.data.domain.ReleaseGroupUiModel(
+private val testReleaseGroup = ReleaseGroupUiModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     name = "欠けた心象、世のよすが",
     primaryType = "EP",
     firstReleaseDate = "2021-09-08",
     artistCredits = listOf(
-        ReleaseGroupArtistCreditRoomModel(
-            releaseGroupId = "1",
+        ArtistCreditUiModel(
+            position = 0,
             artistId = "2",
             name = "Some artist",
-            joinPhrase = " feat. ",
-            order = 0
+            joinPhrase = " feat. "
         ),
-        ReleaseGroupArtistCreditRoomModel(
-            releaseGroupId = "1",
+        ArtistCreditUiModel(
+            position = 1,
             artistId = "3",
-            name = "some other artist",
-            order = 1
+            name = "some other artist"
         )
     )
 )
