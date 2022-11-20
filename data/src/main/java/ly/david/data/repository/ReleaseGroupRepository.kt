@@ -10,12 +10,12 @@ import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.relation.BrowseResourceOffset
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
+import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
@@ -35,9 +35,9 @@ class ReleaseGroupRepository @Inject constructor(
         val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
         if (roomReleaseGroup != null) {
             return roomReleaseGroup.toReleaseGroupUiModel(
-                releaseGroupArtistDao.getReleaseGroupArtistCredits(
-                    releaseGroupId
-                )
+//                releaseGroupArtistDao.getReleaseGroupArtistCredits(
+//                    releaseGroupId
+//                )
             )
         }
 

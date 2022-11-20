@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingUiModel
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.release.tracks.TrackCard
@@ -41,9 +42,12 @@ internal fun RecordingCard(
     }
 }
 
+
+
+@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-internal fun RecordingCardPreview() {
+private fun Preview() {
     PreviewTheme {
         Surface {
             RecordingCard(

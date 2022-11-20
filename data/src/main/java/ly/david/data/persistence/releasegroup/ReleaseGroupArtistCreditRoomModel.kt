@@ -6,6 +6,10 @@ import androidx.room.ForeignKey
 import ly.david.data.ArtistCredit
 import ly.david.data.network.RecordingMusicBrainzModel
 
+// TODO: migrate away
+// TODO: Note: we were using this as the linking table between artists and rg...
+//  so we will need separate artists_release_groups table after our changes
+// https://github.com/metabrainz/musicbrainz-server/blob/master/admin/sql/CreateTables.sql#L464
 /**
  * An artist's credit for a [ReleaseGroup].
  * A release group can have many artists credits. It can even have the same artist listed twice under different names.

@@ -7,6 +7,10 @@ import androidx.room.TypeConverters
 import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
+import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
+import ly.david.data.persistence.artist.ArtistCreditResource
+import ly.david.data.persistence.artist.ArtistCreditRoomModel
+import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistRoomModel
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.history.LookupHistory
@@ -25,13 +29,14 @@ import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.TrackRoomModel
+import ly.david.data.persistence.releasegroup.ArtistCreditNamesWithResource
 import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 61,
+    version = 62,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -41,6 +46,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         EventRoomModel::class,
 
         // Other tables
+        ArtistCreditNameRoomModel::class, ArtistCreditRoomModel::class, ArtistCreditResource::class,
         MediumRoomModel::class, TrackRoomModel::class,
         Iso3166_1::class,
 
@@ -51,6 +57,8 @@ import ly.david.data.persistence.work.WorkRoomModel
         RelationRoomModel::class,
         HasRelationsRoomModel::class,
         BrowseResourceOffset::class,
+
+        ArtistReleaseGroup::class,
         ReleaseGroupArtistCreditRoomModel::class,
         ReleaseArtistCreditRoomModel::class,
         RecordingArtistCreditRoomModel::class,
@@ -64,6 +72,7 @@ import ly.david.data.persistence.work.WorkRoomModel
     ],
     views = [
         LabelWithCatalog::class,
+        ArtistCreditNamesWithResource::class
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
@@ -118,6 +127,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 58, to = 59),
         AutoMigration(from = 59, to = 60),
         AutoMigration(from = 60, to = 61),
+        AutoMigration(from = 61, to = 62),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

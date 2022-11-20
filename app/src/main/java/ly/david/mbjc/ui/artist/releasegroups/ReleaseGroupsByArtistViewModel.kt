@@ -19,23 +19,26 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import ly.david.data.domain.ListSeparator
+import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toReleaseGroupUiModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
+import ly.david.data.persistence.artist.ArtistReleaseGroup
+import ly.david.data.persistence.releasegroup.ArtistCreditDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
     private val releaseGroupArtistDao: ReleaseGroupArtistDao,
+    private val artistCreditDao: ArtistCreditDao,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel() {
 
@@ -87,22 +90,24 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(artistId, query, isSorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toReleaseGroupUiModel(releaseGroupArtistDao.getReleaseGroupArtistCredits(it.id))
-                    }.insertSeparators { releaseGroupUiModel: ly.david.data.domain.ReleaseGroupUiModel?, releaseGroupUiModel2: ly.david.data.domain.ReleaseGroupUiModel? ->
-                        if (isSorted && releaseGroupUiModel2 != null &&
-                            (releaseGroupUiModel?.primaryType != releaseGroupUiModel2.primaryType ||
-                                releaseGroupUiModel?.secondaryTypes != releaseGroupUiModel2.secondaryTypes)
-                        ) {
-                            ly.david.data.domain.ListSeparator(releaseGroupUiModel2.getDisplayTypes())
-                        } else {
-                            null
-                        }
+                        it.toReleaseGroupUiModel()
                     }
+                        .insertSeparators { releaseGroupUiModel: ReleaseGroupUiModel?, releaseGroupUiModel2: ReleaseGroupUiModel? ->
+                            if (isSorted && releaseGroupUiModel2 != null &&
+                                (releaseGroupUiModel?.primaryType != releaseGroupUiModel2.primaryType ||
+                                    releaseGroupUiModel?.secondaryTypes != releaseGroupUiModel2.secondaryTypes)
+                            ) {
+                                ListSeparator(releaseGroupUiModel2.getDisplayTypes())
+                            } else {
+                                null
+                            }
+                        }
                 }
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
+    // TODO: always making network call, caching broken for this?
     private suspend fun browseReleaseGroupsAndStore(artistId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseReleaseGroupsByArtist(
             artistId = artistId,
@@ -116,10 +121,21 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 
         val musicBrainzReleaseGroups = response.releaseGroups
 
-        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toReleaseGroupRoomModel() })
-        releaseGroupArtistDao.insertAll(
-            musicBrainzReleaseGroups.flatMap { releaseGroup ->
-                releaseGroup.getReleaseGroupArtistCreditRoomModels()
+//        releaseGroupDao.insertAll(musicBrainzReleaseGroups.map { it.toReleaseGroupRoomModel() })
+        releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(musicBrainzReleaseGroups)
+
+        // TODO: insert linking table here
+//        releaseGroupArtistDao.insertAll(
+//            musicBrainzReleaseGroups.flatMap { releaseGroup ->
+//                releaseGroup.getReleaseGroupArtistCreditRoomModels()
+//            }
+//        )
+        releaseGroupDao.insertAllArtistReleaseGroup(
+            musicBrainzReleaseGroups.map { releaseGroup ->
+                ArtistReleaseGroup(
+                    artistId = artistId,
+                    releaseGroupId = releaseGroup.id
+                )
             }
         )
 

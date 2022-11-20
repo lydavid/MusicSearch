@@ -2,6 +2,8 @@ package ly.david.data.network
 
 import com.squareup.moshi.Json
 import ly.david.data.ReleaseGroup
+import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
+import ly.david.data.persistence.artist.ArtistCreditUiModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 
 data class ReleaseGroupMusicBrainzModel(
@@ -58,5 +60,26 @@ fun ReleaseGroupMusicBrainzModel.getReleaseGroupArtistCreditRoomModels(): List<R
             name = artistCredit.name,
             joinPhrase = artistCredit.joinPhrase,
             order = index
+        )
+    }.orEmpty()
+
+fun List<ArtistCreditMusicBrainzModel>?.toUiModels(): List<ArtistCreditUiModel> =
+    this?.mapIndexed { index, artistCredit ->
+        ArtistCreditUiModel(
+            position = index,
+            artistId = artistCredit.artist.id,
+            name = artistCredit.name,
+            joinPhrase = artistCredit.joinPhrase
+        )
+    }.orEmpty()
+
+fun List<ArtistCreditMusicBrainzModel>?.toRoomModels(artistCreditId: Long): List<ArtistCreditNameRoomModel> =
+    this?.mapIndexed { index, artistCredit ->
+        ArtistCreditNameRoomModel(
+            artistCreditId = artistCreditId,
+            artistId = artistCredit.artist.id,
+            name = artistCredit.name,
+            joinPhrase = artistCredit.joinPhrase,
+            position = index
         )
     }.orEmpty()
