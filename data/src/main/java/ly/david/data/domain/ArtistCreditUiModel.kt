@@ -2,6 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.ArtistCredit
 import ly.david.data.network.ArtistCreditMusicBrainzModel
+import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
 
 data class ArtistCreditUiModel(
     val position: Int,
@@ -19,3 +20,11 @@ fun List<ArtistCreditMusicBrainzModel>?.toUiModels(): List<ArtistCreditUiModel> 
             joinPhrase = artistCredit.joinPhrase
         )
     }.orEmpty()
+
+fun ArtistCreditNameRoomModel.toUiModel(): ArtistCreditUiModel =
+    ArtistCreditUiModel(
+        position = position,
+        artistId = artistId,
+        name = name,
+        joinPhrase = joinPhrase
+    )

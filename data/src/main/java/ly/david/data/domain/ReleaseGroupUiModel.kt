@@ -2,7 +2,6 @@ package ly.david.data.domain
 
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtists
 
@@ -51,19 +50,8 @@ fun ReleaseGroupWithArtists.toUiModel(): ReleaseGroupUiModel {
         primaryType = releaseGroup.primaryType,
         secondaryTypes = releaseGroup.secondaryTypes,
 
-        // TODO:
         artistCredits = artistCreditNamesWithResources.map {
-            it.artistCreditNameRoomModel
-        }.toUiModels()
+            it.artistCreditNameRoomModel.toUiModel()
+        }
     )
 }
-
-fun List<ArtistCreditNameRoomModel>?.toUiModels(): List<ArtistCreditUiModel> =
-    this?.map { artistCredit ->
-        ArtistCreditUiModel(
-            position = artistCredit.position,
-            artistId = artistCredit.artistId,
-            name = artistCredit.name,
-            joinPhrase = artistCredit.joinPhrase
-        )
-    }.orEmpty()

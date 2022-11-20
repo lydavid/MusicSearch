@@ -29,14 +29,12 @@ import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroup
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
-    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel() {
 
