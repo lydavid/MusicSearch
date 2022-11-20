@@ -2,7 +2,6 @@ package ly.david.data.network
 
 import com.squareup.moshi.Json
 import ly.david.data.ReleaseGroup
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistCreditRoomModel
 
 data class ReleaseGroupMusicBrainzModel(
 
@@ -45,18 +44,3 @@ data class ReleaseGroupMusicBrainzModel(
 
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), ReleaseGroup
-
-// TODO: remove
-/**
- * Returns all artist credits for this release group for caching in database.
- */
-fun ReleaseGroupMusicBrainzModel.getReleaseGroupArtistCreditRoomModels(): List<ReleaseGroupArtistCreditRoomModel> =
-    artistCredits?.mapIndexed { index, artistCredit ->
-        ReleaseGroupArtistCreditRoomModel(
-            releaseGroupId = id,
-            artistId = artistCredit.artist.id,
-            name = artistCredit.name,
-            joinPhrase = artistCredit.joinPhrase,
-            order = index
-        )
-    }.orEmpty()

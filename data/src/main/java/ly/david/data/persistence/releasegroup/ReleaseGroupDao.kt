@@ -9,21 +9,21 @@ import androidx.room.Transaction
 import ly.david.data.getDisplayNames
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.INSERTION_FAILED_DUE_TO_CONFLICT
+import ly.david.data.persistence.artist.ArtistCreditDao
 import ly.david.data.persistence.artist.ArtistCreditResource
 import ly.david.data.persistence.artist.ArtistCreditRoomModel
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.toRoomModels
 
-const val INSERTION_FAILED_DUE_TO_CONFLICT = -1L
-
 @Dao
-abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditInterface {
+abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditDao {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """
             FROM release_groups rg
-            INNER JOIN artists_release_groups rga ON rg.id = rga.release_group_id
-            INNER JOIN artists a ON a.id = rga.artist_id
+            INNER JOIN artists_release_groups arg ON rg.id = arg.release_group_id
+            INNER JOIN artists a ON a.id = arg.artist_id
             WHERE a.id = :artistId
         """
 
@@ -38,7 +38,7 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditInt
         """
 
         private const val ORDER_BY_ARTIST_LINKING_TABLE = """
-            ORDER BY rga.rowid
+            ORDER BY arg.rowid
         """
 
         // The date format YYYY-MM-DD can be correctly sorted by SQLite.
@@ -86,6 +86,7 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditInt
     }
 
     // Lookup
+    @Transaction
     @Query("SELECT * FROM release_groups WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroup(releaseGroupId: String): ReleaseGroupWithArtists?
 
@@ -156,11 +157,7 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditInt
         """
         DELETE from release_groups
         WHERE id in
-        (SELECT rg.id
-        FROM release_groups rg
-        INNER JOIN artists_release_groups rga ON rg.id = rga.release_group_id
-        INNER JOIN artists a ON a.id = rga.artist_id
-        WHERE a.id = :artistId)
+        ($SELECT_RELEASE_GROUPS_ID_BY_ARTIST)
     """
     )
     abstract suspend fun deleteAllReleaseGroupsByArtist(artistId: String)

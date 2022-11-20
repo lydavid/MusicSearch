@@ -4,13 +4,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseUiModel
-import ly.david.data.domain.toUiModel
 import ly.david.data.domain.toReleaseUiModel
+import ly.david.data.domain.toUiModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.getReleaseArtistCreditRoomModels
-import ly.david.data.network.getReleaseGroupArtistCreditRoomModels
 import ly.david.data.network.toLabelRoomModels
 import ly.david.data.network.toReleaseLabels
 import ly.david.data.persistence.area.AreaDao
@@ -26,16 +25,13 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.toMediumRoomModel
 import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.release.toTrackRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupArtistDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.toReleaseGroupRoomModel
 
 @Singleton
 class ReleaseRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val releaseGroupArtistDao: ReleaseGroupArtistDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
@@ -70,8 +66,7 @@ class ReleaseRepository @Inject constructor(
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
 
         releaseMusicBrainzModel.releaseGroup?.let {
-            releaseGroupDao.insert(it.toReleaseGroupRoomModel())
-            releaseGroupArtistDao.insertAll(it.getReleaseGroupArtistCreditRoomModels())
+            releaseGroupDao.insertReleaseGroupWithArtistCredits(it)
         }
 
         releaseDao.insertReplace(releaseMusicBrainzModel.toReleaseRoomModel())

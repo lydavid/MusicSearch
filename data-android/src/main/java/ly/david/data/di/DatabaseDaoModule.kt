@@ -14,9 +14,6 @@ internal object DatabaseDaoModule {
     fun provideArtistDao(db: MusicBrainzDatabase): ArtistDao = db.getArtistDao()
 
     @Provides
-    fun provideReleaseGroupArtistDao(db: MusicBrainzDatabase) = db.getReleaseGroupArtistDao()
-
-    @Provides
     fun provideReleaseGroupDao(db: MusicBrainzDatabase) = db.getReleaseGroupDao()
 
     @Provides
