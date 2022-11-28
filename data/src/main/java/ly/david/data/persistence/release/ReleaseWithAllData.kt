@@ -4,6 +4,8 @@ import androidx.room.DatabaseView
 import androidx.room.Embedded
 import androidx.room.Relation
 import ly.david.data.persistence.RoomModel
+import ly.david.data.persistence.area.AreaRoomModel
+import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
@@ -28,6 +30,29 @@ data class LabelWithCatalog(
     val releaseLabel: ReleaseLabel
 )
 
+@DatabaseView(
+    """
+        SELECT a.*, rc.*
+        FROM areas a
+        INNER JOIN releases_countries rc ON rc.country_id = a.id
+        INNER JOIN releases r ON r.id = rc.release_id
+    """
+)
+data class AreaWithReleaseDate(
+    @Embedded
+    val area: AreaRoomModel,
+
+    @Embedded
+    val releaseCountry: ReleaseCountry,
+//    val date: String? = null,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "area_id"
+    )
+    val countryCodes: List<Iso3166_1>
+): RoomModel
+
 /**
  * Don't use this when paging releases.
  */
@@ -40,7 +65,7 @@ data class ReleaseWithAllData(
         parentColumn = "id",
         entityColumn = "release_id",
     )
-    val releaseEvents: List<ReleaseCountry>,
+    val areaWithReleaseDates: List<AreaWithReleaseDate>,
 
     // TODO: we can do the same thing for labels
     @Relation(

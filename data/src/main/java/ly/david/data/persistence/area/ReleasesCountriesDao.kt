@@ -110,6 +110,6 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         ORDER BY a.name
     """
     )
-    abstract suspend fun getAreasWithReleaseDate(releaseId: String): List<AreaWithReleaseDate>
+    abstract suspend fun getAreasWithReleaseDate(releaseId: String): List<AreaWithReleaseDateOld>
     // endregion
 }

@@ -5,7 +5,8 @@ import ly.david.data.AreaType
 import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.persistence.area.AreaRoomModel
-import ly.david.data.persistence.area.AreaWithReleaseDate
+import ly.david.data.persistence.area.AreaWithReleaseDateOld
+import ly.david.data.persistence.release.AreaWithReleaseDate
 
 data class AreaUiModel(
     override val id: String,
@@ -37,7 +38,7 @@ fun AreaRoomModel.toAreaUiModel(iso_3166_1_codes: List<String>? = null) =
         iso_3166_1_codes = iso_3166_1_codes
     )
 
-fun AreaWithReleaseDate.toAreaUiModel() =
+fun AreaWithReleaseDateOld.toAreaUiModel() =
     AreaUiModel(
         id = area.id,
         name = area.name,
@@ -46,6 +47,17 @@ fun AreaWithReleaseDate.toAreaUiModel() =
         lifeSpan = area.lifeSpan,
         iso_3166_1_codes = countryCodes.map { it.code },
         date = date
+    )
+
+fun AreaWithReleaseDate.toAreaUiModel() =
+    AreaUiModel(
+        id = area.id,
+        name = area.name,
+        disambiguation = area.disambiguation,
+        type = area.type,
+        lifeSpan = area.lifeSpan,
+        iso_3166_1_codes = countryCodes.map { it.code },
+        date = releaseCountry.date
     )
 
 fun AreaUiModel.showReleases(): Boolean =

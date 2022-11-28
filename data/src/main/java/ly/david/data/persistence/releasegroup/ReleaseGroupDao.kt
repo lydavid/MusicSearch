@@ -24,6 +24,7 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditDao
         }
     }
 
+    // TODO: need this logic again for release and recording?
     @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertReleaseGroupWithArtistCredits(releaseGroup: ReleaseGroupMusicBrainzModel) {

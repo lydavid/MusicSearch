@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.Header
 import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.domain.TrackUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.toTrackUiModel
@@ -73,7 +73,7 @@ internal class ReleaseViewModel @Inject constructor(
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
-    suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseUiModel {
+    suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseScaffoldModel {
         return repository.getRelease(releaseId).also { loadTracks(releaseId) }
     }
 

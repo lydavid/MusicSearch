@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -19,7 +19,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun ReleaseStatsScreen(
     releaseId: String,
-    releaseUiModel: ReleaseUiModel?,
+    releaseScaffoldModel: ReleaseScaffoldModel?,
     viewModel: ReleaseStatsViewModel = hiltViewModel()
 ) {
 //    var totalRemote by rememberSaveable { mutableStateOf(0) }
@@ -38,8 +38,8 @@ internal fun ReleaseStatsScreen(
     ReleaseStatsScreen(
 //        totalRemote = totalRemote,
 //        totalLocal = totalLocal,
-        formats = releaseUiModel?.formats,
-        tracks = releaseUiModel?.tracks,
+        formats = releaseScaffoldModel?.formats,
+        tracks = releaseScaffoldModel?.tracks,
         totalRelations = totalRelations,
         relationTypeCounts = relationTypeCounts
     )

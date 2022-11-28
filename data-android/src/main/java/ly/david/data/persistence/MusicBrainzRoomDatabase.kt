@@ -24,6 +24,7 @@ import ly.david.data.persistence.recording.ReleaseRecording
 import ly.david.data.persistence.relation.BrowseResourceOffset
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationRoomModel
+import ly.david.data.persistence.release.AreaWithReleaseDate
 import ly.david.data.persistence.release.LabelWithCatalog
 import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
@@ -35,7 +36,7 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 63,
+    version = 64,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -70,7 +71,8 @@ import ly.david.data.persistence.work.WorkRoomModel
     ],
     views = [
         LabelWithCatalog::class,
-        ArtistCreditNamesWithResource::class
+        ArtistCreditNamesWithResource::class,
+        AreaWithReleaseDate::class
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
@@ -127,6 +129,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 60, to = 61),
         AutoMigration(from = 61, to = 62),
         AutoMigration(from = 62, to = 63, spec = Migrations.DropReleaseGroupsArtists::class),
+        AutoMigration(from = 63, to = 64),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

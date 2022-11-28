@@ -3,8 +3,8 @@ package ly.david.data.repository
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
-import ly.david.data.domain.ReleaseUiModel
-import ly.david.data.domain.toReleaseUiModel
+import ly.david.data.domain.ReleaseScaffoldModel
+import ly.david.data.domain.toScaffoldModel
 import ly.david.data.domain.toUiModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
@@ -45,7 +45,7 @@ class ReleaseRepository @Inject constructor(
      *
      * Looks up release and stores its data (excludes relationships).
      */
-    suspend fun getRelease(releaseId: String): ReleaseUiModel {
+    suspend fun getRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
         val artistCredits = releaseDao.getReleaseArtistCredits(releaseId)
 
@@ -56,7 +56,7 @@ class ReleaseRepository @Inject constructor(
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
-            return releaseWithAllData.toReleaseUiModel(
+            return releaseWithAllData.toScaffoldModel(
                 releaseArtistCreditRoomModel = artistCredits,
                 releaseGroup = releaseGroup?.toUiModel()
             )

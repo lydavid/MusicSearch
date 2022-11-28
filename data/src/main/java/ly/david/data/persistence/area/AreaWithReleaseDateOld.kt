@@ -4,7 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import ly.david.data.persistence.RoomModel
 
-data class AreaWithReleaseDate(
+// TODO: needs to be view, and include release_id for linking
+data class AreaWithReleaseDateOld(
     @Embedded
     val area: AreaRoomModel,
 
