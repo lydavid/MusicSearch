@@ -95,6 +95,14 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
             type = "Original Production",
             labelCode = 10746
         ),
+        LabelUiModel(
+            id = "5",
+            name = "Sony Music",
+            disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
+            type = "Original Production",
+            labelCode = 10746,
+            catalogNumber = "CAT-123"
+        ),
     )
 }
 

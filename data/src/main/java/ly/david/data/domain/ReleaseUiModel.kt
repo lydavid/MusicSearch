@@ -4,11 +4,8 @@ import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
-import ly.david.data.network.getReleaseArtistCreditRoomModels
-import ly.david.data.network.toLabelRoomModels
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
-import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.ReleaseWithAllData
 import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 
@@ -44,42 +41,7 @@ data class ReleaseUiModel(
     val labels: List<LabelUiModel> = listOf()
 ) : UiModel(), Release
 
-fun ReleaseMusicBrainzModel.toReleaseUiModel() =
-    toReleaseUiModel(releaseGroup = null)
-
-// TODO: with paging, we never convert mb model to ui model, only room model to ui model
-//  that means we don't have to do 2 mappings
-//  can we do something when doing a lookup?
-fun ReleaseMusicBrainzModel.toReleaseUiModel(
-    releaseGroup: ReleaseGroupUiModel? = null
-) = ReleaseUiModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        date = date,
-        status = status,
-        barcode = barcode,
-        statusId = statusId,
-        countryCode = countryCode,
-        packaging = packaging,
-        packagingId = packagingId,
-        coverArtArchive = coverArtArchive,
-        textRepresentation = textRepresentation,
-        asin = asin,
-        quality = quality,
-        coverArtUrl = null,
-        artistCredits = getReleaseArtistCreditRoomModels(),
-
-        // TODO: missing format/tracks
-
-        releaseGroup = releaseGroup,
-        labels = labelInfoList?.toLabelRoomModels()?.map { it.toLabelUiModel() }.orEmpty()
-    )
-
-fun ReleaseRoomModel.toReleaseUiModel(
-    releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel>,
-    releaseGroup: ReleaseGroupUiModel?
-) = ReleaseUiModel(
+fun ReleaseMusicBrainzModel.toReleaseUiModel() = ReleaseUiModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
@@ -90,14 +52,11 @@ fun ReleaseRoomModel.toReleaseUiModel(
     countryCode = countryCode,
     packaging = packaging,
     packagingId = packagingId,
+    coverArtArchive = coverArtArchive,
+    textRepresentation = textRepresentation,
     asin = asin,
     quality = quality,
-    coverArtArchive = coverArtArchive,
-    formats = formats,
-    tracks = tracks,
-    coverArtUrl = coverArtUrl,
-    artistCredits = releaseArtistCreditRoomModel,
-    releaseGroup = releaseGroup
+    coverArtUrl = null,
 )
 
 fun ReleaseWithReleaseCountries.toReleaseUiModel(

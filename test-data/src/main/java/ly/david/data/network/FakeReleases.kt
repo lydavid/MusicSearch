@@ -13,10 +13,7 @@ val fakeRelease = ReleaseMusicBrainzModel(
     ),
     media = listOf(fakeMedia),
     labelInfoList = listOf(
-        LabelInfo(
-            catalogNumber = "CAT 1",
-            label = fakeLabel
-        ),
+        fakeLabelInfo,
         LabelInfo(
             label = fakeLabel2
         )

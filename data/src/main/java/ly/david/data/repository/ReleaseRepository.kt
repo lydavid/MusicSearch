@@ -69,6 +69,7 @@ class ReleaseRepository @Inject constructor(
             releaseGroupDao.insertReleaseGroupWithArtistCredits(it)
         }
 
+        // TODO: use new artist credit table
         releaseDao.insertReplace(releaseMusicBrainzModel.toReleaseRoomModel())
         releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
 
@@ -96,9 +97,7 @@ class ReleaseRepository @Inject constructor(
             }.orEmpty()
         )
 
-        return releaseMusicBrainzModel.toReleaseUiModel(
-            releaseGroup = releaseMusicBrainzModel.releaseGroup?.toUiModel()
-        )
+        return getRelease(releaseId)
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

@@ -15,8 +15,8 @@ import kotlinx.coroutines.runBlocking
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.fakeArtistCredit
 import ly.david.data.network.fakeArtistCredit2
-import ly.david.data.network.fakeLabel
 import ly.david.data.network.fakeLabel2
+import ly.david.data.network.fakeLabelInfo
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleaseWithRelation
@@ -57,39 +57,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         setRelease(fakeRelease)
         runBlocking { composeTestRule.awaitIdle() }
 
-        composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        // If we move this first, then it will evaluate this before it actually loads
-        composeTestRule
-            .onNodeWithText(fakeRelease.name)
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(details)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeLabel.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeLabel2.name)
-            .assertIsDisplayed()
-
-        // Confirm that up navigation items exists
-        composeTestRule
-            .onNodeWithTag("TopBarSubtitle")
-            .performClick()
-        // Can't actually navigate to these since we didn't pass in onItemClick
-        // TODO: test up nav click separately in a class that uses MainActivity
-        composeTestRule
-            .onNodeWithText(fakeReleaseGroup.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit2.name)
-            .assertIsDisplayed()
+        assertFieldsDisplayed()
     }
 
     @Test
@@ -100,6 +68,10 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             composeTestRule.awaitIdle()
         }
 
+        assertFieldsDisplayed()
+    }
+
+    private fun assertFieldsDisplayed() {
         composeTestRule
             .onNodeWithText(stats)
             .performClick()
@@ -111,7 +83,10 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(details)
             .performClick()
         composeTestRule
-            .onNodeWithText(fakeLabel.name)
+            .onNodeWithText(fakeLabelInfo.label!!.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(fakeLabelInfo.catalogNumber!!)
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(fakeLabel2.name)

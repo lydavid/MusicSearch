@@ -110,7 +110,6 @@ internal fun ReleaseDetailsScreen(
                     }
                 }
 
-                // TODO: query for these
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.labels))
                     it.forEach { label ->

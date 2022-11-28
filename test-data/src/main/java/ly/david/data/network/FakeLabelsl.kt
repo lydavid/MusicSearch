@@ -13,3 +13,8 @@ val fakeLabel2 = LabelMusicBrainzModel(
     labelCode = 321,
     type = "Production"
 )
+
+val fakeLabelInfo = LabelInfo(
+    catalogNumber = "CAT 1",
+    label = fakeLabel
+)
