@@ -41,6 +41,7 @@ data class LabelWithCatalog(
         FROM areas a
         INNER JOIN releases_countries rc ON rc.country_id = a.id
         INNER JOIN releases r ON r.id = rc.release_id
+        ORDER BY a.name
     """
 )
 data class AreaWithReleaseDate(

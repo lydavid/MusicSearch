@@ -6,6 +6,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Locale
@@ -18,8 +22,11 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.label.LabelCard
 
+// TODO: it lags when navigating to this tab
+//  consider loading ReleaseWithAllData only when we navigate here
 @Composable
 internal fun ReleaseDetailsScreen(
     releaseScaffoldModel: ReleaseScaffoldModel?,
@@ -30,11 +37,11 @@ internal fun ReleaseDetailsScreen(
 ) {
 
     // TODO: get this from ui model, then we can save scroll state
-//    var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
+    var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
 
     LaunchedEffect(key1 = releaseScaffoldModel) {
         if (releaseScaffoldModel == null) return@LaunchedEffect
-//        releaseLength = viewModel.getFormattedReleaseLength(releaseUiModel.id)
+        releaseLength = viewModel.getFormattedReleaseLength(releaseScaffoldModel.id)
     }
 
     LazyColumn(state = lazyListState) {
@@ -50,9 +57,9 @@ internal fun ReleaseDetailsScreen(
                 tracks?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.tracks, text = it)
                 }
-//                releaseLength?.ifNotNullOrEmpty {
-//                    TextWithHeading(headingRes = R.string.length, text = it)
-//                }
+                releaseLength?.ifNotNullOrEmpty {
+                    TextWithHeading(headingRes = R.string.length, text = it)
+                }
 
                 ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
                 releaseGroup?.let {
@@ -105,6 +112,8 @@ internal fun ReleaseDetailsScreen(
                         onAreaClick = onAreaClick
                     )
                 }
+            } ?: run {
+                FullScreenLoadingIndicator()
             }
         }
     }
