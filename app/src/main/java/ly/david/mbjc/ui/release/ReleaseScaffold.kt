@@ -29,6 +29,7 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -181,16 +182,21 @@ internal fun ReleaseScaffold(
                 )
             }
             ReleaseTab.DETAILS -> {
-                ReleaseDetailsScreen(
-                    releaseScaffoldModel = release,
-                    onLabelClick = {
-                        onItemClick(Destination.LOOKUP_LABEL, id, name)
-                    },
-                    onAreaClick = {
-                        onItemClick(Destination.LOOKUP_AREA, id, name)
-                    },
-                    lazyListState = detailsLazyListState
-                )
+                val releaseScaffoldModel = release
+                if (releaseScaffoldModel == null) {
+                    FullScreenLoadingIndicator()
+                } else {
+                    ReleaseDetailsScreen(
+                        releaseScaffoldModel = releaseScaffoldModel,
+                        onLabelClick = {
+                            onItemClick(Destination.LOOKUP_LABEL, id, name)
+                        },
+                        onAreaClick = {
+                            onItemClick(Destination.LOOKUP_AREA, id, name)
+                        },
+                        lazyListState = detailsLazyListState
+                    )
+                }
             }
             ReleaseTab.RELATIONSHIPS -> {
                 viewModel.loadRelations(releaseId)

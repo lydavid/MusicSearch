@@ -22,14 +22,13 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.label.LabelCard
 
 // TODO: it lags when navigating to this tab
 //  consider loading ReleaseWithAllData only when we navigate here
 @Composable
 internal fun ReleaseDetailsScreen(
-    releaseScaffoldModel: ReleaseScaffoldModel?,
+    releaseScaffoldModel: ReleaseScaffoldModel,
     onLabelClick: LabelCardModel.() -> Unit = {},
     onAreaClick: AreaCardModel.() -> Unit = {},
     lazyListState: LazyListState,
@@ -40,13 +39,12 @@ internal fun ReleaseDetailsScreen(
     var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
 
     LaunchedEffect(key1 = releaseScaffoldModel) {
-        if (releaseScaffoldModel == null) return@LaunchedEffect
         releaseLength = viewModel.getFormattedReleaseLength(releaseScaffoldModel.id)
     }
 
     LazyColumn(state = lazyListState) {
         item {
-            releaseScaffoldModel?.run {
+            releaseScaffoldModel.run {
                 ListSeparatorHeader(text = stringResource(id = R.string.release_information))
                 barcode?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.barcode, text = it)
@@ -112,8 +110,6 @@ internal fun ReleaseDetailsScreen(
                         onAreaClick = onAreaClick
                     )
                 }
-            } ?: run {
-                FullScreenLoadingIndicator()
             }
         }
     }
