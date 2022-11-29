@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.AreaCardModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.AreaRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -38,7 +38,7 @@ internal class AreaViewModel @Inject constructor(
     /**
      * Call this to retrieve title, and initiate relations paging.
      */
-    suspend fun lookupAreaThenLoadRelations(areaId: String): AreaUiModel {
+    suspend fun lookupAreaThenLoadRelations(areaId: String): AreaCardModel {
         return repository.lookupArea(
             areaId = areaId,
             hasRelationsBeenStored = { hasRelationsBeenStored() },

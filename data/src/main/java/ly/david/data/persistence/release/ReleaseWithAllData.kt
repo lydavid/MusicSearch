@@ -30,6 +30,11 @@ data class LabelWithCatalog(
     val releaseLabel: ReleaseLabel
 )
 
+/**
+ * An area together with its country codes.
+ *
+ * We include [ReleaseLabel] so that we can filter on release id.
+ */
 @DatabaseView(
     """
         SELECT a.*, rc.*
@@ -44,14 +49,13 @@ data class AreaWithReleaseDate(
 
     @Embedded
     val releaseCountry: ReleaseCountry,
-//    val date: String? = null,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "area_id"
     )
     val countryCodes: List<Iso3166_1>
-): RoomModel
+) : RoomModel
 
 /**
  * Don't use this when paging releases.
@@ -60,12 +64,11 @@ data class ReleaseWithAllData(
     @Embedded
     val release: ReleaseRoomModel,
 
-    // TODO: no longer using, since we query for these when we visit details
     @Relation(
         parentColumn = "id",
         entityColumn = "release_id",
     )
-    val areaWithReleaseDates: List<AreaWithReleaseDate>,
+    val areas: List<AreaWithReleaseDate>,
 
     // TODO: we can do the same thing for labels
     @Relation(

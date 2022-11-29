@@ -10,12 +10,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.AreaUiModel
-import ly.david.data.domain.LabelUiModel
+import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.LabelCardModel
 import ly.david.data.domain.ReleaseScaffoldModel
-import ly.david.data.domain.toAreaUiModel
 import ly.david.data.getDisplayTypes
-import ly.david.data.persistence.release.AreaWithReleaseDate
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
@@ -25,8 +23,8 @@ import ly.david.mbjc.ui.label.LabelCard
 @Composable
 internal fun ReleaseDetailsScreen(
     releaseScaffoldModel: ReleaseScaffoldModel?,
-    onLabelClick: LabelUiModel.() -> Unit = {},
-    onAreaClick: AreaUiModel.() -> Unit = {},
+    onLabelClick: LabelCardModel.() -> Unit = {},
+    onAreaClick: AreaCardModel.() -> Unit = {},
     lazyListState: LazyListState,
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
@@ -34,23 +32,11 @@ internal fun ReleaseDetailsScreen(
     // TODO: get this from ui model, then we can save scroll state
 //    var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
 
-    // TODO: this might also be the culprit
-    //  but hoisting every one of these might be too much effort
-    //  we can just get it via @Relation now that we will always get UI model from room model
-//    var areasWithReleaseDate: List<AreaWithReleaseDateOld> by rememberSaveable { mutableStateOf(listOf()) }
-
     LaunchedEffect(key1 = releaseScaffoldModel) {
         if (releaseScaffoldModel == null) return@LaunchedEffect
 //        releaseLength = viewModel.getFormattedReleaseLength(releaseUiModel.id)
-//        areasWithReleaseDate = viewModel.getAreasWithReleaseDate(releaseScaffoldModel.id)
     }
 
-    // TODO: scroll position not saved on tab change
-    //  it is saved on config change at least
-    //  workaround for LazyPagingItems: https://issuetracker.google.com/issues/177245496#comment24
-    //  might be able to adapt this or wait for a fix
-    //  It's also possible because releaseUiModel is unstable, we recompose every time
-    //  with no skipping
     LazyColumn(state = lazyListState) {
         item {
             releaseScaffoldModel?.run {
@@ -101,11 +87,6 @@ internal fun ReleaseDetailsScreen(
                 asin?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.asin, text = it)
                 }
-//                if (areasWithReleaseDate.isEmpty()) {
-//                    date?.ifNotNullOrEmpty {
-//                        TextWithHeading(headingRes = R.string.release_events, text = it)
-//                    }
-//                }
 
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.labels))
@@ -113,21 +94,18 @@ internal fun ReleaseDetailsScreen(
                         LabelCard(label = label, onLabelClick = onLabelClick)
                     }
                 }
-                if (areaWithReleaseDates.isNotEmpty()) {
+
+                if (areas.isNotEmpty()) {
                     ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                 }
-
-                areaWithReleaseDates.forEach { item: AreaWithReleaseDate ->
+                areas.forEach { item: AreaCardModel ->
                     AreaCard(
-                        area = item.toAreaUiModel(),
+                        area = item,
                         showType = false,
                         onAreaClick = onAreaClick
                     )
                 }
             }
-
-
         }
-
     }
 }

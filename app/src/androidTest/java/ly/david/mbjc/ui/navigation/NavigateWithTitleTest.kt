@@ -28,10 +28,11 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
             return MusicBrainzResource.values().filterNot {
-                // TODO: only url
+                // TODO: should only filter out url
                 listOf(
                     MusicBrainzResource.URL,
                     MusicBrainzResource.SERIES,
+                    // TODO: failing for release
                 ).contains(it)
             }
         }

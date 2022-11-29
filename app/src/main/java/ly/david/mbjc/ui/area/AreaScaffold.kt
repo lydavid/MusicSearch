@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.AreaUiModel
-import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.ReleaseCardModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.showReleases
 import ly.david.data.getNameWithDisambiguation
@@ -63,12 +63,12 @@ internal fun AreaScaffold(
 
     // TODO: api doesn't seem to include area containment
     //  but we could get its parent area via relations "part of" "backward"
-    var area: AreaUiModel? by remember { mutableStateOf(null) }
+    var area: AreaCardModel? by remember { mutableStateOf(null) }
     var title by rememberSaveable { mutableStateOf("") }
     var tabs: List<AreaTab> by rememberSaveable { mutableStateOf(AreaTab.values().filter { it != AreaTab.RELEASES }) }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
-    val releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel> =
+    val releasesLazyPagingItems: LazyPagingItems<ReleaseCardModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 
@@ -131,7 +131,7 @@ private fun AreaScaffold(
     resource: MusicBrainzResource,
     title: String,
     tabs: List<AreaTab>,
-    releasesLazyPagingItems: LazyPagingItems<ReleaseUiModel>,
+    releasesLazyPagingItems: LazyPagingItems<ReleaseCardModel>,
     relationsLazyPagingItems: LazyPagingItems<UiModel>,
     showReleases: Boolean,
     onUpdateQuery: (String) -> Unit,

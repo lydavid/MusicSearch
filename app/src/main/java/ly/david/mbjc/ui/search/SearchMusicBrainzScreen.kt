@@ -37,16 +37,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.AreaCardModel
 import ly.david.data.domain.ArtistUiModel
 import ly.david.data.domain.EndOfList
 import ly.david.data.domain.EventUiModel
 import ly.david.data.domain.InstrumentUiModel
-import ly.david.data.domain.LabelUiModel
+import ly.david.data.domain.LabelCardModel
 import ly.david.data.domain.PlaceUiModel
 import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.ReleaseCardModel
 import ly.david.data.domain.ReleaseGroupUiModel
-import ly.david.data.domain.ReleaseUiModel
 import ly.david.data.domain.SeriesUiModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.WorkUiModel
@@ -178,8 +178,8 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, getNameWithDisambiguation())
                     }
                 }
-                is ReleaseUiModel -> {
-                    ReleaseCard(releaseUiModel = uiModel) {
+                is ReleaseCardModel -> {
+                    ReleaseCard(releaseCardModel = uiModel) {
                         onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
                     }
                 }
@@ -193,7 +193,7 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_WORK, id, getNameWithDisambiguation())
                     }
                 }
-                is AreaUiModel -> {
+                is AreaCardModel -> {
                     AreaCard(area = uiModel) {
                         onItemClick(Destination.LOOKUP_AREA, id, getNameWithDisambiguation())
                     }
@@ -208,7 +208,7 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_INSTRUMENT, id, getNameWithDisambiguation())
                     }
                 }
-                is LabelUiModel -> {
+                is LabelCardModel -> {
                     LabelCard(label = uiModel) {
                         onItemClick(Destination.LOOKUP_LABEL, id, getNameWithDisambiguation())
                     }

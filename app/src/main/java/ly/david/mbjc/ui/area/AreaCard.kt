@@ -14,7 +14,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.AreaUiModel
+import ly.david.data.domain.AreaCardModel
 import ly.david.data.domain.showReleases
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
@@ -29,9 +29,9 @@ import ly.david.mbjc.ui.theme.getSubTextColor
  */
 @Composable
 internal fun AreaCard(
-    area: AreaUiModel,
+    area: AreaCardModel,
     showType: Boolean = true,
-    onAreaClick: AreaUiModel.() -> Unit = {}
+    onAreaClick: AreaCardModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onAreaClick(area) },
@@ -113,18 +113,18 @@ internal fun AreaCard(
 
 // Cannot be private.
 @ExcludeFromJacocoGeneratedReport
-internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaUiModel> {
+internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaCardModel> {
     override val values = sequenceOf(
-        AreaUiModel(
+        AreaCardModel(
             id = "1",
             name = "Area Name",
         ),
-        AreaUiModel(
+        AreaCardModel(
             id = "2",
             name = "Area Name",
             disambiguation = "That one",
         ),
-        AreaUiModel(
+        AreaCardModel(
             id = "3",
             name = "Area Name with a very long name",
             disambiguation = "That one",
@@ -138,7 +138,7 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaU
 @DefaultPreviews
 @Composable
 private fun AreaCardPreview(
-    @PreviewParameter(AreaCardPreviewParameterProvider::class) area: AreaUiModel
+    @PreviewParameter(AreaCardPreviewParameterProvider::class) area: AreaCardModel
 ) {
     PreviewTheme {
         Surface {
@@ -154,7 +154,7 @@ private fun ReleaseEventPreview() {
     PreviewTheme {
         Surface {
             AreaCard(
-                area = AreaUiModel(
+                area = AreaCardModel(
                     id = "4",
                     name = "Area Name with a very long name",
                     disambiguation = "That one",

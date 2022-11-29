@@ -5,10 +5,9 @@ import ly.david.data.AreaType
 import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.persistence.area.AreaRoomModel
-import ly.david.data.persistence.area.AreaWithReleaseDateOld
 import ly.david.data.persistence.release.AreaWithReleaseDate
 
-data class AreaUiModel(
+data class AreaCardModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = "",
@@ -18,8 +17,8 @@ data class AreaUiModel(
     val date: String? = null
 ) : Area, UiModel()
 
-internal fun AreaMusicBrainzModel.toAreaUiModel() =
-    AreaUiModel(
+internal fun AreaMusicBrainzModel.toCardModel() =
+    AreaCardModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -28,8 +27,8 @@ internal fun AreaMusicBrainzModel.toAreaUiModel() =
         iso_3166_1_codes = iso_3166_1_codes
     )
 
-fun AreaRoomModel.toAreaUiModel(iso_3166_1_codes: List<String>? = null) =
-    AreaUiModel(
+fun AreaRoomModel.toCardModel(iso_3166_1_codes: List<String>? = null) =
+    AreaCardModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -38,19 +37,8 @@ fun AreaRoomModel.toAreaUiModel(iso_3166_1_codes: List<String>? = null) =
         iso_3166_1_codes = iso_3166_1_codes
     )
 
-fun AreaWithReleaseDateOld.toAreaUiModel() =
-    AreaUiModel(
-        id = area.id,
-        name = area.name,
-        disambiguation = area.disambiguation,
-        type = area.type,
-        lifeSpan = area.lifeSpan,
-        iso_3166_1_codes = countryCodes.map { it.code },
-        date = date
-    )
-
-fun AreaWithReleaseDate.toAreaUiModel() =
-    AreaUiModel(
+fun AreaWithReleaseDate.toCardModel() =
+    AreaCardModel(
         id = area.id,
         name = area.name,
         disambiguation = area.disambiguation,
@@ -60,5 +48,5 @@ fun AreaWithReleaseDate.toAreaUiModel() =
         date = releaseCountry.date
     )
 
-fun AreaUiModel.showReleases(): Boolean =
+fun AreaCardModel.showReleases(): Boolean =
     type == AreaType.COUNTRY || name == AreaType.WORLDWIDE

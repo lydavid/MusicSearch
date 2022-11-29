@@ -3,8 +3,8 @@ package ly.david.data.repository
 import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.domain.AreaUiModel
-import ly.david.data.domain.toAreaUiModel
+import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.toCardModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS
@@ -44,11 +44,11 @@ class AreaRepository @Inject constructor(
         forceRefresh: Boolean = false,
         hasRelationsBeenStored: suspend () -> Boolean,
         markResourceHasRelations: suspend () -> Unit
-    ): AreaUiModel {
+    ): AreaCardModel {
         val areaRoomModel = areaDao.getArea(areaId)
         val countryCodes = areaDao.getCountryCodes(areaId)
         if (!forceRefresh && areaRoomModel != null && hasRelationsBeenStored()) {
-            return areaRoomModel.toAreaUiModel(countryCodes?.map { it.code })
+            return areaRoomModel.toCardModel(countryCodes?.map { it.code })
         }
 
         val areaMusicBrainzModel = musicBrainzApiService.lookupArea(
@@ -76,7 +76,7 @@ class AreaRepository @Inject constructor(
         areaDao.insert(areaMusicBrainzModel.toAreaRoomModel())
         areaDao.insertAllCountryCodes(areaMusicBrainzModel.getAreaCountryCodes())
 
-        return areaMusicBrainzModel.toAreaUiModel()
+        return areaMusicBrainzModel.toCardModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
