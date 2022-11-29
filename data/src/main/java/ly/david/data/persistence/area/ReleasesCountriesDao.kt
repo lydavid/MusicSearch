@@ -96,20 +96,4 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         query: String
     ): PagingSource<Int, ReleaseWithReleaseCountries>
     // endregion
-
-    // region by Release
-
-    @Transaction
-    @Query(
-        """
-        SELECT a.*, rc.date
-        FROM areas a
-        INNER JOIN releases_countries rc ON rc.country_id = a.id
-        INNER JOIN releases r ON r.id = rc.release_id
-        WHERE r.id = :releaseId
-        ORDER BY a.name
-    """
-    )
-    abstract suspend fun getAreasWithReleaseDate(releaseId: String): List<AreaWithReleaseDate>
-    // endregion
 }

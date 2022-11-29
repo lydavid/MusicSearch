@@ -16,7 +16,7 @@ data class PlaceUiModel(
     override val coordinates: Coordinates? = null,
     override val lifeSpan: LifeSpan? = null,
 
-    val area: AreaUiModel? = null,
+    val area: AreaCardModel? = null,
 ) : Place, UiModel()
 
 internal fun PlaceMusicBrainzModel.toPlaceUiModel() =
@@ -28,11 +28,11 @@ internal fun PlaceMusicBrainzModel.toPlaceUiModel() =
         type = type,
         coordinates = coordinates,
         lifeSpan = lifeSpan,
-        area = area?.toAreaUiModel()
+        area = area?.toCardModel()
     )
 
 internal fun PlaceRoomModel.toPlaceUiModel(
-    area: AreaUiModel? = null
+    area: AreaCardModel? = null
 ) =
     PlaceUiModel(
         id = id,

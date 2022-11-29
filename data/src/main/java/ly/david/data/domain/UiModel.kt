@@ -46,10 +46,10 @@ fun MusicBrainzModel.toUiModel(): UiModel {
     return when (this) {
         is ArtistMusicBrainzModel -> this.toArtistUiModel()
         is ReleaseGroupMusicBrainzModel -> this.toUiModel()
-        is ReleaseMusicBrainzModel -> this.toReleaseUiModel()
+        is ReleaseMusicBrainzModel -> this.toCardModel()
         is RecordingMusicBrainzModel -> this.toRecordingUiModel()
         is PlaceMusicBrainzModel -> this.toPlaceUiModel()
-        is AreaMusicBrainzModel -> this.toAreaUiModel()
+        is AreaMusicBrainzModel -> this.toCardModel()
         is InstrumentMusicBrainzModel -> this.toInstrumentUiModel()
         is LabelMusicBrainzModel -> this.toLabelUiModel()
         is WorkMusicBrainzModel -> this.toWorkUiModel()

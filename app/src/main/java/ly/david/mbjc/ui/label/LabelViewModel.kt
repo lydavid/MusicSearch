@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.LabelUiModel
+import ly.david.data.domain.LabelCardModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -31,6 +31,6 @@ internal class LabelViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    suspend fun lookupLabel(labelId: String): LabelUiModel =
+    suspend fun lookupLabel(labelId: String): LabelCardModel =
         repository.lookupLabel(labelId)
 }

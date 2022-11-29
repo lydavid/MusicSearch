@@ -4,7 +4,6 @@ import android.icu.lang.UScript
 import android.os.Build
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,48 +14,39 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.AreaUiModel
-import ly.david.data.domain.LabelUiModel
-import ly.david.data.domain.ReleaseUiModel
-import ly.david.data.domain.toAreaUiModel
+import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.LabelCardModel
+import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
-import ly.david.data.persistence.area.AreaWithReleaseDate
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.label.LabelCard
 
+// TODO: it lags when navigating to this tab
+//  consider loading ReleaseWithAllData only when we navigate here
 @Composable
 internal fun ReleaseDetailsScreen(
-    releaseUiModel: ReleaseUiModel?,
-    onLabelClick: LabelUiModel.() -> Unit = {},
-    onAreaClick: AreaUiModel.() -> Unit = {},
+    releaseScaffoldModel: ReleaseScaffoldModel?,
+    onLabelClick: LabelCardModel.() -> Unit = {},
+    onAreaClick: AreaCardModel.() -> Unit = {},
     lazyListState: LazyListState,
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
 
+    // TODO: get this from ui model, then we can save scroll state
     var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
 
-    // TODO: this might also be the culprit
-    //  but hoisting every one of these might be too much effort
-    var areasWithReleaseDate: List<AreaWithReleaseDate> by rememberSaveable { mutableStateOf(listOf()) }
-
-    LaunchedEffect(key1 = releaseUiModel) {
-        if (releaseUiModel == null) return@LaunchedEffect
-        releaseLength = viewModel.getFormattedReleaseLength(releaseUiModel.id)
-        areasWithReleaseDate = viewModel.getAreasWithReleaseDate(releaseUiModel.id)
+    LaunchedEffect(key1 = releaseScaffoldModel) {
+        if (releaseScaffoldModel == null) return@LaunchedEffect
+        releaseLength = viewModel.getFormattedReleaseLength(releaseScaffoldModel.id)
     }
 
-    // TODO: scroll position not saved on tab change
-    //  it is saved on config change at least
-    //  workaround for LazyPagingItems: https://issuetracker.google.com/issues/177245496#comment24
-    //  might be able to adapt this or wait for a fix
-    //  It's also possible because releaseUiModel is unstable, we recompose every time
-    //  with no skipping
     LazyColumn(state = lazyListState) {
         item {
-            releaseUiModel?.run {
+            releaseScaffoldModel?.run {
                 ListSeparatorHeader(text = stringResource(id = R.string.release_information))
                 barcode?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.barcode, text = it)
@@ -104,11 +94,6 @@ internal fun ReleaseDetailsScreen(
                 asin?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.asin, text = it)
                 }
-                if (areasWithReleaseDate.isEmpty()) {
-                    date?.ifNotNullOrEmpty {
-                        TextWithHeading(headingRes = R.string.release_events, text = it)
-                    }
-                }
 
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.labels))
@@ -116,19 +101,20 @@ internal fun ReleaseDetailsScreen(
                         LabelCard(label = label, onLabelClick = onLabelClick)
                     }
                 }
-            }
 
-            if (areasWithReleaseDate.isNotEmpty()) {
-                ListSeparatorHeader(text = stringResource(id = R.string.release_events))
+                if (areas.isNotEmpty()) {
+                    ListSeparatorHeader(text = stringResource(id = R.string.release_events))
+                }
+                areas.forEach { item: AreaCardModel ->
+                    AreaCard(
+                        area = item,
+                        showType = false,
+                        onAreaClick = onAreaClick
+                    )
+                }
+            } ?: run {
+                FullScreenLoadingIndicator()
             }
-        }
-
-        items(areasWithReleaseDate) { item: AreaWithReleaseDate ->
-            AreaCard(
-                area = item.toAreaUiModel(),
-                showType = false,
-                onAreaClick = onAreaClick
-            )
         }
     }
 }

@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.ReleaseUiModel
+import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
@@ -69,7 +69,7 @@ internal fun ReleaseScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var url: String by rememberSaveable { mutableStateOf("") }
-    var release: ReleaseUiModel? by remember { mutableStateOf(null) }
+    var release: ReleaseScaffoldModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         title = titleWithDisambiguation
@@ -77,19 +77,19 @@ internal fun ReleaseScaffold(
 
     LaunchedEffect(key1 = releaseId) {
         try {
-            val releaseUiModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
-            val coverArtUrl = releaseUiModel.coverArtUrl
+            val releaseScaffoldModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
+            val coverArtUrl = releaseScaffoldModel.coverArtUrl
             if (coverArtUrl != null) {
                 url = coverArtUrl
-            } else if (releaseUiModel.coverArtArchive.count > 0) {
+            } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
                 url = viewModel.getCoverArtUrlFromNetwork()
             }
 
             if (titleWithDisambiguation.isNullOrEmpty()) {
-                title = releaseUiModel.getNameWithDisambiguation()
+                title = releaseScaffoldModel.getNameWithDisambiguation()
             }
-            subtitleState = "Release by ${releaseUiModel.artistCredits.getDisplayNames()}"
-            release = releaseUiModel
+            subtitleState = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
+            release = releaseScaffoldModel
         } catch (ex: Exception) {
             // If any of the above calls failed, we still want to update the release id so that
             // TracksInReleaseScreen will give us a Retry button.
@@ -182,7 +182,7 @@ internal fun ReleaseScaffold(
             }
             ReleaseTab.DETAILS -> {
                 ReleaseDetailsScreen(
-                    releaseUiModel = release,
+                    releaseScaffoldModel = release,
                     onLabelClick = {
                         onItemClick(Destination.LOOKUP_LABEL, id, name)
                     },
@@ -205,7 +205,7 @@ internal fun ReleaseScaffold(
             ReleaseTab.STATS -> {
                 ReleaseStatsScreen(
                     releaseId = releaseId,
-                    releaseUiModel = release
+                    releaseScaffoldModel = release
                 )
             }
         }

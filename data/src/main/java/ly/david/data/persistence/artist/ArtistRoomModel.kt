@@ -41,6 +41,7 @@ data class ArtistRoomModel(
     @Embedded
     override val lifeSpan: LifeSpan? = null,
 
+    // TODO: remove
     /**
      * The total number of release groups this artist has in Music Brainz's database.
      *
