@@ -7,12 +7,12 @@ import androidx.room.TypeConverters
 import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
-import ly.david.data.persistence.artist.ArtistCreditNamesWithResource
-import ly.david.data.persistence.artist.ArtistCreditResource
-import ly.david.data.persistence.artist.ArtistCreditRoomModel
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistRoomModel
+import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
+import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.persistence.artist.credit.ArtistCreditResource
+import ly.david.data.persistence.artist.credit.ArtistCreditRoomModel
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.instrument.InstrumentRoomModel

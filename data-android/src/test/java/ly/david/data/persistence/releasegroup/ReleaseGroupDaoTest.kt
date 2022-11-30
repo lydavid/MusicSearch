@@ -6,8 +6,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.network.fakeReleaseGroupWithArtistCredits
-import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
-import ly.david.data.persistence.artist.ArtistCreditNamesWithResource
+import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
+import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before

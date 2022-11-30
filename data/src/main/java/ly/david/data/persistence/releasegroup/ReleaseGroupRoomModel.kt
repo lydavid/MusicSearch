@@ -8,7 +8,7 @@ import androidx.room.Relation
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.RoomModel
-import ly.david.data.persistence.artist.ArtistCreditNamesWithResource
+import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 
 @Entity(
     tableName = "release_groups",

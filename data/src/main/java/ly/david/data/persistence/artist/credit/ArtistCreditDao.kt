@@ -1,4 +1,4 @@
-package ly.david.data.persistence.artist
+package ly.david.data.persistence.artist.credit
 
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy

@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.ArtistCredit
 import ly.david.data.network.ArtistCreditMusicBrainzModel
-import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
+import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
 
 // TODO: position unused since we fetch these ordered
 data class ArtistCreditUiModel(

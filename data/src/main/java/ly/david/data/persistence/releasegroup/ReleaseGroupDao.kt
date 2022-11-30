@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.artist.ArtistCreditDao
+import ly.david.data.persistence.artist.credit.ArtistCreditDao
 
 @Dao
 abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>, ArtistCreditDao {
