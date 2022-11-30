@@ -9,7 +9,7 @@ import ly.david.data.persistence.release.ReleaseWithAllData
 data class ReleaseScaffoldModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String,
+    override val disambiguation: String = "",
     override val date: String? = null,
     override val barcode: String? = null,
     override val status: String? = null,
@@ -24,12 +24,10 @@ data class ReleaseScaffoldModel(
     override val textRepresentation: TextRepresentation? = null,
     val coverArtUrl: String? = null,
 
-    val formats: String? = null,
-    val tracks: String? = null,
+    val formattedFormats: String? = null,
+    val formattedTracks: String? = null,
 
     // TODO: minor: consider mapping to a ui model
-    //  which should make this stable (except lists aren't stable...)
-    //  but we can at least make a model that only holds relevant info
     //  in this case, we don't need release_id and order (since we return them ordered)
     val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf(),
 
@@ -56,8 +54,8 @@ fun ReleaseWithAllData.toScaffoldModel(
     quality = release.quality,
     coverArtArchive = release.coverArtArchive,
     textRepresentation = release.textRepresentation,
-    formats = release.formats,
-    tracks = release.tracks,
+    formattedFormats = release.formats,
+    formattedTracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
     areas = areas.map { it.toCardModel() },
     artistCredits = releaseArtistCreditRoomModel,

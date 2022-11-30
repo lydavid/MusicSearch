@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import ly.david.data.AreaType.COUNTRY
+import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.AreaCardModel
@@ -128,8 +130,14 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaC
             id = "3",
             name = "Area Name with a very long name",
             disambiguation = "That one",
-            type = "Country",
+            type = COUNTRY,
             iso_3166_1_codes = listOf("GB")
+        ),
+        AreaCardModel(
+            id = "4",
+            name = "Area Name with a very long name",
+            type = WORLDWIDE,
+            iso_3166_1_codes = listOf("XW")
         )
     )
 }

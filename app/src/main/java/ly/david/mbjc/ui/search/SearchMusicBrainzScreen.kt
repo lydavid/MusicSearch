@@ -179,7 +179,7 @@ internal fun SearchMusicBrainzScreen(
                     }
                 }
                 is ReleaseCardModel -> {
-                    ReleaseCard(releaseCardModel = uiModel) {
+                    ReleaseCard(release = uiModel) {
                         onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
                     }
                 }

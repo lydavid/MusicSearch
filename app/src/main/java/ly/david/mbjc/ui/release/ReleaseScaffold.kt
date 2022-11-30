@@ -211,7 +211,6 @@ internal fun ReleaseScaffold(
             ReleaseTab.STATS -> {
                 ReleaseStatsScreen(
                     releaseId = releaseId,
-                    releaseScaffoldModel = release
                 )
             }
         }

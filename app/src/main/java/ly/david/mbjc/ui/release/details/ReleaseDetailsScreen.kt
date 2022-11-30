@@ -4,6 +4,8 @@ import android.icu.lang.UScript
 import android.os.Build
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,16 +15,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Locale
+import ly.david.data.AreaType.COUNTRY
+import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.AreaCardModel
 import ly.david.data.domain.LabelCardModel
 import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
+import ly.david.data.network.TextRepresentation
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaCard
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.label.LabelCard
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 // TODO: it lags when navigating to this tab
 //  consider loading ReleaseWithAllData only when we navigate here
@@ -31,10 +39,9 @@ internal fun ReleaseDetailsScreen(
     releaseScaffoldModel: ReleaseScaffoldModel,
     onLabelClick: LabelCardModel.() -> Unit = {},
     onAreaClick: AreaCardModel.() -> Unit = {},
-    lazyListState: LazyListState,
+    lazyListState: LazyListState = rememberLazyListState(),
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
-
     // TODO: get this from ui model, then we can save scroll state
     var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
 
@@ -42,17 +49,34 @@ internal fun ReleaseDetailsScreen(
         releaseLength = viewModel.getFormattedReleaseLength(releaseScaffoldModel.id)
     }
 
+    ReleaseDetailsScreen(
+        release = releaseScaffoldModel,
+        onLabelClick = onLabelClick,
+        onAreaClick = onAreaClick,
+        lazyListState = lazyListState,
+        releaseLength = releaseLength
+    )
+}
+
+@Composable
+private fun ReleaseDetailsScreen(
+    release: ReleaseScaffoldModel,
+    onLabelClick: LabelCardModel.() -> Unit = {},
+    onAreaClick: AreaCardModel.() -> Unit = {},
+    lazyListState: LazyListState = rememberLazyListState(),
+    releaseLength: String? = null,
+) {
     LazyColumn(state = lazyListState) {
         item {
-            releaseScaffoldModel.run {
+            release.run {
                 ListSeparatorHeader(text = stringResource(id = R.string.release_information))
                 barcode?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.barcode, text = it)
                 }
-                formats?.ifNotNullOrEmpty {
+                formattedFormats?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.format, text = it)
                 }
-                tracks?.ifNotNullOrEmpty {
+                formattedTracks?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.tracks, text = it)
                 }
                 releaseLength?.ifNotNullOrEmpty {
@@ -114,3 +138,63 @@ internal fun ReleaseDetailsScreen(
         }
     }
 }
+
+// region Previews
+@ExcludeFromJacocoGeneratedReport
+@DefaultPreviews
+@Composable
+private fun Preview() {
+    PreviewTheme {
+        Surface {
+            ReleaseDetailsScreen(
+                release = ReleaseScaffoldModel(
+                    id = "r1",
+                    name = "Release",
+                    date = "1000-10-10",
+                    barcode = "123456789",
+                    status = "Official",
+                    countryCode = "CA",
+                    packaging = "Box",
+                    asin = "B12341234",
+                    quality = "normal",
+                    textRepresentation = TextRepresentation(
+                        script = "Latn",
+                        language = "eng"
+                    ),
+                    formattedFormats = "2xCD + Blu-ray",
+                    formattedTracks = "15 + 8 + 24",
+                    areas = listOf(
+                        AreaCardModel(
+                            id = "a1",
+                            name = "Canada",
+                            type = COUNTRY,
+                            iso_3166_1_codes = listOf("CA"),
+                            date = "2022-11-29"
+                        ),
+                        AreaCardModel(
+                            id = "a2",
+                            name = WORLDWIDE,
+                            iso_3166_1_codes = listOf("XW"),
+                            date = "2022-11-30"
+                        )
+                    ),
+                    labels = listOf(
+                        LabelCardModel(
+                            id = "l1",
+                            name = "Label 1",
+                            type = "Imprint",
+                            catalogNumber = "ASDF-1010"
+                        ),
+                        LabelCardModel(
+                            id = "l1",
+                            name = "Label 1",
+                            catalogNumber = "ASDF-1011"
+                        )
+                    )
+                ),
+                releaseLength = null
+            )
+        }
+    }
+}
+// endregion

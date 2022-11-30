@@ -28,11 +28,11 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun ReleaseCard(
-    releaseCardModel: ReleaseCardModel,
+    release: ReleaseCardModel,
     onClick: ReleaseCardModel.() -> Unit = {}
 ) {
     ClickableListItem(
-        onClick = { onClick(releaseCardModel) },
+        onClick = { onClick(release) },
     ) {
         Column(
             modifier = Modifier
@@ -45,7 +45,7 @@ internal fun ReleaseCard(
                 val (name, disambiguation, countryDate) = createRefs()
 
                 Text(
-                    text = releaseCardModel.name,
+                    text = release.name,
                     style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier
                         .constrainAs(name) {
@@ -65,7 +65,7 @@ internal fun ReleaseCard(
                             end.linkTo(name.end)
                         }
                 ) {
-                    val uiDisambiguation = releaseCardModel.disambiguation
+                    val uiDisambiguation = release.disambiguation
                     if (uiDisambiguation.isNotEmpty()) {
                         Text(
                             text = "($uiDisambiguation)",
@@ -85,7 +85,7 @@ internal fun ReleaseCard(
                         },
                     horizontalAlignment = Alignment.End
                 ) {
-                    val uiDate = releaseCardModel.date
+                    val uiDate = release.date
                     if (!uiDate.isNullOrEmpty()) {
                         Text(
                             text = uiDate,
@@ -93,7 +93,7 @@ internal fun ReleaseCard(
                         )
                     }
 
-                    val uiCountry = releaseCardModel.countryCode
+                    val uiCountry = release.countryCode
                     if (!uiCountry.isNullOrEmpty()) {
                         if (!uiDate.isNullOrEmpty()) {
                             Spacer(modifier = Modifier.padding(4.dp))
@@ -101,8 +101,8 @@ internal fun ReleaseCard(
 
                         // Since we don't store release events when browsing releases, releaseEvents will be empty until
                         // after we've clicked into it
-                        val additionalReleaseEvents = if (releaseCardModel.releaseEvents.size > 1) {
-                            "+ ${releaseCardModel.releaseEvents.size - 1}"
+                        val additionalReleaseEvents = if (release.releaseEvents.size > 1) {
+                            "+ ${release.releaseEvents.size - 1}"
                         } else {
                             ""
                         }
@@ -115,7 +115,7 @@ internal fun ReleaseCard(
             }
 
             Row {
-                val uiFormats = releaseCardModel.formats
+                val uiFormats = release.formats
                 if (!uiFormats.isNullOrEmpty()) {
                     Text(
                         modifier = Modifier
@@ -126,7 +126,7 @@ internal fun ReleaseCard(
                     )
                 }
 
-                val uiTracks = releaseCardModel.tracks
+                val uiTracks = release.tracks
                 if (!uiTracks.isNullOrEmpty()) {
                     Text(
                         modifier = Modifier
@@ -139,6 +139,10 @@ internal fun ReleaseCard(
                 }
             }
 
+            Text(
+                text = release.name,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
         }
     }
 }
@@ -148,7 +152,6 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
         ReleaseCardModel(
             id = "1",
             name = "Release title",
-            disambiguation = ""
         ),
         ReleaseCardModel(
             id = "1",
@@ -169,8 +172,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
         ),
         ReleaseCardModel(
             id = "1",
-            name = "Release title that is long and wraps",
-            disambiguation = "Disambiguation text that is also long",
+            name = "Release title",
             date = "2021-09-08",
             countryCode = "JP",
             formats = "2×CD + Blu-ray",
@@ -180,25 +182,21 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "1",
             name = "Release title",
             date = "2022-04-03",
-            disambiguation = "",
             countryCode = "NL",
         ),
         ReleaseCardModel(
             id = "1",
             name = "Release title",
-            disambiguation = "",
             countryCode = "NL",
         ),
         ReleaseCardModel(
             id = "1",
             name = "Release title",
             date = "2022-04-03",
-            disambiguation = "",
         ),
         ReleaseCardModel(
             id = "1",
             name = "Release title",
-            disambiguation = "",
             countryCode = "DZ",
             releaseEvents = listOf(
                 ReleaseCountry("1", countryId = "2"),

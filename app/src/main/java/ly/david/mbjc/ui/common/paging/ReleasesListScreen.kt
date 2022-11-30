@@ -26,7 +26,7 @@ internal fun ReleasesListScreen(
     ) { releaseCardModel: ReleaseCardModel? ->
         when (releaseCardModel) {
             is ReleaseCardModel -> {
-                ReleaseCard(releaseCardModel = releaseCardModel) {
+                ReleaseCard(release = releaseCardModel) {
                     onReleaseClick(id, getNameWithDisambiguation())
                 }
             }

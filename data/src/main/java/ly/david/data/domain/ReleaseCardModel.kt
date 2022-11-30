@@ -10,7 +10,7 @@ import ly.david.data.persistence.release.ReleaseWithReleaseCountries
 data class ReleaseCardModel(
     override val id: String,
     override val name: String,
-    override val disambiguation: String,
+    override val disambiguation: String = "",
     override val date: String? = null,
     override val barcode: String? = null,
     override val status: String? = null,
