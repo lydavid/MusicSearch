@@ -26,7 +26,7 @@ internal fun RecordingsListScreen(
     ) { recordingUiModel: RecordingUiModel? ->
         when (recordingUiModel) {
             is RecordingUiModel -> {
-                RecordingCard(recordingUiModel = recordingUiModel) {
+                RecordingCard(recording = recordingUiModel) {
                     onRecordingClick(id, getNameWithDisambiguation())
                 }
             }

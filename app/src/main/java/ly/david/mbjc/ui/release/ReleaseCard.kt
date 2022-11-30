@@ -18,8 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toFlagEmoji
+import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.data.domain.ReleaseCardModel
+import ly.david.data.getDisplayNames
 import ly.david.data.persistence.area.ReleaseCountry
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -114,13 +117,11 @@ internal fun ReleaseCard(
                 }
             }
 
-            Row {
+            Row(modifier = Modifier.padding(top = 4.dp)) {
                 val uiFormats = release.formats
                 if (!uiFormats.isNullOrEmpty()) {
                     Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(top = 4.dp),
+                        modifier = Modifier.weight(1f),
                         text = uiFormats,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
@@ -129,14 +130,22 @@ internal fun ReleaseCard(
                 val uiTracks = release.tracks
                 if (!uiTracks.isNullOrEmpty()) {
                     Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(top = 4.dp),
+                        modifier = Modifier.weight(1f),
                         text = uiTracks,
                         style = TextStyles.getCardBodySubTextStyle(),
                         textAlign = TextAlign.End
                     )
                 }
+            }
+
+            if (release.artistCredits.isNotEmpty()) {
+                Text(
+                    text = release.artistCredits.getDisplayNames(),
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .fillMaxWidth(),
+                    style = TextStyles.getCardBodyTextStyle()
+                )
             }
 
             // TODO: catalog number
@@ -148,6 +157,7 @@ internal fun ReleaseCard(
     }
 }
 
+// region Previews
 internal class ReleasePreviewParameterProvider : PreviewParameterProvider<ReleaseCardModel> {
     override val values: Sequence<ReleaseCardModel> = sequenceOf(
         ReleaseCardModel(
@@ -194,6 +204,17 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "1",
             name = "Release title",
             date = "2022-04-03",
+            artistCredits = listOf(
+                ArtistCreditUiModel(
+                    artistId = "2",
+                    name = "Some artist",
+                    joinPhrase = " feat. "
+                ),
+                ArtistCreditUiModel(
+                    artistId = "3",
+                    name = "some other artist"
+                )
+            )
         ),
         ReleaseCardModel(
             id = "1",
@@ -208,6 +229,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
     )
 }
 
+@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun ReleaseCardPreview(
@@ -219,3 +241,4 @@ private fun ReleaseCardPreview(
         }
     }
 }
+// endregion

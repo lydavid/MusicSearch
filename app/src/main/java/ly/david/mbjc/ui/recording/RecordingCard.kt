@@ -21,11 +21,11 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 @Composable
 internal fun RecordingCard(
-    recordingUiModel: RecordingUiModel,
+    recording: RecordingUiModel,
     onRecordingClick: RecordingUiModel.() -> Unit = {}
 ) {
     ClickableListItem(
-        onClick = { onRecordingClick(recordingUiModel) },
+        onClick = { onRecordingClick(recording) },
     ) {
         Column(
             modifier = Modifier
@@ -34,10 +34,10 @@ internal fun RecordingCard(
         ) {
             // TODO: make it look better
 
-            Text(text = recordingUiModel.name)
-            Text(text = recordingUiModel.disambiguation)
-            Text(text = recordingUiModel.date.orEmpty())
-            Text(text = recordingUiModel.length.toDisplayTime())
+            Text(text = recording.name)
+            Text(text = recording.disambiguation)
+            Text(text = recording.date.orEmpty())
+            Text(text = recording.length.toDisplayTime())
         }
     }
 }
@@ -51,7 +51,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             RecordingCard(
-                recordingUiModel = RecordingUiModel(
+                recording = RecordingUiModel(
                     id = "1",
                     name = "Recording name",
                     date = "2022-05-23",

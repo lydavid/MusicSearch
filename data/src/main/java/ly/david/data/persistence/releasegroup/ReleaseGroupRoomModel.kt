@@ -1,14 +1,11 @@
 package ly.david.data.persistence.releasegroup
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.RoomModel
-import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 
 @Entity(
     tableName = "release_groups",
@@ -31,17 +28,6 @@ data class ReleaseGroupRoomModel(
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
 ) : RoomModel, ReleaseGroup
-
-data class ReleaseGroupWithArtistCredits(
-    @Embedded
-    val releaseGroup: ReleaseGroupRoomModel,
-
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "resource_id"
-    )
-    val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>
-) : RoomModel
 
 fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel =
     ReleaseGroupRoomModel(

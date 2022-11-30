@@ -184,7 +184,7 @@ internal fun SearchMusicBrainzScreen(
                     }
                 }
                 is RecordingUiModel -> {
-                    RecordingCard(recordingUiModel = uiModel) {
+                    RecordingCard(recording = uiModel) {
                         onItemClick(Destination.LOOKUP_RECORDING, id, getNameWithDisambiguation())
                     }
                 }
