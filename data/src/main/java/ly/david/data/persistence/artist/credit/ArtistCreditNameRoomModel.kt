@@ -3,18 +3,18 @@ package ly.david.data.persistence.artist.credit
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.ArtistCredit
+import ly.david.data.ArtistCreditName
 import ly.david.data.network.ArtistCreditMusicBrainzModel
 
 /**
- * Represents a single name in an [ArtistCreditRoomModel].
+ * Represents a single name in an [ArtistCredit].
  */
 @Entity(
     tableName = "artist_credit_names",
     primaryKeys = ["artist_credit_id", "position"],
     foreignKeys = [
         ForeignKey(
-            entity = ArtistCreditRoomModel::class,
+            entity = ArtistCredit::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("artist_credit_id"),
             onUpdate = ForeignKey.CASCADE,
@@ -37,7 +37,7 @@ data class ArtistCreditNameRoomModel(
 
     @ColumnInfo(name = "join_phrase")
     override val joinPhrase: String? = null
-) : ArtistCredit
+) : ArtistCreditName
 
 /**
  * Converts artist credits to an appropriate model to store.

@@ -1,14 +1,14 @@
 package ly.david.data
 
-interface ArtistCredit {
+interface ArtistCreditName {
     val name: String
     val joinPhrase: String?
 }
 
 /**
- * Get all artists in the credit, joined by their [ArtistCredit.joinPhrase].
+ * Get all artists' name in a credit, joined by their [ArtistCreditName.joinPhrase].
  */
-fun List<ArtistCredit>?.getDisplayNames(): String {
+fun List<ArtistCreditName>?.getDisplayNames(): String {
     var displayName = ""
     this?.forEach {
         displayName += "${it.name}${it.joinPhrase.orEmpty()}"

@@ -15,16 +15,10 @@ import ly.david.data.persistence.INSERTION_FAILED_DUE_TO_CONFLICT
 interface ArtistCreditDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertArtistCredit(artistCredit: ArtistCreditRoomModel): Long
+    suspend fun insertArtistCredit(artistCredit: ArtistCredit): Long
 
-    @Query(
-        """
-            SELECT *
-            FROM artist_credits
-            WHERE name = :name
-        """
-    )
-    suspend fun getArtistCreditByName(name: String): ArtistCreditRoomModel
+    @Query("SELECT * FROM artist_credits WHERE name = :name")
+    suspend fun getArtistCreditByName(name: String): ArtistCredit
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllArtistCreditNames(artistCreditNameRoomModel: List<ArtistCreditNameRoomModel>)
@@ -37,7 +31,7 @@ interface ArtistCreditDao {
         resourceId: String
     ) {
         val artistCreditName = artistCredits.getDisplayNames()
-        var artistCreditId = insertArtistCredit(ArtistCreditRoomModel(name = artistCreditName))
+        var artistCreditId = insertArtistCredit(ArtistCredit(name = artistCreditName))
         if (artistCreditId == INSERTION_FAILED_DUE_TO_CONFLICT) {
             artistCreditId = getArtistCreditByName(artistCreditName).id
         } else {

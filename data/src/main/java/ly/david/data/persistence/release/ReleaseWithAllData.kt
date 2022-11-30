@@ -87,7 +87,7 @@ data class ReleaseWithAllData(
 
     @Relation(
         parentColumn = "release_group_id",
-        entityColumn = "id"
+        entityColumn = "id" // releaseGroup.id
     )
     val releaseGroup: ReleaseGroupRoomModel?
 ) : RoomModel

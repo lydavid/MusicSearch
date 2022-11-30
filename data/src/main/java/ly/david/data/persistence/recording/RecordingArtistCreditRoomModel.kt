@@ -3,13 +3,13 @@ package ly.david.data.persistence.recording
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.ArtistCredit
+import ly.david.data.ArtistCreditName
 
 /**
  * An artist's credit for a [Recording].
  * A recording can have many artists credits. It can even have the same artist listed twice under different names.
  *
- * An [ArtistCredit] for a [Recording] should map to this.
+ * An [ArtistCreditName] for a [Recording] should map to this.
  */
 @Entity(
     tableName = "recordings_artists",
@@ -39,4 +39,4 @@ data class RecordingArtistCreditRoomModel(
 
     @ColumnInfo(name = "order")
     val order: Int
-) : ArtistCredit
+) : ArtistCreditName

@@ -8,7 +8,7 @@ import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 
 /**
- * Junction table between [ArtistCreditRoomModel] and one of:
+ * Junction table between [ArtistCredit] and one of:
  * - [ReleaseGroupRoomModel]
  * - [ReleaseRoomModel]
  * - [RecordingRoomModel]
@@ -19,7 +19,7 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
     // TODO: can't FK to multiple tables directly?
     foreignKeys = [
         ForeignKey(
-            entity = ArtistCreditRoomModel::class,
+            entity = ArtistCredit::class,
             parentColumns = arrayOf("id"),
             childColumns = arrayOf("artist_credit_id"),
             onUpdate = ForeignKey.CASCADE,

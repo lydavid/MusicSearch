@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
     tableName = "artist_credits",
     indices = [Index(value = ["name"], unique = true)]
 )
-data class ArtistCreditRoomModel(
+data class ArtistCredit(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long = 0,

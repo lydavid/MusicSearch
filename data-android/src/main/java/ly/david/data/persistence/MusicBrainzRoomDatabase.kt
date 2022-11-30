@@ -9,10 +9,10 @@ import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistRoomModel
+import ly.david.data.persistence.artist.credit.ArtistCredit
 import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
 import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 import ly.david.data.persistence.artist.credit.ArtistCreditResource
-import ly.david.data.persistence.artist.credit.ArtistCreditRoomModel
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.instrument.InstrumentRoomModel
@@ -45,7 +45,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         EventRoomModel::class,
 
         // Other tables
-        ArtistCreditNameRoomModel::class, ArtistCreditRoomModel::class, ArtistCreditResource::class,
+        ArtistCredit::class, ArtistCreditNameRoomModel::class, ArtistCreditResource::class,
         MediumRoomModel::class, TrackRoomModel::class,
         Iso3166_1::class,
 
