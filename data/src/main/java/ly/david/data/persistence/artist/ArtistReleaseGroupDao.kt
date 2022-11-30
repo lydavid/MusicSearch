@@ -37,7 +37,6 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup> {
             ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date
         """
 
-        // TODO: if something like this gets too slow, then use fts
         // TODO: we're able to filter on date's month/day even though we don't display it. Could be confusing
         private const val FILTERED = """
             AND (

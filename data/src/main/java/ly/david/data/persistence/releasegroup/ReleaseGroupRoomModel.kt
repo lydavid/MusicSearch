@@ -43,25 +43,6 @@ data class ReleaseGroupWithArtistCredits(
     val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>
 ) : RoomModel
 
-//@Fts4(contentEntity = RoomReleaseGroup::class)
-//@Entity(tableName = "release_groups_fts_table")
-//data class ReleaseGroupFts(
-//    @ColumnInfo(name = "title")
-//    val name: String = "",
-//
-//    @ColumnInfo(name = "first-release-date")
-//    val firstReleaseDate: String = "",
-//
-//    @ColumnInfo(name = "disambiguation")
-//    val disambiguation: String = "",
-//
-//    @ColumnInfo(name = "primary-type")
-//    val primaryType: String = "",
-//
-//    @ColumnInfo(name = "secondary-types")
-//    val secondaryTypes: String = ""
-//)
-
 fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel =
     ReleaseGroupRoomModel(
         id = id,

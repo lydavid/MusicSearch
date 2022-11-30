@@ -49,10 +49,6 @@ import ly.david.data.persistence.work.WorkRoomModel
         MediumRoomModel::class, TrackRoomModel::class,
         Iso3166_1::class,
 
-        // TODO: delete
-        // Full-Text Search (FTS) tables
-//        ReleaseGroupFts::class,
-
         // Relationship tables
         RelationRoomModel::class,
         HasRelationsRoomModel::class,
