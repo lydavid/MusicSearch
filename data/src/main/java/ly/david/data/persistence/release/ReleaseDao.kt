@@ -47,6 +47,6 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>, ArtistCreditDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertReleaseWithArtistCredits(release: ReleaseMusicBrainzModel) {
         insertArtistCredits(artistCredits = release.artistCredits, resourceId = release.id)
-        insert(release.toReleaseRoomModel())
+        insertReplace(release.toReleaseRoomModel())
     }
 }

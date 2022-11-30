@@ -3,7 +3,6 @@ package ly.david.data.persistence.artist
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import ly.david.data.getDisplayNames
 import ly.david.data.network.ArtistCreditMusicBrainzModel
 import ly.david.data.persistence.INSERTION_FAILED_DUE_TO_CONFLICT
@@ -33,7 +32,6 @@ interface ArtistCreditDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArtistCreditResource(artistCreditResource: ArtistCreditResource): Long
 
-    @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArtistCredits(
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
