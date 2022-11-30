@@ -15,11 +15,13 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording> {
             FROM releases rel
             INNER JOIN releases_recordings rr ON rel.id = rr.release_id
             INNER JOIN recordings rec ON rec.id = rr.recording_id
+            LEFT JOIN artist_credits_resources acr ON acr.resource_id = rel.id
+            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
             WHERE rec.id = :recordingId
         """
 
         private const val SELECT_RELEASES_BY_RECORDING = """
-            SELECT rel.*
+            SELECT rel.*, ac.name AS artist_credit_names
             $RELEASES_BY_RECORDING
         """
 
@@ -37,6 +39,7 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording> {
                 rel.name LIKE :query OR rel.disambiguation LIKE :query
                 OR rel.date LIKE :query OR rel.country_code LIKE :query
                 OR rel.formats LIKE :query OR rel.tracks LIKE :query
+                OR ac.name LIKE :query
             )
         """
     }

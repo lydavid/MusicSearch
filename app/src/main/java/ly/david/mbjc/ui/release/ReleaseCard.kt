@@ -18,9 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toFlagEmoji
-import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.data.domain.ReleaseCardModel
-import ly.david.data.getDisplayNames
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -138,9 +136,10 @@ internal fun ReleaseCard(
                 }
             }
 
-            if (release.artistCredits.isNotEmpty()) {
+            val formattedArtistCredits = release.formattedArtistCredits
+            if (!formattedArtistCredits.isNullOrEmpty()) {
                 Text(
-                    text = release.artistCredits.getDisplayNames(),
+                    text = formattedArtistCredits,
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
@@ -204,17 +203,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "1",
             name = "Release title",
             date = "2022-04-03",
-            artistCredits = listOf(
-                ArtistCreditUiModel(
-                    artistId = "2",
-                    name = "Some artist",
-                    joinPhrase = " feat. "
-                ),
-                ArtistCreditUiModel(
-                    artistId = "3",
-                    name = "some other artist"
-                )
-            )
+            formattedArtistCredits = "Some artist feat. Other artist"
         ),
         ReleaseCardModel(
             id = "1",

@@ -15,11 +15,13 @@ abstract class ReleasesReleaseGroupsDao {
         private const val RELEASES_IN_RELEASE_GROUP = """
             FROM releases r
             INNER JOIN release_groups rg ON rg.id = r.release_group_id
+            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
             WHERE rg.id = :releaseGroupId
         """
 
         private const val SELECT_RELEASES_IN_RELEASE_GROUP = """
-            SELECT r.*
+            SELECT r.*, ac.name AS artist_credit_names
             $RELEASES_IN_RELEASE_GROUP
         """
 
@@ -37,6 +39,7 @@ abstract class ReleasesReleaseGroupsDao {
                 r.name LIKE :query OR r.disambiguation LIKE :query
                 OR r.date LIKE :query OR r.country_code LIKE :query
                 OR r.formats LIKE :query OR r.tracks LIKE :query
+                OR ac.name LIKE :query
             )
         """
     }

@@ -15,12 +15,14 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel> {
             FROM releases r
             INNER JOIN releases_labels rl ON r.id = rl.release_id
             INNER JOIN labels l ON l.id = rl.label_id
+            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
             WHERE l.id = :labelId
         """
 
         // DISTINCT because junction table can repeat due to different catalog number for same release/label
         private const val SELECT_RELEASES_BY_LABEL = """
-            SELECT DISTINCT r.*
+            SELECT DISTINCT r.*, ac.name AS artist_credit_names
             $RELEASES_BY_LABEL
         """
 
@@ -38,6 +40,7 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel> {
                 r.name LIKE :query OR r.disambiguation LIKE :query
                 OR r.date LIKE :query OR r.country_code LIKE :query
                 OR r.formats LIKE :query OR r.tracks LIKE :query
+                OR ac.name LIKE :query
             )
         """
     }

@@ -18,11 +18,13 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
             FROM releases r
             INNER JOIN releases_countries rc ON r.id = rc.release_id
             INNER JOIN areas a ON a.id = rc.country_id
+            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
             WHERE a.id = :areaId
         """
 
         private const val SELECT_RELEASES_BY_COUNTRY = """
-            SELECT r.*
+            SELECT r.*, ac.name AS artist_credit_names
             $RELEASES_BY_COUNTRY
         """
 
@@ -40,6 +42,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
                 r.name LIKE :query OR r.disambiguation LIKE :query
                 OR r.date LIKE :query OR r.country_code LIKE :query
                 OR r.formats LIKE :query OR r.tracks LIKE :query
+                OR ac.name LIKE :query
             )
         """
     }
@@ -81,7 +84,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesFromCountry(areaId: String): PagingSource<Int, ReleaseWithReleaseCountries>
+    abstract fun getReleasesByCountry(areaId: String): PagingSource<Int, ReleaseWithReleaseCountries>
 
     @Transaction
     @Query(
@@ -91,7 +94,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry> {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesFromCountryFiltered(
+    abstract fun getReleasesByCountryFiltered(
         areaId: String,
         query: String
     ): PagingSource<Int, ReleaseWithReleaseCountries>

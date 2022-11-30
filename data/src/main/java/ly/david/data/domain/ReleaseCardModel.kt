@@ -27,8 +27,7 @@ data class ReleaseCardModel(
 
     val formats: String? = null,
     val tracks: String? = null,
-
-    val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    val formattedArtistCredits: String? = null,
 
     val releaseEvents: List<ReleaseCountry> = listOf(),
 ) : UiModel(), Release
@@ -69,8 +68,6 @@ fun ReleaseWithReleaseCountries.toCardModel() = ReleaseCardModel(
     formats = release.formats,
     tracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
-    artistCredits = artistCreditNamesWithResources.map {
-        it.artistCreditNameRoomModel.toUiModel()
-    },
+    formattedArtistCredits = artistCreditNames,
     releaseEvents = releaseEvents,
 )

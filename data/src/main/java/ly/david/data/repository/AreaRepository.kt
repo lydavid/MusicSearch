@@ -136,10 +136,10 @@ class AreaRepository @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
         query.isEmpty() -> {
-            releasesCountriesDao.getReleasesFromCountry(resourceId)
+            releasesCountriesDao.getReleasesByCountry(resourceId)
         }
         else -> {
-            releasesCountriesDao.getReleasesFromCountryFiltered(
+            releasesCountriesDao.getReleasesByCountryFiltered(
                 areaId = resourceId,
                 query = "%$query%"
             )
