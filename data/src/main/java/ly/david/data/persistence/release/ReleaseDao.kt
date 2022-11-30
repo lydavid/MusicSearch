@@ -5,10 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.artist.ArtistCreditDao
 
 @Dao
-abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
+abstract class ReleaseDao : BaseDao<ReleaseRoomModel>, ArtistCreditDao {
 
     // Lookup
     @Query("SELECT * FROM releases WHERE id = :releaseId")
@@ -34,18 +36,17 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel> {
     )
     abstract suspend fun setReleaseCoverArtUrl(releaseId: String, coverArtUrl: String)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertAllArtistCredits(artistCredits: List<ReleaseArtistCreditRoomModel>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAllReleasesWithArtistCredits(releases: List<ReleaseMusicBrainzModel>) {
+        releases.forEach { release ->
+            insertReleaseWithArtistCredits(release)
+        }
+    }
 
     @Transaction
-    @Query(
-        """
-        SELECT ra.*
-        FROM releases r
-        INNER JOIN releases_artists ra ON r.id = ra.release_id
-        where r.id = :releaseId
-        ORDER BY ra.`order`
-    """
-    )
-    abstract suspend fun getReleaseArtistCredits(releaseId: String): List<ReleaseArtistCreditRoomModel>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertReleaseWithArtistCredits(release: ReleaseMusicBrainzModel) {
+        insertArtistCredits(artistCredits = release.artistCredits, resourceId = release.id)
+        insert(release.toReleaseRoomModel())
+    }
 }

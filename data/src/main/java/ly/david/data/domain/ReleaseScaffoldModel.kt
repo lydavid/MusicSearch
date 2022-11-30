@@ -3,7 +3,6 @@ package ly.david.data.domain
 import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.TextRepresentation
-import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
 import ly.david.data.persistence.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
@@ -27,17 +26,14 @@ data class ReleaseScaffoldModel(
     val formattedFormats: String? = null,
     val formattedTracks: String? = null,
 
-    // TODO: minor: consider mapping to a ui model
-    //  in this case, we don't need release_id and order (since we return them ordered)
-    val artistCredits: List<ReleaseArtistCreditRoomModel> = listOf(),
+    val artistCredits: List<ArtistCreditUiModel> = listOf(),
 
     val releaseGroup: ReleaseGroupUiModel? = null,
     val areas: List<AreaCardModel> = listOf(),
     val labels: List<LabelCardModel> = listOf()
 ) : Release
 
-fun ReleaseWithAllData.toScaffoldModel(
-    releaseArtistCreditRoomModel: List<ReleaseArtistCreditRoomModel>,
+internal fun ReleaseWithAllData.toScaffoldModel(
     releaseGroup: ReleaseGroupUiModel?
 ) = ReleaseScaffoldModel(
     id = release.id,
@@ -58,7 +54,9 @@ fun ReleaseWithAllData.toScaffoldModel(
     formattedTracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
     areas = areas.map { it.toCardModel() },
-    artistCredits = releaseArtistCreditRoomModel,
+    artistCredits = artistCreditNamesWithResources.map {
+        it.artistCreditNameRoomModel.toUiModel()
+    },
     releaseGroup = releaseGroup,
     labels = labels.map { it.toCardModel() }
 )

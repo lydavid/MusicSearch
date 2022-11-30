@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
 import ly.david.data.NameWithDisambiguation
 import ly.david.data.Release
-import ly.david.data.persistence.release.ReleaseArtistCreditRoomModel
 
 // browse inc: artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
 // lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
@@ -83,19 +82,3 @@ data class ReleaseEvent(
     @Json(name = "name") override val name: String? = null,
     @Json(name = "disambiguation") override val disambiguation: String? = null,
 ) : NameWithDisambiguation
-
-// TODO: unit test
-//  and look into generalizing
-/**
- * Returns all artist credits for this release for caching in database.
- */
-internal fun ReleaseMusicBrainzModel.getReleaseArtistCreditRoomModels(): List<ReleaseArtistCreditRoomModel> =
-    artistCredits?.mapIndexed { index, artistCredit ->
-        ReleaseArtistCreditRoomModel(
-            releaseId = id,
-            artistId = artistCredit.artist.id,
-            name = artistCredit.name,
-            joinPhrase = artistCredit.joinPhrase,
-            order = index
-        )
-    }.orEmpty()

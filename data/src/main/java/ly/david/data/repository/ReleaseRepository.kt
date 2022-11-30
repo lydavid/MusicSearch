@@ -9,7 +9,6 @@ import ly.david.data.domain.toUiModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.network.toLabelRoomModels
 import ly.david.data.network.toReleaseLabels
 import ly.david.data.persistence.area.AreaDao
@@ -23,7 +22,6 @@ import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.toMediumRoomModel
-import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.release.toTrackRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
@@ -47,17 +45,19 @@ class ReleaseRepository @Inject constructor(
      */
     suspend fun getRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
-        val artistCredits = releaseDao.getReleaseArtistCredits(releaseId)
 
         // Empty artist credits is sufficient to indicate we've never done a lookup
         // if it's no longer the case, then check for formats/tracks
-        if (releaseWithAllData != null && artistCredits.isNotEmpty() && releaseWithAllData.release.releaseGroupId != null) {
+        if (releaseWithAllData != null &&
+            releaseWithAllData.artistCreditNamesWithResources.isNotEmpty() &&
+            releaseWithAllData.release.releaseGroupId != null
+        ) {
             val releaseGroup = releaseGroupDao.getReleaseGroupWithArtistCredits(releaseWithAllData.release.releaseGroupId)
 
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits.
+            // TODO: get this via @Relation
             return releaseWithAllData.toScaffoldModel(
-                releaseArtistCreditRoomModel = artistCredits,
                 releaseGroup = releaseGroup?.toUiModel()
             )
         }
@@ -69,9 +69,7 @@ class ReleaseRepository @Inject constructor(
             releaseGroupDao.insertReleaseGroupWithArtistCredits(it)
         }
 
-        // TODO: use new artist credit table
-        releaseDao.insertReplace(releaseMusicBrainzModel.toReleaseRoomModel())
-        releaseDao.insertAllArtistCredits(releaseMusicBrainzModel.getReleaseArtistCreditRoomModels())
+        releaseDao.insertReleaseWithArtistCredits(releaseMusicBrainzModel)
 
         labelDao.insertAll(releaseMusicBrainzModel.labelInfoList?.toLabelRoomModels().orEmpty())
         releasesLabelsDao.insertAll(

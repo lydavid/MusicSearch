@@ -9,6 +9,7 @@ import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
+import ly.david.data.persistence.releasegroup.ArtistCreditNamesWithResource
 
 /**
  * A label together with its catalog number for a release.
@@ -66,16 +67,21 @@ data class ReleaseWithAllData(
     val release: ReleaseRoomModel,
 
     @Relation(
-        parentColumn = "id",
+        parentColumn = "id", // release.id
         entityColumn = "release_id",
     )
     val areas: List<AreaWithReleaseDate>,
 
-    // TODO: we can do the same thing for labels
     @Relation(
         parentColumn = "id", // release.id
         entity = LabelWithCatalog::class,
         entityColumn = "release_id",
     )
-    val labels: List<LabelWithCatalog>
+    val labels: List<LabelWithCatalog>,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "resource_id"
+    )
+    val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>
 ) : RoomModel
