@@ -11,6 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
@@ -36,7 +38,7 @@ private const val TITLE = "title"
 
 internal fun NavHostController.goTo(destination: Destination, id: String, title: String? = null) {
     var route = "${destination.route}/$id"
-    if (!title.isNullOrEmpty()) route += "?$TITLE=$title"
+    if (!title.isNullOrEmpty()) route += "?$TITLE=${URLEncoder.encode(title, StandardCharsets.UTF_8.toString())}"
     this.navigate(route)
 }
 

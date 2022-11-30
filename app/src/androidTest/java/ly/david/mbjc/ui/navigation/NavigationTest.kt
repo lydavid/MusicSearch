@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.navigation
 
+import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasClickAction
@@ -8,13 +9,37 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import ly.david.data.navigation.toDestination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
 internal class NavigationTest : MainActivityTest(), StringReferences {
+
+    private lateinit var navController: NavHostController
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+
+        composeTestRule.activity.setContent {
+            navController = rememberNavController()
+            PreviewTheme {
+                MainApp(navController)
+            }
+        }
+    }
 
     @Test
     fun openNavigationDrawer_goToHistory_returnToSearch() {
@@ -58,6 +83,22 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
         composeTestRule
             .onAllNodesWithText(searchDrawerLabel)
             .filterToOne(matcher = hasNoClickAction())
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun passTitleWithSpecialCharacters() {
+        val title = "H&M <>#"
+        runBlocking {
+            withContext(Dispatchers.Main) {
+                composeTestRule.awaitIdle()
+                val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
+                navController.goTo(destination = MusicBrainzResource.ARTIST.toDestination(), id = resourceId, title = title)
+            }
+        }
+
+        composeTestRule
+            .onNodeWithText(title)
             .assertIsDisplayed()
     }
 }
