@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.persistence.release.ReleaseWithReleaseCountries
+import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 
 // TODO: put this in release group dao? only used by ReleaseGroupRepository
 //  artist should hold release groups by artist
@@ -75,7 +75,7 @@ abstract class ReleasesReleaseGroupsDao {
         $ORDER_BY_DATE_AND_NAME
     """
     )
-    abstract fun getReleasesByReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseWithReleaseCountries>
+    abstract fun getReleasesByReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseWithCreditsAndCountries>
 
     @Transaction
     @Query(
@@ -88,5 +88,5 @@ abstract class ReleasesReleaseGroupsDao {
     abstract fun getReleasesByReleaseGroupFiltered(
         releaseGroupId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithReleaseCountries>
+    ): PagingSource<Int, ReleaseWithCreditsAndCountries>
 }

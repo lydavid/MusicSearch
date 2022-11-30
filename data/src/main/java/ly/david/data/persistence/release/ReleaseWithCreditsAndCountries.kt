@@ -6,8 +6,7 @@ import androidx.room.Relation
 import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.area.ReleaseCountry
 
-// TODO: rename
-data class ReleaseWithReleaseCountries(
+data class ReleaseWithCreditsAndCountries(
     @Embedded
     val release: ReleaseRoomModel,
 
@@ -18,5 +17,5 @@ data class ReleaseWithReleaseCountries(
         parentColumn = "id",
         entityColumn = "release_id",
     )
-    val releaseEvents: List<ReleaseCountry>,
+    val releaseCountries: List<ReleaseCountry>,
 ): RoomModel

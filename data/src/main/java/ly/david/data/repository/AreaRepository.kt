@@ -19,7 +19,7 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithReleaseCountries
+import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
 
 @Singleton
@@ -134,7 +134,7 @@ class AreaRepository @Inject constructor(
     override fun getReleasesPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
             releasesCountriesDao.getReleasesByCountry(resourceId)
         }

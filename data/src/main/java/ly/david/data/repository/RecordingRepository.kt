@@ -17,7 +17,7 @@ import ly.david.data.persistence.recording.toRecordingRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithReleaseCountries
+import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
 
 @Singleton
@@ -100,7 +100,7 @@ class RecordingRepository @Inject constructor(
     override fun getReleasesPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
             releasesRecordingsDao.getReleasesByRecording(resourceId)
         }

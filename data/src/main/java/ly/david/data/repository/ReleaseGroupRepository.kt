@@ -12,7 +12,7 @@ import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithReleaseCountries
+import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 import ly.david.data.persistence.release.toReleaseRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
@@ -84,7 +84,7 @@ class ReleaseGroupRepository @Inject constructor(
     override fun getReleasesPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithReleaseCountries> = when {
+    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
             releasesReleaseGroupsDao.getReleasesByReleaseGroup(resourceId)
         }

@@ -102,8 +102,8 @@ internal fun ReleaseCard(
 
                         // Since we don't store release events when browsing releases, releaseEvents will be empty until
                         // after we've clicked into it
-                        val additionalReleaseEvents = if (release.releaseEvents.size > 1) {
-                            "+ ${release.releaseEvents.size - 1}"
+                        val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
+                            "+ ${release.releaseCountries.size - 1}"
                         } else {
                             ""
                         }
@@ -209,7 +209,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "1",
             name = "Release title",
             countryCode = "DZ",
-            releaseEvents = listOf(
+            releaseCountries = listOf(
                 ReleaseCountry("1", countryId = "2"),
                 ReleaseCountry("1", countryId = "3"),
                 ReleaseCountry("1", countryId = "4"),

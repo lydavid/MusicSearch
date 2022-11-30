@@ -5,7 +5,7 @@ import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
 import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.release.ReleaseWithReleaseCountries
+import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 
 data class ReleaseCardModel(
     override val id: String,
@@ -29,7 +29,7 @@ data class ReleaseCardModel(
     val tracks: String? = null,
     val formattedArtistCredits: String? = null,
 
-    val releaseEvents: List<ReleaseCountry> = listOf(),
+    val releaseCountries: List<ReleaseCountry> = listOf(),
 ) : UiModel(), Release
 
 fun ReleaseMusicBrainzModel.toCardModel() = ReleaseCardModel(
@@ -50,7 +50,7 @@ fun ReleaseMusicBrainzModel.toCardModel() = ReleaseCardModel(
     coverArtUrl = null,
 )
 
-fun ReleaseWithReleaseCountries.toCardModel() = ReleaseCardModel(
+fun ReleaseWithCreditsAndCountries.toCardModel() = ReleaseCardModel(
     id = release.id,
     name = release.name,
     disambiguation = release.disambiguation,
@@ -69,5 +69,5 @@ fun ReleaseWithReleaseCountries.toCardModel() = ReleaseCardModel(
     tracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
     formattedArtistCredits = artistCreditNames,
-    releaseEvents = releaseEvents,
+    releaseCountries = releaseCountries,
 )
