@@ -61,6 +61,7 @@
     <string name="release_events">Release events</string>
     <string name="release_information">Release information</string>
     <string name="additional_details">Additional details</string>
+    <string name="multiple_scripts">Multiple scripts</string>
 
     <string name="ok">OK</string>
     <string name="retry">Retry</string>

@@ -96,14 +96,16 @@ private fun ReleaseDetailsScreen(
                 textRepresentation?.language?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.language, text = Locale(it).displayLanguage)
                 }
-                textRepresentation?.script?.ifNotNullOrEmpty {
-                    val scriptOrCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                textRepresentation?.script?.ifNotNullOrEmpty { script ->
+                    val scriptOrCode = if (script == "Qaaa") {
+                        stringResource(id = R.string.multiple_scripts)
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         // TODO: Works for Latn but not Jpan or Kore
                         //  let's just map the most common codes to their name stored in strings.xml
                         //  then fallback to this for everything else
-                        UScript.getName(UScript.getCodeFromName(it))
+                        UScript.getName(UScript.getCodeFromName(script))
                     } else {
-                        it
+                        script
                     }
                     TextWithHeading(
                         headingRes = R.string.script,
