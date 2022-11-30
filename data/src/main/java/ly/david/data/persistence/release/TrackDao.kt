@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class TrackDao : BaseDao<TrackRoomModel> {
+abstract class TrackDao : BaseDao<TrackRoomModel>() {
 
     companion object {
         private const val TRACKS_IN_RELEASE = """

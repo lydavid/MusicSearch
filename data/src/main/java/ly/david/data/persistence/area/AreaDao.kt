@@ -7,7 +7,7 @@ import androidx.room.Query
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class AreaDao : BaseDao<AreaRoomModel> {
+abstract class AreaDao : BaseDao<AreaRoomModel>() {
 
     @Query("SELECT * FROM areas WHERE id = :areaId")
     abstract suspend fun getArea(areaId: String): AreaRoomModel?

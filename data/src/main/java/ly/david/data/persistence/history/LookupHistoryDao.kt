@@ -8,7 +8,7 @@ import java.util.Date
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class LookupHistoryDao : BaseDao<LookupHistory> {
+abstract class LookupHistoryDao : BaseDao<LookupHistory>() {
 
     @Transaction
     @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")

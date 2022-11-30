@@ -3,14 +3,13 @@ package ly.david.data.persistence
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Transaction
 import androidx.room.Update
 
-internal interface BaseDao<in T> {
+abstract class BaseDao<in T> {
 
-    // Replace strategy let us replace a release with additional information such as formats/tracks data
-    // when doing a lookup vs when first inserting it via release group browse screen.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(entity: T): Long
+    abstract suspend fun insert(entity: T): Long
 
     /**
      * In general, we should choose [insert] over this.
@@ -18,17 +17,31 @@ internal interface BaseDao<in T> {
      * Eg. When browsing releases, we don't store its tracks/formats, but on lookup, we do.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertReplace(entity: T): Long
+    abstract suspend fun insertReplace(entity: T): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(entities: List<T>)
+    abstract suspend fun insertAll(entities: List<T>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllReplace(entities: List<T>)
+    abstract suspend fun insertAllReplace(entities: List<T>)
 
     @Delete
-    fun delete(entity: T)
+    abstract suspend fun delete(entity: T)
 
     @Update
-    suspend fun update(entity: T)
+    abstract suspend fun update(entity: T)
+
+    suspend fun insertOrUpdate(entity: T) {
+        val insertAttempt = insert(entity)
+        if (insertAttempt == INSERTION_FAILED_DUE_TO_CONFLICT) {
+            update(entity)
+        }
+    }
+
+    @Transaction
+    open suspend fun insertOrUpdate(entities: List<T>) {
+        entities.forEach {
+            insertOrUpdate(it)
+        }
+    }
 }

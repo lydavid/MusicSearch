@@ -32,7 +32,6 @@ interface ArtistCreditDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArtistCreditResource(artistCreditResource: ArtistCreditResource): Long
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArtistCredits(
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
         resourceId: String

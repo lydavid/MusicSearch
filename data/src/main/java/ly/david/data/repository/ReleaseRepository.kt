@@ -5,7 +5,6 @@ import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.domain.toScaffoldModel
-import ly.david.data.domain.toUiModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
@@ -46,20 +45,13 @@ class ReleaseRepository @Inject constructor(
     suspend fun getRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
 
-        // Empty artist credits is sufficient to indicate we've never done a lookup
-        // if it's no longer the case, then check for formats/tracks
         if (releaseWithAllData != null &&
             releaseWithAllData.artistCreditNamesWithResources.isNotEmpty() &&
-            releaseWithAllData.release.releaseGroupId != null
+            releaseWithAllData.releaseGroup != null
         ) {
-            val releaseGroup = releaseGroupDao.getReleaseGroupWithArtistCredits(releaseWithAllData.release.releaseGroupId)
-
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
-            // releases must have artist credits.
-            // TODO: get this via @Relation
-            return releaseWithAllData.toScaffoldModel(
-                releaseGroup = releaseGroup?.toUiModel()
-            )
+            // releases must have artist credits and a release group.
+            return releaseWithAllData.toScaffoldModel()
         }
 
         // Fetch from network. Store all relevant models.
@@ -71,6 +63,7 @@ class ReleaseRepository @Inject constructor(
 
         releaseDao.insertReleaseWithArtistCredits(releaseMusicBrainzModel)
 
+        // TODO: transaction
         labelDao.insertAll(releaseMusicBrainzModel.labelInfoList?.toLabelRoomModels().orEmpty())
         releasesLabelsDao.insertAll(
             releaseMusicBrainzModel.labelInfoList?.toReleaseLabels(releaseId = releaseId).orEmpty()

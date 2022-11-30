@@ -40,6 +40,17 @@ fun ReleaseGroupMusicBrainzModel.toUiModel(): ReleaseGroupUiModel {
     )
 }
 
+fun ReleaseGroupRoomModel.toUiModel(): ReleaseGroupUiModel {
+    return ReleaseGroupUiModel(
+        id = id,
+        name = name,
+        firstReleaseDate = firstReleaseDate,
+        disambiguation = disambiguation,
+        primaryType = primaryType,
+        secondaryTypes = secondaryTypes,
+    )
+}
+
 fun ReleaseGroupWithArtistCredits.toUiModel(): ReleaseGroupUiModel {
     return ReleaseGroupUiModel(
         id = releaseGroup.id,

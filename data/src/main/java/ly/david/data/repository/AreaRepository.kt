@@ -105,10 +105,10 @@ class AreaRepository @Inject constructor(
             relationDao.incrementOffsetForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
-        val musicBrainzReleases = response.releases
-        releaseDao.insertAll(musicBrainzReleases.map { it.toReleaseRoomModel() })
+        val releaseMusicBrainzModels = response.releases
+        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
         releasesCountriesDao.insertAll(
-            musicBrainzReleases.map { release ->
+            releaseMusicBrainzModels.map { release ->
                 ReleaseCountry(
                     releaseId = release.id,
                     countryId = resourceId,
@@ -117,7 +117,7 @@ class AreaRepository @Inject constructor(
             }
         )
 
-        return musicBrainzReleases.size
+        return releaseMusicBrainzModels.size
     }
 
     override suspend fun getRemoteReleasesCountByResource(resourceId: String): Int? =

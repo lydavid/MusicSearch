@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class MediumDao : BaseDao<MediumRoomModel> {
+abstract class MediumDao : BaseDao<MediumRoomModel>() {
 
     @Transaction
     @Query("""

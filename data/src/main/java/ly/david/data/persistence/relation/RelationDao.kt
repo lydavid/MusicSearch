@@ -10,7 +10,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class RelationDao : BaseDao<RelationRoomModel> {
+abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     // TODO: right now we're unsure if there's collision with mbid between resources
     //  If we we find a resource shows the wrong relationships, then there must have been a collision.

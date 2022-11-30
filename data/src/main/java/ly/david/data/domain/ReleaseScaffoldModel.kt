@@ -33,9 +33,7 @@ data class ReleaseScaffoldModel(
     val labels: List<LabelCardModel> = listOf()
 ) : Release
 
-internal fun ReleaseWithAllData.toScaffoldModel(
-    releaseGroup: ReleaseGroupUiModel?
-) = ReleaseScaffoldModel(
+internal fun ReleaseWithAllData.toScaffoldModel() = ReleaseScaffoldModel(
     id = release.id,
     name = release.name,
     disambiguation = release.disambiguation,
@@ -57,6 +55,6 @@ internal fun ReleaseWithAllData.toScaffoldModel(
     artistCredits = artistCreditNamesWithResources.map {
         it.artistCreditNameRoomModel.toUiModel()
     },
-    releaseGroup = releaseGroup,
+    releaseGroup = releaseGroup?.toUiModel(),
     labels = labels.map { it.toCardModel() }
 )

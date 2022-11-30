@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class RecordingDao : BaseDao<RecordingRoomModel> {
+abstract class RecordingDao : BaseDao<RecordingRoomModel>() {
 
     @Query("SELECT * FROM recordings WHERE id = :recordingId")
     abstract suspend fun getRecording(recordingId: String): RecordingRoomModel?

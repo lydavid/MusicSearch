@@ -8,7 +8,7 @@ import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 
 @Dao
-abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup> {
+abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """
