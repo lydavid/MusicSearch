@@ -8,6 +8,7 @@ import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.artist.ArtistCreditNameRoomModel
+import ly.david.data.persistence.artist.ArtistCreditNamesWithResource
 import ly.david.data.persistence.artist.ArtistCreditResource
 import ly.david.data.persistence.artist.ArtistCreditRoomModel
 import ly.david.data.persistence.artist.ArtistReleaseGroup
@@ -29,7 +30,6 @@ import ly.david.data.persistence.release.LabelWithCatalog
 import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.TrackRoomModel
-import ly.david.data.persistence.releasegroup.ArtistCreditNamesWithResource
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkRoomModel
@@ -49,6 +49,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         MediumRoomModel::class, TrackRoomModel::class,
         Iso3166_1::class,
 
+        // TODO: delete
         // Full-Text Search (FTS) tables
 //        ReleaseGroupFts::class,
 

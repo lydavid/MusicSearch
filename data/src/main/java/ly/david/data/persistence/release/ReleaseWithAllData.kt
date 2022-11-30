@@ -7,9 +7,9 @@ import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
+import ly.david.data.persistence.artist.ArtistCreditNamesWithResource
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
-import ly.david.data.persistence.releasegroup.ArtistCreditNamesWithResource
 
 /**
  * A label together with its catalog number for a release.

@@ -15,10 +15,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.getYear
+import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -70,13 +70,11 @@ private val testReleaseGroup = ReleaseGroupUiModel(
     firstReleaseDate = "2021-09-08",
     artistCredits = listOf(
         ArtistCreditUiModel(
-            position = 0,
             artistId = "2",
             name = "Some artist",
             joinPhrase = " feat. "
         ),
         ArtistCreditUiModel(
-            position = 1,
             artistId = "3",
             name = "some other artist"
         )

@@ -139,10 +139,11 @@ internal fun ReleaseCard(
                 }
             }
 
-            Text(
-                text = release.name,
-                style = TextStyles.getCardBodyTextStyle(),
-            )
+            // TODO: catalog number
+//            Text(
+//                text = release.name,
+//                style = TextStyles.getCardBodyTextStyle(),
+//            )
         }
     }
 }
