@@ -15,7 +15,7 @@ internal class LabelStatsViewModel @Inject constructor(
 ) : ViewModel(), RelationsStats {
 
     suspend fun getTotalReleases(labelId: String) =
-        relationDao.getBrowseResourceOffset(labelId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
+        relationDao.getBrowseResourceCount(labelId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getNumberOfReleasesByLabel(labelId: String) =
         releasesLabelsDao.getNumberOfReleasesByLabel(labelId)

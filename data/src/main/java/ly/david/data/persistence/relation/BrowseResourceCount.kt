@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import ly.david.data.network.MusicBrainzResource
 
-// TODO: rename
 /**
  * Tracks how many resources [browseResource] there are in MusicBrainz [remoteCount]
  * and how many we have collected [localCount] linked to a resource with [resourceId].
@@ -31,7 +30,7 @@ import ly.david.data.network.MusicBrainzResource
     tableName = "browse_resource_counts",
     primaryKeys = ["resource_id", "browse_resource"]
 )
-data class BrowseResourceOffset(
+data class BrowseResourceCount(
     @ColumnInfo(name = "resource_id") val resourceId: String,
     @ColumnInfo(name = "browse_resource") val browseResource: MusicBrainzResource,
     @ColumnInfo(name = "local_count") val localCount: Int = 0,

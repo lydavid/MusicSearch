@@ -64,8 +64,9 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     )
     abstract suspend fun getCountOfEachRelationshipType(resourceId: String): List<RelationTypeCount>
 
+    // region BrowseResourceCount
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertBrowseResource(browseResourceRoomModel: BrowseResourceOffset): Long
+    abstract suspend fun insertBrowseResourceCount(browseResourceCount: BrowseResourceCount): Long
 
     @Query(
         """
@@ -74,7 +75,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
             WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
     )
-    abstract suspend fun getBrowseResourceOffset(resourceId: String, browseResource: MusicBrainzResource): BrowseResourceOffset?
+    abstract suspend fun getBrowseResourceCount(resourceId: String, browseResource: MusicBrainzResource): BrowseResourceCount?
 
     @Query(
         """
@@ -86,8 +87,8 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     abstract suspend fun updateLocalCountForResource(resourceId: String, browseResource: MusicBrainzResource, localCount: Int)
 
     @Transaction
-    open suspend fun incrementOffsetForResource(resourceId: String, browseResource: MusicBrainzResource, additionalOffset: Int) {
-        val currentOffset = getBrowseResourceOffset(resourceId, browseResource)?.localCount ?: 0
+    open suspend fun incrementLocalCountForResource(resourceId: String, browseResource: MusicBrainzResource, additionalOffset: Int) {
+        val currentOffset = getBrowseResourceCount(resourceId, browseResource)?.localCount ?: 0
         updateLocalCountForResource(resourceId, browseResource, currentOffset + additionalOffset)
     }
 
@@ -97,5 +98,6 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
     )
-    abstract suspend fun deleteBrowseResourceOffsetByResource(resourceId: String, browseResource: MusicBrainzResource)
+    abstract suspend fun deleteBrowseResourceCountByResource(resourceId: String, browseResource: MusicBrainzResource)
+    // endregion
 }

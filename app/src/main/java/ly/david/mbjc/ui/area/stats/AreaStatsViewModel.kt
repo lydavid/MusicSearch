@@ -17,7 +17,7 @@ internal class AreaStatsViewModel @Inject constructor(
 ) : ViewModel(), RelationsStats {
 
     suspend fun getTotalReleases(areaId: String) =
-        relationDao.getBrowseResourceOffset(areaId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
+        relationDao.getBrowseResourceCount(areaId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getNumberOfReleasesByLabel(areaId: String) =
         releasesCountriesDao.getNumberOfReleasesFromCountry(areaId)

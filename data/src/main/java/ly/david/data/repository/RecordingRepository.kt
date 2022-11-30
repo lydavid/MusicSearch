@@ -14,7 +14,7 @@ import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.ReleaseRecording
 import ly.david.data.persistence.recording.ReleasesRecordingsDao
 import ly.david.data.persistence.recording.toRecordingRoomModel
-import ly.david.data.persistence.relation.BrowseResourceOffset
+import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithReleaseCountries
@@ -60,8 +60,8 @@ class RecordingRepository @Inject constructor(
         )
 
         if (response.offset == 0) {
-            relationDao.insertBrowseResource(
-                browseResourceRoomModel = BrowseResourceOffset(
+            relationDao.insertBrowseResourceCount(
+                browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE,
                     localCount = response.releases.size,
@@ -69,7 +69,7 @@ class RecordingRepository @Inject constructor(
                 )
             )
         } else {
-            relationDao.incrementOffsetForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
+            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
         }
 
         val releaseMusicBrainzModels = response.releases
@@ -87,14 +87,14 @@ class RecordingRepository @Inject constructor(
     }
 
     override suspend fun getRemoteReleasesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
+        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
 
     override suspend fun getLocalReleasesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceOffset(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
+        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteReleasesByResource(resourceId: String) {
         releasesRecordingsDao.deleteReleasesByRecording(resourceId)
-        relationDao.deleteBrowseResourceOffsetByResource(resourceId, MusicBrainzResource.RELEASE)
+        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
     override fun getReleasesPagingSource(

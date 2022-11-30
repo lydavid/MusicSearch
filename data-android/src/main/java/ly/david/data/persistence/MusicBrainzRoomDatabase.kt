@@ -22,7 +22,7 @@ import ly.david.data.persistence.place.PlaceRoomModel
 import ly.david.data.persistence.recording.RecordingArtistCreditRoomModel
 import ly.david.data.persistence.recording.RecordingRoomModel
 import ly.david.data.persistence.recording.ReleaseRecording
-import ly.david.data.persistence.relation.BrowseResourceOffset
+import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.release.AreaWithReleaseDate
@@ -52,7 +52,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         // Relationship tables
         RelationRoomModel::class,
         HasRelationsRoomModel::class,
-        BrowseResourceOffset::class,
+        BrowseResourceCount::class,
 
         ArtistReleaseGroup::class,
         RecordingArtistCreditRoomModel::class,
