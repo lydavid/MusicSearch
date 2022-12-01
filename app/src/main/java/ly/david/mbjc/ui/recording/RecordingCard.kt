@@ -7,9 +7,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.toDisplayTime
-import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.RecordingCardModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -21,8 +23,8 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 @Composable
 internal fun RecordingCard(
-    recording: RecordingUiModel,
-    onRecordingClick: RecordingUiModel.() -> Unit = {}
+    recording: RecordingCardModel,
+    onRecordingClick: RecordingCardModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onRecordingClick(recording) },
@@ -38,28 +40,41 @@ internal fun RecordingCard(
             Text(text = recording.disambiguation)
             Text(text = recording.date.orEmpty())
             Text(text = recording.length.toDisplayTime())
+            Text(text = recording.formattedArtistCredits.orEmpty())
         }
     }
 }
 
-
+// region Previews
+@ExcludeFromJacocoGeneratedReport
+internal class RecordingPreviewParameterProvider : PreviewParameterProvider<RecordingCardModel> {
+    override val values = sequenceOf(
+        RecordingCardModel(
+            id = "1",
+            name = "Recording name",
+        ),
+        RecordingCardModel(
+            id = "2",
+            name = "Recording name",
+            date = "2022-05-23",
+            disambiguation = "that one",
+            length = 25300000,
+            video = false,
+            formattedArtistCredits = "Some artist feat. Other artist"
+        )
+    )
+}
 
 @ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-private fun Preview() {
+private fun Preview(
+    @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingCardModel
+) {
     PreviewTheme {
         Surface {
-            RecordingCard(
-                recording = RecordingUiModel(
-                    id = "1",
-                    name = "Recording name",
-                    date = "2022-05-23",
-                    disambiguation = "that one",
-                    length = 25300000,
-                    video = false
-                )
-            )
+            RecordingCard(recording = recording)
         }
     }
 }
+// endregion

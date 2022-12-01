@@ -47,7 +47,7 @@ fun MusicBrainzModel.toUiModel(): UiModel {
         is ArtistMusicBrainzModel -> this.toArtistUiModel()
         is ReleaseGroupMusicBrainzModel -> this.toUiModel()
         is ReleaseMusicBrainzModel -> this.toCardModel()
-        is RecordingMusicBrainzModel -> this.toRecordingUiModel()
+        is RecordingMusicBrainzModel -> this.toListItemModel()
         is PlaceMusicBrainzModel -> this.toPlaceUiModel()
         is AreaMusicBrainzModel -> this.toCardModel()
         is InstrumentMusicBrainzModel -> this.toInstrumentUiModel()

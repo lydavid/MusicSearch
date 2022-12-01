@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.RecordingScaffoldModel
 import ly.david.data.domain.ReleaseCardModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
@@ -61,7 +61,7 @@ internal fun RecordingScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.RELEASES) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var recording: RecordingUiModel? by remember { mutableStateOf(null) }
+    var recording: RecordingScaffoldModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation

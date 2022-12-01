@@ -44,7 +44,7 @@ import ly.david.data.domain.EventUiModel
 import ly.david.data.domain.InstrumentUiModel
 import ly.david.data.domain.LabelCardModel
 import ly.david.data.domain.PlaceUiModel
-import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.RecordingCardModel
 import ly.david.data.domain.ReleaseCardModel
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.SeriesUiModel
@@ -183,7 +183,7 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
                     }
                 }
-                is RecordingUiModel -> {
+                is RecordingCardModel -> {
                     RecordingCard(recording = uiModel) {
                         onItemClick(Destination.LOOKUP_RECORDING, id, getNameWithDisambiguation())
                     }

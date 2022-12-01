@@ -19,7 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.RecordingCardModel
 import ly.david.data.domain.UiModel
 import ly.david.data.domain.WorkUiModel
 import ly.david.data.getNameWithDisambiguation
@@ -113,7 +113,7 @@ internal fun WorkScaffold(
                 .collectAsLazyPagingItems()
 
         val recordingsLazyListState = rememberLazyListState()
-        val recordingsLazyPagingItems: LazyPagingItems<RecordingUiModel> =
+        val recordingsLazyPagingItems: LazyPagingItems<RecordingCardModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRecordings)
                 .collectAsLazyPagingItems()
 

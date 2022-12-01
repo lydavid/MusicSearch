@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.RecordingUiModel
-import ly.david.data.domain.toRecordingUiModel
+import ly.david.data.domain.RecordingCardModel
+import ly.david.data.domain.toListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.repository.RecordingsListRepository
@@ -39,7 +39,7 @@ internal interface IRecordingsList {
         this.query.value = query
     }
 
-    val pagedRecordings: Flow<PagingData<RecordingUiModel>>
+    val pagedRecordings: Flow<PagingData<RecordingCardModel>>
 }
 
 /**
@@ -61,7 +61,7 @@ internal class RecordingsList @Inject constructor() : IRecordingsList {
     lateinit var repository: RecordingsListRepository
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedRecordings: Flow<PagingData<RecordingUiModel>> by lazy {
+    override val pagedRecordings: Flow<PagingData<RecordingCardModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
@@ -77,7 +77,7 @@ internal class RecordingsList @Inject constructor() : IRecordingsList {
                     pagingSourceFactory = { repository.getRecordingsPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toRecordingUiModel()
+                        it.toListItemModel()
                     }
                 }
             }

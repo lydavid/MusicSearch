@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.recording.RecordingRoomModel
+import ly.david.data.persistence.recording.RecordingForListItem
 
 @Dao
 abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
@@ -15,11 +15,13 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
             FROM recordings r
             INNER JOIN recordings_works rw ON r.id = rw.recording_id
             INNER JOIN works w ON w.id = rw.work_id
+            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
             WHERE w.id = :workId
         """
 
         private const val SELECT_RECORDINGS_BY_WORK = """
-            SELECT r.*
+            SELECT r.*, ac.name AS artist_credit_names
             $RECORDINGS_BY_WORK
         """
 
@@ -36,6 +38,7 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
             AND (
                 r.title LIKE :query OR r.disambiguation LIKE :query
                 OR r.first_release_date LIKE :query
+                OR ac.name LIKE :query
             )
         """
     }
@@ -68,7 +71,7 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getRecordingsByWork(workId: String): PagingSource<Int, RecordingRoomModel>
+    abstract fun getRecordingsByWork(workId: String): PagingSource<Int, RecordingForListItem>
 
     @Transaction
     @Query(
@@ -81,5 +84,5 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
     abstract fun getRecordingsByWorkFiltered(
         workId: String,
         query: String
-    ): PagingSource<Int, RecordingRoomModel>
+    ): PagingSource<Int, RecordingForListItem>
 }

@@ -10,7 +10,7 @@ import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.WORK_INC_DEFAULT
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.recording.RecordingDao
-import ly.david.data.persistence.recording.RecordingRoomModel
+import ly.david.data.persistence.recording.RecordingForListItem
 import ly.david.data.persistence.recording.toRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
@@ -115,7 +115,7 @@ class WorkRepository @Inject constructor(
     override fun getRecordingsPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, RecordingRoomModel> = when {
+    ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
             recordingsWorksDao.getRecordingsByWork(resourceId)
         }

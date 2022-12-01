@@ -6,7 +6,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.RecordingUiModel
+import ly.david.data.domain.RecordingCardModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.recording.RecordingCard
 
@@ -15,7 +15,7 @@ internal fun RecordingsListScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    lazyPagingItems: LazyPagingItems<RecordingUiModel>,
+    lazyPagingItems: LazyPagingItems<RecordingCardModel>,
     onRecordingClick: (String, String) -> Unit,
 ) {
     PagingLoadingAndErrorHandler(
@@ -23,10 +23,10 @@ internal fun RecordingsListScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { recordingUiModel: RecordingUiModel? ->
-        when (recordingUiModel) {
-            is RecordingUiModel -> {
-                RecordingCard(recording = recordingUiModel) {
+    ) { recordingCardModel: RecordingCardModel? ->
+        when (recordingCardModel) {
+            is RecordingCardModel -> {
+                RecordingCard(recording = recordingCardModel) {
                     onRecordingClick(id, getNameWithDisambiguation())
                 }
             }

@@ -3,8 +3,8 @@ package ly.david.data.repository
 import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.domain.RecordingUiModel
-import ly.david.data.domain.toRecordingUiModel
+import ly.david.data.domain.RecordingScaffoldModel
+import ly.david.data.domain.toScaffoldModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
@@ -27,15 +27,15 @@ class RecordingRepository @Inject constructor(
     private val releasesRecordingsDao: ReleasesRecordingsDao
 ) : ReleasesListRepository, RelationsListRepository {
 
-    suspend fun lookupRecording(recordingId: String): RecordingUiModel {
+    suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
         val recordingRoomModel = recordingDao.getRecordingWithArtistCredits(recordingId)
         if (recordingRoomModel != null && recordingRoomModel.artistCreditNamesWithResources.isNotEmpty()) {
-            return recordingRoomModel.toRecordingUiModel()
+            return recordingRoomModel.toScaffoldModel()
         }
 
         val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)
         recordingDao.insertRecordingWithArtistCredits(recordingMusicBrainzModel)
-        return recordingMusicBrainzModel.toRecordingUiModel()
+        return lookupRecording(recordingId)
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

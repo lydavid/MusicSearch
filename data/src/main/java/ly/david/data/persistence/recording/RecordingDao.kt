@@ -28,5 +28,5 @@ abstract class RecordingDao : BaseDao<RecordingRoomModel>(), ArtistCreditDao {
 
     @Transaction
     @Query("SELECT * FROM recordings WHERE id = :recordingId")
-    abstract suspend fun getRecordingWithArtistCredits(recordingId: String): RecordingWithArtistCredits?
+    abstract suspend fun getRecordingWithArtistCredits(recordingId: String): RecordingForScaffold?
 }
