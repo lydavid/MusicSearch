@@ -24,7 +24,7 @@ data class RecordingRoomModel(
     override val video: Boolean = false,
 ) : RoomModel, Recording
 
-fun RecordingMusicBrainzModel.toRecordingRoomModel() =
+fun RecordingMusicBrainzModel.toRoomModel() =
     RecordingRoomModel(
         id = id,
         name = name,

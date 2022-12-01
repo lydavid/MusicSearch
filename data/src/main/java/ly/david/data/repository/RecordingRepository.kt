@@ -9,16 +9,14 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.getReleaseArtistCreditRoomModels
 import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.ReleaseRecording
 import ly.david.data.persistence.recording.ReleasesRecordingsDao
-import ly.david.data.persistence.recording.toRecordingRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.toReleaseRoomModel
+import ly.david.data.persistence.release.toRoomModel
 
 @Singleton
 class RecordingRepository @Inject constructor(
@@ -30,19 +28,13 @@ class RecordingRepository @Inject constructor(
 ) : ReleasesListRepository, RelationsListRepository {
 
     suspend fun lookupRecording(recordingId: String): RecordingUiModel {
-        val recordingRoomModel = recordingDao.getRecording(recordingId)
-        val artistCredits = recordingDao.getRecordingArtistCredits(recordingId)
-
-        if (recordingRoomModel != null && artistCredits.isNotEmpty()) {
-            return recordingRoomModel.toRecordingUiModel(
-                artistCredits = artistCredits
-            )
+        val recordingRoomModel = recordingDao.getRecordingWithArtistCredits(recordingId)
+        if (recordingRoomModel != null && recordingRoomModel.artistCreditNamesWithResources.isNotEmpty()) {
+            return recordingRoomModel.toRecordingUiModel()
         }
 
         val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)
-        recordingDao.insert(recordingMusicBrainzModel.toRecordingRoomModel())
-        recordingDao.insertAllArtistCredits(recordingMusicBrainzModel.getReleaseArtistCreditRoomModels())
-
+        recordingDao.insertRecordingWithArtistCredits(recordingMusicBrainzModel)
         return recordingMusicBrainzModel.toRecordingUiModel()
     }
 
@@ -73,7 +65,7 @@ class RecordingRepository @Inject constructor(
         }
 
         val releaseMusicBrainzModels = response.releases
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
+        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
         releasesRecordingsDao.insertAll(
             releaseMusicBrainzModels.map { release ->
                 ReleaseRecording(

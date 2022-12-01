@@ -3,6 +3,8 @@ package ly.david.data.persistence.artist.credit
 import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 import androidx.room.Embedded
+import ly.david.data.domain.ArtistCreditUiModel
+import ly.david.data.domain.toUiModel
 
 @DatabaseView(
     """
@@ -20,3 +22,8 @@ data class ArtistCreditNamesWithResource(
     @Embedded
     val artistCreditNameRoomModel: ArtistCreditNameRoomModel,
 )
+
+fun List<ArtistCreditNamesWithResource>.toUiModels(): List<ArtistCreditUiModel> =
+    map {
+        it.artistCreditNameRoomModel.toUiModel()
+    }

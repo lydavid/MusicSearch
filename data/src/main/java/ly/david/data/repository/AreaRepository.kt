@@ -20,7 +20,7 @@ import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.toReleaseRoomModel
+import ly.david.data.persistence.release.toRoomModel
 
 @Singleton
 class AreaRepository @Inject constructor(
@@ -106,7 +106,7 @@ class AreaRepository @Inject constructor(
         }
 
         val releaseMusicBrainzModels = response.releases
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
+        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
         releasesCountriesDao.insertAll(
             releaseMusicBrainzModels.map { release ->
                 ReleaseCountry(

@@ -2,7 +2,6 @@ package ly.david.data.network
 
 import com.squareup.moshi.Json
 import ly.david.data.Recording
-import ly.david.data.persistence.recording.RecordingArtistCreditRoomModel
 
 data class RecordingMusicBrainzModel(
     @Json(name = "id") override val id: String,
@@ -15,19 +14,3 @@ data class RecordingMusicBrainzModel(
     @Json(name = "artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), Recording
-
-// TODO: unit test
-//  and look into generalizing
-/**
- * Returns all artist credits for this release for caching in database.
- */
-internal fun RecordingMusicBrainzModel.getReleaseArtistCreditRoomModels(): List<RecordingArtistCreditRoomModel> =
-    artistCredits?.mapIndexed { index, artistCredit ->
-        RecordingArtistCreditRoomModel(
-            recordingId = id,
-            artistId = artistCredit.artist.id,
-            name = artistCredit.name,
-            joinPhrase = artistCredit.joinPhrase,
-            order = index
-        )
-    }.orEmpty()

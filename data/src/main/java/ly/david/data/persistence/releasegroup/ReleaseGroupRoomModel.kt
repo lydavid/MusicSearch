@@ -29,7 +29,7 @@ data class ReleaseGroupRoomModel(
     override val secondaryTypes: List<String>? = null,
 ) : RoomModel, ReleaseGroup
 
-fun ReleaseGroupMusicBrainzModel.toReleaseGroupRoomModel(): ReleaseGroupRoomModel =
+fun ReleaseGroupMusicBrainzModel.toRoomModel(): ReleaseGroupRoomModel =
     ReleaseGroupRoomModel(
         id = id,
         name = name,

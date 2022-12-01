@@ -77,9 +77,7 @@ internal class RecordingsList @Inject constructor() : IRecordingsList {
                     pagingSourceFactory = { repository.getRecordingsPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toRecordingUiModel(
-                            artistCredits = listOf()
-                        )
+                        it.toRecordingUiModel()
                     }
                 }
             }

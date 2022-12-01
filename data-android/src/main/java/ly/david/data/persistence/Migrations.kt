@@ -192,4 +192,7 @@ internal object Migrations {
 
     @DeleteTable(tableName = "releases_artists")
     class DropReleasesArtists : AutoMigrationSpec
+
+    @DeleteTable(tableName = "recordings_artists")
+    class DropRecordingsArtists : AutoMigrationSpec
 }

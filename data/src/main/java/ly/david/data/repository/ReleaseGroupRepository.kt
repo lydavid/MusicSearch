@@ -13,7 +13,7 @@ import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.toReleaseRoomModel
+import ly.david.data.persistence.release.toRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 
@@ -65,7 +65,7 @@ class ReleaseGroupRepository @Inject constructor(
         }
 
         val musicBrainzReleases = response.releases
-        releaseDao.insertOrUpdate(musicBrainzReleases.map { it.toReleaseRoomModel(resourceId) })
+        releaseDao.insertOrUpdate(musicBrainzReleases.map { it.toRoomModel(resourceId) })
 
         return musicBrainzReleases.size
     }

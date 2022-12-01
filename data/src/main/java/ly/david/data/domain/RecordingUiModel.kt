@@ -2,9 +2,9 @@ package ly.david.data.domain
 
 import ly.david.data.Recording
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.network.getReleaseArtistCreditRoomModels
-import ly.david.data.persistence.recording.RecordingArtistCreditRoomModel
+import ly.david.data.persistence.artist.credit.toUiModels
 import ly.david.data.persistence.recording.RecordingRoomModel
+import ly.david.data.persistence.recording.RecordingWithArtistCredits
 
 data class RecordingUiModel(
     override val id: String,
@@ -13,7 +13,7 @@ data class RecordingUiModel(
     override val disambiguation: String,
     override val length: Int?,
     override val video: Boolean,
-    val artistCredits: List<RecordingArtistCreditRoomModel> = listOf(),
+    val artistCredits: List<ArtistCreditUiModel> = listOf(),
 ) : UiModel(), Recording
 
 fun RecordingMusicBrainzModel.toRecordingUiModel() =
@@ -24,17 +24,24 @@ fun RecordingMusicBrainzModel.toRecordingUiModel() =
         disambiguation = disambiguation,
         length = length,
         video = video ?: false,
-        artistCredits = getReleaseArtistCreditRoomModels()
+        artistCredits = artistCredits.toUiModels()
     )
 
-fun RecordingRoomModel.toRecordingUiModel(
-    artistCredits: List<RecordingArtistCreditRoomModel>
-) = RecordingUiModel(
+fun RecordingRoomModel.toRecordingUiModel() = RecordingUiModel(
     id = id,
     name = name,
     date = date,
     disambiguation = disambiguation,
     length = length,
     video = video,
-    artistCredits = artistCredits
+)
+
+fun RecordingWithArtistCredits.toRecordingUiModel() = RecordingUiModel(
+    id = recording.id,
+    name = recording.name,
+    date = recording.date,
+    disambiguation = recording.disambiguation,
+    length = recording.length,
+    video = recording.video,
+    artistCredits = artistCreditNamesWithResources.toUiModels()
 )

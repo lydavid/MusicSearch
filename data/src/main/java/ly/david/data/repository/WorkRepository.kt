@@ -11,7 +11,7 @@ import ly.david.data.network.api.LookupApi.Companion.WORK_INC_DEFAULT
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.RecordingRoomModel
-import ly.david.data.persistence.recording.toRecordingRoomModel
+import ly.david.data.persistence.recording.toRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
@@ -88,7 +88,7 @@ class WorkRepository @Inject constructor(
         }
 
         val recordingMusicBrainzModels = response.recordings
-        recordingDao.insertAll(recordingMusicBrainzModels.map { it.toRecordingRoomModel() })
+        recordingDao.insertAll(recordingMusicBrainzModels.map { it.toRoomModel() })
         recordingsWorksDao.insertAll(
             recordingMusicBrainzModels.map { recording ->
                 RecordingWork(

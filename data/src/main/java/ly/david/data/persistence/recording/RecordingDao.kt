@@ -1,30 +1,32 @@
 package ly.david.data.persistence.recording
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.artist.credit.ArtistCreditDao
 
 @Dao
-abstract class RecordingDao : BaseDao<RecordingRoomModel>() {
+abstract class RecordingDao : BaseDao<RecordingRoomModel>(), ArtistCreditDao {
+
+    @Transaction
+    open suspend fun insertAllRecordingsWithArtistCredits(recordings: List<RecordingMusicBrainzModel>) {
+        recordings.forEach { recording ->
+            insertRecordingWithArtistCredits(recording)
+        }
+    }
+
+    @Transaction
+    open suspend fun insertRecordingWithArtistCredits(recording: RecordingMusicBrainzModel) {
+        insertArtistCredits(artistCredits = recording.artistCredits, resourceId = recording.id)
+        insert(recording.toRoomModel())
+    }
 
     @Query("SELECT * FROM recordings WHERE id = :recordingId")
     abstract suspend fun getRecording(recordingId: String): RecordingRoomModel?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertAllArtistCredits(artistCredits: List<RecordingArtistCreditRoomModel>)
-
     @Transaction
-    @Query(
-        """
-        SELECT ra.*
-        FROM recordings r
-        INNER JOIN recordings_artists ra ON r.id = ra.recording_id
-        where r.id = :recordingId
-        ORDER BY ra.`order`
-    """
-    )
-    abstract suspend fun getRecordingArtistCredits(recordingId: String): List<RecordingArtistCreditRoomModel>
+    @Query("SELECT * FROM recordings WHERE id = :recordingId")
+    abstract suspend fun getRecordingWithArtistCredits(recordingId: String): RecordingWithArtistCredits?
 }

@@ -17,7 +17,7 @@ import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.toReleaseRoomModel
+import ly.david.data.persistence.release.toRoomModel
 
 @Singleton
 class LabelRepository @Inject constructor(
@@ -68,7 +68,7 @@ class LabelRepository @Inject constructor(
         }
 
         val releaseMusicBrainzModels = response.releases
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toReleaseRoomModel() })
+        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
         releasesLabelsDao.insertAll(
             releaseMusicBrainzModels.flatMap { release ->
                 release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = resourceId).orEmpty()
