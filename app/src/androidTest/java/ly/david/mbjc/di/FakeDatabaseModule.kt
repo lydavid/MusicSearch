@@ -24,6 +24,8 @@ internal object FakeDatabaseModule {
         return Room.inMemoryDatabaseBuilder(
             context,
             MusicBrainzRoomDatabase::class.java
-        ).build()
+        )
+            .allowMainThreadQueries()
+            .build()
     }
 }
