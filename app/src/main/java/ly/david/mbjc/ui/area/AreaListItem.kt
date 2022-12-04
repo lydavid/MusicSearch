@@ -16,9 +16,9 @@ import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.AreaCardModel
-import ly.david.data.domain.showReleases
+import ly.david.data.domain.AreaListItemModel
 import ly.david.data.getLifeSpanForDisplay
+import ly.david.data.showReleases
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -30,10 +30,10 @@ import ly.david.mbjc.ui.theme.getSubTextColor
  * Also used for release event cards since their Destination is also an Area.
  */
 @Composable
-internal fun AreaCard(
-    area: AreaCardModel,
+internal fun AreaListItem(
+    area: AreaListItemModel,
     showType: Boolean = true,
-    onAreaClick: AreaCardModel.() -> Unit = {}
+    onAreaClick: AreaListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onAreaClick(area) },
@@ -115,25 +115,25 @@ internal fun AreaCard(
 
 // Cannot be private.
 @ExcludeFromJacocoGeneratedReport
-internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaCardModel> {
+internal class AreaListItemPreviewParameterProvider : PreviewParameterProvider<AreaListItemModel> {
     override val values = sequenceOf(
-        AreaCardModel(
+        AreaListItemModel(
             id = "1",
             name = "Area Name",
         ),
-        AreaCardModel(
+        AreaListItemModel(
             id = "2",
             name = "Area Name",
             disambiguation = "That one",
         ),
-        AreaCardModel(
+        AreaListItemModel(
             id = "3",
             name = "Area Name with a very long name",
             disambiguation = "That one",
             type = COUNTRY,
             iso_3166_1_codes = listOf("GB")
         ),
-        AreaCardModel(
+        AreaListItemModel(
             id = "4",
             name = "Area Name with a very long name",
             type = WORLDWIDE,
@@ -145,12 +145,12 @@ internal class AreaCardPreviewParameterProvider : PreviewParameterProvider<AreaC
 @ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-private fun AreaCardPreview(
-    @PreviewParameter(AreaCardPreviewParameterProvider::class) area: AreaCardModel
+private fun Preview(
+    @PreviewParameter(AreaListItemPreviewParameterProvider::class) area: AreaListItemModel
 ) {
     PreviewTheme {
         Surface {
-            AreaCard(area)
+            AreaListItem(area)
         }
     }
 }
@@ -161,8 +161,8 @@ private fun AreaCardPreview(
 private fun ReleaseEventPreview() {
     PreviewTheme {
         Surface {
-            AreaCard(
-                area = AreaCardModel(
+            AreaListItem(
+                area = AreaListItemModel(
                     id = "4",
                     name = "Area Name with a very long name",
                     disambiguation = "That one",

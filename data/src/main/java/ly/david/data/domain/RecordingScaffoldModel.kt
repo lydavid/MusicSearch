@@ -13,7 +13,7 @@ data class RecordingScaffoldModel(
     override val length: Int? = null,
     override val video: Boolean = false,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
-) : UiModel(), Recording
+) : Recording
 
 fun RecordingForScaffold.toScaffoldModel() = RecordingScaffoldModel(
     id = recording.id,

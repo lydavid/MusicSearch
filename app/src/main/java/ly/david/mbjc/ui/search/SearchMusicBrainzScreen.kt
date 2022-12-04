@@ -37,7 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.ArtistUiModel
 import ly.david.data.domain.EndOfList
 import ly.david.data.domain.EventUiModel
@@ -55,7 +55,7 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.area.AreaCard
+import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.artist.ArtistCard
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -193,8 +193,8 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_WORK, id, getNameWithDisambiguation())
                     }
                 }
-                is AreaCardModel -> {
-                    AreaCard(area = uiModel) {
+                is AreaListItemModel -> {
+                    AreaListItem(area = uiModel) {
                         onItemClick(Destination.LOOKUP_AREA, id, getNameWithDisambiguation())
                     }
                 }

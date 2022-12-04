@@ -1,6 +1,6 @@
 package ly.david.data
 
-internal interface Area : NameWithDisambiguation {
+interface Area : NameWithDisambiguation {
     val id: String
     override val name: String
     override val disambiguation: String?
@@ -16,3 +16,6 @@ object AreaType {
     const val COUNTRY = "Country"
     const val WORLDWIDE = "[Worldwide]"
 }
+
+fun Area.showReleases(): Boolean =
+    type == AreaType.COUNTRY || name == AreaType.WORLDWIDE

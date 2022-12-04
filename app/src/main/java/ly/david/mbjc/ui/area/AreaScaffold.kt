@@ -19,13 +19,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.AreaScaffoldModel
 import ly.david.data.domain.ReleaseCardModel
 import ly.david.data.domain.UiModel
-import ly.david.data.domain.showReleases
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.showReleases
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
@@ -63,7 +63,7 @@ internal fun AreaScaffold(
 
     // TODO: api doesn't seem to include area containment
     //  but we could get its parent area via relations "part of" "backward"
-    var area: AreaCardModel? by remember { mutableStateOf(null) }
+    var area: AreaScaffoldModel? by remember { mutableStateOf(null) }
     var title by rememberSaveable { mutableStateOf("") }
     var tabs: List<AreaTab> by rememberSaveable { mutableStateOf(AreaTab.values().filter { it != AreaTab.RELEASES }) }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
@@ -81,12 +81,12 @@ internal fun AreaScaffold(
 
     LaunchedEffect(key1 = areaId) {
         try {
-            val areaUiModel = viewModel.lookupAreaThenLoadRelations(areaId)
+            val areaScaffoldModel = viewModel.lookupAreaThenLoadRelations(areaId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
-                title = areaUiModel.getNameWithDisambiguation()
+                title = areaScaffoldModel.getNameWithDisambiguation()
             }
-            area = areaUiModel
-            if (areaUiModel.showReleases()) {
+            area = areaScaffoldModel
+            if (areaScaffoldModel.showReleases()) {
                 tabs = AreaTab.values().toList()
             }
         } catch (ex: Exception) {

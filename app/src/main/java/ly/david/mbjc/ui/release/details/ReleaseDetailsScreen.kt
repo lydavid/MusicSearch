@@ -18,14 +18,14 @@ import java.util.Locale
 import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.AreaCardModel
+import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.LabelCardModel
 import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.area.AreaCard
+import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -38,7 +38,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 internal fun ReleaseDetailsScreen(
     releaseScaffoldModel: ReleaseScaffoldModel,
     onLabelClick: LabelCardModel.() -> Unit = {},
-    onAreaClick: AreaCardModel.() -> Unit = {},
+    onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState(),
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
@@ -62,7 +62,7 @@ internal fun ReleaseDetailsScreen(
 private fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
     onLabelClick: LabelCardModel.() -> Unit = {},
-    onAreaClick: AreaCardModel.() -> Unit = {},
+    onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState(),
     releaseLength: String? = null,
 ) {
@@ -129,8 +129,8 @@ private fun ReleaseDetailsScreen(
                 if (areas.isNotEmpty()) {
                     ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                 }
-                areas.forEach { item: AreaCardModel ->
-                    AreaCard(
+                areas.forEach { item: AreaListItemModel ->
+                    AreaListItem(
                         area = item,
                         showType = false,
                         onAreaClick = onAreaClick
@@ -166,14 +166,14 @@ private fun Preview() {
                     formattedFormats = "2xCD + Blu-ray",
                     formattedTracks = "15 + 8 + 24",
                     areas = listOf(
-                        AreaCardModel(
+                        AreaListItemModel(
                             id = "a1",
                             name = "Canada",
                             type = COUNTRY,
                             iso_3166_1_codes = listOf("CA"),
                             date = "2022-11-29"
                         ),
-                        AreaCardModel(
+                        AreaListItemModel(
                             id = "a2",
                             name = WORLDWIDE,
                             iso_3166_1_codes = listOf("XW"),

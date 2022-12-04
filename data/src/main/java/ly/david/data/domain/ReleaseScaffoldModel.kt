@@ -34,7 +34,7 @@ data class ReleaseScaffoldModel(
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
 
     val releaseGroup: ReleaseGroupUiModel? = null,
-    val areas: List<AreaCardModel> = listOf(),
+    val areas: List<AreaListItemModel> = listOf(),
     val labels: List<LabelCardModel> = listOf()
 ) : Release
 
@@ -56,7 +56,7 @@ internal fun ReleaseWithAllData.toScaffoldModel() = ReleaseScaffoldModel(
     formattedFormats = release.formats,
     formattedTracks = release.tracks,
     coverArtUrl = release.coverArtUrl,
-    areas = areas.map { it.toCardModel() },
+    areas = areas.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNamesWithResources.map {
         it.artistCreditNameRoomModel.toUiModel()
     },
@@ -83,7 +83,7 @@ internal fun ReleaseMusicBrainzModel.toScaffoldModel() = ReleaseScaffoldModel(
     formattedTracks = media.getTracksForDisplay(),
     coverArtUrl = null,
     areas = releaseEvents?.mapNotNull {
-        it.area?.toCardModel(it.date)?.copy(type = AreaType.COUNTRY)
+        it.area?.toAreaListItemModel(it.date)?.copy(type = AreaType.COUNTRY)
     }.orEmpty(),
     artistCredits = artistCredits.toUiModels(),
     releaseGroup = releaseGroup?.toUiModel(),
