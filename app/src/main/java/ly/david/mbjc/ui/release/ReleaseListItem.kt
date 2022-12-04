@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.persistence.area.ReleaseCountry
@@ -43,7 +44,7 @@ internal fun ReleaseListItem(
             ConstraintLayout(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val (name, disambiguation, countryDate) = createRefs()
+                val (name, disambiguation, endSection) = createRefs()
 
                 Text(
                     text = release.name,
@@ -53,7 +54,7 @@ internal fun ReleaseListItem(
                             width = Dimension.fillToConstraints
                             top.linkTo(parent.top)
                             start.linkTo(parent.start)
-                            end.linkTo(countryDate.start)
+                            end.linkTo(endSection.start)
                         }
                 )
 
@@ -79,24 +80,22 @@ internal fun ReleaseListItem(
 
                 Column(
                     modifier = Modifier
-                        .constrainAs(countryDate) {
+                        .constrainAs(endSection) {
                             width = Dimension.wrapContent
                             top.linkTo(parent.top)
                             end.linkTo(parent.end)
                         },
                     horizontalAlignment = Alignment.End
                 ) {
-                    val uiDate = release.date
-                    if (!uiDate.isNullOrEmpty()) {
+                    release.date.ifNotNullOrEmpty {
                         Text(
-                            text = uiDate,
+                            text = it,
                             style = TextStyles.getCardBodyTextStyle(),
                         )
                     }
 
-                    val uiCountry = release.countryCode
-                    if (!uiCountry.isNullOrEmpty()) {
-                        if (!uiDate.isNullOrEmpty()) {
+                    release.countryCode.ifNotNullOrEmpty { countryCode ->
+                        if (!release.date.isNullOrEmpty()) {
                             Spacer(modifier = Modifier.padding(4.dp))
                         }
 
@@ -108,7 +107,7 @@ internal fun ReleaseListItem(
                             ""
                         }
                         Text(
-                            text = "${uiCountry.toFlagEmoji()} $uiCountry $additionalReleaseEvents",
+                            text = "${countryCode.toFlagEmoji()} $countryCode $additionalReleaseEvents",
                             style = TextStyles.getCardBodyTextStyle(),
                         )
                     }
@@ -116,30 +115,27 @@ internal fun ReleaseListItem(
             }
 
             Row(modifier = Modifier.padding(top = 4.dp)) {
-                val uiFormats = release.formats
-                if (!uiFormats.isNullOrEmpty()) {
+                release.formats.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = uiFormats,
+                        text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
-                val uiTracks = release.tracks
-                if (!uiTracks.isNullOrEmpty()) {
+                release.tracks.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = uiTracks,
+                        text = it,
                         style = TextStyles.getCardBodySubTextStyle(),
                         textAlign = TextAlign.End
                     )
                 }
             }
 
-            val formattedArtistCredits = release.formattedArtistCredits
-            if (!formattedArtistCredits.isNullOrEmpty()) {
+            release.formattedArtistCredits.ifNotNullOrEmpty {
                 Text(
-                    text = formattedArtistCredits,
+                    text = it,
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .fillMaxWidth(),

@@ -33,6 +33,7 @@ import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
@@ -109,6 +110,7 @@ internal fun ReleaseGroupScaffold(
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE_GROUP, resourceId = releaseGroupId)
+                    CopyToClipboardMenuItem(releaseGroupId)
                 },
                 subtitleDropdownMenuItems = {
                     releaseGroup?.artistCredits?.forEach { artistCredit ->

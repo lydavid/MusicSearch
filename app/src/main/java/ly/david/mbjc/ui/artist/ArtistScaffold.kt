@@ -33,6 +33,7 @@ import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
@@ -102,6 +103,7 @@ internal fun ArtistScaffold(
                 showFilterIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
+                    CopyToClipboardMenuItem(artistId)
 
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                         DropdownMenuItem(

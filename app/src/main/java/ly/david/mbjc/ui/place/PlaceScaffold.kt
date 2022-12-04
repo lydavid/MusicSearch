@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 
@@ -39,6 +40,7 @@ internal fun PlaceScaffold(
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.PLACE, resourceId = placeId)
+                    CopyToClipboardMenuItem(placeId)
                 },
             )
         },

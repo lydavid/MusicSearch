@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.recording
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -10,13 +9,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.ThreeSectionListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.release.tracks.TrackListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.mbjc.ui.theme.getSubTextColor
 
 /**
  * Also see [TrackListItem].
@@ -26,23 +28,47 @@ internal fun RecordingListItem(
     recording: RecordingListItemModel,
     onRecordingClick: RecordingListItemModel.() -> Unit = {}
 ) {
-    ClickableListItem(
+    ThreeSectionListItem(
         onClick = { onRecordingClick(recording) },
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        ) {
-            // TODO: make it look better
+        mainContent = {
+            Text(
+                text = recording.name,
+                style = TextStyles.getCardTitleTextStyle(),
+            )
 
-            Text(text = recording.name)
-            Text(text = recording.disambiguation)
-            Text(text = recording.date.orEmpty())
-            Text(text = recording.length.toDisplayTime())
-            Text(text = recording.formattedArtistCredits.orEmpty())
+            recording.disambiguation.ifNotNullOrEmpty {
+                Text(
+                    text = "($it)",
+                    style = TextStyles.getCardBodyTextStyle(),
+                    color = getSubTextColor()
+                )
+            }
+
+            recording.formattedArtistCredits.ifNotNullOrEmpty {
+                Text(
+                    text = it,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .fillMaxWidth(),
+                    style = TextStyles.getCardBodyTextStyle()
+                )
+            }
+        },
+        endMainPadding = 4.dp,
+        endContent = {
+            recording.date.ifNotNullOrEmpty {
+                Text(
+                    text = it,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            }
+
+            Text(
+                text = recording.length.toDisplayTime(),
+                style = TextStyles.getCardBodyTextStyle()
+            )
         }
-    }
+    )
 }
 
 // region Previews

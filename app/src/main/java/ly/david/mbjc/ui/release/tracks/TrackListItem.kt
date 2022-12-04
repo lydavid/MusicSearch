@@ -1,22 +1,15 @@
 package ly.david.mbjc.ui.release.tracks
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.TrackListItemModel
-import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.ThreeSectionListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.recording.RecordingListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -30,71 +23,30 @@ internal fun TrackListItem(
     track: TrackListItemModel,
 //    showTrackArtists: Boolean = false,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
-    onWorkClick: (WorkMusicBrainzModel) -> Unit = {},
-    // no onTrackClick needed since Tracks exists in the context of a Release
 ) {
-
-    ClickableListItem(
+    ThreeSectionListItem(
         onClick = { onRecordingClick(track.recordingId, track.title) },
-    ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        ) {
-            val (startSection, mainSection, endSection) = createRefs()
-
+        startContent = {
             Text(
                 text = track.number,
-                style = TextStyles.getCardBodyTextStyle(),
-                modifier = Modifier.constrainAs(startSection) {
-                    width = Dimension.wrapContent
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    end.linkTo(mainSection.start, margin = 16.dp)
-                    bottom.linkTo(parent.bottom)
-                }
+                style = TextStyles.getCardBodyTextStyle()
             )
-
-            Column(
-                modifier = Modifier.constrainAs(mainSection) {
-                    width = Dimension.fillToConstraints
-                    start.linkTo(startSection.end)
-                    top.linkTo(parent.top)
-                    end.linkTo(endSection.start)
-                    bottom.linkTo(parent.bottom)
-                }
-            ) {
-                Text(
-                    text = track.title,
-                    style = TextStyles.getCardTitleTextStyle(),
-
-                    )
-//                if (showTrackArtists) {
-//                    Text(
-//                        modifier = Modifier.padding(top = 4.dp),
-//                        style = TextStyles.getCardBodyTextStyle(),
-//                        text = "TODO"//uiTrack.artistCredits.getDisplayNames()
-//                    )
-//                }
-            }
-
+        },
+        startMainPadding = 16.dp,
+        mainContent = {
+            Text(
+                text = track.title,
+                style = TextStyles.getCardTitleTextStyle(),
+            )
+        },
+        endMainPadding = 4.dp,
+        endContent = {
             Text(
                 text = track.length.toDisplayTime(),
-                style = TextStyles.getCardBodyTextStyle(),
-                modifier = Modifier
-                    .constrainAs(endSection) {
-                        width = Dimension.wrapContent
-                        start.linkTo(mainSection.end, margin = 4.dp)
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }
+                style = TextStyles.getCardBodyTextStyle()
             )
         }
-
-        // TODO: more content in new screen that expands, but maybe not cover the entire screen
-    }
+    )
 }
 
 @ExcludeFromJacocoGeneratedReport

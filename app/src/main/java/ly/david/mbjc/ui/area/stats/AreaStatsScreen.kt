@@ -27,6 +27,7 @@ internal fun AreaStatsScreen(
     var totalLocal by rememberSaveable { mutableStateOf(0) }
 
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
+    // TODO: all stats screen crash on exit because of this
     var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
