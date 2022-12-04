@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.domain.RecordingListItemModel
-import ly.david.data.domain.toListItemModel
+import ly.david.data.domain.toRecordingListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.repository.RecordingsListRepository
@@ -77,7 +77,7 @@ internal class RecordingsList @Inject constructor() : IRecordingsList {
                     pagingSourceFactory = { repository.getRecordingsPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toListItemModel()
+                        it.toRecordingListItemModel()
                     }
                 }
             }

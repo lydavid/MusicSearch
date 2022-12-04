@@ -42,10 +42,10 @@ import ly.david.data.domain.ArtistUiModel
 import ly.david.data.domain.EndOfList
 import ly.david.data.domain.EventUiModel
 import ly.david.data.domain.InstrumentUiModel
-import ly.david.data.domain.LabelCardModel
+import ly.david.data.domain.LabelListItemModel
 import ly.david.data.domain.PlaceUiModel
 import ly.david.data.domain.RecordingListItemModel
-import ly.david.data.domain.ReleaseCardModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.ReleaseGroupUiModel
 import ly.david.data.domain.SeriesUiModel
 import ly.david.data.domain.UiModel
@@ -65,7 +65,7 @@ import ly.david.mbjc.ui.instrument.InstrumentCard
 import ly.david.mbjc.ui.label.LabelCard
 import ly.david.mbjc.ui.place.PlaceCard
 import ly.david.mbjc.ui.recording.RecordingCard
-import ly.david.mbjc.ui.release.ReleaseCard
+import ly.david.mbjc.ui.release.ReleaseListItem
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
 import ly.david.mbjc.ui.series.SeriesCard
 import ly.david.mbjc.ui.work.WorkCard
@@ -178,8 +178,8 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, getNameWithDisambiguation())
                     }
                 }
-                is ReleaseCardModel -> {
-                    ReleaseCard(release = uiModel) {
+                is ReleaseListItemModel -> {
+                    ReleaseListItem(release = uiModel) {
                         onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
                     }
                 }
@@ -208,7 +208,7 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(Destination.LOOKUP_INSTRUMENT, id, getNameWithDisambiguation())
                     }
                 }
-                is LabelCardModel -> {
+                is LabelListItemModel -> {
                     LabelCard(label = uiModel) {
                         onItemClick(Destination.LOOKUP_LABEL, id, getNameWithDisambiguation())
                     }

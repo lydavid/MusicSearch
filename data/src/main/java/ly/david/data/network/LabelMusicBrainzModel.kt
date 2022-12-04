@@ -3,7 +3,7 @@ package ly.david.data.network
 import com.squareup.moshi.Json
 import ly.david.data.Label
 import ly.david.data.LifeSpan
-import ly.david.data.domain.LabelCardModel
+import ly.david.data.domain.LabelListItemModel
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
 
@@ -41,13 +41,13 @@ fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
     }
 }
 
-fun List<LabelInfo>.toListItemModels(): List<LabelCardModel> {
+fun List<LabelInfo>.toLabelListItemModels(): List<LabelListItemModel> {
     return this.mapNotNull { labelInfo ->
         val label = labelInfo.label
         if (label == null) {
             null
         } else {
-            LabelCardModel(
+            LabelListItemModel(
                 id = label.id,
                 name = label.name,
                 disambiguation = label.disambiguation,

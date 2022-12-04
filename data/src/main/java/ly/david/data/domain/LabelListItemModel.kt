@@ -5,7 +5,7 @@ import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.release.LabelWithCatalog
 
-data class LabelCardModel(
+data class LabelListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,
@@ -15,8 +15,8 @@ data class LabelCardModel(
     val catalogNumber: String? = null
 ) : Label, UiModel()
 
-internal fun LabelMusicBrainzModel.toLabelUiModel() =
-    LabelCardModel(
+internal fun LabelMusicBrainzModel.toLabelListItemModel() =
+    LabelListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -24,8 +24,8 @@ internal fun LabelMusicBrainzModel.toLabelUiModel() =
         labelCode = labelCode
     )
 
-internal fun LabelRoomModel.toLabelUiModel() =
-    LabelCardModel(
+internal fun LabelRoomModel.toLabelListItemModel() =
+    LabelListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -33,8 +33,8 @@ internal fun LabelRoomModel.toLabelUiModel() =
         labelCode = labelCode
     )
 
-internal fun LabelWithCatalog.toCardModel() =
-    LabelCardModel(
+internal fun LabelWithCatalog.toLabelListItemModel() =
+    LabelListItemModel(
         id = label.id,
         name = label.name,
         disambiguation = label.disambiguation,

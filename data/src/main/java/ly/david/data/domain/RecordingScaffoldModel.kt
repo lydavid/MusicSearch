@@ -15,7 +15,7 @@ data class RecordingScaffoldModel(
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
 ) : Recording
 
-fun RecordingForScaffold.toScaffoldModel() = RecordingScaffoldModel(
+fun RecordingForScaffold.toRecordingScaffoldModel() = RecordingScaffoldModel(
     id = recording.id,
     name = recording.name,
     date = recording.date,
@@ -25,7 +25,7 @@ fun RecordingForScaffold.toScaffoldModel() = RecordingScaffoldModel(
     artistCredits = artistCreditNamesWithResources.toUiModels()
 )
 
-fun RecordingMusicBrainzModel.toScaffoldModel() = RecordingScaffoldModel(
+fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(
     id = id,
     name = name,
     date = date,

@@ -3,8 +3,8 @@ package ly.david.data.repository
 import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.domain.LabelCardModel
-import ly.david.data.domain.toLabelUiModel
+import ly.david.data.domain.LabelListItemModel
+import ly.david.data.domain.toLabelListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
@@ -28,17 +28,17 @@ class LabelRepository @Inject constructor(
     private val relationDao: RelationDao,
 ) : ReleasesListRepository, RelationsListRepository {
 
-    suspend fun lookupLabel(labelId: String): LabelCardModel {
+    suspend fun lookupLabel(labelId: String): LabelListItemModel {
         val labelRoomModel = labelDao.getLabel(labelId)
         if (labelRoomModel != null) {
-            return labelRoomModel.toLabelUiModel()
+            return labelRoomModel.toLabelListItemModel()
         }
 
         val labelMusicBrainzModel = musicBrainzApiService.lookupLabel(labelId)
 
         labelDao.insert(labelMusicBrainzModel.toLabelRoomModel())
 
-        return labelMusicBrainzModel.toLabelUiModel()
+        return labelMusicBrainzModel.toLabelListItemModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

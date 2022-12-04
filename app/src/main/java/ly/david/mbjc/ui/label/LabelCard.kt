@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.LabelCardModel
+import ly.david.data.domain.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -23,8 +23,8 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun LabelCard(
-    label: LabelCardModel,
-    onLabelClick: LabelCardModel.() -> Unit = {}
+    label: LabelListItemModel,
+    onLabelClick: LabelListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onLabelClick(label) },
@@ -72,30 +72,30 @@ internal fun LabelCard(
 }
 
 // Cannot be private.
-internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<LabelCardModel> {
+internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<LabelListItemModel> {
     override val values = sequenceOf(
-        LabelCardModel(
+        LabelListItemModel(
             id = "1",
             name = "Music Label",
         ),
-        LabelCardModel(
+        LabelListItemModel(
             id = "2",
             name = "Sony Records",
             disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"
         ),
-        LabelCardModel(
+        LabelListItemModel(
             id = "3",
             name = "Sony Classical",
             type = "Imprint"
         ),
-        LabelCardModel(
+        LabelListItemModel(
             id = "4",
             name = "Sony Music",
             disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
             type = "Original Production",
             labelCode = 10746
         ),
-        LabelCardModel(
+        LabelListItemModel(
             id = "5",
             name = "Sony Music",
             disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
@@ -110,7 +110,7 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun Preview(
-    @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelCardModel
+    @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelListItemModel
 ) {
     PreviewTheme {
         Surface {

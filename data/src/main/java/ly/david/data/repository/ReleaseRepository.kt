@@ -4,7 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseScaffoldModel
-import ly.david.data.domain.toScaffoldModel
+import ly.david.data.domain.toReleaseScaffoldModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
@@ -52,7 +52,7 @@ class ReleaseRepository @Inject constructor(
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
-            return releaseWithAllData.toScaffoldModel()
+            return releaseWithAllData.toReleaseScaffoldModel()
         }
 
         // Fetch from network. Store all relevant models.
@@ -89,7 +89,7 @@ class ReleaseRepository @Inject constructor(
             }.orEmpty()
         )
 
-        return releaseMusicBrainzModel.toScaffoldModel()
+        return releaseMusicBrainzModel.toReleaseScaffoldModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

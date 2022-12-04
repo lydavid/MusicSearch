@@ -19,7 +19,7 @@ import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.AreaListItemModel
-import ly.david.data.domain.LabelCardModel
+import ly.david.data.domain.LabelListItemModel
 import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.TextRepresentation
@@ -37,7 +37,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun ReleaseDetailsScreen(
     releaseScaffoldModel: ReleaseScaffoldModel,
-    onLabelClick: LabelCardModel.() -> Unit = {},
+    onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState(),
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
@@ -61,7 +61,7 @@ internal fun ReleaseDetailsScreen(
 @Composable
 private fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
-    onLabelClick: LabelCardModel.() -> Unit = {},
+    onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState(),
     releaseLength: String? = null,
@@ -181,13 +181,13 @@ private fun Preview() {
                         )
                     ),
                     labels = listOf(
-                        LabelCardModel(
+                        LabelListItemModel(
                             id = "l1",
                             name = "Label 1",
                             type = "Imprint",
                             catalogNumber = "ASDF-1010"
                         ),
-                        LabelCardModel(
+                        LabelListItemModel(
                             id = "l1",
                             name = "Label 1",
                             catalogNumber = "ASDF-1011"

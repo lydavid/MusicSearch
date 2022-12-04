@@ -16,7 +16,7 @@ data class RecordingListItemModel(
 ) : UiModel(), Recording
 
 // Only used for search screen where we don't commit to inserting every search result
-fun RecordingMusicBrainzModel.toListItemModel() = RecordingListItemModel(
+fun RecordingMusicBrainzModel.toRecordingListItemModel() = RecordingListItemModel(
     id = id,
     name = name,
     date = date,
@@ -26,7 +26,7 @@ fun RecordingMusicBrainzModel.toListItemModel() = RecordingListItemModel(
     formattedArtistCredits = artistCredits.getDisplayNames()
 )
 
-fun RecordingForListItem.toListItemModel() = RecordingListItemModel(
+fun RecordingForListItem.toRecordingListItemModel() = RecordingListItemModel(
     id = recording.id,
     name = recording.name,
     date = recording.date,

@@ -7,7 +7,7 @@ import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
 import ly.david.data.network.getFormatsForDisplay
 import ly.david.data.network.getTracksForDisplay
-import ly.david.data.network.toListItemModels
+import ly.david.data.network.toLabelListItemModels
 import ly.david.data.persistence.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
@@ -35,10 +35,10 @@ data class ReleaseScaffoldModel(
 
     val releaseGroup: ReleaseGroupUiModel? = null,
     val areas: List<AreaListItemModel> = listOf(),
-    val labels: List<LabelCardModel> = listOf()
+    val labels: List<LabelListItemModel> = listOf()
 ) : Release
 
-internal fun ReleaseWithAllData.toScaffoldModel() = ReleaseScaffoldModel(
+internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     id = release.id,
     name = release.name,
     disambiguation = release.disambiguation,
@@ -61,10 +61,10 @@ internal fun ReleaseWithAllData.toScaffoldModel() = ReleaseScaffoldModel(
         it.artistCreditNameRoomModel.toUiModel()
     },
     releaseGroup = releaseGroup?.toUiModel(),
-    labels = labels.map { it.toCardModel() }
+    labels = labels.map { it.toLabelListItemModel() }
 )
 
-internal fun ReleaseMusicBrainzModel.toScaffoldModel() = ReleaseScaffoldModel(
+internal fun ReleaseMusicBrainzModel.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
@@ -87,5 +87,5 @@ internal fun ReleaseMusicBrainzModel.toScaffoldModel() = ReleaseScaffoldModel(
     }.orEmpty(),
     artistCredits = artistCredits.toUiModels(),
     releaseGroup = releaseGroup?.toUiModel(),
-    labels = labelInfoList?.toListItemModels().orEmpty()
+    labels = labelInfoList?.toLabelListItemModels().orEmpty()
 )

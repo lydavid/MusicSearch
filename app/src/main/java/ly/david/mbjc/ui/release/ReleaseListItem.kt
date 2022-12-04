@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toFlagEmoji
-import ly.david.data.domain.ReleaseCardModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -28,9 +28,9 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun ReleaseCard(
-    release: ReleaseCardModel,
-    onClick: ReleaseCardModel.() -> Unit = {}
+internal fun ReleaseListItem(
+    release: ReleaseListItemModel,
+    onClick: ReleaseListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(release) },
@@ -157,30 +157,30 @@ internal fun ReleaseCard(
 }
 
 // region Previews
-internal class ReleasePreviewParameterProvider : PreviewParameterProvider<ReleaseCardModel> {
-    override val values: Sequence<ReleaseCardModel> = sequenceOf(
-        ReleaseCardModel(
+internal class ReleasePreviewParameterProvider : PreviewParameterProvider<ReleaseListItemModel> {
+    override val values: Sequence<ReleaseListItemModel> = sequenceOf(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             disambiguation = "Disambiguation text",
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             disambiguation = "Disambiguation text",
             countryCode = "US"
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             disambiguation = "",
             countryCode = "CA"
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             date = "2021-09-08",
@@ -188,24 +188,24 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             formats = "2×CD + Blu-ray",
             tracks = "15 + 8 + 24"
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             date = "2022-04-03",
             countryCode = "NL",
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             countryCode = "NL",
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             date = "2022-04-03",
             formattedArtistCredits = "Some artist feat. Other artist"
         ),
-        ReleaseCardModel(
+        ReleaseListItemModel(
             id = "1",
             name = "Release title",
             countryCode = "DZ",
@@ -221,12 +221,12 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
 @ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-private fun ReleaseCardPreview(
-    @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseCardModel
+private fun Preview(
+    @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseListItemModel
 ) {
     PreviewTheme {
         Surface {
-            ReleaseCard(release)
+            ReleaseListItem(release)
         }
     }
 }

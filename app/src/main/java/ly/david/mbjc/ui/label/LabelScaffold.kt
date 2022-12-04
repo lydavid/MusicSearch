@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.ReleaseCardModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -103,7 +103,7 @@ internal fun LabelScaffold(
     ) { innerPadding ->
 
         val releasesLazyListState = rememberLazyListState()
-        val releasesLazyPagingItems: LazyPagingItems<ReleaseCardModel> =
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
                 .collectAsLazyPagingItems()
 

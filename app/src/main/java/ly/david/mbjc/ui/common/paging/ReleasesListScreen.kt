@@ -6,16 +6,16 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.ReleaseCardModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.mbjc.ui.release.ReleaseCard
+import ly.david.mbjc.ui.release.ReleaseListItem
 
 @Composable
 internal fun ReleasesListScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    lazyPagingItems: LazyPagingItems<ReleaseCardModel>,
+    lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     onReleaseClick: (String, String) -> Unit,
 ) {
     PagingLoadingAndErrorHandler(
@@ -23,10 +23,10 @@ internal fun ReleasesListScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { releaseCardModel: ReleaseCardModel? ->
-        when (releaseCardModel) {
-            is ReleaseCardModel -> {
-                ReleaseCard(release = releaseCardModel) {
+    ) { releaseListItemModel: ReleaseListItemModel? ->
+        when (releaseListItemModel) {
+            is ReleaseListItemModel -> {
+                ReleaseListItem(release = releaseListItemModel) {
                     onReleaseClick(id, getNameWithDisambiguation())
                 }
             }

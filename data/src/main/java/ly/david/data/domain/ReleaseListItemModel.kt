@@ -7,7 +7,7 @@ import ly.david.data.network.TextRepresentation
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 
-data class ReleaseCardModel(
+data class ReleaseListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String = "",
@@ -32,7 +32,7 @@ data class ReleaseCardModel(
     val releaseCountries: List<ReleaseCountry> = listOf(),
 ) : UiModel(), Release
 
-fun ReleaseMusicBrainzModel.toCardModel() = ReleaseCardModel(
+fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
@@ -50,7 +50,7 @@ fun ReleaseMusicBrainzModel.toCardModel() = ReleaseCardModel(
     coverArtUrl = null,
 )
 
-fun ReleaseWithCreditsAndCountries.toCardModel() = ReleaseCardModel(
+fun ReleaseWithCreditsAndCountries.toReleaseListItemModel() = ReleaseListItemModel(
     id = release.id,
     name = release.name,
     disambiguation = release.disambiguation,
