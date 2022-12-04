@@ -13,7 +13,7 @@ data class AreaListItemModel(
     override val lifeSpan: LifeSpan? = null,
     val iso_3166_1_codes: List<String>? = null,
     val date: String? = null
-) : Area, UiModel()
+) : Area, ListItemModel()
 
 internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = AreaListItemModel(
     id = id,

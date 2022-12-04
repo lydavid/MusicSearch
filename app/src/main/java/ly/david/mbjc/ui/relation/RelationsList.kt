@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.domain.Header
-import ly.david.data.domain.RelationUiModel
-import ly.david.data.domain.UiModel
-import ly.david.data.domain.toRelationUiModel
+import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.RelationListItemModel
+import ly.david.data.domain.toRelationListItemModel
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.relation.HasRelationsRoomModel
@@ -34,9 +34,9 @@ import ly.david.data.repository.RelationsListRepository
 internal interface IRelationsList {
 
     /**
-     * Paginated [RelationUiModel] with [Header].
+     * Paginated [RelationListItemModel] with [Header].
      */
-    val pagedRelations: Flow<PagingData<UiModel>>
+    val pagedRelations: Flow<PagingData<ListItemModel>>
 
     /**
      * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
@@ -65,7 +65,7 @@ internal class RelationsList @Inject constructor(
     lateinit var repository: RelationsListRepository
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
-    override val pagedRelations: Flow<PagingData<UiModel>> by lazy {
+    override val pagedRelations: Flow<PagingData<ListItemModel>> by lazy {
         resourceId.filterNot { it.isEmpty() }
             .flatMapLatest { resourceId ->
                 Pager(
@@ -84,8 +84,8 @@ internal class RelationsList @Inject constructor(
                     }
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
-                        relation.toRelationUiModel()
-                    }.insertSeparators { before: RelationUiModel?, _: RelationUiModel? ->
+                        relation.toRelationListItemModel()
+                    }.insertSeparators { before: RelationListItemModel?, _: RelationListItemModel? ->
                         if (before == null) Header else null
                     }
                 }

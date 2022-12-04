@@ -16,14 +16,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.Coordinates
+import ly.david.data.common.showMap
 import ly.david.data.formatForDisplay
 import ly.david.mbjc.ui.common.ClickableListItem
-import ly.david.data.common.showMap
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
-internal fun CoordinateCard(
+internal fun CoordinateListItem(
     context: Context,
     coordinates: Coordinates,
     label: String? = null
@@ -56,7 +56,7 @@ internal fun CoordinateCard(
 private fun CoordinateCardPreview() {
     PreviewTheme {
         Surface {
-            CoordinateCard(
+            CoordinateListItem(
                 context = LocalContext.current,
                 coordinates = Coordinates(
                     longitude = -73.98905,

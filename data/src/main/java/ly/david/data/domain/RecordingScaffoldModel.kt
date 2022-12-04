@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.Recording
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.persistence.artist.credit.toUiModels
+import ly.david.data.persistence.artist.credit.toArtistCreditUiModels
 import ly.david.data.persistence.recording.RecordingForScaffold
 
 data class RecordingScaffoldModel(
@@ -22,7 +22,7 @@ fun RecordingForScaffold.toRecordingScaffoldModel() = RecordingScaffoldModel(
     disambiguation = recording.disambiguation,
     length = recording.length,
     video = recording.video,
-    artistCredits = artistCreditNamesWithResources.toUiModels()
+    artistCredits = artistCreditNamesWithResources.toArtistCreditUiModels()
 )
 
 fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(
@@ -32,5 +32,5 @@ fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldMode
     disambiguation = disambiguation,
     length = length,
     video = video ?: false,
-    artistCredits = artistCredits.toUiModels()
+    artistCredits = artistCredits.toArtistCreditUiModels()
 )

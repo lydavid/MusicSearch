@@ -13,7 +13,7 @@ data class LabelListItemModel(
     override val labelCode: Int? = null,
 
     val catalogNumber: String? = null
-) : Label, UiModel()
+) : Label, ListItemModel()
 
 internal fun LabelMusicBrainzModel.toLabelListItemModel() =
     LabelListItemModel(

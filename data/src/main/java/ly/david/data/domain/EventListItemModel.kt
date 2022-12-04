@@ -5,16 +5,16 @@ import ly.david.data.LifeSpan
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.persistence.event.EventRoomModel
 
-data class EventUiModel(
+data class EventListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,
     override val type: String? = null,
     override val lifeSpan: LifeSpan? = null,
-) : Event, UiModel()
+) : Event, ListItemModel()
 
-internal fun EventMusicBrainzModel.toEventUiModel() =
-    EventUiModel(
+internal fun EventMusicBrainzModel.toEventListItemModel() =
+    EventListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -22,7 +22,7 @@ internal fun EventMusicBrainzModel.toEventUiModel() =
         lifeSpan = lifeSpan
     )
 
-internal fun EventRoomModel.toEventUiModel() =
-    EventUiModel(
+internal fun EventRoomModel.toEventListItemModel() =
+    EventListItemModel(
         id, name, disambiguation, type, lifeSpan
     )

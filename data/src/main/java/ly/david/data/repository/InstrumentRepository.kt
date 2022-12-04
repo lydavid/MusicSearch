@@ -3,8 +3,8 @@ package ly.david.data.repository
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.Instrument
-import ly.david.data.domain.InstrumentUiModel
-import ly.david.data.domain.toInstrumentUiModel
+import ly.david.data.domain.InstrumentListItemModel
+import ly.david.data.domain.toInstrumentListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.history.LookupHistory
@@ -22,16 +22,16 @@ class InstrumentRepository @Inject constructor(
     private val relationDao: RelationDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
-    private var instrument: InstrumentUiModel? = null
+    private var instrument: InstrumentListItemModel? = null
 
-    suspend fun lookupInstrument(instrumentId: String): InstrumentUiModel =
+    suspend fun lookupInstrument(instrumentId: String): InstrumentListItemModel =
         instrument ?: run {
 
             // Use cached model.
             val instrumentRoomModel = instrumentDao.getInstrument(instrumentId)
             if (instrumentRoomModel != null) {
                 incrementOrInsertLookupHistory(instrumentRoomModel)
-                return instrumentRoomModel.toInstrumentUiModel()
+                return instrumentRoomModel.toInstrumentListItemModel()
             }
 
             val instrumentMusicBrainzModel = musicBrainzApiService.lookupInstrument(instrumentId)
@@ -49,7 +49,7 @@ class InstrumentRepository @Inject constructor(
             relationDao.insertAll(relations)
 
             incrementOrInsertLookupHistory(instrumentMusicBrainzModel)
-            instrumentMusicBrainzModel.toInstrumentUiModel()
+            instrumentMusicBrainzModel.toInstrumentListItemModel()
         }
 
     private suspend fun incrementOrInsertLookupHistory(instrument: Instrument) {

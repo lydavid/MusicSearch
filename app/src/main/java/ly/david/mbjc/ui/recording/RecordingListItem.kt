@@ -15,14 +15,14 @@ import ly.david.data.domain.RecordingListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.release.tracks.TrackCard
+import ly.david.mbjc.ui.release.tracks.TrackListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
- * Also see [TrackCard].
+ * Also see [TrackListItem].
  */
 @Composable
-internal fun RecordingCard(
+internal fun RecordingListItem(
     recording: RecordingListItemModel,
     onRecordingClick: RecordingListItemModel.() -> Unit = {}
 ) {
@@ -73,7 +73,7 @@ private fun Preview(
 ) {
     PreviewTheme {
         Surface {
-            RecordingCard(recording = recording)
+            RecordingListItem(recording = recording)
         }
     }
 }

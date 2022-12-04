@@ -8,19 +8,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.data.domain.WorkUiModel
+import ly.david.data.domain.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-internal fun WorkCard(
-    workUiModel: WorkUiModel,
-    onWorkClick: WorkUiModel.() -> Unit = {}
+internal fun WorkListItem(
+    work: WorkListItemModel,
+    onWorkClick: WorkListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
-        onClick = { onWorkClick(workUiModel) },
+        onClick = { onWorkClick(work) },
     ) {
         Column(
             modifier = Modifier
@@ -28,10 +28,10 @@ internal fun WorkCard(
                 .padding(vertical = 16.dp),
         ) {
             // TODO: writers, artists, iswc
-            Text(text = workUiModel.getNameWithDisambiguation())
+            Text(text = work.getNameWithDisambiguation())
 
-            Text(text = workUiModel.language.orEmpty())
-            Text(text = workUiModel.type.orEmpty())
+            Text(text = work.language.orEmpty())
+            Text(text = work.type.orEmpty())
         }
     }
 }
@@ -41,8 +41,8 @@ internal fun WorkCard(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            WorkCard(
-                workUiModel = WorkUiModel(
+            WorkListItem(
+                work = WorkListItemModel(
                     id = "1",
                     name = "work name",
                     disambiguation = "that one",

@@ -5,10 +5,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.RelationUiModel
-import ly.david.data.domain.UiModel
+import ly.david.data.domain.RelationListItemModel
+import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
-import ly.david.mbjc.ui.relation.RelationCard
+import ly.david.mbjc.ui.relation.RelationListItem
 
 @Composable
 internal fun RelationsScreen(
@@ -16,19 +16,19 @@ internal fun RelationsScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<UiModel>,
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         snackbarHostState = snackbarHostState
-    ) { uiModel: UiModel? ->
+    ) { listItemModel: ListItemModel? ->
 
-        when (uiModel) {
-            is RelationUiModel -> {
-                RelationCard(
-                    relation = uiModel,
+        when (listItemModel) {
+            is RelationListItemModel -> {
+                RelationListItem(
+                    relation = listItemModel,
                     onItemClick = onItemClick,
                 )
             }

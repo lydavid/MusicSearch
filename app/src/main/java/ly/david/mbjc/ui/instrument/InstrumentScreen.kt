@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.InstrumentUiModel
-import ly.david.data.domain.UiModel
+import ly.david.data.domain.InstrumentListItemModel
+import ly.david.data.domain.ListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.relation.RelationCard
+import ly.david.mbjc.ui.relation.RelationListItem
 
 @Composable
 internal fun InstrumentScreen(
@@ -30,7 +30,7 @@ internal fun InstrumentScreen(
 ) {
 
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }
-    var instrument: InstrumentUiModel? by remember { mutableStateOf(null) }
+    var instrument: InstrumentListItemModel? by remember { mutableStateOf(null) }
     val lazyListState = rememberLazyListState()
 
     LaunchedEffect(key1 = instrumentId) {
@@ -43,7 +43,7 @@ internal fun InstrumentScreen(
         lookupInProgress = false
     }
 
-    val lazyPagingItems: LazyPagingItems<UiModel> =
+    val lazyPagingItems: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
             .collectAsLazyPagingItems()
 
@@ -52,12 +52,12 @@ internal fun InstrumentScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-    ) { uiModel: UiModel? ->
+    ) { listItemModel: ListItemModel? ->
 
-        when (uiModel) {
-            is ly.david.data.domain.RelationUiModel -> {
-                RelationCard(
-                    relation = uiModel,
+        when (listItemModel) {
+            is ly.david.data.domain.RelationListItemModel -> {
+                RelationListItem(
+                    relation = listItemModel,
                     onItemClick = onItemClick,
                 )
             }

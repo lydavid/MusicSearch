@@ -4,16 +4,16 @@ import ly.david.data.Instrument
 import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.persistence.instrument.InstrumentRoomModel
 
-data class InstrumentUiModel(
+data class InstrumentListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,
     override val description: String? = null,
     override val type: String? = null,
-) : Instrument, UiModel()
+) : Instrument, ListItemModel()
 
-internal fun InstrumentMusicBrainzModel.toInstrumentUiModel() =
-    InstrumentUiModel(
+internal fun InstrumentMusicBrainzModel.toInstrumentListItemModel() =
+    InstrumentListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -21,8 +21,8 @@ internal fun InstrumentMusicBrainzModel.toInstrumentUiModel() =
         type = type,
     )
 
-internal fun InstrumentRoomModel.toInstrumentUiModel() =
-    InstrumentUiModel(
+internal fun InstrumentRoomModel.toInstrumentListItemModel() =
+    InstrumentListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

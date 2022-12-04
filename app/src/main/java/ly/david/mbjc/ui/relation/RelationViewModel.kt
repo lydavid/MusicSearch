@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.domain.Header
-import ly.david.data.domain.RelationUiModel
-import ly.david.data.domain.UiModel
-import ly.david.data.domain.toRelationUiModel
+import ly.david.data.domain.RelationListItemModel
+import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.toRelationListItemModel
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.relation.HasRelationsRoomModel
@@ -33,7 +33,7 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
     private val resourceId: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
-    val pagedRelations: Flow<PagingData<UiModel>> =
+    val pagedRelations: Flow<PagingData<ListItemModel>> =
         resourceId.filterNot { it.isEmpty() }
             .flatMapLatest { resourceId ->
                 Pager(
@@ -52,8 +52,8 @@ internal abstract class RelationViewModel(private val relationDao: RelationDao) 
                     }
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
-                        relation.toRelationUiModel()
-                    }.insertSeparators { before: RelationUiModel?, _: RelationUiModel? ->
+                        relation.toRelationListItemModel()
+                    }.insertSeparators { before: RelationListItemModel?, _: RelationListItemModel? ->
                         if (before == null) Header else null
                     }
                 }

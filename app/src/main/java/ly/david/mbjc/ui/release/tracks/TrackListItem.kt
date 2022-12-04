@@ -13,21 +13,21 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.toDisplayTime
-import ly.david.data.domain.TrackUiModel
+import ly.david.data.domain.TrackListItemModel
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.recording.RecordingCard
+import ly.david.mbjc.ui.recording.RecordingListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 /**
- * Also see [RecordingCard].
+ * Also see [RecordingListItem].
  */
 @Composable
-internal fun TrackCard(
-    track: TrackUiModel,
+internal fun TrackListItem(
+    track: TrackListItemModel,
 //    showTrackArtists: Boolean = false,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
     onWorkClick: (WorkMusicBrainzModel) -> Unit = {},
@@ -98,9 +98,9 @@ internal fun TrackCard(
 }
 
 @ExcludeFromJacocoGeneratedReport
-internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<TrackUiModel> {
+internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<TrackListItemModel> {
     override val values = sequenceOf(
-        TrackUiModel(
+        TrackListItemModel(
             id = "1",
             title = "Track title",
             position = 1,
@@ -108,7 +108,7 @@ internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<Trac
             mediumId = 1L,
             recordingId = "r1"
         ),
-        TrackUiModel(
+        TrackListItemModel(
             id = "2",
             title = "Track title that is long and wraps",
             position = 1,
@@ -124,11 +124,11 @@ internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<Trac
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(TrackCardPreviewParameterProvider::class) track: TrackUiModel
+    @PreviewParameter(TrackCardPreviewParameterProvider::class) track: TrackListItemModel
 ) {
     PreviewTheme {
         Surface {
-            TrackCard(
+            TrackListItem(
                 track = track,
 //                showTrackArtists = true
             )

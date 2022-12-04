@@ -30,7 +30,7 @@ data class ReleaseListItemModel(
     val formattedArtistCredits: String? = null,
 
     val releaseCountries: List<ReleaseCountry> = listOf(),
-) : UiModel(), Release
+) : ListItemModel(), Release
 
 fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     id = id,

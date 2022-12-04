@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
-import ly.david.data.domain.RelationUiModel
+import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toDestination
@@ -25,8 +25,8 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun RelationCard(
-    relation: RelationUiModel,
+internal fun RelationListItem(
+    relation: RelationListItemModel,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
@@ -99,8 +99,8 @@ internal fun RelationCard(
 private fun Artist() {
     PreviewTheme {
         Surface {
-            RelationCard(
-                relation = RelationUiModel(
+            RelationListItem(
+                relation = RelationListItemModel(
                     linkedResourceId = "2",
                     linkedResource = MusicBrainzResource.ARTIST,
                     label = "miscellaneous support",
@@ -119,8 +119,8 @@ private fun Artist() {
 private fun Recording() {
     PreviewTheme {
         Surface {
-            RelationCard(
-                relation = RelationUiModel(
+            RelationListItem(
+                relation = RelationListItemModel(
                     linkedResourceId = "2",
                     linkedResource = MusicBrainzResource.RECORDING,
                     label = "DJ-mixes",

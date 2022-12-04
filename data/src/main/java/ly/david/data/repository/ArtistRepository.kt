@@ -2,8 +2,8 @@ package ly.david.data.repository
 
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.domain.ArtistUiModel
-import ly.david.data.domain.toArtistUiModel
+import ly.david.data.domain.ArtistListItemModel
+import ly.david.data.domain.toArtistListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
@@ -19,17 +19,17 @@ class ArtistRepository @Inject constructor(
 //    private val relationDao: RelationDao,
 ): RelationsListRepository {
 
-    suspend fun lookupArtist(artistId: String): ArtistUiModel {
+    suspend fun lookupArtist(artistId: String): ArtistListItemModel {
         val roomArtist = artistDao.getArtist(artistId)
         if (roomArtist != null) {
-            return roomArtist.toArtistUiModel()
+            return roomArtist.toArtistListItemModel()
         }
 
         val musicBrainzArtist = musicBrainzApiService.lookupArtist(
             artistId = artistId,
         )
         artistDao.insert(musicBrainzArtist.toArtistRoomModel())
-        return musicBrainzArtist.toArtistUiModel()
+        return musicBrainzArtist.toArtistListItemModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

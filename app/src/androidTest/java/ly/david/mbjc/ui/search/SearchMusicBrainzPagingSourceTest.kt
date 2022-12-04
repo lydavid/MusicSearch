@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.search
 import androidx.paging.PagingSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.toArtistUiModel
-import ly.david.data.domain.toUiModel
+import ly.david.data.domain.toArtistListItemModel
+import ly.david.data.domain.toReleaseGroupListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.fakeArtist
 import ly.david.data.network.fakeReleaseGroup
@@ -26,7 +26,7 @@ internal class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    fakeArtist.toArtistUiModel()
+                    fakeArtist.toArtistListItemModel()
                 ),
                 prevKey = 1,
                 nextKey = 2
@@ -50,7 +50,7 @@ internal class SearchMusicBrainzPagingSourceTest {
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    fakeReleaseGroup.toUiModel()
+                    fakeReleaseGroup.toReleaseGroupListItemModel()
                 ),
                 prevKey = 1,
                 nextKey = 2

@@ -38,37 +38,37 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.domain.AreaListItemModel
-import ly.david.data.domain.ArtistUiModel
+import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.domain.EndOfList
-import ly.david.data.domain.EventUiModel
-import ly.david.data.domain.InstrumentUiModel
+import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.InstrumentListItemModel
 import ly.david.data.domain.LabelListItemModel
-import ly.david.data.domain.PlaceUiModel
+import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.domain.RecordingListItemModel
+import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.ReleaseGroupUiModel
-import ly.david.data.domain.SeriesUiModel
-import ly.david.data.domain.UiModel
-import ly.david.data.domain.WorkUiModel
+import ly.david.data.domain.SeriesListItemModel
+import ly.david.data.domain.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
-import ly.david.mbjc.ui.artist.ArtistCard
+import ly.david.mbjc.ui.artist.ArtistListItem
 import ly.david.mbjc.ui.common.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.event.EventCard
-import ly.david.mbjc.ui.instrument.InstrumentCard
-import ly.david.mbjc.ui.label.LabelCard
-import ly.david.mbjc.ui.place.PlaceCard
-import ly.david.mbjc.ui.recording.RecordingCard
+import ly.david.mbjc.ui.event.EventListItem
+import ly.david.mbjc.ui.instrument.InstrumentListItem
+import ly.david.mbjc.ui.label.LabelListItem
+import ly.david.mbjc.ui.place.PlaceListItem
+import ly.david.mbjc.ui.recording.RecordingListItem
 import ly.david.mbjc.ui.release.ReleaseListItem
-import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
-import ly.david.mbjc.ui.series.SeriesCard
-import ly.david.mbjc.ui.work.WorkCard
+import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
+import ly.david.mbjc.ui.series.SeriesListItem
+import ly.david.mbjc.ui.work.WorkListItem
 
 @Composable
 internal fun SearchMusicBrainzScreen(
@@ -80,8 +80,8 @@ internal fun SearchMusicBrainzScreen(
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<UiModel> =
-        rememberFlowWithLifecycleStarted(viewModel.searchResultsUiModel)
+    val lazyPagingItems: LazyPagingItems<ListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.searchResultsListItemModel)
             .collectAsLazyPagingItems()
 
     var text by rememberSaveable { mutableStateOf("") }
@@ -165,61 +165,61 @@ internal fun SearchMusicBrainzScreen(
             lazyListState = lazyListState,
             snackbarHostState = snackbarHostState,
             noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) { uiModel: UiModel? ->
-            when (uiModel) {
-                is ArtistUiModel -> {
-                    ArtistCard(artist = uiModel) {
+        ) { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is ArtistListItemModel -> {
+                    ArtistListItem(artist = listItemModel) {
                         onItemClick(Destination.LOOKUP_ARTIST, id, null)
                     }
                 }
-                is ReleaseGroupUiModel -> {
+                is ReleaseGroupListItemModel -> {
                     // TODO: should see album type rather than year
-                    ReleaseGroupCard(releaseGroup = uiModel) {
+                    ReleaseGroupListItem(releaseGroup = listItemModel) {
                         onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, getNameWithDisambiguation())
                     }
                 }
                 is ReleaseListItemModel -> {
-                    ReleaseListItem(release = uiModel) {
+                    ReleaseListItem(release = listItemModel) {
                         onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
                     }
                 }
                 is RecordingListItemModel -> {
-                    RecordingCard(recording = uiModel) {
+                    RecordingListItem(recording = listItemModel) {
                         onItemClick(Destination.LOOKUP_RECORDING, id, getNameWithDisambiguation())
                     }
                 }
-                is WorkUiModel -> {
-                    WorkCard(workUiModel = uiModel) {
+                is WorkListItemModel -> {
+                    WorkListItem(work = listItemModel) {
                         onItemClick(Destination.LOOKUP_WORK, id, getNameWithDisambiguation())
                     }
                 }
                 is AreaListItemModel -> {
-                    AreaListItem(area = uiModel) {
+                    AreaListItem(area = listItemModel) {
                         onItemClick(Destination.LOOKUP_AREA, id, getNameWithDisambiguation())
                     }
                 }
-                is PlaceUiModel -> {
-                    PlaceCard(place = uiModel) {
+                is PlaceListItemModel -> {
+                    PlaceListItem(place = listItemModel) {
                         onItemClick(Destination.LOOKUP_PLACE, id, getNameWithDisambiguation())
                     }
                 }
-                is InstrumentUiModel -> {
-                    InstrumentCard(instrument = uiModel) {
+                is InstrumentListItemModel -> {
+                    InstrumentListItem(instrument = listItemModel) {
                         onItemClick(Destination.LOOKUP_INSTRUMENT, id, getNameWithDisambiguation())
                     }
                 }
                 is LabelListItemModel -> {
-                    LabelCard(label = uiModel) {
+                    LabelListItem(label = listItemModel) {
                         onItemClick(Destination.LOOKUP_LABEL, id, getNameWithDisambiguation())
                     }
                 }
-                is EventUiModel -> {
-                    EventCard(event = uiModel) {
+                is EventListItemModel -> {
+                    EventListItem(event = listItemModel) {
                         onItemClick(Destination.LOOKUP_EVENT, id, getNameWithDisambiguation())
                     }
                 }
-                is SeriesUiModel -> {
-                    SeriesCard(series = uiModel) {
+                is SeriesListItemModel -> {
+                    SeriesListItem(series = listItemModel) {
                         onItemClick(Destination.LOOKUP_SERIES, id, getNameWithDisambiguation())
                     }
                 }

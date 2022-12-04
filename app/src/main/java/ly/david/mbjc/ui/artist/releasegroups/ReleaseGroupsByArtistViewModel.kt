@@ -19,10 +19,10 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.ReleaseGroupUiModel
-import ly.david.data.domain.UiModel
-import ly.david.data.domain.toUiModel
+import ly.david.data.domain.ReleaseGroupListItemModel
+import ly.david.data.domain.toReleaseGroupListItemModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.paging.BrowseResourceRemoteMediator
@@ -70,7 +70,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalPagingApi::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
-    val pagedReleaseGroups: Flow<PagingData<UiModel>> =
+    val pagedReleaseGroups: Flow<PagingData<ListItemModel>> =
         paramState.filterNot { it.artistId.isEmpty() }
             .flatMapLatest { (artistId, query, isSorted) ->
                 Pager(
@@ -88,14 +88,14 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     pagingSourceFactory = { getPagingSource(artistId, query, isSorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toUiModel()
+                        it.toReleaseGroupListItemModel()
                     }
-                        .insertSeparators { releaseGroupUiModel: ReleaseGroupUiModel?, releaseGroupUiModel2: ReleaseGroupUiModel? ->
-                            if (isSorted && releaseGroupUiModel2 != null &&
-                                (releaseGroupUiModel?.primaryType != releaseGroupUiModel2.primaryType ||
-                                    releaseGroupUiModel?.secondaryTypes != releaseGroupUiModel2.secondaryTypes)
+                        .insertSeparators { releaseGroupListItem: ReleaseGroupListItemModel?, releaseGroupListItem2: ReleaseGroupListItemModel? ->
+                            if (isSorted && releaseGroupListItem2 != null &&
+                                (releaseGroupListItem?.primaryType != releaseGroupListItem2.primaryType ||
+                                    releaseGroupListItem?.secondaryTypes != releaseGroupListItem2.secondaryTypes)
                             ) {
-                                ListSeparator(releaseGroupUiModel2.getDisplayTypes())
+                                ListSeparator(releaseGroupListItem2.getDisplayTypes())
                             } else {
                                 null
                             }

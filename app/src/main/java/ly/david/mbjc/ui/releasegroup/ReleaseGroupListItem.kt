@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.getYear
 import ly.david.data.domain.ArtistCreditUiModel
-import ly.david.data.domain.ReleaseGroupUiModel
+import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -25,9 +25,9 @@ import ly.david.mbjc.ui.theme.TextStyles
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 @Composable
-internal fun ReleaseGroupCard(
-    releaseGroup: ReleaseGroupUiModel,
-    onClick: ReleaseGroupUiModel.() -> Unit = {}
+internal fun ReleaseGroupListItem(
+    releaseGroup: ReleaseGroupListItemModel,
+    onClick: ReleaseGroupListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
@@ -63,7 +63,7 @@ internal fun ReleaseGroupCard(
     }
 }
 
-private val testReleaseGroup = ReleaseGroupUiModel(
+private val testReleaseGroup = ReleaseGroupListItemModel(
     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
     name = "欠けた心象、世のよすが",
     primaryType = "EP",
@@ -87,7 +87,7 @@ private val testReleaseGroup = ReleaseGroupUiModel(
 internal fun ReleaseGroupCardPreview() {
     PreviewTheme {
         Surface {
-            ReleaseGroupCard(testReleaseGroup)
+            ReleaseGroupListItem(testReleaseGroup)
         }
     }
 }

@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Track
 import ly.david.data.persistence.release.TrackRoomModel
 
-data class TrackUiModel(
+data class TrackListItemModel(
     override val id: String,
     override val position: Int,
     override val number: String,
@@ -11,10 +11,10 @@ data class TrackUiModel(
     override val length: Int? = null,
     val mediumId: Long,
     val recordingId: String
-) : UiModel(), Track
+) : ListItemModel(), Track
 
-fun TrackRoomModel.toTrackUiModel() =
-    TrackUiModel(
+fun TrackRoomModel.toTrackListItemModel() =
+    TrackListItemModel(
         id = id,
         position = position,
         number = number,

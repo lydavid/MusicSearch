@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.domain.InstrumentUiModel
+import ly.david.data.domain.InstrumentListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -20,9 +20,9 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun InstrumentCard(
-    instrument: InstrumentUiModel,
-    onInstrumentClick: InstrumentUiModel.() -> Unit = {}
+internal fun InstrumentListItem(
+    instrument: InstrumentListItemModel,
+    onInstrumentClick: InstrumentListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onInstrumentClick(instrument) },
@@ -60,24 +60,24 @@ internal fun InstrumentCard(
 }
 
 // Cannot be private.
-internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider<InstrumentUiModel> {
+internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider<InstrumentListItemModel> {
     override val values = sequenceOf(
-        InstrumentUiModel(
+        InstrumentListItemModel(
             id = "1",
             name = "Piano",
         ),
-        InstrumentUiModel(
+        InstrumentListItemModel(
             id = "2",
             name = "bass recorder",
             type = "Wind instrument"
         ),
-        InstrumentUiModel(
+        InstrumentListItemModel(
             id = "3",
             name = "Portuguese guitar",
             disambiguation = "Portugese plucked lute",
             type = "String instrument"
         ),
-        InstrumentUiModel(
+        InstrumentListItemModel(
             id = "4",
             name = "baroque guitar",
             disambiguation = "Baroque gut string guitar",
@@ -92,11 +92,11 @@ internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun Preview(
-    @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentUiModel
+    @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel
 ) {
     PreviewTheme {
         Surface {
-            InstrumentCard(instrument)
+            InstrumentListItem(instrument)
         }
     }
 }

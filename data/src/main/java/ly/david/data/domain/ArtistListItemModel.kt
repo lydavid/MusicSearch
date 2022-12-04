@@ -5,7 +5,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.persistence.artist.ArtistRoomModel
 
-data class ArtistUiModel(
+data class ArtistListItemModel(
     override val id: String,
     override val name: String,
     override val sortName: String,
@@ -14,10 +14,10 @@ data class ArtistUiModel(
     override val gender: String? = null,
     override val countryCode: String? = null,
     override val lifeSpan: LifeSpan? = null
-) : UiModel(), Artist
+) : ListItemModel(), Artist
 
-fun ArtistMusicBrainzModel.toArtistUiModel() =
-    ArtistUiModel(
+fun ArtistMusicBrainzModel.toArtistListItemModel() =
+    ArtistListItemModel(
         id = id,
         name = name,
         sortName = sortName,
@@ -28,8 +28,8 @@ fun ArtistMusicBrainzModel.toArtistUiModel() =
         lifeSpan = lifeSpan
     )
 
-fun ArtistRoomModel.toArtistUiModel() =
-    ArtistUiModel(
+fun ArtistRoomModel.toArtistListItemModel() =
+    ArtistListItemModel(
         id = id,
         name = name,
         sortName = sortName,

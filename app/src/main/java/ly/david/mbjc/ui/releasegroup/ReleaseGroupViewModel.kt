@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.ReleaseGroupUiModel
+import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -31,6 +31,6 @@ internal class ReleaseGroupViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupUiModel =
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupListItemModel =
         repository.lookupReleaseGroup(releaseGroupId)
 }

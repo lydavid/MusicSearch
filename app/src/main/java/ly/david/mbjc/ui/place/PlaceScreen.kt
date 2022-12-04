@@ -13,13 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.PlaceUiModel
-import ly.david.data.domain.UiModel
+import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.ListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.relation.RelationCard
+import ly.david.mbjc.ui.relation.RelationListItem
 
 @Composable
 internal fun PlaceScreen(
@@ -32,7 +32,7 @@ internal fun PlaceScreen(
 ) {
 
     var lookupInProgress by rememberSaveable { mutableStateOf(true) }
-    var place: PlaceUiModel? by remember { mutableStateOf(null) }
+    var place: PlaceListItemModel? by remember { mutableStateOf(null) }
     val lazyListState = rememberLazyListState()
 
     LaunchedEffect(key1 = placeId) {
@@ -45,7 +45,7 @@ internal fun PlaceScreen(
         lookupInProgress = false
     }
 
-    val lazyPagingItems: LazyPagingItems<UiModel> =
+    val lazyPagingItems: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
             .collectAsLazyPagingItems()
 
@@ -54,25 +54,25 @@ internal fun PlaceScreen(
         lazyPagingItems = lazyPagingItems,
         somethingElseLoading = lookupInProgress,
         lazyListState = lazyListState,
-    ) { uiModel: UiModel? ->
+    ) { listItemModel: ListItemModel? ->
 
-        when (uiModel) {
+        when (listItemModel) {
             is ly.david.data.domain.Header -> {
                 place?.coordinates?.let {
 
                     val label = place?.name +
                         if (place?.lifeSpan?.ended == true) " (closed)" else ""
 
-                    CoordinateCard(
+                    CoordinateListItem(
                         context = context,
                         coordinates = it,
                         label = label
                     )
                 }
             }
-            is ly.david.data.domain.RelationUiModel -> {
-                RelationCard(
-                    relation = uiModel,
+            is ly.david.data.domain.RelationListItemModel -> {
+                RelationListItem(
+                    relation = listItemModel,
                     onItemClick = onItemClick,
                 )
             }

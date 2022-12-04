@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.UiModel
+import ly.david.data.domain.ListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
@@ -108,7 +108,7 @@ internal fun LabelScaffold(
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 

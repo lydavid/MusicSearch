@@ -22,11 +22,11 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.Header
+import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseScaffoldModel
-import ly.david.data.domain.TrackUiModel
-import ly.david.data.domain.UiModel
-import ly.david.data.domain.toTrackUiModel
+import ly.david.data.domain.TrackListItemModel
+import ly.david.data.domain.toTrackListItemModel
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
@@ -87,7 +87,7 @@ internal class ReleaseViewModel @Inject constructor(
 
     // TODO: tracks refresh broken
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
-    val pagedTracks: Flow<PagingData<UiModel>> =
+    val pagedTracks: Flow<PagingData<ListItemModel>> =
         tracksParamState.filterNot { it.releaseId.isEmpty() }
             .flatMapLatest { (releaseId, query) ->
                 Pager(
@@ -106,8 +106,8 @@ internal class ReleaseViewModel @Inject constructor(
                     }
                 ).flow.map { pagingData ->
                     pagingData.map { track: TrackRoomModel ->
-                        track.toTrackUiModel()
-                    }.insertSeparators { before: TrackUiModel?, after: TrackUiModel? ->
+                        track.toTrackListItemModel()
+                    }.insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
                             // TODO: possible race condition: sometimes crashes here with null medium
                             val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)

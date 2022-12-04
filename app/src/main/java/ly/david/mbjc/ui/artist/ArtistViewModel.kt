@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.ArtistUiModel
+import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.ArtistRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -24,6 +24,6 @@ internal class ArtistViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    suspend fun lookupArtist(artistId: String): ArtistUiModel =
+    suspend fun lookupArtist(artistId: String): ArtistListItemModel =
         repository.lookupArtist(artistId)
 }

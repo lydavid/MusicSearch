@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.mbjc.ui.recording.RecordingCard
+import ly.david.mbjc.ui.recording.RecordingListItem
 
 @Composable
 internal fun RecordingsListScreen(
@@ -26,7 +26,7 @@ internal fun RecordingsListScreen(
     ) { recordingListItemModel: RecordingListItemModel? ->
         when (recordingListItemModel) {
             is RecordingListItemModel -> {
-                RecordingCard(recording = recordingListItemModel) {
+                RecordingListItem(recording = recordingListItemModel) {
                     onRecordingClick(id, getNameWithDisambiguation())
                 }
             }

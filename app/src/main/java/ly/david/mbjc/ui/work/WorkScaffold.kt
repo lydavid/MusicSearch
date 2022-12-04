@@ -19,9 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RecordingListItemModel
-import ly.david.data.domain.UiModel
-import ly.david.data.domain.WorkUiModel
+import ly.david.data.domain.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
@@ -56,7 +56,7 @@ internal fun WorkScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(WorkTab.RELATIONSHIPS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var work: WorkUiModel? by remember { mutableStateOf(null) }
+    var work: WorkListItemModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation
@@ -64,11 +64,11 @@ internal fun WorkScaffold(
 
     LaunchedEffect(key1 = workId) {
         try {
-            val workUiModel = viewModel.lookupWorkThenLoadRelations(workId)
+            val workListItemModel = viewModel.lookupWorkThenLoadRelations(workId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = workUiModel.getNameWithDisambiguation()
+                titleState = workListItemModel.getNameWithDisambiguation()
             }
-            work = workUiModel
+            work = workListItemModel
 
         } catch (ex: Exception) {
             Log.d("Remove This", "WorkScaffold: $ex")
@@ -108,7 +108,7 @@ internal fun WorkScaffold(
     ) { innerPadding ->
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 

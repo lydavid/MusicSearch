@@ -20,8 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.AreaScaffoldModel
+import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.UiModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
@@ -72,7 +72,7 @@ internal fun AreaScaffold(
         rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
             .collectAsLazyPagingItems()
 
-    val relationsLazyPagingItems: LazyPagingItems<UiModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+    val relationsLazyPagingItems: LazyPagingItems<ListItemModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
         .collectAsLazyPagingItems()
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
@@ -132,7 +132,7 @@ private fun AreaScaffold(
     title: String,
     tabs: List<AreaTab>,
     releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
-    relationsLazyPagingItems: LazyPagingItems<UiModel>,
+    relationsLazyPagingItems: LazyPagingItems<ListItemModel>,
     showReleases: Boolean,
     onUpdateQuery: (String) -> Unit,
     loadReleases: () -> Unit,

@@ -13,7 +13,7 @@ data class RecordingListItemModel(
     override val length: Int? = null,
     override val video: Boolean = false,
     val formattedArtistCredits: String? = null,
-) : UiModel(), Recording
+) : ListItemModel(), Recording
 
 // Only used for search screen where we don't commit to inserting every search result
 fun RecordingMusicBrainzModel.toRecordingListItemModel() = RecordingListItemModel(

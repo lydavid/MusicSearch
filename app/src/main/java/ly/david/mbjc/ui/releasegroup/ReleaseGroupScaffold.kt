@@ -21,9 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.ReleaseGroupUiModel
+import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -66,7 +66,7 @@ internal fun ReleaseGroupScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var releaseGroup: ReleaseGroupUiModel? by remember { mutableStateOf(null) }
+    var releaseGroup: ReleaseGroupListItemModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         title = titleWithDisambiguation
@@ -74,12 +74,12 @@ internal fun ReleaseGroupScaffold(
 
     LaunchedEffect(key1 = releaseGroupId) {
         try {
-            val releaseGroupUiModel = viewModel.lookupReleaseGroup(releaseGroupId)
+            val releaseGroupListItemModel = viewModel.lookupReleaseGroup(releaseGroupId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
-                title = releaseGroupUiModel.getNameWithDisambiguation()
+                title = releaseGroupListItemModel.getNameWithDisambiguation()
             }
-            subtitle = "Release Group by ${releaseGroupUiModel.artistCredits.getDisplayNames()}"
-            releaseGroup = releaseGroupUiModel
+            subtitle = "Release Group by ${releaseGroupListItemModel.artistCredits.getDisplayNames()}"
+            releaseGroup = releaseGroupListItemModel
 
             viewModel.loadReleases(releaseGroupId)
         } catch (ex: Exception) {
@@ -142,7 +142,7 @@ internal fun ReleaseGroupScaffold(
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 

@@ -6,7 +6,7 @@ import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.persistence.place.PlaceRoomModel
 
-data class PlaceUiModel(
+data class PlaceListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,
@@ -17,10 +17,10 @@ data class PlaceUiModel(
     override val lifeSpan: LifeSpan? = null,
 
     val area: AreaListItemModel? = null,
-) : Place, UiModel()
+) : Place, ListItemModel()
 
-internal fun PlaceMusicBrainzModel.toPlaceUiModel() =
-    PlaceUiModel(
+internal fun PlaceMusicBrainzModel.toPlaceListItemModel() =
+    PlaceListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -31,10 +31,10 @@ internal fun PlaceMusicBrainzModel.toPlaceUiModel() =
         area = area?.toAreaListItemModel()
     )
 
-internal fun PlaceRoomModel.toPlaceUiModel(
+internal fun PlaceRoomModel.toPlaceListItemModel(
     area: AreaListItemModel? = null
 ) =
-    PlaceUiModel(
+    PlaceListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,

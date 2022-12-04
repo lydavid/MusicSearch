@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.WorkUiModel
+import ly.david.data.domain.WorkListItemModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -31,7 +31,7 @@ internal class WorkViewModel @Inject constructor(
         recordingsList.repository = repository
     }
 
-    suspend fun lookupWorkThenLoadRelations(workId: String): WorkUiModel {
+    suspend fun lookupWorkThenLoadRelations(workId: String): WorkListItemModel {
         return repository.lookupWork(
             workId = workId,
             hasRelationsBeenStored = { hasRelationsBeenStored() },

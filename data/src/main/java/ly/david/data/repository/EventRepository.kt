@@ -3,8 +3,8 @@ package ly.david.data.repository
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.Event
-import ly.david.data.domain.EventUiModel
-import ly.david.data.domain.toEventUiModel
+import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.toEventListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.event.EventDao
@@ -22,16 +22,16 @@ class EventRepository @Inject constructor(
     private val relationDao: RelationDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
-    private var event: EventUiModel? = null
+    private var event: EventListItemModel? = null
 
-    suspend fun lookupEvent(eventId: String): EventUiModel =
+    suspend fun lookupEvent(eventId: String): EventListItemModel =
         event ?: run {
 
             // Use cached model.
             val eventRoomModel = eventDao.getEvent(eventId)
             if (eventRoomModel != null) {
                 incrementOrInsertLookupHistory(eventRoomModel)
-                return eventRoomModel.toEventUiModel()
+                return eventRoomModel.toEventListItemModel()
             }
 
             val eventMusicBrainzModel = musicBrainzApiService.lookupEvent(eventId)
@@ -49,7 +49,7 @@ class EventRepository @Inject constructor(
             relationDao.insertAll(eventRelations)
 
             incrementOrInsertLookupHistory(eventMusicBrainzModel)
-            eventMusicBrainzModel.toEventUiModel()
+            eventMusicBrainzModel.toEventListItemModel()
         }
 
     private suspend fun incrementOrInsertLookupHistory(event: Event) {

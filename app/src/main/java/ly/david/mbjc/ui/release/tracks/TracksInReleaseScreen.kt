@@ -27,8 +27,8 @@ import coil.size.Size
 import ly.david.data.common.useHttps
 import ly.david.data.domain.Header
 import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.TrackUiModel
-import ly.david.data.domain.UiModel
+import ly.david.data.domain.TrackListItemModel
+import ly.david.data.domain.ListItemModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
@@ -44,7 +44,7 @@ internal fun TracksInReleaseScreen(
     coverArtUrl: String = "",
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    lazyPagingItems: LazyPagingItems<UiModel>,
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
 
@@ -66,8 +66,8 @@ internal fun TracksInReleaseScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { uiModel: UiModel? ->
-        when (uiModel) {
+    ) { listItemModel: ListItemModel? ->
+        when (listItemModel) {
             is Header -> {
                 if (coverArtUrl.isNotEmpty()) {
 
@@ -104,15 +104,15 @@ internal fun TracksInReleaseScreen(
                     }
                 }
             }
-            is TrackUiModel -> {
-                TrackCard(
-                    track = uiModel,
+            is TrackListItemModel -> {
+                TrackListItem(
+                    track = listItemModel,
 //                            showTrackArtists = shouldShowTrackArtists,
                     onRecordingClick = onRecordingClick
                 )
             }
             is ListSeparator -> {
-                ListSeparatorHeader(text = uiModel.text)
+                ListSeparatorHeader(text = listItemModel.text)
             }
             else -> {
                 // Do nothing.

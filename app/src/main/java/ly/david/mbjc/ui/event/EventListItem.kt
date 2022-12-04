@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ly.david.data.domain.EventUiModel
+import ly.david.data.domain.EventListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -18,9 +18,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 
 // TODO: pretty up
 @Composable
-internal fun EventCard(
-    event: EventUiModel,
-    onEventClick: EventUiModel.() -> Unit = {}
+internal fun EventListItem(
+    event: EventListItemModel,
+    onEventClick: EventListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onEventClick(event) },
@@ -43,8 +43,8 @@ internal fun EventCard(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            EventCard(
-                event = EventUiModel(
+            EventListItem(
+                event = EventListItemModel(
                     id = "1",
                     name = "event name",
                     disambiguation = "that one",

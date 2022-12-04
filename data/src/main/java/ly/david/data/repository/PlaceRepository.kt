@@ -3,8 +3,8 @@ package ly.david.data.repository
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.Place
-import ly.david.data.domain.PlaceUiModel
-import ly.david.data.domain.toPlaceUiModel
+import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.toPlaceListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.history.LookupHistory
@@ -22,16 +22,16 @@ class PlaceRepository @Inject constructor(
     private val relationDao: RelationDao,
     private val lookupHistoryDao: LookupHistoryDao
 ) {
-    private var place: PlaceUiModel? = null
+    private var place: PlaceListItemModel? = null
 
-    suspend fun lookupPlace(placeId: String): PlaceUiModel =
+    suspend fun lookupPlace(placeId: String): PlaceListItemModel =
         place ?: run {
 
             // Use cached model.
             val placeRoomModel = placeDao.getPlace(placeId)
             if (placeRoomModel != null) {
                 incrementOrInsertLookupHistory(placeRoomModel)
-                return placeRoomModel.toPlaceUiModel()
+                return placeRoomModel.toPlaceListItemModel()
             }
 
             val placeMusicBrainzModel = musicBrainzApiService.lookupPlace(placeId)
@@ -51,7 +51,7 @@ class PlaceRepository @Inject constructor(
             relationDao.insertAll(relations)
 
             incrementOrInsertLookupHistory(placeMusicBrainzModel)
-            placeMusicBrainzModel.toPlaceUiModel()
+            placeMusicBrainzModel.toPlaceListItemModel()
         }
 
     private suspend fun incrementOrInsertLookupHistory(place: Place) {

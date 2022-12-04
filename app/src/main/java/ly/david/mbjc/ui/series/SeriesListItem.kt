@@ -13,16 +13,16 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.SeriesUiModel
+import ly.david.data.domain.SeriesListItemModel
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun SeriesCard(
-    series: SeriesUiModel,
-    onSeriesClick: SeriesUiModel.() -> Unit = {}
+internal fun SeriesListItem(
+    series: SeriesListItemModel,
+    onSeriesClick: SeriesListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onSeriesClick(series) },
@@ -57,23 +57,23 @@ internal fun SeriesCard(
 }
 
 // region Previews
-internal class SeriesPreviewParameterProvider : PreviewParameterProvider<SeriesUiModel> {
+internal class SeriesPreviewParameterProvider : PreviewParameterProvider<SeriesListItemModel> {
     override val values = sequenceOf(
-        SeriesUiModel(
+        SeriesListItemModel(
             id = "1",
             name = "series name",
         ),
-        SeriesUiModel(
+        SeriesListItemModel(
             id = "1",
             name = "series name",
             disambiguation = "that one",
         ),
-        SeriesUiModel(
+        SeriesListItemModel(
             id = "1",
             name = "series name",
             type = "Tour",
         ),
-        SeriesUiModel(
+        SeriesListItemModel(
             id = "1",
             name = "series name",
             disambiguation = "that one",
@@ -86,11 +86,11 @@ internal class SeriesPreviewParameterProvider : PreviewParameterProvider<SeriesU
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun Preview(
-    @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesUiModel
+    @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesListItemModel
 ) {
     PreviewTheme {
         Surface {
-            SeriesCard(series = series)
+            SeriesListItem(series = series)
         }
     }
 }

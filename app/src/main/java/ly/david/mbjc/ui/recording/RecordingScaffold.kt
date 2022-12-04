@@ -21,9 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RecordingScaffoldModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.UiModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -69,12 +69,12 @@ internal fun RecordingScaffold(
 
     LaunchedEffect(key1 = recordingId) {
         try {
-            val recordingUiModel = viewModel.lookupRecording(recordingId)
+            val recordingScaffoldModel = viewModel.lookupRecording(recordingId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = recordingUiModel.getNameWithDisambiguation()
+                titleState = recordingScaffoldModel.getNameWithDisambiguation()
             }
-            subtitleState = "Recording by ${recordingUiModel.artistCredits.getDisplayNames()}"
-            recording = recordingUiModel
+            subtitleState = "Recording by ${recordingScaffoldModel.artistCredits.getDisplayNames()}"
+            recording = recordingScaffoldModel
 
             viewModel.loadReleases(resourceId = recordingId)
 
@@ -132,7 +132,7 @@ internal fun RecordingScaffold(
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<UiModel> =
+        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 

@@ -3,8 +3,8 @@ package ly.david.data.repository
 import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.domain.WorkUiModel
-import ly.david.data.domain.toWorkUiModel
+import ly.david.data.domain.WorkListItemModel
+import ly.david.data.domain.toWorkListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.WORK_INC_DEFAULT
@@ -35,10 +35,10 @@ class WorkRepository @Inject constructor(
         forceRefresh: Boolean = false,
         hasRelationsBeenStored: suspend () -> Boolean,
         markResourceHasRelations: suspend () -> Unit
-    ): WorkUiModel {
+    ): WorkListItemModel {
         val workRoomModel = workDao.getWork(workId)
         if (!forceRefresh && workRoomModel != null && hasRelationsBeenStored()) {
-            return workRoomModel.toWorkUiModel()
+            return workRoomModel.toWorkListItemModel()
         }
 
         val workMusicBrainzModel = musicBrainzApiService.lookupWork(
@@ -58,7 +58,7 @@ class WorkRepository @Inject constructor(
         markResourceHasRelations()
 
         workDao.insert(workMusicBrainzModel.toWorkRoomModel())
-        return workMusicBrainzModel.toWorkUiModel()
+        return workMusicBrainzModel.toWorkListItemModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

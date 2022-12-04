@@ -12,7 +12,7 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
  * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
  */
 //@Immutable
-data class ReleaseGroupUiModel(
+data class ReleaseGroupListItemModel(
     override val id: String,
     override val name: String,
     override val firstReleaseDate: String = "",
@@ -24,10 +24,10 @@ data class ReleaseGroupUiModel(
     override val secondaryTypes: List<String>? = null,
 
     val artistCredits: List<ArtistCreditUiModel> = listOf()
-) : UiModel(), ReleaseGroup
+) : ListItemModel(), ReleaseGroup
 
-fun ReleaseGroupMusicBrainzModel.toUiModel(): ReleaseGroupUiModel {
-    return ReleaseGroupUiModel(
+fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
+    return ReleaseGroupListItemModel(
         id = id,
         name = name,
         firstReleaseDate = firstReleaseDate,
@@ -36,12 +36,12 @@ fun ReleaseGroupMusicBrainzModel.toUiModel(): ReleaseGroupUiModel {
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
 
-        artistCredits = artistCredits.toUiModels()
+        artistCredits = artistCredits.toArtistCreditUiModels()
     )
 }
 
-fun ReleaseGroupRoomModel.toUiModel(): ReleaseGroupUiModel {
-    return ReleaseGroupUiModel(
+fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
+    return ReleaseGroupListItemModel(
         id = id,
         name = name,
         firstReleaseDate = firstReleaseDate,
@@ -51,8 +51,8 @@ fun ReleaseGroupRoomModel.toUiModel(): ReleaseGroupUiModel {
     )
 }
 
-fun ReleaseGroupWithArtistCredits.toUiModel(): ReleaseGroupUiModel {
-    return ReleaseGroupUiModel(
+fun ReleaseGroupWithArtistCredits.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
+    return ReleaseGroupListItemModel(
         id = releaseGroup.id,
         name = releaseGroup.name,
         firstReleaseDate = releaseGroup.firstReleaseDate,
@@ -62,7 +62,7 @@ fun ReleaseGroupWithArtistCredits.toUiModel(): ReleaseGroupUiModel {
         secondaryTypes = releaseGroup.secondaryTypes,
 
         artistCredits = artistCreditNamesWithResources.map {
-            it.artistCreditNameRoomModel.toUiModel()
+            it.artistCreditNameRoomModel.toArtistCreditUiModel()
         }
     )
 }

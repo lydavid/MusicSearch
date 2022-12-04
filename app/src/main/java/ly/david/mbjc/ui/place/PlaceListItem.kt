@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.LifeSpan
-import ly.david.data.domain.PlaceUiModel
+import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.common.ClickableListItem
@@ -21,9 +21,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
-internal fun PlaceCard(
-    place: PlaceUiModel,
-    onPlaceClick: PlaceUiModel.() -> Unit = {}
+internal fun PlaceListItem(
+    place: PlaceListItemModel,
+    onPlaceClick: PlaceListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onPlaceClick(place) },
@@ -69,14 +69,14 @@ internal fun PlaceCard(
 }
 
 // Cannot be private.
-internal class PlaceCardPreviewParameterProvider : PreviewParameterProvider<PlaceUiModel> {
+internal class PlaceCardPreviewParameterProvider : PreviewParameterProvider<PlaceListItemModel> {
     override val values = sequenceOf(
-        PlaceUiModel(
+        PlaceListItemModel(
             id = "2",
             name = "Place Name",
             address = "123 Fake St"
         ),
-        PlaceUiModel(
+        PlaceListItemModel(
             id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
             name = "Sony Music Studios",
             disambiguation = "NYC, closed 2007",
@@ -84,7 +84,7 @@ internal class PlaceCardPreviewParameterProvider : PreviewParameterProvider<Plac
             address = "460 W. 54th St., at 10th Avenue, Manhatten, NY",
             lifeSpan = LifeSpan(begin = "1993", end = "2007-08", ended = true)
         ),
-        PlaceUiModel(
+        PlaceListItemModel(
             id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             name = "日本武道館",
             type = "Indoor arena",
@@ -98,11 +98,11 @@ internal class PlaceCardPreviewParameterProvider : PreviewParameterProvider<Plac
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun PlaceCardPreview(
-    @PreviewParameter(PlaceCardPreviewParameterProvider::class) place: PlaceUiModel
+    @PreviewParameter(PlaceCardPreviewParameterProvider::class) place: PlaceListItemModel
 ) {
     PreviewTheme {
         Surface {
-            PlaceCard(place)
+            PlaceListItem(place)
         }
     }
 }

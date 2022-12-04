@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun LabelCard(
+internal fun LabelListItem(
     label: LabelListItemModel,
     onLabelClick: LabelListItemModel.() -> Unit = {}
 ) {
@@ -114,7 +114,7 @@ private fun Preview(
 ) {
     PreviewTheme {
         Surface {
-            LabelCard(label)
+            LabelListItem(label)
         }
     }
 }

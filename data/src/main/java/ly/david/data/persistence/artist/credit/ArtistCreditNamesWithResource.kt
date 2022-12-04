@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 import androidx.room.Embedded
 import ly.david.data.domain.ArtistCreditUiModel
-import ly.david.data.domain.toUiModel
+import ly.david.data.domain.toArtistCreditUiModel
 
 @DatabaseView(
     """
@@ -23,7 +23,7 @@ data class ArtistCreditNamesWithResource(
     val artistCreditNameRoomModel: ArtistCreditNameRoomModel,
 )
 
-fun List<ArtistCreditNamesWithResource>.toUiModels(): List<ArtistCreditUiModel> =
+fun List<ArtistCreditNamesWithResource>.toArtistCreditUiModels(): List<ArtistCreditUiModel> =
     map {
-        it.artistCreditNameRoomModel.toUiModel()
+        it.artistCreditNameRoomModel.toArtistCreditUiModel()
     }

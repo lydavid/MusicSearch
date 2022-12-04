@@ -10,11 +10,11 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.ReleaseGroupUiModel
-import ly.david.data.domain.UiModel
+import ly.david.data.domain.ReleaseGroupListItemModel
+import ly.david.data.domain.ListItemModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.releasegroup.ReleaseGroupCard
+import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 
 @Composable
 internal fun ReleaseGroupsByArtistScreen(
@@ -25,8 +25,8 @@ internal fun ReleaseGroupsByArtistScreen(
     snackbarHostState: SnackbarHostState,
     onReleaseGroupClick: (String) -> Unit = {},
     lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<UiModel>,
-    onPagedReleaseGroupsChange: (Flow<PagingData<UiModel>>) -> Unit,
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    onPagedReleaseGroupsChange: (Flow<PagingData<ListItemModel>>) -> Unit,
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
 
@@ -43,15 +43,15 @@ internal fun ReleaseGroupsByArtistScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { uiModel: UiModel? ->
-        when (uiModel) {
-            is ReleaseGroupUiModel -> {
-                ReleaseGroupCard(releaseGroup = uiModel) {
+    ) { listItemModel: ListItemModel? ->
+        when (listItemModel) {
+            is ReleaseGroupListItemModel -> {
+                ReleaseGroupListItem(releaseGroup = listItemModel) {
                     onReleaseGroupClick(id)
                 }
             }
             is ListSeparator -> {
-                ListSeparatorHeader(text = uiModel.text)
+                ListSeparatorHeader(text = listItemModel.text)
             }
             else -> {
                 // Do nothing.

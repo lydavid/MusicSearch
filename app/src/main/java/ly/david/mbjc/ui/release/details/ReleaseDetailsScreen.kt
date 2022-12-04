@@ -29,7 +29,7 @@ import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.label.LabelCard
+import ly.david.mbjc.ui.label.LabelListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 // TODO: it lags when navigating to this tab
@@ -122,7 +122,7 @@ private fun ReleaseDetailsScreen(
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.labels))
                     it.forEach { label ->
-                        LabelCard(label = label, onLabelClick = onLabelClick)
+                        LabelListItem(label = label, onLabelClick = onLabelClick)
                     }
                 }
 

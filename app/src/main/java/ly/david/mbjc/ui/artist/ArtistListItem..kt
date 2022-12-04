@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.artist
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,7 +7,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -17,17 +15,19 @@ import androidx.constraintlayout.compose.Dimension
 import ly.david.data.LifeSpan
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.ArtistUiModel
+import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.getLifeSpanForDisplay
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
-internal fun ArtistCard(
-    artist: ArtistUiModel,
-    onArtistClick: ArtistUiModel.() -> Unit = {}
+internal fun ArtistListItem(
+    artist: ArtistListItemModel,
+    onArtistClick: ArtistListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onArtistClick(artist) },
@@ -120,15 +120,16 @@ internal fun ArtistCard(
     }
 }
 
-internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistUiModel> {
+@ExcludeFromJacocoGeneratedReport
+internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistListItemModel> {
     override val values = sequenceOf(
-        ArtistUiModel(
+        ArtistListItemModel(
             id = "1",
             name = "artist name",
             sortName = "sort name should not be seen",
             countryCode = "CA"
         ),
-        ArtistUiModel(
+        ArtistListItemModel(
             id = "2",
             type = "Group, but for some reason it is really long and wraps around the screen",
             name = "wow, this artist name is so long it will wrap around the screen",
@@ -140,7 +141,7 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistU
                 end = "2022-01-01"
             )
         ),
-        ArtistUiModel(
+        ArtistListItemModel(
             id = "3",
             name = "wow, this artist name is so long it will wrap around the screen",
             sortName = ""
@@ -148,15 +149,15 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistU
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ExcludeFromJacocoGeneratedReport
+@DefaultPreviews
 @Composable
-private fun ArtistCardPreview(
-    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistUiModel
+private fun Preview1(
+    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistListItemModel
 ) {
     PreviewTheme {
         Surface {
-            ArtistCard(artist)
+            ArtistListItem(artist)
         }
     }
 }

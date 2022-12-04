@@ -4,7 +4,7 @@ import ly.david.data.Relation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationRoomModel
 
-data class RelationUiModel(
+data class RelationListItemModel(
     override val linkedResourceId: String,
     override val label: String,
     override val name: String,
@@ -12,10 +12,10 @@ data class RelationUiModel(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedResource: MusicBrainzResource,
-) : UiModel(), Relation
+) : ListItemModel(), Relation
 
-fun RelationRoomModel.toRelationUiModel() =
-    RelationUiModel(
+fun RelationRoomModel.toRelationListItemModel() =
+    RelationListItemModel(
         linkedResourceId = linkedResourceId,
         linkedResource = linkedResource,
         label = label,

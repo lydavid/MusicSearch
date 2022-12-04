@@ -5,7 +5,7 @@ import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 // TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name
-data class WorkUiModel(
+data class WorkListItemModel(
     override val id: String,
     override val name: String,
     override val disambiguation: String? = null,
@@ -13,10 +13,10 @@ data class WorkUiModel(
 //    override val typeId: String? = null,
     override val language: String? = null,
 //    override val languages: List<String>? = null,
-) : Work, UiModel()
+) : Work, ListItemModel()
 
-internal fun WorkMusicBrainzModel.toWorkUiModel() =
-    WorkUiModel(
+internal fun WorkMusicBrainzModel.toWorkListItemModel() =
+    WorkListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
@@ -26,8 +26,8 @@ internal fun WorkMusicBrainzModel.toWorkUiModel() =
 //        languages = languages
     )
 
-internal fun WorkRoomModel.toWorkUiModel() =
-    WorkUiModel(
+internal fun WorkRoomModel.toWorkListItemModel() =
+    WorkListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
