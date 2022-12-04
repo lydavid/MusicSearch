@@ -17,36 +17,38 @@ data class AreaCardModel(
     val date: String? = null
 ) : Area, UiModel()
 
-internal fun AreaMusicBrainzModel.toCardModel() =
-    AreaCardModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        lifeSpan = lifeSpan,
-        iso_3166_1_codes = iso_3166_1_codes
-    )
+internal fun AreaMusicBrainzModel.toCardModel() = toCardModel(date = null)
 
-fun AreaRoomModel.toCardModel(iso_3166_1_codes: List<String>? = null) =
-    AreaCardModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        lifeSpan = lifeSpan,
-        iso_3166_1_codes = iso_3166_1_codes
-    )
+// TODO: move this to area subdir, then we won't need above
+internal fun AreaMusicBrainzModel.toCardModel(date: String? = null) = AreaCardModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    lifeSpan = lifeSpan,
+    iso_3166_1_codes = iso_3166_1_codes,
+    date = date
+)
 
-fun AreaWithReleaseDate.toCardModel() =
-    AreaCardModel(
-        id = area.id,
-        name = area.name,
-        disambiguation = area.disambiguation,
-        type = area.type,
-        lifeSpan = area.lifeSpan,
-        iso_3166_1_codes = countryCodes.map { it.code },
-        date = releaseCountry.date
-    )
+// TODO: use below mapper
+fun AreaRoomModel.toCardModel(iso_3166_1_codes: List<String>? = null) = AreaCardModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    lifeSpan = lifeSpan,
+    iso_3166_1_codes = iso_3166_1_codes
+)
+
+fun AreaWithReleaseDate.toCardModel() = AreaCardModel(
+    id = area.id,
+    name = area.name,
+    disambiguation = area.disambiguation,
+    type = area.type,
+    lifeSpan = area.lifeSpan,
+    iso_3166_1_codes = countryCodes.map { it.code },
+    date = releaseCountry.date
+)
 
 fun AreaCardModel.showReleases(): Boolean =
     type == AreaType.COUNTRY || name == AreaType.WORLDWIDE

@@ -5,7 +5,7 @@ import ly.david.data.getDisplayNames
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.persistence.recording.RecordingForListItem
 
-data class RecordingCardModel(
+data class RecordingListItemModel(
     override val id: String,
     override val name: String,
     override val date: String? = null,
@@ -16,7 +16,7 @@ data class RecordingCardModel(
 ) : UiModel(), Recording
 
 // Only used for search screen where we don't commit to inserting every search result
-fun RecordingMusicBrainzModel.toListItemModel() = RecordingCardModel(
+fun RecordingMusicBrainzModel.toListItemModel() = RecordingListItemModel(
     id = id,
     name = name,
     date = date,
@@ -26,7 +26,7 @@ fun RecordingMusicBrainzModel.toListItemModel() = RecordingCardModel(
     formattedArtistCredits = artistCredits.getDisplayNames()
 )
 
-fun RecordingForListItem.toListItemModel() = RecordingCardModel(
+fun RecordingForListItem.toListItemModel() = RecordingListItemModel(
     id = recording.id,
     name = recording.name,
     date = recording.date,

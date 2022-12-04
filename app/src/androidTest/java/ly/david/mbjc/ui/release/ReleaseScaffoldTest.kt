@@ -18,6 +18,7 @@ import ly.david.data.network.fakeArtistCredit2
 import ly.david.data.network.fakeLabel2
 import ly.david.data.network.fakeLabelInfo
 import ly.david.data.network.fakeRelease
+import ly.david.data.network.fakeReleaseEvent
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleaseWithRelation
 import ly.david.data.repository.ReleaseRepository
@@ -91,6 +92,12 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule
             .onNodeWithText(fakeLabel2.name)
             .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(fakeReleaseEvent.area!!.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(fakeReleaseEvent.date!!)
+            .assertIsDisplayed()
 
         // Confirm that up navigation items exists
         composeTestRule
@@ -148,7 +155,8 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
-    // TODO: seems like we haven't successfully replaced the injected loader
+    // TODO: with breakpoints we've confirmed that we've replaced the image loader
+    //  but we're probably running into suspend issues
 //    @Test
 //    fun firstTimeVisit_CoverArt() {
 //        setRelease(fakeReleaseWithCoverArt)

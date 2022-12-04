@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.toDisplayTime
-import ly.david.data.domain.RecordingCardModel
+import ly.david.data.domain.RecordingListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -23,8 +23,8 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 @Composable
 internal fun RecordingCard(
-    recording: RecordingCardModel,
-    onRecordingClick: RecordingCardModel.() -> Unit = {}
+    recording: RecordingListItemModel,
+    onRecordingClick: RecordingListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onRecordingClick(recording) },
@@ -47,13 +47,13 @@ internal fun RecordingCard(
 
 // region Previews
 @ExcludeFromJacocoGeneratedReport
-internal class RecordingPreviewParameterProvider : PreviewParameterProvider<RecordingCardModel> {
+internal class RecordingPreviewParameterProvider : PreviewParameterProvider<RecordingListItemModel> {
     override val values = sequenceOf(
-        RecordingCardModel(
+        RecordingListItemModel(
             id = "1",
             name = "Recording name",
         ),
-        RecordingCardModel(
+        RecordingListItemModel(
             id = "2",
             name = "Recording name",
             date = "2022-05-23",
@@ -69,7 +69,7 @@ internal class RecordingPreviewParameterProvider : PreviewParameterProvider<Reco
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingCardModel
+    @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingListItemModel
 ) {
     PreviewTheme {
         Surface {

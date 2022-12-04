@@ -1,8 +1,13 @@
 package ly.david.data.domain
 
+import ly.david.data.AreaType
 import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
+import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
+import ly.david.data.network.getFormatsForDisplay
+import ly.david.data.network.getTracksForDisplay
+import ly.david.data.network.toListItemModels
 import ly.david.data.persistence.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
@@ -38,8 +43,8 @@ internal fun ReleaseWithAllData.toScaffoldModel() = ReleaseScaffoldModel(
     name = release.name,
     disambiguation = release.disambiguation,
     date = release.date,
-    status = release.status,
     barcode = release.barcode,
+    status = release.status,
     statusId = release.statusId,
     countryCode = release.countryCode,
     packaging = release.packaging,
@@ -57,4 +62,30 @@ internal fun ReleaseWithAllData.toScaffoldModel() = ReleaseScaffoldModel(
     },
     releaseGroup = releaseGroup?.toUiModel(),
     labels = labels.map { it.toCardModel() }
+)
+
+internal fun ReleaseMusicBrainzModel.toScaffoldModel() = ReleaseScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    date = date,
+    barcode = barcode,
+    status = status,
+    statusId = statusId,
+    countryCode = countryCode,
+    packaging = packaging,
+    packagingId = packagingId,
+    asin = asin,
+    quality = quality,
+    coverArtArchive = coverArtArchive,
+    textRepresentation = textRepresentation,
+    formattedFormats = media.getFormatsForDisplay(),
+    formattedTracks = media.getTracksForDisplay(),
+    coverArtUrl = null,
+    areas = releaseEvents?.mapNotNull {
+        it.area?.toCardModel(it.date)?.copy(type = AreaType.COUNTRY)
+    }.orEmpty(),
+    artistCredits = artistCredits.toUiModels(),
+    releaseGroup = releaseGroup?.toUiModel(),
+    labels = labelInfoList?.toListItemModels().orEmpty()
 )

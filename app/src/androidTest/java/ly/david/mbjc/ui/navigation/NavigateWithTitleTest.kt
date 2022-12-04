@@ -32,8 +32,6 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
                 listOf(
                     MusicBrainzResource.URL,
                     MusicBrainzResource.SERIES,
-                    // TODO: failing for release
-                    MusicBrainzResource.RELEASE
                 ).contains(it)
             }
         }

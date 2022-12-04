@@ -1,15 +1,17 @@
 package ly.david.data.network
 
+val fakeReleaseEvent = ReleaseEvent(
+    area = fakeCountry,
+    date = "2022-10-29"
+)
+
 val fakeRelease = ReleaseMusicBrainzModel(
     id = "fakeRelease1",
     name = "Release Name",
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
     releaseGroup = fakeReleaseGroup,
     releaseEvents = listOf(
-        ReleaseEvent(
-            area = fakeCountry,
-            date = "2022-10-29"
-        )
+        fakeReleaseEvent
     ),
     media = listOf(fakeMedia),
     labelInfoList = listOf(

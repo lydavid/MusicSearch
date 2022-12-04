@@ -35,7 +35,7 @@ class RecordingRepository @Inject constructor(
 
         val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)
         recordingDao.insertRecordingWithArtistCredits(recordingMusicBrainzModel)
-        return lookupRecording(recordingId)
+        return recordingMusicBrainzModel.toScaffoldModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

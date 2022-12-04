@@ -8,8 +8,8 @@ import ly.david.data.domain.toScaffoldModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.toLabelRoomModels
 import ly.david.data.network.toReleaseLabels
+import ly.david.data.network.toRoomModels
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.area.getAreaCountryCodes
@@ -24,6 +24,7 @@ import ly.david.data.persistence.release.toMediumRoomModel
 import ly.david.data.persistence.release.toTrackRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
+// TODO: move back to ui folder
 @Singleton
 class ReleaseRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
@@ -64,7 +65,7 @@ class ReleaseRepository @Inject constructor(
         releaseDao.insertReleaseWithArtistCredits(releaseMusicBrainzModel)
 
         // TODO: transaction
-        labelDao.insertAll(releaseMusicBrainzModel.labelInfoList?.toLabelRoomModels().orEmpty())
+        labelDao.insertAll(releaseMusicBrainzModel.labelInfoList?.toRoomModels().orEmpty())
         releasesLabelsDao.insertAll(
             releaseMusicBrainzModel.labelInfoList?.toReleaseLabels(releaseId = releaseId).orEmpty()
         )
@@ -88,7 +89,7 @@ class ReleaseRepository @Inject constructor(
             }.orEmpty()
         )
 
-        return getRelease(releaseId)
+        return releaseMusicBrainzModel.toScaffoldModel()
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

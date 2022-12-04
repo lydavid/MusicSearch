@@ -4,7 +4,8 @@ import ly.david.data.ArtistCreditName
 import ly.david.data.network.ArtistCreditMusicBrainzModel
 import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
 
-// TODO: position unused since we fetch these ordered
+// This will continue to use the term UiModel because these are not meant to appear as list items
+// But they are list items when appearing in subtitle...
 data class ArtistCreditUiModel(
     val artistId: String,
     override val name: String,
