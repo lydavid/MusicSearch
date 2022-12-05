@@ -109,8 +109,9 @@ internal class ReleaseViewModel @Inject constructor(
                         track.toTrackListItemModel()
                     }.insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
-                            // TODO: possible race condition: sometimes crashes here with null medium
-                            val medium: MediumRoomModel = mediumDao.getMediumForTrack(after.id)
+                            val medium: MediumRoomModel =
+                                mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
+
                             ListSeparator(
                                 text = medium.format.orEmpty() +
                                     (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
