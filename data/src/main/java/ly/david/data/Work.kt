@@ -9,4 +9,6 @@ internal interface Work: NameWithDisambiguation {
 //    val typeId: String?
     val language: String?
 //    val languages: List<String>?
+
+    val iswcs: List<String>?
 }

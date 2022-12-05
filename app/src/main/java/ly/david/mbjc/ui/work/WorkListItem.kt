@@ -8,11 +8,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import java.util.Locale
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.WorkListItemModel
-import ly.david.data.getNameWithDisambiguation
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun WorkListItem(
@@ -27,15 +31,43 @@ internal fun WorkListItem(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            // TODO: writers, artists, iswc
-            Text(text = work.getNameWithDisambiguation())
+            Text(
+                text = work.name,
+                style = TextStyles.getCardTitleTextStyle(),
+            )
+            work.disambiguation.ifNotNullOrEmpty {
+                Text(
+                    text = "($it)",
+                    style = TextStyles.getCardBodyTextStyle(),
+                    color = getSubTextColor()
+                )
+            }
+            work.iswcs?.ifNotNullOrEmpty {
+                Text(
+                    text = it.joinToString("\n"),
+                    style = TextStyles.getCardBodySubTextStyle()
+                )
+            }
+            work.type?.let {
+                Text(
+                    text = it,
+                    style = TextStyles.getCardBodyTextStyle()
+                )
+            }
+            work.language?.ifNotNullOrEmpty {
+                Text(
+                    text = Locale(it).displayLanguage,
+                    style = TextStyles.getCardBodyTextStyle()
+                )
+            }
 
-            Text(text = work.language.orEmpty())
-            Text(text = work.type.orEmpty())
+            // TODO: writers, artists
+
         }
     }
 }
 
+@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

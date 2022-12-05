@@ -10,9 +10,8 @@ data class WorkListItemModel(
     override val name: String,
     override val disambiguation: String? = null,
     override val type: String? = null,
-//    override val typeId: String? = null,
     override val language: String? = null,
-//    override val languages: List<String>? = null,
+    override val iswcs: List<String>? = null
 ) : Work, ListItemModel()
 
 internal fun WorkMusicBrainzModel.toWorkListItemModel() =
@@ -21,9 +20,8 @@ internal fun WorkMusicBrainzModel.toWorkListItemModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
-//        typeId = typeId,
         language = language,
-//        languages = languages
+        iswcs = iswcs
     )
 
 internal fun WorkRoomModel.toWorkListItemModel() =
@@ -32,7 +30,6 @@ internal fun WorkRoomModel.toWorkListItemModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
-//        typeId = typeId,
         language = language,
-//        languages = languages
+        iswcs = iswcs
     )

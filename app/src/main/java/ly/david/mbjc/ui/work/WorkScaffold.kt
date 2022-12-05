@@ -26,17 +26,19 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.paging.RecordingsListScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 
 private enum class WorkTab(@StringRes val titleRes: Int) {
+    DETAILS(R.string.details),
     RELATIONSHIPS(R.string.relationships),
     RECORDINGS(R.string.recordings),
-    DETAILS(R.string.details),
     STATS(R.string.stats)
 }
 
@@ -53,7 +55,7 @@ internal fun WorkScaffold(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var titleState by rememberSaveable { mutableStateOf("") }
-    var selectedTab by rememberSaveable { mutableStateOf(WorkTab.RELATIONSHIPS) }
+    var selectedTab by rememberSaveable { mutableStateOf(WorkTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var work: WorkListItemModel? by remember { mutableStateOf(null) }
@@ -64,7 +66,7 @@ internal fun WorkScaffold(
 
     LaunchedEffect(key1 = workId) {
         try {
-            val workListItemModel = viewModel.lookupWorkThenLoadRelations(workId)
+            val workListItemModel = viewModel.lookupWork(workId)
             if (titleWithDisambiguation.isNullOrEmpty()) {
                 titleState = workListItemModel.getNameWithDisambiguation()
             }
@@ -118,7 +120,17 @@ internal fun WorkScaffold(
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
+            WorkTab.DETAILS -> {
+                val workListItemModel = work
+                if (workListItemModel == null) {
+                    FullScreenLoadingIndicator()
+                } else {
+                    WorkDetailsScreen(work = workListItemModel)
+                }
+            }
             WorkTab.RELATIONSHIPS -> {
+                viewModel.loadRelations(workId)
+
                 RelationsScreen(
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
@@ -139,9 +151,6 @@ internal fun WorkScaffold(
                         onItemClick(Destination.LOOKUP_RECORDING, id, title)
                     }
                 )
-            }
-            WorkTab.DETAILS -> {
-
             }
             WorkTab.STATS -> {
 

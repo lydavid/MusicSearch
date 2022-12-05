@@ -31,13 +31,11 @@ internal class WorkViewModel @Inject constructor(
         recordingsList.repository = repository
     }
 
-    suspend fun lookupWorkThenLoadRelations(workId: String): WorkListItemModel {
+    suspend fun lookupWork(workId: String): WorkListItemModel {
         return repository.lookupWork(
             workId = workId,
             hasRelationsBeenStored = { hasRelationsBeenStored() },
             markResourceHasRelations = { markResourceHasRelations() }
-        ).also {
-            loadRelations(it.id)
-        }
+        )
     }
 }
