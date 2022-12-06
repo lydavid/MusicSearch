@@ -146,7 +146,9 @@ internal fun SearchMusicBrainzScreen(
                     }
                 },
                 onValueChange = { newText ->
-                    text = newText
+                    if (!newText.contains("\n")) {
+                        text = newText
+                    }
                 }
             )
 
