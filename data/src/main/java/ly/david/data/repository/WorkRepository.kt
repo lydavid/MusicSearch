@@ -14,8 +14,6 @@ import ly.david.data.persistence.recording.RecordingForListItem
 import ly.david.data.persistence.recording.toRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.relation.RelationRoomModel
-import ly.david.data.persistence.relation.toRelationRoomModel
 import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.RecordingsWorksDao
 import ly.david.data.persistence.work.WorkDao
@@ -32,31 +30,13 @@ class WorkRepository @Inject constructor(
 
     suspend fun lookupWork(
         workId: String,
-        forceRefresh: Boolean = false,
-        hasRelationsBeenStored: suspend () -> Boolean,
-        markResourceHasRelations: suspend () -> Unit
     ): WorkListItemModel {
         val workRoomModel = workDao.getWork(workId)
-        if (!forceRefresh && workRoomModel != null && hasRelationsBeenStored()) {
+        if (workRoomModel != null) {
             return workRoomModel.toWorkListItemModel()
         }
 
-        val workMusicBrainzModel = musicBrainzApiService.lookupWork(
-            workId = workId,
-            include = WORK_INC_DEFAULT
-        )
-        val relations = mutableListOf<RelationRoomModel>()
-        workMusicBrainzModel.relations?.forEachIndexed { index, relationMusicBrainzModel ->
-            relationMusicBrainzModel.toRelationRoomModel(
-                resourceId = workId,
-                order = index
-            )?.let { relationRoomModel ->
-                relations.add(relationRoomModel)
-            }
-        }
-        relationDao.insertAll(relations)
-        markResourceHasRelations()
-
+        val workMusicBrainzModel = musicBrainzApiService.lookupWork(workId = workId)
         workDao.insert(workMusicBrainzModel.toWorkRoomModel())
         return workMusicBrainzModel.toWorkListItemModel()
     }
@@ -84,7 +64,11 @@ class WorkRepository @Inject constructor(
                 )
             )
         } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RECORDING, response.recordings.size)
+            relationDao.incrementLocalCountForResource(
+                resourceId,
+                MusicBrainzResource.RECORDING,
+                response.recordings.size
+            )
         }
 
         val recordingMusicBrainzModels = response.recordings

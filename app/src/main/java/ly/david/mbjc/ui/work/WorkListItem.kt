@@ -61,8 +61,11 @@ internal fun WorkListItem(
                 )
             }
 
-            // TODO: writers, artists
+            // TODO: writers
+            //  these come from relations
 
+            // TODO: artists
+            //  these are the artists from each recording
         }
     }
 }

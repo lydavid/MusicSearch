@@ -80,7 +80,7 @@ interface LookupApi {
     @GET("work/{workId}")
     suspend fun lookupWork(
         @Path("workId") workId: String,
-        @Query("inc") include: String = WORK_INC_DEFAULT
+        @Query("inc") include: String? = null
     ): WorkMusicBrainzModel
 
     // TODO: lookup with all rels might be a bit too much, especially since there's no pagination

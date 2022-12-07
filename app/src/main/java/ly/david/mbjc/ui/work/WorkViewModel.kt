@@ -31,11 +31,6 @@ internal class WorkViewModel @Inject constructor(
         recordingsList.repository = repository
     }
 
-    suspend fun lookupWork(workId: String): WorkListItemModel {
-        return repository.lookupWork(
-            workId = workId,
-            hasRelationsBeenStored = { hasRelationsBeenStored() },
-            markResourceHasRelations = { markResourceHasRelations() }
-        )
-    }
+    suspend fun lookupWork(workId: String): WorkListItemModel =
+        repository.lookupWork(workId)
 }
