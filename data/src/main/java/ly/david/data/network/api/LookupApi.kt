@@ -107,8 +107,7 @@ interface LookupApi {
     @GET("place/{placeId}")
     suspend fun lookupPlace(
         @Path("placeId") placeId: String,
-        @Query("inc") include: String = "place-rels"//"area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
-        //"+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
+        @Query("inc") include: String? = null
     ): PlaceMusicBrainzModel
 
     @GET("instrument/{instrumentId}")

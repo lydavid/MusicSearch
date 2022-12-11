@@ -109,6 +109,8 @@ internal fun WorkScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -125,7 +127,11 @@ internal fun WorkScaffold(
                 if (workListItemModel == null) {
                     FullScreenLoadingIndicator()
                 } else {
-                    WorkDetailsScreen(work = workListItemModel)
+                    WorkDetailsScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        work = workListItemModel,
+                        lazyListState = detailsLazyListState
+                    )
                 }
             }
             WorkTab.RELATIONSHIPS -> {

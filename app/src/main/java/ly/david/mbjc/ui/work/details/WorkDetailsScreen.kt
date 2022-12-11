@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
@@ -18,14 +19,18 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
 internal fun WorkDetailsScreen(
+    modifier: Modifier = Modifier,
     work: WorkListItemModel,
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
-    LazyColumn(state = lazyListState) {
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState
+    ) {
         item {
             work.run {
                 ListSeparatorHeader(text = stringResource(id = R.string.work_information))
-                type?.let {
+                type?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.type, text = it)
                 }
                 language?.ifNotNullOrEmpty {
