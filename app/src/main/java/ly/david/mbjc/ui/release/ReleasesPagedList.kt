@@ -20,27 +20,7 @@ import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.repository.ReleasesListRepository
-
-internal interface IReleasesList {
-    data class ViewModelState(
-        val resourceId: String = "",
-        val query: String = ""
-    )
-
-    val resourceId: MutableStateFlow<String>
-    val query: MutableStateFlow<String>
-    val paramState: Flow<ViewModelState>
-
-    fun loadReleases(resourceId: String) {
-        this.resourceId.value = resourceId
-    }
-
-    fun updateQuery(query: String) {
-        this.query.value = query
-    }
-
-    val pagedReleases: Flow<PagingData<ReleaseListItemModel>>
-}
+import ly.david.mbjc.ui.common.paging.PagedList
 
 /**
  * Generic implementation for handling paged releases.
@@ -49,32 +29,32 @@ internal interface IReleasesList {
  *
  * The ViewModel should should assign [scope] and [repository] in its init block.
  */
-internal class ReleasesList @Inject constructor() : IReleasesList {
+internal class ReleasesPagedList @Inject constructor() : PagedList<ReleaseListItemModel> {
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
     override val paramState = combine(resourceId, query) { resourceId, query ->
-        IReleasesList.ViewModelState(resourceId, query)
+        PagedList.ViewModelState(resourceId, query)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
     lateinit var repository: ReleasesListRepository
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedReleases: Flow<PagingData<ReleaseListItemModel>> by lazy {
+    override val pagedResources: Flow<PagingData<ReleaseListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getRemoteReleasesCountByResource(resourceId) },
-                        getLocalResourceCount = { repository.getLocalReleasesCountByResource(resourceId) },
-                        deleteLocalResource = { repository.deleteReleasesByResource(resourceId) },
+                        getRemoteResourceCount = { repository.getRemoteLinkedResourcesCountByResource(resourceId) },
+                        getLocalResourceCount = { repository.getLocalLinkedResourcesCountByResource(resourceId) },
+                        deleteLocalResource = { repository.deleteLinkedResourcesByResource(resourceId) },
                         browseResource = { offset ->
-                            repository.browseReleasesAndStore(resourceId, offset)
+                            repository.browseLinkedResourcesAndStore(resourceId, offset)
                         }
                     ),
-                    pagingSourceFactory = { repository.getReleasesPagingSource(resourceId, query) }
+                    pagingSourceFactory = { repository.getLinkedResourcesPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toReleaseListItemModel()

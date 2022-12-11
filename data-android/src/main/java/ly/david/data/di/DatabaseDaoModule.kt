@@ -46,6 +46,9 @@ internal object DatabaseDaoModule {
     fun provideAreaDao(db: MusicBrainzDatabase) = db.getAreaDao()
 
     @Provides
+    fun provideAreaPlaceDao(db: MusicBrainzDatabase) = db.getAreaPlaceDao()
+
+    @Provides
     fun provideReleasesCountriesDao(db: MusicBrainzDatabase) = db.getReleasesCountriesDao()
 
     @Provides

@@ -16,20 +16,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.ReleaseListItemModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.paging.RelationsScreen
-import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 
 private enum class LabelTab(@StringRes val titleRes: Int) {
@@ -67,8 +70,6 @@ internal fun LabelScaffold(
             titleState = label.getNameWithDisambiguation()
         }
 
-        viewModel.loadReleases(labelId)
-
         if (!recordedLookup) {
             viewModel.recordLookupHistory(
                 resourceId = labelId,
@@ -96,15 +97,15 @@ internal fun LabelScaffold(
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
-                    viewModel.query.value = filterText
                 },
             )
         },
     ) { innerPadding ->
 
         val releasesLazyListState = rememberLazyListState()
+        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
@@ -114,14 +115,15 @@ internal fun LabelScaffold(
 
         when (selectedTab) {
             LabelTab.RELEASES -> {
-                ReleasesListScreen(
+                ReleasesByLabelScreen(
+                    labelId = labelId,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    lazyListState = releasesLazyListState,
-                    lazyPagingItems = releasesLazyPagingItems,
-                    onReleaseClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RELEASE, id, title)
-                    }
+                    releasesLazyListState = releasesLazyListState,
+                    releasesLazyPagingItems = releasesLazyPagingItems,
+                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    onReleaseClick = onItemClick,
+                    filterText = filterText
                 )
             }
             LabelTab.RELATIONSHIPS -> {

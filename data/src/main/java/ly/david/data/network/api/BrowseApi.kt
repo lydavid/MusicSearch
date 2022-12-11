@@ -1,6 +1,7 @@
 package ly.david.data.network.api
 
 import com.squareup.moshi.Json
+import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
@@ -17,6 +18,13 @@ internal const val LABELS = "labels"
  * This is the only type of request with pagination.
  */
 interface BrowseApi {
+
+    @GET("place")
+    suspend fun browsePlacesByArea(
+        @Query("area") areaId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowsePlacesResponse
 
     @GET("recording")
     suspend fun browseRecordingsByWork(
@@ -73,6 +81,12 @@ interface Browsable {
     val count: Int
     val offset: Int
 }
+
+data class BrowsePlacesResponse(
+    @Json(name = "place-count") val count: Int,
+    @Json(name = "place-offset") val offset: Int,
+    @Json(name = "places") val places: List<PlaceMusicBrainzModel>
+)
 
 data class BrowseRecordingsResponse(
     @Json(name = "recording-count") val count: Int,

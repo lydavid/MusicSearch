@@ -76,7 +76,7 @@ internal fun RecordingScaffold(
             subtitleState = "Recording by ${recordingScaffoldModel.artistCredits.getDisplayNames()}"
             recording = recordingScaffoldModel
 
-            viewModel.loadReleases(resourceId = recordingId)
+            viewModel.loadPagedResources(resourceId = recordingId)
 
             if (!recordedLookup) {
                 viewModel.recordLookupHistory(
@@ -128,7 +128,7 @@ internal fun RecordingScaffold(
 
         val releasesLazyListState = rememberLazyListState()
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+            rememberFlowWithLifecycleStarted(viewModel.pagedResources)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()

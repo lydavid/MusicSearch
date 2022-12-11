@@ -35,7 +35,7 @@ data class PlaceRoomModel(
     override val lifeSpan: LifeSpan?,
 ) : RoomModel, Place
 
-internal fun PlaceMusicBrainzModel.toPlaceRoomModel() =
+fun PlaceMusicBrainzModel.toPlaceRoomModel() =
     PlaceRoomModel(
         id = id,
         name = name,

@@ -4,6 +4,7 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import ly.david.data.persistence.area.AreaPlace
 import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.area.Iso3166_1
 import ly.david.data.persistence.area.ReleaseCountry
@@ -34,7 +35,7 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 68,
+    version = 69,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -53,6 +54,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         HasRelationsRoomModel::class,
         BrowseResourceCount::class,
 
+        AreaPlace::class,
         ArtistReleaseGroup::class,
         RecordingWork::class,
         ReleaseLabel::class,
@@ -127,6 +129,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 65, to = 66, spec = Migrations.DropReleasesArtists::class),
         AutoMigration(from = 66, to = 67, spec = Migrations.DropRecordingsArtists::class),
         AutoMigration(from = 67, to = 68),
+        AutoMigration(from = 68, to = 69),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

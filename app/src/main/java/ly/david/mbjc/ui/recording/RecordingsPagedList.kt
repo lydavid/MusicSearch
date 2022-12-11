@@ -19,62 +19,43 @@ import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.domain.toRecordingListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.repository.RecordingsListRepository
-
-internal interface IRecordingsList {
-    data class ViewModelState(
-        val resourceId: String = "",
-        val query: String = ""
-    )
-
-    val resourceId: MutableStateFlow<String>
-    val query: MutableStateFlow<String>
-    val paramState: Flow<ViewModelState>
-
-    fun loadRecordings(resourceId: String) {
-        this.resourceId.value = resourceId
-    }
-
-    fun updateQuery(query: String) {
-        this.query.value = query
-    }
-
-    val pagedRecordings: Flow<PagingData<RecordingListItemModel>>
-}
+import ly.david.data.persistence.recording.RecordingForListItem
+import ly.david.data.repository.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.PagedList
 
 /**
  * Generic implementation for handling paged recordings.
  *
  * Meant to be implemented by a ViewModel through delegation.
  *
- * The ViewModel should should assign [scope] and [repository] in its init block.
+ * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
-internal class RecordingsList @Inject constructor() : IRecordingsList {
+internal class RecordingsPagedList @Inject constructor() : PagedList<RecordingListItemModel> {
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
     override val paramState = combine(resourceId, query) { resourceId, query ->
-        IRecordingsList.ViewModelState(resourceId, query)
+        PagedList.ViewModelState(resourceId, query)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var repository: RecordingsListRepository
+    lateinit var useCase: BrowseResourceUseCase<RecordingForListItem>
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedRecordings: Flow<PagingData<RecordingListItemModel>> by lazy {
+    override val pagedResources: Flow<PagingData<RecordingListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getRemoteRecordingsCountByResource(resourceId) },
-                        getLocalResourceCount = { repository.getLocalRecordingsCountByResource(resourceId) },
-                        deleteLocalResource = { repository.deleteRecordingsByResource(resourceId) },
+                        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
+                        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
+                        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
                         browseResource = { offset ->
-                            repository.browseRecordingsAndStore(resourceId, offset)
+                            useCase.browseLinkedResourcesAndStore(resourceId, offset)
                         }
                     ),
-                    pagingSourceFactory = { repository.getRecordingsPagingSource(resourceId, query) }
+                    pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toRecordingListItemModel()

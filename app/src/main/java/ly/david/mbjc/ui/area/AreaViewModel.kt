@@ -10,8 +10,6 @@ import ly.david.data.repository.AreaRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.relation.IRelationsList
 import ly.david.mbjc.ui.relation.RelationsList
-import ly.david.mbjc.ui.release.IReleasesList
-import ly.david.mbjc.ui.release.ReleasesList
 
 /**
  * The logic for loading relations is different here because we start on relationships tab.
@@ -22,17 +20,12 @@ internal class AreaViewModel @Inject constructor(
     private val repository: AreaRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-    private val releasesList: ReleasesList
 ) : ViewModel(), RecordLookupHistory,
-    IRelationsList by relationsList,
-    IReleasesList by releasesList {
+    IRelationsList by relationsList {
 
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
-
-        releasesList.scope = viewModelScope
-        releasesList.repository = repository
     }
 
     /**

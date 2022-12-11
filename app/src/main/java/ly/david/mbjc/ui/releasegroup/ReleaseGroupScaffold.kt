@@ -82,7 +82,7 @@ internal fun ReleaseGroupScaffold(
             subtitle = "Release Group by ${releaseGroupListItemModel.artistCredits.getDisplayNames()}"
             releaseGroup = releaseGroupListItemModel
 
-            viewModel.loadReleases(releaseGroupId)
+            viewModel.loadPagedResources(releaseGroupId)
         } catch (ex: Exception) {
 //            title = "[Release group lookup failed]"
 //            subtitle = "[error]"
@@ -140,7 +140,7 @@ internal fun ReleaseGroupScaffold(
 
         val releasesLazyListState = rememberLazyListState()
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+            rememberFlowWithLifecycleStarted(viewModel.pagedResources)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()

@@ -85,6 +85,10 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
 
     // endregion
 
+    override suspend fun browsePlacesByArea(areaId: String, limit: Int, offset: Int): BrowsePlacesResponse {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun browseRecordingsByWork(workId: String, limit: Int, offset: Int): BrowseRecordingsResponse {
         return browseRecordingsResponse
     }
@@ -151,7 +155,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return fakeLabel
     }
 
-    override suspend fun lookupPlace(placeId: String, include: String): PlaceMusicBrainzModel {
+    override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
         return placeMusicBrainzModel
     }
 
@@ -167,7 +171,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return fakeReleaseGroup
     }
 
-    override suspend fun lookupWork(workId: String, include: String): WorkMusicBrainzModel {
+    override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
         return workMusicBrainzModel
     }
 }

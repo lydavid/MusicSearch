@@ -17,19 +17,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.AreaScaffoldModel
 import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.showReleases
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
+import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
-import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
@@ -42,6 +47,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 private enum class AreaTab(@StringRes val titleRes: Int) {
     RELATIONSHIPS(R.string.relationships),
     RELEASES(R.string.releases),
+    PLACES(R.string.places),
 
     //    RELATIONSHIPS_RELEASES(R.string.relationships_releases),
 //    RELATIONSHIPS_RECORDINGS(R.string.relationships_recordings),
@@ -68,8 +74,9 @@ internal fun AreaScaffold(
     var tabs: List<AreaTab> by rememberSaveable { mutableStateOf(AreaTab.values().filter { it != AreaTab.RELEASES }) }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
 
+    var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
     val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-        rememberFlowWithLifecycleStarted(viewModel.pagedReleases)
+        rememberFlowWithLifecycleStarted(pagedReleasesFlow)
             .collectAsLazyPagingItems()
 
     val relationsLazyPagingItems: LazyPagingItems<ListItemModel> = rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -113,12 +120,7 @@ internal fun AreaScaffold(
         title = title,
         tabs = tabs,
         showReleases = area?.showReleases() ?: false,
-        onUpdateQuery = { filterText ->
-            viewModel.updateQuery(filterText)
-        },
-        loadReleases = {
-            viewModel.loadReleases(areaId)
-        },
+        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
     )
 }
 
@@ -134,8 +136,7 @@ private fun AreaScaffold(
     releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     relationsLazyPagingItems: LazyPagingItems<ListItemModel>,
     showReleases: Boolean,
-    onUpdateQuery: (String) -> Unit,
-    loadReleases: () -> Unit,
+    onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -156,11 +157,10 @@ private fun AreaScaffold(
                 tabsTitles = tabs.map { stringResource(id = it.titleRes) },
                 selectedTabIndex = tabs.indexOf(selectedTab),
                 onSelectTabIndex = { selectedTab = tabs[it] },
-                showFilterIcon = selectedTab == AreaTab.RELEASES,
+                showFilterIcon = selectedTab in listOf(AreaTab.RELEASES, AreaTab.PLACES),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
-                    onUpdateQuery(filterText)
                 },
             )
         },
@@ -168,6 +168,12 @@ private fun AreaScaffold(
 
         val relationsLazyListState = rememberLazyListState()
         val releasesLazyListState = rememberLazyListState()
+
+        val placesLazyListState = rememberLazyListState()
+        var pagedPlacesFlow: Flow<PagingData<PlaceListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val placesLazyPagingItems: LazyPagingItems<PlaceListItemModel> =
+            rememberFlowWithLifecycleStarted(pagedPlacesFlow)
+                .collectAsLazyPagingItems()
 
         when (selectedTab) {
             AreaTab.RELATIONSHIPS -> {
@@ -180,16 +186,27 @@ private fun AreaScaffold(
                 )
             }
             AreaTab.RELEASES -> {
-                loadReleases()
-
-                ReleasesListScreen(
+                ReleasesByAreaScreen(
+                    areaId = areaId,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    lazyListState = releasesLazyListState,
-                    lazyPagingItems = releasesLazyPagingItems,
-                    onReleaseClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RELEASE, id, title)
-                    }
+                    releasesLazyListState = releasesLazyListState,
+                    releasesLazyPagingItems = releasesLazyPagingItems,
+                    onPagedReleasesFlowChange = onPagedReleasesFlowChange,
+                    onReleaseClick = onItemClick,
+                    filterText = filterText
+                )
+            }
+            AreaTab.PLACES -> {
+                PlacesByAreaScreen(
+                    areaId = areaId,
+                    modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
+                    placesLazyListState = placesLazyListState,
+                    placesLazyPagingItems = placesLazyPagingItems,
+                    onPagedPlacesFlowChange = { pagedPlacesFlow = it },
+                    onPlaceClick = onItemClick,
+                    filterText = filterText
                 )
             }
             AreaTab.STATS -> {

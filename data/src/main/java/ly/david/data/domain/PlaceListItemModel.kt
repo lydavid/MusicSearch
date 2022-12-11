@@ -31,7 +31,7 @@ internal fun PlaceMusicBrainzModel.toPlaceListItemModel() =
         area = area?.toAreaListItemModel()
     )
 
-internal fun PlaceRoomModel.toPlaceListItemModel(
+fun PlaceRoomModel.toPlaceListItemModel(
     area: AreaListItemModel? = null
 ) =
     PlaceListItemModel(

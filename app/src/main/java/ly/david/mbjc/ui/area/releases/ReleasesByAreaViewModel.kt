@@ -1,53 +1,42 @@
-package ly.david.data.repository
+package ly.david.mbjc.ui.area.releases
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingSource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import javax.inject.Singleton
-import ly.david.data.domain.RecordingScaffoldModel
-import ly.david.data.domain.toRecordingScaffoldModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.recording.RecordingDao
-import ly.david.data.persistence.recording.ReleaseRecording
-import ly.david.data.persistence.recording.ReleasesRecordingsDao
+import ly.david.data.persistence.area.ReleaseCountry
+import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 import ly.david.data.persistence.release.toRoomModel
+import ly.david.data.repository.ReleasesListRepository
+import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.mbjc.ui.release.ReleasesPagedList
 
-@Singleton
-class RecordingRepository @Inject constructor(
+@HiltViewModel
+internal class ReleasesByAreaViewModel @Inject constructor(
+    private val releasesPagedList: ReleasesPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val recordingDao: RecordingDao,
     private val relationDao: RelationDao,
+    private val releasesCountriesDao: ReleasesCountriesDao,
     private val releaseDao: ReleaseDao,
-    private val releasesRecordingsDao: ReleasesRecordingsDao
-) : ReleasesListRepository, RelationsListRepository {
+) : ViewModel(),
+    PagedList<ReleaseListItemModel> by releasesPagedList, ReleasesListRepository {
 
-    suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
-        val recordingRoomModel = recordingDao.getRecordingWithArtistCredits(recordingId)
-        if (recordingRoomModel != null && recordingRoomModel.artistCreditNamesWithResources.isNotEmpty()) {
-            return recordingRoomModel.toRecordingScaffoldModel()
-        }
-
-        val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)
-        recordingDao.insertRecordingWithArtistCredits(recordingMusicBrainzModel)
-        return recordingMusicBrainzModel.toRecordingScaffoldModel()
-    }
-
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupRecording(
-            recordingId = resourceId,
-            include = LookupApi.INC_ALL_RELATIONS
-        ).relations
+    init {
+        releasesPagedList.scope = viewModelScope
+        releasesPagedList.repository = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByRecording(
-            recordingId = resourceId,
+        val response = musicBrainzApiService.browseReleasesByArea(
+            areaId = resourceId,
             offset = nextOffset
         )
 
@@ -66,11 +55,12 @@ class RecordingRepository @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releasesRecordingsDao.insertAll(
+        releasesCountriesDao.insertAll(
             releaseMusicBrainzModels.map { release ->
-                ReleaseRecording(
+                ReleaseCountry(
                     releaseId = release.id,
-                    recordingId = resourceId
+                    countryId = resourceId,
+                    date = release.date
                 )
             }
         )
@@ -85,7 +75,7 @@ class RecordingRepository @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesRecordingsDao.deleteReleasesByRecording(resourceId)
+        releasesCountriesDao.deleteReleasesFromCountry(resourceId)
         relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
@@ -94,11 +84,11 @@ class RecordingRepository @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
-            releasesRecordingsDao.getReleasesByRecording(resourceId)
+            releasesCountriesDao.getReleasesByCountry(resourceId)
         }
         else -> {
-            releasesRecordingsDao.getReleasesByRecordingFiltered(
-                recordingId = resourceId,
+            releasesCountriesDao.getReleasesByCountryFiltered(
+                areaId = resourceId,
                 query = "%$query%"
             )
         }

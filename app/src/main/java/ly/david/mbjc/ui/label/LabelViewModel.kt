@@ -10,23 +10,16 @@ import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.relation.IRelationsList
 import ly.david.mbjc.ui.relation.RelationsList
-import ly.david.mbjc.ui.release.IReleasesList
-import ly.david.mbjc.ui.release.ReleasesList
 
 @HiltViewModel
 internal class LabelViewModel @Inject constructor(
     private val repository: LabelRepository,
     override val lookupHistoryDao: LookupHistoryDao,
-    private val releasesList: ReleasesList,
     private val relationsList: RelationsList,
 ) : ViewModel(), RecordLookupHistory,
-    IReleasesList by releasesList,
     IRelationsList by relationsList {
 
     init {
-        releasesList.scope = viewModelScope
-        releasesList.repository = repository
-
         relationsList.scope = viewModelScope
         relationsList.repository = repository
     }

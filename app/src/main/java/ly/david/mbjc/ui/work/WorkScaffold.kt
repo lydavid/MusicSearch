@@ -118,7 +118,7 @@ internal fun WorkScaffold(
 
         val recordingsLazyListState = rememberLazyListState()
         val recordingsLazyPagingItems: LazyPagingItems<RecordingListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedRecordings)
+            rememberFlowWithLifecycleStarted(viewModel.pagedResources)
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
@@ -146,7 +146,7 @@ internal fun WorkScaffold(
                 )
             }
             WorkTab.RECORDINGS -> {
-                viewModel.loadRecordings(workId)
+                viewModel.loadPagedResources(workId)
 
                 RecordingsListScreen(
                     modifier = Modifier.padding(innerPadding),

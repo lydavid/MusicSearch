@@ -1,35 +1,25 @@
 package ly.david.data.repository
 
-import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.AreaScaffoldModel
 import ly.david.data.domain.toAreaScaffoldModel
-import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.toAreaRoomModel
-import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.relation.toRelationRoomModel
-import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.toRoomModel
 
 @Singleton
 class AreaRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val areaDao: AreaDao,
     private val relationDao: RelationDao,
-    private val releasesCountriesDao: ReleasesCountriesDao,
-    private val releaseDao: ReleaseDao,
-) : ReleasesListRepository, RelationsListRepository {
+) : RelationsListRepository {
 
     /**
      * Returns area for display.
@@ -83,65 +73,5 @@ class AreaRepository @Inject constructor(
             areaId = resourceId,
             include = INC_ALL_RELATIONS
         ).relations
-    }
-
-    override suspend fun browseReleasesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByArea(
-            areaId = resourceId,
-            offset = nextOffset
-        )
-
-        if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.RELEASE,
-                    localCount = response.releases.size,
-                    remoteCount = response.count
-                )
-            )
-        } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
-        }
-
-        val releaseMusicBrainzModels = response.releases
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releasesCountriesDao.insertAll(
-            releaseMusicBrainzModels.map { release ->
-                ReleaseCountry(
-                    releaseId = release.id,
-                    countryId = resourceId,
-                    date = release.date
-                )
-            }
-        )
-
-        return releaseMusicBrainzModels.size
-    }
-
-    override suspend fun getRemoteReleasesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
-
-    override suspend fun getLocalReleasesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
-
-    override suspend fun deleteReleasesByResource(resourceId: String) {
-        releasesCountriesDao.deleteReleasesFromCountry(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
-    }
-
-    override fun getReleasesPagingSource(
-        resourceId: String,
-        query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
-        query.isEmpty() -> {
-            releasesCountriesDao.getReleasesByCountry(resourceId)
-        }
-        else -> {
-            releasesCountriesDao.getReleasesByCountryFiltered(
-                areaId = resourceId,
-                query = "%$query%"
-            )
-        }
     }
 }

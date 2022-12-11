@@ -1,6 +1,7 @@
 package ly.david.data.persistence
 
 import ly.david.data.persistence.area.AreaDao
+import ly.david.data.persistence.area.AreaPlaceDao
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
@@ -38,6 +39,7 @@ interface MusicBrainzDatabase {
     fun getRecordingsWorksDao(): RecordingsWorksDao
 
     fun getAreaDao(): AreaDao
+    fun getAreaPlaceDao(): AreaPlaceDao
     fun getReleasesCountriesDao(): ReleasesCountriesDao
 
     fun getPlaceDao(): PlaceDao

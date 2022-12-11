@@ -26,7 +26,7 @@ class WorkRepository @Inject constructor(
     private val recordingsWorksDao: RecordingsWorksDao,
     private val workDao: WorkDao,
     private val relationDao: RelationDao,
-) : RelationsListRepository, RecordingsListRepository {
+) : RelationsListRepository, BrowseResourceUseCase<RecordingForListItem> {
 
     suspend fun lookupWork(
         workId: String,
@@ -48,7 +48,7 @@ class WorkRepository @Inject constructor(
         ).relations
     }
 
-    override suspend fun browseRecordingsAndStore(resourceId: String, nextOffset: Int): Int {
+    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
         val response = musicBrainzApiService.browseRecordingsByWork(
             workId = resourceId,
             offset = nextOffset
@@ -85,18 +85,18 @@ class WorkRepository @Inject constructor(
         return recordingMusicBrainzModels.size
     }
 
-    override suspend fun getRemoteRecordingsCountByResource(resourceId: String): Int? =
+    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RECORDING)?.remoteCount
 
-    override suspend fun getLocalRecordingsCountByResource(resourceId: String) =
+    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RECORDING)?.localCount ?: 0
 
-    override suspend fun deleteRecordingsByResource(resourceId: String) {
+    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         recordingsWorksDao.deleteRecordingsByWork(resourceId)
         relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RECORDING)
     }
 
-    override fun getRecordingsPagingSource(
+    override fun getLinkedResourcesPagingSource(
         resourceId: String,
         query: String
     ): PagingSource<Int, RecordingForListItem> = when {
