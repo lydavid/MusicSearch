@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label.releases
+package ly.david.mbjc.ui.recording.releases
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,8 +8,8 @@ import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.toReleaseLabels
-import ly.david.data.persistence.label.ReleasesLabelsDao
+import ly.david.data.persistence.recording.ReleaseRecording
+import ly.david.data.persistence.recording.ReleasesRecordingsDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -20,12 +20,12 @@ import ly.david.mbjc.ui.common.paging.PagedList
 import ly.david.mbjc.ui.release.ReleasesPagedList
 
 @HiltViewModel
-internal class ReleasesByLabelViewModel @Inject constructor(
+internal class ReleasesByRecordingViewModel @Inject constructor(
     private val releasesPagedList: ReleasesPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val releasesLabelsDao: ReleasesLabelsDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
+    private val releasesRecordingsDao: ReleasesRecordingsDao
 ) : ViewModel(),
     PagedList<ReleaseListItemModel> by releasesPagedList, BrowseResourceUseCase<ReleaseWithCreditsAndCountries> {
 
@@ -35,8 +35,8 @@ internal class ReleasesByLabelViewModel @Inject constructor(
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByLabel(
-            labelId = resourceId,
+        val response = musicBrainzApiService.browseReleasesByRecording(
+            recordingId = resourceId,
             offset = nextOffset
         )
 
@@ -55,9 +55,12 @@ internal class ReleasesByLabelViewModel @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releasesLabelsDao.insertAll(
-            releaseMusicBrainzModels.flatMap { release ->
-                release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = resourceId).orEmpty()
+        releasesRecordingsDao.insertAll(
+            releaseMusicBrainzModels.map { release ->
+                ReleaseRecording(
+                    releaseId = release.id,
+                    recordingId = resourceId
+                )
             }
         )
 
@@ -71,7 +74,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesLabelsDao.deleteReleasesByLabel(resourceId)
+        releasesRecordingsDao.deleteReleasesByRecording(resourceId)
         relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
@@ -80,11 +83,11 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
-            releasesLabelsDao.getReleasesByLabel(resourceId)
+            releasesRecordingsDao.getReleasesByRecording(resourceId)
         }
         else -> {
-            releasesLabelsDao.getReleasesByLabelFiltered(
-                labelId = resourceId,
+            releasesRecordingsDao.getReleasesByRecordingFiltered(
+                recordingId = resourceId,
                 query = "%$query%"
             )
         }

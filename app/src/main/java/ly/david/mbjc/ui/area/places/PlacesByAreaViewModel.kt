@@ -15,7 +15,7 @@ import ly.david.data.persistence.place.PlaceRoomModel
 import ly.david.data.persistence.place.toPlaceRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.repository.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
 import ly.david.mbjc.ui.place.PlacesPagedList
 

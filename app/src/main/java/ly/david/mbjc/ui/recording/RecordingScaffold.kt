@@ -19,8 +19,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RecordingScaffoldModel
 import ly.david.data.domain.ReleaseListItemModel
@@ -31,11 +34,11 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.RelationsScreen
-import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
 private enum class RecordingTab(@StringRes val titleRes: Int) {
@@ -75,8 +78,6 @@ internal fun RecordingScaffold(
             }
             subtitleState = "Recording by ${recordingScaffoldModel.artistCredits.getDisplayNames()}"
             recording = recordingScaffoldModel
-
-            viewModel.loadPagedResources(resourceId = recordingId)
 
             if (!recordedLookup) {
                 viewModel.recordLookupHistory(
@@ -120,15 +121,15 @@ internal fun RecordingScaffold(
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
-                    viewModel.updateQuery(filterText)
                 },
             )
         },
     ) { innerPadding ->
 
         val releasesLazyListState = rememberLazyListState()
+        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
@@ -139,14 +140,15 @@ internal fun RecordingScaffold(
         when (selectedTab) {
 
             RecordingTab.RELEASES -> {
-                ReleasesListScreen(
+                ReleasesByRecordingScreen(
+                    recordingId = recordingId,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    lazyListState = releasesLazyListState,
-                    lazyPagingItems = releasesLazyPagingItems,
-                    onReleaseClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RELEASE, id, title)
-                    }
+                    releasesLazyListState = releasesLazyListState,
+                    releasesLazyPagingItems = releasesLazyPagingItems,
+                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    onReleaseClick = onItemClick,
+                    filterText = filterText
                 )
             }
             RecordingTab.RELATIONSHIPS -> {

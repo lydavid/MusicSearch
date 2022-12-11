@@ -20,7 +20,7 @@ import ly.david.data.domain.toPlaceListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.place.PlaceRoomModel
-import ly.david.data.repository.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
 
 internal class PlacesPagedList @Inject constructor() : PagedList<PlaceListItemModel> {

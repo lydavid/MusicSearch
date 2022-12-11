@@ -17,8 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.domain.WorkListItemModel
@@ -27,13 +30,13 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
-import ly.david.mbjc.ui.common.paging.RecordingsListScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
+import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 
 private enum class WorkTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
@@ -103,7 +106,6 @@ internal fun WorkScaffold(
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
-                    viewModel.updateQuery(filterText)
                 },
             )
         },
@@ -117,8 +119,9 @@ internal fun WorkScaffold(
                 .collectAsLazyPagingItems()
 
         val recordingsLazyListState = rememberLazyListState()
+        var pagedRecordingsFlow: Flow<PagingData<RecordingListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val recordingsLazyPagingItems: LazyPagingItems<RecordingListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            rememberFlowWithLifecycleStarted(pagedRecordingsFlow)
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
@@ -146,16 +149,15 @@ internal fun WorkScaffold(
                 )
             }
             WorkTab.RECORDINGS -> {
-                viewModel.loadPagedResources(workId)
-
-                RecordingsListScreen(
+                RecordingsByWorkScreen(
+                    workId = workId,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    lazyListState = recordingsLazyListState,
-                    lazyPagingItems = recordingsLazyPagingItems,
-                    onRecordingClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RECORDING, id, title)
-                    }
+                    recordingsLazyListState = recordingsLazyListState,
+                    recordingsLazyPagingItems = recordingsLazyPagingItems,
+                    onPagedRecordingsFlowChange = { pagedRecordingsFlow = it },
+                    onRecordingClick = onItemClick,
+                    filterText = filterText
                 )
             }
             WorkTab.STATS -> {

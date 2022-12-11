@@ -1,9 +1,8 @@
-package ly.david.data.repository
+package ly.david.mbjc.ui.common.paging
 
 import androidx.paging.PagingSource
 import ly.david.data.persistence.RoomModel
 
-// TODO: move
 interface BrowseResourceUseCase<T: RoomModel> {
     suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int
     suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int?

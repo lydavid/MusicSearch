@@ -15,7 +15,7 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 import ly.david.data.persistence.release.toRoomModel
-import ly.david.data.repository.ReleasesListRepository
+import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
 import ly.david.mbjc.ui.release.ReleasesPagedList
 
@@ -27,11 +27,11 @@ internal class ReleasesByAreaViewModel @Inject constructor(
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val releaseDao: ReleaseDao,
 ) : ViewModel(),
-    PagedList<ReleaseListItemModel> by releasesPagedList, ReleasesListRepository {
+    PagedList<ReleaseListItemModel> by releasesPagedList, BrowseResourceUseCase<ReleaseWithCreditsAndCountries> {
 
     init {
         releasesPagedList.scope = viewModelScope
-        releasesPagedList.repository = this
+        releasesPagedList.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {

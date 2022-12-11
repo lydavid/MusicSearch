@@ -19,8 +19,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.domain.ReleaseListItemModel
@@ -31,11 +34,11 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.paging.RelationsScreen
-import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
 private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
@@ -82,7 +85,6 @@ internal fun ReleaseGroupScaffold(
             subtitle = "Release Group by ${releaseGroupListItemModel.artistCredits.getDisplayNames()}"
             releaseGroup = releaseGroupListItemModel
 
-            viewModel.loadPagedResources(releaseGroupId)
         } catch (ex: Exception) {
 //            title = "[Release group lookup failed]"
 //            subtitle = "[error]"
@@ -132,15 +134,15 @@ internal fun ReleaseGroupScaffold(
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
-                    viewModel.updateQuery(query = filterText)
                 },
             )
         },
     ) { innerPadding ->
 
         val releasesLazyListState = rememberLazyListState()
+        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
@@ -150,14 +152,15 @@ internal fun ReleaseGroupScaffold(
 
         when (selectedTab) {
             ReleaseGroupTab.RELEASES -> {
-                ReleasesListScreen(
+                ReleasesByReleaseGroupScreen(
+                    releaseGroupId = releaseGroupId,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    lazyListState = releasesLazyListState,
-                    lazyPagingItems = releasesLazyPagingItems,
-                    onReleaseClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RELEASE, id, title)
-                    }
+                    releasesLazyListState = releasesLazyListState,
+                    releasesLazyPagingItems = releasesLazyPagingItems,
+                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    onReleaseClick = onItemClick,
+                    filterText = filterText
                 )
             }
             ReleaseGroupTab.RELATIONSHIPS -> {

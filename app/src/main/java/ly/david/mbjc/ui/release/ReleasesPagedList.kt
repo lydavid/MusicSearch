@@ -19,7 +19,8 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.repository.ReleasesListRepository
+import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
 
 /**
@@ -27,7 +28,7 @@ import ly.david.mbjc.ui.common.paging.PagedList
  *
  * Meant to be implemented by a ViewModel through delegation.
  *
- * The ViewModel should should assign [scope] and [repository] in its init block.
+ * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
 internal class ReleasesPagedList @Inject constructor() : PagedList<ReleaseListItemModel> {
 
@@ -38,7 +39,7 @@ internal class ReleasesPagedList @Inject constructor() : PagedList<ReleaseListIt
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var repository: ReleasesListRepository
+    lateinit var useCase: BrowseResourceUseCase<ReleaseWithCreditsAndCountries>
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<ReleaseListItemModel>> by lazy {
@@ -47,14 +48,14 @@ internal class ReleasesPagedList @Inject constructor() : PagedList<ReleaseListIt
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { repository.getRemoteLinkedResourcesCountByResource(resourceId) },
-                        getLocalResourceCount = { repository.getLocalLinkedResourcesCountByResource(resourceId) },
-                        deleteLocalResource = { repository.deleteLinkedResourcesByResource(resourceId) },
+                        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
+                        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
+                        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
                         browseResource = { offset ->
-                            repository.browseLinkedResourcesAndStore(resourceId, offset)
+                            useCase.browseLinkedResourcesAndStore(resourceId, offset)
                         }
                     ),
-                    pagingSourceFactory = { repository.getLinkedResourcesPagingSource(resourceId, query) }
+                    pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toReleaseListItemModel()

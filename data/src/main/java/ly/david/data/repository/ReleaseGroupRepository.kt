@@ -1,30 +1,19 @@
 package ly.david.data.repository
 
-import androidx.paging.PagingSource
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.domain.toReleaseGroupListItemModel
-import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.relation.BrowseResourceCount
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.toRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 
 @Singleton
 class ReleaseGroupRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
-    private val releaseDao: ReleaseDao,
-    private val relationDao: RelationDao,
-) : ReleasesListRepository, RelationsListRepository {
+) : RelationsListRepository {
 
     // We need ReleaseGroupUiModel so that we have artist credits
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupListItemModel {
@@ -43,56 +32,5 @@ class ReleaseGroupRepository @Inject constructor(
             releaseGroupId = resourceId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
-    }
-
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByReleaseGroup(
-            releaseGroupId = resourceId,
-            offset = nextOffset
-        )
-
-        if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.RELEASE,
-                    localCount = response.releases.size,
-                    remoteCount = response.count
-                )
-            )
-        } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
-        }
-
-        val musicBrainzReleases = response.releases
-        releaseDao.insertOrUpdate(musicBrainzReleases.map { it.toRoomModel(resourceId) })
-
-        return musicBrainzReleases.size
-    }
-
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
-
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
-
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesReleaseGroupsDao.deleteReleasesByReleaseGroup(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
-    }
-
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
-        query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
-        query.isEmpty() -> {
-            releasesReleaseGroupsDao.getReleasesByReleaseGroup(resourceId)
-        }
-        else -> {
-            releasesReleaseGroupsDao.getReleasesByReleaseGroupFiltered(
-                releaseGroupId = resourceId,
-                query = "%$query%"
-            )
-        }
     }
 }
