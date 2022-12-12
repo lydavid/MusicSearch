@@ -5,6 +5,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.persistence.place.PlaceRoomModel
+import ly.david.data.persistence.place.PlaceWithArea
 
 data class PlaceListItemModel(
     override val id: String,
@@ -31,16 +32,24 @@ internal fun PlaceMusicBrainzModel.toPlaceListItemModel() =
         area = area?.toAreaListItemModel()
     )
 
-fun PlaceRoomModel.toPlaceListItemModel(
-    area: AreaListItemModel? = null
-) =
-    PlaceListItemModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        address = address,
-        type = type,
-        coordinates = coordinates,
-        lifeSpan = lifeSpan,
-        area = area
-    )
+fun PlaceRoomModel.toPlaceListItemModel() = PlaceListItemModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    address = address,
+    type = type,
+    coordinates = coordinates,
+    lifeSpan = lifeSpan,
+    area = null
+)
+
+fun PlaceWithArea.toPlaceListItemModel() = PlaceListItemModel(
+    id = place.id,
+    name = place.name,
+    disambiguation = place.disambiguation,
+    address = place.address,
+    type = place.type,
+    coordinates = place.coordinates,
+    lifeSpan = place.lifeSpan,
+    area = area?.toAreaListItemModel()
+)

@@ -1,22 +1,23 @@
 package ly.david.mbjc.ui.place
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.LifeSpan
+import ly.david.data.common.ifNotNull
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.getNameWithDisambiguation
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -28,48 +29,53 @@ internal fun PlaceListItem(
     ClickableListItem(
         onClick = { onPlaceClick(place) },
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        ) {
-            Text(
-                text = place.getNameWithDisambiguation(),
-                style = TextStyles.getCardTitleTextStyle()
-            )
-
-            val type = place.type
-            if (!type.isNullOrEmpty()) {
+        Column(modifier = Modifier.padding(vertical = 16.dp)) {
+            place.run {
                 Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = type,
-                    style = TextStyles.getCardBodyTextStyle(),
+                    text = getNameWithDisambiguation(),
+                    style = TextStyles.getCardTitleTextStyle()
                 )
-            }
 
-            val address = place.address
-            if (address.isNotEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = address,
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
+                type.ifNotNullOrEmpty {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
 
-            val lifeSpan = place.lifeSpan.getLifeSpanForDisplay()
-            if (lifeSpan.isNotEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = lifeSpan,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
+                address.ifNotNullOrEmpty {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                // TODO: too much information on list item?
+//                area.ifNotNull {
+//                    Text(
+//                        modifier = Modifier.padding(top = 4.dp),
+//                        text = it.name,
+//                        style = TextStyles.getCardBodyTextStyle(),
+//                    )
+//                }
+
+                lifeSpan.ifNotNull {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = it.getLifeSpanForDisplay(),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
             }
         }
     }
 }
 
 // Cannot be private.
-internal class PlaceCardPreviewParameterProvider : PreviewParameterProvider<PlaceListItemModel> {
+@ExcludeFromJacocoGeneratedReport
+internal class PlacePreviewParameterProvider : PreviewParameterProvider<PlaceListItemModel> {
     override val values = sequenceOf(
         PlaceListItemModel(
             id = "2",
@@ -94,11 +100,11 @@ internal class PlaceCardPreviewParameterProvider : PreviewParameterProvider<Plac
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ExcludeFromJacocoGeneratedReport
+@DefaultPreviews
 @Composable
-private fun PlaceCardPreview(
-    @PreviewParameter(PlaceCardPreviewParameterProvider::class) place: PlaceListItemModel
+private fun Preview(
+    @PreviewParameter(PlacePreviewParameterProvider::class) place: PlaceListItemModel
 ) {
     PreviewTheme {
         Surface {

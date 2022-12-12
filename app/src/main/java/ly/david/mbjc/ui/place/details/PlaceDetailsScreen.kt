@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.place
+package ly.david.mbjc.ui.place.details
 
 import android.content.Context
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,14 +11,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import ly.david.data.Coordinates
 import ly.david.data.LifeSpan
+import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.navigation.Destination
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.mbjc.ui.place.CoordinateListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
@@ -27,6 +32,7 @@ internal fun PlaceDetailsScreen(
     context: Context = LocalContext.current,
     place: PlaceListItemModel,
     lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     LazyColumn(
@@ -51,9 +57,20 @@ internal fun PlaceDetailsScreen(
                 address.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.address, text = it)
                 }
-                // TODO: area
+
+                area?.ifNotNull {
+                    ListSeparatorHeader(text = stringResource(id = R.string.area))
+                    AreaListItem(
+                        area = it,
+                        showType = false,
+                        onAreaClick = {
+                            onItemClick(Destination.LOOKUP_AREA, id, getNameWithDisambiguation())
+                        }
+                    )
+                }
 
                 coordinates?.let {
+                    ListSeparatorHeader(text = stringResource(id = R.string.coordinates))
                     val label = place.name +
                         if (place.lifeSpan?.ended == true) " (${stringResource(id = R.string.closed)})" else ""
                     CoordinateListItem(

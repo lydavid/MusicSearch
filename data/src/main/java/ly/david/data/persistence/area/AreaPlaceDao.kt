@@ -29,7 +29,7 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
         """
 
         private const val ORDER_BY_ADDRESS = """
-            ORDER BY p.address
+            ORDER BY p.name, p.address
         """
 
         private const val FILTERED = """

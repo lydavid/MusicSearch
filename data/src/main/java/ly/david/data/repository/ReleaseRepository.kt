@@ -43,7 +43,7 @@ class ReleaseRepository @Inject constructor(
      *
      * Looks up release and stores its data (excludes relationships).
      */
-    suspend fun getRelease(releaseId: String): ReleaseScaffoldModel {
+    suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
 
         if (releaseWithAllData != null &&

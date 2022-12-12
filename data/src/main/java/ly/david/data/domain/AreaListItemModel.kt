@@ -3,6 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Area
 import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
+import ly.david.data.persistence.area.AreaRoomModel
 import ly.david.data.persistence.release.AreaWithReleaseDate
 
 data class AreaListItemModel(
@@ -23,6 +24,14 @@ internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = Ar
     lifeSpan = lifeSpan,
     iso_3166_1_codes = iso_3166_1_codes,
     date = date
+)
+
+fun AreaRoomModel.toAreaListItemModel() = AreaListItemModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    lifeSpan = lifeSpan,
 )
 
 fun AreaWithReleaseDate.toAreaListItemModel() = AreaListItemModel(

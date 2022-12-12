@@ -32,6 +32,7 @@ import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 
 private enum class PlaceTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
@@ -44,7 +45,7 @@ private enum class PlaceTab(@StringRes val titleRes: Int) {
 internal fun PlaceScaffold(
     placeId: String,
     titleWithDisambiguation: String? = null,
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: PlaceViewModel = hiltViewModel()
 ) {
@@ -117,7 +118,8 @@ internal fun PlaceScaffold(
                         modifier = Modifier.padding(innerPadding),
                         context = context,
                         place = placeListItemModel,
-                        lazyListState = detailsLazyListState
+                        lazyListState = detailsLazyListState,
+                        onItemClick = onItemClick
                     )
                 }
             }

@@ -50,7 +50,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
                 ReleaseScaffold(releaseId = releaseMusicBrainzModel.id)
             }
         }
-        composeTestRule.onRoot(useUnmergedTree = true).printToLog("ReleaseScaffoldTest")
+        composeTestRule.onRoot(useUnmergedTree = true).printToLog(this::class.java.simpleName)
     }
 
     @Test
@@ -64,7 +64,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     @Test
     fun repeatVisit_localData() {
         runBlocking {
-            releaseRepository.getRelease(fakeRelease.id)
+            releaseRepository.lookupRelease(fakeRelease.id)
             setRelease(fakeRelease)
             composeTestRule.awaitIdle()
         }
@@ -147,8 +147,6 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
-
-        composeTestRule.onRoot(useUnmergedTree = true).printToLog("ReleaseScaffoldTest2")
 
         composeTestRule
             .onNodeWithText(fakeReleaseWithRelation.relations?.first()?.release?.name ?: "")

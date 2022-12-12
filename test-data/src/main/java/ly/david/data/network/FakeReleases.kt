@@ -1,5 +1,7 @@
 package ly.david.data.network
 
+import ly.david.data.network.api.BrowseReleasesResponse
+
 val fakeReleaseEvent = ReleaseEvent(
     area = fakeCountry,
     date = "2022-10-29"
@@ -53,4 +55,10 @@ val fakeReleases = listOf(
     fakeRelease,
     fakeReleaseWithRelation,
     fakeReleaseWithCoverArt
+)
+
+val browseReleasesResponse = BrowseReleasesResponse(
+    count = 1,
+    offset = 0,
+    releases = listOf(fakeRelease)
 )

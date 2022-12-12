@@ -74,7 +74,7 @@ internal class ReleaseViewModel @Inject constructor(
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
     suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseScaffoldModel {
-        return repository.getRelease(releaseId).also { loadTracks(releaseId) }
+        return repository.lookupRelease(releaseId).also { loadTracks(releaseId) }
     }
 
     fun loadTracks(releaseId: String) {
@@ -94,7 +94,7 @@ internal class ReleaseViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = LookupResourceRemoteMediator(
                         hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                        lookupResource = { repository.getRelease(releaseId) },
+                        lookupResource = { repository.lookupRelease(releaseId) },
                         deleteLocalResource = {
                             // TODO: invalidate cover art cache and refresh
                             // TODO: delete release_label

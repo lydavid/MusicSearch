@@ -10,20 +10,22 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.network.browsePlacesResponse
 import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
-import ly.david.data.network.eventMusicBrainzModel
 import ly.david.data.network.fakeArea
 import ly.david.data.network.fakeAreas
 import ly.david.data.network.fakeArtist
+import ly.david.data.network.fakeEvent
 import ly.david.data.network.fakeLabel
+import ly.david.data.network.fakePlace
+import ly.david.data.network.fakePlaces
 import ly.david.data.network.fakeRecording
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleases
 import ly.david.data.network.instrumentMusicBrainzModel
-import ly.david.data.network.placeMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
 import ly.david.data.network.searchEventsResponse
@@ -86,7 +88,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     // endregion
 
     override suspend fun browsePlacesByArea(areaId: String, limit: Int, offset: Int): BrowsePlacesResponse {
-        TODO("Not yet implemented")
+        return browsePlacesResponse
     }
 
     override suspend fun browseRecordingsByWork(workId: String, limit: Int, offset: Int): BrowseRecordingsResponse {
@@ -144,7 +146,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupEvent(eventId: String, include: String): EventMusicBrainzModel {
-        return eventMusicBrainzModel
+        return fakeEvent
     }
 
     override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
@@ -156,7 +158,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
-        return placeMusicBrainzModel
+        return fakePlaces.firstOrNull { it.id == placeId } ?: fakePlace
     }
 
     override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {

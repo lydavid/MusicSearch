@@ -69,6 +69,7 @@
     <string name="place_information">Place information</string>
     <string name="additional_details">Additional details</string>
     <string name="multiple_scripts">Multiple scripts</string>
+    <string name="coordinates">Coordinates</string>
 
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
