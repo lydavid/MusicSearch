@@ -57,7 +57,7 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
         SELECT IFNULL(
             (SELECT COUNT(*)
             $RECORDINGS_BY_WORK
-            GROUP BY w.id),
+            ),
             0
         ) AS count
     """

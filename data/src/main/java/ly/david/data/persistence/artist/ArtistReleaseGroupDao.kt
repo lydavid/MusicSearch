@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
 import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 
 @Dao
@@ -102,4 +103,25 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
         artistId: String,
         query: String
     ): PagingSource<Int, ReleaseGroupWithArtistCredits>
+
+    @Query(
+        """
+        SELECT IFNULL(
+            (SELECT COUNT(*)
+            $RELEASE_GROUPS_BY_ARTIST
+            ),
+            0
+        ) AS count
+    """
+    )
+    abstract suspend fun getNumberOfReleaseGroupsByArtist(artistId: String): Int
+
+    @Query(
+        """
+        SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) as count
+        $RELEASE_GROUPS_BY_ARTIST
+        GROUP BY rg.primary_type, rg.secondary_types
+    """
+    )
+    abstract suspend fun getCountOfEachAlbumType(artistId: String): List<ReleaseGroupTypeCount>
 }

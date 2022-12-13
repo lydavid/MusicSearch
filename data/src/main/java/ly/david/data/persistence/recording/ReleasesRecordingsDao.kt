@@ -63,7 +63,7 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
         SELECT IFNULL(
             (SELECT COUNT(*)
             $RELEASES_BY_RECORDING
-            GROUP BY rec.id),
+            ),
             0
         ) AS count
     """

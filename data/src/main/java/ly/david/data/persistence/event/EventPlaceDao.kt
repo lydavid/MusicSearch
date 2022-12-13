@@ -48,7 +48,6 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
     )
     abstract suspend fun deleteEventsByPlace(placeId: String)
 
-    // TODO: need group by? test it out for stats screen
     @Query(
         """
         SELECT IFNULL(

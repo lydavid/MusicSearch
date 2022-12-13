@@ -70,7 +70,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
             INNER JOIN releases_countries rc ON r.id = rc.release_id
             INNER JOIN areas a ON a.id = rc.country_id
             WHERE a.id = :areaId
-            GROUP BY a.id),
+            ),
             0
         ) AS count
     """

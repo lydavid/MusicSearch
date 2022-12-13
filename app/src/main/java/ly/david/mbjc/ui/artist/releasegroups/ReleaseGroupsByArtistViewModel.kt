@@ -77,7 +77,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = BrowseResourceRemoteMediator(
                         getRemoteResourceCount = { artistDao.getArtist(artistId)?.releaseGroupsCount },
-                        getLocalResourceCount = { artistDao.getNumberOfReleaseGroupsByArtist(artistId) },
+                        getLocalResourceCount = { artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(artistId) },
                         deleteLocalResource = {
                             artistReleaseGroupDao.deleteReleaseGroupsByArtist(artistId)
                         },

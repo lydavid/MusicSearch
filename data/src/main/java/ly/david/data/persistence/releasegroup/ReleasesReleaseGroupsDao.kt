@@ -60,7 +60,7 @@ abstract class ReleasesReleaseGroupsDao {
             FROM releases r
             INNER JOIN release_groups rg ON rg.id = r.release_group_id
             WHERE rg.id = :releaseGroupId
-            GROUP BY rg.id),
+            ),
             0
         ) AS count
     """

@@ -49,13 +49,12 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
     )
     abstract suspend fun deletePlacesByArea(areaId: String)
 
-    // TODO: need group by? test it out for stats screen
     @Query(
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
             $PLACES_BY_AREA
-            GROUP BY a.id),
+            ),
             0
         ) AS count
     """
