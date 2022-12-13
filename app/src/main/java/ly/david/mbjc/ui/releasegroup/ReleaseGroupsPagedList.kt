@@ -1,0 +1,84 @@
+package ly.david.mbjc.ui.releasegroup
+
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
+import androidx.paging.map
+import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.ListSeparator
+import ly.david.data.domain.ReleaseGroupListItemModel
+import ly.david.data.domain.toReleaseGroupListItemModel
+import ly.david.data.getDisplayTypes
+import ly.david.data.paging.BrowseResourceRemoteMediator
+import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
+import ly.david.mbjc.ui.common.paging.BrowseSortableResourceUseCase
+import ly.david.mbjc.ui.common.paging.SortablePagedList
+
+// This is currently 1-to-1 with ReleaseGroupsByArtistViewModel, but we expect to reuse for release groups by release
+/**
+ * Generic implementation for handling paged release groups.
+ *
+ * Meant to be implemented by a ViewModel through delegation.
+ *
+ * The ViewModel should should assign [scope] and [useCase] in its init block.
+ */
+internal class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<ListItemModel> {
+
+    override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    override val query: MutableStateFlow<String> = MutableStateFlow("")
+    override val sorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val paramState = combine(resourceId, query, sorted) { resourceId, query, sorted ->
+        SortablePagedList.ViewModelState(resourceId, query, sorted)
+    }.distinctUntilChanged()
+
+    lateinit var scope: CoroutineScope
+    lateinit var useCase: BrowseSortableResourceUseCase<ReleaseGroupWithArtistCredits>
+
+    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
+    override val pagedResources: Flow<PagingData<ListItemModel>> by lazy {
+        paramState.filterNot { it.resourceId.isEmpty() }
+            .flatMapLatest { (resourceId, query, sorted) ->
+                Pager(
+                    config = MusicBrainzPagingConfig.pagingConfig,
+                    remoteMediator = BrowseResourceRemoteMediator(
+                        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
+                        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
+                        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
+                        browseResource = { offset ->
+                            useCase.browseLinkedResourcesAndStore(resourceId, offset)
+                        }
+                    ),
+                    pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query, sorted) }
+                ).flow.map { pagingData ->
+                    pagingData.map {
+                        it.toReleaseGroupListItemModel()
+                    }
+                        .insertSeparators { releaseGroupListItem: ReleaseGroupListItemModel?, releaseGroupListItem2: ReleaseGroupListItemModel? ->
+                            if (sorted && releaseGroupListItem2 != null &&
+                                (releaseGroupListItem?.primaryType != releaseGroupListItem2.primaryType ||
+                                    releaseGroupListItem?.secondaryTypes != releaseGroupListItem2.secondaryTypes)
+                            ) {
+                                ListSeparator(releaseGroupListItem2.getDisplayTypes())
+                            } else {
+                                null
+                            }
+                        }
+                }
+            }
+            .distinctUntilChanged()
+            .cachedIn(scope)
+    }
+}

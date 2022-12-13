@@ -34,13 +34,14 @@ internal class ReleasesPagedList @Inject constructor() : PagedList<ReleaseListIt
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
-    override val paramState = combine(resourceId, query) { resourceId, query ->
+    private val paramState = combine(resourceId, query) { resourceId, query ->
         PagedList.ViewModelState(resourceId, query)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
     lateinit var useCase: BrowseResourceUseCase<ReleaseWithCreditsAndCountries>
 
+    // TODO: if we generalize useCase and PageList, can we cut down the number of these delegated classes?
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<ReleaseListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }

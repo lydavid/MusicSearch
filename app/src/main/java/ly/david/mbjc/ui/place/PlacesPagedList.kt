@@ -27,7 +27,7 @@ internal class PlacesPagedList @Inject constructor() : PagedList<PlaceListItemMo
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
-    override val paramState = combine(resourceId, query) { resourceId, query ->
+    private val paramState = combine(resourceId, query) { resourceId, query ->
         PagedList.ViewModelState(resourceId, query)
     }.distinctUntilChanged()
 

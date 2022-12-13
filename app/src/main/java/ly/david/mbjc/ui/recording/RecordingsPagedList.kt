@@ -34,7 +34,7 @@ internal class RecordingsPagedList @Inject constructor() : PagedList<RecordingLi
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
-    override val paramState = combine(resourceId, query) { resourceId, query ->
+    private val paramState = combine(resourceId, query) { resourceId, query ->
         PagedList.ViewModelState(resourceId, query)
     }.distinctUntilChanged()
 

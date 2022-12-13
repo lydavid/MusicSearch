@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.data.domain.ListItemModel
 
-internal interface PagedList<LI: ListItemModel> {
+internal interface PagedList<LI : ListItemModel> {
     data class ViewModelState(
         val resourceId: String = "",
         val query: String = ""
@@ -13,7 +13,6 @@ internal interface PagedList<LI: ListItemModel> {
 
     val resourceId: MutableStateFlow<String>
     val query: MutableStateFlow<String>
-    val paramState: Flow<ViewModelState>
 
     fun loadPagedResources(resourceId: String) {
         this.resourceId.value = resourceId
@@ -24,4 +23,18 @@ internal interface PagedList<LI: ListItemModel> {
     }
 
     val pagedResources: Flow<PagingData<LI>>
+}
+
+internal interface SortablePagedList<LI : ListItemModel> : PagedList<LI> {
+    data class ViewModelState(
+        val resourceId: String = "",
+        val query: String = "",
+        val sorted: Boolean = false
+    )
+
+    val sorted: MutableStateFlow<Boolean>
+
+    fun updateSorted(sorted: Boolean) {
+        this.sorted.value = sorted
+    }
 }

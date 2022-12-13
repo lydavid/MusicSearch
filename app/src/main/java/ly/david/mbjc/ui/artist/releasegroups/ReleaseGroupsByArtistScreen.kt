@@ -9,9 +9,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
+import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
-import ly.david.data.domain.ListItemModel
 import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
@@ -31,12 +31,12 @@ internal fun ReleaseGroupsByArtistScreen(
 ) {
 
     LaunchedEffect(key1 = artistId) {
-        viewModel.updateArtistId(artistId)
-        onPagedReleaseGroupsChange(viewModel.pagedReleaseGroups)
+        viewModel.loadPagedResources(artistId)
+        onPagedReleaseGroupsChange(viewModel.pagedResources)
     }
 
     viewModel.updateQuery(query = searchText)
-    viewModel.updateIsSorted(isSorted = isSorted)
+    viewModel.updateSorted(sorted = isSorted)
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
