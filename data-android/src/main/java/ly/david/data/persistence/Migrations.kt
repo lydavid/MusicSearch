@@ -195,4 +195,7 @@ internal object Migrations {
 
     @DeleteTable(tableName = "recordings_artists")
     class DropRecordingsArtists : AutoMigrationSpec
+
+    @DeleteColumn(tableName = "artists", columnName = "release_group_count")
+    class DeleteReleaseGroupCount : AutoMigrationSpec
 }

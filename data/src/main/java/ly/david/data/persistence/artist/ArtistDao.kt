@@ -9,14 +9,4 @@ abstract class ArtistDao : BaseDao<ArtistRoomModel>() {
 
     @Query("SELECT * FROM artists WHERE id = :artistId")
     abstract suspend fun getArtist(artistId: String): ArtistRoomModel?
-
-    // TODO: use browse_resources
-    @Query(
-        """
-        UPDATE artists
-        SET release_group_count = :releaseGroupCount
-        WHERE id = :artistId
-        """
-    )
-    abstract suspend fun setReleaseGroupCount(artistId: String, releaseGroupCount: Int)
 }
