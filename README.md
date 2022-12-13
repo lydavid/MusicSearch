@@ -6,7 +6,7 @@
 |---------------|--------|--------|---------------------------------------|
 | area          | x      | x      |
 | artist        | x      | x      |
-| event         | x      | x      |
+| event         | x      | x      | place                                 |
 | genre         |        | x      |
 | instrument    | x      | x      |
 | label         | x      | x      |
@@ -17,7 +17,6 @@
 | series        | x      | WIP    |
 | work          | x      | x      |
 | url           |        | x      |
-
 
 ## Code Coverage
 

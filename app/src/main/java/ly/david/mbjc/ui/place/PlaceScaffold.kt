@@ -18,8 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
@@ -31,12 +35,16 @@ import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
+import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 
 private enum class PlaceTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
+
+    // Should exclude event-rels because they appear to be the same as the results from browse events by place
     RELATIONSHIPS(R.string.relationships),
+    EVENTS(R.string.events),
     STATS(R.string.stats)
 }
 
@@ -50,12 +58,14 @@ internal fun PlaceScaffold(
     viewModel: PlaceViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.PLACE
+
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var place: PlaceListItemModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
@@ -86,7 +96,7 @@ internal fun PlaceScaffold(
     Scaffold(
         topBar = {
             // TODO: filter relationships
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = titleState,
                 onBack = onBack,
@@ -97,6 +107,11 @@ internal fun PlaceScaffold(
                 tabsTitles = PlaceTab.values().map { stringResource(id = it.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = PlaceTab.values()[it] },
+                showFilterIcon = selectedTab == PlaceTab.EVENTS,
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                },
             )
         },
     ) { innerPadding ->
@@ -106,6 +121,12 @@ internal fun PlaceScaffold(
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
+                .collectAsLazyPagingItems()
+
+        val eventsLazyListState = rememberLazyListState()
+        var pagedEventsFlow: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val eventsLazyPagingItems: LazyPagingItems<EventListItemModel> =
+            rememberFlowWithLifecycleStarted(pagedEventsFlow)
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
@@ -132,6 +153,18 @@ internal fun PlaceScaffold(
                     onItemClick = onItemClick,
                     lazyListState = relationsLazyListState,
                     lazyPagingItems = relationsLazyPagingItems,
+                )
+            }
+            PlaceTab.EVENTS -> {
+                EventsByPlaceScreen(
+                    placeId = placeId,
+                    modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
+                    eventsLazyListState = eventsLazyListState,
+                    eventsLazyPagingItems = eventsLazyPagingItems,
+                    onPagedEventsFlowChange = { pagedEventsFlow = it },
+                    onEventClick = onItemClick,
+                    filterText = filterText
                 )
             }
             PlaceTab.STATS -> {

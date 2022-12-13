@@ -57,8 +57,8 @@ internal fun LabelScaffold(
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
-    var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var filterText by rememberSaveable { mutableStateOf("") }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation

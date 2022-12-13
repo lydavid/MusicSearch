@@ -10,6 +10,7 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.network.browseEventsResponse
 import ly.david.data.network.browsePlacesResponse
 import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
@@ -87,6 +88,11 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
 
     // endregion
 
+    // region Browse
+    override suspend fun browseEventsByPlace(placeId: String, limit: Int, offset: Int): BrowseEventsResponse {
+        return browseEventsResponse
+    }
+
     override suspend fun browsePlacesByArea(areaId: String, limit: Int, offset: Int): BrowsePlacesResponse {
         return browsePlacesResponse
     }
@@ -136,7 +142,9 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
+    // endregion
 
+    // region Lookup
     override suspend fun lookupArea(areaId: String, include: String): AreaMusicBrainzModel {
         return fakeAreas.firstOrNull { it.id == areaId } ?: fakeArea
     }
@@ -145,7 +153,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return fakeArtist
     }
 
-    override suspend fun lookupEvent(eventId: String, include: String): EventMusicBrainzModel {
+    override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
         return fakeEvent
     }
 
@@ -176,4 +184,5 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
         return workMusicBrainzModel
     }
+    // endregion
 }

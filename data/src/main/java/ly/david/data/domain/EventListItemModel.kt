@@ -13,7 +13,7 @@ data class EventListItemModel(
     override val lifeSpan: LifeSpan? = null,
 ) : Event, ListItemModel()
 
-internal fun EventMusicBrainzModel.toEventListItemModel() =
+fun EventMusicBrainzModel.toEventListItemModel() =
     EventListItemModel(
         id = id,
         name = name,
@@ -22,7 +22,11 @@ internal fun EventMusicBrainzModel.toEventListItemModel() =
         lifeSpan = lifeSpan
     )
 
-internal fun EventRoomModel.toEventListItemModel() =
+fun EventRoomModel.toEventListItemModel() =
     EventListItemModel(
-        id, name, disambiguation, type, lifeSpan
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        lifeSpan = lifeSpan
     )

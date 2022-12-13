@@ -28,7 +28,7 @@ data class EventRoomModel(
     override val lifeSpan: LifeSpan?,
 ) : RoomModel, Event
 
-internal fun EventMusicBrainzModel.toEventRoomModel() =
+fun EventMusicBrainzModel.toEventRoomModel() =
     EventRoomModel(
         id = id,
         name = name,

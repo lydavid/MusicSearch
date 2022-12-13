@@ -40,6 +40,10 @@ interface LookupApi {
         const val INC_ALL_RELATIONS =
             "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
 
+        const val INC_ALL_RELATIONS_EXCLUDE_EVENTS =
+            "$AREA_REL+$ARTIST_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+
+
         // TODO: use this if we decide to split area relations lookup
         const val AREA_DEFAULT_RELS =
             "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
@@ -104,6 +108,12 @@ interface LookupApi {
         //"+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
     ): AreaMusicBrainzModel
 
+    @GET("event/{eventId}")
+    suspend fun lookupEvent(
+        @Path("eventId") eventId: String,
+        @Query("inc") include: String? = null
+    ): EventMusicBrainzModel
+
     @GET("place/{placeId}")
     suspend fun lookupPlace(
         @Path("placeId") placeId: String,
@@ -121,12 +131,6 @@ interface LookupApi {
         @Path("labelId") labelId: String,
         @Query("inc") include: String = "artist-rels+label-rels+url-rels"
     ): LabelMusicBrainzModel
-
-    @GET("event/{eventId}")
-    suspend fun lookupEvent(
-        @Path("eventId") eventId: String,
-        @Query("inc") include: String = EVENT_INC_DEFAULT
-    ): EventMusicBrainzModel
 
     // TODO: series
 }

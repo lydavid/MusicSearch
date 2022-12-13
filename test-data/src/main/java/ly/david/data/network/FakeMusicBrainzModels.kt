@@ -15,11 +15,6 @@ import ly.david.data.network.api.SearchSeriesResponse
 import ly.david.data.network.api.SearchWorksResponse
 import ly.david.data.persistence.history.LookupHistory
 
-val fakeEvent = EventMusicBrainzModel(
-    id = "1",
-    name = "Event Name"
-)
-
 val instrumentMusicBrainzModel = InstrumentMusicBrainzModel(
     id = "1",
     name = "Instrument Name",

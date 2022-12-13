@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.search
 
-import android.content.res.Configuration
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -9,12 +8,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.mbjc.ui.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,15 +41,5 @@ internal fun SearchScreenScaffold(
             searchQuery = searchQuery,
             searchOption = searchOption
         )
-    }
-}
-
-// TODO: broken
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun SearchScreenPreview() {
-    PreviewTheme {
-        SearchScreenScaffold()
     }
 }

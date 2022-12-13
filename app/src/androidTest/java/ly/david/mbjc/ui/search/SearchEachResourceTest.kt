@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 /**
- * Test interacting with each [searchableResources] from the search screen.
+ * Test interacting with each [searchableResources] from [SearchMusicBrainzScreen].
  */
 @HiltAndroidTest
 @RunWith(Parameterized::class)

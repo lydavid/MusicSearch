@@ -1,6 +1,7 @@
 package ly.david.data.network.api
 
 import com.squareup.moshi.Json
+import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
@@ -18,6 +19,13 @@ internal const val LABELS = "labels"
  * This is the only type of request with pagination.
  */
 interface BrowseApi {
+
+    @GET("event")
+    suspend fun browseEventsByPlace(
+        @Query("place") placeId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowseEventsResponse
 
     @GET("place")
     suspend fun browsePlacesByArea(
@@ -82,17 +90,23 @@ interface Browsable {
     val offset: Int
 }
 
+data class BrowseEventsResponse(
+    @Json(name = "event-count") override val count: Int,
+    @Json(name = "event-offset") override val offset: Int,
+    @Json(name = "events") val events: List<EventMusicBrainzModel>
+) : Browsable
+
 data class BrowsePlacesResponse(
-    @Json(name = "place-count") val count: Int,
-    @Json(name = "place-offset") val offset: Int,
+    @Json(name = "place-count") override val count: Int,
+    @Json(name = "place-offset") override val offset: Int,
     @Json(name = "places") val places: List<PlaceMusicBrainzModel>
-)
+) : Browsable
 
 data class BrowseRecordingsResponse(
-    @Json(name = "recording-count") val count: Int,
-    @Json(name = "recording-offset") val offset: Int,
+    @Json(name = "recording-count") override val count: Int,
+    @Json(name = "recording-offset") override val offset: Int,
     @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
-)
+) : Browsable
 
 data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,

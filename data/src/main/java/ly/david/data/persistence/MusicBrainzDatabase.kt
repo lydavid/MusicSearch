@@ -6,6 +6,7 @@ import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.event.EventDao
+import ly.david.data.persistence.event.EventPlaceDao
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.instrument.InstrumentDao
 import ly.david.data.persistence.label.LabelDao
@@ -40,6 +41,7 @@ interface MusicBrainzDatabase {
 
     fun getAreaDao(): AreaDao
     fun getAreaPlaceDao(): AreaPlaceDao
+    fun getEventPlaceDao(): EventPlaceDao
     fun getReleasesCountriesDao(): ReleasesCountriesDao
 
     fun getPlaceDao(): PlaceDao

@@ -124,6 +124,7 @@ internal fun AreaScaffold(
     )
 }
 
+// TODO: don't split like this, can't even preview this
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AreaScaffold(
