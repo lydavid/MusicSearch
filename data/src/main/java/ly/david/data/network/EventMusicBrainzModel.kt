@@ -11,6 +11,8 @@ data class EventMusicBrainzModel(
     @Json(name = "type") override val type: String? = null,
     @Json(name = "life-span") override val lifeSpan: LifeSpan? = null,
 
+    // TODO: time, cancelled
+
     // search API returns relations without target-type
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : Event, MusicBrainzModel()

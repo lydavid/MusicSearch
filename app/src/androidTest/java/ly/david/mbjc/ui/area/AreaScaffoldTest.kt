@@ -5,9 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -15,6 +13,7 @@ import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.fakeArea
 import ly.david.data.network.fakeAreaWithRelation
 import ly.david.data.network.fakeCountry
+import ly.david.data.network.fakePlace
 import ly.david.data.network.fakeRelease
 import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.area.AreaDao
@@ -54,7 +53,6 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
                 AreaScaffold(areaId = areaMusicBrainzModel.id)
             }
         }
-        composeTestRule.onRoot(useUnmergedTree = true).printToLog("AreaScaffoldTest")
     }
 
     // region General
@@ -65,9 +63,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(stats)
             .performClick()
 
-        composeTestRule
-            .onNodeWithText(fakeArea.name)
-            .assertIsDisplayed()
+        assertFieldsDisplayed()
     }
 
     @Test
@@ -78,12 +74,25 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
             composeTestRule.awaitIdle()
         }
 
+        assertFieldsDisplayed()
+    }
+
+    private fun assertFieldsDisplayed() {
         composeTestRule
             .onNodeWithText(stats)
             .performClick()
 
         composeTestRule
             .onNodeWithText(fakeArea.name)
+            .assertIsDisplayed()
+
+        // TODO: can't differentiate between local/network
+        //  also maybe it's better to test this composables independently
+        composeTestRule
+            .onNodeWithText(places)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakePlace.name)
             .assertIsDisplayed()
     }
 

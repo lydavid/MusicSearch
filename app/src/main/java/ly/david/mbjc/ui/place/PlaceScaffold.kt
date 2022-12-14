@@ -58,6 +58,7 @@ internal fun PlaceScaffold(
     viewModel: PlaceViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.PLACE
+    var place: PlaceListItemModel? by remember { mutableStateOf(null) }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
@@ -66,7 +67,6 @@ internal fun PlaceScaffold(
     var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var filterText by rememberSaveable { mutableStateOf("") }
-    var place: PlaceListItemModel? by remember { mutableStateOf(null) }
 
     if (!titleWithDisambiguation.isNullOrEmpty()) {
         titleState = titleWithDisambiguation
