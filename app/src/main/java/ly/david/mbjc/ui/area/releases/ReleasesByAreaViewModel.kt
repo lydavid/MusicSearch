@@ -6,6 +6,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
+import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.ReleaseCountry
@@ -17,21 +18,22 @@ import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 import ly.david.data.persistence.release.toRoomModel
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.release.ReleasesPagedList
+import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class ReleasesByAreaViewModel @Inject constructor(
-    private val releasesPagedList: ReleasesPagedList,
+    private val pagedListImpl: PagedListImpl<ReleaseWithCreditsAndCountries, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val releaseDao: ReleaseDao,
 ) : ViewModel(),
-    PagedList<ReleaseListItemModel> by releasesPagedList, BrowseResourceUseCase<ReleaseWithCreditsAndCountries> {
+    PagedList<ReleaseListItemModel> by pagedListImpl,
+    BrowseResourceUseCase<ReleaseWithCreditsAndCountries, ReleaseListItemModel> {
 
     init {
-        releasesPagedList.scope = viewModelScope
-        releasesPagedList.useCase = this
+        pagedListImpl.scope = viewModelScope
+        pagedListImpl.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
@@ -92,5 +94,9 @@ internal class ReleasesByAreaViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
+    }
+
+    override fun transformRoomToListItemModel(roomModel: ReleaseWithCreditsAndCountries): ReleaseListItemModel {
+        return roomModel.toReleaseListItemModel()
     }
 }

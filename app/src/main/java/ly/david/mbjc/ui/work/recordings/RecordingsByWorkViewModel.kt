@@ -6,6 +6,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.RecordingListItemModel
+import ly.david.data.domain.toRecordingListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.recording.RecordingDao
@@ -17,21 +18,22 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.RecordingsWorksDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.recording.RecordingsPagedList
+import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class RecordingsByWorkViewModel @Inject constructor(
-    private val recordingsPagedList: RecordingsPagedList,
+    private val pagedListImpl: PagedListImpl<RecordingForListItem, RecordingListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val recordingDao: RecordingDao,
     private val relationDao: RelationDao,
     private val recordingsWorksDao: RecordingsWorksDao,
 ) : ViewModel(),
-    PagedList<RecordingListItemModel> by recordingsPagedList, BrowseResourceUseCase<RecordingForListItem> {
+    PagedList<RecordingListItemModel> by pagedListImpl,
+    BrowseResourceUseCase<RecordingForListItem, RecordingListItemModel> {
 
     init {
-        recordingsPagedList.scope = viewModelScope
-        recordingsPagedList.useCase = this
+        pagedListImpl.scope = viewModelScope
+        pagedListImpl.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
@@ -95,5 +97,9 @@ internal class RecordingsByWorkViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
+    }
+
+    override fun transformRoomToListItemModel(roomModel: RecordingForListItem): RecordingListItemModel {
+        return roomModel.toRecordingListItemModel()
     }
 }

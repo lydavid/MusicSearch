@@ -6,6 +6,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.toPlaceListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.AreaPlace
@@ -17,21 +18,22 @@ import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.place.PlacesPagedList
+import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class PlacesByAreaViewModel @Inject constructor(
-    private val placesPagedList: PlacesPagedList,
+    private val pagedListImpl: PagedListImpl<PlaceRoomModel, PlaceListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
     private val areaPlaceDao: AreaPlaceDao,
     private val placeDao: PlaceDao,
 ) : ViewModel(),
-    PagedList<PlaceListItemModel> by placesPagedList, BrowseResourceUseCase<PlaceRoomModel> {
+    PagedList<PlaceListItemModel> by pagedListImpl,
+    BrowseResourceUseCase<PlaceRoomModel, PlaceListItemModel> {
 
     init {
-        placesPagedList.scope = viewModelScope
-        placesPagedList.useCase = this
+        pagedListImpl.scope = viewModelScope
+        pagedListImpl.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
@@ -91,5 +93,9 @@ internal class PlacesByAreaViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
+    }
+
+    override fun transformRoomToListItemModel(roomModel: PlaceRoomModel): PlaceListItemModel {
+        return roomModel.toPlaceListItemModel()
     }
 }

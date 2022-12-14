@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.place
+package ly.david.mbjc.ui.common.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -15,15 +15,18 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.PlaceListItemModel
-import ly.david.data.domain.toPlaceListItemModel
+import ly.david.data.domain.ListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.place.PlaceRoomModel
-import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.data.persistence.RoomModel
 
-internal class PlacesPagedList @Inject constructor() : PagedList<PlaceListItemModel> {
+/**
+ * Generic implementation for handling paged [RoomModel]/[ListItemModel].
+ *
+ * Meant to be implemented by a ViewModel through delegation.
+ * The ViewModel should should assign [scope] and [useCase] in its init block.
+ */
+internal class PagedListImpl<RM: RoomModel, LI: ListItemModel> @Inject constructor() : PagedList<LI> {
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
@@ -32,10 +35,10 @@ internal class PlacesPagedList @Inject constructor() : PagedList<PlaceListItemMo
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseResourceUseCase<PlaceRoomModel>
+    lateinit var useCase: BrowseResourceUseCase<RM, LI>
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedResources: Flow<PagingData<PlaceListItemModel>> by lazy {
+    override val pagedResources: Flow<PagingData<LI>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
@@ -51,7 +54,7 @@ internal class PlacesPagedList @Inject constructor() : PagedList<PlaceListItemMo
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
                 ).flow.map { pagingData ->
                     pagingData.map {
-                        it.toPlaceListItemModel()
+                        useCase.transformRoomToListItemModel(it)
                     }
                 }
             }

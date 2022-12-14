@@ -6,6 +6,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.toEventListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.event.EventDao
@@ -17,21 +18,22 @@ import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.event.EventsPagedList
+import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class EventsByPlaceViewModel @Inject constructor(
-    private val eventsPagedList: EventsPagedList,
+    private val pagedListImpl: PagedListImpl<EventRoomModel, EventListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
     private val eventPlaceDao: EventPlaceDao,
     private val eventDao: EventDao,
 ) : ViewModel(),
-    PagedList<EventListItemModel> by eventsPagedList, BrowseResourceUseCase<EventRoomModel> {
+    PagedList<EventListItemModel> by pagedListImpl,
+    BrowseResourceUseCase<EventRoomModel, EventListItemModel> {
 
     init {
-        eventsPagedList.scope = viewModelScope
-        eventsPagedList.useCase = this
+        pagedListImpl.scope = viewModelScope
+        pagedListImpl.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
@@ -91,5 +93,9 @@ internal class EventsByPlaceViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
+    }
+
+    override fun transformRoomToListItemModel(roomModel: EventRoomModel): EventListItemModel {
+        return roomModel.toEventListItemModel()
     }
 }
