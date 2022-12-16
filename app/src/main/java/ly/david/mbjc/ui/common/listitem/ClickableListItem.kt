@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.mbjc.ui.common.listitem
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

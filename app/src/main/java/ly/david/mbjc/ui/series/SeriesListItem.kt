@@ -12,12 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.SeriesListItemModel
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun SeriesListItem(
@@ -32,25 +32,21 @@ internal fun SeriesListItem(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            Text(
-                text = series.name,
-                style = TextStyles.getCardTitleTextStyle(),
-            )
-
-            if (!series.disambiguation.isNullOrEmpty()) {
+            series.run {
                 Text(
-                    text = series.disambiguation.transformThisIfNotNullOrEmpty { "($it)" },
-                    style = TextStyles.getCardBodyTextStyle(),
-                    color = getSubTextColor(),
+                    text = name,
+                    style = TextStyles.getCardTitleTextStyle(),
                 )
-            }
 
-            val type = series.type
-            if (!type.isNullOrEmpty()) {
-                Text(
-                    text = type,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                )
+                DisambiguationText(disambiguation = disambiguation)
+
+                type.ifNotNullOrEmpty {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
             }
         }
     }

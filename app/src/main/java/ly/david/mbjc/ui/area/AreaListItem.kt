@@ -14,17 +14,19 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
+import ly.david.data.common.ifNotNull
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.showReleases
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 /**
  * Also used for release event cards since their Destination is also an Area.
@@ -66,15 +68,7 @@ internal fun AreaListItem(
                     style = TextStyles.getCardTitleTextStyle(),
                 )
 
-                val disambiguation = area.disambiguation
-                if (!disambiguation.isNullOrEmpty()) {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = "($disambiguation)",
-                        color = getSubTextColor(),
-                        style = TextStyles.getCardBodyTextStyle()
-                    )
-                }
+                DisambiguationText(disambiguation = area.disambiguation)
 
                 val type = area.type
                 if (showType && !type.isNullOrEmpty()) {
@@ -85,20 +79,18 @@ internal fun AreaListItem(
                     )
                 }
 
-                val lifeSpan = area.lifeSpan.getLifeSpanForDisplay()
-                if (lifeSpan.isNotEmpty()) {
+                area.lifeSpan.ifNotNull {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = lifeSpan,
+                        text = it.getLifeSpanForDisplay(),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
             }
 
-            val date = area.date
-            if (!date.isNullOrEmpty()) {
+            area.date.ifNotNullOrEmpty {
                 Text(
-                    text = date,
+                    text = it,
                     style = TextStyles.getCardBodyTextStyle(),
                     modifier = Modifier
                         .constrainAs(endSection) {

@@ -18,7 +18,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles

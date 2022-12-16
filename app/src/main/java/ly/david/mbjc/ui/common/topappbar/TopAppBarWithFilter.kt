@@ -38,6 +38,9 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
+/**
+ * [ScrollableTopAppBar] with filtering.
+ */
 @Composable
 internal fun TopAppBarWithFilter(
     onBack: () -> Unit = {},
@@ -45,14 +48,17 @@ internal fun TopAppBarWithFilter(
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
-    showFilterIcon: Boolean = true,
+
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-    filterText: String = "",
-    onFilterTextChange: (String) -> Unit = {},
+
     tabsTitles: List<String> = listOf(),
     selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {}
+    onSelectTabIndex: (Int) -> Unit = {},
+
+    showFilterIcon: Boolean = true,
+    filterText: String = "",
+    onFilterTextChange: (String) -> Unit = {},
 ) {
     var isFilterMode by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }

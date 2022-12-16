@@ -46,6 +46,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 private const val DELAY_LOADING_MS = 300L
 
 /**
+ * [SmallTopAppBar] with icon for [resource], scrollable [title]/[subtitle];
+ * drawer button invoking [openDrawer] if not null, otherwise back button invoking [onBack];
+ * and [Tab]s for each [tabsTitles].
  *
  * @param resource What [MusicBrainzResource]'s icon to display.
  */
@@ -56,7 +59,9 @@ internal fun ScrollableTopAppBar(
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
+
     mainAction: @Composable (() -> Unit)? = null,
+
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 

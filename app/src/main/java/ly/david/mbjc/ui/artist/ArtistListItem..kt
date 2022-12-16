@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.artist
 
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -13,16 +13,17 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.LifeSpan
+import ly.david.data.common.ifNotNull
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
-import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun ArtistListItem(
@@ -37,84 +38,57 @@ internal fun ArtistListItem(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            val (name, countryCode, disambiguation, type, lifeSpan) = createRefs()
+            val (mainSection, endSection, bottomSection) = createRefs()
 
             Text(
                 text = artist.name,
                 style = TextStyles.getCardTitleTextStyle(),
                 modifier = Modifier
-                    .constrainAs(name) {
+                    .constrainAs(mainSection) {
                         width = Dimension.fillToConstraints
                         start.linkTo(parent.start)
                         top.linkTo(parent.top)
-                        end.linkTo(countryCode.start)
+                        end.linkTo(endSection.start)
                     }
             )
 
-            val countryCodeText = artist.countryCode
-            if (!countryCodeText.isNullOrEmpty()) {
+            artist.countryCode?.ifNotNullOrEmpty { countryCode ->
                 Text(
-                    text = "${countryCodeText.toFlagEmoji()} ${artist.countryCode}",
+                    text = "${countryCode.toFlagEmoji()} $countryCode",
                     style = TextStyles.getCardTitleTextStyle(),
                     modifier = Modifier
-                        .constrainAs(countryCode) {
+                        .constrainAs(endSection) {
                             width = Dimension.wrapContent
-                            start.linkTo(name.end, margin = 4.dp)
+                            start.linkTo(mainSection.end, margin = 4.dp)
                             top.linkTo(parent.top)
                             end.linkTo(parent.end)
                         }
                 )
-            } else {
-                Spacer(modifier = Modifier.constrainAs(countryCode) {
-                    end.linkTo(parent.end)
-                })
             }
 
-            if (!artist.disambiguation.isNullOrEmpty()) {
-                Text(
-                    text = artist.disambiguation.transformThisIfNotNullOrEmpty { "($it)" },
-                    style = TextStyles.getCardBodyTextStyle(),
-                    color = getSubTextColor(),
-                    modifier = Modifier
-                        .constrainAs(disambiguation) {
-                            width = Dimension.matchParent
-                            top.linkTo(name.bottom, margin = 4.dp)
-                        }
-                )
-            } else {
-                Spacer(modifier = Modifier.constrainAs(disambiguation) {
-                    top.linkTo(name.bottom)
-                })
-            }
+            Column(
+                modifier = Modifier.constrainAs(bottomSection) {
+                    width = Dimension.matchParent
+                    top.linkTo(mainSection.bottom)
+                }
+            ) {
+                DisambiguationText(disambiguation = artist.disambiguation)
 
-            val artistType = artist.type
-            if (!artistType.isNullOrEmpty()) {
-                Text(
-                    text = artistType,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                    modifier = Modifier
-                        .constrainAs(type) {
-                            width = Dimension.matchParent
-                            top.linkTo(disambiguation.bottom, margin = 4.dp)
-                        }
-                )
-            } else {
-                Spacer(modifier = Modifier.constrainAs(type) {
-                    top.linkTo(disambiguation.bottom)
-                })
-            }
+                artist.type.ifNotNullOrEmpty {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle()
+                    )
+                }
 
-            val lifeSpanText = artist.lifeSpan.getLifeSpanForDisplay()
-            if (lifeSpanText.isNotEmpty()) {
-                Text(
-                    text = lifeSpanText,
-                    style = TextStyles.getCardBodySubTextStyle(),
-                    modifier = Modifier
-                        .constrainAs(lifeSpan) {
-                            width = Dimension.matchParent
-                            top.linkTo(type.bottom, margin = 4.dp)
-                        }
-                )
+                artist.lifeSpan.ifNotNull {
+                    Text(
+                        text = it.getLifeSpanForDisplay(),
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle(),
+                    )
+                }
             }
         }
     }

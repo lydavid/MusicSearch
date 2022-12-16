@@ -16,7 +16,7 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor

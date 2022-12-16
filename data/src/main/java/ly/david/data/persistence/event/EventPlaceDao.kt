@@ -27,8 +27,8 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
             $EVENTS_BY_PLACE
         """
 
-        private const val ORDER_BY_NAME = """
-            ORDER BY e.name
+        private const val ORDER_BY_DATE_NAME = """
+            ORDER BY e.begin, e.end, e.name
         """
 
         private const val FILTERED = """
@@ -64,7 +64,7 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
     @Query(
         """
         $SELECT_EVENT_BY_PLACE
-        $ORDER_BY_NAME
+        $ORDER_BY_DATE_NAME
     """
     )
     abstract fun getEventsByPlace(placeId: String): PagingSource<Int, EventRoomModel>
@@ -74,7 +74,7 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
         """
         $SELECT_EVENT_BY_PLACE
         $FILTERED
-        $ORDER_BY_NAME
+        $ORDER_BY_DATE_NAME
     """
     )
     abstract fun getEventsByPlace(

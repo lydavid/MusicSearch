@@ -12,11 +12,11 @@ import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.WorkListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun WorkListItem(
@@ -31,41 +31,37 @@ internal fun WorkListItem(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            Text(
-                text = work.name,
-                style = TextStyles.getCardTitleTextStyle(),
-            )
-            work.disambiguation.ifNotNullOrEmpty {
+            work.run {
                 Text(
-                    text = "($it)",
-                    style = TextStyles.getCardBodyTextStyle(),
-                    color = getSubTextColor()
+                    text = name,
+                    style = TextStyles.getCardTitleTextStyle(),
                 )
-            }
-            work.iswcs?.ifNotNullOrEmpty {
-                Text(
-                    text = it.joinToString("\n"),
-                    style = TextStyles.getCardBodySubTextStyle()
-                )
-            }
-            work.type?.let {
-                Text(
-                    text = it,
-                    style = TextStyles.getCardBodyTextStyle()
-                )
-            }
-            work.language?.ifNotNullOrEmpty {
-                Text(
-                    text = Locale(it).displayLanguage,
-                    style = TextStyles.getCardBodyTextStyle()
-                )
-            }
+                DisambiguationText(disambiguation = disambiguation)
+                iswcs?.ifNotNullOrEmpty {
+                    Text(
+                        text = it.joinToString("\n"),
+                        style = TextStyles.getCardBodySubTextStyle()
+                    )
+                }
+                type?.let {
+                    Text(
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle()
+                    )
+                }
+                language?.ifNotNullOrEmpty {
+                    Text(
+                        text = Locale(it).displayLanguage,
+                        style = TextStyles.getCardBodyTextStyle()
+                    )
+                }
 
-            // TODO: writers
-            //  these come from relations
+                // TODO: writers
+                //  these come from relations
 
-            // TODO: artists
-            //  these are the artists from each recording
+                // TODO: artists
+                //  these are the artists from each recording
+            }
         }
     }
 }

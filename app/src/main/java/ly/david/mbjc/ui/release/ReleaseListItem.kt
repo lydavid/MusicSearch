@@ -22,7 +22,7 @@ import ly.david.data.common.toFlagEmoji
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles

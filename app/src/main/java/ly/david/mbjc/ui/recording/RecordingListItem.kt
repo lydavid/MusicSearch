@@ -14,11 +14,11 @@ import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.ThreeSectionListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.release.tracks.TrackListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 /**
  * Also see [TrackListItem].
@@ -36,13 +36,7 @@ internal fun RecordingListItem(
                 style = TextStyles.getCardTitleTextStyle(),
             )
 
-            recording.disambiguation.ifNotNullOrEmpty {
-                Text(
-                    text = "($it)",
-                    style = TextStyles.getCardBodyTextStyle(),
-                    color = getSubTextColor()
-                )
-            }
+            DisambiguationText(disambiguation = recording.disambiguation)
 
             recording.formattedArtistCredits.ifNotNullOrEmpty {
                 Text(

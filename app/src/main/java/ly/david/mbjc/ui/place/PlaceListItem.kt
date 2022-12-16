@@ -14,9 +14,9 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getLifeSpanForDisplay
-import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -32,14 +32,16 @@ internal fun PlaceListItem(
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
             place.run {
                 Text(
-                    text = getNameWithDisambiguation(),
+                    text = name,
                     style = TextStyles.getCardTitleTextStyle()
                 )
 
+                DisambiguationText(disambiguation = disambiguation)
+
                 type.ifNotNullOrEmpty {
                     Text(
-                        modifier = Modifier.padding(top = 4.dp),
                         text = it,
+                        modifier = Modifier.padding(top = 4.dp),
                         style = TextStyles.getCardBodyTextStyle(),
                     )
                 }

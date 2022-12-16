@@ -31,7 +31,7 @@ import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler

@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.instrument
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,16 +7,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.InstrumentListItemModel
-import ly.david.data.getNameWithDisambiguation
-import ly.david.mbjc.ui.common.ClickableListItem
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
+import ly.david.mbjc.ui.common.listitem.DisambiguationText
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
 
 @Composable
 internal fun InstrumentListItem(
@@ -32,34 +32,37 @@ internal fun InstrumentListItem(
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            Text(
-                text = instrument.getNameWithDisambiguation(),
-                style = TextStyles.getCardTitleTextStyle()
-            )
 
-            val type = instrument.type
-            if (!type.isNullOrEmpty()) {
+            instrument.run {
                 Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = type,
-                    color = getSubTextColor(),
-                    style = TextStyles.getCardBodyTextStyle(),
+                    text = name,
+                    style = TextStyles.getCardTitleTextStyle()
                 )
-            }
 
-            val description = instrument.description
-            if (!description.isNullOrEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = description,
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
+                DisambiguationText(disambiguation = disambiguation)
+
+                type.ifNotNullOrEmpty {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                description.ifNotNullOrEmpty {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
             }
         }
     }
 }
 
 // Cannot be private.
+@ExcludeFromJacocoGeneratedReport
 internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider<InstrumentListItemModel> {
     override val values = sequenceOf(
         InstrumentListItemModel(
@@ -88,8 +91,8 @@ internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ExcludeFromJacocoGeneratedReport
+@DefaultPreviews
 @Composable
 private fun Preview(
     @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel
