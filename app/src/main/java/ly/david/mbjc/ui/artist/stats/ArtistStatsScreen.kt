@@ -24,7 +24,7 @@ import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.addSpacer
-import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
 import ly.david.mbjc.ui.theme.PreviewTheme

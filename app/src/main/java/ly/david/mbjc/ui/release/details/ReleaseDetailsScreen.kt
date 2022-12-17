@@ -26,8 +26,9 @@ import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
-import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.label.LabelListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -69,7 +70,7 @@ private fun ReleaseDetailsScreen(
     LazyColumn(state = lazyListState) {
         item {
             release.run {
-                ListSeparatorHeader(text = stringResource(id = R.string.release_information))
+                InformationListSeparatorHeader(R.string.release)
                 barcode?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.barcode, text = it)
                 }

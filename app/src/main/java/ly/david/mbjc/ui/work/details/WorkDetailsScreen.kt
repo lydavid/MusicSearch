@@ -6,14 +6,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.WorkListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
@@ -29,7 +28,7 @@ internal fun WorkDetailsScreen(
     ) {
         item {
             work.run {
-                ListSeparatorHeader(text = stringResource(id = R.string.work_information))
+                InformationListSeparatorHeader(R.string.work)
                 type?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.type, text = it)
                 }

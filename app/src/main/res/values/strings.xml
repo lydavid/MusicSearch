@@ -69,9 +69,7 @@
     <string name="asin">ASIN</string>
     <string name="iswc">ISWC</string>
     <string name="release_events">Release events</string>
-    <string name="release_information">Release information</string>
-    <string name="work_information">Work information</string>
-    <string name="place_information">Place information</string>
+    <string name="information_header">%s information</string>
     <string name="additional_details">Additional details</string>
     <string name="multiple_scripts">Multiple scripts</string>
     <string name="coordinates">Coordinates</string>

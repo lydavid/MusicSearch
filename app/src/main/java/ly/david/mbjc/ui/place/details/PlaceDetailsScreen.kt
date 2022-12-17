@@ -20,8 +20,9 @@ import ly.david.data.navigation.Destination
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
-import ly.david.mbjc.ui.common.ListSeparatorHeader
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.place.CoordinateListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -41,8 +42,7 @@ internal fun PlaceDetailsScreen(
     ) {
         item {
             place.run {
-                ListSeparatorHeader(text = stringResource(id = R.string.place_information))
-
+                InformationListSeparatorHeader(R.string.place)
                 type?.ifNotNullOrEmpty {
                     TextWithHeading(headingRes = R.string.type, text = it)
                 }

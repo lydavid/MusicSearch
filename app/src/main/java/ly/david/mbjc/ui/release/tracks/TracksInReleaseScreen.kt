@@ -29,7 +29,7 @@ import ly.david.data.domain.Header
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.TrackListItemModel
 import ly.david.data.domain.ListItemModel
-import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 /**

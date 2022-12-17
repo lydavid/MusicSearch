@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.ListSeparatorHeader
+import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.preview.DefaultPreviews

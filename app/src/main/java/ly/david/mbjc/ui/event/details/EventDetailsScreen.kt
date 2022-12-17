@@ -18,6 +18,7 @@ import ly.david.data.domain.EventListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.LifeSpanText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -30,6 +31,7 @@ internal fun EventDetailsScreen(
 ) {
     Column(modifier = modifier) {
         event.run {
+            InformationListSeparatorHeader(R.string.event)
             type?.ifNotNullOrEmpty {
                 TextWithHeading(headingRes = R.string.type, text = it)
             }
