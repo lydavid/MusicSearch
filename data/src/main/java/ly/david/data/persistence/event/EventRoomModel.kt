@@ -11,21 +11,13 @@ import ly.david.data.persistence.RoomModel
 
 @Entity(tableName = "events")
 data class EventRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-
-    @ColumnInfo(name = "name")
-    override val name: String,
-
-    @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String?,
-
-    @ColumnInfo(name = "type")
-    override val type: String?,
-
-    @Embedded
-    override val lifeSpan: LifeSpan?,
+    @PrimaryKey @ColumnInfo(name = "id") override val id: String,
+    @ColumnInfo(name = "name") override val name: String,
+    @ColumnInfo(name = "disambiguation") override val disambiguation: String?,
+    @ColumnInfo(name = "type") override val type: String?,
+    @ColumnInfo(name = "time") override val time: String? = null,
+    @ColumnInfo(name = "cancelled") override val cancelled: Boolean? = null,
+    @Embedded override val lifeSpan: LifeSpan?,
 ) : RoomModel, Event
 
 fun EventMusicBrainzModel.toEventRoomModel() =
@@ -34,5 +26,7 @@ fun EventMusicBrainzModel.toEventRoomModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
+        time = time,
+        cancelled = cancelled,
         lifeSpan = lifeSpan,
     )

@@ -20,6 +20,18 @@ adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.i
 adb shell am start -d "mbjc://artist/d044577e-aa22-43b7-ab29-cabee5f6643c" -a android.intent.action.VIEW
 ```
 
+## Event
+
+```shell
+adb shell am start -d "mbjc://event/3d6f84e1-bb1b-4caa-9abf-db67a4c2c055" -a android.intent.action.VIEW
+```
+
+Cancelled
+```shell
+adb shell am start -d "mbjc://event/3a6d0f96-d0ec-487d-bfbc-c584c8d31596" -a android.intent.action.VIEW
+```
+
+
 ## Recording
 
 Recording with recording
@@ -127,11 +139,6 @@ adb shell am start -d "mbjc://label/d4cd174f-784d-48d7-91c6-7427bd5d57fe" -a and
 ```
 
 
-## Event
-
-```shell
-adb shell am start -d "mbjc://event/3d6f84e1-bb1b-4caa-9abf-db67a4c2c055" -a android.intent.action.VIEW
-```
 
 
 ## Genre

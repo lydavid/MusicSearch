@@ -31,6 +31,7 @@ import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.event.details.EventDetailsScreen
 
 // TODO: all of its content are relationships, there's no browsing supported
 private enum class EventTab(@StringRes val titleRes: Int) {

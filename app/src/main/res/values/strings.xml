@@ -56,8 +56,10 @@
     <string name="type">Type</string>
     <string name="opened">Opened</string>
     <string name="closed">Closed</string>
+    <string name="date">Date</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
+    <string name="time">Time</string>
     <string name="address">Address</string>
     <string name="packaging">Packaging</string>
     <string name="status">Status</string>
@@ -73,6 +75,7 @@
     <string name="additional_details">Additional details</string>
     <string name="multiple_scripts">Multiple scripts</string>
     <string name="coordinates">Coordinates</string>
+    <string name="cancelled">Cancelled</string>
 
     <string name="ok">OK</string>
     <string name="retry">Retry</string>

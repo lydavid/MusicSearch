@@ -10,6 +10,8 @@ data class EventListItemModel(
     override val name: String,
     override val disambiguation: String? = null,
     override val type: String? = null,
+    override val time: String? = null,
+    override val cancelled: Boolean? = null,
     override val lifeSpan: LifeSpan? = null,
 ) : Event, ListItemModel()
 
@@ -19,6 +21,8 @@ fun EventMusicBrainzModel.toEventListItemModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
+        time = time,
+        cancelled = cancelled,
         lifeSpan = lifeSpan
     )
 
@@ -28,5 +32,7 @@ fun EventRoomModel.toEventListItemModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
+        time = time,
+        cancelled = cancelled,
         lifeSpan = lifeSpan
     )
