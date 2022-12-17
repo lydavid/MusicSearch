@@ -55,7 +55,7 @@ private enum class AreaTab(@StringRes val titleRes: Int) {
 }
 
 /**
- * A screen that starts on relationships tab.
+ * The top-level screen for an area.
  */
 @Composable
 internal fun AreaScaffold(

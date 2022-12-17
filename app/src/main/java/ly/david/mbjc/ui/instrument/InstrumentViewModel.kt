@@ -1,18 +1,28 @@
 package ly.david.mbjc.ui.instrument
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.InstrumentRepository
-import ly.david.mbjc.ui.relation.RelationViewModel
+import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import ly.david.mbjc.ui.relation.IRelationsList
+import ly.david.mbjc.ui.relation.RelationsList
 
 @HiltViewModel
 internal class InstrumentViewModel @Inject constructor(
-    private val instrumentRepository: InstrumentRepository,
-    relationDao: RelationDao
-) : RelationViewModel(relationDao) {
+    private val repository: InstrumentRepository,
+    private val relationsList: RelationsList,
+    override val lookupHistoryDao: LookupHistoryDao,
+) : ViewModel(), RecordLookupHistory,
+    IRelationsList by relationsList {
 
-    suspend fun lookupInstrument(instrumentId: String) = instrumentRepository.lookupInstrument(instrumentId).also {
-        loadRelations(it.id)
+    init {
+        relationsList.scope = viewModelScope
+        relationsList.repository = repository
     }
+
+    suspend fun lookupInstrument(instrumentId: String) =
+        repository.lookupInstrument(instrumentId)
 }

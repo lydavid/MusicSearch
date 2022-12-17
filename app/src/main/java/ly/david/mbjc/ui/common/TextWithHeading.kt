@@ -19,6 +19,7 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
+// TODO: selecting this starting from heading will behave strangely for text with multiple lines
 @Composable
 internal fun TextWithHeading(
     @StringRes headingRes: Int,

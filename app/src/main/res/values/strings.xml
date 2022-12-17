@@ -76,6 +76,7 @@
     <string name="multiple_scripts">Multiple scripts</string>
     <string name="coordinates">Coordinates</string>
     <string name="cancelled">Cancelled</string>
+    <string name="description">Description</string>
 
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
