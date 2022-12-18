@@ -151,7 +151,7 @@ adb shell am start -d "mbjc://genre/911c7bbb-172d-4df8-9478-dbff4296e791?title=P
 - work attributes
 
 ```shell
-adb shell am start -d "mbjc://work/82cbbd32-3b19-3fd7-b409-49d1dbededd5" -a android.intent.action.VIEW
+adb shell am start -d "mbjc://work/412c8cf4-6905-3b4b-a59a-1a71f98e2677" -a android.intent.action.VIEW
 ```
 
 - arrangements

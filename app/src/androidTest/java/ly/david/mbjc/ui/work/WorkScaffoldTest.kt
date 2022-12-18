@@ -9,7 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.fakeWork
+import ly.david.data.network.fakeWorkWithAllData
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -38,7 +38,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
 
     @Test
     fun firstVisit_noLocalData() {
-        setWork(fakeWork)
+        setWork(fakeWorkWithAllData)
         runBlocking { composeTestRule.awaitIdle() }
 
         assertFieldsDisplayed()
@@ -47,8 +47,8 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     @Test
     fun repeatVisit_localData() {
         runBlocking {
-            repository.lookupWork(fakeWork.id)
-            setWork(fakeWork)
+            repository.lookupWork(fakeWorkWithAllData.id)
+            setWork(fakeWorkWithAllData)
             composeTestRule.awaitIdle()
         }
 
@@ -60,21 +60,21 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(stats)
             .performClick()
         composeTestRule
-            .onNodeWithText(fakeWork.getNameWithDisambiguation())
+            .onNodeWithText(fakeWorkWithAllData.getNameWithDisambiguation())
             .assertIsDisplayed()
 
         composeTestRule
             .onNodeWithText(details)
             .performClick()
         composeTestRule
-            .onNodeWithText(fakeWork.type!!)
+            .onNodeWithText(fakeWorkWithAllData.type!!)
             .assertIsDisplayed()
         // Doesn't work cause it contains : but we shouldn't be testing for exact string here
 //        composeTestRule
 //            .onNodeWithText(fakeWork.attributes!!.first().type)
 //            .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(fakeWork.attributes!!.first().value)
+            .onNodeWithText(fakeWorkWithAllData.attributes!!.first().value)
             .assertIsDisplayed()
     }
 
@@ -86,7 +86,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule.activity.setContent {
             PreviewTheme {
                 WorkScaffold(
-                    workId = fakeWork.id,
+                    workId = fakeWorkWithAllData.id,
                     titleWithDisambiguation = customName
                 )
             }
@@ -95,7 +95,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         runBlocking { composeTestRule.awaitIdle() }
 
         composeTestRule
-            .onNodeWithText(fakeWork.name)
+            .onNodeWithText(fakeWorkWithAllData.name)
             .assertDoesNotExist()
 
         composeTestRule
@@ -103,17 +103,17 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
-//    @Test
-//    fun releaseHasRelations() {
-//        setWork(fakePlaceWithRelation)
-//        runBlocking { composeTestRule.awaitIdle() }
-//
-//        composeTestRule
-//            .onNodeWithText(relationships)
-//            .performClick()
-//
-//        composeTestRule
-//            .onNodeWithText(fakePlaceWithRelation.relations?.first()?.event?.name ?: "")
-//            .assertIsDisplayed()
-//    }
+    @Test
+    fun hasRelations() {
+        setWork(fakeWorkWithAllData)
+        runBlocking { composeTestRule.awaitIdle() }
+
+        composeTestRule
+            .onNodeWithText(relationships)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(fakeWorkWithAllData.relations?.first()?.work?.name!!)
+            .assertIsDisplayed()
+    }
 }

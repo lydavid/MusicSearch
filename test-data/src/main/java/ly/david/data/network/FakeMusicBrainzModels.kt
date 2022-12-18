@@ -7,7 +7,6 @@ import ly.david.data.network.api.SearchArtistsResponse
 import ly.david.data.network.api.SearchEventsResponse
 import ly.david.data.network.api.SearchInstrumentsResponse
 import ly.david.data.network.api.SearchLabelsResponse
-import ly.david.data.network.api.SearchPlacesResponse
 import ly.david.data.network.api.SearchRecordingsResponse
 import ly.david.data.network.api.SearchReleaseGroupsResponse
 import ly.david.data.network.api.SearchReleasesResponse
@@ -38,7 +37,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.RELEASE -> fakeRelease
         MusicBrainzResource.RELEASE_GROUP -> fakeReleaseGroup
         MusicBrainzResource.SERIES -> seriesMusicBrainzModel
-        MusicBrainzResource.WORK -> fakeWork
+        MusicBrainzResource.WORK -> fakeWorkWithAllData
         MusicBrainzResource.URL -> TODO()
     }
 
@@ -78,11 +77,7 @@ val searchLabelsResponse = SearchLabelsResponse(
     listOf(element = fakeLabel)
 )
 
-val searchPlacesResponse = SearchPlacesResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = fakePlace)
-)
+
 
 val searchRecordingsResponse = SearchRecordingsResponse(
     count = 1,
@@ -108,11 +103,7 @@ val searchSeriesResponse = SearchSeriesResponse(
     listOf(element = seriesMusicBrainzModel)
 )
 
-val searchWorksResponse = SearchWorksResponse(
-    count = 1,
-    offset = 0,
-    listOf(element = fakeWork)
-)
+
 
 
 

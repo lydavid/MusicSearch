@@ -26,7 +26,7 @@ import ly.david.data.network.fakeRecording
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleases
-import ly.david.data.network.fakeWork
+import ly.david.data.network.fakeWorkWithAllData
 import ly.david.data.network.instrumentMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
@@ -182,7 +182,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
-        return fakeWork
+        return fakeWorkWithAllData
     }
     // endregion
 }

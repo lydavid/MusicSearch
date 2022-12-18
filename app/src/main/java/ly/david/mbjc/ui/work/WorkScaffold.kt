@@ -149,6 +149,11 @@ internal fun WorkScaffold(
                 )
             }
             WorkTab.RECORDINGS -> {
+                // TODO: browsing rather than lookup recording-rels doesn't include attributes
+                //  Compare:
+                //  - https://musicbrainz.org/ws/2/work/c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3?inc=recording-rels
+                //  - https://musicbrainz.org/ws/2/recording?work=c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3
+                //      - missing "instrumental" attribute
                 RecordingsByWorkScreen(
                     workId = workId,
                     modifier = Modifier.padding(innerPadding),

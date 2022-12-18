@@ -14,7 +14,6 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.fakePlace
 import ly.david.data.network.fakePlaceWithAllData
-import ly.david.data.network.fakePlaceWithRelation
 import ly.david.data.repository.PlaceRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -118,8 +117,8 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun releaseHasRelations() {
-        setPlace(fakePlaceWithRelation)
+    fun hasRelations() {
+        setPlace(fakePlaceWithAllData)
         runBlocking { composeTestRule.awaitIdle() }
 
         composeTestRule
@@ -127,7 +126,7 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
             .performClick()
 
         composeTestRule
-            .onNodeWithText(fakePlaceWithRelation.relations?.first()?.event?.name ?: "")
+            .onNodeWithText(fakePlaceWithAllData.relations?.first()?.event?.name ?: "")
             .assertIsDisplayed()
     }
 }
