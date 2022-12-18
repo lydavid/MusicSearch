@@ -8,8 +8,8 @@ import ly.david.data.domain.WorkListItemModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.relation.IRelationsList
-import ly.david.mbjc.ui.relation.RelationsList
+import ly.david.mbjc.ui.common.paging.IRelationsList
+import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
 internal class WorkViewModel @Inject constructor(

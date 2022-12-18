@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.relation
+package ly.david.mbjc.ui.common.paging
 
 import androidx.lifecycle.ViewModel
 import androidx.paging.ExperimentalPagingApi

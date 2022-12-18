@@ -8,8 +8,8 @@ import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.ArtistRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.relation.IRelationsList
-import ly.david.mbjc.ui.relation.RelationsList
+import ly.david.mbjc.ui.common.paging.IRelationsList
+import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
 internal class ArtistViewModel @Inject constructor(

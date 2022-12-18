@@ -8,8 +8,8 @@ import ly.david.data.domain.AreaScaffoldModel
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.AreaRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.relation.IRelationsList
-import ly.david.mbjc.ui.relation.RelationsList
+import ly.david.mbjc.ui.common.paging.IRelationsList
+import ly.david.mbjc.ui.common.paging.RelationsList
 
 /**
  * The logic for loading relations is different here because we start on relationships tab.

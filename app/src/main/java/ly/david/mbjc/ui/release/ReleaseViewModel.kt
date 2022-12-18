@@ -39,8 +39,8 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
-import ly.david.mbjc.ui.relation.IRelationsList
-import ly.david.mbjc.ui.relation.RelationsList
+import ly.david.mbjc.ui.common.paging.IRelationsList
+import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
 internal class ReleaseViewModel @Inject constructor(
