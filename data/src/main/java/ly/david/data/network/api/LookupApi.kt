@@ -9,6 +9,7 @@ import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -132,5 +133,9 @@ interface LookupApi {
         @Query("inc") include: String = "artist-rels+label-rels+url-rels"
     ): LabelMusicBrainzModel
 
-    // TODO: series
+    @GET("series/{seriesId}")
+    suspend fun lookupSeries(
+        @Path("seriesId") seriesId: String,
+        @Query("inc") include: String? = null
+    ): SeriesMusicBrainzModel
 }

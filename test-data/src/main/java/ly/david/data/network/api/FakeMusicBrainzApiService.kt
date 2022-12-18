@@ -9,6 +9,7 @@ import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.browseEventsResponse
 import ly.david.data.network.browsePlacesResponse
@@ -26,6 +27,7 @@ import ly.david.data.network.fakeRecording
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleases
+import ly.david.data.network.fakeSeries
 import ly.david.data.network.fakeWorkWithAllData
 import ly.david.data.network.instrumentMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
@@ -179,6 +181,10 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
         return fakeReleaseGroup
+    }
+
+    override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
+        return fakeSeries
     }
 
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {

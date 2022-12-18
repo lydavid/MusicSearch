@@ -145,6 +145,14 @@ adb shell am start -d "mbjc://label/d4cd174f-784d-48d7-91c6-7427bd5d57fe" -a and
 adb shell am start -d "mbjc://genre/911c7bbb-172d-4df8-9478-dbff4296e791?title=Pop" -a android.intent.action.VIEW
 ```
 
+## Series
+
+- Work award
+```shell
+adb shell am start -d "mbjc://series/2bb59d7e-88f9-455d-888e-802b5f688dac" -a android.intent.action.VIEW
+```
+
+
 
 ## Work
 

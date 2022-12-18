@@ -9,8 +9,7 @@ data class SeriesMusicBrainzModel(
     @Json(name = "disambiguation") override val disambiguation: String? = null,
 
     @Json(name = "type") override val type: String? = null,
-//    @Json(name = "type-id") override val typeId: String? = null,
+    @Json(name = "type-id") val typeId: String? = null,
 
-    // search API returns relations without target-type
-//    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : Series, MusicBrainzModel()

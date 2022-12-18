@@ -5,5 +5,4 @@ interface Series : NameWithDisambiguation {
     override val name: String
     override val disambiguation: String?
     val type: String?
-//    val typeId: String?
 }

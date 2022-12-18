@@ -20,6 +20,7 @@ import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
+import ly.david.data.persistence.series.SeriesDao
 import ly.david.data.persistence.work.RecordingsWorksDao
 import ly.david.data.persistence.work.WorkDao
 
@@ -52,6 +53,7 @@ interface MusicBrainzDatabase {
     fun getReleasesLabelsDao(): ReleasesLabelsDao
 
     fun getEventDao(): EventDao
+    fun getSeriesDao(): SeriesDao
 
     fun getRelationDao(): RelationDao
     fun getLookupHistoryDao(): LookupHistoryDao

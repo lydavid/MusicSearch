@@ -70,6 +70,9 @@ internal object DatabaseDaoModule {
     fun provideEventDao(db: MusicBrainzDatabase) = db.getEventDao()
 
     @Provides
+    fun provideSeriesDao(db: MusicBrainzDatabase) = db.getSeriesDao()
+
+    @Provides
     fun provideRelationDao(db: MusicBrainzDatabase) = db.getRelationDao()
 
     @Provides

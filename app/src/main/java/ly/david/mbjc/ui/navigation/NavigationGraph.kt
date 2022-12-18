@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
@@ -31,6 +30,7 @@ import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
+import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 
 private const val ID = "id"
@@ -246,13 +246,12 @@ internal fun NavigationGraph(
             resource = MusicBrainzResource.SERIES,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
-            // TODO:
-            Text(text = resourceId)
-            //            SeriesScaffold(
-//                eventId = seriesId,
-//                onBack = navController::navigateUp,
-//                onItemClick = onLookupItemClick
-//            )
+            SeriesScaffold(
+                seriesId = resourceId,
+                titleWithDisambiguation = title,
+                onBack = navController::navigateUp,
+                onItemClick = onLookupItemClick
+            )
         }
 
         addResourceScreen(

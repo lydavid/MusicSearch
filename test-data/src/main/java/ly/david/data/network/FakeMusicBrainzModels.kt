@@ -11,7 +11,6 @@ import ly.david.data.network.api.SearchRecordingsResponse
 import ly.david.data.network.api.SearchReleaseGroupsResponse
 import ly.david.data.network.api.SearchReleasesResponse
 import ly.david.data.network.api.SearchSeriesResponse
-import ly.david.data.network.api.SearchWorksResponse
 import ly.david.data.persistence.history.LookupHistory
 
 val instrumentMusicBrainzModel = InstrumentMusicBrainzModel(
@@ -19,7 +18,7 @@ val instrumentMusicBrainzModel = InstrumentMusicBrainzModel(
     name = "Instrument Name",
 )
 
-val seriesMusicBrainzModel = SeriesMusicBrainzModel(
+val fakeSeries = SeriesMusicBrainzModel(
     id = "1",
     name = "Series Name",
 )
@@ -36,7 +35,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.RECORDING -> fakeRecording
         MusicBrainzResource.RELEASE -> fakeRelease
         MusicBrainzResource.RELEASE_GROUP -> fakeReleaseGroup
-        MusicBrainzResource.SERIES -> seriesMusicBrainzModel
+        MusicBrainzResource.SERIES -> fakeSeries
         MusicBrainzResource.WORK -> fakeWorkWithAllData
         MusicBrainzResource.URL -> TODO()
     }
@@ -100,7 +99,7 @@ val searchReleaseGroupsResponse = SearchReleaseGroupsResponse(
 val searchSeriesResponse = SearchSeriesResponse(
     count = 1,
     offset = 0,
-    listOf(element = seriesMusicBrainzModel)
+    listOf(element = fakeSeries)
 )
 
 
