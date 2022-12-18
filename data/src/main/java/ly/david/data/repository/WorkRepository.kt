@@ -8,6 +8,7 @@ import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.WORK_INC_DEFAULT
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.work.WorkDao
+import ly.david.data.persistence.work.toWorkAttributeRoomModel
 import ly.david.data.persistence.work.toWorkRoomModel
 
 @Singleton
@@ -26,6 +27,10 @@ class WorkRepository @Inject constructor(
 
         val workMusicBrainzModel = musicBrainzApiService.lookupWork(workId = workId)
         workDao.insert(workMusicBrainzModel.toWorkRoomModel())
+        workDao.insertAllAttributes(
+            workMusicBrainzModel.attributes?.map { it.toWorkAttributeRoomModel(workId) }.orEmpty()
+        )
+
         return workMusicBrainzModel.toWorkListItemModel()
     }
 

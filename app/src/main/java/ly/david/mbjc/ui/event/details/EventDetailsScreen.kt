@@ -17,7 +17,7 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.EventListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.LifeSpanText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -33,11 +33,11 @@ internal fun EventDetailsScreen(
         event.run {
             InformationListSeparatorHeader(R.string.event)
             type?.ifNotNullOrEmpty {
-                TextWithHeading(headingRes = R.string.type, text = it)
+                TextWithHeadingRes(headingRes = R.string.type, text = it)
             }
             LifeSpanText(lifeSpan = lifeSpan)
             time?.ifNotNullOrEmpty {
-                TextWithHeading(headingRes = R.string.time, text = it)
+                TextWithHeadingRes(headingRes = R.string.time, text = it)
             }
             if (cancelled == true) {
                 SelectionContainer {

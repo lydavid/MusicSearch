@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.work.details
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -12,6 +13,8 @@ import ly.david.data.domain.WorkListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.TextWithHeadingRes
+import ly.david.mbjc.ui.common.listitem.AttributesListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -30,23 +33,23 @@ internal fun WorkDetailsScreen(
             work.run {
                 InformationListSeparatorHeader(R.string.work)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(headingRes = R.string.type, text = it)
                 }
                 language?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.language, text = Locale(it).displayLanguage)
+                    TextWithHeadingRes(headingRes = R.string.language, text = Locale(it).displayLanguage)
                 }
                 iswcs?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.iswc, text = it.joinToString("\n"))
+                    TextWithHeadingRes(headingRes = R.string.iswc, text = it.joinToString("\n"))
                 }
 
-                // TODO: work attributes
-//                labels.ifNotNullOrEmpty {
-//                    ListSeparatorHeader(text = stringResource(id = R.string.labels))
-//                    it.forEach { label ->
-//                        LabelListItem(label = label, onLabelClick = onLabelClick)
-//                    }
-//                }
+                if (attributes.isNotEmpty()) {
+                    AttributesListSeparatorHeader(R.string.work)
+                }
             }
+        }
+
+        items(work.attributes) { attribute ->
+            TextWithHeading(heading = attribute.type, text = attribute.value)
         }
     }
 }

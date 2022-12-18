@@ -20,7 +20,7 @@ import ly.david.data.navigation.Destination
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
-import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -44,18 +44,18 @@ internal fun PlaceDetailsScreen(
             place.run {
                 InformationListSeparatorHeader(R.string.place)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(headingRes = R.string.type, text = it)
                 }
                 lifeSpan?.run {
                     begin?.ifNotNullOrEmpty {
-                        TextWithHeading(headingRes = R.string.opened, text = it)
+                        TextWithHeadingRes(headingRes = R.string.opened, text = it)
                     }
                     end?.ifNotNullOrEmpty {
-                        TextWithHeading(headingRes = R.string.closed, text = it)
+                        TextWithHeadingRes(headingRes = R.string.closed, text = it)
                     }
                 }
                 address.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.address, text = it)
+                    TextWithHeadingRes(headingRes = R.string.address, text = it)
                 }
 
                 area?.ifNotNull {

@@ -1,8 +1,10 @@
 package ly.david.data.persistence.work
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import ly.david.data.Work
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.persistence.RoomModel
@@ -26,3 +28,14 @@ internal fun WorkMusicBrainzModel.toWorkRoomModel() =
         language = language,
         iswcs = iswcs
     )
+
+data class WorkWithAttributes(
+    @Embedded
+    val work: WorkRoomModel,
+
+    @Relation(
+        parentColumn = "id", // work.id
+        entityColumn = "work_id",
+    )
+    val attributes: List<WorkAttributeRoomModel>,
+)

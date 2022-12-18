@@ -37,6 +37,11 @@ internal fun InformationListSeparatorHeader(@StringRes resourceStringRes: Int) {
     ListSeparatorHeader(text = stringResource(id = R.string.information_header, stringResource(id = resourceStringRes)))
 }
 
+@Composable
+internal fun AttributesListSeparatorHeader(@StringRes resourceStringRes: Int) {
+    ListSeparatorHeader(text = stringResource(id = R.string.attributes_header, stringResource(id = resourceStringRes)))
+}
+
 @ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable

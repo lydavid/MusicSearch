@@ -70,6 +70,7 @@
     <string name="iswc">ISWC</string>
     <string name="release_events">Release events</string>
     <string name="information_header">%s information</string>
+    <string name="attributes_header">%s attributes</string>
     <string name="additional_details">Additional details</string>
     <string name="multiple_scripts">Multiple scripts</string>
     <string name="coordinates">Coordinates</string>

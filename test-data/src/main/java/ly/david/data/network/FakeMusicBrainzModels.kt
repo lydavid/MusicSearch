@@ -25,11 +25,6 @@ val seriesMusicBrainzModel = SeriesMusicBrainzModel(
     name = "Series Name",
 )
 
-val workMusicBrainzModel = WorkMusicBrainzModel(
-    id = "1",
-    name = "Work Name",
-)
-
 fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
     when (this) {
         MusicBrainzResource.AREA -> fakeArea
@@ -43,7 +38,7 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
         MusicBrainzResource.RELEASE -> fakeRelease
         MusicBrainzResource.RELEASE_GROUP -> fakeReleaseGroup
         MusicBrainzResource.SERIES -> seriesMusicBrainzModel
-        MusicBrainzResource.WORK -> workMusicBrainzModel
+        MusicBrainzResource.WORK -> fakeWork
         MusicBrainzResource.URL -> TODO()
     }
 
@@ -116,7 +111,7 @@ val searchSeriesResponse = SearchSeriesResponse(
 val searchWorksResponse = SearchWorksResponse(
     count = 1,
     offset = 0,
-    listOf(element = workMusicBrainzModel)
+    listOf(element = fakeWork)
 )
 
 

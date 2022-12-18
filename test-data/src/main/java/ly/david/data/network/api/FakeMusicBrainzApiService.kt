@@ -26,6 +26,7 @@ import ly.david.data.network.fakeRecording
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleases
+import ly.david.data.network.fakeWork
 import ly.david.data.network.instrumentMusicBrainzModel
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
@@ -38,7 +39,6 @@ import ly.david.data.network.searchReleaseGroupsResponse
 import ly.david.data.network.searchReleasesResponse
 import ly.david.data.network.searchSeriesResponse
 import ly.david.data.network.searchWorksResponse
-import ly.david.data.network.workMusicBrainzModel
 
 class FakeMusicBrainzApiService : MusicBrainzApiService {
     // region Search
@@ -182,7 +182,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
-        return workMusicBrainzModel
+        return fakeWork
     }
     // endregion
 }

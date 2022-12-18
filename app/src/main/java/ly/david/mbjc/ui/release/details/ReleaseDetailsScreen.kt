@@ -26,7 +26,7 @@ import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
-import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -72,30 +72,30 @@ private fun ReleaseDetailsScreen(
             release.run {
                 InformationListSeparatorHeader(R.string.release)
                 barcode?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.barcode, text = it)
+                    TextWithHeadingRes(headingRes = R.string.barcode, text = it)
                 }
                 formattedFormats?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.format, text = it)
+                    TextWithHeadingRes(headingRes = R.string.format, text = it)
                 }
                 formattedTracks?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.tracks, text = it)
+                    TextWithHeadingRes(headingRes = R.string.tracks, text = it)
                 }
                 releaseLength?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.length, text = it)
+                    TextWithHeadingRes(headingRes = R.string.length, text = it)
                 }
 
                 ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
                 releaseGroup?.let {
-                    TextWithHeading(headingRes = R.string.type, text = it.getDisplayTypes())
+                    TextWithHeadingRes(headingRes = R.string.type, text = it.getDisplayTypes())
                 }
                 packaging?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.packaging, text = it)
+                    TextWithHeadingRes(headingRes = R.string.packaging, text = it)
                 }
                 status?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.status, text = it)
+                    TextWithHeadingRes(headingRes = R.string.status, text = it)
                 }
                 textRepresentation?.language?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.language, text = Locale(it).displayLanguage)
+                    TextWithHeadingRes(headingRes = R.string.language, text = Locale(it).displayLanguage)
                 }
                 textRepresentation?.script?.ifNotNullOrEmpty { script ->
                     val scriptOrCode = if (script == "Qaaa") {
@@ -108,16 +108,16 @@ private fun ReleaseDetailsScreen(
                     } else {
                         script
                     }
-                    TextWithHeading(
+                    TextWithHeadingRes(
                         headingRes = R.string.script,
                         text = scriptOrCode
                     )
                 }
                 quality?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.data_quality, text = it)
+                    TextWithHeadingRes(headingRes = R.string.data_quality, text = it)
                 }
                 asin?.ifNotNullOrEmpty {
-                    TextWithHeading(headingRes = R.string.asin, text = it)
+                    TextWithHeadingRes(headingRes = R.string.asin, text = it)
                 }
 
                 labels.ifNotNullOrEmpty {

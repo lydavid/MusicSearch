@@ -19,10 +19,21 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
+@Composable
+internal fun TextWithHeadingRes(
+    @StringRes headingRes: Int,
+    text: String
+) {
+    TextWithHeading(
+        heading = stringResource(id = headingRes),
+        text = text
+    )
+}
+
 // TODO: selecting this starting from heading will behave strangely for text with multiple lines
 @Composable
 internal fun TextWithHeading(
-    @StringRes headingRes: Int,
+    heading: String,
     text: String
 ) {
     SelectionContainer {
@@ -33,7 +44,7 @@ internal fun TextWithHeading(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${stringResource(id = headingRes)}: ",
+                text = "$heading: ",
                 style = TextStyles.getCardBodyTextStyle(),
                 fontWeight = FontWeight.Bold
             )
@@ -52,7 +63,7 @@ internal fun TextWithHeading(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            TextWithHeading(headingRes = R.string.format, text = "Digital Media")
+            TextWithHeadingRes(headingRes = R.string.format, text = "Digital Media")
         }
     }
 }

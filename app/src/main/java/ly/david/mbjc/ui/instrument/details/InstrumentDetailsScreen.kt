@@ -14,7 +14,7 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.InstrumentListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -30,7 +30,7 @@ internal fun InstrumentDetailsScreen(
         instrument.run {
             InformationListSeparatorHeader(R.string.instrument)
             type?.ifNotNullOrEmpty {
-                TextWithHeading(headingRes = R.string.type, text = it)
+                TextWithHeadingRes(headingRes = R.string.type, text = it)
             }
 
             ListSeparatorHeader(stringResource(id = R.string.description))

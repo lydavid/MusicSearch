@@ -9,7 +9,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
@@ -21,13 +21,13 @@ internal fun LifeSpanText(lifeSpan: LifeSpan?) {
     lifeSpan?.run {
         val beginDate = begin
         if (beginDate == end && beginDate != null) {
-            TextWithHeading(headingRes = R.string.date, text = beginDate)
+            TextWithHeadingRes(headingRes = R.string.date, text = beginDate)
         } else {
             begin?.ifNotNullOrEmpty {
-                TextWithHeading(headingRes = R.string.start_date, text = it)
+                TextWithHeadingRes(headingRes = R.string.start_date, text = it)
             }
             end?.ifNotNullOrEmpty {
-                TextWithHeading(headingRes = R.string.end_date, text = it)
+                TextWithHeadingRes(headingRes = R.string.end_date, text = it)
             }
         }
     }

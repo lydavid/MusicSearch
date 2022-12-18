@@ -139,8 +139,6 @@ adb shell am start -d "mbjc://label/d4cd174f-784d-48d7-91c6-7427bd5d57fe" -a and
 ```
 
 
-
-
 ## Genre
 
 ```shell
@@ -148,10 +146,13 @@ adb shell am start -d "mbjc://genre/911c7bbb-172d-4df8-9478-dbff4296e791?title=P
 ```
 
 
+## Work
 
-<details><summary>work</summary><blockquote>
+- work attributes
 
-## イニシエノウタ
+```shell
+adb shell am start -d "mbjc://work/82cbbd32-3b19-3fd7-b409-49d1dbededd5" -a android.intent.action.VIEW
+```
 
 - arrangements
 
@@ -164,8 +165,6 @@ adb shell am start -d "mbjc://work/c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3" -a andr
 ```shell
 adb shell am start -d "mbjc://work/7a7d89a4-ddb9-44af-a293-cf3b7ad59cf3" -a android.intent.action.VIEW
 ```
-
-</blockquote></details>
 
 
 <details><summary>area</summary><blockquote>

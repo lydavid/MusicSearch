@@ -50,7 +50,7 @@ private enum class WorkTab(@StringRes val titleRes: Int) {
 internal fun WorkScaffold(
     workId: String,
     titleWithDisambiguation: String? = null,
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: WorkViewModel = hiltViewModel()
 ) {
