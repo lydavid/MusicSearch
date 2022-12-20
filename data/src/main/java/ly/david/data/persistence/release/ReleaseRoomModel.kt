@@ -24,7 +24,12 @@ data class ReleaseRoomModel(
     @ColumnInfo(name = "disambiguation")
     override val disambiguation: String = "",
 
-    // Date could be 2022-10-10 or 2022 (or possibly 2022-10)
+    /**
+     * Valid date formats are 2022-10-10, 2022-10, or 2022
+     *
+     * Although this information is mostly duplicated from release_country, it is used
+     * in the case where no countries are associated with its release.
+     */
     @ColumnInfo(name = "date")
     override val date: String? = null,
 

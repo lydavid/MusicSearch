@@ -85,7 +85,6 @@ internal class ReleaseViewModel @Inject constructor(
         this.query.value = query
     }
 
-    // TODO: tracks refresh broken
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     val pagedTracks: Flow<PagingData<ListItemModel>> =
         tracksParamState.filterNot { it.releaseId.isEmpty() }

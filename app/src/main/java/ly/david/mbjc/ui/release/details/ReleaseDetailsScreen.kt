@@ -83,6 +83,9 @@ private fun ReleaseDetailsScreen(
                 releaseLength?.ifNotNullOrEmpty {
                     TextWithHeadingRes(headingRes = R.string.length, text = it)
                 }
+                date?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.date, text = it)
+                }
 
                 ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
                 releaseGroup?.let {
