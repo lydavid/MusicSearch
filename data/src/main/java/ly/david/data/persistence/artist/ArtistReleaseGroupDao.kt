@@ -13,9 +13,9 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """
-            FROM release_groups rg
-            INNER JOIN artists_release_groups arg ON rg.id = arg.release_group_id
-            INNER JOIN artists a ON a.id = arg.artist_id
+            FROM release_group rg
+            INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
+            INNER JOIN artist a ON a.id = arg.artist_id
             WHERE a.id = :artistId
         """
 
@@ -50,7 +50,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
 
     @Query(
         """
-        DELETE FROM release_groups WHERE id IN (
+        DELETE FROM release_group WHERE id IN (
         $SELECT_RELEASE_GROUPS_ID_BY_ARTIST
         )
         """

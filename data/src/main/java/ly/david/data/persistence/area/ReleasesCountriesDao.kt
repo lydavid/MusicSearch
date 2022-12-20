@@ -15,16 +15,16 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
     //  But we could just call country_id area_id
     companion object {
         private const val RELEASES_BY_COUNTRY = """
-            FROM releases r
-            INNER JOIN releases_countries rc ON r.id = rc.release_id
-            INNER JOIN areas a ON a.id = rc.country_id
-            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
-            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
+            FROM release r
+            INNER JOIN release_country rc ON r.id = rc.release_id
+            INNER JOIN area a ON a.id = rc.country_id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE a.id = :areaId
         """
 
         private const val SELECT_RELEASES_BY_COUNTRY = """
-            SELECT r.*, ac.name AS artist_credit_names
+            SELECT r.*, ac.name AS artist_credit_name
             $RELEASES_BY_COUNTRY
         """
 
@@ -50,7 +50,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
     // region by Area
     @Query(
         """
-        DELETE FROM releases WHERE id IN (
+        DELETE FROM release WHERE id IN (
         $SELECT_RELEASES_ID_BY_COUNTRY
         )
         """
@@ -66,9 +66,9 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
-            FROM releases r
-            INNER JOIN releases_countries rc ON r.id = rc.release_id
-            INNER JOIN areas a ON a.id = rc.country_id
+            FROM release r
+            INNER JOIN release_country rc ON r.id = rc.release_id
+            INNER JOIN area a ON a.id = rc.country_id
             WHERE a.id = :areaId
             ),
             0

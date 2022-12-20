@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 @Entity(
-    tableName = "releases_recordings",
+    tableName = "recording_release",
     primaryKeys = ["release_id", "recording_id"],
 )
 data class ReleaseRecording(

@@ -9,7 +9,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
-@Entity(tableName = "areas")
+@Entity(tableName = "area")
 data class AreaRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")

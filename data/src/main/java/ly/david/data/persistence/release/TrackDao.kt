@@ -11,9 +11,9 @@ abstract class TrackDao : BaseDao<TrackRoomModel>() {
 
     companion object {
         private const val TRACKS_IN_RELEASE = """
-            FROM tracks t
-            INNER JOIN media m ON t.medium_id = m.id
-            INNER JOIN releases r ON m.release_id = r.id
+            FROM track t
+            INNER JOIN medium m ON t.medium_id = m.id
+            INNER JOIN release r ON m.release_id = r.id
             WHERE r.id = :releaseId
         """
 

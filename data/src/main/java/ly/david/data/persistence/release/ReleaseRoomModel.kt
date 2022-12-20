@@ -13,7 +13,7 @@ import ly.david.data.network.getTracksForDisplay
 import ly.david.data.persistence.RoomModel
 
 @Entity(
-    tableName = "releases",
+    tableName = "release",
 )
 data class ReleaseRoomModel(
     @PrimaryKey

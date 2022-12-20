@@ -24,23 +24,23 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
     }
 
     // Lookup
-    @Query("SELECT * FROM releases WHERE id = :releaseId")
+    @Query("SELECT * FROM release WHERE id = :releaseId")
     abstract suspend fun getRelease(releaseId: String): ReleaseRoomModel?
 
     @Transaction
-    @Query("SELECT * FROM releases WHERE id = :releaseId")
+    @Query("SELECT * FROM release WHERE id = :releaseId")
     abstract suspend fun getReleaseWithAllData(releaseId: String): ReleaseWithAllData?
 
     @Query(
         """
-        DELETE FROM releases WHERE id = :releaseId
+        DELETE FROM release WHERE id = :releaseId
         """
     )
     abstract suspend fun deleteReleaseById(releaseId: String)
 
     @Query(
         """
-            UPDATE releases
+            UPDATE release
             SET cover_art_url = :coverArtUrl
             WHERE id = :releaseId
         """

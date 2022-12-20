@@ -25,7 +25,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
             SELECT *
-            FROM relations
+            FROM relation
             WHERE resource_id = :resourceId
             ORDER BY linked_resource, label, `order`
         """
@@ -36,7 +36,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-        DELETE FROM relations WHERE resource_id = :resourceId
+        DELETE FROM relation WHERE resource_id = :resourceId
         """
     )
     abstract suspend fun deleteRelationsByResource(resourceId: String)
@@ -48,7 +48,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
             SELECT COUNT(*)
-            FROM relations
+            FROM relation
             WHERE resource_id = :resourceId
     """
     )
@@ -57,7 +57,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
         SELECT linked_resource, COUNT(resource_id) as count
-        FROM relations
+        FROM relation
         WHERE resource_id = :resourceId
         GROUP BY linked_resource
     """
@@ -71,7 +71,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
             SELECT *
-            FROM browse_resource_counts
+            FROM browse_resource_count
             WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
     )
@@ -79,7 +79,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-            UPDATE browse_resource_counts
+            UPDATE browse_resource_count
             SET local_count = :localCount
             WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
@@ -94,7 +94,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-        DELETE FROM browse_resource_counts 
+        DELETE FROM browse_resource_count
         WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
     )

@@ -9,7 +9,7 @@ import ly.david.data.Work
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
-@Entity(tableName = "works")
+@Entity(tableName = "work")
 data class WorkRoomModel(
     @PrimaryKey @ColumnInfo(name = "id") override val id: String,
     @ColumnInfo(name = "name") override val name: String,

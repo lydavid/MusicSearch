@@ -10,7 +10,7 @@ import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
 @Entity(
-    tableName = "artists"
+    tableName = "artist"
 )
 data class ArtistRoomModel(
     @PrimaryKey

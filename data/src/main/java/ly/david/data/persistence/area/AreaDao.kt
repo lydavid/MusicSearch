@@ -9,7 +9,7 @@ import ly.david.data.persistence.BaseDao
 @Dao
 abstract class AreaDao : BaseDao<AreaRoomModel>() {
 
-    @Query("SELECT * FROM areas WHERE id = :areaId")
+    @Query("SELECT * FROM area WHERE id = :areaId")
     abstract suspend fun getArea(areaId: String): AreaWithIso?
 
     // We don't expect these to change.

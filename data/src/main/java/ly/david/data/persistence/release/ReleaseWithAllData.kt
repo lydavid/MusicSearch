@@ -20,8 +20,8 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 @DatabaseView(
     """
     SELECT l.*, rl.*
-    FROM labels l
-    INNER JOIN releases_labels rl ON l.id = rl.label_id
+    FROM label l
+    INNER JOIN release_label rl ON l.id = rl.label_id
 """
 )
 data class LabelWithCatalog(
@@ -40,9 +40,9 @@ data class LabelWithCatalog(
 @DatabaseView(
     """
         SELECT a.*, rc.*
-        FROM areas a
-        INNER JOIN releases_countries rc ON rc.country_id = a.id
-        INNER JOIN releases r ON r.id = rc.release_id
+        FROM area a
+        INNER JOIN release_country rc ON rc.country_id = a.id
+        INNER JOIN release r ON r.id = rc.release_id
         ORDER BY a.name
     """
 )

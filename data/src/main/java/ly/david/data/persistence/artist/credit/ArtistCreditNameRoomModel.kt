@@ -10,7 +10,7 @@ import ly.david.data.network.ArtistCreditMusicBrainzModel
  * Represents a single name in an [ArtistCredit].
  */
 @Entity(
-    tableName = "artist_credit_names",
+    tableName = "artist_credit_name",
     primaryKeys = ["artist_credit_id", "position"],
     foreignKeys = [
         ForeignKey(

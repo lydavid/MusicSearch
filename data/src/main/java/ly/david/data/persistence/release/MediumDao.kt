@@ -11,8 +11,8 @@ abstract class MediumDao : BaseDao<MediumRoomModel>() {
     @Transaction
     @Query("""
         SELECT m.*
-        FROM media m
-        INNER JOIN tracks t ON t.medium_id = m.id
+        FROM medium m
+        INNER JOIN track t ON t.medium_id = m.id
         WHERE t.id = :trackId
     """)
     abstract suspend fun getMediumForTrack(trackId: String): MediumRoomModel?
@@ -20,8 +20,8 @@ abstract class MediumDao : BaseDao<MediumRoomModel>() {
     @Transaction
     @Query("""
         SELECT m.*
-        FROM media m
-        INNER JOIN tracks t ON t.medium_id = m.id
+        FROM medium m
+        INNER JOIN track t ON t.medium_id = m.id
         WHERE t.id = :trackId
     """)
     abstract suspend fun getMediaCountForRelease(trackId: String): MediumRoomModel

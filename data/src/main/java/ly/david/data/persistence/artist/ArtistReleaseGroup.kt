@@ -9,7 +9,7 @@ import androidx.room.Entity
  * For artist credits, see [ArtistCreditResource].
  */
 @Entity(
-    tableName = "artists_release_groups",
+    tableName = "artist_release_group",
     primaryKeys = ["artist_id", "release_group_id"]
 )
 data class ArtistReleaseGroup(

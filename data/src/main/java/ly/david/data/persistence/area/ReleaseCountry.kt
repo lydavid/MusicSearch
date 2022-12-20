@@ -19,7 +19,7 @@ import ly.david.data.persistence.release.ReleaseRoomModel
     // releases_countries suggests this is many-to-many between releases and countries (areas)
     // however we currently only have release as a primary key
     // In order to also have area as a primary key, we need to store all areas from a release's release events
-    tableName = "releases_countries",
+    tableName = "release_country",
     primaryKeys = ["release_id", "country_id"],
     foreignKeys = [
         ForeignKey(

@@ -7,6 +7,6 @@ import ly.david.data.persistence.BaseDao
 @Dao
 abstract class PlaceDao : BaseDao<PlaceRoomModel>() {
 
-    @Query("SELECT * FROM places WHERE id = :placeId")
+    @Query("SELECT * FROM place WHERE id = :placeId")
     abstract suspend fun getPlace(placeId: String): PlaceWithArea?
 }

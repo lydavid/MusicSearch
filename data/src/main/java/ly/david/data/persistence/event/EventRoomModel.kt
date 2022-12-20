@@ -9,7 +9,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
-@Entity(tableName = "events")
+@Entity(tableName = "event")
 data class EventRoomModel(
     @PrimaryKey @ColumnInfo(name = "id") override val id: String,
     @ColumnInfo(name = "name") override val name: String,

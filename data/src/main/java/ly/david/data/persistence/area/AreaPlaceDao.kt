@@ -12,9 +12,9 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
 
     companion object {
         private const val PLACES_BY_AREA = """
-            FROM places p
+            FROM place p
             INNER JOIN area_place ap ON p.id = ap.place_id
-            INNER JOIN areas a ON a.id = ap.area_id
+            INNER JOIN area a ON a.id = ap.area_id
             WHERE a.id = :areaId
         """
 
@@ -42,7 +42,7 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
 
     @Query(
         """
-        DELETE FROM places WHERE id IN (
+        DELETE FROM place WHERE id IN (
         $SELECT_PLACE_ID_BY_AREA
         )
         """

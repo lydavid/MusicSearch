@@ -7,6 +7,6 @@ import ly.david.data.persistence.BaseDao
 @Dao
 abstract class InstrumentDao : BaseDao<InstrumentRoomModel>() {
 
-    @Query("SELECT * FROM instruments WHERE id = :instrumentId")
+    @Query("SELECT * FROM instrument WHERE id = :instrumentId")
     abstract suspend fun getInstrument(instrumentId: String): InstrumentRoomModel?
 }

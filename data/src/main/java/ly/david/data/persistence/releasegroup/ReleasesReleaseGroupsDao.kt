@@ -13,10 +13,10 @@ abstract class ReleasesReleaseGroupsDao {
 
     companion object {
         private const val RELEASES_IN_RELEASE_GROUP = """
-            FROM releases r
-            INNER JOIN release_groups rg ON rg.id = r.release_group_id
-            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
-            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
+            FROM release r
+            INNER JOIN release_group rg ON rg.id = r.release_group_id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE rg.id = :releaseGroupId
         """
 
@@ -46,7 +46,7 @@ abstract class ReleasesReleaseGroupsDao {
 
     @Query(
         """
-        DELETE FROM releases WHERE id IN (
+        DELETE FROM release WHERE id IN (
         $SELECT_RELEASES_ID_IN_RELEASE_GROUP
         )
         """
@@ -57,8 +57,8 @@ abstract class ReleasesReleaseGroupsDao {
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
-            FROM releases r
-            INNER JOIN release_groups rg ON rg.id = r.release_group_id
+            FROM release r
+            INNER JOIN release_group rg ON rg.id = r.release_group_id
             WHERE rg.id = :releaseGroupId
             ),
             0

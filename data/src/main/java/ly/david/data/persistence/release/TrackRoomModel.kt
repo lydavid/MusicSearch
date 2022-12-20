@@ -11,7 +11,7 @@ import ly.david.data.persistence.RoomModel
 // TODO: medium_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.TrackRoomModel
 // TODO: check that deleting a release will delete all media and tracks
 @Entity(
-    tableName = "tracks",
+    tableName = "track",
     foreignKeys = [
         ForeignKey(
             entity = MediumRoomModel::class,

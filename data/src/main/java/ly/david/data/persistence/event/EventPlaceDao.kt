@@ -11,9 +11,9 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
 
     companion object {
         private const val EVENTS_BY_PLACE = """
-            FROM events e
+            FROM event e
             INNER JOIN event_place ep ON e.id = ep.event_id
-            INNER JOIN places p ON p.id = ep.place_id
+            INNER JOIN place p ON p.id = ep.place_id
             WHERE p.id = :placeId
         """
 
@@ -41,7 +41,7 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
 
     @Query(
         """
-        DELETE FROM events WHERE id IN (
+        DELETE FROM event WHERE id IN (
         $SELECT_EVENT_ID_BY_PLACE
         )
         """

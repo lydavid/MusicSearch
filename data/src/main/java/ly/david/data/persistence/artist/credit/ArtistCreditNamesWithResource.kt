@@ -9,9 +9,9 @@ import ly.david.data.domain.toArtistCreditUiModel
 @DatabaseView(
     """
     SELECT acr.resource_id, acn.*
-    FROM artist_credits_resources acr
-    INNER JOIN artist_credits ac ON ac.id = acr.artist_credit_id
-    INNER JOIN artist_credit_names acn ON acn.artist_credit_id = ac.id
+    FROM artist_credit_resource acr
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
 """
 )
 data class ArtistCreditNamesWithResource(

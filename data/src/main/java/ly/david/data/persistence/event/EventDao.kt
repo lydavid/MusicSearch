@@ -7,6 +7,6 @@ import ly.david.data.persistence.BaseDao
 @Dao
 abstract class EventDao : BaseDao<EventRoomModel>() {
 
-    @Query("SELECT * FROM events WHERE id = :eventId")
+    @Query("SELECT * FROM event WHERE id = :eventId")
     abstract suspend fun getEvent(eventId: String): EventRoomModel?
 }

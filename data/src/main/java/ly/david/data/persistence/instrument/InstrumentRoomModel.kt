@@ -7,7 +7,7 @@ import ly.david.data.Instrument
 import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
-@Entity(tableName = "instruments")
+@Entity(tableName = "instrument")
 data class InstrumentRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")

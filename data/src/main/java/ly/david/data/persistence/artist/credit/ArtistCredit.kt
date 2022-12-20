@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
  * We store the fully formatted [name] so that we can quickly compare to ensure we don't insert duplicates.
  */
 @Entity(
-    tableName = "artist_credits",
+    tableName = "artist_credit",
     indices = [Index(value = ["name"], unique = true)]
 )
 data class ArtistCredit(

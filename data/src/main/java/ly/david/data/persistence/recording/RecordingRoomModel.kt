@@ -10,7 +10,7 @@ import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 
-@Entity(tableName = "recordings")
+@Entity(tableName = "recording")
 data class RecordingRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")

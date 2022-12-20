@@ -8,7 +8,7 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
 @Entity(
-    tableName = "release_groups",
+    tableName = "release_group",
 )
 data class ReleaseGroupRoomModel(
 

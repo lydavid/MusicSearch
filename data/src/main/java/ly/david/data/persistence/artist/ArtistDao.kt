@@ -7,6 +7,6 @@ import ly.david.data.persistence.BaseDao
 @Dao
 abstract class ArtistDao : BaseDao<ArtistRoomModel>() {
 
-    @Query("SELECT * FROM artists WHERE id = :artistId")
+    @Query("SELECT * FROM artist WHERE id = :artistId")
     abstract suspend fun getArtist(artistId: String): ArtistRoomModel?
 }

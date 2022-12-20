@@ -12,11 +12,11 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
 
     companion object {
         private const val RELEASES_BY_RECORDING = """
-            FROM releases rel
-            INNER JOIN releases_recordings rr ON rel.id = rr.release_id
-            INNER JOIN recordings rec ON rec.id = rr.recording_id
-            LEFT JOIN artist_credits_resources acr ON acr.resource_id = rel.id
-            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
+            FROM release rel
+            INNER JOIN recording_release rr ON rel.id = rr.release_id
+            INNER JOIN recording rec ON rec.id = rr.recording_id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = rel.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE rec.id = :recordingId
         """
 
@@ -51,7 +51,7 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
     // we won't consider this a bug.
     @Query(
         """
-        DELETE FROM releases WHERE id IN (
+        DELETE FROM release WHERE id IN (
         $SELECT_RELEASES_ID_BY_RECORDING
         )
         """

@@ -12,17 +12,17 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel>() {
 
     companion object {
         private const val RELEASES_BY_LABEL = """
-            FROM releases r
-            INNER JOIN releases_labels rl ON r.id = rl.release_id
-            INNER JOIN labels l ON l.id = rl.label_id
-            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
-            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
+            FROM release r
+            INNER JOIN release_label rl ON r.id = rl.release_id
+            INNER JOIN label l ON l.id = rl.label_id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE l.id = :labelId
         """
 
         // DISTINCT because junction table can repeat due to different catalog number for same release/label
         private const val SELECT_RELEASES_BY_LABEL = """
-            SELECT DISTINCT r.*, ac.name AS artist_credit_names
+            SELECT DISTINCT r.*, ac.name AS artist_credit_name
             $RELEASES_BY_LABEL
         """
 
@@ -52,7 +52,7 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel>() {
     // we won't consider this a bug.
     @Query(
         """
-        DELETE FROM releases WHERE id IN (
+        DELETE FROM release WHERE id IN (
         $SELECT_RELEASES_ID_BY_LABEL
         )
         """
@@ -64,9 +64,9 @@ abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel>() {
         SELECT IFNULL(
             (SELECT COUNT(*) FROM
                 (SELECT DISTINCT rl.release_id, rl.label_id
-                FROM releases r
-                INNER JOIN releases_labels rl ON r.id = rl.release_id
-                INNER JOIN labels l ON l.id = rl.label_id
+                FROM release r
+                INNER JOIN release_label rl ON r.id = rl.release_id
+                INNER JOIN label l ON l.id = rl.label_id
                 WHERE l.id = :labelId)
             ),
             0

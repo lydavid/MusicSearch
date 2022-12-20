@@ -198,4 +198,28 @@ internal object Migrations {
 
     @DeleteColumn(tableName = "artists", columnName = "release_group_count")
     class DeleteReleaseGroupCount : AutoMigrationSpec
+
+    @RenameTable(fromTableName = "areas", toTableName = "area")
+    @RenameTable(fromTableName = "releases_countries", toTableName = "release_country")
+    @RenameTable(fromTableName = "artist_credits", toTableName = "artist_credit")
+    @RenameTable(fromTableName = "artist_credit_names", toTableName = "artist_credit_name")
+    @RenameTable(fromTableName = "artist_credits_resources", toTableName = "artist_credit_resource")
+    @RenameTable(fromTableName = "artists_release_groups", toTableName = "artist_release_group")
+    @RenameTable(fromTableName = "artists", toTableName = "artist")
+    @RenameTable(fromTableName = "events", toTableName = "event")
+    @RenameTable(fromTableName = "instruments", toTableName = "instrument")
+    @RenameTable(fromTableName = "labels", toTableName = "label")
+    @RenameTable(fromTableName = "releases_labels", toTableName = "release_label")
+    @RenameTable(fromTableName = "places", toTableName = "place")
+    @RenameTable(fromTableName = "recordings", toTableName = "recording")
+    @RenameTable(fromTableName = "releases_recordings", toTableName = "recording_release")
+    @RenameTable(fromTableName = "browse_resource_counts", toTableName = "browse_resource_count")
+    @RenameTable(fromTableName = "relations", toTableName = "relation")
+    @RenameTable(fromTableName = "media", toTableName = "medium")
+    @RenameTable(fromTableName = "releases", toTableName = "release")
+    @RenameTable(fromTableName = "tracks", toTableName = "track")
+    @RenameTable(fromTableName = "release_groups", toTableName = "release_group")
+    @RenameTable(fromTableName = "recordings_works", toTableName = "recording_work")
+    @RenameTable(fromTableName = "works", toTableName = "work")
+    class RenameTablesToSingular : AutoMigrationSpec
 }

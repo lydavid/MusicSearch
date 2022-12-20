@@ -12,11 +12,11 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
 
     companion object {
         private const val RECORDINGS_BY_WORK = """
-            FROM recordings r
-            INNER JOIN recordings_works rw ON r.id = rw.recording_id
-            INNER JOIN works w ON w.id = rw.work_id
-            LEFT JOIN artist_credits_resources acr ON acr.resource_id = r.id
-            LEFT JOIN artist_credits ac ON ac.id = acr.artist_credit_id
+            FROM recording r
+            INNER JOIN recording_work rw ON r.id = rw.recording_id
+            INNER JOIN work w ON w.id = rw.work_id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE w.id = :workId
         """
 
@@ -45,7 +45,7 @@ abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
 
     @Query(
         """
-        DELETE FROM recordings WHERE id IN (
+        DELETE FROM recording WHERE id IN (
         $SELECT_RECORDINGS_ID_BY_WORK
         )
         """

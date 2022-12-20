@@ -23,7 +23,7 @@ import ly.david.data.persistence.RoomModel
  * It would make us always true to fetch it even though we've discovered there are none.
  */
 @Entity(
-    tableName = "relations",
+    tableName = "relation",
     primaryKeys = ["resource_id", "linked_resource_id", "order"],
 )
 data class RelationRoomModel(

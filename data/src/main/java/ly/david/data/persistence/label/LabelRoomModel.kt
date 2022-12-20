@@ -7,7 +7,7 @@ import ly.david.data.Label
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
-@Entity(tableName = "labels")
+@Entity(tableName = "label")
 data class LabelRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")

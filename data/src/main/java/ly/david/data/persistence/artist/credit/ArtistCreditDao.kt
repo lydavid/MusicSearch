@@ -17,7 +17,7 @@ interface ArtistCreditDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArtistCredit(artistCredit: ArtistCredit): Long
 
-    @Query("SELECT * FROM artist_credits WHERE name = :name")
+    @Query("SELECT * FROM artist_credit WHERE name = :name")
     suspend fun getArtistCreditByName(name: String): ArtistCredit
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

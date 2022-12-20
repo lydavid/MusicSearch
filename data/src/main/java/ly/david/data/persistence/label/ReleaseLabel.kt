@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 @Entity(
-    tableName = "releases_labels",
+    tableName = "release_label",
     primaryKeys = ["release_id", "label_id", "catalog_number"],
 )
 data class ReleaseLabel(

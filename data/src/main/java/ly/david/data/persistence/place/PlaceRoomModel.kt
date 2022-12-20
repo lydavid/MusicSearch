@@ -10,7 +10,7 @@ import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
-@Entity(tableName = "places")
+@Entity(tableName = "place")
 data class PlaceRoomModel(
     @PrimaryKey
     @ColumnInfo(name = "id")
