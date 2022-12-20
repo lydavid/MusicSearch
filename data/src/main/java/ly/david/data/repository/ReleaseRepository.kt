@@ -6,6 +6,7 @@ import ly.david.data.AreaType
 import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.domain.toReleaseScaffoldModel
 import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.toReleaseLabels
@@ -36,7 +37,7 @@ class ReleaseRepository @Inject constructor(
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val releasesLabelsDao: ReleasesLabelsDao
-): RelationsListRepository {
+) : RelationsListRepository {
 
     /**
      * Returns a release for display.
@@ -57,39 +58,41 @@ class ReleaseRepository @Inject constructor(
 
         // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
-
-        releaseMusicBrainzModel.releaseGroup?.let {
-            releaseGroupDao.insertReleaseGroupWithArtistCredits(it)
-        }
-
-        releaseDao.insertReleaseWithArtistCredits(releaseMusicBrainzModel)
-
-        // TODO: transaction
-        labelDao.insertAll(releaseMusicBrainzModel.labelInfoList?.toRoomModels().orEmpty())
-        releasesLabelsDao.insertAll(
-            releaseMusicBrainzModel.labelInfoList?.toReleaseLabels(releaseId = releaseId).orEmpty()
-        )
-
-        releaseMusicBrainzModel.media?.forEach { medium ->
-            val mediumId = mediumDao.insert(medium.toMediumRoomModel(releaseMusicBrainzModel.id))
-            trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
-        }
-
-        releasesCountriesDao.insertAll(releaseMusicBrainzModel.getReleaseCountries())
-        areaDao.insertAll(
-            releaseMusicBrainzModel.releaseEvents?.mapNotNull {
-                // release events returns null type, but we know they are countries
-                // Except in the case of [Worldwide], but it will replace itself when we first visit it.
-                it.area?.toAreaRoomModel()?.copy(type = AreaType.COUNTRY)
-            }.orEmpty()
-        )
-        areaDao.insertAllCountryCodes(
-            releaseMusicBrainzModel.releaseEvents?.flatMap { releaseEvent ->
-                releaseEvent.area?.getAreaCountryCodes().orEmpty()
-            }.orEmpty()
-        )
-
+        insertAllModels(releaseMusicBrainzModel)
         return releaseMusicBrainzModel.toReleaseScaffoldModel()
+    }
+
+    private suspend fun insertAllModels(release: ReleaseMusicBrainzModel) {
+        releaseDao.withTransaction {
+            release.releaseGroup?.let {
+                releaseGroupDao.insertReleaseGroupWithArtistCredits(it)
+            }
+            releaseDao.insertReleaseWithArtistCredits(release)
+
+            labelDao.insertAll(release.labelInfoList?.toRoomModels().orEmpty())
+            releasesLabelsDao.insertAll(
+                release.labelInfoList?.toReleaseLabels(releaseId = release.id).orEmpty()
+            )
+
+            release.media?.forEach { medium ->
+                val mediumId = mediumDao.insert(medium.toMediumRoomModel(release.id))
+                trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
+            }
+
+            releasesCountriesDao.insertAll(release.getReleaseCountries())
+            areaDao.insertAll(
+                release.releaseEvents?.mapNotNull {
+                    // release events returns null type, but we know they are countries
+                    // Except in the case of [Worldwide], but it will replace itself when we first visit it.
+                    it.area?.toAreaRoomModel()?.copy(type = AreaType.COUNTRY)
+                }.orEmpty()
+            )
+            areaDao.insertAllCountryCodes(
+                release.releaseEvents?.flatMap { releaseEvent ->
+                    releaseEvent.area?.getAreaCountryCodes().orEmpty()
+                }.orEmpty()
+            )
+        }
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

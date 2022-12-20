@@ -30,17 +30,17 @@ class PlaceRepository @Inject constructor(
 
         val placeMusicBrainzModel = musicBrainzApiService.lookupPlace(placeId)
 
-        placeDao.insert(placeMusicBrainzModel.toPlaceRoomModel())
-
-        // TODO: transaction
-        placeMusicBrainzModel.area?.let { area ->
-            areaDao.insert(area.toAreaRoomModel())
-            areaPlaceDao.insert(
-                AreaPlace(
-                    areaId = area.id,
-                    placeId = placeId
+        areaDao.withTransaction {
+            placeDao.insert(placeMusicBrainzModel.toPlaceRoomModel())
+            placeMusicBrainzModel.area?.let { area ->
+                areaDao.insert(area.toAreaRoomModel())
+                areaPlaceDao.insert(
+                    AreaPlace(
+                        areaId = area.id,
+                        placeId = placeId
+                    )
                 )
-            )
+            }
         }
 
         return placeMusicBrainzModel.toPlaceListItemModel()

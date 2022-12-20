@@ -44,4 +44,9 @@ abstract class BaseDao<in T> {
             insertOrUpdate(it)
         }
     }
+
+    @Transaction
+    open suspend fun withTransaction(block: suspend () -> Unit) {
+        block()
+    }
 }
