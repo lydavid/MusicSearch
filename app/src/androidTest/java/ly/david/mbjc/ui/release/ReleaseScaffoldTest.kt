@@ -2,13 +2,12 @@ package ly.david.mbjc.ui.release
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
-import coil.Coil
-import coil.ImageLoaderFactory
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
@@ -20,6 +19,7 @@ import ly.david.data.network.fakeLabelInfo
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseEvent
 import ly.david.data.network.fakeReleaseGroup
+import ly.david.data.network.fakeReleaseWithCoverArt
 import ly.david.data.network.fakeReleaseWithRelation
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.MainActivityTest
@@ -34,14 +34,14 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     @Inject
     lateinit var releaseRepository: ReleaseRepository
 
-    @Inject
-    lateinit var imageLoaderFactory: ImageLoaderFactory
+//    @Inject
+//    lateinit var imageLoaderFactory: ImageLoaderFactory
 
     @Before
     fun setupApp() {
         hiltRule.inject()
 
-        Coil.setImageLoader(imageLoaderFactory)
+//        Coil.setImageLoader(imageLoaderFactory)
     }
 
     private fun setRelease(releaseMusicBrainzModel: ReleaseMusicBrainzModel) {
@@ -99,6 +99,13 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(fakeReleaseEvent.date!!)
             .assertIsDisplayed()
 
+        composeTestRule
+            .onNodeWithText(tracks)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakeRelease.media!!.first().tracks!!.first().title)
+            .assertIsDisplayed()
+
         // Confirm that up navigation items exists
         composeTestRule
             .onNodeWithTag("TopBarSubtitle")
@@ -153,46 +160,52 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
-    // TODO: with breakpoints we've confirmed that we've replaced the image loader
-    //  but we're probably running into suspend issues
-//    @Test
-//    fun firstTimeVisit_CoverArt() {
-//        setRelease(fakeReleaseWithCoverArt)
-//        composeTestRule
-//            .onNodeWithText(stats)
-//            .performClick()
-//        composeTestRule.waitUntil {
-//            composeTestRule
-//                .onAllNodesWithText(fakeReleaseWithCoverArt.name)
-//                .fetchSemanticsNodes().size == 1
-//        }
-//        composeTestRule
-//            .onNodeWithText(fakeReleaseWithCoverArt.name)
-//            .assertIsDisplayed()
-//
-//        composeTestRule
-//            .onNodeWithText(tracks)
-//            .performClick()
-//        composeTestRule.waitUntil {
-//            composeTestRule
-//                .onAllNodesWithTag("coverArtImage")
-//                .fetchSemanticsNodes().size == 1
-//        }
-//        composeTestRule
-//            .onNodeWithTag("coverArtImage")
-//            .assertIsDisplayed()
-//    }
+    // TODO: These only works when we use real ImageLoader...
+    @Test
+    fun firstTimeVisit_CoverArt() {
+        setRelease(fakeReleaseWithCoverArt)
 
-//    @Test
-//    fun repeatVisit_CoverArt() {
-//        setRelease(fakeReleaseWithCoverArt)
-//        runBlocking {
-//            releaseDao.insert(fakeReleaseWithCoverArt.toReleaseRoomModel())
-//            composeTestRule.awaitIdle()
-//        }
-//
-//        composeTestRule
-//            .onNodeWithText(fakeReleaseWithCoverArt.name)
-//            .assertIsDisplayed()
-//    }
+        composeTestRule.waitUntil {
+            composeTestRule
+                .onAllNodesWithTag("coverArtImage")
+                .fetchSemanticsNodes().size == 1
+        }
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onNodeWithTag("coverArtImage")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(stats)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakeReleaseWithCoverArt.name)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun repeatVisit_CoverArt() {
+        runBlocking {
+            releaseRepository.lookupRelease(fakeReleaseWithCoverArt.id)
+            setRelease(fakeReleaseWithCoverArt)
+            composeTestRule.awaitIdle()
+        }
+
+        composeTestRule.waitUntil {
+            composeTestRule
+                .onAllNodesWithTag("coverArtImage")
+                .fetchSemanticsNodes().size == 1
+        }
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onNodeWithTag("coverArtImage")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(stats)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakeReleaseWithCoverArt.name)
+            .assertIsDisplayed()
+    }
 }

@@ -21,8 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
@@ -40,8 +40,8 @@ import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
 private enum class ReleaseTab(@StringRes val titleRes: Int) {
-    TRACKS(R.string.tracks),
     DETAILS(R.string.details),
+    TRACKS(R.string.tracks),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
 }
@@ -66,7 +66,7 @@ internal fun ReleaseScaffold(
 
     var title by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
-    var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.TRACKS) }
+    var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var url: String by rememberSaveable { mutableStateOf("") }
@@ -78,12 +78,12 @@ internal fun ReleaseScaffold(
 
     LaunchedEffect(key1 = releaseId) {
         try {
-            val releaseScaffoldModel = viewModel.lookupReleaseThenLoadTracks(releaseId)
+            val releaseScaffoldModel = viewModel.lookupRelease(releaseId)
             val coverArtUrl = releaseScaffoldModel.coverArtUrl
             if (coverArtUrl != null) {
                 url = coverArtUrl
             } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
-                url = viewModel.getCoverArtUrlFromNetwork()
+                url = viewModel.getCoverArtUrlFromNetwork(releaseId)
             }
 
             if (titleWithDisambiguation.isNullOrEmpty()) {
@@ -98,7 +98,7 @@ internal fun ReleaseScaffold(
             // TODO: when we fail any of the above calls, we will end up in a bad state
             //  where we have the title, but not the tracks/cover/subtitle
             //  fail more gracefully
-            viewModel.loadTracks(releaseId)
+            viewModel.lookupRelease(releaseId)
         }
 
         if (!recordedLookup) {
@@ -169,18 +169,6 @@ internal fun ReleaseScaffold(
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
-            ReleaseTab.TRACKS -> {
-                TracksInReleaseScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    coverArtUrl = url,
-                    snackbarHostState = snackbarHostState,
-                    lazyListState = tracksLazyListState,
-                    lazyPagingItems = tracksLazyPagingItems,
-                    onRecordingClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RECORDING, id, title)
-                    }
-                )
-            }
             ReleaseTab.DETAILS -> {
                 val releaseScaffoldModel = release
                 if (releaseScaffoldModel == null) {
@@ -188,15 +176,29 @@ internal fun ReleaseScaffold(
                 } else {
                     ReleaseDetailsScreen(
                         releaseScaffoldModel = releaseScaffoldModel,
+                        coverArtUrl = url,
                         onLabelClick = {
                             onItemClick(Destination.LOOKUP_LABEL, id, name)
                         },
                         onAreaClick = {
                             onItemClick(Destination.LOOKUP_AREA, id, name)
                         },
-                        lazyListState = detailsLazyListState
+                        lazyListState = detailsLazyListState,
                     )
                 }
+            }
+            ReleaseTab.TRACKS -> {
+                viewModel.loadTracks(releaseId)
+
+                TracksInReleaseScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = tracksLazyListState,
+                    lazyPagingItems = tracksLazyPagingItems,
+                    onRecordingClick = { id, title ->
+                        onItemClick(Destination.LOOKUP_RECORDING, id, title)
+                    }
+                )
             }
             ReleaseTab.RELATIONSHIPS -> {
                 viewModel.loadRelations(releaseId)

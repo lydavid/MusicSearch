@@ -73,8 +73,8 @@ internal class ReleaseViewModel @Inject constructor(
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
-    suspend fun lookupReleaseThenLoadTracks(releaseId: String): ReleaseScaffoldModel {
-        return repository.lookupRelease(releaseId).also { loadTracks(releaseId) }
+    suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
+        return repository.lookupRelease(releaseId)
     }
 
     fun loadTracks(releaseId: String) {
@@ -147,9 +147,9 @@ internal class ReleaseViewModel @Inject constructor(
      *
      * Also set it in the release.
      */
-    suspend fun getCoverArtUrlFromNetwork(): String {
-        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId.value).getSmallCoverArtUrl().orEmpty()
-        releaseDao.setReleaseCoverArtUrl(releaseId.value, url)
+    suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
+        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
+        releaseDao.setReleaseCoverArtUrl(releaseId, url)
         return url
     }
 }

@@ -2,9 +2,14 @@ package ly.david.mbjc.ui.release.details
 
 import android.icu.lang.UScript
 import android.os.Build
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,12 +17,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.size.Scale
+import coil.size.Size
 import java.util.Locale
 import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.ifNotNullOrEmpty
+import ly.david.data.common.useHttps
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.LabelListItemModel
 import ly.david.data.domain.ReleaseScaffoldModel
@@ -33,11 +53,10 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.label.LabelListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 
-// TODO: it lags when navigating to this tab
-//  consider loading ReleaseWithAllData only when we navigate here
 @Composable
 internal fun ReleaseDetailsScreen(
     releaseScaffoldModel: ReleaseScaffoldModel,
+    coverArtUrl: String = "",
     onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState(),
@@ -52,6 +71,7 @@ internal fun ReleaseDetailsScreen(
 
     ReleaseDetailsScreen(
         release = releaseScaffoldModel,
+        coverArtUrl = coverArtUrl,
         onLabelClick = onLabelClick,
         onAreaClick = onAreaClick,
         lazyListState = lazyListState,
@@ -62,12 +82,58 @@ internal fun ReleaseDetailsScreen(
 @Composable
 private fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
+    coverArtUrl: String = "",
     onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState(),
     releaseLength: String? = null,
 ) {
+
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(coverArtUrl.useHttps())
+            .size(Size.ORIGINAL)
+            .scale(Scale.FIT)
+            .crossfade(true)
+            .build(),
+        imageLoader = LocalContext.current.imageLoader
+    )
+
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+
     LazyColumn(state = lazyListState) {
+
+        item {
+            if (coverArtUrl.isNotEmpty()) {
+                when (painter.state) {
+                    is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
+                        Box(
+                            modifier = Modifier
+                                .height(screenWidth)
+                                .fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
+                    is AsyncImagePainter.State.Success -> {
+                        Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .semantics { testTag = "coverArtImage" },
+                            painter = painter,
+                            contentDescription = null,
+                            contentScale = ContentScale.FillWidth,
+                        )
+                    }
+                    is AsyncImagePainter.State.Error -> {
+                        // TODO: handle error
+                    }
+                }
+            }
+        }
+
         item {
             release.run {
                 InformationListSeparatorHeader(R.string.release)
