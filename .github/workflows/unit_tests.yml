@@ -15,5 +15,8 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
+      - name: Grant Permissions to gradlew
+        run: chmod +x gradlew
+
       - name: Run unit tests
         run: ./gradlew data-android:testDebugUnitTest
