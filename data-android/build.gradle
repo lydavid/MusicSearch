@@ -70,7 +70,7 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:2.44"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     kaptTest 'com.google.dagger:hilt-android-compiler:2.44'
-    testImplementation "com.google.dagger:hilt-android-testing:2.44"
+    testImplementation "com.google.dagger:hilt-android-testing:2.44.2"
 
     testImplementation "org.robolectric:robolectric:4.9"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
