@@ -6,10 +6,11 @@ on:
 
 jobs:
   android-test:
+    timeout-minutes: 20
     runs-on: macos-latest
     strategy:
       matrix:
-        api-level: [ 23 ]
+        api-level: [ 29 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
