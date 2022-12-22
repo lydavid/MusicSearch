@@ -19,6 +19,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Grant permissions to gradlew
+        run: chmod +x gradlew
+
       - name: Run data unit tests
         uses: gradle/gradle-build-action@v2
         with:
