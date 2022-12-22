@@ -130,7 +130,7 @@ dependencies {
     implementation "androidx.paging:paging-compose:1.0.0-alpha14"
 
     // Room
-    androidTestImplementation "androidx.room:room-testing:2.5.0-beta01"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.44"
