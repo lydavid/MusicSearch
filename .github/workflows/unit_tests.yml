@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  test:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,10 +15,16 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
-      - name: Grant permissions to gradlew
-        run: chmod +x gradlew
+      # https://github.com/gradle/gradle-build-action
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-      - name: Run unit tests with coverage
+      - name: Run data unit tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:test
+
+      - name: Run data-android unit tests with coverage
         run: ./gradlew data-android:createDebugUnitTestCoverageReport
 
       # https://github.com/codecov/codecov-action#arguments
@@ -27,5 +33,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: data-android/build/reports/coverage/test/debug/report.xml
-
-      # TODO: Find a way to run the unit tests inside data (non-Android module)
