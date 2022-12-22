@@ -4,9 +4,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "friday"
+      time: "8:20"
+      timezone: "Canada/Eastern"
   - package-ecosystem: gradle
     directory: "/"
     schedule:
       interval: "daily"
       time: "8:20"
+      timezone: "Canada/Eastern"
     open-pull-requests-limit: 10
