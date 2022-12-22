@@ -5,14 +5,15 @@ plugins {
     id "kotlin-kapt"
 }
 
-// https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
-def keystorePropertiesFile = rootProject.file("ignore_folder/keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     signingConfigs {
         release {
+
+            // https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
+            def keystorePropertiesFile = rootProject.file("ignore_folder/keystore.properties")
+            def keystoreProperties = new Properties()
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
             storeFile rootProject.file("ignore_folder/release-keystore.jks")
             keyAlias "mbjc"
             storePassword keystoreProperties["storePassword"]
