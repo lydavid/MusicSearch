@@ -27,12 +27,13 @@ jobs:
         with:
           arguments: data:test
 
+      # TODO: This is reporting 0% coverage, probably because it doesn't test any of its own code
       - name: Run data-android unit tests with coverage
         run: ./gradlew data-android:createDebugUnitTestCoverageReport
 
       # https://github.com/codecov/codecov-action#arguments
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: data-android/build/reports/coverage/test/debug/report.xml
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          files: data-android/build/reports/coverage/test/debug/report.xml
