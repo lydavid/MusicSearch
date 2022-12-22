@@ -15,10 +15,15 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
-      - name: Grant Permissions to gradlew
+      - name: Grant permissions to gradlew
         run: chmod +x gradlew
 
-      - name: Run unit tests
-        run: ./gradlew data-android:testDebugUnitTest
+      - name: Run unit tests with coverage
+        run: ./gradlew data-android:createDebugUnitTestCoverageReport
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       # TODO: Find a way to run the unit tests inside data (non-Android module)
