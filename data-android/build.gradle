@@ -66,11 +66,11 @@ dependencies {
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-android-compiler:2.44"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.44'
-    testImplementation "com.google.dagger:hilt-android-testing:2.44"
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
 
     testImplementation "org.robolectric:robolectric:4.9"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
