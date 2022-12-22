@@ -1,12 +1,6 @@
 name: Android Tests
 
-on:
-  pull_request:
-    branches:
-      - codecov-app # TODO: remove
-  push:
-    branches:
-      - master
+on: workflow_dispatch
 
 jobs:
   android-test:
