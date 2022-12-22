@@ -1,8 +1,7 @@
 name: Unit tests
 
 on:
-#  pull_request:
-  push:
+#  push: # TODO: uncomment
 
 jobs:
   unit-test:
