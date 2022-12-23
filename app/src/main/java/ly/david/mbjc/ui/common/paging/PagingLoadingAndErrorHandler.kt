@@ -1,48 +1,34 @@
 package ly.david.mbjc.ui.common.paging
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.flow.flowOf
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.RetryButton
+import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.fullscreen.FullScreenText
-import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
  * Handles loading and errors for paging screens.
@@ -81,7 +67,7 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                 snackbarHostState?.showSnackbar(displayMessage)
             }
 
-            FullScreenErrorWithRetry(lazyPagingItems = lazyPagingItems)
+            FullScreenErrorWithRetry(onClick = { lazyPagingItems.refresh() })
         }
         lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
             // TODO: cannot refresh
@@ -130,7 +116,7 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                                             .padding(8.dp),
                                         horizontalArrangement = Arrangement.Center
                                     ) {
-                                        RetryButton(lazyPagingItems = lazyPagingItems)
+                                        RetryButton(onClick = { lazyPagingItems.refresh() })
                                     }
                                 }
                                 else -> {
@@ -149,46 +135,3 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
     }
 }
 
-@Composable
-private fun <T : Any> FullScreenErrorWithRetry(
-    lazyPagingItems: LazyPagingItems<T>,
-) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            modifier = Modifier.padding(bottom = 16.dp),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodyMedium,
-            text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again."
-        )
-        RetryButton(lazyPagingItems = lazyPagingItems)
-    }
-}
-
-@Composable
-private fun <T : Any> RetryButton(lazyPagingItems: LazyPagingItems<T>) {
-    Button(
-        onClick = { lazyPagingItems.retry() }
-    ) {
-        Icon(Icons.Default.Refresh, "")
-        Text(
-            modifier = Modifier.padding(start = 8.dp),
-            style = MaterialTheme.typography.headlineMedium,
-            text = stringResource(id = R.string.retry)
-        )
-    }
-}
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-internal fun FullScreenErrorWithRetryPreview() {
-    PreviewTheme {
-        Surface {
-            FullScreenErrorWithRetry(flowOf(PagingData.from(listOf())).collectAsLazyPagingItems())
-        }
-    }
-}

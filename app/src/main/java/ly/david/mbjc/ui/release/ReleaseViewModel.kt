@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.Header
 import ly.david.data.domain.ListItemModel
@@ -27,6 +28,9 @@ import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.domain.TrackListItemModel
 import ly.david.data.domain.toTrackListItemModel
+import ly.david.data.getDisplayNames
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
@@ -65,6 +69,13 @@ internal class ReleaseViewModel @Inject constructor(
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
 
+    val title = MutableStateFlow("")
+    val subtitleState = MutableStateFlow("")
+    var recordedLookup = false
+    val isError = MutableStateFlow(false)
+    val release: MutableStateFlow<ReleaseScaffoldModel?> = MutableStateFlow(null)
+    val url = MutableStateFlow("")
+
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
@@ -73,11 +84,11 @@ internal class ReleaseViewModel @Inject constructor(
     /**
      * Call this to retrieve the title, subtitle, and initiate tracks paging.
      */
-    suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
+    private suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
         return repository.lookupRelease(releaseId)
     }
 
-    fun loadTracks(releaseId: String) {
+    private fun loadTracks(releaseId: String) {
         this.releaseId.value = releaseId
     }
 
@@ -147,9 +158,57 @@ internal class ReleaseViewModel @Inject constructor(
      *
      * Also set it in the release.
      */
-    suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
+    private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
         val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
         releaseDao.setReleaseCoverArtUrl(releaseId, url)
         return url
+    }
+
+    fun setTitle(title: String?) {
+        this.title.value = title ?: return
+    }
+
+    fun onSelectedTabChange(
+        releaseId: String,
+        selectedTab: ReleaseTab
+    ) {
+        when (selectedTab) {
+            ReleaseTab.DETAILS -> {
+                viewModelScope.launch {
+                    try {
+                        val releaseScaffoldModel = lookupRelease(releaseId)
+                        val coverArtUrl = releaseScaffoldModel.coverArtUrl
+                        if (coverArtUrl != null) {
+                            url.value = coverArtUrl
+                        } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
+                            url.value = getCoverArtUrlFromNetwork(releaseId)
+                        }
+
+                        if (title.value.isEmpty()) {
+                            title.value = releaseScaffoldModel.getNameWithDisambiguation()
+                        }
+                        subtitleState.value = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
+                        release.value = releaseScaffoldModel
+                        isError.value = false
+                    } catch (ex: Exception) {
+                        isError.value = true
+                    }
+
+                    if (!recordedLookup) {
+                        recordLookupHistory(
+                            resourceId = releaseId,
+                            resource = MusicBrainzResource.RELEASE,
+                            summary = title.value
+                        )
+                        recordedLookup = true
+                    }
+                }
+            }
+            ReleaseTab.TRACKS -> loadTracks(releaseId)
+            ReleaseTab.RELATIONSHIPS -> loadRelations(releaseId)
+            ReleaseTab.STATS -> {
+
+            }
+        }
     }
 }

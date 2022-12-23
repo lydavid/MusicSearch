@@ -11,6 +11,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,13 +23,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.ReleaseScaffoldModel
-import ly.david.data.getDisplayNames
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -39,7 +38,7 @@ import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
-private enum class ReleaseTab(@StringRes val titleRes: Int) {
+internal enum class ReleaseTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
     TRACKS(R.string.tracks),
     RELATIONSHIPS(R.string.relationships),
@@ -64,51 +63,25 @@ internal fun ReleaseScaffold(
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var title by rememberSaveable { mutableStateOf("") }
-    var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var url: String by rememberSaveable { mutableStateOf("") }
-    var release: ReleaseScaffoldModel? by remember { mutableStateOf(null) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        title = titleWithDisambiguation
-    }
+    val title = viewModel.title.collectAsState().value
+    val subtitleState = viewModel.subtitleState.collectAsState().value
+    val url = viewModel.url.collectAsState()
+    val release = viewModel.release.collectAsState()
+    val showError = viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = releaseId) {
-        try {
-            val releaseScaffoldModel = viewModel.lookupRelease(releaseId)
-            val coverArtUrl = releaseScaffoldModel.coverArtUrl
-            if (coverArtUrl != null) {
-                url = coverArtUrl
-            } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
-                url = viewModel.getCoverArtUrlFromNetwork(releaseId)
-            }
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                title = releaseScaffoldModel.getNameWithDisambiguation()
-            }
-            subtitleState = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
-            release = releaseScaffoldModel
-        } catch (ex: Exception) {
-            // If any of the above calls failed, we still want to update the release id so that
-            // TracksInReleaseScreen will give us a Retry button.
-
-            // TODO: when we fail any of the above calls, we will end up in a bad state
-            //  where we have the title, but not the tracks/cover/subtitle
-            //  fail more gracefully
-            viewModel.lookupRelease(releaseId)
-        }
-
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = releaseId,
-                resource = resource,
-                summary = title
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            releaseId = releaseId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
@@ -124,7 +97,7 @@ internal fun ReleaseScaffold(
                     CopyToClipboardMenuItem(resourceId = releaseId)
                 },
                 subtitleDropdownMenuItems = {
-                    release?.artistCredits?.forEach { artistCredit ->
+                    release.value?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
@@ -133,7 +106,7 @@ internal fun ReleaseScaffold(
                                 onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
                             })
                     }
-                    release?.releaseGroup?.let { releaseGroup ->
+                    release.value?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(
                             text = { Text(text = releaseGroup.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.RELEASE_GROUP) },
@@ -170,26 +143,34 @@ internal fun ReleaseScaffold(
 
         when (selectedTab) {
             ReleaseTab.DETAILS -> {
-                val releaseScaffoldModel = release
-                if (releaseScaffoldModel == null) {
-                    FullScreenLoadingIndicator()
-                } else {
-                    ReleaseDetailsScreen(
-                        releaseScaffoldModel = releaseScaffoldModel,
-                        coverArtUrl = url,
-                        onLabelClick = {
-                            onItemClick(Destination.LOOKUP_LABEL, id, name)
-                        },
-                        onAreaClick = {
-                            onItemClick(Destination.LOOKUP_AREA, id, name)
-                        },
-                        lazyListState = detailsLazyListState,
-                    )
+                val releaseScaffoldModel = release.value
+                when {
+                    showError.value -> {
+                        FullScreenErrorWithRetry(
+                            // TODO: [low] if you spam click this it won't work
+                            //  but you can always change tabs or come back to reload
+                            onClick = { forceRefresh = true }
+                        )
+                    }
+                    releaseScaffoldModel == null -> {
+                        FullScreenLoadingIndicator()
+                    }
+                    else -> {
+                        ReleaseDetailsScreen(
+                            releaseScaffoldModel = releaseScaffoldModel,
+                            coverArtUrl = url.value,
+                            onLabelClick = {
+                                onItemClick(Destination.LOOKUP_LABEL, id, name)
+                            },
+                            onAreaClick = {
+                                onItemClick(Destination.LOOKUP_AREA, id, name)
+                            },
+                            lazyListState = detailsLazyListState,
+                        )
+                    }
                 }
             }
             ReleaseTab.TRACKS -> {
-                viewModel.loadTracks(releaseId)
-
                 TracksInReleaseScreen(
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
@@ -201,8 +182,6 @@ internal fun ReleaseScaffold(
                 )
             }
             ReleaseTab.RELATIONSHIPS -> {
-                viewModel.loadRelations(releaseId)
-
                 RelationsScreen(
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
