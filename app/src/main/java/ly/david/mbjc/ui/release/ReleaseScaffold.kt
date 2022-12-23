@@ -67,11 +67,11 @@ internal fun ReleaseScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    val title = viewModel.title.collectAsState().value
-    val subtitleState = viewModel.subtitleState.collectAsState().value
-    val url = viewModel.url.collectAsState()
-    val release = viewModel.release.collectAsState()
-    val showError = viewModel.isError.collectAsState()
+    val title by viewModel.title.collectAsState()
+    val subtitleState by viewModel.subtitleState.collectAsState()
+    val url by viewModel.url.collectAsState()
+    val release by viewModel.release.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = releaseId) {
         viewModel.setTitle(titleWithDisambiguation)
@@ -97,7 +97,7 @@ internal fun ReleaseScaffold(
                     CopyToClipboardMenuItem(resourceId = releaseId)
                 },
                 subtitleDropdownMenuItems = {
-                    release.value?.artistCredits?.forEach { artistCredit ->
+                    release?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
@@ -106,7 +106,7 @@ internal fun ReleaseScaffold(
                                 onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
                             })
                     }
-                    release.value?.releaseGroup?.let { releaseGroup ->
+                    release?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(
                             text = { Text(text = releaseGroup.name) },
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.RELEASE_GROUP) },
@@ -143,9 +143,9 @@ internal fun ReleaseScaffold(
 
         when (selectedTab) {
             ReleaseTab.DETAILS -> {
-                val releaseScaffoldModel = release.value
+                val releaseScaffoldModel = release
                 when {
-                    showError.value -> {
+                    showError -> {
                         FullScreenErrorWithRetry(
                             // TODO: [low] if you spam click this it won't work
                             //  but you can always change tabs or come back to reload
@@ -158,7 +158,7 @@ internal fun ReleaseScaffold(
                     else -> {
                         ReleaseDetailsScreen(
                             releaseScaffoldModel = releaseScaffoldModel,
-                            coverArtUrl = url.value,
+                            coverArtUrl = url,
                             onLabelClick = {
                                 onItemClick(Destination.LOOKUP_LABEL, id, name)
                             },
