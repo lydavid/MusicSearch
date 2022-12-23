@@ -1,0 +1,68 @@
+name: Android Tests
+
+on: [ workflow_dispatch ]
+
+jobs:
+  android-test:
+    timeout-minutes: 60
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 29 ]
+        arch: [ x86_64 ]
+        target: [ google_apis ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "11"
+
+      # https://github.com/gradle/gradle-build-action
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Grant permissions to gradlew
+        run: chmod +x gradlew
+
+      - name: AVD cache
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      # https://github.com/ReactiveCircus/android-emulator-runner
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: ${{ matrix.arch }}
+          target: ${{ matrix.target }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run android tests with code coverage
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: ${{ matrix.arch }}
+          target: ${{ matrix.target }}
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
+
+      # https://github.com/codecov/codecov-action#arguments
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
