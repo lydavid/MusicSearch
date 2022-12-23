@@ -7,7 +7,6 @@ import androidx.paging.RemoteMediator
 import ly.david.data.persistence.RoomModel
 
 /**
- *
  * When using [LoadType.REFRESH], [hasResourceBeenStored] does not need to be checked.
  * A refresh load will always call [lookupResource] with force refresh flag.
  */

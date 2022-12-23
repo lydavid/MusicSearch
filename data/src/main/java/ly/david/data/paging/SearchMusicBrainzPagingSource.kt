@@ -2,6 +2,7 @@ package ly.david.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
 import java.io.IOException
 import kotlinx.coroutines.delay
 import ly.david.data.domain.ListItemModel
@@ -13,6 +14,11 @@ import ly.david.data.network.api.STARTING_OFFSET
 import ly.david.data.network.api.SearchApi
 import retrofit2.HttpException
 
+/**
+ * This is not a [RemoteMediator] compared to [BrowseResourceRemoteMediator] and [LookupResourceRemoteMediator].
+ * This is because we are not storing search results locally.
+ * We want all search results to be fresh.
+ */
 class SearchMusicBrainzPagingSource(
     private val searchApi: SearchApi,
     private val resource: MusicBrainzResource,
@@ -30,13 +36,15 @@ class SearchMusicBrainzPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ListItemModel> {
-        val currentOffset = params.key ?: STARTING_OFFSET
-        if (currentOffset != STARTING_OFFSET) {
-            delay(DELAY_PAGED_API_CALLS_MS)
-        }
-
-        val limit = params.loadSize
         return try {
+            val currentOffset = if (params is LoadParams.Refresh) {
+                STARTING_OFFSET
+            } else {
+                delay(DELAY_PAGED_API_CALLS_MS)
+                params.key ?: STARTING_OFFSET
+            }
+
+            val limit = params.loadSize
             val response = getQueryResults(
                 searchApi = searchApi,
                 resource = resource,
