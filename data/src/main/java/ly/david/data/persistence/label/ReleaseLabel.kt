@@ -2,10 +2,28 @@ package ly.david.data.persistence.label
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import ly.david.data.persistence.release.ReleaseRoomModel
 
 @Entity(
     tableName = "release_label",
     primaryKeys = ["release_id", "label_id", "catalog_number"],
+    foreignKeys = [
+        ForeignKey(
+            entity = LabelRoomModel::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("label_id"),
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = ReleaseRoomModel::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("release_id"),
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
 )
 data class ReleaseLabel(
     @ColumnInfo(name = "release_id")

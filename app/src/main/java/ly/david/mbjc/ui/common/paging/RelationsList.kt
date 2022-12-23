@@ -85,8 +85,12 @@ internal class RelationsList @Inject constructor(
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
                         relation.toRelationListItemModel()
-                    }.insertSeparators { before: RelationListItemModel?, _: RelationListItemModel? ->
-                        if (before == null) Header else null
+                    }.insertSeparators { before: RelationListItemModel?, after: RelationListItemModel? ->
+                        // We used to put details as a Header in a paged list
+                        // but it makes more sense to put it in its own tab where it won't interfere with things
+                        // like refreshing and counting lazyPagingItems for an empty state.
+                        // TODO: consider removing Header
+                        if (before == null && after != null) Header else null
                     }
                 }
             }

@@ -62,7 +62,7 @@ internal fun ReleaseDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     viewModel: ReleaseDetailsViewModel = hiltViewModel()
 ) {
-    // TODO: get this from ui model, then we can save scroll state
+    // TODO: get this from ui model, then we can save scroll state without jumps
     var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
 
     LaunchedEffect(key1 = releaseScaffoldModel) {
@@ -79,6 +79,8 @@ internal fun ReleaseDetailsScreen(
     )
 }
 
+// TODO: consider how to refresh this screen
+//  generalize pullrefresh?
 @Composable
 private fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
@@ -128,7 +130,8 @@ private fun ReleaseDetailsScreen(
                         )
                     }
                     is AsyncImagePainter.State.Error -> {
-                        // TODO: handle error
+                        // TODO: handle error with retry
+                        //  this case means there is an image but we failed to get it
                     }
                 }
             }

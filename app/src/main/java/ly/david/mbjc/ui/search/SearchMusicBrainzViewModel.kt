@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.data.domain.EndOfList
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
@@ -37,7 +38,6 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
         viewModelState.value = ViewModelState(resource, query)
     }
 
-    // TODO: refresh not implemented
     @OptIn(ExperimentalCoroutinesApi::class)
     val searchResultsListItemModel: Flow<PagingData<ListItemModel>> =
         viewModelState.filterNot { it.query.isEmpty() }
@@ -52,7 +52,7 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
                         )
                     }
                 ).flow.map { pagingData ->
-                    pagingData.insertFooterItemForNonEmpty(item = ly.david.data.domain.EndOfList)
+                    pagingData.insertFooterItemForNonEmpty(item = EndOfList)
                 }
             }
             .distinctUntilChanged()

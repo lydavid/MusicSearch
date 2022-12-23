@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.paging.MusicBrainzPagingConfig
 
 @HiltViewModel
 internal class HistoryViewModel @Inject constructor(
@@ -33,6 +33,8 @@ internal class HistoryViewModel @Inject constructor(
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
+                    // TODO: if we allow different sorting, then it will multiple these queries
+                    //  can we sort with Kotlin? since this is a flow, we can't sort it afterwards
                     if (query.isEmpty()) {
                         lookupHistoryDao.getAllLookupHistory()
                     } else {

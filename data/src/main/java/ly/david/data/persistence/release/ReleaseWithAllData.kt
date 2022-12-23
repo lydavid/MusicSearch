@@ -22,6 +22,7 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
     SELECT l.*, rl.*
     FROM label l
     INNER JOIN release_label rl ON l.id = rl.label_id
+    ORDER BY rl.catalog_number
 """
 )
 data class LabelWithCatalog(

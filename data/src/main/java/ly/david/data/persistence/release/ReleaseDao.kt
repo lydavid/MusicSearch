@@ -31,6 +31,9 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
     @Query("SELECT * FROM release WHERE id = :releaseId")
     abstract suspend fun getReleaseWithAllData(releaseId: String): ReleaseWithAllData?
 
+    /**
+     * By deleting a release, all junction tables for it should cascade delete too.
+     */
     @Query(
         """
         DELETE FROM release WHERE id = :releaseId

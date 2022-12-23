@@ -6,7 +6,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.Header
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.TrackListItemModel
@@ -34,8 +33,6 @@ internal fun TracksInReleaseScreen(
         snackbarHostState = snackbarHostState
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
-            is Header -> {
-            }
             is TrackListItemModel -> {
                 TrackListItem(
                     track = listItemModel,

@@ -54,52 +54,61 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
 ) {
 
-    // This doesn't affect "loads" from db/source.
-    when {
-        lazyPagingItems.loadState.refresh is LoadState.Loading || somethingElseLoading -> {
-            FullScreenLoadingIndicator()
-        }
-        lazyPagingItems.loadState.refresh is LoadState.Error -> {
-            // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
-            LaunchedEffect(Unit) {
-                val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
-                val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
-                snackbarHostState?.showSnackbar(displayMessage)
-            }
+//    val refreshScope = rememberCoroutineScope()
+//    var refreshing by remember { mutableStateOf(false) }
 
-            FullScreenErrorWithRetry(onClick = { lazyPagingItems.refresh() })
+    // TODO: Issue with indicator remaining on screen without delay in refresh
+    //  https://issuetracker.google.com/issues/248274004
+    //  Fixed in: androidx.compose.material:material:1.4.0-alpha03
+    //  Pulling down doesn't guarantee a refresh. Let's just wait for next release.
+//    fun refresh() = refreshScope.launch {
+//        refreshing = true
+//        lazyPagingItems.refresh()
+//        delay(1000)
+//        refreshing = false
+//    }
+//
+//    val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
+
+    val swipeRefreshState = rememberSwipeRefreshState(false)
+    SwipeRefresh(
+        state = swipeRefreshState,
+        onRefresh = { lazyPagingItems.refresh() },
+        indicator = { state: SwipeRefreshState, refreshTrigger: Dp ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = refreshTrigger,
+                contentColor = MaterialTheme.colorScheme.primary
+            )
         }
-        lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
-            // TODO: cannot refresh
-            //  also there should be a difference between 0 out of 0, and 0 out of 1 found
-            //  the latter should offer a retry button
-            FullScreenText(noResultsText)
-        }
-        else -> {
-            // https://android-review.googlesource.com/c/platform/frameworks/support/+/2193512/19/compose/material/material/samples/src/main/java/androidx/compose/material/samples/PullRefreshSamples.kt#58
-            // New rememberPullRefreshState is out, but seems to not work as nicely right now
-            val swipeRefreshState = rememberSwipeRefreshState(false)
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = { lazyPagingItems.refresh() },
-                indicator = { state: SwipeRefreshState, refreshTrigger: Dp ->
-                    SwipeRefreshIndicator(
-                        state = state,
-                        refreshTriggerDistance = refreshTrigger,
-                        contentColor = MaterialTheme.colorScheme.primary
-                    )
+    ) {
+
+        // This doesn't affect "loads" from db/source.
+        when {
+            lazyPagingItems.loadState.refresh is LoadState.Loading || somethingElseLoading -> {
+                FullScreenLoadingIndicator()
+            }
+            lazyPagingItems.loadState.refresh is LoadState.Error -> {
+                // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
+                LaunchedEffect(Unit) {
+                    val errorMessage = (lazyPagingItems.loadState.refresh as LoadState.Error).error.message
+                    val displayMessage = "Failed to fetch data: ${errorMessage ?: "unknown"}"
+                    snackbarHostState?.showSnackbar(displayMessage)
                 }
-            ) {
+
+                FullScreenErrorWithRetry(onClick = { lazyPagingItems.refresh() })
+            }
+            lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
+                // TODO: cannot refresh
+                //  also there should be a difference between 0 out of 0, and 0 out of 1 found
+                //  the latter should offer a retry button
+                FullScreenText(noResultsText)
+            }
+            else -> {
                 LazyColumn(
                     modifier = modifier,
                     state = lazyListState,
                 ) {
-
-                    // Note that if we prepend/append items, it will cause scroll to top on config change.
-//                item {
-//                    Text(text = "blah")
-//                }
-
                     itemsIndexed(lazyPagingItems) { index: Int, value: T? ->
                         itemContent(value)
 
@@ -134,4 +143,3 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
         }
     }
 }
-

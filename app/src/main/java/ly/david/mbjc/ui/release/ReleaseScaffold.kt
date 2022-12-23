@@ -46,9 +46,7 @@ internal enum class ReleaseTab(@StringRes val titleRes: Int) {
 }
 
 /**
- * Equivalent of a screen like: https://musicbrainz.org/release/f171e0ae-bea8-41e6-bb41-4c7af7977f50
- *
- * Starts on a screen that displays all of its media/tracks.
+ * The top-level screen for a release.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -156,6 +154,8 @@ internal fun ReleaseScaffold(
                         FullScreenLoadingIndicator()
                     }
                     else -> {
+                        // TODO: test refreshing this screen
+                        //  want to see if deleting labels by release will cascade delete its junction table
                         ReleaseDetailsScreen(
                             releaseScaffoldModel = releaseScaffoldModel,
                             coverArtUrl = url,

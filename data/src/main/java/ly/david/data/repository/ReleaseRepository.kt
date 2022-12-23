@@ -39,6 +39,9 @@ class ReleaseRepository @Inject constructor(
     private val releasesLabelsDao: ReleasesLabelsDao
 ) : RelationsListRepository {
 
+    // TODO: split up what data to include when calling from details/tracks tabs?
+    //  initial load only requires 1 api call to display data on both tabs
+    //  but swipe to refresh should only refresh its own tab
     /**
      * Returns a release for display.
      *
@@ -69,6 +72,8 @@ class ReleaseRepository @Inject constructor(
             }
             releaseDao.insertReleaseWithArtistCredits(release)
 
+            // This serves as a replacement for browsing labels by release.
+            // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
             labelDao.insertAll(release.labelInfoList?.toRoomModels().orEmpty())
             releasesLabelsDao.insertAll(
                 release.labelInfoList?.toReleaseLabels(releaseId = release.id).orEmpty()
@@ -79,7 +84,6 @@ class ReleaseRepository @Inject constructor(
                 trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
             }
 
-            releasesCountriesDao.insertAll(release.getReleaseCountries())
             areaDao.insertAll(
                 release.releaseEvents?.mapNotNull {
                     // release events returns null type, but we know they are countries
@@ -92,6 +96,7 @@ class ReleaseRepository @Inject constructor(
                     releaseEvent.area?.getAreaCountryCodes().orEmpty()
                 }.orEmpty()
             )
+            releasesCountriesDao.insertAll(release.getReleaseCountries())
         }
     }
 

@@ -7,7 +7,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
-import androidx.paging.insertHeaderItem
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +21,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.Header
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseScaffoldModel
@@ -106,9 +104,8 @@ internal class ReleaseViewModel @Inject constructor(
                         hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
                         lookupResource = { repository.lookupRelease(releaseId) },
                         deleteLocalResource = {
-                            // TODO: invalidate cover art cache and refresh
-                            // TODO: delete release_label
                             releaseDao.deleteReleaseById(releaseId)
+
                         }
                     ),
                     pagingSourceFactory = {
@@ -130,7 +127,7 @@ internal class ReleaseViewModel @Inject constructor(
                         } else {
                             null
                         }
-                    }.insertHeaderItem(item = Header)
+                    }
                 }
             }
             .distinctUntilChanged()
