@@ -1,7 +1,5 @@
 name: Unit tests
-
-on:
-#  push: # TODO: uncomment
+on: [ push ]
 
 jobs:
   unit-test:
