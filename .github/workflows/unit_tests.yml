@@ -1,5 +1,13 @@
-name: Unit tests
-on: [ push ]
+name: Unit Tests
+
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+      - "data/**"
+      - "data-android/**"
+      - "gradle/**"
+      - "**/*.gradle"
 
 jobs:
   unit-test:
