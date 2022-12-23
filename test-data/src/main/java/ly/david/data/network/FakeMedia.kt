@@ -17,10 +17,19 @@ val fakeTrack = TrackMusicBrainzModel(
     recording = fakeRecording
 )
 
+val fakeTrack2 = TrackMusicBrainzModel(
+    id = "track2",
+    position = 1,
+    number = "A2",
+    title = "Fake Track 2 (find me)",
+    length = 1000,
+    recording = fakeRecording
+)
+
 val fakeMedia = MediumMusicBrainzModel(
     position = 1,
     title = null,
     trackCount = 1,
     format = "CD",
-    tracks = listOf(fakeTrack)
+    tracks = listOf(fakeTrack, fakeTrack2)
 )

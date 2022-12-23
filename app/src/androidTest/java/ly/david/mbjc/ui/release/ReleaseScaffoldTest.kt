@@ -97,12 +97,17 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(fakeReleaseEvent.date!!)
             .assertIsDisplayed()
 
+        // TODO: maybe don't test like this, it's hard to reference their values
         composeTestRule
             .onNodeWithText(tracks)
             .performClick()
         composeTestRule
             .onNodeWithText(fakeRelease.media!!.first().tracks!!.first().title)
             .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(fakeRelease.media!!.first().tracks!!.last().title)
+            .assertIsDisplayed()
+        // TODO: attempted to test filtering but apparently our listitem nodes gets duplicated afterwards...
 
         // Confirm that up navigation items exists
         composeTestRule
@@ -158,7 +163,33 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
+    @Test
+    fun showRetryButtonOnError() {
+        composeTestRule.activity.setContent {
+            PreviewTheme {
+                ReleaseScaffold(
+                    releaseId = "error"
+                )
+            }
+        }
+
+        runBlocking { composeTestRule.awaitIdle() }
+
+        composeTestRule
+            .onNodeWithText(retry)
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(tracks)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(retry)
+            .assertIsDisplayed()
+    }
+
     // TODO: These only works when we use real ImageLoader...
+    //  try: https://github.com/coil-kt/coil/pull/1451
 //    @Test
 //    fun firstTimeVisit_CoverArt() {
 //        setRelease(fakeReleaseWithCoverArt)
