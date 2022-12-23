@@ -1,12 +1,10 @@
 name: Android Tests
 
-on:
-  workflow_dispatch:
-  push:
+on: [ workflow_dispatch ]
 
 jobs:
   android-test:
-    timeout-minutes: 20
+    timeout-minutes: 60
     runs-on: macos-latest
     strategy:
       matrix:
