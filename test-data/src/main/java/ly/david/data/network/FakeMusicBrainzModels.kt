@@ -1,6 +1,5 @@
 package ly.david.data.network
 
-import ly.david.data.NameWithDisambiguation
 import ly.david.data.network.api.BrowseRecordingsResponse
 import ly.david.data.network.api.SearchAreasResponse
 import ly.david.data.network.api.SearchArtistsResponse
@@ -23,7 +22,7 @@ val fakeSeries = SeriesMusicBrainzModel(
     name = "Series Name",
 )
 
-fun MusicBrainzResource.toFakeMusicBrainzModel(): NameWithDisambiguation =
+fun MusicBrainzResource.toFakeMusicBrainzModel(): MusicBrainzModel =
     when (this) {
         MusicBrainzResource.AREA -> fakeArea
         MusicBrainzResource.ARTIST -> fakeArtist

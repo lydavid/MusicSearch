@@ -2,12 +2,8 @@ name: Unit Tests
 
 on:
   push:
-    paths:
-      - ".github/workflows/**"
-      - "data/**"
-      - "data-android/**"
-      - "gradle/**"
-      - "**/*.gradle"
+    paths-ignore:
+      - "*.md"
 
 jobs:
   unit-test:
@@ -38,6 +34,9 @@ jobs:
       # TODO: This is reporting 0% coverage, probably because it doesn't test any of its own code
       - name: Run data-android unit tests with coverage
         run: ./gradlew data-android:createDebugUnitTestCoverageReport
+
+      - name: Run app unit tests with coverage
+        run: ./gradlew app:createDebugUnitTestCoverageReport
 
       # https://github.com/codecov/codecov-action#arguments
 #      - name: Upload coverage to Codecov
