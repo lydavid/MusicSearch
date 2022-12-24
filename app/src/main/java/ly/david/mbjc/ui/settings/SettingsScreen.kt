@@ -60,7 +60,7 @@ internal fun SettingsScreen(filterText: String) {
         }
 
         // TODO: sharedpreference to use artist sort name throughout app
-        //  helpful for foreign names
+        //  helpful for non-Latin names
         //  other entities have a sort_name field in backend
         //  but doesn't seem to be exposed for editing/displaying
 

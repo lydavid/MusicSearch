@@ -12,18 +12,21 @@ import ly.david.mbjc.ui.settings.SettingSwitch
 internal fun DevSettingsSection(
     viewModel: DevSettingsViewModel = hiltViewModel()
 ) {
-
-//    LaunchedEffect(key1 = Unit, block = {
-//        viewModel.showThingFlow.first()
-//    })
-
     Column {
         ListSeparatorHeader(text = "Dev Settings")
 
         // TODO: if it starts true, it will be colored correctly but its position is wrong
+        //  This is a material3 bug that is fixed by updating it
+        //  But that update will break our app, so let's wait for stable release to update/fix
+        //  For now we can use non-material3 switch
         val showThing by viewModel.showThingFlow.collectAsState(false)
 
         val showThingHeader = "Show thing"
-        SettingSwitch(header = showThingHeader, checked = showThing, onCheckedChange = { viewModel.setShowThing(it) })
+        SettingSwitch(
+            header = showThingHeader,
+            checked = showThing,
+            onCheckedChange = { checked ->
+                viewModel.setShowThing(checked)
+            })
     }
 }

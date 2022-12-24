@@ -191,6 +191,9 @@ internal class ReleaseViewModel @Inject constructor(
                         isError.value = true
                     }
 
+                    // This will still record a lookup that failed, allowing for us to quickly get back to it later.
+                    // However, reloading it will not record another visit, so its title will remain empty in history.
+                    // But clicking on it will update its title, so we're not fixing it right now.
                     if (!recordedLookup) {
                         recordLookupHistory(
                             resourceId = releaseId,

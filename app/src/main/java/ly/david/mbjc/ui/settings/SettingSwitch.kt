@@ -1,11 +1,14 @@
 package ly.david.mbjc.ui.settings
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,8 +28,7 @@ internal fun SettingSwitch(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            ,
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -36,7 +38,15 @@ internal fun SettingSwitch(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Switch(checked = checked, onCheckedChange = onCheckedChange)
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
+                uncheckedTrackColor = MaterialTheme.colorScheme.onSurface
+            )
+        )
     }
 }
 
@@ -46,7 +56,10 @@ internal fun SettingSwitch(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            SettingSwitch(header = "A setting", checked = true)
+            Column {
+                SettingSwitch(header = "A setting", checked = true)
+                SettingSwitch(header = "A setting", checked = false)
+            }
         }
     }
 }
