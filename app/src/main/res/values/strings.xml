@@ -27,6 +27,7 @@
 
     <string name="search_musicbrainz">Search MusicBrainz</string>
     <string name="history">History</string>
+    <string name="settings">Settings</string>
 
     <string name="search">Search</string>
     <string name="resource">Resource</string>
@@ -76,6 +77,8 @@
     <string name="coordinates">Coordinates</string>
     <string name="cancelled">Cancelled</string>
     <string name="description">Description</string>
+
+    <string name="app_version">App version</string>
 
     <string name="ok">OK</string>
     <string name="retry">Retry</string>

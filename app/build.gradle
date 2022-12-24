@@ -32,7 +32,7 @@ android {
         minSdk 23
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
@@ -146,6 +146,8 @@ dependencies {
 
     // Tried this for UScript.getName(UScript.getCodeFromName(it))
 //    implementation "com.ibm.icu:icu4j:72.1"
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     // Test - General
     testImplementation "junit:junit:4.13.2"

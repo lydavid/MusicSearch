@@ -17,6 +17,7 @@ import ly.david.data.network.RESOURCE_WORK
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"
+private const val TOP_LEVEL_SETTINGS = "settings"
 private const val TOP_LEVEL_EXPERIMENTAL = "experimental"
 
 /**
@@ -49,6 +50,7 @@ enum class Destination(val route: String, val musicBrainzResource: MusicBrainzRe
     LOOKUP_URL("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_URL", MusicBrainzResource.URL),
 
     HISTORY(TOP_LEVEL_HISTORY, null),
+    SETTINGS(TOP_LEVEL_SETTINGS, null),
     EXPERIMENTAL(TOP_LEVEL_EXPERIMENTAL, null)
 }
 
@@ -80,5 +82,6 @@ fun String.getTopLevelRoute(): String = this.split(DIVIDER).first()
 fun String.getTopLevelDestination(): Destination = when (this) {
     TOP_LEVEL_HISTORY -> Destination.HISTORY
     TOP_LEVEL_EXPERIMENTAL -> Destination.EXPERIMENTAL
+    TOP_LEVEL_SETTINGS -> Destination.SETTINGS
     else -> Destination.LOOKUP
 }

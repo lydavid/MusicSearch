@@ -31,6 +31,7 @@ import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
+import ly.david.mbjc.ui.settings.SettingsScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 
 private const val ID = "id"
@@ -77,12 +78,9 @@ internal fun NavigationGraph(
                     // Expected to be handled elsewhere.
                 }
 
-                Destination.LOOKUP -> {
-                    // Not handled.
-                }
-                Destination.HISTORY -> {
-                    // Not handled.
-                }
+                Destination.LOOKUP,
+                Destination.HISTORY,
+                Destination.SETTINGS,
                 Destination.EXPERIMENTAL -> {
                     // Not handled.
                 }
@@ -272,6 +270,14 @@ internal fun NavigationGraph(
             HistoryScreenScaffold(
                 openDrawer = openDrawer,
                 onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            Destination.SETTINGS.route
+        ) {
+            SettingsScaffold(
+                openDrawer = openDrawer
             )
         }
 

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -69,10 +70,19 @@ internal fun NavigationDrawer(
                 closeDrawer()
             }
 
+            Divider(modifier = Modifier.padding(vertical = 16.dp))
+
+            NavigationDrawerItem(
+                icon = Icons.Default.Settings,
+                iconDescription = "",
+                label = stringResource(id = R.string.settings),
+                isSelected = selectedTopLevelDestination == Destination.SETTINGS
+            ) {
+                navigateToTopLevelDestination(Destination.SETTINGS)
+                closeDrawer()
+            }
+
             if (BuildConfig.DEBUG) {
-
-                Divider(modifier = Modifier.padding(vertical = 16.dp))
-
                 NavigationDrawerItem(
                     icon = Icons.Default.Science,
                     iconDescription = "",
