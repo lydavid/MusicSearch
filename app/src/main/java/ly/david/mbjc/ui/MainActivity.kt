@@ -15,23 +15,32 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.getTopLevelDestination
 import ly.david.data.navigation.getTopLevelRoute
 import ly.david.mbjc.ui.navigation.NavigationDrawer
 import ly.david.mbjc.ui.navigation.NavigationGraph
+import ly.david.mbjc.ui.settings.AppPreferences
+import ly.david.mbjc.ui.settings.shouldUseDarkColors
 import ly.david.mbjc.ui.theme.BaseTheme
 
 @AndroidEntryPoint
 internal class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
 
-            BaseTheme(context = this) {
+            BaseTheme(
+                context = this,
+                darkTheme = appPreferences.shouldUseDarkColors()
+            ) {
                 MainApp(navController)
             }
         }

@@ -1,16 +1,14 @@
-package ly.david.mbjc.ui.settings.dev
+package ly.david.mbjc.ui.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
-import ly.david.mbjc.ui.settings.SettingSwitch
 
 @Composable
-internal fun DevSettingsSection(
-    viewModel: DevSettingsViewModel = hiltViewModel()
+fun DevSettingsSection(
+    viewModel: SettingsViewModel
 ) {
     Column {
         ListSeparatorHeader(text = "Dev Settings")

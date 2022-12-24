@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings.dev
+package ly.david.mbjc.ui.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -19,13 +19,14 @@ import kotlinx.coroutines.launch
 private val SHOW_THING = booleanPreferencesKey("show_thing")
 
 @HiltViewModel
-internal class DevSettingsViewModel @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+class SettingsViewModel @Inject constructor(
+    private val preferencesDataStore: DataStore<Preferences>,
+    val appPreferences: AppPreferences
 ) : ViewModel() {
 
     // Issue for StateFlow so we don't have to specify defaults twice: https://issuetracker.google.com/issues/196441778
     val showThingFlow: Flow<Boolean>
-        get() = dataStore.data
+        get() = preferencesDataStore.data
             .catch {
                 if (it is IOException) {
                     emit(emptyPreferences())
@@ -39,7 +40,7 @@ internal class DevSettingsViewModel @Inject constructor(
 
     fun setShowThing(show: Boolean) {
         viewModelScope.launch {
-            dataStore.edit {
+            preferencesDataStore.edit {
                 it[SHOW_THING] = show
             }
         }

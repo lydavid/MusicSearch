@@ -20,7 +20,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
-internal fun SettingSwitch(
+fun SettingSwitch(
     header: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit = {}
@@ -43,7 +43,7 @@ internal fun SettingSwitch(
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colorScheme.primary,
-                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
+                uncheckedThumbColor = MaterialTheme.colorScheme.surface,
                 uncheckedTrackColor = MaterialTheme.colorScheme.onSurface
             )
         )
