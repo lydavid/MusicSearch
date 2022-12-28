@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.mbjc.ui.settings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,7 @@ import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.MultipleChoiceDialog
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 

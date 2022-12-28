@@ -49,4 +49,12 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.retry)
     val cancel
         get() = composeTestRule.activity.resources.getString(R.string.cancel)
+    val theme
+        get() = composeTestRule.activity.resources.getString(R.string.theme)
+    val light
+        get() = composeTestRule.activity.resources.getString(R.string.light)
+    val dark
+        get() = composeTestRule.activity.resources.getString(R.string.dark)
+    val system
+        get() = composeTestRule.activity.resources.getString(R.string.system)
 }
