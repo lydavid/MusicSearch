@@ -1,25 +1,16 @@
 package ly.david.mbjc.ui.settings
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.regex.Pattern
 import ly.david.mbjc.BuildConfig
@@ -29,7 +20,6 @@ import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +45,6 @@ fun SettingsScaffold(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     filterText: String,
@@ -63,35 +52,23 @@ fun SettingsScreen(
 ) {
 
     // TODO: can we filter through viewmodel? pass filter data to viewmodel,
-    //  then it decides which to show
+    //  then it decides what to show
     val filterRegex = Regex(".*(?i)(${Pattern.quote(filterText)}).*")
 
     Column {
+
+        val theme by viewModel.appPreferences.themeFlow.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        SettingWithDialogChoices(
+            titleRes = R.string.theme,
+            choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
+            selectedChoiceIndex = theme.ordinal,
+            onSelectChoiceIndex = { viewModel.appPreferences.setTheme(AppPreferences.Theme.values()[it]) },
+        )
 
         val versionKey = stringResource(id = R.string.app_version)
         val versionValue = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
         if (filterRegex.matches(versionKey) || filterRegex.matches(versionValue)) {
             TextWithHeading(heading = versionKey, text = versionValue)
-        }
-
-        val theme by viewModel.appPreferences.themeFlow.collectAsState(initial = AppPreferences.Theme.SYSTEM)
-
-        AppPreferences.Theme.values().forEach {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(id = it.textRes),
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                RadioButton(selected = theme == it, onClick = { viewModel.appPreferences.setTheme(it) })
-            }
         }
 
         // TODO: sharedpreference to use artist sort name throughout app

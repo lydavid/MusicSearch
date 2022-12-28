@@ -1,13 +1,13 @@
 package ly.david.mbjc.ui.common
 
-import android.content.res.Configuration
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
 internal fun SimpleAlertDialog(
@@ -16,7 +16,12 @@ internal fun SimpleAlertDialog(
     onDismiss: () -> Unit,
 ) {
     AlertDialog(
-        title = { Text(title) },
+        title = {
+            Text(
+                text = title,
+                style = TextStyles.getCardTitleTextStyle(),
+            )
+        },
         onDismissRequest = {
             onDismiss()
         },
@@ -28,8 +33,7 @@ internal fun SimpleAlertDialog(
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
 private fun Preview() {
     PreviewTheme {
@@ -39,8 +43,7 @@ private fun Preview() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
 private fun Long() {
     PreviewTheme {
