@@ -93,12 +93,33 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
                 val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
-                navController.goTo(destination = MusicBrainzResource.ARTIST.toDestination(), id = resourceId, title = title)
+                navController.goTo(
+                    destination = MusicBrainzResource.ARTIST.toDestination(),
+                    id = resourceId,
+                    title = title
+                )
             }
         }
 
         composeTestRule
             .onNodeWithText(title)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun openNavigationDrawer_goToSettings() {
+        composeTestRule
+            .onNodeWithContentDescription(navDrawerIconContentDescription)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(settings)
+            .performClick()
+
+        // Header
+        composeTestRule
+            .onAllNodesWithText(settings)
+            .filterToOne(hasNoClickAction())
             .assertIsDisplayed()
     }
 }

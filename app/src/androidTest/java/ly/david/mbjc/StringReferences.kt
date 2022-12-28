@@ -21,6 +21,8 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.open_nav_drawer)
     val historyDrawerLabel
         get() = composeTestRule.activity.resources.getString(R.string.history)
+    val settings
+        get() = composeTestRule.activity.resources.getString(R.string.settings)
     val historyScreenTitle
         get() = composeTestRule.activity.resources.getString(R.string.recent_history)
     val noResultsFound

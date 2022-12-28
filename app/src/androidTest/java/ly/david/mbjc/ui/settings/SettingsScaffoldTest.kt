@@ -6,10 +6,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import java.io.File
-import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.BaseTheme
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -17,9 +17,21 @@ import org.junit.Test
 @HiltAndroidTest
 internal class SettingsScaffoldTest : MainActivityTest(), StringReferences {
 
+    @Inject
+    lateinit var appPreferences: AppPreferences
+
     @Before
     fun setupApp() {
         hiltRule.inject()
+
+        composeTestRule.activity.setContent {
+            BaseTheme(
+                context = composeTestRule.activity,
+                darkTheme = appPreferences.shouldUseDarkColors()
+            ) {
+                SettingsScaffold()
+            }
+        }
     }
 
     @After
@@ -28,20 +40,9 @@ internal class SettingsScaffoldTest : MainActivityTest(), StringReferences {
         File(composeTestRule.activity.filesDir, "datastore").deleteRecursively()
     }
 
-    // Doesn't actually change the theme. Limitation of compose testing?
+    // TODO: [low] verify the screen did change color
     @Test
     fun selectTheme() {
-
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                SettingsScaffold()
-            }
-        }
-
-        runBlocking {
-            composeTestRule.awaitIdle()
-        }
-
         composeTestRule
             .onNodeWithText(system)
             .assertIsDisplayed()

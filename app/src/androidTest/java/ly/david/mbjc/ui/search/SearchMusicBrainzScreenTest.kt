@@ -119,6 +119,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             .assert(hasText(""))
     }
 
+    // TODO: flaked
     @Test
     fun deeplinkToSearchWithQueryAndResource() {
         runBlocking { composeTestRule.awaitIdle() }
