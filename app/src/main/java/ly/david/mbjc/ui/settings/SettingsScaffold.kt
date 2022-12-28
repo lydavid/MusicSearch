@@ -50,8 +50,8 @@ fun SettingsScaffold(
 
         SettingsScreen(
             showTheme = showTheme,
-            showAppVersion = showAppVersion,
             theme = theme,
+            showAppVersion = showAppVersion,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
         )
     }
@@ -87,11 +87,10 @@ fun SettingsScreen(
         //  other entities have a sort_name field in backend
         //  but doesn't seem to be exposed for editing/displaying
 
-//        if (BuildConfig.DEBUG) {
-//            DevSettingsSection(
-//                viewModel = viewModel
-//            )
-//        }
+        if (BuildConfig.DEBUG) {
+            DevSettingsSection(
+            )
+        }
     }
 }
 
