@@ -20,7 +20,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold
-import ly.david.mbjc.ui.experimental.ExperimentalScreen
+import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
@@ -284,7 +284,9 @@ internal fun NavigationGraph(
         composable(
             Destination.EXPERIMENTAL.route
         ) {
-            ExperimentalScreen()
+            ExperimentalSettingsScaffold(
+                openDrawer = openDrawer
+            )
         }
     }
 }

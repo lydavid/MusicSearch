@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.mbjc.ui.experimental
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -7,6 +7,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.BuildConfig
@@ -14,30 +17,43 @@ import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.settings.AppPreferences
+import ly.david.mbjc.ui.settings.DevSettingsSection
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScaffold(
+fun ExperimentalSettingsScaffold(
     openDrawer: () -> Unit = {},
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: ExperimentalSettingsViewModel = hiltViewModel()
 ) {
+
+    var filterText by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 openDrawer = openDrawer,
                 title = stringResource(id = R.string.settings),
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                    viewModel.setFilter(filterText)
+                },
             )
         },
     ) {
 
+        val showTheme by viewModel.showTheme.collectAsState(initial = true)
         val theme by viewModel.appPreferences.themeFlow.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        val showAppVersion by viewModel.showAppVersion.collectAsState(initial = true)
 
         SettingsScreen(
+            showTheme = showTheme,
             theme = theme,
+            showAppVersion = showAppVersion,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
         )
     }
@@ -45,22 +61,28 @@ fun SettingsScaffold(
 
 @Composable
 fun SettingsScreen(
+    showTheme: Boolean = true,
     theme: AppPreferences.Theme,
+    showAppVersion: Boolean = true,
     onThemeChange: (AppPreferences.Theme) -> Unit = {}
 ) {
 
     Column {
 
-        SettingWithDialogChoices(
-            titleRes = R.string.theme,
-            choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
-            selectedChoiceIndex = theme.ordinal,
-            onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
-        )
+        if (showTheme) {
+            SettingWithDialogChoices(
+                titleRes = R.string.theme,
+                choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
+                selectedChoiceIndex = theme.ordinal,
+                onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
+            )
+        }
 
         val versionKey = stringResource(id = R.string.app_version)
         val versionValue = BuildConfig.VERSION_NAME
-        TextWithHeading(heading = versionKey, text = versionValue)
+        if (showAppVersion) {
+            TextWithHeading(heading = versionKey, text = versionValue)
+        }
 
         // TODO: sharedpreference to use artist sort name throughout app
         //  helpful for non-Latin names
