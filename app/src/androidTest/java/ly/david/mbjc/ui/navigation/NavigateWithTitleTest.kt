@@ -54,7 +54,7 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
                 val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
-                navController.goTo(destination = resource.toDestination(), id = resourceId, title = title)
+                navController.goToResource(destination = resource.toDestination(), id = resourceId, title = title)
             }
         }
 

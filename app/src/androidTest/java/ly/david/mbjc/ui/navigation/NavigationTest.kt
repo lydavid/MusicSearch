@@ -93,7 +93,7 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
                 val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
-                navController.goTo(
+                navController.goToResource(
                     destination = MusicBrainzResource.ARTIST.toDestination(),
                     id = resourceId,
                     title = title

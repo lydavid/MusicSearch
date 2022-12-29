@@ -102,7 +102,7 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
 @ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-internal fun ReleaseGroupCardPreview() {
+private fun Preview() {
     PreviewTheme {
         Surface {
             ReleaseGroupListItem(testReleaseGroup)

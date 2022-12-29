@@ -51,7 +51,9 @@ enum class Destination(val route: String, val musicBrainzResource: MusicBrainzRe
 
     HISTORY(TOP_LEVEL_HISTORY, null),
     SETTINGS(TOP_LEVEL_SETTINGS, null),
-    EXPERIMENTAL(TOP_LEVEL_EXPERIMENTAL, null)
+    EXPERIMENTAL(TOP_LEVEL_EXPERIMENTAL, null),
+    EXPERIMENTAL_SETTINGS("$TOP_LEVEL_EXPERIMENTAL$DIVIDER" + "SETTINGS", null),
+    EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_EXPERIMENTAL$DIVIDER" + "SPOTIFY", null)
 }
 
 fun MusicBrainzResource.toDestination() =

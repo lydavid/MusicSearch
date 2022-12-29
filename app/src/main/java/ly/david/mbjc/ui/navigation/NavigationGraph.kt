@@ -20,7 +20,9 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold
+import ly.david.mbjc.ui.experimental.ExperimentalScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
+import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.history.HistoryScreenScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
@@ -37,9 +39,14 @@ import ly.david.mbjc.ui.work.WorkScaffold
 private const val ID = "id"
 private const val TITLE = "title"
 
-internal fun NavHostController.goTo(destination: Destination, id: String, title: String? = null) {
+internal fun NavHostController.goToResource(destination: Destination, id: String, title: String? = null) {
     var route = "${destination.route}/$id"
     if (!title.isNullOrEmpty()) route += "?$TITLE=${URLEncoder.encode(title, StandardCharsets.UTF_8.toString())}"
+    this.navigate(route)
+}
+
+internal fun NavHostController.goTo(destination: Destination) {
+    val route = destination.route
     this.navigate(route)
 }
 
@@ -59,6 +66,7 @@ internal fun NavigationGraph(
             navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId")
         }
 
+        // TODO: should rethink this structure once we introduce more non-MB-resource destinations
         val onLookupItemClick: (Destination, String, String?) -> Unit = { destination, id, title ->
             when (destination) {
                 Destination.LOOKUP_ARTIST,
@@ -72,7 +80,7 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_WORK,
                 Destination.LOOKUP_EVENT,
                 Destination.LOOKUP_SERIES,
-                Destination.LOOKUP_GENRE -> navController.goTo(destination, id, title)
+                Destination.LOOKUP_GENRE -> navController.goToResource(destination, id, title)
 
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
@@ -84,7 +92,17 @@ internal fun NavigationGraph(
                 Destination.EXPERIMENTAL -> {
                     // Not handled.
                 }
+
+                Destination.EXPERIMENTAL_SETTINGS,
+                Destination.EXPERIMENTAL_SPOTIFY -> {
+                    navController.goTo(destination)
+                }
             }
+        }
+
+        val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
+            val route = Destination.LOOKUP.route + "?query=${query}&type=${type.resourceName}"
+            navController.navigate(route)
         }
 
         composable(Destination.LOOKUP.route) {
@@ -284,8 +302,25 @@ internal fun NavigationGraph(
         composable(
             Destination.EXPERIMENTAL.route
         ) {
+            ExperimentalScaffold(
+                openDrawer = openDrawer,
+                onItemClick = onLookupItemClick
+            )
+        }
+
+        composable(
+            Destination.EXPERIMENTAL_SETTINGS.route
+        ) {
             ExperimentalSettingsScaffold(
                 openDrawer = openDrawer
+            )
+        }
+
+        composable(
+            Destination.EXPERIMENTAL_SPOTIFY.route
+        ) {
+            SpotifyScreen(
+                searchMusicBrainz = searchMusicBrainz
             )
         }
     }

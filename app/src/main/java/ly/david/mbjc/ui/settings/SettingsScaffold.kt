@@ -24,7 +24,6 @@ fun SettingsScaffold(
     openDrawer: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
-
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
