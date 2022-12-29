@@ -4,8 +4,10 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,18 +17,19 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubBackgroundColor
 
 @Composable
 internal fun ListSeparatorHeader(text: String) {
-    Surface(color = getSubBackgroundColor()) {
+    val surfaceColor = MaterialTheme.colorScheme.surfaceVariant
+    Surface(color = surfaceColor) {
         SelectionContainer {
             Text(
                 text = text,
-                style = TextStyles.getCardBodyTextStyle(),
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 4.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                color = contentColorFor(backgroundColor = surfaceColor),
+                style = TextStyles.getCardBodyTextStyle()
             )
         }
     }
@@ -47,6 +50,8 @@ internal fun AttributesListSeparatorHeader(@StringRes resourceStringRes: Int) {
 @Composable
 private fun ListSeparatorHeaderPreview() {
     PreviewTheme {
-        ListSeparatorHeader("Album + Compilation")
+        Surface {
+            ListSeparatorHeader("Album + Compilation")
+        }
     }
 }
