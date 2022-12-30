@@ -143,6 +143,10 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
+
+    override suspend fun browseReleasesByArtist(artistId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+        return browseReleasesResponse
+    }
     // endregion
 
     // region Lookup

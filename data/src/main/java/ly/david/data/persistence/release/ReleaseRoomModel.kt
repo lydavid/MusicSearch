@@ -75,12 +75,9 @@ data class ReleaseRoomModel(
      */
     @ColumnInfo(name = "cover_art_url", defaultValue = "null")
     val coverArtUrl: String? = null,
-
-    @ColumnInfo(name = "release_group_id", defaultValue = "null")
-    val releaseGroupId: String? = null
 ) : RoomModel, Release
 
-fun ReleaseMusicBrainzModel.toRoomModel(releaseGroupId: String?) =
+fun ReleaseMusicBrainzModel.toRoomModel() =
     ReleaseRoomModel(
         id = id,
         name = name,
@@ -97,9 +94,5 @@ fun ReleaseMusicBrainzModel.toRoomModel(releaseGroupId: String?) =
         coverArtArchive = coverArtArchive,
         textRepresentation = textRepresentation,
         formats = media?.getFormatsForDisplay(),
-        tracks = media?.getTracksForDisplay(),
-        releaseGroupId = releaseGroupId
+        tracks = media?.getTracksForDisplay()
     )
-
-fun ReleaseMusicBrainzModel.toRoomModel() =
-    this.toRoomModel(releaseGroup?.id)

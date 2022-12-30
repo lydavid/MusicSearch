@@ -27,16 +27,16 @@ class MediumMusicBrainzModelTest {
     @Test
     fun `null media`() {
 
-        assertEquals(null, media.getFormatsForDisplay())
-        assertEquals(null, media.getTracksForDisplay())
+        assertEquals("", media.getFormatsForDisplay())
+        assertEquals("", media.getTracksForDisplay())
     }
 
     @Test
     fun `empty media`() {
         media = listOf()
 
-        assertEquals(null, media.getFormatsForDisplay())
-        assertEquals(null, media.getTracksForDisplay())
+        assertEquals("", media.getFormatsForDisplay())
+        assertEquals("", media.getTracksForDisplay())
     }
 
     @Test

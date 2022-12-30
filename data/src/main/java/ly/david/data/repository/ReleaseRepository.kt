@@ -17,10 +17,12 @@ import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.label.LabelDao
-import ly.david.data.persistence.label.ReleasesLabelsDao
+import ly.david.data.persistence.label.ReleaseLabelDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
+import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
+import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.release.toMediumRoomModel
 import ly.david.data.persistence.release.toTrackRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
@@ -30,13 +32,14 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 class ReleaseRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
+    private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val releasesCountriesDao: ReleasesCountriesDao,
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
-    private val releasesLabelsDao: ReleasesLabelsDao
+    private val releaseLabelDao: ReleaseLabelDao
 ) : RelationsListRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -52,7 +55,8 @@ class ReleaseRepository @Inject constructor(
 
         if (releaseWithAllData != null &&
             releaseWithAllData.artistCreditNamesWithResources.isNotEmpty() &&
-            releaseWithAllData.releaseGroup != null
+            releaseWithAllData.release.formats != null &&
+            releaseWithAllData.release.tracks != null
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
@@ -67,15 +71,21 @@ class ReleaseRepository @Inject constructor(
 
     private suspend fun insertAllModels(release: ReleaseMusicBrainzModel) {
         releaseDao.withTransaction {
-            release.releaseGroup?.let {
-                releaseGroupDao.insertReleaseGroupWithArtistCredits(it)
+            release.releaseGroup?.let { releaseGroup ->
+                releaseGroupDao.insertReleaseGroupWithArtistCredits(releaseGroup)
+                releaseReleaseGroupDao.insert(
+                    ReleaseReleaseGroup(
+                        releaseId = release.id,
+                        releaseGroupId = releaseGroup.id
+                    )
+                )
             }
             releaseDao.insertReleaseWithArtistCredits(release)
 
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
             labelDao.insertAll(release.labelInfoList?.toRoomModels().orEmpty())
-            releasesLabelsDao.insertAll(
+            releaseLabelDao.insertAll(
                 release.labelInfoList?.toReleaseLabels(releaseId = release.id).orEmpty()
             )
 

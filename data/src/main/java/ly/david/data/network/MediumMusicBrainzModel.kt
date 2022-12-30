@@ -24,7 +24,7 @@ data class MediumMusicBrainzModel(
  * * 170xCD
  * * 2×CD + Blu-ray
  */
-fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
+fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String {
 
     val hashMap = hashMapOf<String, Int>()
 
@@ -40,7 +40,7 @@ fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
     }
 
     return if (hashMap.isEmpty()) {
-        null
+        ""
     } else {
         hashMap.map {
             val count = it.value
@@ -60,12 +60,12 @@ fun List<MediumMusicBrainzModel>?.getFormatsForDisplay(): String? {
  * * 23
  * * 15 + 8 + 24
  */
-fun List<MediumMusicBrainzModel>?.getTracksForDisplay(): String? {
+fun List<MediumMusicBrainzModel>?.getTracksForDisplay(): String {
     val tracksForDisplay = this?.joinToString(" + ") {
         "${it.trackCount}"
     }
     return if (tracksForDisplay.isNullOrEmpty()) {
-        null
+        ""
     } else {
         tracksForDisplay
     }

@@ -5,14 +5,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleasesReleaseGroupsDao
 import ly.david.mbjc.ui.relation.stats.RelationsStats
 
 @HiltViewModel
 internal class ReleaseGroupStatsViewModel @Inject constructor(
     private val releaseGroupDao: ReleaseGroupDao,
-    private val releasesReleaseGroupsDao: ReleasesReleaseGroupsDao,
+    private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     override val relationDao: RelationDao
 ) : ViewModel(), RelationsStats {
 
@@ -20,5 +20,5 @@ internal class ReleaseGroupStatsViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(releaseGroupId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String) =
-        releasesReleaseGroupsDao.getNumberOfReleasesByReleaseGroup(releaseGroupId)
+        releaseReleaseGroupDao.getNumberOfReleasesByReleaseGroup(releaseGroupId)
 }

@@ -13,13 +13,16 @@ internal object DatabaseDaoModule {
     fun provideArtistDao(db: MusicBrainzDatabase) = db.getArtistDao()
 
     @Provides
+    fun provideArtistReleaseDao(db: MusicBrainzDatabase) = db.getArtistReleaseDao()
+
+    @Provides
     fun provideArtistReleaseGroupDao(db: MusicBrainzDatabase) = db.getArtistReleaseGroupDao()
 
     @Provides
     fun provideReleaseGroupDao(db: MusicBrainzDatabase) = db.getReleaseGroupDao()
 
     @Provides
-    fun provideReleasesReleaseGroupsDao(db: MusicBrainzDatabase) = db.getReleasesReleaseGroupsDao()
+    fun provideReleaseReleaseGroupDao(db: MusicBrainzDatabase) = db.getReleaseReleaseGroupDao()
 
     @Provides
     fun provideReleaseDao(db: MusicBrainzDatabase) = db.getReleaseDao()
@@ -64,7 +67,7 @@ internal object DatabaseDaoModule {
     fun provideLabelDao(db: MusicBrainzDatabase) = db.getLabelDao()
 
     @Provides
-    fun provideReleasesLabelsDao(db: MusicBrainzDatabase) = db.getReleasesLabelsDao()
+    fun provideReleaseLabelDao(db: MusicBrainzDatabase) = db.getReleaseLabelDao()
 
     @Provides
     fun provideEventDao(db: MusicBrainzDatabase) = db.getEventDao()

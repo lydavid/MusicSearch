@@ -1,33 +1,35 @@
-package ly.david.data.persistence.releasegroup
+package ly.david.data.persistence.release.releasegroup
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 
 // TODO: put this in release group dao? only used by ReleaseGroupRepository
 //  artist should hold release groups by artist
 @Dao
-abstract class ReleasesReleaseGroupsDao {
+abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
 
     companion object {
-        private const val RELEASES_IN_RELEASE_GROUP = """
+        private const val RELEASES_BY_RELEASE_GROUP = """
             FROM release r
-            INNER JOIN release_group rg ON rg.id = r.release_group_id
+            INNER JOIN release_release_group rrg ON rrg.release_id = r.id
+            INNER JOIN release_group rg ON rg.id = rrg.release_group_id
             LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE rg.id = :releaseGroupId
         """
 
-        private const val SELECT_RELEASES_IN_RELEASE_GROUP = """
+        private const val SELECT_RELEASES_BY_RELEASE_GROUP = """
             SELECT r.*, ac.name AS artist_credit_names
-            $RELEASES_IN_RELEASE_GROUP
+            $RELEASES_BY_RELEASE_GROUP
         """
 
-        private const val SELECT_RELEASES_ID_IN_RELEASE_GROUP = """
+        private const val SELECT_RELEASES_ID_BY_RELEASE_GROUP = """
             SELECT r.id
-            $RELEASES_IN_RELEASE_GROUP
+            $RELEASES_BY_RELEASE_GROUP
         """
 
         private const val ORDER_BY_DATE_AND_NAME = """
@@ -47,18 +49,22 @@ abstract class ReleasesReleaseGroupsDao {
     @Query(
         """
         DELETE FROM release WHERE id IN (
-        $SELECT_RELEASES_ID_IN_RELEASE_GROUP
+        $SELECT_RELEASES_ID_BY_RELEASE_GROUP
         )
         """
     )
     abstract suspend fun deleteReleasesByReleaseGroup(releaseGroupId: String)
+
+    @Query("DELETE FROM release_release_group WHERE release_group_id = :releaseGroupId")
+    abstract suspend fun deleteReleaseReleaseGroupLinks(releaseGroupId: String)
 
     @Query(
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
             FROM release r
-            INNER JOIN release_group rg ON rg.id = r.release_group_id
+            INNER JOIN release_release_group rrg ON rrg.release_id = r.id
+            INNER JOIN release_group rg ON rg.id = rrg.release_group_id
             WHERE rg.id = :releaseGroupId
             ),
             0
@@ -67,11 +73,10 @@ abstract class ReleasesReleaseGroupsDao {
     )
     abstract suspend fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String): Int
 
-    // TODO: based on r's release_group_id
     @Transaction
     @Query(
         """
-        $SELECT_RELEASES_IN_RELEASE_GROUP
+        $SELECT_RELEASES_BY_RELEASE_GROUP
         $ORDER_BY_DATE_AND_NAME
     """
     )
@@ -80,7 +85,7 @@ abstract class ReleasesReleaseGroupsDao {
     @Transaction
     @Query(
         """
-        $SELECT_RELEASES_IN_RELEASE_GROUP
+        $SELECT_RELEASES_BY_RELEASE_GROUP
         $FILTERED
         $ORDER_BY_DATE_AND_NAME
     """

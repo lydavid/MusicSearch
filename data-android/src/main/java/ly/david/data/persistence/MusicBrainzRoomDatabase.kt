@@ -14,6 +14,7 @@ import ly.david.data.persistence.artist.credit.ArtistCredit
 import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
 import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 import ly.david.data.persistence.artist.credit.ArtistCreditResource
+import ly.david.data.persistence.artist.release.ArtistRelease
 import ly.david.data.persistence.event.EventPlace
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.history.LookupHistory
@@ -31,6 +32,7 @@ import ly.david.data.persistence.release.LabelWithCatalog
 import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.TrackRoomModel
+import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.series.SeriesRoomModel
 import ly.david.data.persistence.work.RecordingWork
@@ -38,7 +40,7 @@ import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 77,
+    version = 81,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -60,12 +62,14 @@ import ly.david.data.persistence.work.WorkRoomModel
         BrowseResourceCount::class,
 
         AreaPlace::class,
+        ArtistRelease::class,
         EventPlace::class,
         ArtistReleaseGroup::class,
         RecordingWork::class,
-        ReleaseLabel::class,
         ReleaseCountry::class,
+        ReleaseLabel::class,
         ReleaseRecording::class,
+        ReleaseReleaseGroup::class,
 
         // Additional features tables
         LookupHistory::class
@@ -144,6 +148,9 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 74, to = 75, spec = Migrations.RenameTablesToSingular::class),
         AutoMigration(from = 75, to = 76),
         AutoMigration(from = 76, to = 77),
+        AutoMigration(from = 76, to = 78),
+        AutoMigration(from = 78, to = 79), // Add new table
+        AutoMigration(from = 80, to = 81, spec = Migrations.DeleteReleaseGroupIdFromRelease::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

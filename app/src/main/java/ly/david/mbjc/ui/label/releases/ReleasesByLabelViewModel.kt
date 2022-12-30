@@ -10,7 +10,7 @@ import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.toReleaseLabels
-import ly.david.data.persistence.label.ReleasesLabelsDao
+import ly.david.data.persistence.label.ReleaseLabelDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -24,7 +24,7 @@ import ly.david.mbjc.ui.common.paging.PagedListImpl
 internal class ReleasesByLabelViewModel @Inject constructor(
     private val pagedListImpl: PagedListImpl<ReleaseWithCreditsAndCountries, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val releasesLabelsDao: ReleasesLabelsDao,
+    private val releaseLabelDao: ReleaseLabelDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
 ) : ViewModel(),
@@ -57,7 +57,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releasesLabelsDao.insertAll(
+        releaseLabelDao.insertAll(
             releaseMusicBrainzModels.flatMap { release ->
                 release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = resourceId).orEmpty()
             }
@@ -73,7 +73,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesLabelsDao.deleteReleasesByLabel(resourceId)
+        releaseLabelDao.deleteReleasesByLabel(resourceId)
         relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
     }
 
@@ -82,10 +82,10 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
-            releasesLabelsDao.getReleasesByLabel(resourceId)
+            releaseLabelDao.getReleasesByLabel(resourceId)
         }
         else -> {
-            releasesLabelsDao.getReleasesByLabelFiltered(
+            releaseLabelDao.getReleasesByLabelFiltered(
                 labelId = resourceId,
                 query = "%$query%"
             )

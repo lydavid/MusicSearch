@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.releasegroup.releases
+package ly.david.mbjc.ui.artist.releases
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,24 +9,24 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.persistence.artist.release.ArtistRelease
+import ly.david.data.persistence.artist.release.ArtistReleaseDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
-import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
-import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.release.toRoomModel
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
 import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
-internal class ReleasesByReleaseGroupViewModel @Inject constructor(
+internal class ReleasesByArtistViewModel @Inject constructor(
     private val pagedListImpl: PagedListImpl<ReleaseWithCreditsAndCountries, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-    private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
+    private val artistReleaseDao: ArtistReleaseDao,
+    private val releaseDao: ReleaseDao,
 ) : ViewModel(),
     PagedList<ReleaseListItemModel> by pagedListImpl,
     BrowseResourceUseCase<ReleaseWithCreditsAndCountries, ReleaseListItemModel> {
@@ -37,8 +37,8 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByReleaseGroup(
-            releaseGroupId = resourceId,
+        val response = musicBrainzApiService.browseReleasesByArtist(
+            artistId = resourceId,
             offset = nextOffset
         )
 
@@ -57,11 +57,11 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releaseReleaseGroupDao.insertAll(
+        artistReleaseDao.insertAll(
             releaseMusicBrainzModels.map { release ->
-                ReleaseReleaseGroup(
-                    releaseId = release.id,
-                    releaseGroupId = resourceId
+                ArtistRelease(
+                    artistId = resourceId,
+                    releaseId = release.id
                 )
             }
         )
@@ -76,9 +76,9 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releaseReleaseGroupDao.withTransaction {
-            releaseReleaseGroupDao.deleteReleasesByReleaseGroup(resourceId)
-            releaseReleaseGroupDao.deleteReleaseReleaseGroupLinks(resourceId)
+        artistReleaseDao.withTransaction {
+            artistReleaseDao.deleteReleasesByArtist(resourceId)
+            artistReleaseDao.deleteArtistReleaseLinks(resourceId)
             relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
         }
     }
@@ -88,11 +88,11 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
         query.isEmpty() -> {
-            releaseReleaseGroupDao.getReleasesByReleaseGroup(resourceId)
+            artistReleaseDao.getReleasesByArtist(resourceId)
         }
         else -> {
-            releaseReleaseGroupDao.getReleasesByReleaseGroupFiltered(
-                releaseGroupId = resourceId,
+            artistReleaseDao.getReleasesByArtistFiltered(
+                artistId = resourceId,
                 query = "%$query%"
             )
         }

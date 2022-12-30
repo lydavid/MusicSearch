@@ -2,6 +2,7 @@ package ly.david.data.persistence.release
 
 import androidx.room.DatabaseView
 import androidx.room.Embedded
+import androidx.room.Junction
 import androidx.room.Relation
 import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.area.AreaRoomModel
@@ -10,6 +11,7 @@ import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
+import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 
 /**
@@ -87,8 +89,13 @@ data class ReleaseWithAllData(
     val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>,
 
     @Relation(
-        parentColumn = "release_group_id",
-        entityColumn = "id" // releaseGroup.id
+        parentColumn = "id",
+        entityColumn = "id", // releaseGroup.id
+        associateBy = Junction(
+            value = ReleaseReleaseGroup::class,
+            parentColumn = "release_id",
+            entityColumn = "release_group_id"
+        )
     )
     val releaseGroup: ReleaseGroupRoomModel?
 ) : RoomModel

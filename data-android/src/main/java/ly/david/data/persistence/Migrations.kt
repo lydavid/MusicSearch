@@ -222,4 +222,21 @@ internal object Migrations {
     @RenameTable(fromTableName = "recordings_works", toTableName = "recording_work")
     @RenameTable(fromTableName = "works", toTableName = "work")
     class RenameTablesToSingular : AutoMigrationSpec
+
+    val MOVE_RELEASE_GROUP_ID_OUT_OF_RELEASE = object : Migration(79, 80) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                INSERT INTO release_release_group (release_id, release_group_id)
+                SELECT id, release_group_id
+                FROM release
+                WHERE release_group_id IS NOT NULL
+            """
+            )
+            // Literally cannot drop column here, need to do another migration with @DeleteColumn
+        }
+    }
+
+    @DeleteColumn(tableName = "release", columnName = "release_group_id")
+    class DeleteReleaseGroupIdFromRelease : AutoMigrationSpec
 }

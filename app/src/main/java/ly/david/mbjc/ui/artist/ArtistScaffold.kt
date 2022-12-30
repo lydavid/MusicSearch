@@ -25,11 +25,13 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
+import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -37,12 +39,11 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
-//        listOf("Overview", "Releases", "Recordings", "Works", "Events", "Recordings", "Aliases", "Tags", "Details")
-
 // Would be nice if we could have an enum of Tabs, then pick a subset of them for each of these scaffolds.
 // Right now, we just have to copy/paste these around.
 private enum class ArtistTab(@StringRes val titleRes: Int) {
     RELEASE_GROUPS(R.string.release_groups),
+    RELEASES(R.string.releases),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
 }
@@ -135,6 +136,12 @@ internal fun ArtistScaffold(
         val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
             .collectAsLazyPagingItems()
 
+        val releasesLazyListState = rememberLazyListState()
+        var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+        val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
+            rememberFlowWithLifecycleStarted(pagedReleasesFlow)
+                .collectAsLazyPagingItems()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -156,6 +163,18 @@ internal fun ArtistScaffold(
                     onPagedReleaseGroupsChange = {
                         pagedReleaseGroups = it
                     }
+                )
+            }
+            ArtistTab.RELEASES -> {
+                ReleasesByArtistScreen(
+                    artistId = artistId,
+                    modifier = Modifier.padding(innerPadding),
+                    snackbarHostState = snackbarHostState,
+                    releasesLazyListState = releasesLazyListState,
+                    releasesLazyPagingItems = releasesLazyPagingItems,
+                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    onReleaseClick = onItemClick,
+                    filterText = filterText
                 )
             }
             ArtistTab.RELATIONSHIPS -> {

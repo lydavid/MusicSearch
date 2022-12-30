@@ -15,13 +15,13 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
-internal class ReleasesLabelsDaoTest : HiltTest() {
+internal class ReleaseLabelDaoTest : HiltTest() {
 
     @Inject
     lateinit var db: MusicBrainzDatabase
 
     @Inject
-    lateinit var releasesLabelsDao: ReleasesLabelsDao
+    lateinit var releaseLabelDao: ReleaseLabelDao
     @Inject
     lateinit var releaseDao: ReleaseDao
     @Inject
@@ -46,7 +46,7 @@ internal class ReleasesLabelsDaoTest : HiltTest() {
                 name = "Label",
             )
         )
-        releasesLabelsDao.insertAll(
+        releaseLabelDao.insertAll(
             listOf(
                 ReleaseLabel(
                     releaseId = "release1",
@@ -61,6 +61,6 @@ internal class ReleasesLabelsDaoTest : HiltTest() {
             )
         )
 
-        assertThat(releasesLabelsDao.getNumberOfReleasesByLabel("label1"), `is`(1))
+        assertThat(releaseLabelDao.getNumberOfReleasesByLabel("label1"), `is`(1))
     }
 }

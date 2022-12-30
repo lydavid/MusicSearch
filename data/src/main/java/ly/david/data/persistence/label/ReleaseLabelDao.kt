@@ -8,7 +8,7 @@ import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
 
 @Dao
-abstract class ReleasesLabelsDao : BaseDao<ReleaseLabel>() {
+abstract class ReleaseLabelDao : BaseDao<ReleaseLabel>() {
 
     companion object {
         private const val RELEASES_BY_LABEL = """
