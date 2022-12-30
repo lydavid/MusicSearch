@@ -12,7 +12,7 @@ import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.release.toRoomModel
@@ -22,14 +22,14 @@ import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class ReleasesByReleaseGroupViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<ReleaseWithCreditsAndCountries, ReleaseListItemModel>,
+    private val pagedListImpl: PagedListImpl<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
 ) : ViewModel(),
     PagedList<ReleaseListItemModel> by pagedListImpl,
-    BrowseResourceUseCase<ReleaseWithCreditsAndCountries, ReleaseListItemModel> {
+    BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
 
     init {
         pagedListImpl.scope = viewModelScope
@@ -86,7 +86,7 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
     override fun getLinkedResourcesPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
+    ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             releaseReleaseGroupDao.getReleasesByReleaseGroup(resourceId)
         }
@@ -98,7 +98,7 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
         }
     }
 
-    override fun transformRoomToListItemModel(roomModel: ReleaseWithCreditsAndCountries): ReleaseListItemModel {
+    override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
         return roomModel.toReleaseListItemModel()
     }
 }

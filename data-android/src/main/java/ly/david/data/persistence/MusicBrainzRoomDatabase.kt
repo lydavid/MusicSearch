@@ -30,6 +30,7 @@ import ly.david.data.persistence.relation.RelationRoomModel
 import ly.david.data.persistence.release.AreaWithReleaseDate
 import ly.david.data.persistence.release.LabelWithCatalog
 import ly.david.data.persistence.release.MediumRoomModel
+import ly.david.data.persistence.release.ReleaseFormatTrackCount
 import ly.david.data.persistence.release.ReleaseRoomModel
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
@@ -40,7 +41,7 @@ import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 81,
+    version = 83,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -77,7 +78,8 @@ import ly.david.data.persistence.work.WorkRoomModel
     views = [
         LabelWithCatalog::class,
         ArtistCreditNamesWithResource::class,
-        AreaWithReleaseDate::class
+        AreaWithReleaseDate::class,
+        ReleaseFormatTrackCount::class,
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
@@ -151,6 +153,8 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 76, to = 78),
         AutoMigration(from = 78, to = 79), // Add new table
         AutoMigration(from = 80, to = 81, spec = Migrations.DeleteReleaseGroupIdFromRelease::class),
+        AutoMigration(from = 81, to = 82),
+        AutoMigration(from = 82, to = 83, spec = Migrations.DeleteFormatsAndTracksFromRelease::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

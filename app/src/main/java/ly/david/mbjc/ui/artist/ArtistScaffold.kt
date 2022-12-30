@@ -101,7 +101,7 @@ internal fun ArtistScaffold(
                 onBack = onBack,
                 resource = resource,
                 title = title,
-                showFilterIcon = selectedTab == ArtistTab.RELEASE_GROUPS,
+                showFilterIcon = selectedTab in listOf(ArtistTab.RELEASE_GROUPS, ArtistTab.RELEASES),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
                     CopyToClipboardMenuItem(artistId)

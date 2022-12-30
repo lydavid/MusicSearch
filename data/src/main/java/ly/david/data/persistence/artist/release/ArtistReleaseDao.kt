@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 
 @Dao
 abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
@@ -38,7 +38,6 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
             AND (
                 r.name LIKE :query OR r.disambiguation LIKE :query
                 OR r.date LIKE :query OR r.country_code LIKE :query
-                OR r.formats LIKE :query OR r.tracks LIKE :query
                 OR ac.name LIKE :query
             )
         """
@@ -79,7 +78,7 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesByArtist(artistId: String): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    abstract fun getReleasesByArtist(artistId: String): PagingSource<Int, ReleaseForListItem>
 
     @Transaction
     @Query(
@@ -92,5 +91,5 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
     abstract fun getReleasesByArtistFiltered(
         artistId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    ): PagingSource<Int, ReleaseForListItem>
 }

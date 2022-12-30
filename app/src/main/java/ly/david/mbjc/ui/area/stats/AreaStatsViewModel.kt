@@ -20,5 +20,5 @@ internal class AreaStatsViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(areaId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getNumberOfReleasesByLabel(areaId: String) =
-        releasesCountriesDao.getNumberOfReleasesFromCountry(areaId)
+        releasesCountriesDao.getNumberOfReleasesByCountry(areaId)
 }

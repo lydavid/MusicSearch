@@ -98,6 +98,13 @@ adb shell am start -d "mbjc://release/e7092039-54ae-4765-84da-732909429c92" -a a
 adb shell am start -d "mbjc://release/0c86c9de-ecb0-42a7-8808-bd06f7541f53" -a android.intent.action.VIEW
 ```
 
+Mozart Complete Edition
+- 170 CDs
+```sh
+adb shell am start -d "mbjc://release/18572d3b-b8d6-4ac1-8cda-6951a8f625d5" -a android.intent.action.VIEW
+```
+
+
 release with misc: miscellaneous support: task
 ```sh
 adb shell am start -d "mbjc://release/f6719001-9d2f-4511-88d7-80393524aa23" -a android.intent.action.VIEW

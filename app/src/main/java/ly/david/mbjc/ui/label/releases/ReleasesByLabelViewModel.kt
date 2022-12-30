@@ -14,7 +14,7 @@ import ly.david.data.persistence.label.ReleaseLabelDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.toRoomModel
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
@@ -22,14 +22,14 @@ import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class ReleasesByLabelViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<ReleaseWithCreditsAndCountries, ReleaseListItemModel>,
+    private val pagedListImpl: PagedListImpl<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseLabelDao: ReleaseLabelDao,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
 ) : ViewModel(),
     PagedList<ReleaseListItemModel> by pagedListImpl,
-    BrowseResourceUseCase<ReleaseWithCreditsAndCountries, ReleaseListItemModel> {
+    BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
 
     init {
         pagedListImpl.scope = viewModelScope
@@ -73,14 +73,17 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releaseLabelDao.deleteReleasesByLabel(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+        releaseLabelDao.withTransaction {
+            releaseLabelDao.deleteReleasesByLabel(resourceId)
+            releaseLabelDao.deleteLabelReleaseLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
+    ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             releaseLabelDao.getReleasesByLabel(resourceId)
         }
@@ -92,7 +95,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         }
     }
 
-    override fun transformRoomToListItemModel(roomModel: ReleaseWithCreditsAndCountries): ReleaseListItemModel {
+    override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
         return roomModel.toReleaseListItemModel()
     }
 }

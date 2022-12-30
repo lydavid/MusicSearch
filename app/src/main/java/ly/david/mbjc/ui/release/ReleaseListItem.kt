@@ -115,7 +115,7 @@ internal fun ReleaseListItem(
             }
 
             Row(modifier = Modifier.padding(top = 4.dp)) {
-                release.formats.ifNotNullOrEmpty {
+                release.formattedFormats.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.weight(1f),
                         text = it,
@@ -123,7 +123,7 @@ internal fun ReleaseListItem(
                     )
                 }
 
-                release.tracks.ifNotNullOrEmpty {
+                release.formattedTracks.ifNotNullOrEmpty {
                     Text(
                         modifier = Modifier.weight(1f),
                         text = it,
@@ -181,8 +181,8 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             name = "Release title",
             date = "2021-09-08",
             countryCode = "JP",
-            formats = "2×CD + Blu-ray",
-            tracks = "15 + 8 + 24"
+            formattedFormats = "2×CD + Blu-ray",
+            formattedTracks = "15 + 8 + 24"
         ),
         ReleaseListItemModel(
             id = "1",

@@ -103,10 +103,7 @@ internal class ReleaseViewModel @Inject constructor(
                     remoteMediator = LookupResourceRemoteMediator(
                         hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
                         lookupResource = { repository.lookupRelease(releaseId) },
-                        deleteLocalResource = {
-                            releaseDao.deleteReleaseById(releaseId)
-
-                        }
+                        deleteLocalResource = { releaseDao.deleteReleaseById(releaseId) }
                     ),
                     pagingSourceFactory = {
                         getPagingSource(releaseId, query)
@@ -134,8 +131,8 @@ internal class ReleaseViewModel @Inject constructor(
             .cachedIn(viewModelScope)
 
     private suspend fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
-        val roomRelease = releaseDao.getRelease(releaseId)
-        return roomRelease?.formats != null && roomRelease.tracks != null
+        val roomRelease = releaseDao.getReleaseWithFormatTrackCounts(releaseId)
+        return !roomRelease?.formatTrackCounts.isNullOrEmpty()
     }
 
     private fun getPagingSource(releaseId: String, query: String): PagingSource<Int, TrackRoomModel> = when {

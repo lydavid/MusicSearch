@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 
 @Dao
 abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
@@ -41,7 +41,6 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
             AND (
                 r.name LIKE :query OR r.disambiguation LIKE :query
                 OR r.date LIKE :query OR r.country_code LIKE :query
-                OR r.formats LIKE :query OR r.tracks LIKE :query
                 OR ac.name LIKE :query
             )
         """
@@ -55,7 +54,10 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
         )
         """
     )
-    abstract suspend fun deleteReleasesFromCountry(areaId: String)
+    abstract suspend fun deleteReleasesByCountry(areaId: String)
+
+    @Query("DELETE FROM release_country WHERE country_id = :areaId")
+    abstract suspend fun deleteArtistReleaseLinks(areaId: String)
 
     /**
      * This is the actual number of releases from this country (area) stored locally.
@@ -75,7 +77,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
         ) AS count
     """
     )
-    abstract suspend fun getNumberOfReleasesFromCountry(areaId: String): Int
+    abstract suspend fun getNumberOfReleasesByCountry(areaId: String): Int
 
     @Transaction
     @Query(
@@ -84,7 +86,7 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesByCountry(areaId: String): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    abstract fun getReleasesByCountry(areaId: String): PagingSource<Int, ReleaseForListItem>
 
     @Transaction
     @Query(
@@ -97,6 +99,6 @@ abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
     abstract fun getReleasesByCountryFiltered(
         areaId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    ): PagingSource<Int, ReleaseForListItem>
     // endregion
 }

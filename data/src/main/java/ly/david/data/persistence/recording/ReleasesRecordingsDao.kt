@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 
 @Dao
 abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
@@ -38,7 +38,6 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
             AND (
                 rel.name LIKE :query OR rel.disambiguation LIKE :query
                 OR rel.date LIKE :query OR rel.country_code LIKE :query
-                OR rel.formats LIKE :query OR rel.tracks LIKE :query
                 OR ac.name LIKE :query
             )
         """
@@ -57,6 +56,9 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
         """
     )
     abstract suspend fun deleteReleasesByRecording(recordingId: String)
+
+    @Query("DELETE FROM recording_release WHERE recording_id = :recordingId")
+    abstract suspend fun deleteRecordingReleaseLinks(recordingId: String)
 
     @Query(
         """
@@ -77,7 +79,7 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesByRecording(recordingId: String): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    abstract fun getReleasesByRecording(recordingId: String): PagingSource<Int, ReleaseForListItem>
 
     @Transaction
     @Query(
@@ -90,5 +92,5 @@ abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
     abstract fun getReleasesByRecordingFiltered(
         recordingId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    ): PagingSource<Int, ReleaseForListItem>
 }

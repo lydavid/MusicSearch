@@ -2,11 +2,11 @@ package ly.david.data.domain
 
 import ly.david.data.AreaType
 import ly.david.data.Release
+import ly.david.data.getFormatsForDisplay
+import ly.david.data.getTracksForDisplay
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
-import ly.david.data.network.getFormatsForDisplay
-import ly.david.data.network.getTracksForDisplay
 import ly.david.data.network.toLabelListItemModels
 import ly.david.data.persistence.release.ReleaseWithAllData
 
@@ -53,8 +53,8 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     quality = release.quality,
     coverArtArchive = release.coverArtArchive,
     textRepresentation = release.textRepresentation,
-    formattedFormats = release.formats,
-    formattedTracks = release.tracks,
+    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
+    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     coverArtUrl = release.coverArtUrl,
     areas = areas.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNamesWithResources.map {
@@ -79,8 +79,8 @@ internal fun ReleaseMusicBrainzModel.toReleaseScaffoldModel() = ReleaseScaffoldM
     quality = quality,
     coverArtArchive = coverArtArchive,
     textRepresentation = textRepresentation,
-    formattedFormats = media.getFormatsForDisplay(),
-    formattedTracks = media.getTracksForDisplay(),
+    formattedFormats = media?.map { it.format }.getFormatsForDisplay(),
+    formattedTracks = media?.map { it.trackCount }.getTracksForDisplay(),
     coverArtUrl = null,
     areas = releaseEvents?.mapNotNull {
         it.area?.toAreaListItemModel(it.date)?.copy(type = AreaType.COUNTRY)

@@ -71,6 +71,14 @@ data class ReleaseWithAllData(
     val release: ReleaseRoomModel,
 
     @Relation(
+        entity = ReleaseFormatTrackCount::class,
+        parentColumn = "id",
+        entityColumn = "releaseId",
+        projection = ["format", "trackCount"]
+    )
+    val formatTrackCounts: List<FormatTrackCount>,
+
+    @Relation(
         parentColumn = "id", // release.id
         entityColumn = "release_id",
     )

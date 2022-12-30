@@ -4,8 +4,10 @@ import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
+import ly.david.data.getFormatsForDisplay
+import ly.david.data.getTracksForDisplay
 import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 
 data class ReleaseListItemModel(
     override val id: String,
@@ -25,8 +27,8 @@ data class ReleaseListItemModel(
     override val textRepresentation: TextRepresentation? = null,
     val coverArtUrl: String? = null,
 
-    val formats: String? = null,
-    val tracks: String? = null,
+    val formattedFormats: String? = null,
+    val formattedTracks: String? = null,
     val formattedArtistCredits: String? = null,
 
     val releaseCountries: List<ReleaseCountry> = listOf(),
@@ -50,7 +52,7 @@ fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     coverArtUrl = null,
 )
 
-fun ReleaseWithCreditsAndCountries.toReleaseListItemModel() = ReleaseListItemModel(
+fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
     id = release.id,
     name = release.name,
     disambiguation = release.disambiguation,
@@ -65,8 +67,8 @@ fun ReleaseWithCreditsAndCountries.toReleaseListItemModel() = ReleaseListItemMod
     quality = release.quality,
     coverArtArchive = release.coverArtArchive,
     textRepresentation = release.textRepresentation,
-    formats = release.formats,
-    tracks = release.tracks,
+    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
+    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     coverArtUrl = release.coverArtUrl,
     formattedArtistCredits = artistCreditNames,
     releaseCountries = releaseCountries,

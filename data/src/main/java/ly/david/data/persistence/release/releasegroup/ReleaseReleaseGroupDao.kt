@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 
 // TODO: put this in release group dao? only used by ReleaseGroupRepository
 //  artist should hold release groups by artist
@@ -40,7 +40,6 @@ abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
             AND (
                 r.name LIKE :query OR r.disambiguation LIKE :query
                 OR r.date LIKE :query OR r.country_code LIKE :query
-                OR r.formats LIKE :query OR r.tracks LIKE :query
                 OR ac.name LIKE :query
             )
         """
@@ -80,7 +79,7 @@ abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
         $ORDER_BY_DATE_AND_NAME
     """
     )
-    abstract fun getReleasesByReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    abstract fun getReleasesByReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseForListItem>
 
     @Transaction
     @Query(
@@ -93,5 +92,5 @@ abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
     abstract fun getReleasesByReleaseGroupFiltered(
         releaseGroupId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries>
+    ): PagingSource<Int, ReleaseForListItem>
 }

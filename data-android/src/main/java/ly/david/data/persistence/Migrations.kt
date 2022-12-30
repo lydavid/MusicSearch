@@ -239,4 +239,8 @@ internal object Migrations {
 
     @DeleteColumn(tableName = "release", columnName = "release_group_id")
     class DeleteReleaseGroupIdFromRelease : AutoMigrationSpec
+
+    @DeleteColumn(tableName = "release", columnName = "formats")
+    @DeleteColumn(tableName = "release", columnName = "tracks")
+    class DeleteFormatsAndTracksFromRelease : AutoMigrationSpec
 }

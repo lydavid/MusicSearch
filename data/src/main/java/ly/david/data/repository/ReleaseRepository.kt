@@ -55,8 +55,7 @@ class ReleaseRepository @Inject constructor(
 
         if (releaseWithAllData != null &&
             releaseWithAllData.artistCreditNamesWithResources.isNotEmpty() &&
-            releaseWithAllData.release.formats != null &&
-            releaseWithAllData.release.tracks != null
+            releaseWithAllData.formatTrackCounts.isNotEmpty()
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.

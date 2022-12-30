@@ -8,8 +8,6 @@ import ly.david.data.Release
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
-import ly.david.data.network.getFormatsForDisplay
-import ly.david.data.network.getTracksForDisplay
 import ly.david.data.persistence.RoomModel
 
 @Entity(
@@ -61,12 +59,6 @@ data class ReleaseRoomModel(
     @Embedded
     override val textRepresentation: TextRepresentation? = null,
 
-    @ColumnInfo(name = "formats")
-    val formats: String? = null,
-
-    @ColumnInfo(name = "tracks")
-    val tracks: String? = null,
-
     /**
      * May be one of:
      * - `null`: Have not requested cover art
@@ -92,7 +84,5 @@ fun ReleaseMusicBrainzModel.toRoomModel() =
         asin = asin,
         quality = quality,
         coverArtArchive = coverArtArchive,
-        textRepresentation = textRepresentation,
-        formats = media?.getFormatsForDisplay(),
-        tracks = media?.getTracksForDisplay()
+        textRepresentation = textRepresentation
     )

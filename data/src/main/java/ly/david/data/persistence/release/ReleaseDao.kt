@@ -24,8 +24,9 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
     }
 
     // Lookup
+    @Transaction
     @Query("SELECT * FROM release WHERE id = :releaseId")
-    abstract suspend fun getRelease(releaseId: String): ReleaseRoomModel?
+    abstract suspend fun getReleaseWithFormatTrackCounts(releaseId: String): ReleaseWithFormatTrackCounts?
 
     @Transaction
     @Query("SELECT * FROM release WHERE id = :releaseId")

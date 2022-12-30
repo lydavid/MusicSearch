@@ -14,7 +14,7 @@ import ly.david.data.persistence.recording.ReleasesRecordingsDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseWithCreditsAndCountries
+import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.toRoomModel
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.PagedList
@@ -22,14 +22,14 @@ import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class ReleasesByRecordingViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<ReleaseWithCreditsAndCountries, ReleaseListItemModel>,
+    private val pagedListImpl: PagedListImpl<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
     private val releasesRecordingsDao: ReleasesRecordingsDao
 ) : ViewModel(),
     PagedList<ReleaseListItemModel> by pagedListImpl,
-    BrowseResourceUseCase<ReleaseWithCreditsAndCountries, ReleaseListItemModel> {
+    BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
 
     init {
         pagedListImpl.scope = viewModelScope
@@ -76,14 +76,17 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesRecordingsDao.deleteReleasesByRecording(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+        releasesRecordingsDao.withTransaction {
+            releasesRecordingsDao.deleteReleasesByRecording(resourceId)
+            releasesRecordingsDao.deleteRecordingReleaseLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(
         resourceId: String,
         query: String
-    ): PagingSource<Int, ReleaseWithCreditsAndCountries> = when {
+    ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             releasesRecordingsDao.getReleasesByRecording(resourceId)
         }
@@ -95,7 +98,7 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
         }
     }
 
-    override fun transformRoomToListItemModel(roomModel: ReleaseWithCreditsAndCountries): ReleaseListItemModel {
+    override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
         return roomModel.toReleaseListItemModel()
     }
 }
