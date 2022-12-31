@@ -3,7 +3,7 @@ package ly.david.data.network
 val fakeRecording = RecordingMusicBrainzModel(
     id = "recording1",
     name = "Fake Recording",
-    date = "2022-11-06",
+    firstReleaseDate = "2022-11-06",
     length = 25300000,
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
 )

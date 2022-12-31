@@ -12,7 +12,7 @@ import ly.david.data.network.MusicBrainzResource
  * But that would mess up our browsing because we might have collected a resource via other means than browsing,
  * (such as lookup) which would make us incorrectly begin our offset at 0.
  * Because we cannot guarantee the order of individually lookup'd resources, we will make sure to browse everything
- * starting from offset 0, while making sure to Ignore rather than Replace its entry when we encounter it.
+ * starting from offset 0, while making sure to Ignore rather than Replace when inserting entities.
  *
  * @param resourceId The resource's id we're tracking the progress of browsing a paginated [browseResource].
  *  Ex. An Area we want to browse all of its Releases.
@@ -22,7 +22,6 @@ import ly.david.data.network.MusicBrainzResource
  *  Ex. Releases in an Area.
  * @param localCount This is not actually the number of [browseResource] we have in our local database,
  *  but rather the current offset for browsing [browseResource].
- *
  * @param remoteCount How many [browseResource] exists in MusicBrainz's database.
  *  null means we have not yet started browsing. 0 means there were none.
  */

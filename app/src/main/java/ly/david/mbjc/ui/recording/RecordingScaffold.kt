@@ -33,15 +33,18 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
 private enum class RecordingTab(@StringRes val titleRes: Int) {
+    DETAILS(R.string.details),
     RELEASES(R.string.releases),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
@@ -61,7 +64,7 @@ internal fun RecordingScaffold(
 
     var titleState by rememberSaveable { mutableStateOf("") }
     var subtitleState by rememberSaveable { mutableStateOf("") }
-    var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.RELEASES) }
+    var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var recording: RecordingScaffoldModel? by remember { mutableStateOf(null) }
@@ -126,6 +129,8 @@ internal fun RecordingScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val releasesLazyListState = rememberLazyListState()
         var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
@@ -138,7 +143,18 @@ internal fun RecordingScaffold(
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
-
+            RecordingTab.DETAILS -> {
+                val recordingScaffoldModel = recording
+                if (recordingScaffoldModel == null) {
+                    FullScreenLoadingIndicator()
+                } else {
+                    RecordingDetailsScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        recording = recordingScaffoldModel,
+                        lazyListState = detailsLazyListState
+                    )
+                }
+            }
             RecordingTab.RELEASES -> {
                 ReleasesByRecordingScreen(
                     recordingId = recordingId,

@@ -13,8 +13,8 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.listitem.ThreeSectionListItem
 import ly.david.mbjc.ui.common.listitem.DisambiguationText
+import ly.david.mbjc.ui.common.listitem.ThreeSectionListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.release.tracks.TrackListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -50,7 +50,7 @@ internal fun RecordingListItem(
         },
         endMainPadding = 4.dp,
         endContent = {
-            recording.date.ifNotNullOrEmpty {
+            recording.firstReleaseDate.ifNotNullOrEmpty {
                 Text(
                     text = it,
                     style = TextStyles.getCardBodyTextStyle(),
@@ -76,7 +76,7 @@ internal class RecordingPreviewParameterProvider : PreviewParameterProvider<Reco
         RecordingListItemModel(
             id = "2",
             name = "Recording name",
-            date = "2022-05-23",
+            firstReleaseDate = "2022-05-23",
             disambiguation = "that one",
             length = 25300000,
             video = false,

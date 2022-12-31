@@ -6,7 +6,7 @@ package ly.david.data
 internal interface Recording : NameWithDisambiguation {
     val id: String
     override val name: String
-    val date: String?
+    val firstReleaseDate: String?
     override val disambiguation: String
     val length: Int?
     val video: Boolean?

@@ -14,6 +14,9 @@ interface StoreResourceUseCase {
 interface BrowseResourceUseCase<RM: RoomModel, LI: ListItemModel> : StoreResourceUseCase {
     fun getLinkedResourcesPagingSource(resourceId: String, query: String): PagingSource<Int, RM>
     fun transformRoomToListItemModel(roomModel: RM): LI
+    fun postFilter(listItemModel: LI): Boolean {
+        return true
+    }
 }
 
 interface BrowseSortableResourceUseCase<RM: RoomModel> : StoreResourceUseCase {

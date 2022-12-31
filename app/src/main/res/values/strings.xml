@@ -63,6 +63,7 @@
     <string name="opened">Opened</string>
     <string name="closed">Closed</string>
     <string name="date">Date</string>
+    <string name="first_release_date">First release date</string>
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="time">Time</string>
@@ -74,6 +75,7 @@
     <string name="data_quality">Data Quality</string>
     <string name="asin">ASIN</string>
     <string name="iswc">ISWC</string>
+    <string name="isrc">ISRC</string>
     <string name="release_events">Release events</string>
     <string name="information_header">%s information</string>
     <string name="attributes_header">%s attributes</string>

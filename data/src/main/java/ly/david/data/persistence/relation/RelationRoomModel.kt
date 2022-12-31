@@ -13,18 +13,6 @@ import ly.david.data.network.getFormattedAttributesForDisplay
 import ly.david.data.network.getHeader
 import ly.david.data.persistence.RoomModel
 
-
-@Entity(
-    tableName = "new_relation",
-    primaryKeys = ["resource_id", "linked_resource_id", "order"],
-)
-data class NewRelationRoomModel(
-    @ColumnInfo(name = "resource_id")
-    val resourceId: String,
-
-    )
-
-
 // TODO: [low priority] recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.
 //  web doesn't display it twice, so maybe we shouldn't either.
 

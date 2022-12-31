@@ -12,29 +12,24 @@ import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 
 @Entity(tableName = "recording")
 data class RecordingRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-    @ColumnInfo(name = "title")
-    override val name: String,
-    @ColumnInfo(name = "first_release_date")
-    override val date: String? = null,
-    @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String = "",
-    @ColumnInfo(name = "length")
-    override val length: Int? = null,
-    @ColumnInfo(name = "video")
-    override val video: Boolean = false,
+    @PrimaryKey @ColumnInfo(name = "id") override val id: String,
+    @ColumnInfo(name = "title") override val name: String,
+    @ColumnInfo(name = "first_release_date") override val firstReleaseDate: String? = null,
+    @ColumnInfo(name = "disambiguation") override val disambiguation: String = "",
+    @ColumnInfo(name = "length") override val length: Int? = null,
+    @ColumnInfo(name = "video") override val video: Boolean = false,
+    @ColumnInfo(name = "isrcs", defaultValue = "null") val isrcs: List<String>? = null,
 ) : RoomModel, Recording
 
 fun RecordingMusicBrainzModel.toRoomModel() =
     RecordingRoomModel(
         id = id,
         name = name,
-        date = date,
+        firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
         length = length,
-        video = video ?: false
+        video = video ?: false,
+        isrcs = isrcs
     )
 
 data class RecordingForListItem(

@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import androidx.paging.map
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +57,8 @@ internal class PagedListImpl<RM: RoomModel, LI: ListItemModel> @Inject construct
                 ).flow.map { pagingData ->
                     pagingData.map {
                         useCase.transformRoomToListItemModel(it)
+                    }.filter {
+                        useCase.postFilter(it)
                     }
                 }
             }
