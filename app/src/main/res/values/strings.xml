@@ -76,6 +76,7 @@
     <string name="asin">ASIN</string>
     <string name="iswc">ISWC</string>
     <string name="isrc">ISRC</string>
+    <string name="iso_3166_1">ISO 3166–1</string>
     <string name="release_events">Release events</string>
     <string name="information_header">%s information</string>
     <string name="attributes_header">%s attributes</string>

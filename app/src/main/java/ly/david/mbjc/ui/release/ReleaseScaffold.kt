@@ -58,9 +58,7 @@ internal fun ReleaseScaffold(
     viewModel: ReleaseViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE
-
     val snackbarHostState = remember { SnackbarHostState() }
-
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }

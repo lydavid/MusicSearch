@@ -1,8 +1,10 @@
 package ly.david.mbjc.ui.event.details
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,33 +30,39 @@ import ly.david.mbjc.ui.theme.TextStyles
 internal fun EventDetailsScreen(
     modifier: Modifier = Modifier,
     event: EventListItemModel,
+    lazyListState: LazyListState = rememberLazyListState(),
 ) {
-    Column(modifier = modifier) {
-        event.run {
-            InformationListSeparatorHeader(R.string.event)
-            type?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = R.string.type, text = it)
-            }
-            LifeSpanText(lifeSpan = lifeSpan)
-            time?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = R.string.time, text = it)
-            }
-            if (cancelled == true) {
-                SelectionContainer {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 4.dp),
-                        text = "(${stringResource(id = R.string.cancelled)})",
-                        style = TextStyles.getCardBodyTextStyle(),
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.error
-                    )
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState
+    ) {
+        item {
+            event.run {
+                InformationListSeparatorHeader(R.string.event)
+                type?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.type, text = it)
                 }
-            }
+                LifeSpanText(lifeSpan = lifeSpan)
+                time?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.time, text = it)
+                }
+                if (cancelled == true) {
+                    SelectionContainer {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                            text = "(${stringResource(id = R.string.cancelled)})",
+                            style = TextStyles.getCardBodyTextStyle(),
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
 
-            // TODO: set list
-            //  api for this seems like some kind markdown?
+                // TODO: set list
+                //  api for this seems like some kind markdown?
+            }
         }
     }
 }

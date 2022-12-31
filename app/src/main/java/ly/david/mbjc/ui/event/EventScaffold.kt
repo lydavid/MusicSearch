@@ -104,6 +104,8 @@ internal fun EventScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -117,7 +119,8 @@ internal fun EventScaffold(
                 } else {
                     EventDetailsScreen(
                         modifier = Modifier.padding(innerPadding),
-                        event = eventListItemModel
+                        event = eventListItemModel,
+                        lazyListState = detailsLazyListState
                     )
                 }
             }

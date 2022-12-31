@@ -1,0 +1,71 @@
+package ly.david.mbjc.ui.area.details
+
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import ly.david.data.LifeSpan
+import ly.david.data.common.ifNotNullOrEmpty
+import ly.david.data.domain.AreaScaffoldModel
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.TextWithHeadingRes
+import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.mbjc.ui.common.listitem.LifeSpanText
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.mbjc.ui.theme.PreviewTheme
+
+@Composable
+internal fun AreaDetailsScreen(
+    modifier: Modifier = Modifier,
+    area: AreaScaffoldModel,
+    lazyListState: LazyListState = rememberLazyListState(),
+) {
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState
+    ) {
+        item {
+            area.run {
+                InformationListSeparatorHeader(R.string.area)
+                type?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                }
+                LifeSpanText(lifeSpan = lifeSpan)
+                iso_3166_1_codes?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.iso_3166_1, text = it.joinToString(", "))
+                }
+
+                // TODO: api doesn't seem to include area containment
+                //  but we could get its parent area via relations "part of" "backward"
+            }
+        }
+    }
+}
+
+// region Previews
+@ExcludeFromJacocoGeneratedReport
+@DefaultPreviews
+@Composable
+private fun Preview() {
+    PreviewTheme {
+        Surface {
+            AreaDetailsScreen(
+                area = AreaScaffoldModel(
+                    id = "88f49821-05a3-3bbc-a24b-bbd6b918c07b",
+                    name = "Czechoslovakia",
+                    type = "Country",
+                    lifeSpan = LifeSpan(
+                        begin = "1918-10-28",
+                        end = "1992-12-31",
+                        ended = true
+                    ),
+                    iso_3166_1_codes = listOf("XC")
+                )
+            )
+        }
+    }
+}
+// endregion

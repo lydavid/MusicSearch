@@ -153,6 +153,40 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
+    @Test
+    fun showRetryButtonOnError() {
+        composeTestRule.activity.setContent {
+            PreviewTheme {
+                AreaScaffold(
+                    areaId = "error"
+                )
+            }
+        }
+
+        runBlocking { composeTestRule.awaitIdle() }
+
+        composeTestRule
+            .onNodeWithText(retry)
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(relationships)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(retry)
+            .assertIsDisplayed()
+
+        // TODO: showing "no results"
+//        composeTestRule
+//            .onNodeWithText(places)
+//            .performClick()
+//
+//        composeTestRule
+//            .onNodeWithText(retry)
+//            .assertIsDisplayed()
+    }
+
     // TODO: visit, check history count is 1, visit again, go to release, return, return, check history count is 2
 
     // endregion
@@ -186,7 +220,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
 
         // Need to differentiate between Releases tab and header inside stats
         composeTestRule
-            .onNode(hasText(releases).and(hasNoClickAction()))
+            .onNode(hasText(releases).and(hasNoClickAction()), useUnmergedTree = true)
             .assertIsDisplayed()
     }
     // endregion

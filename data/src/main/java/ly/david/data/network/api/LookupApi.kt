@@ -94,9 +94,7 @@ interface LookupApi {
     suspend fun lookupArea(
         @Path("areaId") areaId: String,
 
-        @Query("inc") include: String =
-        // Overview
-            "area-rels+url-rels+instrument-rels+genre-rels"
+        @Query("inc") include: String? = null
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
