@@ -22,7 +22,7 @@ abstract class ReleaseLabelDao : BaseDao<ReleaseLabel>() {
 
         // DISTINCT because junction table can repeat due to different catalog number for same release/label
         private const val SELECT_RELEASES_BY_LABEL = """
-            SELECT DISTINCT r.*, ac.name AS artist_credit_name
+            SELECT DISTINCT r.*, ac.name AS artist_credit_names
             $RELEASES_BY_LABEL
         """
 

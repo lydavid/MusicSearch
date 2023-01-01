@@ -21,7 +21,7 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
         """
 
         private const val SELECT_RELEASES_BY_ARTIST = """
-            SELECT r.*, ac.name AS artist_credit_name
+            SELECT r.*, ac.name AS artist_credit_names
             $RELEASES_BY_ARTIST
         """
 
