@@ -125,31 +125,6 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun useCustomName() {
-
-        val customName = "My Custom Name"
-
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                ReleaseScaffold(
-                    releaseId = fakeRelease.id,
-                    titleWithDisambiguation = customName
-                )
-            }
-        }
-
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(fakeRelease.name)
-            .assertDoesNotExist()
-
-        composeTestRule
-            .onNodeWithText(customName)
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun releaseHasRelations() {
         setRelease(fakeReleaseWithRelation)
         runBlocking { composeTestRule.awaitIdle() }

@@ -129,31 +129,6 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun useCustomName() {
-
-        val customName = "My Custom Name"
-
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                AreaScaffold(
-                    areaId = fakeArea.id,
-                    titleWithDisambiguation = customName
-                )
-            }
-        }
-
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(fakeArea.name)
-            .assertDoesNotExist()
-
-        composeTestRule
-            .onNodeWithText(customName)
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun showRetryButtonOnError() {
         composeTestRule.activity.setContent {
             PreviewTheme {

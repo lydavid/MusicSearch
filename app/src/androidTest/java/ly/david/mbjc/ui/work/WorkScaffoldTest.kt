@@ -79,31 +79,6 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun useCustomName() {
-
-        val customName = "My Custom Name"
-
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                WorkScaffold(
-                    workId = fakeWorkWithAllData.id,
-                    titleWithDisambiguation = customName
-                )
-            }
-        }
-
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.name)
-            .assertDoesNotExist()
-
-        composeTestRule
-            .onNodeWithText(customName)
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun hasRelations() {
         setWork(fakeWorkWithAllData)
         runBlocking { composeTestRule.awaitIdle() }

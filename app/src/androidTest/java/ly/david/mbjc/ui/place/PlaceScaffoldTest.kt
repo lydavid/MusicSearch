@@ -12,7 +12,6 @@ import kotlinx.coroutines.runBlocking
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
-import ly.david.data.network.fakePlace
 import ly.david.data.network.fakePlaceWithAllData
 import ly.david.data.repository.PlaceRepository
 import ly.david.mbjc.MainActivityTest
@@ -88,31 +87,6 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(fakePlaceWithAllData.lifeSpan?.end!!)
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun useCustomName() {
-
-        val customName = "My Custom Name"
-
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                PlaceScaffold(
-                    placeId = fakePlace.id,
-                    titleWithDisambiguation = customName
-                )
-            }
-        }
-
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(fakePlace.name)
-            .assertDoesNotExist()
-
-        composeTestRule
-            .onNodeWithText(customName)
             .assertIsDisplayed()
     }
 

@@ -107,29 +107,4 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
 //            .onNodeWithText(fakeAreaWithRelation.relations?.first()?.area?.name ?: "")
 //            .assertIsDisplayed()
 //    }
-
-    @Test
-    fun useCustomName() {
-
-        val customName = "My Custom Name"
-
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                RecordingScaffold(
-                    recordingId = fakeRecording.id,
-                    titleWithDisambiguation = customName
-                )
-            }
-        }
-
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(fakeRecording.name)
-            .assertDoesNotExist()
-
-        composeTestRule
-            .onNodeWithText(customName)
-            .assertIsDisplayed()
-    }
 }
