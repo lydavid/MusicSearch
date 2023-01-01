@@ -16,10 +16,6 @@ import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
-/**
- * The logic for loading relations is different here because we start on relationships tab.
- * We cannot start on releases tab because non-country areas do not have releases.
- */
 @HiltViewModel
 internal class AreaViewModel @Inject constructor(
     private val repository: AreaRepository,

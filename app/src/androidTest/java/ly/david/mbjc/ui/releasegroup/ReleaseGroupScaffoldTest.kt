@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.releasegroup
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import ly.david.data.network.fakeReleaseGroup
@@ -42,6 +43,31 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
         composeTestRule
             .onNodeWithText(customName)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun showRetryButtonOnError() {
+        composeTestRule.activity.setContent {
+            PreviewTheme {
+                ReleaseGroupScaffold(
+                    releaseGroupId = "error"
+                )
+            }
+        }
+
+        runBlocking { composeTestRule.awaitIdle() }
+
+        composeTestRule
+            .onNodeWithText(retry)
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(relationships)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(retry)
             .assertIsDisplayed()
     }
 }

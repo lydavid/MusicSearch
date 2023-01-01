@@ -18,3 +18,7 @@ val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     offset = 0,
     releaseGroups = listOf(fakeReleaseGroup)
 )
+
+val fakeReleaseGroups = listOf(
+    fakeReleaseGroup
+)

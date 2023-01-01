@@ -11,6 +11,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,23 +26,24 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.getDisplayNames
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
+import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 
-private enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
+internal enum class ReleaseGroupTab(@StringRes val titleRes: Int) {
+    DETAILS(R.string.details),
     RELEASES(R.string.releases),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats),
@@ -62,44 +64,25 @@ internal fun ReleaseGroupScaffold(
     viewModel: ReleaseGroupViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE_GROUP
-
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var title by rememberSaveable { mutableStateOf("") }
-    var subtitle by rememberSaveable { mutableStateOf("") }
-    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.RELEASES) }
+    var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var releaseGroup: ReleaseGroupListItemModel? by remember { mutableStateOf(null) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        title = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val subtitle by viewModel.subtitle.collectAsState()
+    val releaseGroup by viewModel.releaseGroup.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = releaseGroupId) {
-        try {
-            val releaseGroupListItemModel = viewModel.lookupReleaseGroup(releaseGroupId)
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                title = releaseGroupListItemModel.getNameWithDisambiguation()
-            }
-            subtitle = "Release Group by ${releaseGroupListItemModel.artistCredits.getDisplayNames()}"
-            releaseGroup = releaseGroupListItemModel
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        } catch (ex: Exception) {
-//            title = "[Release group lookup failed]"
-//            subtitle = "[error]"
-            // TODO: the only time we would need an error state in the title is if we deeplinked in
-            //  in which case, we would also want to handle filling in the title after a successful retry
-        }
-
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = releaseGroupId,
-                resource = resource,
-                summary = title
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            releaseGroupId = releaseGroupId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
@@ -139,6 +122,8 @@ internal fun ReleaseGroupScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val releasesLazyListState = rememberLazyListState()
         var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
@@ -151,6 +136,26 @@ internal fun ReleaseGroupScaffold(
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
+            ReleaseGroupTab.DETAILS -> {
+                val releaseGroupListItemModel = releaseGroup
+                when {
+                    showError -> {
+                        FullScreenErrorWithRetry(
+                            onClick = { forceRefresh = true }
+                        )
+                    }
+                    releaseGroupListItemModel == null -> {
+                        FullScreenLoadingIndicator()
+                    }
+                    else -> {
+                        ReleaseGroupDetailsScreen(
+                            releaseGroup = releaseGroupListItemModel,
+//                            coverArtUrl = url,
+                            lazyListState = detailsLazyListState,
+                        )
+                    }
+                }
+            }
             ReleaseGroupTab.RELEASES -> {
                 ReleasesByReleaseGroupScreen(
                     releaseGroupId = releaseGroupId,

@@ -64,7 +64,7 @@ internal fun ReleaseScaffold(
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
-    val subtitleState by viewModel.subtitleState.collectAsState()
+    val subtitle by viewModel.subtitle.collectAsState()
     val url by viewModel.url.collectAsState()
     val release by viewModel.release.collectAsState()
     val showError by viewModel.isError.collectAsState()
@@ -86,7 +86,7 @@ internal fun ReleaseScaffold(
             TopAppBarWithFilter(
                 resource = resource,
                 title = title,
-                subtitle = subtitleState,
+                subtitle = subtitle,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE, resourceId = releaseId)
@@ -125,12 +125,12 @@ internal fun ReleaseScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val tracksLazyListState = rememberLazyListState()
         val tracksLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedTracks)
                 .collectAsLazyPagingItems()
-
-        val detailsLazyListState = rememberLazyListState()
 
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =

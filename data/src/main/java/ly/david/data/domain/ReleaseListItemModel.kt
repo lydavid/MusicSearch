@@ -1,11 +1,11 @@
 package ly.david.data.domain
 
 import ly.david.data.Release
+import ly.david.data.getFormatsForDisplay
+import ly.david.data.getTracksForDisplay
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
-import ly.david.data.getFormatsForDisplay
-import ly.david.data.getTracksForDisplay
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.release.ReleaseForListItem
 

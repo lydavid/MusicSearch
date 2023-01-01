@@ -68,7 +68,7 @@ internal class ReleaseViewModel @Inject constructor(
     }.distinctUntilChanged()
 
     val title = MutableStateFlow("")
-    val subtitleState = MutableStateFlow("")
+    val subtitle = MutableStateFlow("")
     var recordedLookup = false
     val isError = MutableStateFlow(false)
     val release: MutableStateFlow<ReleaseScaffoldModel?> = MutableStateFlow(null)
@@ -181,7 +181,7 @@ internal class ReleaseViewModel @Inject constructor(
                         if (title.value.isEmpty()) {
                             title.value = releaseScaffoldModel.getNameWithDisambiguation()
                         }
-                        subtitleState.value = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
+                        subtitle.value = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
                         release.value = releaseScaffoldModel
                         isError.value = false
                     } catch (ex: Exception) {

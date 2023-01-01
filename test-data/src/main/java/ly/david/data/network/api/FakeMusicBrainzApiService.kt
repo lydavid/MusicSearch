@@ -23,7 +23,7 @@ import ly.david.data.network.fakeLabel
 import ly.david.data.network.fakePlace
 import ly.david.data.network.fakePlaces
 import ly.david.data.network.fakeRecording
-import ly.david.data.network.fakeReleaseGroup
+import ly.david.data.network.fakeReleaseGroups
 import ly.david.data.network.fakeReleases
 import ly.david.data.network.fakeSeries
 import ly.david.data.network.fakeWorkWithAllData
@@ -182,7 +182,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
-        return fakeReleaseGroup
+        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId } ?: throw Exception()
     }
 
     override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {

@@ -62,7 +62,6 @@ internal fun ArtistScaffold(
     // but because it relies on compose paging, we can't preview.
     viewModel: ArtistViewModel = hiltViewModel()
 ) {
-
     val resource = MusicBrainzResource.ARTIST
 
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
