@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.WorkListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -18,6 +19,8 @@ internal class WorkViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
+
+    override val resource: MusicBrainzResource = MusicBrainzResource.WORK
 
     init {
         relationsList.scope = viewModelScope

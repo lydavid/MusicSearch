@@ -27,4 +27,22 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>(), ArtistCreditD
     @Transaction
     @Query("SELECT * FROM release_group WHERE id = :releaseGroupId")
     abstract suspend fun getReleaseGroupWithArtistCredits(releaseGroupId: String): ReleaseGroupWithArtistCredits?
+
+    @Query(
+        """
+            UPDATE release_group
+            SET cover_art_url = :coverArtUrl
+            WHERE id = :releaseGroupId
+        """
+    )
+    abstract suspend fun setReleaseGroupCoverArtUrl(releaseGroupId: String, coverArtUrl: String)
+
+    @Query(
+        """
+            UPDATE release_group
+            SET has_cover_art = :hasCoverArt
+            WHERE id = :releaseGroupId
+        """
+    )
+    abstract suspend fun setReleaseGroupHasCoverArt(releaseGroupId: String, hasCoverArt: Boolean)
 }

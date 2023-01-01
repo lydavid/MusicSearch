@@ -72,7 +72,8 @@ internal fun ReleaseGroupScaffold(
     val title by viewModel.title.collectAsState()
     val subtitle by viewModel.subtitle.collectAsState()
     val releaseGroup by viewModel.releaseGroup.collectAsState()
-    val showError by viewModel.isError.collectAsState()
+    val showError by viewModel.isFullScreenError.collectAsState()
+    val url by viewModel.url.collectAsState()
 
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.setTitle(titleWithDisambiguation)
@@ -150,7 +151,7 @@ internal fun ReleaseGroupScaffold(
                     else -> {
                         ReleaseGroupDetailsScreen(
                             releaseGroup = releaseGroupListItemModel,
-//                            coverArtUrl = url,
+                            coverArtUrl = url,
                             lazyListState = detailsLazyListState,
                         )
                     }

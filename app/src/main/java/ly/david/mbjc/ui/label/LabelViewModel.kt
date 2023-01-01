@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.LabelListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -18,6 +19,8 @@ internal class LabelViewModel @Inject constructor(
     private val relationsList: RelationsList,
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
+
+    override val resource: MusicBrainzResource = MusicBrainzResource.LABEL
 
     init {
         relationsList.scope = viewModelScope

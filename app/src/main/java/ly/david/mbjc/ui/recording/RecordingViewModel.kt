@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.RecordingRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -17,6 +18,8 @@ internal class RecordingViewModel @Inject constructor(
     private val relationsList: RelationsList,
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
+
+    override val resource: MusicBrainzResource = MusicBrainzResource.RECORDING
 
     init {
         relationsList.scope = viewModelScope

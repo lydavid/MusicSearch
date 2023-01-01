@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.PlaceRepository
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -18,6 +19,8 @@ internal class PlaceViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
+
+    override val resource: MusicBrainzResource = MusicBrainzResource.PLACE
 
     init {
         relationsList.scope = viewModelScope

@@ -67,9 +67,11 @@ internal class ReleaseViewModel @Inject constructor(
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
 
+    private var recordedLookup = false
+    override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE
+
     val title = MutableStateFlow("")
     val subtitle = MutableStateFlow("")
-    var recordedLookup = false
     val isError = MutableStateFlow(false)
     val release: MutableStateFlow<ReleaseScaffoldModel?> = MutableStateFlow(null)
     val url = MutableStateFlow("")
@@ -194,7 +196,7 @@ internal class ReleaseViewModel @Inject constructor(
                     if (!recordedLookup) {
                         recordLookupHistory(
                             resourceId = releaseId,
-                            resource = MusicBrainzResource.RELEASE,
+                            resource = resource,
                             summary = title.value
                         )
                         recordedLookup = true
@@ -204,7 +206,7 @@ internal class ReleaseViewModel @Inject constructor(
             ReleaseTab.TRACKS -> loadTracks(releaseId)
             ReleaseTab.RELATIONSHIPS -> loadRelations(releaseId)
             ReleaseTab.STATS -> {
-
+                // Not handled here.
             }
         }
     }

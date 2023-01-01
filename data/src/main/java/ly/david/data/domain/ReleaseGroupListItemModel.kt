@@ -5,7 +5,7 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 
-// TODO: if this is in a non-android module, we can't mark it Immutable
+// TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable
 //  We could extract uimodel to data-android or app
 /**
  * Representation of a [ReleaseGroup] for our UI.
@@ -23,7 +23,9 @@ data class ReleaseGroupListItemModel(
     // Since this is just a list of primitives, we will mark this class immutable.
     override val secondaryTypes: List<String>? = null,
 
-    val artistCredits: List<ArtistCreditUiModel> = listOf()
+    val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    val hasCoverArt: Boolean? = null,
+    val coverArtUrl: String? = null,
 ) : ListItemModel(), ReleaseGroup
 
 fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
@@ -32,11 +34,11 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupList
         name = name,
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
-
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
-
-        artistCredits = artistCredits.toArtistCreditUiModels()
+        artistCredits = artistCredits.toArtistCreditUiModels(),
+        hasCoverArt = null,
+        coverArtUrl = null
     )
 }
 
@@ -48,6 +50,8 @@ fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemMod
         disambiguation = disambiguation,
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
+        hasCoverArt = hasCoverArt,
+        coverArtUrl = coverArtUrl
     )
 }
 
@@ -57,12 +61,12 @@ fun ReleaseGroupWithArtistCredits.toReleaseGroupListItemModel(): ReleaseGroupLis
         name = releaseGroup.name,
         firstReleaseDate = releaseGroup.firstReleaseDate,
         disambiguation = releaseGroup.disambiguation,
-
         primaryType = releaseGroup.primaryType,
         secondaryTypes = releaseGroup.secondaryTypes,
-
         artistCredits = artistCreditNamesWithResources.map {
             it.artistCreditNameRoomModel.toArtistCreditUiModel()
-        }
+        },
+        hasCoverArt = releaseGroup.hasCoverArt,
+        coverArtUrl = releaseGroup.coverArtUrl
     )
 }

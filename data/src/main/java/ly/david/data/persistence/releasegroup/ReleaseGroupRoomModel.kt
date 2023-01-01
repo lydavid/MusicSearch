@@ -27,6 +27,21 @@ data class ReleaseGroupRoomModel(
 
     @ColumnInfo(name = "secondary_types")
     override val secondaryTypes: List<String>? = null,
+
+    /**
+     * Whether this release group has a cover art.
+     * - `null`: Don't know.
+     */
+    @ColumnInfo(name = "has_cover_art", defaultValue = "null") val hasCoverArt: Boolean? = null,
+
+    /**
+     * May be one of:
+     * - `null`: Have not requested cover art
+     * - Empty: Requested but did not find any
+     * - string url: URL to cover art
+     */
+    @ColumnInfo(name = "cover_art_url", defaultValue = "null")
+    val coverArtUrl: String? = null,
 ) : RoomModel, ReleaseGroup
 
 fun ReleaseGroupMusicBrainzModel.toRoomModel(): ReleaseGroupRoomModel =

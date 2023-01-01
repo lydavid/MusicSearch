@@ -24,6 +24,8 @@ internal class AreaViewModel @Inject constructor(
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
 
+    override val resource: MusicBrainzResource = MusicBrainzResource.AREA
+
     val title = MutableStateFlow("")
     var recordedLookup = false
     val isError = MutableStateFlow(false)
@@ -63,7 +65,7 @@ internal class AreaViewModel @Inject constructor(
                     if (!recordedLookup) {
                         recordLookupHistory(
                             resourceId = areaId,
-                            resource = MusicBrainzResource.AREA,
+                            resource = resource,
                             summary = title.value
                         )
                         recordedLookup = true
