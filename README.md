@@ -14,7 +14,7 @@
 | recording     | x      | x      | work                                  |
 | release       | x      | x      | area, label, recording, release-group |
 | release-group | x      | x      | artist                                |
-| series        | x      | WIP    |
+| series        | x      | x      |
 | work          | x      | x      |
 | url           |        | x      |
 

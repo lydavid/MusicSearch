@@ -15,6 +15,7 @@ import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.repository.ReleaseGroupRepository
+import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
@@ -27,13 +28,14 @@ internal class ReleaseGroupViewModel @Inject constructor(
     private val relationsList: RelationsList,
     private val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val releaseGroupDao: ReleaseGroupDao,
-) : ViewModel(), RecordLookupHistory,
+) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP
+    override val title = MutableStateFlow("")
+    override val isError = MutableStateFlow(false)
 
-    val title = MutableStateFlow("")
     val subtitle = MutableStateFlow("")
     val isFullScreenError = MutableStateFlow(false)
     val releaseGroup: MutableStateFlow<ReleaseGroupListItemModel?> = MutableStateFlow(null)
@@ -42,10 +44,6 @@ internal class ReleaseGroupViewModel @Inject constructor(
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
-    }
-
-    fun setTitle(title: String?) {
-        this.title.value = title ?: return
     }
 
     fun onSelectedTabChange(

@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.series
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -9,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,12 +20,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.SeriesListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -33,7 +31,7 @@ import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
 
-private enum class SeriesTab(@StringRes val titleRes: Int) {
+internal enum class SeriesTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
@@ -54,44 +52,30 @@ internal fun SeriesScaffold(
     viewModel: SeriesViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.SERIES
-    var series: SeriesListItemModel? by remember { mutableStateOf(null) }
-
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(SeriesTab.DETAILS) }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        titleState = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val series by viewModel.series.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = seriesId) {
-        try {
-            val seriesListItemModel = viewModel.lookupSeries(seriesId)
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = seriesListItemModel.getNameWithDisambiguation()
-            }
-            series = seriesListItemModel
-        } catch (ex: Exception) {
-            Log.d("Remove This", "SeriesScaffold: $ex")
-        }
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = seriesId,
-                resource = resource,
-                summary = titleState
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            seriesId = seriesId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
                 resource = resource,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource, seriesId)
@@ -104,6 +88,8 @@ internal fun SeriesScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -111,13 +97,15 @@ internal fun SeriesScaffold(
 
         when (selectedTab) {
             SeriesTab.DETAILS -> {
-                val seriesListItemModel = series
-                if (seriesListItemModel == null) {
-                    FullScreenLoadingIndicator()
-                } else {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = series
+                ) {
                     SeriesDetailsScreen(
                         modifier = Modifier.padding(innerPadding),
-                        series = seriesListItemModel
+                        series = it,
+                        lazyListState = detailsLazyListState
                     )
                 }
             }

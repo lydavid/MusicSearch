@@ -4,7 +4,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistory
 import ly.david.data.persistence.history.LookupHistoryDao
 
-internal interface RecordLookupHistory: MusicBrainzResourceViewModel {
+internal interface RecordLookupHistory {
     val lookupHistoryDao: LookupHistoryDao
 
     suspend fun recordLookupHistory(
@@ -22,8 +22,4 @@ internal interface RecordLookupHistory: MusicBrainzResourceViewModel {
             )
         )
     }
-}
-
-internal interface MusicBrainzResourceViewModel {
-    val resource: MusicBrainzResource
 }

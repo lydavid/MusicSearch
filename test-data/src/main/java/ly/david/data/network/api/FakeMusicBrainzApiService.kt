@@ -3,6 +3,7 @@ package ly.david.data.network.api
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
+import ly.david.data.network.GenreMusicBrainzModel
 import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.PlaceMusicBrainzModel
@@ -19,6 +20,7 @@ import ly.david.data.network.browseReleasesResponse
 import ly.david.data.network.fakeAreas
 import ly.david.data.network.fakeArtists
 import ly.david.data.network.fakeEvents
+import ly.david.data.network.fakeGenres
 import ly.david.data.network.fakeInstruments
 import ly.david.data.network.fakeLabels
 import ly.david.data.network.fakePlaces
@@ -157,6 +159,10 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
 
     override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
         return fakeEvents.firstOrNull { it.id == eventId } ?: throw Exception()
+    }
+
+    override suspend fun lookupGenre(genreId: String, include: String?): GenreMusicBrainzModel {
+        return fakeGenres.firstOrNull { it.id == genreId } ?: throw Exception()
     }
 
     override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {

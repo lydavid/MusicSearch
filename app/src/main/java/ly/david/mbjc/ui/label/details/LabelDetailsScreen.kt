@@ -37,7 +37,7 @@ internal fun LabelDetailsScreen(
                     TextWithHeadingRes(headingRes = R.string.label_code, text = stringResource(id = R.string.lc, it))
                 }
 
-                // TODO: lifespan, defunct for end
+                // TODO: lifespan, founded, defunct for end
 
                 // TODO: area
             }

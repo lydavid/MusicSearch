@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -38,7 +40,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 
-private enum class WorkTab(@StringRes val titleRes: Int) {
+internal enum class WorkTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
     RELATIONSHIPS(R.string.relationships),
     RECORDINGS(R.string.recordings),
@@ -56,44 +58,30 @@ internal fun WorkScaffold(
 ) {
     val resource = MusicBrainzResource.WORK
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(WorkTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var work: WorkListItemModel? by remember { mutableStateOf(null) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        titleState = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val work by viewModel.work.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = workId) {
-        try {
-            val workListItemModel = viewModel.lookupWork(workId)
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = workListItemModel.getNameWithDisambiguation()
-            }
-            work = workListItemModel
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        } catch (ex: Exception) {
-            Log.d("Remove This", "WorkScaffold: $ex")
-        }
-
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = workId,
-                resource = resource,
-                summary = titleState
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            workId = workId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = workId)
@@ -126,13 +114,14 @@ internal fun WorkScaffold(
 
         when (selectedTab) {
             WorkTab.DETAILS -> {
-                val workListItemModel = work
-                if (workListItemModel == null) {
-                    FullScreenLoadingIndicator()
-                } else {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = work
+                ) {
                     WorkDetailsScreen(
                         modifier = Modifier.padding(innerPadding),
-                        work = workListItemModel,
+                        work = it,
                         lazyListState = detailsLazyListState
                     )
                 }

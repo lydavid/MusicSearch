@@ -11,6 +11,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.ArtistRepository
+import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
@@ -20,23 +21,19 @@ internal class ArtistViewModel @Inject constructor(
     private val repository: ArtistRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList
-) : ViewModel(), RecordLookupHistory,
+) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.ARTIST
+    override val title = MutableStateFlow("")
+    override val isError = MutableStateFlow(false)
 
-    val title = MutableStateFlow("")
-    val isError = MutableStateFlow(false)
     val artist: MutableStateFlow<ArtistListItemModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
-    }
-
-    fun setTitle(title: String?) {
-        this.title.value = title ?: return
     }
 
     fun onSelectedTabChange(

@@ -11,6 +11,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.EventRepository
+import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
@@ -20,23 +21,19 @@ internal class EventViewModel @Inject constructor(
     private val repository: EventRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,
-) : ViewModel(), RecordLookupHistory,
+) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.EVENT
+    override val title = MutableStateFlow("")
+    override val isError = MutableStateFlow(false)
 
-    val title = MutableStateFlow("")
-    val isError = MutableStateFlow(false)
     val event: MutableStateFlow<EventListItemModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
-    }
-
-    fun setTitle(title: String?) {
-        this.title.value = title ?: return
     }
 
     fun onSelectedTabChange(

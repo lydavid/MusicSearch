@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.recording
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,6 +10,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,15 +25,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.RecordingScaffoldModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.getDisplayNames
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -43,7 +40,7 @@ import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
-private enum class RecordingTab(@StringRes val titleRes: Int) {
+internal enum class RecordingTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
     RELEASES(R.string.releases),
     RELATIONSHIPS(R.string.relationships),
@@ -61,46 +58,32 @@ internal fun RecordingScaffold(
 ) {
     val resource = MusicBrainzResource.RECORDING
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var titleState by rememberSaveable { mutableStateOf("") }
-    var subtitleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
-    var recording: RecordingScaffoldModel? by remember { mutableStateOf(null) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        titleState = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val subtitle by viewModel.subtitle.collectAsState()
+    val recording by viewModel.recording.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = recordingId) {
-        try {
-            val recordingScaffoldModel = viewModel.lookupRecording(recordingId)
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = recordingScaffoldModel.getNameWithDisambiguation()
-            }
-            subtitleState = "Recording by ${recordingScaffoldModel.artistCredits.getDisplayNames()}"
-            recording = recordingScaffoldModel
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-            if (!recordedLookup) {
-                viewModel.recordLookupHistory(
-                    resourceId = recordingId,
-                    resource = resource,
-                    summary = titleState
-                )
-                recordedLookup = true
-            }
-        } catch (ex: Exception) {
-            Log.d("Remove This", "RecordingScaffold: $ex")
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            recordingId = recordingId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,
-                title = titleState,
-                subtitle = subtitleState,
+                title = title,
+                subtitle = subtitle,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = recordingId)
@@ -144,13 +127,14 @@ internal fun RecordingScaffold(
 
         when (selectedTab) {
             RecordingTab.DETAILS -> {
-                val recordingScaffoldModel = recording
-                if (recordingScaffoldModel == null) {
-                    FullScreenLoadingIndicator()
-                } else {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = recording
+                ) {
                     RecordingDetailsScreen(
                         modifier = Modifier.padding(innerPadding),
-                        recording = recordingScaffoldModel,
+                        recording = it,
                         lazyListState = detailsLazyListState
                     )
                 }

@@ -40,6 +40,7 @@ import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.repository.ReleaseRepository
+import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
@@ -53,7 +54,7 @@ internal class ReleaseViewModel @Inject constructor(
     private val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
-) : ViewModel(), RecordLookupHistory,
+) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private data class ViewModelState(
@@ -69,10 +70,10 @@ internal class ReleaseViewModel @Inject constructor(
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE
+    override val title = MutableStateFlow("")
+    override val isError = MutableStateFlow(false)
 
-    val title = MutableStateFlow("")
     val subtitle = MutableStateFlow("")
-    val isError = MutableStateFlow(false)
     val release: MutableStateFlow<ReleaseScaffoldModel?> = MutableStateFlow(null)
     val url = MutableStateFlow("")
 
@@ -158,10 +159,6 @@ internal class ReleaseViewModel @Inject constructor(
         val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
         releaseDao.setReleaseCoverArtUrl(releaseId, url)
         return url
-    }
-
-    fun setTitle(title: String?) {
-        this.title.value = title ?: return
     }
 
     fun onSelectedTabChange(

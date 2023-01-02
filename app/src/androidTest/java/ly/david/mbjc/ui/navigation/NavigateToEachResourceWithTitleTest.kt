@@ -48,8 +48,6 @@ internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBr
         }
     }
 
-    // TODO: also test exceptions, rename this class
-    //  will need to pass in id that match our fake api
     @Test
     fun navigateToEachResourceScreenWithCustomTitle() {
         val title = resource.resourceName

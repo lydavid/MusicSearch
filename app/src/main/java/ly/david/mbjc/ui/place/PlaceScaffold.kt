@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.place
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -9,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,12 +25,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.PlaceListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -39,7 +37,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 
-private enum class PlaceTab(@StringRes val titleRes: Int) {
+internal enum class PlaceTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
 
     // Should exclude event-rels because they appear to be the same as the results from browse events by place
@@ -58,47 +56,32 @@ internal fun PlaceScaffold(
     viewModel: PlaceViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.PLACE
-    var place: PlaceListItemModel? by remember { mutableStateOf(null) }
-
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-
-    var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
     var filterText by rememberSaveable { mutableStateOf("") }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        titleState = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val place by viewModel.place.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = placeId) {
-        try {
-            val placeListItemModel = viewModel.lookupPlace(placeId)
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = placeListItemModel.getNameWithDisambiguation()
-            }
-            place = placeListItemModel
-        } catch (ex: Exception) {
-            Log.d("Remove This", "PlaceScaffold: $ex")
-        }
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = placeId,
-                resource = resource,
-                summary = titleState
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            placeId = placeId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
         topBar = {
-            // TODO: filter relationships
             TopAppBarWithFilter(
                 resource = resource,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = placeId)
@@ -131,14 +114,15 @@ internal fun PlaceScaffold(
 
         when (selectedTab) {
             PlaceTab.DETAILS -> {
-                val placeListItemModel = place
-                if (placeListItemModel == null) {
-                    FullScreenLoadingIndicator()
-                } else {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = place
+                ) {
                     PlaceDetailsScreen(
                         modifier = Modifier.padding(innerPadding),
                         context = context,
-                        place = placeListItemModel,
+                        place = it,
                         lazyListState = detailsLazyListState,
                         onItemClick = onItemClick
                     )
