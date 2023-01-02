@@ -27,8 +27,7 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -139,33 +138,26 @@ internal fun ReleaseScaffold(
 
         when (selectedTab) {
             ReleaseTab.DETAILS -> {
-                val releaseScaffoldModel = release
-                when {
-                    showError -> {
-                        FullScreenErrorWithRetry(
-                            // TODO: [low] if you spam click this it won't work
-                            //  but you can always change tabs or come back to reload
-                            onClick = { forceRefresh = true }
-                        )
-                    }
-                    releaseScaffoldModel == null -> {
-                        FullScreenLoadingIndicator()
-                    }
-                    else -> {
-                        // TODO: test refreshing this screen
-                        //  want to see if deleting labels by release will cascade delete its junction table
-                        ReleaseDetailsScreen(
-                            releaseScaffoldModel = releaseScaffoldModel,
-                            coverArtUrl = url,
-                            onLabelClick = {
-                                onItemClick(Destination.LOOKUP_LABEL, id, name)
-                            },
-                            onAreaClick = {
-                                onItemClick(Destination.LOOKUP_AREA, id, name)
-                            },
-                            lazyListState = detailsLazyListState,
-                        )
-                    }
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    // TODO: [low] if you spam click this it won't work
+                    //  but you can always change tabs or come back to reload
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = release
+                ) {
+                    // TODO: test refreshing this screen
+                    //  want to see if deleting labels by release will cascade delete its junction table
+                    ReleaseDetailsScreen(
+                        releaseScaffoldModel = it,
+                        coverArtUrl = url,
+                        onLabelClick = {
+                            onItemClick(Destination.LOOKUP_LABEL, id, name)
+                        },
+                        onAreaClick = {
+                            onItemClick(Destination.LOOKUP_AREA, id, name)
+                        },
+                        lazyListState = detailsLazyListState,
+                    )
                 }
             }
             ReleaseTab.TRACKS -> {

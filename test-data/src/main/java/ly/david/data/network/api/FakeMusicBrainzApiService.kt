@@ -17,17 +17,16 @@ import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
 import ly.david.data.network.fakeAreas
-import ly.david.data.network.fakeArtist
-import ly.david.data.network.fakeEvent
-import ly.david.data.network.fakeLabel
-import ly.david.data.network.fakePlace
+import ly.david.data.network.fakeArtists
+import ly.david.data.network.fakeEvents
+import ly.david.data.network.fakeInstruments
+import ly.david.data.network.fakeLabels
 import ly.david.data.network.fakePlaces
-import ly.david.data.network.fakeRecording
+import ly.david.data.network.fakeRecordings
 import ly.david.data.network.fakeReleaseGroups
 import ly.david.data.network.fakeReleases
-import ly.david.data.network.fakeSeries
-import ly.david.data.network.fakeWorkWithAllData
-import ly.david.data.network.instrumentMusicBrainzModel
+import ly.david.data.network.fakeSeriesList
+import ly.david.data.network.fakeWorks
 import ly.david.data.network.searchAreasResponse
 import ly.david.data.network.searchArtistsResponse
 import ly.david.data.network.searchEventsResponse
@@ -42,32 +41,16 @@ import ly.david.data.network.searchWorksResponse
 
 class FakeMusicBrainzApiService : MusicBrainzApiService {
     // region Search
-    override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
-        return searchArtistsResponse
-    }
-
-    override suspend fun queryReleaseGroups(query: String, limit: Int, offset: Int): SearchReleaseGroupsResponse {
-        return searchReleaseGroupsResponse
-    }
-
-    override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
-        return searchReleasesResponse
-    }
-
-    override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
-        return searchRecordingsResponse
-    }
-
-    override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
-        return searchWorksResponse
-    }
-
     override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
         return searchAreasResponse
     }
 
-    override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
-        return searchPlacesResponse
+    override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
+        return searchArtistsResponse
+    }
+
+    override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
+        return searchEventsResponse
     }
 
     override suspend fun queryInstruments(query: String, limit: Int, offset: Int): SearchInstrumentsResponse {
@@ -78,14 +61,29 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return searchLabelsResponse
     }
 
-    override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
-        return searchEventsResponse
+    override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
+        return searchPlacesResponse
+    }
+
+    override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
+        return searchRecordingsResponse
+    }
+
+    override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
+        return searchReleasesResponse
+    }
+
+    override suspend fun queryReleaseGroups(query: String, limit: Int, offset: Int): SearchReleaseGroupsResponse {
+        return searchReleaseGroupsResponse
     }
 
     override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
         return searchSeriesResponse
     }
 
+    override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
+        return searchWorksResponse
+    }
     // endregion
 
     // region Browse
@@ -154,27 +152,27 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
-        return fakeArtist
+        return fakeArtists.firstOrNull { it.id == artistId } ?: throw Exception()
     }
 
     override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
-        return fakeEvent
+        return fakeEvents.firstOrNull { it.id == eventId } ?: throw Exception()
     }
 
     override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
-        return instrumentMusicBrainzModel
+        return fakeInstruments.firstOrNull { it.id == instrumentId } ?: throw Exception()
     }
 
     override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
-        return fakeLabel
+        return fakeLabels.firstOrNull { it.id == labelId } ?: throw Exception()
     }
 
     override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
-        return fakePlaces.firstOrNull { it.id == placeId } ?: fakePlace
+        return fakePlaces.firstOrNull { it.id == placeId } ?: throw Exception()
     }
 
     override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
-        return fakeRecording
+        return fakeRecordings.firstOrNull { it.id == recordingId } ?: throw Exception()
     }
 
     override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
@@ -186,11 +184,11 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
-        return fakeSeries
+        return fakeSeriesList.firstOrNull { it.id == seriesId } ?: throw Exception()
     }
 
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
-        return fakeWorkWithAllData
+        return fakeWorks.firstOrNull { it.id == workId } ?: throw Exception()
     }
     // endregion
 }

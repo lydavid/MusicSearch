@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,19 +24,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 
-private enum class LabelTab(@StringRes val titleRes: Int) {
+internal enum class LabelTab(@StringRes val titleRes: Int) {
+    DETAILS(R.string.details),
     RELEASES(R.string.releases),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
@@ -50,41 +53,32 @@ internal fun LabelScaffold(
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: LabelViewModel = hiltViewModel()
 ) {
-
     val resource = MusicBrainzResource.LABEL
-
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var titleState by rememberSaveable { mutableStateOf("") }
-    var selectedTab by rememberSaveable { mutableStateOf(LabelTab.RELEASES) }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        titleState = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val label by viewModel.label.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = labelId) {
-        val label = viewModel.lookupLabel(labelId)
-        if (titleWithDisambiguation.isNullOrEmpty()) {
-            titleState = label.getNameWithDisambiguation()
-        }
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = labelId,
-                resource = resource,
-                summary = titleState
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            labelId = labelId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.LABEL, resourceId = labelId)
@@ -102,6 +96,8 @@ internal fun LabelScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val releasesLazyListState = rememberLazyListState()
         var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
@@ -114,6 +110,19 @@ internal fun LabelScaffold(
                 .collectAsLazyPagingItems()
 
         when (selectedTab) {
+            LabelTab.DETAILS -> {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = label
+                ) {
+                    LabelDetailsScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        label = it,
+                        lazyListState = detailsLazyListState
+                    )
+                }
+            }
             LabelTab.RELEASES -> {
                 ReleasesByLabelScreen(
                     labelId = labelId,

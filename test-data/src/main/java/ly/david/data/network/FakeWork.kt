@@ -31,6 +31,11 @@ val fakeWorkWithAllData = WorkMusicBrainzModel(
     relations = listOf(arrangements)
 )
 
+val fakeWorks = listOf(
+    fakeWorkWithAllData,
+    fakeWork2
+)
+
 val searchWorksResponse = SearchWorksResponse(
     count = 1,
     offset = 0,

@@ -8,6 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -16,6 +17,7 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -51,7 +53,7 @@ internal fun LabelListItem(
             label.labelCode?.ifNotNull {
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = "LC $it",
+                    text = stringResource(id = R.string.lc, it),
                     style = TextStyles.getCardBodyTextStyle(),
                 )
             }

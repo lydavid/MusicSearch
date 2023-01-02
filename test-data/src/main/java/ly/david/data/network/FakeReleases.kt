@@ -1,6 +1,7 @@
 package ly.david.data.network
 
 import ly.david.data.network.api.BrowseReleasesResponse
+import ly.david.data.network.api.SearchReleasesResponse
 
 val fakeReleaseEvent = ReleaseEvent(
     area = fakeCountry,
@@ -61,4 +62,10 @@ val browseReleasesResponse = BrowseReleasesResponse(
     count = 1,
     offset = 0,
     releases = listOf(fakeRelease)
+)
+
+val searchReleasesResponse = SearchReleasesResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeRelease)
 )

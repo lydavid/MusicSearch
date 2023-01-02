@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.instrument
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -9,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,13 +19,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.InstrumentListItemModel
 import ly.david.data.domain.ListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -33,7 +31,7 @@ import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.instrument.details.InstrumentDetailsScreen
 
-private enum class InstrumentTab(@StringRes val titleRes: Int) {
+internal enum class InstrumentTab(@StringRes val titleRes: Int) {
     DETAILS(R.string.details),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
@@ -54,44 +52,30 @@ internal fun InstrumentScaffold(
     viewModel: InstrumentViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.INSTRUMENT
-    var instrument: InstrumentListItemModel? by remember { mutableStateOf(null) }
-
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var titleState by rememberSaveable { mutableStateOf("") }
     var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        titleState = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val instrument by viewModel.instrument.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = instrumentId) {
-        try {
-            val instrumentListItemModel = viewModel.lookupInstrument(instrumentId)
-            if (titleWithDisambiguation.isNullOrEmpty()) {
-                titleState = instrumentListItemModel.getNameWithDisambiguation()
-            }
-            instrument = instrumentListItemModel
-        } catch (ex: Exception) {
-            Log.d("Remove This", "EventScaffold: $ex")
-        }
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = instrumentId,
-                resource = resource,
-                summary = titleState
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            instrumentId = instrumentId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
         topBar = {
             ScrollableTopAppBar(
                 resource = resource,
-                title = titleState,
+                title = title,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = instrumentId)
@@ -104,6 +88,8 @@ internal fun InstrumentScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
@@ -111,13 +97,15 @@ internal fun InstrumentScaffold(
 
         when (selectedTab) {
             InstrumentTab.DETAILS -> {
-                val instrumentListItemModel = instrument
-                if (instrumentListItemModel == null) {
-                    FullScreenLoadingIndicator()
-                } else {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = instrument
+                ) {
                     InstrumentDetailsScreen(
                         modifier = Modifier.padding(innerPadding),
-                        instrument = instrumentListItemModel
+                        instrument = it,
+                        lazyListState = detailsLazyListState
                     )
                 }
             }

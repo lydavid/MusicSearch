@@ -11,6 +11,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.MainApp
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -21,7 +22,7 @@ import org.junit.runners.Parameterized
 
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) : MainActivityTest() {
+internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBrainzResource) : MainActivityTest() {
 
     companion object {
         @JvmStatic
@@ -47,13 +48,15 @@ internal class NavigateWithTitleTest(private val resource: MusicBrainzResource) 
         }
     }
 
+    // TODO: also test exceptions, rename this class
+    //  will need to pass in id that match our fake api
     @Test
     fun navigateToEachResourceScreenWithCustomTitle() {
         val title = resource.resourceName
         runBlocking {
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
-                val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
+                val resourceId = resource.toFakeMusicBrainzModel().id
                 navController.goToResource(destination = resource.toDestination(), id = resourceId, title = title)
             }
         }

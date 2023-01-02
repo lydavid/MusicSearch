@@ -58,10 +58,18 @@
     <string name="stats">Stats</string>
 
     <string name="barcode">Barcode</string>
+    <string name="label_code">Label code</string>
+    <string name="lc">LC %d</string>
     <string name="length">Length</string>
     <string name="type">Type</string>
+    <string name="gender">Gender</string>
     <string name="opened">Opened</string>
     <string name="closed">Closed</string>
+    <string name="created">Created</string>
+    <string name="born">Born</string>
+    <string name="died">Died</string>
+    <string name="founded">Founded</string>
+    <string name="dissolved">Dissolved</string>
     <string name="date">Date</string>
     <string name="first_release_date">First release date</string>
     <string name="start_date">Start Date</string>

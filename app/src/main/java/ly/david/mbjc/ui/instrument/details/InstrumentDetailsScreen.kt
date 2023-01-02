@@ -1,8 +1,10 @@
 package ly.david.mbjc.ui.instrument.details
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,25 +26,31 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun InstrumentDetailsScreen(
     modifier: Modifier = Modifier,
-    instrument: InstrumentListItemModel
+    instrument: InstrumentListItemModel,
+    lazyListState: LazyListState = rememberLazyListState(),
 ) {
-    Column(modifier = modifier) {
-        instrument.run {
-            InformationListSeparatorHeader(R.string.instrument)
-            type?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = R.string.type, text = it)
-            }
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState
+    ) {
+        item {
+            instrument.run {
+                InformationListSeparatorHeader(R.string.instrument)
+                type?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                }
 
-            ListSeparatorHeader(stringResource(id = R.string.description))
-            description?.ifNotNullOrEmpty {
-                SelectionContainer {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 4.dp),
-                        text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
+                ListSeparatorHeader(stringResource(id = R.string.description))
+                description?.ifNotNullOrEmpty {
+                    SelectionContainer {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
+                            text = it,
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
                 }
             }
         }

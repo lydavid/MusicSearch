@@ -12,6 +12,7 @@ data class LabelListItemModel(
     override val type: String? = null,
     override val labelCode: Int? = null,
 
+    // TODO: don't need this in scaffold model
     val catalogNumber: String? = null
 ) : Label, ListItemModel()
 

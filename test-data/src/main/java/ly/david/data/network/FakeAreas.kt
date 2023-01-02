@@ -1,6 +1,7 @@
 package ly.david.data.network
 
 import ly.david.data.AreaType
+import ly.david.data.network.api.SearchAreasResponse
 
 /**
  * All fake models should start as MusicBrainzModel, since we can convert them to RoomModel and UiModel.
@@ -36,4 +37,10 @@ val fakeAreas = listOf(
     fakeArea,
     fakeCountry,
     fakeAreaWithRelation
+)
+
+val searchAreasResponse = SearchAreasResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeArea)
 )

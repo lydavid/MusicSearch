@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import ly.david.data.domain.InstrumentListItemModel
+import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.repository.InstrumentRepository
@@ -19,13 +23,54 @@ internal class InstrumentViewModel @Inject constructor(
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
 
+    private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.INSTRUMENT
+
+    val title = MutableStateFlow("")
+    val isError = MutableStateFlow(false)
+    val instrument: MutableStateFlow<InstrumentListItemModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope
         relationsList.repository = repository
     }
 
-    suspend fun lookupInstrument(instrumentId: String) =
-        repository.lookupInstrument(instrumentId)
+    fun setTitle(title: String?) {
+        this.title.value = title ?: return
+    }
+
+    fun onSelectedTabChange(
+        instrumentId: String,
+        selectedTab: InstrumentTab
+    ) {
+        when (selectedTab) {
+            InstrumentTab.DETAILS -> {
+                viewModelScope.launch {
+                    try {
+                        val eventListItemModel = repository.lookupInstrument(instrumentId)
+                        if (title.value.isEmpty()) {
+                            title.value = eventListItemModel.getNameWithDisambiguation()
+                        }
+                        instrument.value = eventListItemModel
+                        isError.value = false
+                    } catch (ex: Exception) {
+                        isError.value = true
+                    }
+
+                    if (!recordedLookup) {
+                        recordLookupHistory(
+                            resourceId = instrumentId,
+                            resource = resource,
+                            summary = title.value
+                        )
+                        recordedLookup = true
+                    }
+                }
+            }
+            InstrumentTab.RELATIONSHIPS -> loadRelations(instrumentId)
+            else -> {
+                // Not handled here.
+            }
+        }
+    }
 }

@@ -17,17 +17,21 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  * Should be used inside a [ColumnScope].
  */
 @Composable
-internal fun LifeSpanText(lifeSpan: LifeSpan?) {
+internal fun LifeSpanText(
+    lifeSpan: LifeSpan?,
+    beginHeadingRes: Int = R.string.start_date,
+    endHeadingRes: Int = R.string.end_date
+) {
     lifeSpan?.run {
         val beginDate = begin
         if (beginDate == end && beginDate != null) {
             TextWithHeadingRes(headingRes = R.string.date, text = beginDate)
         } else {
             begin?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = R.string.start_date, text = it)
+                TextWithHeadingRes(headingRes = beginHeadingRes, text = it)
             }
             end?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = R.string.end_date, text = it)
+                TextWithHeadingRes(headingRes = endHeadingRes, text = it)
             }
         }
     }

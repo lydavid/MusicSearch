@@ -55,7 +55,7 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
     }
 
     @Test
-    fun selectResourceAndSearch() {
+    fun searchEachResource() {
         composeTestRule
             .onNodeWithText(resourceLabel)
             .performClick()
@@ -77,7 +77,7 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
             .performImeAction()
 
         composeTestRule
-            .onNodeWithText(resource.toFakeMusicBrainzModel().name ?: "should fail")
+            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
             .performClick()
     }

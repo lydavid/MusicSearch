@@ -34,8 +34,7 @@ import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
-import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -128,23 +127,16 @@ internal fun AreaScaffold(
 
         when (selectedTab) {
             AreaTab.DETAILS -> {
-                val areaScaffoldModel = area
-                when {
-                    showError -> {
-                        FullScreenErrorWithRetry(
-                            onClick = { forceRefresh = true }
-                        )
-                    }
-                    areaScaffoldModel == null -> {
-                        FullScreenLoadingIndicator()
-                    }
-                    else -> {
-                        AreaDetailsScreen(
-                            modifier = Modifier.padding(innerPadding),
-                            area = areaScaffoldModel,
-                            lazyListState = detailsLazyListState
-                        )
-                    }
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = area
+                ) {
+                    AreaDetailsScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        area = it,
+                        lazyListState = detailsLazyListState
+                    )
                 }
             }
             AreaTab.RELATIONSHIPS -> {

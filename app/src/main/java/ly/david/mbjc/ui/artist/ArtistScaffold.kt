@@ -11,6 +11,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,13 +27,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -41,14 +43,14 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 // Would be nice if we could have an enum of Tabs, then pick a subset of them for each of these scaffolds.
 // Right now, we just have to copy/paste these around.
-private enum class ArtistTab(@StringRes val titleRes: Int) {
+internal enum class ArtistTab(@StringRes val titleRes: Int) {
+    DETAILS(R.string.details),
     RELEASE_GROUPS(R.string.release_groups),
     RELEASES(R.string.releases),
     RELATIONSHIPS(R.string.relationships),
     STATS(R.string.stats)
 }
 
-// TODO: either align ReleaseGroupScaffold to be like this, or align this
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ArtistScaffold(
@@ -63,34 +65,25 @@ internal fun ArtistScaffold(
     viewModel: ArtistViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.ARTIST
-
-    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.RELEASE_GROUPS) }
-    var title by rememberSaveable { mutableStateOf("") }
+    val snackbarHostState = remember { SnackbarHostState() }
+    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
-    val snackbarHostState = remember { SnackbarHostState() }
-    var recordedLookup by rememberSaveable { mutableStateOf(false) }
+    var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
-    if (!titleWithDisambiguation.isNullOrEmpty()) {
-        title = titleWithDisambiguation
-    }
+    val title by viewModel.title.collectAsState()
+    val artist by viewModel.artist.collectAsState()
+    val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = artistId) {
-        val artist = viewModel.lookupArtist(artistId)
-        if (titleWithDisambiguation.isNullOrEmpty()) {
-            title = artist.getNameWithDisambiguation()
-        }
+        viewModel.setTitle(titleWithDisambiguation)
+    }
 
-        // Following experience of Firefox's visit count, which doesn't record back as visits.
-        if (!recordedLookup) {
-            viewModel.recordLookupHistory(
-                resourceId = artistId,
-                resource = resource,
-                summary = title,
-                searchHint = artist.sortName
-            )
-            recordedLookup = true
-        }
+    LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
+        viewModel.onSelectedTabChange(
+            artistId = artistId,
+            selectedTab = selectedTab
+        )
     }
 
     Scaffold(
@@ -129,6 +122,8 @@ internal fun ArtistScaffold(
         },
     ) { innerPadding ->
 
+        val detailsLazyListState = rememberLazyListState()
+
         // This is sufficient to preserve scroll position when switching tabs
         val releaseGroupsLazyListState = rememberLazyListState()
         var pagedReleaseGroups: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -149,6 +144,19 @@ internal fun ArtistScaffold(
         val statsLazyListState = rememberLazyListState()
 
         when (selectedTab) {
+            ArtistTab.DETAILS -> {
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = artist
+                ) {
+                    ArtistDetailsScreen(
+                        modifier = Modifier.padding(innerPadding),
+                        artist = it,
+                        lazyListState = detailsLazyListState
+                    )
+                }
+            }
             ArtistTab.RELEASE_GROUPS -> {
                 ReleaseGroupsByArtistScreen(
                     modifier = Modifier.padding(innerPadding),

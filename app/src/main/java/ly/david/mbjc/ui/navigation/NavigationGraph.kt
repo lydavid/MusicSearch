@@ -66,33 +66,30 @@ internal fun NavigationGraph(
             navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId")
         }
 
-        // TODO: should rethink this structure once we introduce more non-MB-resource destinations
+        // TODO: [low] should rethink this structure once we introduce more non-MB-resource destinations
         val onLookupItemClick: (Destination, String, String?) -> Unit = { destination, id, title ->
             when (destination) {
-                Destination.LOOKUP_ARTIST,
-                Destination.LOOKUP_RELEASE_GROUP,
-                Destination.LOOKUP_RELEASE,
-                Destination.LOOKUP_RECORDING,
                 Destination.LOOKUP_AREA,
-                Destination.LOOKUP_PLACE,
+                Destination.LOOKUP_ARTIST,
+                Destination.LOOKUP_EVENT,
+                Destination.LOOKUP_GENRE,
                 Destination.LOOKUP_INSTRUMENT,
                 Destination.LOOKUP_LABEL,
-                Destination.LOOKUP_WORK,
-                Destination.LOOKUP_EVENT,
+                Destination.LOOKUP_PLACE,
+                Destination.LOOKUP_RECORDING,
+                Destination.LOOKUP_RELEASE,
+                Destination.LOOKUP_RELEASE_GROUP,
                 Destination.LOOKUP_SERIES,
-                Destination.LOOKUP_GENRE -> navController.goToResource(destination, id, title)
-
+                Destination.LOOKUP_WORK -> navController.goToResource(destination, id, title)
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
                 }
-
                 Destination.LOOKUP,
                 Destination.HISTORY,
                 Destination.SETTINGS,
                 Destination.EXPERIMENTAL -> {
                     // Not handled.
                 }
-
                 Destination.EXPERIMENTAL_SETTINGS,
                 Destination.EXPERIMENTAL_SPOTIFY -> {
                     navController.goTo(destination)

@@ -31,8 +31,7 @@ import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -138,23 +137,16 @@ internal fun ReleaseGroupScaffold(
 
         when (selectedTab) {
             ReleaseGroupTab.DETAILS -> {
-                val releaseGroupListItemModel = releaseGroup
-                when {
-                    showError -> {
-                        FullScreenErrorWithRetry(
-                            onClick = { forceRefresh = true }
-                        )
-                    }
-                    releaseGroupListItemModel == null -> {
-                        FullScreenLoadingIndicator()
-                    }
-                    else -> {
-                        ReleaseGroupDetailsScreen(
-                            releaseGroup = releaseGroupListItemModel,
-                            coverArtUrl = url,
-                            lazyListState = detailsLazyListState,
-                        )
-                    }
+                DetailsWithErrorHandling(
+                    showError = showError,
+                    onRetryClick = { forceRefresh = true },
+                    scaffoldModel = releaseGroup
+                ) {
+                    ReleaseGroupDetailsScreen(
+                        releaseGroup = it,
+                        coverArtUrl = url,
+                        lazyListState = detailsLazyListState,
+                    )
                 }
             }
             ReleaseGroupTab.RELEASES -> {

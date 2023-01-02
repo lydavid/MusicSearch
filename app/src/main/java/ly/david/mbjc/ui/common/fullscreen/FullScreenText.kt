@@ -1,28 +1,24 @@
 package ly.david.mbjc.ui.common.fullscreen
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.RetryButton
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-internal fun FullScreenErrorWithRetry(onClick: () -> Unit = {}) {
+internal fun FullScreenText(
+    text: String,
+) {
     FullScreenContent {
         Text(
-            modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
-            text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again."
+            text = text
         )
-        RetryButton(onClick = onClick)
     }
 }
 
@@ -32,7 +28,7 @@ internal fun FullScreenErrorWithRetry(onClick: () -> Unit = {}) {
 private fun Preview() {
     PreviewTheme {
         Surface {
-            FullScreenErrorWithRetry()
+            FullScreenText("Hello world")
         }
     }
 }

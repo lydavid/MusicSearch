@@ -24,10 +24,10 @@ internal class AreaViewModel @Inject constructor(
 ) : ViewModel(), RecordLookupHistory,
     IRelationsList by relationsList {
 
+    private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.AREA
 
     val title = MutableStateFlow("")
-    var recordedLookup = false
     val isError = MutableStateFlow(false)
     var tabs: MutableStateFlow<List<AreaTab>> = MutableStateFlow(AreaTab.values().filter { it != AreaTab.RELEASES })
     val area: MutableStateFlow<AreaScaffoldModel?> = MutableStateFlow(null)
