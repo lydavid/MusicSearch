@@ -7,17 +7,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Locale
 import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
+import ly.david.data.common.UNKNOWN_TIME
 import ly.david.data.common.ifNotNullOrEmpty
+import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.LabelListItemModel
 import ly.david.data.domain.ReleaseScaffoldModel
@@ -36,48 +32,16 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
 internal fun ReleaseDetailsScreen(
-    releaseScaffoldModel: ReleaseScaffoldModel,
-    coverArtUrl: String = "",
-    onLabelClick: LabelListItemModel.() -> Unit = {},
-    onAreaClick: AreaListItemModel.() -> Unit = {},
-    lazyListState: LazyListState = rememberLazyListState(),
-    viewModel: ReleaseDetailsViewModel = hiltViewModel()
-) {
-    // TODO: get this from ui model, then we can save scroll state without jumps
-    var releaseLength: String? by rememberSaveable { mutableStateOf(null) }
-
-    LaunchedEffect(key1 = releaseScaffoldModel) {
-        releaseLength = viewModel.getFormattedReleaseLength(releaseScaffoldModel.id)
-    }
-
-    ReleaseDetailsScreen(
-        release = releaseScaffoldModel,
-        coverArtUrl = coverArtUrl,
-        onLabelClick = onLabelClick,
-        onAreaClick = onAreaClick,
-        lazyListState = lazyListState,
-        releaseLength = releaseLength
-    )
-}
-
-// TODO: consider how to refresh this screen
-//  generalize pullrefresh?
-@Composable
-private fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
     coverArtUrl: String = "",
     onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
-    lazyListState: LazyListState = rememberLazyListState(),
-    releaseLength: String? = null,
+    lazyListState: LazyListState = rememberLazyListState()
 ) {
     LazyColumn(state = lazyListState) {
-
         item {
             BigCoverArt(coverArtUrl)
-        }
 
-        item {
             release.run {
                 InformationListSeparatorHeader(R.string.release)
                 barcode?.ifNotNullOrEmpty {
@@ -89,9 +53,15 @@ private fun ReleaseDetailsScreen(
                 formattedTracks?.ifNotNullOrEmpty {
                     TextWithHeadingRes(headingRes = R.string.tracks, text = it)
                 }
-                releaseLength?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.length, text = it)
+
+                val releaseLength = releaseLength.toDisplayTime()
+                val formattedReleaseLength = if (hasNullLength) {
+                    if (releaseLength == UNKNOWN_TIME) UNKNOWN_TIME else "$releaseLength (+ $UNKNOWN_TIME)"
+                } else {
+                    releaseLength
                 }
+                TextWithHeadingRes(headingRes = R.string.length, text = formattedReleaseLength)
+
                 date?.ifNotNullOrEmpty {
                     TextWithHeadingRes(headingRes = R.string.date, text = it)
                 }
@@ -205,9 +175,10 @@ private fun Preview() {
                             name = "Label 1",
                             catalogNumber = "ASDF-1011"
                         )
-                    )
-                ),
-                releaseLength = null
+                    ),
+                    releaseLength = 8000,
+                    hasNullLength = true
+                )
             )
         }
     }

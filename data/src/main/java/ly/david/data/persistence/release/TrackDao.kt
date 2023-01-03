@@ -48,23 +48,4 @@ abstract class TrackDao : BaseDao<TrackRoomModel>() {
         releaseId: String,
         query: String
     ): PagingSource<Int, TrackRoomModel>
-
-    @Transaction
-    @Query(
-        """
-        SELECT SUM(t.length)
-        $TRACKS_IN_RELEASE
-    """
-    )
-    abstract suspend fun getReleaseTracksLength(releaseId: String): Int?
-
-    @Transaction
-    @Query(
-        """
-        SELECT COUNT(t.id)
-        $TRACKS_IN_RELEASE
-        AND t.length IS NULL
-    """
-    )
-    abstract suspend fun getReleaseTracksWithNullLength(releaseId: String): Int
 }

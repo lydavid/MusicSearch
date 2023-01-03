@@ -28,8 +28,30 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
     @Query("SELECT * FROM release WHERE id = :releaseId")
     abstract suspend fun getReleaseWithFormatTrackCounts(releaseId: String): ReleaseWithFormatTrackCounts?
 
+    // TODO: simplify
     @Transaction
-    @Query("SELECT * FROM release WHERE id = :releaseId")
+    @Query(
+        """
+        SELECT *, 
+        (
+            SELECT SUM(t.length)
+            FROM track t
+            INNER JOIN medium m ON t.medium_id = m.id
+            INNER JOIN `release` r ON m.release_id = r.id
+            WHERE r.id = :releaseId
+        ) as releaseLength,
+        (
+            SELECT COUNT(t.id) > 0
+            FROM track t
+            INNER JOIN medium m ON t.medium_id = m.id
+            INNER JOIN `release` r ON m.release_id = r.id
+            WHERE r.id = :releaseId
+            AND t.length IS NULL
+        ) as hasNullLength
+        FROM `release`
+        WHERE id = :releaseId
+        """
+    )
     abstract suspend fun getReleaseWithAllData(releaseId: String): ReleaseWithAllData?
 
     /**

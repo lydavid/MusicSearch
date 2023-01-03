@@ -82,13 +82,6 @@ internal class ReleaseViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    /**
-     * Call this to retrieve the title, subtitle, and initiate tracks paging.
-     */
-    private suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
-        return repository.lookupRelease(releaseId)
-    }
-
     private fun loadTracks(releaseId: String) {
         this.releaseId.value = releaseId
     }
@@ -169,7 +162,7 @@ internal class ReleaseViewModel @Inject constructor(
             ReleaseTab.DETAILS -> {
                 viewModelScope.launch {
                     try {
-                        val releaseScaffoldModel = lookupRelease(releaseId)
+                        val releaseScaffoldModel = repository.lookupRelease(releaseId)
                         val coverArtUrl = releaseScaffoldModel.coverArtUrl
                         if (coverArtUrl != null) {
                             url.value = coverArtUrl

@@ -148,7 +148,7 @@ internal fun ReleaseScaffold(
                     // TODO: test refreshing this screen
                     //  want to see if deleting labels by release will cascade delete its junction table
                     ReleaseDetailsScreen(
-                        releaseScaffoldModel = it,
+                        release = it,
                         coverArtUrl = url,
                         onLabelClick = {
                             onItemClick(Destination.LOOKUP_LABEL, id, name)

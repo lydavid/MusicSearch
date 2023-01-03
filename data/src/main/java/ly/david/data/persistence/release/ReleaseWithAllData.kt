@@ -70,6 +70,10 @@ data class ReleaseWithAllData(
     @Embedded
     val release: ReleaseRoomModel,
 
+    val releaseLength: Int?,
+
+    val hasNullLength: Boolean,
+
     @Relation(
         entity = ReleaseFormatTrackCount::class,
         parentColumn = "id",

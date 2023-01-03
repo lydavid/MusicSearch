@@ -1,13 +1,10 @@
 package ly.david.data.domain
 
-import ly.david.data.AreaType
 import ly.david.data.Release
 import ly.david.data.getFormatsForDisplay
 import ly.david.data.getTracksForDisplay
 import ly.david.data.network.CoverArtArchive
-import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
-import ly.david.data.network.toLabelListItemModels
 import ly.david.data.persistence.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
@@ -35,7 +32,10 @@ data class ReleaseScaffoldModel(
 
     val releaseGroup: ReleaseGroupListItemModel? = null,
     val areas: List<AreaListItemModel> = listOf(),
-    val labels: List<LabelListItemModel> = listOf()
+    val labels: List<LabelListItemModel> = listOf(),
+
+    val releaseLength: Int? = null,
+    val hasNullLength: Boolean = false
 ) : Release
 
 internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
@@ -61,31 +61,7 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
         it.artistCreditNameRoomModel.toArtistCreditUiModel()
     },
     releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
-    labels = labels.map { it.toLabelListItemModel() }
-)
-
-internal fun ReleaseMusicBrainzModel.toReleaseScaffoldModel() = ReleaseScaffoldModel(
-    id = id,
-    name = name,
-    disambiguation = disambiguation,
-    date = date,
-    barcode = barcode,
-    status = status,
-    statusId = statusId,
-    countryCode = countryCode,
-    packaging = packaging,
-    packagingId = packagingId,
-    asin = asin,
-    quality = quality,
-    coverArtArchive = coverArtArchive,
-    textRepresentation = textRepresentation,
-    formattedFormats = media?.map { it.format }.getFormatsForDisplay(),
-    formattedTracks = media?.map { it.trackCount }.getTracksForDisplay(),
-    coverArtUrl = null,
-    areas = releaseEvents?.mapNotNull {
-        it.area?.toAreaListItemModel(it.date)?.copy(type = AreaType.COUNTRY)
-    }.orEmpty(),
-    artistCredits = artistCredits.toArtistCreditUiModels(),
-    releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
-    labels = labelInfoList?.toLabelListItemModels().orEmpty()
+    labels = labels.map { it.toLabelListItemModel() },
+    releaseLength = releaseLength,
+    hasNullLength = hasNullLength
 )

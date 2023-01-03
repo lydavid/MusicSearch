@@ -120,6 +120,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
     }
 
     // TODO: flaked
+    //  No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
     @Test
     fun deeplinkToSearchWithQueryAndResource() {
         runBlocking { composeTestRule.awaitIdle() }

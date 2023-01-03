@@ -65,7 +65,7 @@ class ReleaseRepository @Inject constructor(
         // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
         insertAllModels(releaseMusicBrainzModel)
-        return releaseMusicBrainzModel.toReleaseScaffoldModel()
+        return lookupRelease(releaseId)
     }
 
     private suspend fun insertAllModels(release: ReleaseMusicBrainzModel) {
