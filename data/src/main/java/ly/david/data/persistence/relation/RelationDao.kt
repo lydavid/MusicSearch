@@ -41,15 +41,22 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     )
     abstract suspend fun deleteRelationsByResource(resourceId: String)
 
-    // TODO: it never actually returns null
+    // region Relationship stats
     /**
-     * Null means we have not tried fetching its relationships.
+     * Null means we have not successfully fetched its relationships.
      */
     @Query(
         """
-            SELECT COUNT(*)
-            FROM relation
-            WHERE resource_id = :resourceId
+        SELECT
+            CASE 
+                WHEN (SELECT has_relations FROM has_relations WHERE resource_id = :resourceId) IS NULL THEN
+                    NULL
+                ELSE
+                    (SELECT COUNT(*)
+                    FROM relation
+                    WHERE resource_id = :resourceId)
+            END
+        AS numRelations
     """
     )
     abstract suspend fun getNumberOfRelationsByResource(resourceId: String): Int?
@@ -63,6 +70,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     """
     )
     abstract suspend fun getCountOfEachRelationshipType(resourceId: String): List<RelationTypeCount>
+    // endregion
 
     // region BrowseResourceCount
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -75,7 +83,10 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
             WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
     )
-    abstract suspend fun getBrowseResourceCount(resourceId: String, browseResource: MusicBrainzResource): BrowseResourceCount?
+    abstract suspend fun getBrowseResourceCount(
+        resourceId: String,
+        browseResource: MusicBrainzResource
+    ): BrowseResourceCount?
 
     @Query(
         """
@@ -84,10 +95,18 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
             WHERE resource_id = :resourceId AND browse_resource = :browseResource
         """
     )
-    abstract suspend fun updateLocalCountForResource(resourceId: String, browseResource: MusicBrainzResource, localCount: Int)
+    abstract suspend fun updateLocalCountForResource(
+        resourceId: String,
+        browseResource: MusicBrainzResource,
+        localCount: Int
+    )
 
     @Transaction
-    open suspend fun incrementLocalCountForResource(resourceId: String, browseResource: MusicBrainzResource, additionalOffset: Int) {
+    open suspend fun incrementLocalCountForResource(
+        resourceId: String,
+        browseResource: MusicBrainzResource,
+        additionalOffset: Int
+    ) {
         val currentOffset = getBrowseResourceCount(resourceId, browseResource)?.localCount ?: 0
         updateLocalCountForResource(resourceId, browseResource, currentOffset + additionalOffset)
     }
