@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,7 +27,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
+import ly.david.mbjc.ui.stats.addRelationshipsSection
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -38,10 +39,10 @@ internal fun ArtistStatsScreen(
 ) {
     var totalRemote by rememberSaveable { mutableStateOf(0) }
     var totalLocal by rememberSaveable { mutableStateOf(0) }
-    var releaseGroupTypeCounts by rememberSaveable { mutableStateOf(listOf<ReleaseGroupTypeCount>()) }
+    var releaseGroupTypeCounts by remember { mutableStateOf(listOf<ReleaseGroupTypeCount>()) }
 
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
-    var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
+    var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = totalRemote, key2 = totalLocal) {
         totalRemote = viewModel.getTotalReleaseGroups(artistId)

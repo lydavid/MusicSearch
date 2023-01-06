@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.relation.stats
+package ly.david.mbjc.ui.stats
 
 import ly.david.data.persistence.relation.RelationDao
 

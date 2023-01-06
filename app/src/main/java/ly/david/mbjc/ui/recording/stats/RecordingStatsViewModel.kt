@@ -6,7 +6,7 @@ import javax.inject.Inject
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.recording.ReleasesRecordingsDao
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.relation.stats.RelationsStats
+import ly.david.mbjc.ui.stats.RelationsStats
 
 @HiltViewModel
 internal class RecordingStatsViewModel @Inject constructor(

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,10 +14,13 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
-import ly.david.mbjc.ui.release.stats.addReleasesSection
+import ly.david.mbjc.ui.stats.addRelationshipsSection
+import ly.david.mbjc.ui.stats.addReleasesSection
 import ly.david.mbjc.ui.theme.PreviewTheme
 
+// TODO: instead of making a stats screen for every scaffold
+//  can we have one and based on whether it has relationships/BrowseResourceCount
+//  show the relevant stats?
 @Composable
 internal fun AreaStatsScreen(
     areaId: String,
@@ -27,8 +31,7 @@ internal fun AreaStatsScreen(
     var totalLocal by rememberSaveable { mutableStateOf(0) }
 
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
-    // TODO: all stats screen crash on exit because of this
-    var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
+    var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
         totalRemote = viewModel.getTotalReleases(areaId)
@@ -79,8 +82,8 @@ private fun Preview() {
         Surface {
             AreaStatsScreen(
                 showReleases = true,
-                totalRemote = 1,
-                totalLocal = 2,
+                totalRemote = 2,
+                totalLocal = 1,
                 totalRelations = 3,
                 relationTypeCounts = listOf(
                     RelationTypeCount(MusicBrainzResource.URL, 3)

@@ -7,7 +7,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.ReleasesCountriesDao
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.relation.stats.RelationsStats
+import ly.david.mbjc.ui.stats.RelationsStats
 
 @HiltViewModel
 internal class AreaStatsViewModel @Inject constructor(

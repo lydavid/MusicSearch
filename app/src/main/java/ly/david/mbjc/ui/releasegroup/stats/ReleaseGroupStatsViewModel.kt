@@ -7,7 +7,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.ui.relation.stats.RelationsStats
+import ly.david.mbjc.ui.stats.RelationsStats
 
 @HiltViewModel
 internal class ReleaseGroupStatsViewModel @Inject constructor(

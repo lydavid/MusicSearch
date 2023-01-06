@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,7 +14,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.relation.stats.addRelationshipsSection
+import ly.david.mbjc.ui.stats.addRelationshipsSection
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
@@ -22,7 +23,7 @@ internal fun ReleaseStatsScreen(
     viewModel: ReleaseStatsViewModel = hiltViewModel()
 ) {
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
-    var relationTypeCounts by rememberSaveable { mutableStateOf(listOf<RelationTypeCount>()) }
+    var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
         totalRelations = viewModel.getNumberOfRelationsByResource(releaseId)
