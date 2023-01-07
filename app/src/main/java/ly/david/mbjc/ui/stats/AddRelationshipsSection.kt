@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -54,7 +55,9 @@ internal fun LazyListScope.addRelationshipsSection(
                 .padding(horizontal = 16.dp)
                 .padding(top = 4.dp),
         ) {
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 if (linkedResource == MusicBrainzResource.URL) {
                     Spacer(modifier = Modifier.padding(end = 32.dp))
                 } else {
@@ -64,12 +67,14 @@ internal fun LazyListScope.addRelationshipsSection(
                     )
                 }
                 Text(
-                    style = TextStyles.getCardBodyTextStyle(),
+                    style = TextStyles.getCardBodySubTextStyle(),
                     text = "${stringResource(id = linkedResource.getDisplayTextRes())}: ${relationTypeCount.count}"
                 )
             }
 
             if (totalRelations != null && totalRelations != 0) {
+                // Let's not round the corners because we don't expect this to fill to 100%
+                // which makes it look strange
                 LinearProgressIndicator(
                     modifier = Modifier
                         .height(4.dp)

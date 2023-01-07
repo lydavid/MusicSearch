@@ -32,19 +32,12 @@ internal fun LazyListScope.addReleaseGroupsSection(
 ) {
     item {
         ListSeparatorHeader(text = stringResource(id = R.string.release_groups))
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp),
-        ) {
-            Text(
-                style = TextStyles.getCardBodyTextStyle(),
-                text = "Cached release groups\n $totalLocal / $totalRemote"
-            )
 
-            LocalRemoteProgressBar(
-                totalRemote = totalRemote,
-                totalLocal = totalLocal
-            )
-        }
+        LocalRemoteProgressBar(
+            totalRemote = totalRemote,
+            totalLocal = totalLocal,
+            cachedStringRes = R.string.cached_release_groups
+        )
     }
     items(releaseGroupTypeCounts) {
         Column(
@@ -53,7 +46,7 @@ internal fun LazyListScope.addReleaseGroupsSection(
                 .padding(top = 4.dp),
         ) {
             Text(
-                style = TextStyles.getCardBodyTextStyle(),
+                style = TextStyles.getCardBodySubTextStyle(),
                 text = "${it.getDisplayTypes()}: ${it.count}"
             )
 
