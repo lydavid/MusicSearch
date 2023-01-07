@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.stats
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -54,6 +55,8 @@ internal fun LazyListScope.addReleasesSection(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.padding(top = 16.dp))
     }
 }
 
