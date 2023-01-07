@@ -34,8 +34,8 @@ internal fun AreaStatsScreen(
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRemote = viewModel.getTotalReleases(areaId)
-        totalLocal = viewModel.getNumberOfReleasesByLabel(areaId)
+        totalRemote = viewModel.getTotalRemoteReleases(areaId)
+        totalLocal = viewModel.getTotalLocalReleases(areaId)
 
         totalRelations = viewModel.getNumberOfRelationsByResource(areaId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(areaId)

@@ -30,8 +30,8 @@ internal fun RecordingStatsScreen(
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRemote = viewModel.getTotalReleases(recordingId)
-        totalLocal = viewModel.getNumberOfLocalReleasesByRecording(recordingId)
+        totalRemote = viewModel.getTotalRemoteReleases(recordingId)
+        totalLocal = viewModel.getTotalLocalReleases(recordingId)
 
         totalRelations = viewModel.getNumberOfRelationsByResource(recordingId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(recordingId)
