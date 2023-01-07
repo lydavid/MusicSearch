@@ -21,7 +21,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
 internal fun LocalRemoteProgressBar(
-    totalRemote: Int,
+    totalRemote: Int?,
     totalLocal: Int,
     cachedStringRes: Int
 ) {
@@ -30,25 +30,33 @@ internal fun LocalRemoteProgressBar(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
     ) {
-        // TODO: "cached" is misleading here
-        //  since the moment they click a release, it will require downloading details
-        Text(
-            style = TextStyles.getCardBodyTextStyle(),
-            text = stringResource(id = cachedStringRes, totalLocal, totalRemote)
-        )
+        if (totalRemote == null) {
+            Text(
+                style = TextStyles.getCardBodyTextStyle(),
+                // TODO: better copy
+                text = "No stats available. Tap this resource's tab to begin browsing."
+            )
+        } else {
+            // TODO: "cached" is misleading here
+            //  since the moment they click a release, it will require downloading details
+            Text(
+                style = TextStyles.getCardBodyTextStyle(),
+                text = stringResource(id = cachedStringRes, totalLocal, totalRemote)
+            )
 
-        if (totalRemote != 0) {
-            Surface(
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .height(8.dp)
-                        .fillMaxWidth(),
-                    progress = totalLocal / totalRemote.toFloat(),
-                    color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-                )
+            if (totalRemote != 0) {
+                Surface(
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .height(8.dp)
+                            .fillMaxWidth(),
+                        progress = totalLocal / totalRemote.toFloat(),
+                        color = MaterialTheme.colorScheme.primary,
+                        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                    )
+                }
             }
         }
     }

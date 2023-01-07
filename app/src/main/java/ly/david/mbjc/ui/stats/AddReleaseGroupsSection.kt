@@ -26,7 +26,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
 internal fun LazyListScope.addReleaseGroupsSection(
-    totalRemote: Int,
+    totalRemote: Int?,
     totalLocal: Int,
     releaseGroupTypeCounts: List<ReleaseGroupTypeCount>
 ) {

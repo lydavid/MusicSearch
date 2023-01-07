@@ -11,8 +11,8 @@ import ly.david.mbjc.ui.release.stats.ReleaseStatsViewModel
 internal interface ReleasesStats {
     val relationDao: RelationDao
 
-    suspend fun getTotalRemoteReleases(releaseId: String): Int =
-        relationDao.getBrowseResourceCount(releaseId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
+    suspend fun getTotalRemoteReleases(resourceId: String): Int =
+        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount ?: 0
 
     suspend fun getTotalLocalReleases(resourceId: String): Int
 }
