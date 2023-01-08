@@ -23,7 +23,7 @@ data class ReleaseScaffoldModel(
 
     override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
     override val textRepresentation: TextRepresentation? = null,
-    val coverArtUrl: String? = null,
+    val coverArtPath: String? = null,
 
     val formattedFormats: String? = null,
     val formattedTracks: String? = null,
@@ -55,7 +55,7 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     textRepresentation = release.textRepresentation,
     formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-    coverArtUrl = release.coverArtUrl,
+    coverArtPath = release.coverArtPath,
     areas = areas.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNamesWithResources.map {
         it.artistCreditNameRoomModel.toArtistCreditUiModel()

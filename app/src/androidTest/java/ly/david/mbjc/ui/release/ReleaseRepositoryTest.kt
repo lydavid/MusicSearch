@@ -51,7 +51,7 @@ class ReleaseRepositoryTest {
                 quality = null,
                 coverArtArchive = CoverArtArchive(count = 0),
                 textRepresentation = null,
-                coverArtUrl = null,
+                coverArtPath = null,
                 formattedFormats = "CD",
                 formattedTracks = "2",
                 artistCredits = listOf(

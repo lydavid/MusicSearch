@@ -2,14 +2,13 @@ package ly.david.mbjc.ui.common.coverart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -23,7 +22,7 @@ import coil.size.Size
 import ly.david.data.common.useHttps
 
 @Composable
-internal fun BigCoverArt(
+internal fun SmallCoverArt(
     modifier: Modifier = Modifier,
     coverArtUrl: String = "",
 ) {
@@ -32,22 +31,18 @@ internal fun BigCoverArt(
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(coverArtUrl.useHttps())
-                .size(Size.ORIGINAL)
+                .size(Size(64, 64))
                 .scale(Scale.FIT)
                 .crossfade(true)
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )
 
-        val configuration = LocalConfiguration.current
-        val screenWidth = configuration.screenWidthDp.dp
-
         when (painter.state) {
             is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
                 Box(
                     modifier = modifier
-                        .height(screenWidth)
-                        .fillMaxWidth(),
+                        .size(64.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -56,7 +51,7 @@ internal fun BigCoverArt(
             is AsyncImagePainter.State.Success -> {
                 Image(
                     modifier = modifier
-                        .fillMaxWidth()
+                        .size(64.dp)
                         .semantics { testTag = "coverArtImage" },
                     painter = painter,
                     contentDescription = null,
@@ -69,5 +64,8 @@ internal fun BigCoverArt(
                 //  This is not on failing cover art archive lookup, but on failing downloading the image itself
             }
         }
+    } else {
+        // Used just so that constraint layout can link to.
+        Spacer(modifier = modifier)
     }
 }

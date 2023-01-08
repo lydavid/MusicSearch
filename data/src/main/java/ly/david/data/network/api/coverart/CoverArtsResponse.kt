@@ -11,15 +11,12 @@ data class CoverArtsResponse(
 )
 
 data class CoverArtUrls(
-//    @Json(name = "edit") val edit: String,
     @Json(name = "id") val id: String,
 
     // Seems to be the full-size image
     @Json(name = "image") val imageUrl: String? = null,
 
     @Json(name = "thumbnails") val thumbnailsUrls: ThumbnailsUrls? = null,
-//    @Json(name = "comment") val comment: String? = null,
-//    @Json(name = "approved") val approved: Boolean,
     @Json(name = "front") val front: Boolean,
 //    @Json(name = "back") val back: Boolean,
     @Json(name = "types") val types: List<String>? = null,

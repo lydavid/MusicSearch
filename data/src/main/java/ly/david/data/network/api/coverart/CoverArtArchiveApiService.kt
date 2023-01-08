@@ -7,7 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-private const val COVER_ART_ARCHIVE_BASE_URL = "https://coverartarchive.org/"
+internal const val COVER_ART_ARCHIVE_BASE_URL = "https://coverartarchive.org/"
 
 interface CoverArtArchiveApiService {
     /**

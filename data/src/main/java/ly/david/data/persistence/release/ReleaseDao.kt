@@ -67,9 +67,9 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
     @Query(
         """
             UPDATE release
-            SET cover_art_url = :coverArtUrl
+            SET cover_art_path = :coverArtPath
             WHERE id = :releaseId
         """
     )
-    abstract suspend fun setReleaseCoverArtUrl(releaseId: String, coverArtUrl: String)
+    abstract suspend fun setReleaseCoverArtPath(releaseId: String, coverArtPath: String)
 }

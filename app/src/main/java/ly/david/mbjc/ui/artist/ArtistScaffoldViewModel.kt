@@ -17,7 +17,7 @@ import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class ArtistViewModel @Inject constructor(
+internal class ArtistScaffoldViewModel @Inject constructor(
     private val repository: ArtistRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList

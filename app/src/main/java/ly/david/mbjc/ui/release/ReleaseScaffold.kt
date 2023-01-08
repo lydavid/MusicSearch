@@ -54,7 +54,7 @@ internal fun ReleaseScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: ReleaseViewModel = hiltViewModel()
+    viewModel: ReleaseScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE
     val snackbarHostState = remember { SnackbarHostState() }

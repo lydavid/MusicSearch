@@ -16,6 +16,7 @@ import ly.david.data.persistence.Migrations.MIGRATION_34_35
 import ly.david.data.persistence.Migrations.MIGRATION_36_37
 import ly.david.data.persistence.Migrations.MOVE_COVER_ART_URL_TO_RELEASES
 import ly.david.data.persistence.Migrations.MOVE_RELEASE_GROUP_ID_OUT_OF_RELEASE
+import ly.david.data.persistence.Migrations.REMOVE_LEADING_CAA_PATH
 import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.MusicBrainzRoomDatabase
 
@@ -36,6 +37,7 @@ object DatabaseModule {
             .addMigrations(MOVE_COVER_ART_URL_TO_RELEASES)
             .addMigrations(ADD_FK_TO_RELEASES_RELEASE_GROUPS)
             .addMigrations(MOVE_RELEASE_GROUP_ID_OUT_OF_RELEASE)
+            .addMigrations(REMOVE_LEADING_CAA_PATH)
             .fallbackToDestructiveMigration()
             .build()
     }

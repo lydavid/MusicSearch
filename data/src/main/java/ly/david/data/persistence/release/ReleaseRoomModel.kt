@@ -65,8 +65,8 @@ data class ReleaseRoomModel(
      * - Empty: Requested but did not find any
      * - string url: URL to cover art
      */
-    @ColumnInfo(name = "cover_art_url", defaultValue = "null")
-    val coverArtUrl: String? = null,
+    @ColumnInfo(name = "cover_art_path", defaultValue = "null")
+    val coverArtPath: String? = null,
 ) : RoomModel, Release
 
 fun ReleaseMusicBrainzModel.toRoomModel() =

@@ -62,7 +62,7 @@ internal fun ArtistScaffold(
 
     // This can be hoisted up which would normally let us preview this,
     // but because it relies on compose paging, we can't preview.
-    viewModel: ArtistViewModel = hiltViewModel()
+    viewModel: ArtistScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.ARTIST
     val snackbarHostState = remember { SnackbarHostState() }

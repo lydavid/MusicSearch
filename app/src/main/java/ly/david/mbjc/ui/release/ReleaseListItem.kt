@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.release
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -20,14 +18,21 @@ import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.domain.ReleaseListItemModel
+import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.mbjc.ui.common.coverart.SmallCoverArt
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
 
+// TODO: we probably need preferences to show/hide some of the content in this item
+// TODO: rethink showing release country -> could be misleading, and expensive joins
+//  with cover art loaded by default, we can prob hide the other info by default
+// TODO: we'll likely run into 429 when loading many images at once, not much we can do about that right now
+//  see: https://tickets.metabrainz.org/browse/LB-1139 and https://tickets.metabrainz.org/browse/CAA-141
 @Composable
 internal fun ReleaseListItem(
     release: ReleaseListItemModel,
@@ -36,118 +41,113 @@ internal fun ReleaseListItem(
     ClickableListItem(
         onClick = { onClick(release) },
     ) {
-        Column(
+        ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
         ) {
-            ConstraintLayout(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                val (name, disambiguation, endSection) = createRefs()
+            val (coverArt, content) = createRefs()
 
+            // TODO: if url is null, then we should try to fetch it
+            //  we should make a call to CAA to find any possible cover arts, then make a call to that cover art url to load image
+            //  But if every list item tries to do this on its own, we will be making many calls at once
+            //  If we can't load every thumbnail at once, we can just say "Click to load image" or something
+//            release.coverArtUrl.ifNotNull {
+            SmallCoverArt(
+                modifier = Modifier
+                    .constrainAs(coverArt) {
+                        width = Dimension.value(64.dp)
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(content.start, margin = 16.dp)
+                        bottom.linkTo(parent.bottom)
+                    },
+                coverArtUrl = buildReleaseCoverArtUrl(release.id, release.coverArtPath.orEmpty())
+            )
+//            }
+
+            Column(
+                modifier = Modifier.constrainAs(content) {
+                    width = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    start.linkTo(coverArt.end)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                }
+            ) {
                 Text(
                     text = release.name,
-                    style = TextStyles.getCardTitleTextStyle(),
-                    modifier = Modifier
-                        .constrainAs(name) {
-                            width = Dimension.fillToConstraints
-                            top.linkTo(parent.top)
-                            start.linkTo(parent.start)
-                            end.linkTo(endSection.start)
-                        }
+                    style = TextStyles.getCardTitleTextStyle()
                 )
 
-                Box(
-                    modifier = Modifier
-                        .constrainAs(disambiguation) {
-                            width = Dimension.fillToConstraints
-                            top.linkTo(name.bottom)
-                            start.linkTo(name.start)
-                            end.linkTo(name.end)
-                        }
-                ) {
-                    val uiDisambiguation = release.disambiguation
-                    if (uiDisambiguation.isNotEmpty()) {
-                        Text(
-                            text = "($uiDisambiguation)",
-                            color = getSubTextColor(),
-                            style = TextStyles.getCardBodyTextStyle(),
-                            modifier = Modifier.padding(top = 4.dp)
-                        )
-                    }
+                release.disambiguation.ifNotNullOrEmpty {
+                    Text(
+                        text = "($it)",
+                        color = getSubTextColor(),
+                        style = TextStyles.getCardBodyTextStyle(),
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
                 }
 
-                Column(
-                    modifier = Modifier
-                        .constrainAs(endSection) {
-                            width = Dimension.wrapContent
-                            top.linkTo(parent.top)
-                            end.linkTo(parent.end)
-                        },
-                    horizontalAlignment = Alignment.End
-                ) {
-                    release.date.ifNotNullOrEmpty {
+                release.date.ifNotNullOrEmpty {
+                    Text(
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                release.countryCode.ifNotNullOrEmpty { countryCode ->
+                    if (!release.date.isNullOrEmpty()) {
+                        Spacer(modifier = Modifier.padding(4.dp))
+                    }
+
+                    // Since we don't store release events when browsing releases, releaseEvents will be empty until
+                    // after we've clicked into it
+                    val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
+                        "+ ${release.releaseCountries.size - 1}"
+                    } else {
+                        ""
+                    }
+                    Text(
+                        text = "${countryCode.toFlagEmoji()} $countryCode $additionalReleaseEvents",
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                Row(modifier = Modifier.padding(top = 4.dp)) {
+                    release.formattedFormats.ifNotNullOrEmpty {
                         Text(
+                            modifier = Modifier.weight(1f),
                             text = it,
-                            style = TextStyles.getCardBodyTextStyle(),
+                            style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
 
-                    release.countryCode.ifNotNullOrEmpty { countryCode ->
-                        if (!release.date.isNullOrEmpty()) {
-                            Spacer(modifier = Modifier.padding(4.dp))
-                        }
-
-                        // Since we don't store release events when browsing releases, releaseEvents will be empty until
-                        // after we've clicked into it
-                        val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
-                            "+ ${release.releaseCountries.size - 1}"
-                        } else {
-                            ""
-                        }
+                    release.formattedTracks.ifNotNullOrEmpty {
                         Text(
-                            text = "${countryCode.toFlagEmoji()} $countryCode $additionalReleaseEvents",
-                            style = TextStyles.getCardBodyTextStyle(),
+                            modifier = Modifier.weight(1f),
+                            text = it,
+                            style = TextStyles.getCardBodySubTextStyle(),
+                            textAlign = TextAlign.End
                         )
                     }
                 }
-            }
 
-            Row(modifier = Modifier.padding(top = 4.dp)) {
-                release.formattedFormats.ifNotNullOrEmpty {
+                release.formattedArtistCredits.ifNotNullOrEmpty {
                     Text(
-                        modifier = Modifier.weight(1f),
                         text = it,
-                        style = TextStyles.getCardBodySubTextStyle(),
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .fillMaxWidth(),
+                        style = TextStyles.getCardBodyTextStyle()
                     )
                 }
-
-                release.formattedTracks.ifNotNullOrEmpty {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = it,
-                        style = TextStyles.getCardBodySubTextStyle(),
-                        textAlign = TextAlign.End
-                    )
-                }
-            }
-
-            release.formattedArtistCredits.ifNotNullOrEmpty {
-                Text(
-                    text = it,
-                    modifier = Modifier
-                        .padding(top = 4.dp)
-                        .fillMaxWidth(),
-                    style = TextStyles.getCardBodyTextStyle()
-                )
-            }
-
-            // TODO: catalog number
+                // TODO: catalog number
 //            Text(
 //                text = release.name,
 //                style = TextStyles.getCardBodyTextStyle(),
 //            )
+            }
         }
     }
 }

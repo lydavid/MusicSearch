@@ -243,4 +243,20 @@ internal object Migrations {
     @DeleteColumn(tableName = "release", columnName = "formats")
     @DeleteColumn(tableName = "release", columnName = "tracks")
     class DeleteFormatsAndTracksFromRelease : AutoMigrationSpec
+
+    @RenameColumn(tableName = "release", fromColumnName = "cover_art_url", toColumnName = "cover_art_path")
+    class RenameToCoverArtPath : AutoMigrationSpec
+
+    // Remove leading http://coverartarchive.org/release/e83e9090-3590-4b95-b27d-6f442014bd4d/
+    val REMOVE_LEADING_CAA_PATH = object : Migration(86, 87) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                UPDATE `release`
+                SET cover_art_path = SUBSTR(cover_art_path, 73)
+                WHERE cover_art_path IS NOT NULL
+            """
+            )
+        }
+    }
 }

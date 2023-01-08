@@ -30,6 +30,7 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
@@ -46,7 +47,7 @@ import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class ReleaseViewModel @Inject constructor(
+internal class ReleaseScaffoldViewModel @Inject constructor(
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
@@ -150,7 +151,7 @@ internal class ReleaseViewModel @Inject constructor(
      */
     private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
         val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
-        releaseDao.setReleaseCoverArtUrl(releaseId, url)
+        releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
         return url
     }
 
@@ -163,9 +164,9 @@ internal class ReleaseViewModel @Inject constructor(
                 viewModelScope.launch {
                     try {
                         val releaseScaffoldModel = repository.lookupRelease(releaseId)
-                        val coverArtUrl = releaseScaffoldModel.coverArtUrl
-                        if (coverArtUrl != null) {
-                            url.value = coverArtUrl
+                        val coverArtPath = releaseScaffoldModel.coverArtPath
+                        if (coverArtPath != null) {
+                            url.value = buildReleaseCoverArtUrl(releaseId, coverArtPath)
                         } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
                             url.value = getCoverArtUrlFromNetwork(releaseId)
                         }

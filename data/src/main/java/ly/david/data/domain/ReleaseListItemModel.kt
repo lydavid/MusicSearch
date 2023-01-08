@@ -25,7 +25,7 @@ data class ReleaseListItemModel(
 
     override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
     override val textRepresentation: TextRepresentation? = null,
-    val coverArtUrl: String? = null,
+    val coverArtPath: String? = null,
 
     val formattedFormats: String? = null,
     val formattedTracks: String? = null,
@@ -49,7 +49,7 @@ fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     textRepresentation = textRepresentation,
     asin = asin,
     quality = quality,
-    coverArtUrl = null,
+    coverArtPath = null,
 )
 
 fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
@@ -69,7 +69,7 @@ fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
     textRepresentation = release.textRepresentation,
     formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-    coverArtUrl = release.coverArtUrl,
+    coverArtPath = release.coverArtPath,
     formattedArtistCredits = artistCreditNames,
     releaseCountries = releaseCountries,
 )
