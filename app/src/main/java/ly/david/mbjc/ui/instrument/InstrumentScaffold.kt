@@ -49,7 +49,7 @@ internal fun InstrumentScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: InstrumentViewModel = hiltViewModel()
+    viewModel: InstrumentScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.INSTRUMENT
     val snackbarHostState = remember { SnackbarHostState() }

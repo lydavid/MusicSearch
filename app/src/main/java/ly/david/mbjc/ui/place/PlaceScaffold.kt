@@ -53,7 +53,7 @@ internal fun PlaceScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: PlaceViewModel = hiltViewModel()
+    viewModel: PlaceScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.PLACE
     val snackbarHostState = remember { SnackbarHostState() }

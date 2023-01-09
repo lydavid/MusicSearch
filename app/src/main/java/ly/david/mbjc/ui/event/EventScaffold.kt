@@ -49,7 +49,7 @@ internal fun EventScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: EventViewModel = hiltViewModel()
+    viewModel: EventScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.EVENT
     val snackbarHostState = remember { SnackbarHostState() }

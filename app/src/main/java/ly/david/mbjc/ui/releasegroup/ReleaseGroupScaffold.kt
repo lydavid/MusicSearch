@@ -60,7 +60,7 @@ internal fun ReleaseGroupScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: ReleaseGroupViewModel = hiltViewModel()
+    viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE_GROUP
     val snackbarHostState = remember { SnackbarHostState() }

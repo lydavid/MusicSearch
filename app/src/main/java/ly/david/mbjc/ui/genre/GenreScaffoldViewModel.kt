@@ -15,7 +15,7 @@ import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 
 @HiltViewModel
-internal class GenreViewModel @Inject constructor(
+internal class GenreScaffoldViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory {

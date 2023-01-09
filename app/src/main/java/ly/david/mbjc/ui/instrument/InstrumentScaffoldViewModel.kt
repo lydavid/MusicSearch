@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.place
+package ly.david.mbjc.ui.instrument
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,30 +6,30 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.InstrumentListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.repository.PlaceRepository
+import ly.david.data.repository.InstrumentRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class PlaceViewModel @Inject constructor(
-    private val repository: PlaceRepository,
+internal class InstrumentScaffoldViewModel @Inject constructor(
+    private val repository: InstrumentRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.PLACE
+    override val resource: MusicBrainzResource = MusicBrainzResource.INSTRUMENT
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val place: MutableStateFlow<PlaceListItemModel?> = MutableStateFlow(null)
+    val instrument: MutableStateFlow<InstrumentListItemModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope
@@ -37,18 +37,18 @@ internal class PlaceViewModel @Inject constructor(
     }
 
     fun onSelectedTabChange(
-        placeId: String,
-        selectedTab: PlaceTab
+        instrumentId: String,
+        selectedTab: InstrumentTab
     ) {
         when (selectedTab) {
-            PlaceTab.DETAILS -> {
+            InstrumentTab.DETAILS -> {
                 viewModelScope.launch {
                     try {
-                        val eventListItemModel = repository.lookupPlace(placeId)
+                        val eventListItemModel = repository.lookupInstrument(instrumentId)
                         if (title.value.isEmpty()) {
                             title.value = eventListItemModel.getNameWithDisambiguation()
                         }
-                        place.value = eventListItemModel
+                        instrument.value = eventListItemModel
                         isError.value = false
                     } catch (ex: Exception) {
                         isError.value = true
@@ -56,7 +56,7 @@ internal class PlaceViewModel @Inject constructor(
 
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = placeId,
+                            resourceId = instrumentId,
                             resource = resource,
                             summary = title.value
                         )
@@ -64,7 +64,7 @@ internal class PlaceViewModel @Inject constructor(
                     }
                 }
             }
-            PlaceTab.RELATIONSHIPS -> loadRelations(placeId)
+            InstrumentTab.RELATIONSHIPS -> loadRelations(instrumentId)
             else -> {
                 // Not handled here.
             }

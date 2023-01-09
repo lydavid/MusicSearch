@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.area
+package ly.david.mbjc.ui.recording
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,32 +6,32 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.AreaScaffoldModel
+import ly.david.data.domain.RecordingScaffoldModel
+import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.repository.AreaRepository
-import ly.david.data.showReleases
+import ly.david.data.repository.RecordingRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class AreaViewModel @Inject constructor(
-    private val repository: AreaRepository,
+internal class RecordingScaffoldViewModel @Inject constructor(
+    private val repository: RecordingRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.AREA
+    override val resource: MusicBrainzResource = MusicBrainzResource.RECORDING
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    var tabs: MutableStateFlow<List<AreaTab>> = MutableStateFlow(AreaTab.values().filter { it != AreaTab.RELEASES })
-    val area: MutableStateFlow<AreaScaffoldModel?> = MutableStateFlow(null)
+    val subtitle = MutableStateFlow("")
+    val recording: MutableStateFlow<RecordingScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope
@@ -39,21 +39,19 @@ internal class AreaViewModel @Inject constructor(
     }
 
     fun onSelectedTabChange(
-        areaId: String,
-        selectedTab: AreaTab
+        recordingId: String,
+        selectedTab: RecordingTab
     ) {
         when (selectedTab) {
-            AreaTab.DETAILS -> {
+            RecordingTab.DETAILS -> {
                 viewModelScope.launch {
                     try {
-                        val areaScaffoldModel = repository.lookupArea(areaId)
+                        val recordingScaffoldModel = repository.lookupRecording(recordingId)
                         if (title.value.isEmpty()) {
-                            title.value = areaScaffoldModel.getNameWithDisambiguation()
+                            title.value = recordingScaffoldModel.getNameWithDisambiguation()
                         }
-                        if (areaScaffoldModel.showReleases()) {
-                            tabs.value = AreaTab.values().toList()
-                        }
-                        area.value = areaScaffoldModel
+                        subtitle.value = "Recording by ${recordingScaffoldModel.artistCredits.getDisplayNames()}"
+                        recording.value = recordingScaffoldModel
                         isError.value = false
                     } catch (ex: Exception) {
                         isError.value = true
@@ -61,7 +59,7 @@ internal class AreaViewModel @Inject constructor(
 
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = areaId,
+                            resourceId = recordingId,
                             resource = resource,
                             summary = title.value
                         )
@@ -69,7 +67,7 @@ internal class AreaViewModel @Inject constructor(
                     }
                 }
             }
-            AreaTab.RELATIONSHIPS -> loadRelations(areaId)
+            RecordingTab.RELATIONSHIPS -> loadRelations(recordingId)
             else -> {
                 // Not handled here.
             }

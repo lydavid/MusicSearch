@@ -17,7 +17,7 @@ import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class EventViewModel @Inject constructor(
+internal class EventScaffoldViewModel @Inject constructor(
     private val repository: EventRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,

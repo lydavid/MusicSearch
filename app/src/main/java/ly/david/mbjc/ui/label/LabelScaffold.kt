@@ -51,7 +51,7 @@ internal fun LabelScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: LabelViewModel = hiltViewModel()
+    viewModel: LabelScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.LABEL
     val snackbarHostState = remember { SnackbarHostState() }

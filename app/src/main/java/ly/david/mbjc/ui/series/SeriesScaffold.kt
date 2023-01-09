@@ -49,7 +49,7 @@ internal fun SeriesScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: SeriesViewModel = hiltViewModel()
+    viewModel: SeriesScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.SERIES
     val snackbarHostState = remember { SnackbarHostState() }

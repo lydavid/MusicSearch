@@ -59,7 +59,7 @@ internal fun AreaScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: AreaViewModel = hiltViewModel(),
+    viewModel: AreaScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzResource.AREA
     val snackbarHostState = remember { SnackbarHostState() }

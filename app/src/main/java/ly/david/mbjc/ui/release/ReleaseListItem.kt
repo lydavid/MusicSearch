@@ -52,6 +52,7 @@ internal fun ReleaseListItem(
             //  we should make a call to CAA to find any possible cover arts, then make a call to that cover art url to load image
             //  But if every list item tries to do this on its own, we will be making many calls at once
             //  If we can't load every thumbnail at once, we can just say "Click to load image" or something
+            //  Note hiltviewmodel is not keyed, so multiple instances of same one cannot co-exist
 //            release.coverArtUrl.ifNotNull {
             SmallCoverArt(
                 modifier = Modifier

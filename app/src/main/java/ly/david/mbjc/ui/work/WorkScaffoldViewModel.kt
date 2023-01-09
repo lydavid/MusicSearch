@@ -17,7 +17,7 @@ import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class WorkViewModel @Inject constructor(
+internal class WorkScaffoldViewModel @Inject constructor(
     private val repository: WorkRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,

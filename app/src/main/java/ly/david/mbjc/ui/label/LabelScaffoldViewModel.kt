@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.series
+package ly.david.mbjc.ui.label
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,30 +6,30 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.SeriesListItemModel
+import ly.david.data.domain.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.repository.SeriesRepository
+import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
-internal class SeriesViewModel @Inject constructor(
-    private val repository: SeriesRepository,
-    private val relationsList: RelationsList,
+internal class LabelScaffoldViewModel @Inject constructor(
+    private val repository: LabelRepository,
     override val lookupHistoryDao: LookupHistoryDao,
+    private val relationsList: RelationsList,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.SERIES
+    override val resource: MusicBrainzResource = MusicBrainzResource.LABEL
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val series: MutableStateFlow<SeriesListItemModel?> = MutableStateFlow(null)
+    val label: MutableStateFlow<LabelListItemModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope
@@ -37,18 +37,18 @@ internal class SeriesViewModel @Inject constructor(
     }
 
     fun onSelectedTabChange(
-        seriesId: String,
-        selectedTab: SeriesTab
+        labelId: String,
+        selectedTab: LabelTab
     ) {
         when (selectedTab) {
-            SeriesTab.DETAILS -> {
+            LabelTab.DETAILS -> {
                 viewModelScope.launch {
                     try {
-                        val seriesListItemModel = repository.lookupSeries(seriesId)
+                        val labelListItemModel = repository.lookupLabel(labelId)
                         if (title.value.isEmpty()) {
-                            title.value = seriesListItemModel.getNameWithDisambiguation()
+                            title.value = labelListItemModel.getNameWithDisambiguation()
                         }
-                        series.value = seriesListItemModel
+                        label.value = labelListItemModel
                         isError.value = false
                     } catch (ex: Exception) {
                         isError.value = true
@@ -56,7 +56,7 @@ internal class SeriesViewModel @Inject constructor(
 
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = seriesId,
+                            resourceId = labelId,
                             resource = resource,
                             summary = title.value
                         )
@@ -64,7 +64,7 @@ internal class SeriesViewModel @Inject constructor(
                     }
                 }
             }
-            SeriesTab.RELATIONSHIPS -> loadRelations(seriesId)
+            LabelTab.RELATIONSHIPS -> loadRelations(labelId)
             else -> {
                 // Not handled here.
             }

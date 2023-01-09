@@ -36,7 +36,7 @@ internal fun GenreScaffold(
     genreId: String,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    viewModel: GenreViewModel = hiltViewModel()
+    viewModel: GenreScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.GENRE
     val context = LocalContext.current

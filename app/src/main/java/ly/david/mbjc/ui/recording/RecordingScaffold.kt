@@ -54,7 +54,7 @@ internal fun RecordingScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    viewModel: RecordingViewModel = hiltViewModel()
+    viewModel: RecordingScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RECORDING
     val snackbarHostState = remember { SnackbarHostState() }

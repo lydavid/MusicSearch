@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.common.paging.RelationsList
 import retrofit2.HttpException
 
 @HiltViewModel
-internal class ReleaseGroupViewModel @Inject constructor(
+internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private val repository: ReleaseGroupRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
