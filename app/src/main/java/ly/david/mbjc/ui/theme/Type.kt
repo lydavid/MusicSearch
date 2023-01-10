@@ -12,5 +12,5 @@ internal object TextStyles {
     fun getCardBodyTextStyle() = MaterialTheme.typography.bodyLarge
 
     @Composable
-    fun getCardBodySubTextStyle() = MaterialTheme.typography.bodyMedium
+    fun getCardBodySubTextStyle() = MaterialTheme.typography.bodySmall
 }

@@ -75,6 +75,8 @@ internal fun ArtistScaffold(
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
 
+    val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+
     LaunchedEffect(key1 = artistId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
@@ -107,6 +109,16 @@ internal fun ArtistScaffold(
                                 closeMenu()
                                 // TODO: disclaimer when turning on sort if we have not gotten all release groups
                                 isSorted = !isSorted
+                            }
+                        )
+                    }
+                    // TODO: generalize switch menu item
+                    if (selectedTab == ArtistTab.RELEASES) {
+                        DropdownMenuItem(
+                            text = { Text(if (showMoreInfoInReleaseListItem) "Show less info" else "Show more info") },
+                            onClick = {
+                                viewModel.appPreferences.setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)
+                                closeMenu()
                             }
                         )
                     }
@@ -181,7 +193,8 @@ internal fun ArtistScaffold(
                     releasesLazyPagingItems = releasesLazyPagingItems,
                     onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     onReleaseClick = onItemClick,
-                    filterText = filterText
+                    filterText = filterText,
+                    showMoreInfo = showMoreInfoInReleaseListItem
                 )
             }
             ArtistTab.RELATIONSHIPS -> {

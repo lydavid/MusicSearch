@@ -15,6 +15,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
 import ly.david.mbjc.ui.theme.PreviewTheme
 
@@ -33,11 +34,16 @@ fun SettingsScaffold(
         },
     ) {
 
-        val theme by viewModel.appPreferences.themeFlow.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(
+            initial = true
+        )
 
         SettingsScreen(
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
+            showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+            onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) }
         )
     }
 }
@@ -45,7 +51,9 @@ fun SettingsScaffold(
 @Composable
 fun SettingsScreen(
     theme: AppPreferences.Theme,
-    onThemeChange: (AppPreferences.Theme) -> Unit = {}
+    onThemeChange: (AppPreferences.Theme) -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {}
 ) {
 
     Column {
@@ -55,6 +63,12 @@ fun SettingsScreen(
             choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
             selectedChoiceIndex = theme.ordinal,
             onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
+        )
+
+        SettingSwitch(
+            header = "Show more info in release list items",
+            checked = showMoreInfoInReleaseListItem,
+            onCheckedChange = onShowMoreInfoInReleaseListItemChange
         )
 
         val versionKey = stringResource(id = R.string.app_version)
@@ -80,7 +94,8 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             SettingsScreen(
-                theme = AppPreferences.Theme.SYSTEM
+                theme = AppPreferences.Theme.SYSTEM,
+                showMoreInfoInReleaseListItem = true
             )
         }
     }

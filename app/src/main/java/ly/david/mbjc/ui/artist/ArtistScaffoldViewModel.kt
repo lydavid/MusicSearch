@@ -15,12 +15,14 @@ import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
+import ly.david.mbjc.ui.settings.AppPreferences
 
 @HiltViewModel
 internal class ArtistScaffoldViewModel @Inject constructor(
     private val repository: ArtistRepository,
     override val lookupHistoryDao: LookupHistoryDao,
-    private val relationsList: RelationsList
+    private val relationsList: RelationsList,
+    val appPreferences: AppPreferences
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 

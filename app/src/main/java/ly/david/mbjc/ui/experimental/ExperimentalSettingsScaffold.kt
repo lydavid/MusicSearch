@@ -47,7 +47,7 @@ fun ExperimentalSettingsScaffold(
     ) {
 
         val showTheme by viewModel.showTheme.collectAsState(initial = true)
-        val theme by viewModel.appPreferences.themeFlow.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val showAppVersion by viewModel.showAppVersion.collectAsState(initial = true)
 
         SettingsScreen(

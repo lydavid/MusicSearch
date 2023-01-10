@@ -24,6 +24,7 @@ internal fun ReleasesByArtistScreen(
     onReleaseClick: (destination: Destination, String, String) -> Unit,
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit,
     filterText: String,
+    showMoreInfo: Boolean,
     viewModel: ReleasesByArtistViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = artistId) {
@@ -37,6 +38,7 @@ internal fun ReleasesByArtistScreen(
         snackbarHostState = snackbarHostState,
         lazyListState = releasesLazyListState,
         lazyPagingItems = releasesLazyPagingItems,
+        showMoreInfo = showMoreInfo,
         onReleaseClick = { id, title ->
             onReleaseClick(Destination.LOOKUP_RELEASE, id, title)
         }

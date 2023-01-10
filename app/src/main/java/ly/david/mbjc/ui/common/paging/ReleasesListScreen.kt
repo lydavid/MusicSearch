@@ -16,6 +16,7 @@ internal fun ReleasesListScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    showMoreInfo: Boolean = true,
     onReleaseClick: (String, String) -> Unit,
 ) {
     PagingLoadingAndErrorHandler(
@@ -26,7 +27,10 @@ internal fun ReleasesListScreen(
     ) { releaseListItemModel: ReleaseListItemModel? ->
         when (releaseListItemModel) {
             is ReleaseListItemModel -> {
-                ReleaseListItem(release = releaseListItemModel) {
+                ReleaseListItem(
+                    release = releaseListItemModel,
+                    showMoreInfo = showMoreInfo
+                ) {
                     onReleaseClick(id, getNameWithDisambiguation())
                 }
             }

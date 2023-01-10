@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.release
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -17,6 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
+import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
 import ly.david.data.persistence.area.ReleaseCountry
@@ -36,6 +36,7 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun ReleaseListItem(
     release: ReleaseListItemModel,
+    showMoreInfo: Boolean = true,
     onClick: ReleaseListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
@@ -78,71 +79,82 @@ internal fun ReleaseListItem(
             ) {
                 Text(
                     text = release.name,
-                    style = TextStyles.getCardTitleTextStyle()
+                    style = TextStyles.getCardBodyTextStyle()
                 )
 
                 release.disambiguation.ifNotNullOrEmpty {
                     Text(
                         text = "($it)",
                         color = getSubTextColor(),
-                        style = TextStyles.getCardBodyTextStyle(),
-                        modifier = Modifier.padding(top = 4.dp)
+                        style = TextStyles.getCardBodySubTextStyle()
                     )
                 }
 
-                release.date.ifNotNullOrEmpty {
-                    Text(
-                        text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
-                }
+                if (showMoreInfo) {
+                    Row {
+                        release.date.ifNotNullOrEmpty {
+                            Text(
+                                text = it,
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                        }
 
-                release.countryCode.ifNotNullOrEmpty { countryCode ->
-                    if (!release.date.isNullOrEmpty()) {
-                        Spacer(modifier = Modifier.padding(4.dp))
+                        release.countryCode.ifNotNullOrEmpty { countryCode ->
+                            // Since we don't store release events when browsing releases, releaseEvents will be empty until
+                            // after we've clicked into it
+                            val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
+                                "+ ${release.releaseCountries.size - 1}"
+                            } else {
+                                ""
+                            }
+                            Text(
+                                text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" },
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                textAlign = TextAlign.End
+                            )
+                        }
                     }
 
-                    // Since we don't store release events when browsing releases, releaseEvents will be empty until
-                    // after we've clicked into it
-                    val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
-                        "+ ${release.releaseCountries.size - 1}"
-                    } else {
-                        ""
-                    }
-                    Text(
-                        text = "${countryCode.toFlagEmoji()} $countryCode $additionalReleaseEvents",
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
-                }
+                    Row {
+                        release.formattedFormats.ifNotNullOrEmpty {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                text = it,
+                                style = TextStyles.getCardBodySubTextStyle(),
+                            )
+                        }
 
-                Row(modifier = Modifier.padding(top = 4.dp)) {
-                    release.formattedFormats.ifNotNullOrEmpty {
+                        release.formattedTracks.ifNotNullOrEmpty {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .weight(1f),
+                                text = it,
+                                style = TextStyles.getCardBodySubTextStyle(),
+                                textAlign = TextAlign.End
+                            )
+                        }
+                    }
+
+                    release.formattedArtistCredits.ifNotNullOrEmpty {
                         Text(
-                            modifier = Modifier.weight(1f),
                             text = it,
-                            style = TextStyles.getCardBodySubTextStyle(),
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .fillMaxWidth(),
+                            style = TextStyles.getCardBodySubTextStyle()
                         )
                     }
-
-                    release.formattedTracks.ifNotNullOrEmpty {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = it,
-                            style = TextStyles.getCardBodySubTextStyle(),
-                            textAlign = TextAlign.End
-                        )
-                    }
                 }
 
-                release.formattedArtistCredits.ifNotNullOrEmpty {
-                    Text(
-                        text = it,
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .fillMaxWidth(),
-                        style = TextStyles.getCardBodyTextStyle()
-                    )
-                }
                 // TODO: catalog number
 //            Text(
 //                text = release.name,
@@ -223,7 +235,10 @@ private fun Preview(
 ) {
     PreviewTheme {
         Surface {
-            ReleaseListItem(release)
+            ReleaseListItem(
+                release = release,
+                showMoreInfo = true
+            )
         }
     }
 }

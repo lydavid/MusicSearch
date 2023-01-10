@@ -38,6 +38,7 @@ fun SettingSwitch(
 
         Spacer(modifier = Modifier.weight(1f))
 
+        // TODO: unchecked color is hard to see
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
