@@ -17,23 +17,23 @@ import ly.david.data.persistence.place.toPlaceRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class PlacesByAreaViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<PlaceRoomModel, PlaceListItemModel>,
+    private val pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
     private val areaPlaceDao: AreaPlaceDao,
     private val placeDao: PlaceDao,
 ) : ViewModel(),
-    PagedList<PlaceListItemModel> by pagedListImpl,
+    IPagedList<PlaceListItemModel> by pagedList,
     BrowseResourceUseCase<PlaceRoomModel, PlaceListItemModel> {
 
     init {
-        pagedListImpl.scope = viewModelScope
-        pagedListImpl.useCase = this
+        pagedList.scope = viewModelScope
+        pagedList.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {

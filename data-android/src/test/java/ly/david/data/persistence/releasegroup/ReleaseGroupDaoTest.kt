@@ -42,11 +42,11 @@ internal class ReleaseGroupDaoTest : HiltTest() {
             )
         )
 
-        var releaseGroupWithArtistCredits = releaseGroupDao.getReleaseGroupWithArtistCredits("1")
+        var releaseGroupWithArtistCredits = releaseGroupDao.getReleaseGroup("1")
         assertThat(releaseGroupWithArtistCredits?.releaseGroup?.name, `is`("name"))
         assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithResources, `is`(listOf()))
 
-        releaseGroupWithArtistCredits = releaseGroupDao.getReleaseGroupWithArtistCredits("2")
+        releaseGroupWithArtistCredits = releaseGroupDao.getReleaseGroup("2")
         assertThat(releaseGroupWithArtistCredits?.releaseGroup?.name, `is`("blah"))
         assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithResources, `is`(listOf()))
     }
@@ -56,7 +56,7 @@ internal class ReleaseGroupDaoTest : HiltTest() {
         releaseGroupDao.insertReleaseGroupWithArtistCredits(fakeReleaseGroupWithArtistCredits)
 
         val releaseGroupWithArtistCredits =
-            releaseGroupDao.getReleaseGroupWithArtistCredits(fakeReleaseGroupWithArtistCredits.id)
+            releaseGroupDao.getReleaseGroup(fakeReleaseGroupWithArtistCredits.id)
         assertThat(releaseGroupWithArtistCredits?.releaseGroup?.name, `is`(fakeReleaseGroupWithArtistCredits.name))
         assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithResources?.size, `is`(2))
         assertThat(

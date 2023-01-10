@@ -68,7 +68,7 @@ class ReleaseRepositoryTest {
                     disambiguation = "",
                     primaryType = null,
                     secondaryTypes = listOf(),
-                    artistCredits = listOf(),
+                    formattedArtistCredits = null,
                     hasCoverArt = null,
                     coverArtUrl = null
                 ),

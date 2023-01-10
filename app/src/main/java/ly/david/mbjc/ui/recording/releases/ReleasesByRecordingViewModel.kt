@@ -17,23 +17,23 @@ import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.toRoomModel
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class ReleasesByRecordingViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<ReleaseForListItem, ReleaseListItemModel>,
+    private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
     private val releasesRecordingsDao: ReleasesRecordingsDao
 ) : ViewModel(),
-    PagedList<ReleaseListItemModel> by pagedListImpl,
+    IPagedList<ReleaseListItemModel> by pagedList,
     BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
 
     init {
-        pagedListImpl.scope = viewModelScope
-        pagedListImpl.useCase = this
+        pagedList.scope = viewModelScope
+        pagedList.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {

@@ -2,8 +2,8 @@ package ly.david.data.repository
 
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.domain.ReleaseGroupListItemModel
-import ly.david.data.domain.toReleaseGroupListItemModel
+import ly.david.data.domain.ReleaseGroupScaffoldModel
+import ly.david.data.domain.toReleaseGroupScaffoldModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
@@ -15,16 +15,15 @@ class ReleaseGroupRepository @Inject constructor(
     private val releaseGroupDao: ReleaseGroupDao,
 ) : RelationsListRepository {
 
-    // We need ReleaseGroupUiModel so that we have artist credits
-    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupListItemModel {
-        val roomReleaseGroup = releaseGroupDao.getReleaseGroupWithArtistCredits(releaseGroupId)
+    suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
+        val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
         if (roomReleaseGroup != null) {
-            return roomReleaseGroup.toReleaseGroupListItemModel()
+            return roomReleaseGroup.toReleaseGroupScaffoldModel()
         }
 
         val releaseGroupMusicBrainzModel = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
         releaseGroupDao.insertReleaseGroupWithArtistCredits(releaseGroupMusicBrainzModel)
-        return releaseGroupMusicBrainzModel.toReleaseGroupListItemModel()
+        return lookupReleaseGroup(releaseGroupId)
     }
 
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {

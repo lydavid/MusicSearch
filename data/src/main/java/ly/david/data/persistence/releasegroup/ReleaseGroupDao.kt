@@ -26,7 +26,7 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>(), ArtistCreditD
     // Lookup
     @Transaction
     @Query("SELECT * FROM release_group WHERE id = :releaseGroupId")
-    abstract suspend fun getReleaseGroupWithArtistCredits(releaseGroupId: String): ReleaseGroupWithArtistCredits?
+    abstract suspend fun getReleaseGroup(releaseGroupId: String): ReleaseGroupWithAllData?
 
     @Query(
         """

@@ -23,7 +23,7 @@ import ly.david.data.domain.toReleaseGroupListItemModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
+import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.mbjc.ui.common.paging.BrowseSortableResourceUseCase
 import ly.david.mbjc.ui.common.paging.SortablePagedList
 
@@ -45,7 +45,7 @@ internal class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseSortableResourceUseCase<ReleaseGroupWithArtistCredits>
+    lateinit var useCase: BrowseSortableResourceUseCase<ReleaseGroupForListItem>
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<ListItemModel>> by lazy {

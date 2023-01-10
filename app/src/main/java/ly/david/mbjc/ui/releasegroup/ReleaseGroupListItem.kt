@@ -12,9 +12,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.getYear
 import ly.david.data.common.ifNotNull
-import ly.david.data.domain.ArtistCreditUiModel
 import ly.david.data.domain.ReleaseGroupListItemModel
-import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
@@ -66,9 +64,9 @@ internal fun ReleaseGroupListItem(
                 }
             )
 
-            releaseGroup.artistCredits.ifNotNull {
+            releaseGroup.formattedArtistCredits.ifNotNull {
                 Text(
-                    text = it.getDisplayNames(),
+                    text = it,
                     style = TextStyles.getCardBodyTextStyle(),
                     modifier = Modifier.constrainAs(bottomSection) {
                         width = Dimension.matchParent
@@ -86,17 +84,7 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
     name = "欠けた心象、世のよすが",
     primaryType = "EP",
     firstReleaseDate = "2021-09-08",
-    artistCredits = listOf(
-        ArtistCreditUiModel(
-            artistId = "2",
-            name = "Some artist",
-            joinPhrase = " feat. "
-        ),
-        ArtistCreditUiModel(
-            artistId = "3",
-            name = "some other artist"
-        )
-    )
+    formattedArtistCredits = "Some artist feat. some other artist"
 )
 
 @ExcludeFromJacocoGeneratedReport

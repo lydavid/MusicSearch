@@ -5,8 +5,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 
 @Dao
 abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
@@ -16,11 +16,13 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
             FROM release_group rg
             INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
             INNER JOIN artist a ON a.id = arg.artist_id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = rg.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE a.id = :artistId
         """
 
         private const val SELECT_RELEASE_GROUPS_BY_ARTIST = """
-            SELECT rg.*
+            SELECT rg.*, ac.name AS artist_credit_names
             $RELEASE_GROUPS_BY_ARTIST
         """
 
@@ -44,6 +46,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
                 rg.title LIKE :query OR rg.disambiguation LIKE :query
                 OR rg.first_release_date LIKE :query
                 OR rg.primary_type LIKE :query OR rg.secondary_types LIKE :query
+                OR ac.name LIKE :query
             )
         """
     }
@@ -66,7 +69,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
         $ORDER_BY_ARTIST_LINKING_TABLE
         """
     )
-    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, ReleaseGroupWithArtistCredits>
+    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, ReleaseGroupForListItem>
 
     @Transaction
     @Query(
@@ -75,7 +78,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
         $ORDER_BY_TYPES_AND_DATE
     """
     )
-    abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, ReleaseGroupWithArtistCredits>
+    abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, ReleaseGroupForListItem>
 
     // Not as fast as FTS but allows searching characters within words
     @Transaction
@@ -89,7 +92,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
     abstract fun getReleaseGroupsByArtistFiltered(
         artistId: String,
         query: String
-    ): PagingSource<Int, ReleaseGroupWithArtistCredits>
+    ): PagingSource<Int, ReleaseGroupForListItem>
 
     @Transaction
     @Query(
@@ -102,7 +105,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
     abstract fun getReleaseGroupsByArtistFilteredSorted(
         artistId: String,
         query: String
-    ): PagingSource<Int, ReleaseGroupWithArtistCredits>
+    ): PagingSource<Int, ReleaseGroupForListItem>
 
     @Query(
         """

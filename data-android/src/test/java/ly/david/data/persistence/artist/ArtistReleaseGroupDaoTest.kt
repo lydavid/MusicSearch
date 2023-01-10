@@ -8,8 +8,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -357,11 +357,11 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
 
     // TODO: generic
     private suspend fun getReleaseGroupsFromPagingSource(
-        pagingSource: PagingSource<Int, ReleaseGroupWithArtistCredits>
-    ): List<ReleaseGroupWithArtistCredits> {
-        val loadResult: PagingSource.LoadResult<Int, ReleaseGroupWithArtistCredits> = pagingSource.load(
+        pagingSource: PagingSource<Int, ReleaseGroupForListItem>
+    ): List<ReleaseGroupForListItem> {
+        val loadResult: PagingSource.LoadResult<Int, ReleaseGroupForListItem> = pagingSource.load(
             PagingSource.LoadParams.Refresh(key = null, loadSize = 10, placeholdersEnabled = false)
         )
-        return (loadResult as PagingSource.LoadResult.Page<Int, ReleaseGroupWithArtistCredits>).data
+        return (loadResult as PagingSource.LoadResult.Page<Int, ReleaseGroupForListItem>).data
     }
 }

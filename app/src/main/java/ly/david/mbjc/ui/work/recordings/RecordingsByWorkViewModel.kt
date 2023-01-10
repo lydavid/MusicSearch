@@ -17,23 +17,23 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.RecordingsWorksDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class RecordingsByWorkViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<RecordingForListItem, RecordingListItemModel>,
+    private val pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val recordingDao: RecordingDao,
     private val relationDao: RelationDao,
     private val recordingsWorksDao: RecordingsWorksDao,
 ) : ViewModel(),
-    PagedList<RecordingListItemModel> by pagedListImpl,
+    IPagedList<RecordingListItemModel> by pagedList,
     BrowseResourceUseCase<RecordingForListItem, RecordingListItemModel> {
 
     init {
-        pagedListImpl.scope = viewModelScope
-        pagedListImpl.useCase = this
+        pagedList.scope = viewModelScope
+        pagedList.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {

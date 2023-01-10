@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.ReleaseGroupListItemModel
+import ly.david.data.domain.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
@@ -38,7 +38,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
 
     val subtitle = MutableStateFlow("")
     val isFullScreenError = MutableStateFlow(false)
-    val releaseGroup: MutableStateFlow<ReleaseGroupListItemModel?> = MutableStateFlow(null)
+    val releaseGroup: MutableStateFlow<ReleaseGroupScaffoldModel?> = MutableStateFlow(null)
     val url = MutableStateFlow("")
 
     init {
@@ -90,13 +90,13 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
 
     private suspend fun getCoverArtUrl(
         releaseGroupId: String,
-        releaseGroupListItemModel: ReleaseGroupListItemModel
+        releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
         try {
-            val coverArtUrl = releaseGroupListItemModel.coverArtUrl
+            val coverArtUrl = releaseGroupScaffoldModel.coverArtUrl
             if (coverArtUrl != null) {
                 url.value = coverArtUrl
-            } else if (releaseGroupListItemModel.hasCoverArt != false) {
+            } else if (releaseGroupScaffoldModel.hasCoverArt != false) {
                 url.value = getCoverArtUrlFromNetwork(releaseGroupId)
             }
         } catch (ex: HttpException) {

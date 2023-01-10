@@ -12,7 +12,7 @@ import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithArtistCredits
+import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.mbjc.ui.common.paging.BrowseSortableResourceUseCase
 import ly.david.mbjc.ui.common.paging.SortablePagedList
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupsPagedList
@@ -26,7 +26,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val relationDao: RelationDao,
 ) : ViewModel(),
     SortablePagedList<ListItemModel> by releaseGroupsPagedList,
-    BrowseSortableResourceUseCase<ReleaseGroupWithArtistCredits> {
+    BrowseSortableResourceUseCase<ReleaseGroupForListItem> {
 
     init {
         releaseGroupsPagedList.scope = viewModelScope

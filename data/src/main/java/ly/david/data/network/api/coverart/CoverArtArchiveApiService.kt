@@ -11,15 +11,17 @@ internal const val COVER_ART_ARCHIVE_BASE_URL = "https://coverartarchive.org/"
 
 interface CoverArtArchiveApiService {
     /**
-     * This is used to get the URLs for this release. So after calling this, we need to make another API call
-     * based on the retrieved URLs.
+     * This is used to get the URLs for this release.
+     * So after calling this, we need to make another API call based on the retrieved URLs.
+     * The image loading library will generally handle that next call.
      */
     @GET("release/{id}")
     suspend fun getReleaseCoverArts(@Path("id") releaseId: String): CoverArtsResponse
 
     /**
-     * This is used to get the URLs for this release group. So after calling this, we need to make another API call
-     * based on the retrieved URLs.
+     * This is used to get the URLs for this release group.
+     * So after calling this, we need to make another API call based on the retrieved URLs.
+     * The image loading library will generally handle that next call.
      */
     @GET("release-group/{id}")
     suspend fun getReleaseGroupCoverArts(@Path("id") releaseGroupId: String): CoverArtsResponse

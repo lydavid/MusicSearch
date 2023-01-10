@@ -17,23 +17,23 @@ import ly.david.data.persistence.event.toEventRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
+import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
-import ly.david.mbjc.ui.common.paging.PagedListImpl
 
 @HiltViewModel
 internal class EventsByPlaceViewModel @Inject constructor(
-    private val pagedListImpl: PagedListImpl<EventRoomModel, EventListItemModel>,
+    private val pagedList: PagedList<EventRoomModel, EventListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
     private val eventPlaceDao: EventPlaceDao,
     private val eventDao: EventDao,
 ) : ViewModel(),
-    PagedList<EventListItemModel> by pagedListImpl,
+    IPagedList<EventListItemModel> by pagedList,
     BrowseResourceUseCase<EventRoomModel, EventListItemModel> {
 
     init {
-        pagedListImpl.scope = viewModelScope
-        pagedListImpl.useCase = this
+        pagedList.scope = viewModelScope
+        pagedList.useCase = this
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
