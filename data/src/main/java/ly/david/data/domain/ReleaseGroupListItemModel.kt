@@ -1,10 +1,10 @@
 package ly.david.data.domain
 
 import ly.david.data.ReleaseGroup
+import ly.david.data.getDisplayNames
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithAllData
 
 // TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable
 //  We could extract uimodel to data-android or app
@@ -29,22 +29,6 @@ data class ReleaseGroupListItemModel(
     val coverArtUrl: String? = null,
 ) : ListItemModel(), ReleaseGroup
 
-data class ReleaseGroupScaffoldModel(
-    override val id: String,
-    override val name: String,
-    override val firstReleaseDate: String = "",
-    override val disambiguation: String = "",
-    override val primaryType: String? = null,
-
-    // Lists are considered unstable by Compose.
-    // Since this is just a list of primitives, we will mark this class immutable.
-    override val secondaryTypes: List<String>? = null,
-
-    val artistCredits: List<ArtistCreditUiModel> = listOf(),
-    val hasCoverArt: Boolean? = null,
-    val coverArtUrl: String? = null,
-) : ReleaseGroup
-
 fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
     return ReleaseGroupListItemModel(
         id = id,
@@ -53,7 +37,7 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupList
         disambiguation = disambiguation,
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
-//        formattedArtistCredits = artistCredits.toArtistCreditUiModels(),
+        formattedArtistCredits = artistCredits.getDisplayNames(),
         hasCoverArt = null,
         coverArtUrl = null
     )
@@ -69,22 +53,6 @@ fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemMod
         secondaryTypes = secondaryTypes,
         hasCoverArt = hasCoverArt,
         coverArtUrl = coverArtUrl
-    )
-}
-
-fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroupScaffoldModel {
-    return ReleaseGroupScaffoldModel(
-        id = releaseGroup.id,
-        name = releaseGroup.name,
-        firstReleaseDate = releaseGroup.firstReleaseDate,
-        disambiguation = releaseGroup.disambiguation,
-        primaryType = releaseGroup.primaryType,
-        secondaryTypes = releaseGroup.secondaryTypes,
-        artistCredits = artistCreditNamesWithResources.map {
-            it.artistCreditNameRoomModel.toArtistCreditUiModel()
-        },
-        hasCoverArt = releaseGroup.hasCoverArt,
-        coverArtUrl = releaseGroup.coverArtUrl
     )
 }
 

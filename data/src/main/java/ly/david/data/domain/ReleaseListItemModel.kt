@@ -1,6 +1,7 @@
 package ly.david.data.domain
 
 import ly.david.data.Release
+import ly.david.data.getDisplayNames
 import ly.david.data.getFormatsForDisplay
 import ly.david.data.getTracksForDisplay
 import ly.david.data.network.CoverArtArchive
@@ -50,6 +51,7 @@ fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     asin = asin,
     quality = quality,
     coverArtPath = null,
+    formattedArtistCredits = artistCredits.getDisplayNames()
 )
 
 fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
