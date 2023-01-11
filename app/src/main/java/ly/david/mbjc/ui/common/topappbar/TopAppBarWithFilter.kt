@@ -61,6 +61,50 @@ internal fun TopAppBarWithFilter(
     onFilterTextChange: (String) -> Unit = {},
 ) {
     var isFilterMode by rememberSaveable { mutableStateOf(false) }
+
+    BackHandler {
+        isFilterMode = false
+        onFilterTextChange("")
+    }
+
+    TopAppBarWithFilterInternal(
+        onBack = onBack,
+        openDrawer = openDrawer,
+        resource = resource,
+        title = title,
+        subtitle = subtitle,
+        overflowDropdownMenuItems = overflowDropdownMenuItems,
+        subtitleDropdownMenuItems = subtitleDropdownMenuItems,
+        tabsTitles = tabsTitles,
+        selectedTabIndex = selectedTabIndex,
+        onSelectTabIndex = onSelectTabIndex,
+        showFilterIcon = showFilterIcon,
+        filterText = filterText,
+        onFilterTextChange = onFilterTextChange,
+        isFilterMode = isFilterMode,
+        onFilterModeChange = { isFilterMode = it }
+    )
+}
+
+@Composable
+private fun TopAppBarWithFilterInternal(
+    onBack: () -> Unit = {},
+    openDrawer: (() -> Unit)? = null,
+    resource: MusicBrainzResource? = null,
+    title: String,
+    subtitle: String = "",
+    overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+    tabsTitles: List<String> = listOf(),
+    selectedTabIndex: Int = 0,
+    onSelectTabIndex: (Int) -> Unit = {},
+    showFilterIcon: Boolean = true,
+    filterText: String = "",
+    onFilterTextChange: (String) -> Unit = {},
+    isFilterMode: Boolean = false,
+    onFilterModeChange: (Boolean) -> Unit = {}
+) {
+
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -78,11 +122,6 @@ internal fun TopAppBarWithFilter(
             focusRequester.requestFocus()
         }
 
-        BackHandler {
-            isFilterMode = false
-            onFilterTextChange("")
-        }
-
         Surface {
             Column {
                 TextField(
@@ -98,7 +137,7 @@ internal fun TopAppBarWithFilter(
                     ),
                     leadingIcon = {
                         IconButton(onClick = {
-                            isFilterMode = false
+                            onFilterModeChange(false)
                             onFilterTextChange("")
                         }) {
                             Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
@@ -135,7 +174,7 @@ internal fun TopAppBarWithFilter(
 
     AnimatedVisibility(
         visible = !isFilterMode,
-        enter = expandVertically { fullHeight -> fullHeight / 2 },
+        enter = expandVertically(),
         exit = shrinkVertically()
     ) {
         ScrollableTopAppBar(
@@ -147,7 +186,7 @@ internal fun TopAppBarWithFilter(
             mainAction = {
                 if (showFilterIcon) {
                     IconButton(onClick = {
-                        isFilterMode = true
+                        onFilterModeChange(true)
                     }) {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -171,8 +210,20 @@ internal fun TopAppBarWithFilter(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            // TODO: Low: animation crashes in interactive mode
-            TopAppBarWithFilter(title = "Title")
+            TopAppBarWithFilterInternal(title = "Title")
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun PreviewFilterMode() {
+    PreviewTheme {
+        Surface {
+            TopAppBarWithFilterInternal(
+                title = "Title",
+                isFilterMode = true
+            )
         }
     }
 }
@@ -182,7 +233,7 @@ private fun Preview() {
 private fun PreviewNoSearch() {
     PreviewTheme {
         Surface {
-            TopAppBarWithFilter(
+            TopAppBarWithFilterInternal(
                 title = "Title",
                 showFilterIcon = false
             )
@@ -195,7 +246,7 @@ private fun PreviewNoSearch() {
 private fun PreviewWithTabs() {
     PreviewTheme {
         Surface {
-            TopAppBarWithFilter(
+            TopAppBarWithFilterInternal(
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
                 tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
                 selectedTabIndex = 1
