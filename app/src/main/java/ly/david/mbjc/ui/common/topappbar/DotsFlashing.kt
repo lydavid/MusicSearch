@@ -12,12 +12,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
+import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.mbjc.ui.theme.PreviewTheme
 
 private val DEFAULT_DOT_SIZE = 12.dp
 private const val ANIMATION_DELAY_MS = 300
@@ -71,5 +75,16 @@ internal fun DotsFlashing() {
         Dot(alpha2)
         Spacer(Modifier.width(spaceSize))
         Dot(alpha3)
+    }
+}
+
+@ExcludeFromJacocoGeneratedReport
+@DefaultPreviews
+@Composable
+private fun Preview() {
+    PreviewTheme {
+        Surface {
+            DotsFlashing()
+        }
     }
 }
