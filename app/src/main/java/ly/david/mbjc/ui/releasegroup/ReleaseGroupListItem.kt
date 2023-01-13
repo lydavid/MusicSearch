@@ -1,24 +1,28 @@
 package ly.david.mbjc.ui.releasegroup
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
-import ly.david.data.common.getYear
 import ly.david.data.common.ifNotNull
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.ReleaseGroupListItemModel
-import ly.david.data.getNameWithDisambiguation
+import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.mbjc.ui.common.coverart.SmallCoverArt
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.mbjc.ui.theme.getSubTextColor
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**
@@ -34,45 +38,48 @@ internal fun ReleaseGroupListItem(
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
     ) {
-        ConstraintLayout(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            val (mainSection, endSection, bottomSection) = createRefs()
 
-            Text(
-                text = releaseGroup.getNameWithDisambiguation(),
-                style = TextStyles.getCardTitleTextStyle(),
-                modifier = Modifier.constrainAs(mainSection) {
-                    width = Dimension.fillToConstraints
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    end.linkTo(endSection.start)
-                }
+            SmallCoverArt(
+                modifier = Modifier.padding(end = 16.dp),
+                placeholderIcon = Icons.Default.Folder,
+                coverArtUrl = buildReleaseGroupCoverArtUrl(releaseGroup.coverArtPath.orEmpty())
             )
 
-            Text(
-                text = releaseGroup.firstReleaseDate.getYear(),
-                style = TextStyles.getCardBodyTextStyle(),
-                textAlign = TextAlign.End,
-                modifier = Modifier.constrainAs(endSection) {
-                    width = Dimension.wrapContent
-                    start.linkTo(mainSection.end, margin = 4.dp)
-                    top.linkTo(parent.top)
-                    end.linkTo(parent.end)
-                }
-            )
-
-            releaseGroup.formattedArtistCredits.ifNotNull {
+            Column {
                 Text(
-                    text = it,
-                    style = TextStyles.getCardBodyTextStyle(),
-                    modifier = Modifier.constrainAs(bottomSection) {
-                        width = Dimension.matchParent
-                        top.linkTo(mainSection.bottom, margin = 4.dp)
-                    }
+                    text = releaseGroup.name,
+                    style = TextStyles.getCardBodyTextStyle()
                 )
+
+                releaseGroup.disambiguation.ifNotNullOrEmpty {
+                    Text(
+                        text = "($it)",
+                        color = getSubTextColor(),
+                        style = TextStyles.getCardBodySubTextStyle()
+                    )
+                }
+
+                releaseGroup.firstReleaseDate.ifNotNullOrEmpty {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle()
+                    )
+                }
+
+                releaseGroup.formattedArtistCredits.ifNotNull {
+                    Text(
+                        text = it,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = TextStyles.getCardBodySubTextStyle()
+                    )
+                }
             }
         }
     }
