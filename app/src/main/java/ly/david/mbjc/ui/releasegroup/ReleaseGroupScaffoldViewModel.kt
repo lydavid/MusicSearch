@@ -11,6 +11,7 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
 import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
@@ -93,9 +94,9 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
         try {
-            val coverArtUrl = releaseGroupScaffoldModel.coverArtUrl
-            if (coverArtUrl != null) {
-                url.value = coverArtUrl
+            val coverArtPath = releaseGroupScaffoldModel.coverArtPath
+            if (coverArtPath != null) {
+                url.value = buildReleaseGroupCoverArtUrl(coverArtPath)
             } else if (releaseGroupScaffoldModel.hasCoverArt != false) {
                 url.value = getCoverArtUrlFromNetwork(releaseGroupId)
             }
@@ -114,7 +115,9 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private suspend fun getCoverArtUrlFromNetwork(releaseGroupId: String): String {
         val url = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId).getSmallCoverArtUrl().orEmpty()
         releaseGroupDao.withTransaction {
-            releaseGroupDao.setReleaseGroupCoverArtUrl(releaseGroupId, url)
+            val splitUrl = url.split("/")
+            if (splitUrl.size < 2) throw Exception()
+            releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, "${splitUrl[splitUrl.lastIndex - 1]}/${splitUrl.last()}")
             releaseGroupDao.setReleaseGroupHasCoverArt(releaseGroupId, true)
         }
         return url

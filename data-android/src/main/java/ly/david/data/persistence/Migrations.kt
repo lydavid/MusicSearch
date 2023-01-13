@@ -259,4 +259,20 @@ internal object Migrations {
             )
         }
     }
+
+    @RenameColumn(tableName = "release_group", fromColumnName = "cover_art_url", toColumnName = "cover_art_path")
+    class RenameToCoverArtPathForReleaseGroup : AutoMigrationSpec
+
+    // Remove leading http://coverartarchive.org/release/
+    val REMOVE_LEADING_CAA_PATH_FOR_RELEASE_GROUP = object : Migration(88, 89) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                UPDATE release_group
+                SET cover_art_path = SUBSTR(cover_art_path, 36)
+                WHERE cover_art_path IS NOT NULL
+            """
+            )
+        }
+    }
 }

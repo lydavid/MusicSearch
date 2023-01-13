@@ -26,7 +26,7 @@ data class ReleaseGroupListItemModel(
 
     val formattedArtistCredits: String? = null,
     val hasCoverArt: Boolean? = null,
-    val coverArtUrl: String? = null,
+    val coverArtPath: String? = null,
 ) : ListItemModel(), ReleaseGroup
 
 fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
@@ -39,7 +39,7 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupList
         secondaryTypes = secondaryTypes,
         formattedArtistCredits = artistCredits.getDisplayNames(),
         hasCoverArt = null,
-        coverArtUrl = null
+        coverArtPath = null
     )
 }
 
@@ -52,7 +52,7 @@ fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemMod
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
         hasCoverArt = hasCoverArt,
-        coverArtUrl = coverArtUrl
+        coverArtPath = coverArtPath
     )
 }
 
@@ -66,6 +66,6 @@ fun ReleaseGroupForListItem.toReleaseGroupListItemModel(): ReleaseGroupListItemM
         secondaryTypes = releaseGroup.secondaryTypes,
         formattedArtistCredits = artistCreditNames,
         hasCoverArt = releaseGroup.hasCoverArt,
-        coverArtUrl = releaseGroup.coverArtUrl
+        coverArtPath = releaseGroup.coverArtPath
     )
 }

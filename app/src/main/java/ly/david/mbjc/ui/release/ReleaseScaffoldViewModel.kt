@@ -144,17 +144,6 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         }
     }
 
-    /**
-     * Returns a url to the cover art. Empty if none found.
-     *
-     * Also set it in the release.
-     */
-    private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
-        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
-        releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
-        return url
-    }
-
     fun onSelectedTabChange(
         releaseId: String,
         selectedTab: ReleaseTab
@@ -164,18 +153,14 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                 viewModelScope.launch {
                     try {
                         val releaseScaffoldModel = repository.lookupRelease(releaseId)
-                        val coverArtPath = releaseScaffoldModel.coverArtPath
-                        if (coverArtPath != null) {
-                            url.value = buildReleaseCoverArtUrl(releaseId, coverArtPath)
-                        } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
-                            url.value = getCoverArtUrlFromNetwork(releaseId)
-                        }
-
                         if (title.value.isEmpty()) {
                             title.value = releaseScaffoldModel.getNameWithDisambiguation()
                         }
                         subtitle.value = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
                         release.value = releaseScaffoldModel
+
+                        getCoverArtUrl(releaseId, releaseScaffoldModel)
+
                         isError.value = false
                     } catch (ex: Exception) {
                         isError.value = true
@@ -200,5 +185,28 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                 // Not handled here.
             }
         }
+    }
+
+    private suspend fun getCoverArtUrl(
+        releaseId: String,
+        releaseScaffoldModel: ReleaseScaffoldModel
+    ) {
+        val coverArtPath = releaseScaffoldModel.coverArtPath
+        if (coverArtPath != null) {
+            url.value = buildReleaseCoverArtUrl(releaseId, coverArtPath)
+        } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
+            url.value = getCoverArtUrlFromNetwork(releaseId)
+        }
+    }
+
+    /**
+     * Returns a url to the cover art. Empty if none found.
+     *
+     * Also set it in the release.
+     */
+    private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
+        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
+        releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
+        return url
     }
 }

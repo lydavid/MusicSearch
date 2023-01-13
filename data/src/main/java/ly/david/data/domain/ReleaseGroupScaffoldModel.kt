@@ -12,7 +12,7 @@ data class ReleaseGroupScaffoldModel(
     override val secondaryTypes: List<String>? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val hasCoverArt: Boolean? = null,
-    val coverArtUrl: String? = null,
+    val coverArtPath: String? = null,
 ) : ReleaseGroup
 
 fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroupScaffoldModel {
@@ -27,6 +27,6 @@ fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroupScaffoldM
             it.artistCreditNameRoomModel.toArtistCreditUiModel()
         },
         hasCoverArt = releaseGroup.hasCoverArt,
-        coverArtUrl = releaseGroup.coverArtUrl
+        coverArtPath = releaseGroup.coverArtPath
     )
 }

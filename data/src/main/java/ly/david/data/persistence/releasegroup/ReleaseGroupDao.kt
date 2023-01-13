@@ -31,11 +31,11 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>(), ArtistCreditD
     @Query(
         """
             UPDATE release_group
-            SET cover_art_url = :coverArtUrl
+            SET cover_art_path = :coverArtUrl
             WHERE id = :releaseGroupId
         """
     )
-    abstract suspend fun setReleaseGroupCoverArtUrl(releaseGroupId: String, coverArtUrl: String)
+    abstract suspend fun setReleaseGroupCoverArtPath(releaseGroupId: String, coverArtUrl: String)
 
     @Query(
         """

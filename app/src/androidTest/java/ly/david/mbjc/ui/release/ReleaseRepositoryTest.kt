@@ -70,7 +70,7 @@ class ReleaseRepositoryTest {
                     secondaryTypes = listOf(),
                     formattedArtistCredits = null,
                     hasCoverArt = null,
-                    coverArtUrl = null
+                    coverArtPath = null
                 ),
                 areas = listOf(
                     AreaListItemModel(
