@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,8 +34,16 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun ReleaseGroupListItem(
     releaseGroup: ReleaseGroupListItemModel,
+    requestForMissingCoverArtPath: suspend () -> Unit = {},
     onClick: ReleaseGroupListItemModel.() -> Unit = {}
 ) {
+
+    LaunchedEffect(key1 = releaseGroup.id) {
+        if (releaseGroup.coverArtPath == null) {
+            requestForMissingCoverArtPath()
+        }
+    }
+
     ClickableListItem(
         onClick = { onClick(releaseGroup) },
     ) {

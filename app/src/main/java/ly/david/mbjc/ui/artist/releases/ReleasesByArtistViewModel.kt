@@ -29,6 +29,7 @@ internal class ReleasesByArtistViewModel @Inject constructor(
     private val relationDao: RelationDao,
     private val artistReleaseDao: ArtistReleaseDao,
     private val releaseDao: ReleaseDao,
+    private val coverArtArchiveApiService: CoverArtArchiveApiService,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
     BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
@@ -107,5 +108,11 @@ internal class ReleasesByArtistViewModel @Inject constructor(
     // TODO: ideal for selecting labels. though where would those labels be shown?
     override fun postFilter(listItemModel: ReleaseListItemModel): Boolean {
         return true
+    }
+
+    private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
+        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
+        releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
+        return url
     }
 }

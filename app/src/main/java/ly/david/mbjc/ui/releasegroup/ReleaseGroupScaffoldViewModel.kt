@@ -11,8 +11,8 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.ReleaseGroupCoverArt
 import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
-import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.repository.ReleaseGroupRepository
@@ -27,10 +27,11 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private val repository: ReleaseGroupRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-    private val coverArtArchiveApiService: CoverArtArchiveApiService,
-    private val releaseGroupDao: ReleaseGroupDao,
+    override val coverArtArchiveApiService: CoverArtArchiveApiService,
+    override val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
-    IRelationsList by relationsList {
+    IRelationsList by relationsList,
+    ReleaseGroupCoverArt {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP
@@ -98,28 +99,12 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
             if (coverArtPath != null) {
                 url.value = buildReleaseGroupCoverArtUrl(coverArtPath)
             } else if (releaseGroupScaffoldModel.hasCoverArt != false) {
-                url.value = getCoverArtUrlFromNetwork(releaseGroupId)
+                url.value = getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
             }
         } catch (ex: HttpException) {
             if (ex.code() == 404) {
                 releaseGroupDao.setReleaseGroupHasCoverArt(releaseGroupId, false)
             }
         }
-    }
-
-    /**
-     * Returns a url to the cover art. Empty if none found.
-     *
-     * Also set it in the release group.
-     */
-    private suspend fun getCoverArtUrlFromNetwork(releaseGroupId: String): String {
-        val url = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId).getSmallCoverArtUrl().orEmpty()
-        releaseGroupDao.withTransaction {
-            val splitUrl = url.split("/")
-            if (splitUrl.size < 2) throw Exception()
-            releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, "${splitUrl[splitUrl.lastIndex - 1]}/${splitUrl.last()}")
-            releaseGroupDao.setReleaseGroupHasCoverArt(releaseGroupId, true)
-        }
-        return url
     }
 }

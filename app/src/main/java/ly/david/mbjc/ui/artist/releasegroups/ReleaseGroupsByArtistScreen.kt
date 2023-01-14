@@ -46,7 +46,16 @@ internal fun ReleaseGroupsByArtistScreen(
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ReleaseGroupListItemModel -> {
-                ReleaseGroupListItem(releaseGroup = listItemModel) {
+                ReleaseGroupListItem(
+                    releaseGroup = listItemModel,
+                    requestForMissingCoverArtPath = {
+                        try {
+                            viewModel.getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId = listItemModel.id)
+                        } catch (ex: Exception) {
+                            // Do nothing.
+                        }
+                    }
+                ) {
                     onReleaseGroupClick(id)
                 }
             }

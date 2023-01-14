@@ -47,9 +47,6 @@ internal class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<
     lateinit var scope: CoroutineScope
     lateinit var useCase: BrowseSortableResourceUseCase<ReleaseGroupForListItem>
 
-    // TODO: consider doing rg first, try to change each list item if they have null cover art
-    //  ideally an item loads and then we query for its cover art (handled by coil)
-    //  but we need to make our own calls to CAA to find those urls
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<ListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
