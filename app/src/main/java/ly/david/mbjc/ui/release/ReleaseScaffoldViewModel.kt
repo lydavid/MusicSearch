@@ -30,8 +30,8 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.GetReleaseCoverArtUrl
 import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
-import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -48,15 +48,16 @@ import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
 internal class ReleaseScaffoldViewModel @Inject constructor(
-    private val releaseDao: ReleaseDao,
+    override val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     override val lookupHistoryDao: LookupHistoryDao,
-    private val coverArtArchiveApiService: CoverArtArchiveApiService,
+    override val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
-    IRelationsList by relationsList {
+    IRelationsList by relationsList,
+    GetReleaseCoverArtUrl {
 
     private data class ViewModelState(
         val releaseId: String = "",
@@ -192,21 +193,10 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         releaseScaffoldModel: ReleaseScaffoldModel
     ) {
         val coverArtPath = releaseScaffoldModel.coverArtPath
-        if (coverArtPath != null) {
+        if (coverArtPath == null) {
+            url.value = getReleaseCoverArtUrlFromNetwork(releaseId)
+        } else {
             url.value = buildReleaseCoverArtUrl(releaseId, coverArtPath)
-        } else if (releaseScaffoldModel.coverArtArchive.count > 0) {
-            url.value = getCoverArtUrlFromNetwork(releaseId)
         }
-    }
-
-    /**
-     * Returns a url to the cover art. Empty if none found.
-     *
-     * Also set it in the release.
-     */
-    private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
-        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
-        releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
-        return url
     }
 }

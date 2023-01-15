@@ -8,7 +8,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.ReleaseGroupCoverArt
+import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtUrl
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.relation.BrowseResourceCount
@@ -30,7 +30,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 ) : ViewModel(),
     SortablePagedList<ListItemModel> by releaseGroupsPagedList,
     BrowseSortableResourceUseCase<ReleaseGroupForListItem>,
-    ReleaseGroupCoverArt {
+    GetReleaseGroupCoverArtUrl {
 
     init {
         releaseGroupsPagedList.scope = viewModelScope

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Album
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -39,11 +40,20 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 internal fun ReleaseListItem(
     release: ReleaseListItemModel,
     showMoreInfo: Boolean = true,
+    requestForMissingCoverArtPath: suspend () -> Unit = {},
     onClick: ReleaseListItemModel.() -> Unit = {}
 ) {
+
+    LaunchedEffect(key1 = release.id) {
+        if (release.coverArtPath == null) {
+            requestForMissingCoverArtPath()
+        }
+    }
+
     ClickableListItem(
         onClick = { onClick(release) },
     ) {
+        // TODO: don't need constraint
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,12 +61,6 @@ internal fun ReleaseListItem(
         ) {
             val (coverArt, content) = createRefs()
 
-            // TODO: if url is null, then we should try to fetch it
-            //  we should make a call to CAA to find any possible cover arts, then make a call to that cover art url to load image
-            //  But if every list item tries to do this on its own, we will be making many calls at once
-            //  If we can't load every thumbnail at once, we can just say "Click to load image" or something
-            //  Note hiltviewmodel is not keyed, so multiple instances of same one cannot co-exist
-//            release.coverArtUrl.ifNotNull {
             SmallCoverArt(
                 modifier = Modifier
                     .constrainAs(coverArt) {
@@ -69,7 +73,6 @@ internal fun ReleaseListItem(
                 placeholderIcon = Icons.Default.Album,
                 coverArtUrl = buildReleaseCoverArtUrl(release.id, release.coverArtPath.orEmpty())
             )
-//            }
 
             Column(
                 modifier = Modifier.constrainAs(content) {

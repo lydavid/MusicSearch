@@ -1,20 +1,15 @@
 package ly.david.mbjc.ui.common.coverart
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -44,36 +39,36 @@ internal fun SmallCoverArt(
 
         when (painter.state) {
             is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
-                Box(
-                    modifier = modifier
-                        .size(64.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                PlaceholderIcon(modifier, placeholderIcon)
             }
             is AsyncImagePainter.State.Success -> {
                 Image(
                     modifier = modifier
-                        .size(64.dp)
-                        .semantics { testTag = "coverArtImage" },
+                        .size(64.dp),
                     painter = painter,
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
                 )
             }
             is AsyncImagePainter.State.Error -> {
-                // TODO: handle error with retry
-                //  this case means there is an image but we failed to get it
-                //  This is not on failing cover art archive lookup, but on failing downloading the image itself
+                // No need to show error. List items will auto-retry when next recomposed.
+                PlaceholderIcon(modifier, placeholderIcon)
             }
         }
     } else {
-        Icon(
-            modifier = modifier
-                .size(64.dp),
-            imageVector = placeholderIcon,
-            contentDescription = "No release cover art"
-        )
+        PlaceholderIcon(modifier, placeholderIcon)
     }
+}
+
+@Composable
+private fun PlaceholderIcon(
+    modifier: Modifier = Modifier,
+    placeholderIcon: ImageVector = Icons.Default.Album,
+) {
+    Icon(
+        modifier = modifier
+            .size(64.dp),
+        imageVector = placeholderIcon,
+        contentDescription = "No cover art"
+    )
 }

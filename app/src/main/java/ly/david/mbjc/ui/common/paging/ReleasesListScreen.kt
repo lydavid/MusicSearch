@@ -5,10 +5,23 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
+import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.network.api.coverart.GetReleaseCoverArtUrl
+import ly.david.data.persistence.release.ReleaseDao
 import ly.david.mbjc.ui.release.ReleaseListItem
+
+@HiltViewModel
+internal class ReleasesListViewModel @Inject constructor(
+    override val coverArtArchiveApiService: CoverArtArchiveApiService,
+    override val releaseDao: ReleaseDao
+) : ViewModel(), GetReleaseCoverArtUrl
 
 @Composable
 internal fun ReleasesListScreen(
@@ -18,6 +31,7 @@ internal fun ReleasesListScreen(
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     showMoreInfo: Boolean = true,
     onReleaseClick: (String, String) -> Unit,
+    viewModel: ReleasesListViewModel = hiltViewModel()
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -29,7 +43,14 @@ internal fun ReleasesListScreen(
             is ReleaseListItemModel -> {
                 ReleaseListItem(
                     release = releaseListItemModel,
-                    showMoreInfo = showMoreInfo
+                    showMoreInfo = showMoreInfo,
+                    requestForMissingCoverArtPath = {
+                        try {
+                            viewModel.getReleaseCoverArtUrlFromNetwork(releaseId = releaseListItemModel.id)
+                        } catch (ex: Exception) {
+                            // Do nothing.
+                        }
+                    }
                 ) {
                     onReleaseClick(id, getNameWithDisambiguation())
                 }

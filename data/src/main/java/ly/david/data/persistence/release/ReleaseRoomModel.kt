@@ -41,6 +41,7 @@ data class ReleaseRoomModel(
     @ColumnInfo(name = "packaging") override val packaging: String? = null,
     @ColumnInfo(name = "packaging_id") override val packagingId: String? = null,
 
+    // TODO: might be able to remove this unless we care about the number of cover art it has
     @Embedded override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
 
     @Embedded override val textRepresentation: TextRepresentation? = null,

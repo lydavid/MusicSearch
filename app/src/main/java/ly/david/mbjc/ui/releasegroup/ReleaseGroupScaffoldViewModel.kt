@@ -11,7 +11,7 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.ReleaseGroupCoverArt
+import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtUrl
 import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
@@ -20,7 +20,6 @@ import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
-import retrofit2.HttpException
 
 @HiltViewModel
 internal class ReleaseGroupScaffoldViewModel @Inject constructor(
@@ -31,7 +30,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     override val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
-    ReleaseGroupCoverArt {
+    GetReleaseGroupCoverArtUrl {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP
@@ -94,17 +93,11 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         releaseGroupId: String,
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
-        try {
-            val coverArtPath = releaseGroupScaffoldModel.coverArtPath
-            if (coverArtPath != null) {
-                url.value = buildReleaseGroupCoverArtUrl(coverArtPath)
-            } else if (releaseGroupScaffoldModel.hasCoverArt != false) {
-                url.value = getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
-            }
-        } catch (ex: HttpException) {
-            if (ex.code() == 404) {
-                releaseGroupDao.setReleaseGroupHasCoverArt(releaseGroupId, false)
-            }
+        val coverArtPath = releaseGroupScaffoldModel.coverArtPath
+        url.value = if (coverArtPath == null) {
+            getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
+        } else {
+            buildReleaseGroupCoverArtUrl(coverArtPath)
         }
     }
 }

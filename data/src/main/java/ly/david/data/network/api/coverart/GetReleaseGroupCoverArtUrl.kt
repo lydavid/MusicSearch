@@ -1,15 +1,22 @@
 package ly.david.data.network.api.coverart
 
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import retrofit2.HttpException
 
 /**
- * Logic to retrieve release group cover art urls
+ * Logic to retrieve release group cover art url.
  */
-interface ReleaseGroupCoverArt {
+interface GetReleaseGroupCoverArtUrl {
 
     val coverArtArchiveApiService: CoverArtArchiveApiService
     val releaseGroupDao: ReleaseGroupDao
 
+    /**
+     * Returns an appropriate cover art for the release group with [releaseGroupId].
+     * Empty if none found.
+     *
+     * Make sure to handle non-404 errors as call site.
+     */
     suspend fun getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId: String): String {
         return try {
             val url = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId).getSmallCoverArtUrl().orEmpty()
@@ -23,10 +30,10 @@ interface ReleaseGroupCoverArt {
                 releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, coverArtPath)
             }
             return url
-        } catch (ex: Exception) {
-            // Because we throw on 404 when we don't find a cover art, we need to make sure we still set empty in room
-            // to indicate we shouldn't retry this next time.
-            releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, "")
+        } catch (ex: HttpException) {
+            if (ex.code() == 404) {
+                releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, "")
+            }
             ""
         }
     }
