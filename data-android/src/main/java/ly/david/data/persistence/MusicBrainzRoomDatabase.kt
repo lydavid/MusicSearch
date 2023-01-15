@@ -41,7 +41,7 @@ import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 89,
+    version = 91,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -159,6 +159,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 84, to = 85),
         AutoMigration(from = 85, to = 86, spec = Migrations.RenameToCoverArtPath::class),
         AutoMigration(from = 87, to = 88, spec = Migrations.RenameToCoverArtPathForReleaseGroup::class),
+        AutoMigration(from = 89, to = 90),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

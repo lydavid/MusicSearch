@@ -5,11 +5,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import androidx.room.Update
+import androidx.room.Upsert
 
 abstract class BaseDao<in T> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insert(entity: T): Long
+
+    @Upsert
+    abstract suspend fun upsert(entity: T)
 
     /**
      * In general, we should choose [insert] over this.

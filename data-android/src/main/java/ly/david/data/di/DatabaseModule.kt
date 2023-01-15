@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.persistence.Migrations.ADD_FK_TO_RELEASES_RELEASE_GROUPS
+import ly.david.data.persistence.Migrations.CHANGE_LOOKUP_HISTORY_PK
 import ly.david.data.persistence.Migrations.MIGRATION_10_11
 import ly.david.data.persistence.Migrations.MIGRATION_29_30
 import ly.david.data.persistence.Migrations.MIGRATION_32_33
@@ -40,6 +41,7 @@ object DatabaseModule {
             .addMigrations(MOVE_RELEASE_GROUP_ID_OUT_OF_RELEASE)
             .addMigrations(REMOVE_LEADING_CAA_PATH)
             .addMigrations(REMOVE_LEADING_CAA_PATH_FOR_RELEASE_GROUP)
+            .addMigrations(CHANGE_LOOKUP_HISTORY_PK)
             .fallbackToDestructiveMigration()
             .build()
     }

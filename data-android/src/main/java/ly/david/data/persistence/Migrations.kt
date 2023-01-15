@@ -275,4 +275,25 @@ internal object Migrations {
             )
         }
     }
+
+    val CHANGE_LOOKUP_HISTORY_PK = object : Migration(90, 91) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                INSERT INTO lookup_history_copy (mbid, title, resource, number_of_visits, last_accessed, search_hint)
+                SELECT mbid, title, resource, number_of_visits, last_accessed, search_hint FROM lookup_history
+            """
+            )
+            database.execSQL(
+                """
+                DROP TABLE lookup_history
+            """
+            )
+            database.execSQL(
+                """
+                ALTER TABLE lookup_history_copy RENAME TO lookup_history
+            """
+            )
+        }
+    }
 }

@@ -52,19 +52,13 @@ abstract class LookupHistoryDao : BaseDao<LookupHistory>() {
         val historyRecord = getLookupHistory(lookupHistory.mbid)
         if (historyRecord == null) {
             insert(lookupHistory)
-        } else if (historyRecord.title.isEmpty()) {
-            insertReplace(
+        } else {
+            upsert(
                 historyRecord.copy(
                     title = lookupHistory.title,
                     numberOfVisits = historyRecord.numberOfVisits + 1,
-                    lastAccessed = Date()
-                )
-            )
-        } else {
-            insertReplace(
-                historyRecord.copy(
-                    numberOfVisits = historyRecord.numberOfVisits + 1,
-                    lastAccessed = Date()
+                    lastAccessed = Date(),
+                    searchHint = lookupHistory.searchHint
                 )
             )
         }

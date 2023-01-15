@@ -60,7 +60,8 @@ internal class ArtistScaffoldViewModel @Inject constructor(
                         recordLookupHistory(
                             resourceId = artistId,
                             resource = resource,
-                            summary = title.value
+                            summary = title.value,
+                            searchHint = artist.value?.sortName ?: ""
                         )
                         recordedLookup = true
                     }
