@@ -15,7 +15,7 @@ interface GetReleaseCoverArtUrl {
      */
     suspend fun getReleaseCoverArtUrlFromNetwork(releaseId: String): String {
         return try {
-            val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
+            val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getFrontCoverArtUrl().orEmpty()
             releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
             return url
         } catch (ex: HttpException) {

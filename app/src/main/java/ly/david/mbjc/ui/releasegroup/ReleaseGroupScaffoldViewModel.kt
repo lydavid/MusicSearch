@@ -94,10 +94,9 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
         val coverArtPath = releaseGroupScaffoldModel.coverArtPath
-        url.value = if (coverArtPath == null) {
-            getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId)
-        } else {
-            buildReleaseGroupCoverArtUrl(coverArtPath)
-        }
+        url.value = buildReleaseGroupCoverArtUrl(
+            coverArtPath = coverArtPath ?: getReleaseGroupCoverArtPathFromNetwork(releaseGroupId),
+            thumbnail = false
+        )
     }
 }

@@ -40,7 +40,7 @@ internal fun ReleaseDetailsScreen(
 ) {
     LazyColumn(state = lazyListState) {
         item {
-            BigCoverArt(coverArtUrl = coverArtUrl)
+            BigCoverArt(coverArtUrl = coverArtUrl, resourceId = release.id)
 
             release.run {
                 InformationListSeparatorHeader(R.string.release)

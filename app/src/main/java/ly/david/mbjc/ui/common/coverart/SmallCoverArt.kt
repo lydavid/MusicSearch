@@ -22,8 +22,9 @@ import ly.david.data.common.useHttps
 @Composable
 internal fun SmallCoverArt(
     modifier: Modifier = Modifier,
-    placeholderIcon: ImageVector = Icons.Default.Album,
     coverArtUrl: String = "",
+    placeholderIcon: ImageVector = Icons.Default.Album,
+    resourceId: String? = null
 ) {
     if (coverArtUrl.isNotEmpty()) {
 
@@ -33,6 +34,7 @@ internal fun SmallCoverArt(
                 .size(Size(64, 64))
                 .scale(Scale.FIT)
                 .crossfade(true)
+                .memoryCacheKey(resourceId)
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )

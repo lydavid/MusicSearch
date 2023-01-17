@@ -17,19 +17,17 @@ interface GetReleaseGroupCoverArtUrl {
      *
      * Make sure to handle non-404 errors as call site.
      */
-    suspend fun getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId: String): String {
+    suspend fun getReleaseGroupCoverArtPathFromNetwork(releaseGroupId: String): String {
         return try {
-            val url = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId).getSmallCoverArtUrl().orEmpty()
-            releaseGroupDao.withTransaction {
-                val splitUrl = url.split("/")
-                val coverArtPath = if (splitUrl.size < 2) {
-                    ""
-                } else {
-                    "${splitUrl[splitUrl.lastIndex - 1]}/${splitUrl.last()}"
-                }
-                releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, coverArtPath)
+            val url = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId).getFrontCoverArtUrl().orEmpty()
+            val splitUrl = url.split("/")
+            val coverArtPath = if (splitUrl.size < 2) {
+                ""
+            } else {
+                "${splitUrl[splitUrl.lastIndex - 1]}/${splitUrl.last().replace(".jpg", "")}"
             }
-            return url
+            releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, coverArtPath)
+            return coverArtPath
         } catch (ex: HttpException) {
             if (ex.code() == 404) {
                 releaseGroupDao.setReleaseGroupCoverArtPath(releaseGroupId, "")

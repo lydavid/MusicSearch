@@ -2,18 +2,20 @@ package ly.david.data.network.api.coverart
 
 import com.squareup.moshi.Json
 
+/**
+ * [Cover Art Archive API documentation](https://wiki.musicbrainz.org/Cover_Art_Archive/API#Cover_Art_Archive_Metadata)
+ */
 data class CoverArtsResponse(
-
     @Json(name = "images") val coverArtUrls: List<CoverArtUrls>,
-
-    // URL back to Music Brainz release
-    @Json(name = "release") val release: String
+    @Json(name = "release") val release: String // URL back to Music Brainz release
 )
 
 data class CoverArtUrls(
     @Json(name = "id") val id: String,
 
-    // Seems to be the full-size image
+    /**
+     * The full-size image. Its url is all we need, as we can build the thumbnail by appending -250.jpg
+     */
     @Json(name = "image") val imageUrl: String? = null,
 
     @Json(name = "thumbnails") val thumbnailsUrls: ThumbnailsUrls? = null,
@@ -44,12 +46,9 @@ data class ThumbnailsUrls(
 //}
 
 /**
- * Returns an appropriate small [ThumbnailsUrls.resolution250Url]/[ThumbnailsUrls.small].
+ * Returns a cover art url.
  */
-fun CoverArtsResponse.getSmallCoverArtUrl(): String? {
-    val firstFront250Url = coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution250Url
-    val firstFrontSmallUrl = coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.small
-
+fun CoverArtsResponse.getFrontCoverArtUrl(): String? {
     // Note: MB doesn't fall back to any non-front covers
-    return firstFront250Url ?: firstFrontSmallUrl
+    return coverArtUrls.firstOrNull { it.front }?.imageUrl
 }

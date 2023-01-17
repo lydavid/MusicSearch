@@ -41,7 +41,7 @@ import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 91,
+    version = 92,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,

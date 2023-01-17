@@ -10,7 +10,6 @@ import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.getSmallCoverArtUrl
 import ly.david.data.persistence.artist.release.ArtistRelease
 import ly.david.data.persistence.artist.release.ArtistReleaseDao
 import ly.david.data.persistence.relation.BrowseResourceCount
@@ -108,11 +107,5 @@ internal class ReleasesByArtistViewModel @Inject constructor(
     // TODO: ideal for selecting labels. though where would those labels be shown?
     override fun postFilter(listItemModel: ReleaseListItemModel): Boolean {
         return true
-    }
-
-    private suspend fun getCoverArtUrlFromNetwork(releaseId: String): String {
-        val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getSmallCoverArtUrl().orEmpty()
-        releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
-        return url
     }
 }

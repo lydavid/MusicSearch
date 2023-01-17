@@ -196,7 +196,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         if (coverArtPath == null) {
             url.value = getReleaseCoverArtUrlFromNetwork(releaseId)
         } else {
-            url.value = buildReleaseCoverArtUrl(releaseId, coverArtPath)
+            url.value = buildReleaseCoverArtUrl(releaseId = releaseId, coverArtPath = coverArtPath, thumbnail = false)
         }
     }
 }

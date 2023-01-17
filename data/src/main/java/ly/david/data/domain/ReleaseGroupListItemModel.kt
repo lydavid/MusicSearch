@@ -38,8 +38,6 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupList
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
         formattedArtistCredits = artistCredits.getDisplayNames(),
-        hasCoverArt = null,
-        coverArtPath = null
     )
 }
 

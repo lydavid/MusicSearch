@@ -21,7 +21,10 @@ internal fun ReleaseGroupDetailsScreen(
     LazyColumn(state = lazyListState) {
 
         item {
-            BigCoverArt(coverArtUrl = coverArtUrl)
+            BigCoverArt(
+                coverArtUrl = coverArtUrl,
+                resourceId = releaseGroup.id
+            )
         }
 
         item {

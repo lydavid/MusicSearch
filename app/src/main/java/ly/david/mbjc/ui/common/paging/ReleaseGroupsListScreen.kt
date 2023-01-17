@@ -47,7 +47,7 @@ internal fun ReleaseGroupsListScreen(
                     releaseGroup = listItemModel,
                     requestForMissingCoverArtPath = {
                         try {
-                            viewModel.getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId = listItemModel.id)
+                            viewModel.getReleaseGroupCoverArtPathFromNetwork(releaseGroupId = listItemModel.id)
                         } catch (ex: Exception) {
                             // Do nothing.
                         }
