@@ -30,6 +30,7 @@ internal fun ReleasesByAreaScreen(
         viewModel.loadPagedResources(areaId)
         onPagedReleasesFlowChange(viewModel.pagedResources)
     }
+
     viewModel.updateQuery(filterText)
 
     ReleasesListScreen(

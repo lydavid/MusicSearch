@@ -7,8 +7,6 @@ import javax.inject.Inject
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtUrl
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.relation.BrowseResourceCount
@@ -24,13 +22,11 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
     private val releaseGroupsPagedList: ReleaseGroupsPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
-    override val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupDao: ReleaseGroupDao,
     private val relationDao: RelationDao,
-    override val coverArtArchiveApiService: CoverArtArchiveApiService
 ) : ViewModel(),
     SortablePagedList<ListItemModel> by releaseGroupsPagedList,
-    BrowseSortableResourceUseCase<ReleaseGroupForListItem>,
-    GetReleaseGroupCoverArtUrl {
+    BrowseSortableResourceUseCase<ReleaseGroupForListItem> {
 
     init {
         releaseGroupsPagedList.scope = viewModelScope

@@ -56,7 +56,6 @@ internal enum class ArtistTab(@StringRes val titleRes: Int) {
 internal fun ArtistScaffold(
     artistId: String,
     titleWithDisambiguation: String? = null,
-    onReleaseGroupClick: (String) -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
 
@@ -176,7 +175,7 @@ internal fun ArtistScaffold(
                     searchText = filterText,
                     isSorted = isSorted,
                     snackbarHostState = snackbarHostState,
-                    onReleaseGroupClick = onReleaseGroupClick,
+                    onReleaseGroupClick = onItemClick,
                     lazyListState = releaseGroupsLazyListState,
                     lazyPagingItems = releaseGroupsLazyPagingItems,
                     onPagedReleaseGroupsChange = {

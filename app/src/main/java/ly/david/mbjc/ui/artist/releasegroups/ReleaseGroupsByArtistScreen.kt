@@ -10,11 +10,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.ReleaseGroupListItemModel
-import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
+import ly.david.data.navigation.Destination
+import ly.david.mbjc.ui.common.paging.ReleaseGroupsListScreen
 
 @Composable
 internal fun ReleaseGroupsByArtistScreen(
@@ -23,13 +20,12 @@ internal fun ReleaseGroupsByArtistScreen(
     searchText: String,
     isSorted: Boolean,
     snackbarHostState: SnackbarHostState,
-    onReleaseGroupClick: (String) -> Unit = {},
+    onReleaseGroupClick: (destination: Destination, String, String) -> Unit,
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     onPagedReleaseGroupsChange: (Flow<PagingData<ListItemModel>>) -> Unit,
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
-
     LaunchedEffect(key1 = artistId) {
         viewModel.loadPagedResources(artistId)
         onPagedReleaseGroupsChange(viewModel.pagedResources)
@@ -38,33 +34,13 @@ internal fun ReleaseGroupsByArtistScreen(
     viewModel.updateQuery(query = searchText)
     viewModel.updateSorted(sorted = isSorted)
 
-    PagingLoadingAndErrorHandler(
+    ReleaseGroupsListScreen(
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
-    ) { listItemModel: ListItemModel? ->
-        when (listItemModel) {
-            is ReleaseGroupListItemModel -> {
-                ReleaseGroupListItem(
-                    releaseGroup = listItemModel,
-                    requestForMissingCoverArtPath = {
-                        try {
-                            viewModel.getReleaseGroupCoverArtUrlFromNetwork(releaseGroupId = listItemModel.id)
-                        } catch (ex: Exception) {
-                            // Do nothing.
-                        }
-                    }
-                ) {
-                    onReleaseGroupClick(id)
-                }
-            }
-            is ListSeparator -> {
-                ListSeparatorHeader(text = listItemModel.text)
-            }
-            else -> {
-                // Do nothing.
-            }
+        onReleaseGroupClick = { id, title ->
+            onReleaseGroupClick(Destination.LOOKUP_RELEASE_GROUP, id, title)
         }
-    }
+    )
 }

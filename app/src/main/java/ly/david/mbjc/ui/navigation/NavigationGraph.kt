@@ -155,7 +155,6 @@ internal fun NavigationGraph(
             ArtistScaffold(
                 artistId = resourceId,
                 titleWithDisambiguation = title,
-                onReleaseGroupClick = onReleaseGroupClick,
                 onItemClick = onLookupItemClick,
                 onBack = navController::navigateUp,
             )
