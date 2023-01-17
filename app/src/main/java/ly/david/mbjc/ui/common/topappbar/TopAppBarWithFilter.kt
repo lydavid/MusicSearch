@@ -62,9 +62,11 @@ internal fun TopAppBarWithFilter(
 ) {
     var isFilterMode by rememberSaveable { mutableStateOf(false) }
 
-    BackHandler {
-        isFilterMode = false
-        onFilterTextChange("")
+    if (isFilterMode) {
+        BackHandler {
+            isFilterMode = false
+            onFilterTextChange("")
+        }
     }
 
     TopAppBarWithFilterInternal(
