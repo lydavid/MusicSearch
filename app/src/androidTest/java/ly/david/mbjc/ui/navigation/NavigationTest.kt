@@ -122,4 +122,53 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             .filterToOne(hasNoClickAction())
             .assertIsDisplayed()
     }
+
+    /**
+     * Ensure we don't run into another BackHandler that eats up all of our hardware back presses.
+     */
+    @Test
+    fun pressHardwareBackButton() {
+        composeTestRule
+            .onNodeWithContentDescription(navDrawerIconContentDescription)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithContentDescription(navDrawerIconContentDescription)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(historyDrawerLabel)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithText(historyScreenTitle)
+            .assertIsDisplayed()
+
+        composeTestRule.activityRule.scenario.onActivity {
+            it.onBackPressedDispatcher.onBackPressed()
+        }
+
+        composeTestRule
+            .onAllNodesWithText(searchDrawerLabel)
+            .filterToOne(matcher = hasNoClickAction())
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText(settings)
+            .performClick()
+
+        composeTestRule
+            .onAllNodesWithText(settings)
+            .filterToOne(hasNoClickAction())
+            .assertIsDisplayed()
+
+        composeTestRule.activityRule.scenario.onActivity {
+            it.onBackPressedDispatcher.onBackPressed()
+        }
+
+        composeTestRule
+            .onAllNodesWithText(searchDrawerLabel)
+            .filterToOne(matcher = hasNoClickAction())
+            .assertIsDisplayed()
+    }
 }
