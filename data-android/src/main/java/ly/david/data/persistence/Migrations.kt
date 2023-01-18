@@ -309,4 +309,17 @@ internal object Migrations {
             )
         }
     }
+
+    // Remove trailing -250.jpg
+    val TRIM_250_JPG_FOR_RELEASE = object : Migration(92, 93) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                UPDATE release
+                SET cover_art_path = SUBSTR(cover_art_path, 1, LENGTH(cover_art_path)-8)
+                WHERE cover_art_path IS NOT NULL
+            """
+            )
+        }
+    }
 }

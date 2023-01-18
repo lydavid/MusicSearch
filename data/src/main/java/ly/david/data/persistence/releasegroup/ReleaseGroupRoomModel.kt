@@ -33,7 +33,7 @@ data class ReleaseGroupRoomModel(
      * May be one of:
      * - `null`: Have not requested cover art
      * - Empty: Requested but did not find any
-     * - string path: partial url path to cover art (eg. e6a9a248-649c-4be1-bc84-924638bafa49/32187188956-250.jpg)
+     * - string path: partial url path to cover art (eg. e6a9a248-649c-4be1-bc84-924638bafa49/32187188956)
      *
      * Also see [ReleaseRoomModel.coverArtPath].
      */

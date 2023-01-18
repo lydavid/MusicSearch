@@ -15,7 +15,7 @@ import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtUrl
+import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
@@ -24,7 +24,7 @@ import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 internal class ReleaseGroupsListViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     override val releaseGroupDao: ReleaseGroupDao
-) : ViewModel(), GetReleaseGroupCoverArtUrl
+) : ViewModel(), GetReleaseGroupCoverArtPath
 
 @Composable
 internal fun ReleaseGroupsListScreen(

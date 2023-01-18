@@ -11,7 +11,7 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtUrl
+import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
@@ -30,7 +30,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     override val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
-    GetReleaseGroupCoverArtUrl {
+    GetReleaseGroupCoverArtPath {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP

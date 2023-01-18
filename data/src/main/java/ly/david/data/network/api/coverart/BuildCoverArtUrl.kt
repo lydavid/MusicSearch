@@ -5,6 +5,11 @@ package ly.david.data.network.api.coverart
 private const val SMALL_SUFFIX = "-250"
 private const val LARGE_SUFFIX = "-500"
 
+/**
+ * Builds a fully qualified cover art url from [releaseId] and [coverArtPath].
+ *
+ * @param thumbnail Determines whether to build url for smaller thumbnail image or not.
+ */
 fun buildReleaseCoverArtUrl(
     releaseId: String,
     coverArtPath: String,
@@ -18,8 +23,9 @@ fun buildReleaseCoverArtUrl(
 }
 
 /**
- * Release group cover art actually comes from a release.
- * Since multiple releases can belong to a release group, we just store the path including the release id.
+ * Builds a fully qualified cover art url from [coverArtPath].
+ *
+ * @param thumbnail Determines whether to build url for smaller thumbnail image or not.
  */
 fun buildReleaseGroupCoverArtUrl(
     coverArtPath: String,

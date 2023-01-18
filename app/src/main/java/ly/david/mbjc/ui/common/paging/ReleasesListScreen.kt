@@ -13,7 +13,7 @@ import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.GetReleaseCoverArtUrl
+import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.mbjc.ui.release.ReleaseListItem
 
@@ -21,7 +21,7 @@ import ly.david.mbjc.ui.release.ReleaseListItem
 internal class ReleasesListViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     override val releaseDao: ReleaseDao
-) : ViewModel(), GetReleaseCoverArtUrl
+) : ViewModel(), GetReleaseCoverArtPath
 
 @Composable
 internal fun ReleasesListScreen(
@@ -46,7 +46,7 @@ internal fun ReleasesListScreen(
                     showMoreInfo = showMoreInfo,
                     requestForMissingCoverArtPath = {
                         try {
-                            viewModel.getReleaseCoverArtUrlFromNetwork(releaseId = releaseListItemModel.id)
+                            viewModel.getReleaseCoverArtPathFromNetwork(releaseId = releaseListItemModel.id)
                         } catch (ex: Exception) {
                             // Do nothing.
                         }

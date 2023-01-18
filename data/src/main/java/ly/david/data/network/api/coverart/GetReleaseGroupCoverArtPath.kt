@@ -4,9 +4,9 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import retrofit2.HttpException
 
 /**
- * Logic to retrieve release group cover art url.
+ * Logic to retrieve release group cover art path.
  */
-interface GetReleaseGroupCoverArtUrl {
+interface GetReleaseGroupCoverArtPath {
 
     val coverArtArchiveApiService: CoverArtArchiveApiService
     val releaseGroupDao: ReleaseGroupDao

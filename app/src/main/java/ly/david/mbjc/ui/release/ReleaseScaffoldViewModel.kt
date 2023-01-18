@@ -30,7 +30,7 @@ import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.GetReleaseCoverArtUrl
+import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
 import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
@@ -57,7 +57,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     private val relationsList: RelationsList,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
-    GetReleaseCoverArtUrl {
+    GetReleaseCoverArtPath {
 
     private data class ViewModelState(
         val releaseId: String = "",
@@ -193,10 +193,10 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         releaseScaffoldModel: ReleaseScaffoldModel
     ) {
         val coverArtPath = releaseScaffoldModel.coverArtPath
-        if (coverArtPath == null) {
-            url.value = getReleaseCoverArtUrlFromNetwork(releaseId)
-        } else {
-            url.value = buildReleaseCoverArtUrl(releaseId = releaseId, coverArtPath = coverArtPath, thumbnail = false)
-        }
+        url.value = buildReleaseCoverArtUrl(
+            releaseId = releaseId,
+            coverArtPath = coverArtPath ?: getReleaseCoverArtPathFromNetwork(releaseId),
+            thumbnail = false
+        )
     }
 }

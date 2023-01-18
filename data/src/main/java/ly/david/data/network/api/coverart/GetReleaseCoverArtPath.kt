@@ -3,7 +3,10 @@ package ly.david.data.network.api.coverart
 import ly.david.data.persistence.release.ReleaseDao
 import retrofit2.HttpException
 
-interface GetReleaseCoverArtUrl {
+/**
+ * Logic to retrieve release cover art path.
+ */
+interface GetReleaseCoverArtPath {
 
     val coverArtArchiveApiService: CoverArtArchiveApiService
     val releaseDao: ReleaseDao
@@ -13,11 +16,12 @@ interface GetReleaseCoverArtUrl {
      *
      * Also set it in the release.
      */
-    suspend fun getReleaseCoverArtUrlFromNetwork(releaseId: String): String {
+    suspend fun getReleaseCoverArtPathFromNetwork(releaseId: String): String {
         return try {
             val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getFrontCoverArtUrl().orEmpty()
-            releaseDao.setReleaseCoverArtPath(releaseId, url.split("/").last())
-            return url
+            val path = url.split("/").last().replace(".jpg", "")
+            releaseDao.setReleaseCoverArtPath(releaseId, path)
+            return path
         } catch (ex: HttpException) {
             if (ex.code() == 404) {
                 releaseDao.setReleaseCoverArtPath(releaseId, "")
