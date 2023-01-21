@@ -3,7 +3,7 @@ package ly.david.data.network.api
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
-internal object JsonUtils {
+object JsonUtils {
     val moshi: Moshi by lazy {
         Moshi.Builder()
             .add(KotlinJsonAdapterFactory())

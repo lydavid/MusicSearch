@@ -22,7 +22,7 @@ private const val ACCEPT_VALUE = "application/json"
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object NetworkModule {
+object NetworkModule {
 
     @Singleton
     @Provides

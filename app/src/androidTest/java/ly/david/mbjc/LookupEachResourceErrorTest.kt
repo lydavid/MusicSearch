@@ -21,8 +21,9 @@ import org.junit.runners.Parameterized
 
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class LookupEachResourceErrorTest(private val resource: MusicBrainzResource) : MainActivityTest(),
-    StringReferences {
+internal class LookupEachResourceErrorTest(
+    private val resource: MusicBrainzResource
+) : MainActivityTestWithMockServer(), StringReferences {
 
     companion object {
         @JvmStatic
@@ -37,8 +38,8 @@ internal class LookupEachResourceErrorTest(private val resource: MusicBrainzReso
     private lateinit var navController: NavHostController
 
     @Before
-    fun setupApp() {
-        hiltRule.inject()
+    override fun setupApp() {
+        super.setupApp()
 
         composeTestRule.activity.setContent {
             navController = rememberNavController()

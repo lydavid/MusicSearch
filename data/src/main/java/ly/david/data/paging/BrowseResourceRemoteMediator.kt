@@ -63,7 +63,7 @@ class BrowseResourceRemoteMediator<RM : RoomModel>(
                     val remoteResourceCount = getRemoteResourceCount()
 
                     // It should not be possible for the number of release groups in the database to exceed the total
-                    // from Music Brainz's database. But if it does, it could cause an infinite loop here.
+                    // from MusicBrainz's database. But if it does, it could cause an infinite loop here.
                     if (localResourceCount == remoteResourceCount) {
                         return MediatorResult.Success(endOfPaginationReached = true)
                     }

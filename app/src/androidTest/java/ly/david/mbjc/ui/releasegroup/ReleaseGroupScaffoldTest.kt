@@ -6,19 +6,13 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
-import ly.david.mbjc.MainActivityTest
+import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-    }
+internal class ReleaseGroupScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
     @Test
     fun showRetryButtonOnError() {

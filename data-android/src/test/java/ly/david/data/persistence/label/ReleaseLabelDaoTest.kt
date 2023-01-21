@@ -5,7 +5,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
-import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseRoomModel
 import org.hamcrest.CoreMatchers.`is`
@@ -16,9 +15,6 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseLabelDaoTest : HiltTest() {
-
-    @Inject
-    lateinit var db: MusicBrainzDatabase
 
     @Inject
     lateinit var releaseLabelDao: ReleaseLabelDao

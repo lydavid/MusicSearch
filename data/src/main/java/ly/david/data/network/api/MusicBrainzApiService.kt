@@ -14,7 +14,7 @@ interface MusicBrainzApiService : SearchApi, BrowseApi, LookupApi
 /**
  * Implementation of MusicBrainz API.
  */
-interface MusicBrainzApiServiceImpl : MusicBrainzApiService {
+interface MusicBrainzApiServiceImpl {
     companion object {
         fun create(client: OkHttpClient): MusicBrainzApiService {
             val retrofit = Retrofit.Builder()

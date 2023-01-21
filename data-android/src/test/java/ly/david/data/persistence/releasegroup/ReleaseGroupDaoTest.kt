@@ -13,8 +13,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 
-// TODO: splitting data by data and data-android means we are testing this
-//  in data-android, despite this dao being from data
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseGroupDaoTest : HiltTest() {

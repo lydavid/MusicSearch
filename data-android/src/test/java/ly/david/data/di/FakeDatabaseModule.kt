@@ -11,7 +11,7 @@ import javax.inject.Singleton
 import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.MusicBrainzRoomDatabase
 
-// TODO: duplicated here and in app
+// Duplicated here and in app but it's okay because trying to inject this upstream just makes a mess of AS modules
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],

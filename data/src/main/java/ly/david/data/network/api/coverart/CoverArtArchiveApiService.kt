@@ -27,7 +27,6 @@ interface CoverArtArchiveApiService {
     suspend fun getReleaseGroupCoverArts(@Path("id") releaseGroupId: String): CoverArtsResponse
 }
 
-// TODO: a 404 is different -> there is no cover art, so don't keep/allow retrying
 interface CoverArtArchiveApiServiceImpl {
     companion object {
         fun create(client: OkHttpClient): CoverArtArchiveApiService {

@@ -15,14 +15,12 @@ import ly.david.data.network.fakeAreaWithRelation
 import ly.david.data.network.fakeCountry
 import ly.david.data.network.fakePlace
 import ly.david.data.network.fakeRelease
-import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.MainActivityTest
+import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
 
 /**
@@ -32,20 +30,13 @@ import org.junit.Test
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
 @HiltAndroidTest
-internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
+internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
     @Inject
-    lateinit var db: MusicBrainzDatabase
-    private lateinit var relationDao: RelationDao
-    private lateinit var areaDao: AreaDao
+    lateinit var relationDao: RelationDao
 
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-
-        relationDao = db.getRelationDao()
-        areaDao = db.getAreaDao()
-    }
+    @Inject
+    lateinit var areaDao: AreaDao
 
     private fun setArea(areaMusicBrainzModel: AreaMusicBrainzModel) {
         composeTestRule.activity.setContent {

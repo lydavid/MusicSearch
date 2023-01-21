@@ -20,27 +20,19 @@ import ly.david.data.network.fakeReleaseEvent
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleaseWithRelation
 import ly.david.data.repository.ReleaseRepository
-import ly.david.mbjc.MainActivityTest
+import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
+internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
     @Inject
     lateinit var releaseRepository: ReleaseRepository
 
 //    @Inject
 //    lateinit var imageLoaderFactory: ImageLoaderFactory
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-
-//        Coil.setImageLoader(imageLoaderFactory)
-    }
 
     private fun setRelease(releaseMusicBrainzModel: ReleaseMusicBrainzModel) {
         composeTestRule.activity.setContent {
@@ -72,15 +64,8 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
 
     private fun assertFieldsDisplayed() {
         composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        composeTestRule
             .onNodeWithText(fakeRelease.name)
             .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(details)
-            .performClick()
         composeTestRule
             .onNodeWithText(fakeLabelInfo.label!!.name)
             .assertIsDisplayed()
@@ -164,7 +149,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     // TODO: These only works when we use real ImageLoader...
-    //  try: https://github.com/coil-kt/coil/pull/1451
+    //  Wait for: https://github.com/coil-kt/coil/pull/1451
 //    @Test
 //    fun firstTimeVisit_CoverArt() {
 //        setRelease(fakeReleaseWithCoverArt)
