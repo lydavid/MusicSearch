@@ -37,3 +37,7 @@ fun buildReleaseGroupCoverArtUrl(
         "${COVER_ART_ARCHIVE_BASE_URL}release/$coverArtPath" + if (thumbnail) SMALL_SUFFIX else LARGE_SUFFIX
     }
 }
+
+fun String.trimCoverArtSuffix(): String {
+    return this.replace(SMALL_SUFFIX, "").replace(LARGE_SUFFIX, "")
+}

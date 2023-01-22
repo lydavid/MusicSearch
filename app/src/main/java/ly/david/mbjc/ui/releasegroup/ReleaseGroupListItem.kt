@@ -58,7 +58,6 @@ internal fun ReleaseGroupListItem(
                 modifier = Modifier.padding(end = 16.dp),
                 coverArtUrl = buildReleaseGroupCoverArtUrl(releaseGroup.coverArtPath.orEmpty()),
                 placeholderIcon = Icons.Default.Folder,
-                resourceId = releaseGroup.id
             )
 
             Column {

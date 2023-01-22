@@ -22,8 +22,7 @@ internal fun ReleaseGroupDetailsScreen(
 
         item {
             BigCoverArt(
-                coverArtUrl = coverArtUrl,
-                resourceId = releaseGroup.id
+                coverArtUrl = coverArtUrl
             )
         }
 

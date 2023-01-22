@@ -22,17 +22,15 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
+import ly.david.data.network.api.coverart.trimCoverArtSuffix
 
 /**
  * A big cover art that fills the screen's width.
- *
- * @param resourceId We use this as the memory cache key to show a placeholder lower res image while loading.
  */
 @Composable
 internal fun BigCoverArt(
     modifier: Modifier = Modifier,
     coverArtUrl: String = "",
-    resourceId: String
 ) {
     if (coverArtUrl.isNotEmpty()) {
 
@@ -42,7 +40,8 @@ internal fun BigCoverArt(
                 .size(Size.ORIGINAL)
                 .scale(Scale.FIT)
                 .crossfade(true)
-                .placeholderMemoryCacheKey(resourceId)
+                .memoryCacheKey(coverArtUrl.trimCoverArtSuffix())
+                .placeholderMemoryCacheKey(coverArtUrl.trimCoverArtSuffix())
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )

@@ -18,13 +18,13 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
+import ly.david.data.network.api.coverart.trimCoverArtSuffix
 
 @Composable
 internal fun SmallCoverArt(
     modifier: Modifier = Modifier,
     coverArtUrl: String = "",
     placeholderIcon: ImageVector = Icons.Default.Album,
-    resourceId: String? = null
 ) {
     if (coverArtUrl.isNotEmpty()) {
 
@@ -34,7 +34,7 @@ internal fun SmallCoverArt(
                 .size(Size(64, 64))
                 .scale(Scale.FIT)
                 .crossfade(true)
-                .memoryCacheKey(resourceId)
+                .memoryCacheKey(coverArtUrl.trimCoverArtSuffix())
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )
