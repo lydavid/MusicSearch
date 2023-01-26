@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.stats
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,19 +15,19 @@ import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
-// TODO: generalize for event, place, recording
-//  these do not show type distribution unlike RG
-internal fun LazyListScope.addReleasesSection(
+internal fun LazyListScope.addResourcesStatsSection(
     totalRemote: Int?,
     totalLocal: Int,
+    @StringRes headerRes: Int,
+    @StringRes cachedLocalOfRemoteRes: Int
 ) {
     item {
-        ListSeparatorHeader(text = stringResource(id = R.string.releases))
+        ListSeparatorHeader(text = stringResource(id = headerRes))
 
         LocalRemoteProgressBar(
             totalRemote = totalRemote,
             totalLocal = totalLocal,
-            cachedStringRes = R.string.cached_releases
+            cachedLocalOfRemoteRes = cachedLocalOfRemoteRes
         )
 
         Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -39,9 +40,11 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             LazyColumn {
-                addReleasesSection(
+                addResourcesStatsSection(
                     totalRemote = 10,
-                    totalLocal = 7
+                    totalLocal = 7,
+                    headerRes = R.string.releases,
+                    cachedLocalOfRemoteRes = R.string.cached_releases
                 )
             }
         }

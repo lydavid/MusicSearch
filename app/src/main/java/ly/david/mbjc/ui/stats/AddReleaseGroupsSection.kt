@@ -36,7 +36,7 @@ internal fun LazyListScope.addReleaseGroupsSection(
         LocalRemoteProgressBar(
             totalRemote = totalRemote,
             totalLocal = totalLocal,
-            cachedStringRes = R.string.cached_release_groups
+            cachedLocalOfRemoteRes = R.string.cached_release_groups
         )
     }
     items(releaseGroupTypeCounts) {

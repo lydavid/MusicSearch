@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.work
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,7 +25,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -36,11 +35,11 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 
-internal enum class WorkTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    RELATIONSHIPS(R.string.relationships),
-    RECORDINGS(R.string.recordings),
-    STATS(R.string.stats)
+internal enum class WorkTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    RECORDINGS(Tab.RECORDINGS),
+    STATS(Tab.STATS)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,7 +82,7 @@ internal fun WorkScaffold(
                     OpenInBrowserMenuItem(resource = resource, resourceId = workId)
                     CopyToClipboardMenuItem(workId)
                 },
-                tabsTitles = WorkTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = WorkTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = WorkTab.values()[it] },
                 showFilterIcon = selectedTab == WorkTab.RECORDINGS,

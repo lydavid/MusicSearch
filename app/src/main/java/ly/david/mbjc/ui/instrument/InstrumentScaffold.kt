@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.instrument
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,7 +21,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -31,10 +30,10 @@ import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.instrument.details.InstrumentDetailsScreen
 
-internal enum class InstrumentTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    RELATIONSHIPS(R.string.relationships),
-    STATS(R.string.stats)
+internal enum class InstrumentTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    STATS(Tab.STATS)
 }
 
 /**
@@ -81,7 +80,7 @@ internal fun InstrumentScaffold(
                     OpenInBrowserMenuItem(resource = resource, resourceId = instrumentId)
                     CopyToClipboardMenuItem(instrumentId)
                 },
-                tabsTitles = InstrumentTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = InstrumentTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = InstrumentTab.values()[it] },
             )

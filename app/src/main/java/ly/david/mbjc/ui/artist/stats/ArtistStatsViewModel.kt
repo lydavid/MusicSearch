@@ -21,6 +21,7 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
 import ly.david.mbjc.ui.stats.RelationsStats
 import ly.david.mbjc.ui.stats.ReleaseGroupsStats
 import ly.david.mbjc.ui.stats.ReleasesStats
+import ly.david.mbjc.ui.stats.Stats
 
 @HiltViewModel
 internal class ArtistStatsViewModel @Inject constructor(
@@ -42,7 +43,7 @@ internal class ArtistStatsViewModel @Inject constructor(
     @Composable
     private fun getArtistStatsPresenter(
         resourceId: String
-    ): ArtistStats {
+    ): Stats {
         var totalRemoteReleaseGroups: Int? by remember { mutableStateOf(null) }
         var totalLocalReleaseGroups by remember { mutableStateOf(0) }
         var releaseGroupTypeCounts by remember { mutableStateOf(listOf<ReleaseGroupTypeCount>()) }
@@ -61,7 +62,7 @@ internal class ArtistStatsViewModel @Inject constructor(
             relationTypeCounts = getCountOfEachRelationshipType(resourceId)
         }
 
-        return ArtistStats(
+        return Stats(
             totalRemoteReleaseGroups = totalRemoteReleaseGroups,
             totalLocalReleaseGroups = totalLocalReleaseGroups,
             releaseGroupTypeCounts = releaseGroupTypeCounts,
@@ -72,7 +73,7 @@ internal class ArtistStatsViewModel @Inject constructor(
         )
     }
 
-    fun getStats(resourceId: String, scope: CoroutineScope): StateFlow<ArtistStats> {
+    fun getStats(resourceId: String, scope: CoroutineScope): StateFlow<Stats> {
         return scope.launchMolecule(RecompositionClock.ContextClock) {
             getArtistStatsPresenter(resourceId)
         }

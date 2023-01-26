@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.place
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +26,7 @@ import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -37,13 +36,13 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 
-internal enum class PlaceTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
+internal enum class PlaceTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
 
-    // Should exclude event-rels because they appear to be the same as the results from browse events by place
-    RELATIONSHIPS(R.string.relationships),
-    EVENTS(R.string.events),
-    STATS(R.string.stats)
+    // TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    EVENTS(Tab.EVENTS),
+    STATS(Tab.STATS)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +86,7 @@ internal fun PlaceScaffold(
                     OpenInBrowserMenuItem(resource = resource, resourceId = placeId)
                     CopyToClipboardMenuItem(placeId)
                 },
-                tabsTitles = PlaceTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = PlaceTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = PlaceTab.values()[it] },
                 showFilterIcon = selectedTab == PlaceTab.EVENTS,

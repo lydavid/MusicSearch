@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.artist
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -29,11 +28,11 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -41,14 +40,12 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
-// Would be nice if we could have an enum of Tabs, then pick a subset of them for each of these scaffolds.
-// Right now, we just have to copy/paste these around.
-internal enum class ArtistTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    RELEASE_GROUPS(R.string.release_groups),
-    RELEASES(R.string.releases),
-    RELATIONSHIPS(R.string.relationships),
-    STATS(R.string.stats)
+internal enum class ArtistTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    RELEASE_GROUPS(Tab.RELEASE_GROUPS),
+    RELEASES(Tab.RELEASES),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    STATS(Tab.STATS)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,7 +123,7 @@ internal fun ArtistScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
-                tabsTitles = ArtistTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = ArtistTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ArtistTab.values()[it] }
             )
@@ -151,9 +148,6 @@ internal fun ArtistScaffold(
         val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
-
-        // TODO: doesn't actually save state
-        val statsLazyListState = rememberLazyListState()
 
         when (selectedTab) {
             ArtistTab.DETAILS -> {
@@ -210,7 +204,7 @@ internal fun ArtistScaffold(
             ArtistTab.STATS -> {
                 ArtistStatsScreen(
                     artistId = artistId,
-                    lazyListState = statsLazyListState
+                    tabs = ArtistTab.values().map { it.tab }
                 )
             }
         }

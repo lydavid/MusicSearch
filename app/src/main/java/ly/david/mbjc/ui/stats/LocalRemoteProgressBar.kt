@@ -23,7 +23,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 internal fun LocalRemoteProgressBar(
     totalRemote: Int?,
     totalLocal: Int,
-    cachedStringRes: Int
+    cachedLocalOfRemoteRes: Int
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +41,7 @@ internal fun LocalRemoteProgressBar(
             //  since the moment they click a release, it will require downloading details
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
-                text = stringResource(id = cachedStringRes, totalLocal, totalRemote)
+                text = stringResource(id = cachedLocalOfRemoteRes, totalLocal, totalRemote)
             )
 
             if (totalRemote != 0) {
@@ -72,7 +72,7 @@ private fun Empty() {
             LocalRemoteProgressBar(
                 totalRemote = 1,
                 totalLocal = 0,
-                cachedStringRes = R.string.cached_releases
+                cachedLocalOfRemoteRes = R.string.cached_releases
             )
         }
     }
@@ -87,7 +87,7 @@ private fun Half() {
             LocalRemoteProgressBar(
                 totalRemote = 2,
                 totalLocal = 1,
-                cachedStringRes = R.string.cached_releases
+                cachedLocalOfRemoteRes = R.string.cached_releases
             )
         }
     }
@@ -102,7 +102,7 @@ private fun Full() {
             LocalRemoteProgressBar(
                 totalRemote = 1,
                 totalLocal = 1,
-                cachedStringRes = R.string.cached_releases
+                cachedLocalOfRemoteRes = R.string.cached_releases
             )
         }
     }
@@ -117,7 +117,7 @@ private fun Overflow() {
             LocalRemoteProgressBar(
                 totalRemote = 1,
                 totalLocal = 2,
-                cachedStringRes = R.string.cached_releases
+                cachedLocalOfRemoteRes = R.string.cached_releases
             )
         }
     }

@@ -12,10 +12,11 @@ import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.addSpacer
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.stats.addRelationshipsSection
-import ly.david.mbjc.ui.stats.addReleasesSection
+import ly.david.mbjc.ui.stats.addResourcesStatsSection
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
@@ -53,9 +54,11 @@ private fun RecordingStatsScreen(
     relationTypeCounts: List<RelationTypeCount>
 ) {
     LazyColumn {
-        addReleasesSection(
+        addResourcesStatsSection(
             totalRemote = totalRemote,
             totalLocal = totalLocal,
+            headerRes = R.string.releases,
+            cachedLocalOfRemoteRes = R.string.cached_releases
         )
         addSpacer()
         addRelationshipsSection(

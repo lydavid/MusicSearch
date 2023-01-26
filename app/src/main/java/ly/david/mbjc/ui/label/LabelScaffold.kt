@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.label
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,7 +25,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -37,11 +36,11 @@ import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 
-internal enum class LabelTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    RELEASES(R.string.releases),
-    RELATIONSHIPS(R.string.relationships),
-    STATS(R.string.stats)
+internal enum class LabelTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    RELEASES(Tab.RELEASES),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    STATS(Tab.STATS)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,7 +83,7 @@ internal fun LabelScaffold(
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.LABEL, resourceId = labelId)
                     CopyToClipboardMenuItem(labelId)
                 },
-                tabsTitles = LabelTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = LabelTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = LabelTab.values()[it] },
                 showFilterIcon = selectedTab == LabelTab.RELEASES,

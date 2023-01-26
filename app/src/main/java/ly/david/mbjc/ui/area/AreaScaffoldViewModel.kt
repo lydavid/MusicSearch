@@ -30,7 +30,7 @@ internal class AreaScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    var tabs: MutableStateFlow<List<AreaTab>> = MutableStateFlow(AreaTab.values().filter { it != AreaTab.RELEASES })
+    var areaTabs: MutableStateFlow<List<AreaTab>> = MutableStateFlow(AreaTab.values().filter { it != AreaTab.RELEASES })
     val area: MutableStateFlow<AreaScaffoldModel?> = MutableStateFlow(null)
 
     init {
@@ -51,7 +51,7 @@ internal class AreaScaffoldViewModel @Inject constructor(
                             title.value = areaScaffoldModel.getNameWithDisambiguation()
                         }
                         if (areaScaffoldModel.showReleases()) {
-                            tabs.value = AreaTab.values().toList()
+                            areaTabs.value = AreaTab.values().toList()
                         }
                         area.value = areaScaffoldModel
                         isError.value = false

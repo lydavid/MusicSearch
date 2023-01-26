@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.recording
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -28,8 +27,8 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -40,11 +39,11 @@ import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
-internal enum class RecordingTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    RELEASES(R.string.releases),
-    RELATIONSHIPS(R.string.relationships),
-    STATS(R.string.stats)
+internal enum class RecordingTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    RELEASES(Tab.RELEASES),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    STATS(Tab.STATS)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -100,7 +99,7 @@ internal fun RecordingScaffold(
                             })
                     }
                 },
-                tabsTitles = RecordingTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = RecordingTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = RecordingTab.values()[it] },
                 showFilterIcon = selectedTab == RecordingTab.RELEASES,

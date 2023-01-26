@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.area
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,12 +27,11 @@ import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.showReleases
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -41,12 +39,12 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
-internal enum class AreaTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    RELATIONSHIPS(R.string.relationships),
-    RELEASES(R.string.releases),
-    PLACES(R.string.places),
-    STATS(R.string.stats)
+internal enum class AreaTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    RELEASES(Tab.RELEASES),
+    PLACES(Tab.PLACES),
+    STATS(Tab.STATS)
 }
 
 /**
@@ -69,7 +67,7 @@ internal fun AreaScaffold(
 
     val title by viewModel.title.collectAsState()
     val area by viewModel.area.collectAsState()
-    val tabs by viewModel.tabs.collectAsState()
+    val areaTabs by viewModel.areaTabs.collectAsState()
     val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = areaId) {
@@ -94,9 +92,9 @@ internal fun AreaScaffold(
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
                     CopyToClipboardMenuItem(areaId)
                 },
-                tabsTitles = tabs.map { stringResource(id = it.titleRes) },
-                selectedTabIndex = tabs.indexOf(selectedTab),
-                onSelectTabIndex = { selectedTab = tabs[it] },
+                tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
+                selectedTabIndex = areaTabs.indexOf(selectedTab),
+                onSelectTabIndex = { selectedTab = areaTabs[it] },
                 showFilterIcon = selectedTab in listOf(AreaTab.RELEASES, AreaTab.PLACES),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -175,7 +173,7 @@ internal fun AreaScaffold(
             AreaTab.STATS -> {
                 AreaStatsScreen(
                     areaId = areaId,
-                    showReleases = area?.showReleases() ?: false
+                    tabs = areaTabs.map { it.tab }
                 )
             }
         }

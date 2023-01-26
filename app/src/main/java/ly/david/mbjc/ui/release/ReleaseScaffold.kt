@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.release
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -25,8 +24,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -37,11 +36,11 @@ import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
-internal enum class ReleaseTab(@StringRes val titleRes: Int) {
-    DETAILS(R.string.details),
-    TRACKS(R.string.tracks),
-    RELATIONSHIPS(R.string.relationships),
-    STATS(R.string.stats)
+internal enum class ReleaseTab(val tab: Tab) {
+    DETAILS(Tab.DETAILS),
+    TRACKS(Tab.TRACKS),
+    RELATIONSHIPS(Tab.RELATIONSHIPS),
+    STATS(Tab.STATS)
 }
 
 /**
@@ -111,7 +110,7 @@ internal fun ReleaseScaffold(
                             })
                     }
                 },
-                tabsTitles = ReleaseTab.values().map { stringResource(id = it.titleRes) },
+                tabsTitles = ReleaseTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { selectedTab = ReleaseTab.values()[it] },
                 showFilterIcon = selectedTab == ReleaseTab.TRACKS,
