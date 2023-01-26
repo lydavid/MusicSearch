@@ -152,6 +152,7 @@ internal fun ArtistScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
+        // TODO: doesn't actually save state
         val statsLazyListState = rememberLazyListState()
 
         when (selectedTab) {

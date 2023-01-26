@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.common.paging
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -48,6 +49,8 @@ internal fun ReleasesListScreen(
                         try {
                             viewModel.getReleaseCoverArtPathFromNetwork(releaseId = releaseListItemModel.id)
                         } catch (ex: Exception) {
+                            // TODO: timber these
+                            Log.d("Remove This", "ReleasesListScreen: $ex")
                             // Do nothing.
                         }
                     }

@@ -17,7 +17,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 // TODO: generalize for event, place, recording
 //  these do not show type distribution unlike RG
 internal fun LazyListScope.addReleasesSection(
-    totalRemote: Int,
+    totalRemote: Int?,
     totalLocal: Int,
 ) {
     item {

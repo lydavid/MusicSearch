@@ -5,7 +5,7 @@ import ly.david.data.persistence.relation.RelationDao
 /**
  * Stats about relations.
  */
-internal interface RelationsStats {
+interface RelationsStats {
     val relationDao: RelationDao
 
     suspend fun getNumberOfRelationsByResource(resourceId: String) =

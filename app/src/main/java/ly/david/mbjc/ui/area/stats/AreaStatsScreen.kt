@@ -3,12 +3,10 @@ package ly.david.mbjc.ui.area.stats
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
@@ -27,49 +25,32 @@ internal fun AreaStatsScreen(
     showReleases: Boolean,
     viewModel: AreaStatsViewModel = hiltViewModel()
 ) {
-    var totalRemote by rememberSaveable { mutableStateOf(0) }
-    var totalLocal by rememberSaveable { mutableStateOf(0) }
-
-    var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
-    var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
-
-    LaunchedEffect(key1 = Unit) {
-        totalRemote = viewModel.getTotalRemoteReleases(areaId)
-        totalLocal = viewModel.getTotalLocalReleases(areaId)
-
-        totalRelations = viewModel.getNumberOfRelationsByResource(areaId)
-        relationTypeCounts = viewModel.getCountOfEachRelationshipType(areaId)
-    }
+    val coroutineScope = rememberCoroutineScope()
+    val areaStats by remember { viewModel.getStats(areaId, coroutineScope) }.collectAsState()
 
     AreaStatsScreen(
         showReleases = showReleases,
-        totalRemote = totalRemote,
-        totalLocal = totalLocal,
-        totalRelations = totalRelations,
-        relationTypeCounts = relationTypeCounts
+        stats = areaStats
     )
 }
 
 @Composable
 private fun AreaStatsScreen(
     showReleases: Boolean,
-    totalRemote: Int,
-    totalLocal: Int,
-    totalRelations: Int?,
-    relationTypeCounts: List<RelationTypeCount>
+    stats: AreaStats
 ) {
     LazyColumn {
         if (showReleases) {
             addReleasesSection(
-                totalRemote = totalRemote,
-                totalLocal = totalLocal,
+                totalRemote = stats.totalRemoteReleases,
+                totalLocal = stats.totalLocalReleases,
             )
             addSpacer()
         }
 
         addRelationshipsSection(
-            totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts
+            totalRelations = stats.totalRelations,
+            relationTypeCounts = stats.relationTypeCounts
         )
     }
 }
@@ -82,11 +63,13 @@ private fun Preview() {
         Surface {
             AreaStatsScreen(
                 showReleases = true,
-                totalRemote = 2,
-                totalLocal = 1,
-                totalRelations = 3,
-                relationTypeCounts = listOf(
-                    RelationTypeCount(MusicBrainzResource.URL, 3)
+                stats = AreaStats(
+                    totalRemoteReleases = 1,
+                    totalLocalReleases = 2,
+                    totalRelations = 3,
+                    relationTypeCounts = listOf(
+                        RelationTypeCount(MusicBrainzResource.URL, 3)
+                    )
                 )
             )
         }
@@ -100,11 +83,13 @@ private fun PreviewNoReleases() {
         Surface {
             AreaStatsScreen(
                 showReleases = false,
-                totalRemote = 1,
-                totalLocal = 2,
-                totalRelations = 3,
-                relationTypeCounts = listOf(
-                    RelationTypeCount(MusicBrainzResource.URL, 3)
+                stats = AreaStats(
+                    totalRemoteReleases = 1,
+                    totalLocalReleases = 2,
+                    totalRelations = 3,
+                    relationTypeCounts = listOf(
+                        RelationTypeCount(MusicBrainzResource.URL, 3)
+                    )
                 )
             )
         }

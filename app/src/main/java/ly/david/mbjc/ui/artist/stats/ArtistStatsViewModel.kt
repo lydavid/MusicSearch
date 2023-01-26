@@ -46,7 +46,7 @@ internal class ArtistStatsViewModel @Inject constructor(
         var totalRemoteReleaseGroups: Int? by remember { mutableStateOf(null) }
         var totalLocalReleaseGroups by remember { mutableStateOf(0) }
         var releaseGroupTypeCounts by remember { mutableStateOf(listOf<ReleaseGroupTypeCount>()) }
-        var totalRemoteReleases by remember { mutableStateOf(0) }
+        var totalRemoteReleases: Int? by remember { mutableStateOf(0) }
         var totalLocalReleases by remember { mutableStateOf(0) }
         var totalRelations: Int? by remember { mutableStateOf(null) }
         var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }

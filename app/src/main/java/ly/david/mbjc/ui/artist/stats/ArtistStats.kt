@@ -8,7 +8,7 @@ data class ArtistStats(
     val totalLocalReleaseGroups: Int,
     val releaseGroupTypeCounts: List<ReleaseGroupTypeCount>,
     val totalLocalReleases: Int,
-    val totalRemoteReleases: Int,
+    val totalRemoteReleases: Int?,
     val totalRelations: Int?,
     val relationTypeCounts: List<RelationTypeCount>
 )

@@ -23,7 +23,7 @@ internal fun RecordingStatsScreen(
     recordingId: String,
     viewModel: RecordingStatsViewModel = hiltViewModel()
 ) {
-    var totalRemote by rememberSaveable { mutableStateOf(0) }
+    var totalRemote: Int? by rememberSaveable { mutableStateOf(0) }
     var totalLocal by rememberSaveable { mutableStateOf(0) }
 
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
@@ -47,7 +47,7 @@ internal fun RecordingStatsScreen(
 
 @Composable
 private fun RecordingStatsScreen(
-    totalRemote: Int,
+    totalRemote: Int?,
     totalLocal: Int,
     totalRelations: Int?,
     relationTypeCounts: List<RelationTypeCount>
