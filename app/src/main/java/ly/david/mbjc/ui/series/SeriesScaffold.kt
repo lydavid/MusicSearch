@@ -29,6 +29,7 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
+import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
 
 internal enum class SeriesTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
@@ -120,7 +121,10 @@ internal fun SeriesScaffold(
                 )
             }
             SeriesTab.STATS -> {
-
+                SeriesStatsScreen(
+                    seriesId = seriesId,
+                    tabs = SeriesTab.values().map { it.tab }
+                )
             }
         }
     }

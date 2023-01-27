@@ -145,7 +145,10 @@ internal fun LabelScaffold(
                 )
             }
             LabelTab.STATS -> {
-                LabelStatsScreen(labelId = labelId)
+                LabelStatsScreen(
+                    labelId = labelId,
+                    tabs = LabelTab.values().map { it.tab }
+                )
             }
         }
     }

@@ -61,9 +61,6 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
 
     private fun assertFieldsDisplayed() {
         composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        composeTestRule
             .onNodeWithText(fakePlaceWithAllData.getNameWithDisambiguation())
             .assertIsDisplayed()
 

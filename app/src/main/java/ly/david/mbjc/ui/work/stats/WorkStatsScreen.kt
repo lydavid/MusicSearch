@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.recording.stats
+package ly.david.mbjc.ui.work.stats
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,23 +14,21 @@ import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen
 
 @Composable
-internal fun RecordingStatsScreen(
-    recordingId: String,
+internal fun WorkGroupStatsScreen(
+    workId: String,
     tabs: List<Tab>,
-    viewModel: RecordingStatsViewModel = hiltViewModel()
+    viewModel: WorkStatsViewModel = hiltViewModel()
 ) {
-    var totalRemote: Int? by rememberSaveable { mutableStateOf(0) }
-    var totalLocal by rememberSaveable { mutableStateOf(0) }
-
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
+    var totalRemoteRecordings: Int? by rememberSaveable { mutableStateOf(0) }
+    var totalLocalRecordings by rememberSaveable { mutableStateOf(0) }
 
-    LaunchedEffect(key1 = Unit) {
-        totalRemote = viewModel.getTotalRemoteReleases(recordingId)
-        totalLocal = viewModel.getTotalLocalReleases(recordingId)
-
-        totalRelations = viewModel.getNumberOfRelationsByResource(recordingId)
-        relationTypeCounts = viewModel.getCountOfEachRelationshipType(recordingId)
+    LaunchedEffect(key1 = totalRemoteRecordings, key2 = totalLocalRecordings) {
+        totalRelations = viewModel.getNumberOfRelationsByResource(workId)
+        relationTypeCounts = viewModel.getCountOfEachRelationshipType(workId)
+        totalRemoteRecordings = viewModel.getTotalRemoteRecordings(workId)
+        totalLocalRecordings = viewModel.getTotalLocalRecordings(workId)
     }
 
     StatsScreen(
@@ -38,8 +36,8 @@ internal fun RecordingStatsScreen(
         stats = Stats(
             totalRelations = totalRelations,
             relationTypeCounts = relationTypeCounts,
-            totalRemoteReleases = totalRemote,
-            totalLocalReleases = totalLocal
+            totalLocalRecordings = totalLocalRecordings,
+            totalRemoteRecordings = totalRemoteRecordings,
         )
     )
 }

@@ -29,6 +29,7 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.instrument.details.InstrumentDetailsScreen
+import ly.david.mbjc.ui.instrument.stats.InstrumentStatsScreen
 
 internal enum class InstrumentTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
@@ -120,7 +121,10 @@ internal fun InstrumentScaffold(
                 )
             }
             InstrumentTab.STATS -> {
-
+                InstrumentStatsScreen(
+                    instrumentId = instrumentId,
+                    tabs = InstrumentTab.values().map { it.tab }
+                )
             }
         }
     }

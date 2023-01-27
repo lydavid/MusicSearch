@@ -1,7 +1,5 @@
 package ly.david.mbjc.ui.release.stats
 
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -10,16 +8,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.stats.addRelationshipsSection
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.common.Tab
+import ly.david.mbjc.ui.stats.Stats
+import ly.david.mbjc.ui.stats.StatsScreen
 
 @Composable
 internal fun ReleaseStatsScreen(
     releaseId: String,
+    tabs: List<Tab>,
     viewModel: ReleaseStatsViewModel = hiltViewModel()
 ) {
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
@@ -30,37 +27,11 @@ internal fun ReleaseStatsScreen(
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(releaseId)
     }
 
-    ReleaseStatsScreen(
-        totalRelations = totalRelations,
-        relationTypeCounts = relationTypeCounts
-    )
-}
-
-@Composable
-internal fun ReleaseStatsScreen(
-    totalRelations: Int?,
-    relationTypeCounts: List<RelationTypeCount>
-) {
-    LazyColumn {
-        addRelationshipsSection(
+    StatsScreen(
+        tabs = tabs,
+        stats = Stats(
             totalRelations = totalRelations,
             relationTypeCounts = relationTypeCounts
         )
-    }
-}
-
-@ExcludeFromJacocoGeneratedReport
-@DefaultPreviews
-@Composable
-private fun Preview() {
-    PreviewTheme {
-        Surface {
-            ReleaseStatsScreen(
-                totalRelations = 3,
-                relationTypeCounts = listOf(
-                    RelationTypeCount(MusicBrainzResource.URL, 3)
-                )
-            )
-        }
-    }
+    )
 }

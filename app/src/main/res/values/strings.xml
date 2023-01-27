@@ -99,7 +99,9 @@
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
 
+    <string name="cached_events">Cached %d of %d events</string>
     <string name="cached_places">Cached %d of %d places</string>
+    <string name="cached_recordings">Cached %d of %d recordings</string>
     <string name="cached_releases">Cached %d of %d releases</string>
     <string name="cached_release_groups">Cached %d of %d release groups</string>
 </resources>

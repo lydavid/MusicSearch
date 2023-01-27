@@ -161,7 +161,10 @@ internal fun RecordingScaffold(
                 )
             }
             RecordingTab.STATS -> {
-                RecordingStatsScreen(recordingId = recordingId)
+                RecordingStatsScreen(
+                    recordingId = recordingId,
+                    tabs = RecordingTab.values().map { it.tab }
+                )
             }
         }
     }

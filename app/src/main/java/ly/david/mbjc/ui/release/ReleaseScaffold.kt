@@ -181,6 +181,7 @@ internal fun ReleaseScaffold(
             ReleaseTab.STATS -> {
                 ReleaseStatsScreen(
                     releaseId = releaseId,
+                    tabs = ReleaseTab.values().map { it.tab }
                 )
             }
         }

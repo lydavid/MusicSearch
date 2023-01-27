@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.release.stats
+package ly.david.mbjc.ui.series.stats
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -7,6 +7,6 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.stats.RelationsStats
 
 @HiltViewModel
-internal class ReleaseStatsViewModel @Inject constructor(
+internal class SeriesStatsViewModel @Inject constructor(
     override val relationDao: RelationDao
 ) : ViewModel(), RelationsStats

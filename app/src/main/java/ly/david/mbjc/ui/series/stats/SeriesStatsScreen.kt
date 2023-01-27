@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.recording.stats
+package ly.david.mbjc.ui.series.stats
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,32 +14,24 @@ import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen
 
 @Composable
-internal fun RecordingStatsScreen(
-    recordingId: String,
+internal fun SeriesStatsScreen(
+    seriesId: String,
     tabs: List<Tab>,
-    viewModel: RecordingStatsViewModel = hiltViewModel()
+    viewModel: SeriesStatsViewModel = hiltViewModel()
 ) {
-    var totalRemote: Int? by rememberSaveable { mutableStateOf(0) }
-    var totalLocal by rememberSaveable { mutableStateOf(0) }
-
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRemote = viewModel.getTotalRemoteReleases(recordingId)
-        totalLocal = viewModel.getTotalLocalReleases(recordingId)
-
-        totalRelations = viewModel.getNumberOfRelationsByResource(recordingId)
-        relationTypeCounts = viewModel.getCountOfEachRelationshipType(recordingId)
+        totalRelations = viewModel.getNumberOfRelationsByResource(seriesId)
+        relationTypeCounts = viewModel.getCountOfEachRelationshipType(seriesId)
     }
 
     StatsScreen(
         tabs = tabs,
         stats = Stats(
             totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts,
-            totalRemoteReleases = totalRemote,
-            totalLocalReleases = totalLocal
+            relationTypeCounts = relationTypeCounts
         )
     )
 }

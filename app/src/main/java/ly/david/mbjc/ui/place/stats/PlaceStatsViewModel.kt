@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label.stats
+package ly.david.mbjc.ui.place.stats
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,27 +13,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
-import ly.david.data.persistence.label.ReleaseLabelDao
+import ly.david.data.persistence.event.EventPlaceDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationTypeCount
+import ly.david.mbjc.ui.stats.EventStats
 import ly.david.mbjc.ui.stats.RelationsStats
-import ly.david.mbjc.ui.stats.ReleasesStats
 import ly.david.mbjc.ui.stats.Stats
 
-interface LabelStatsRepository : ReleasesStats, RelationsStats
+interface PlaceStatsRepository : RelationsStats, EventStats
 
 @HiltViewModel
-class LabelStatsViewModel @Inject constructor(
+class PlaceStatsViewModel @Inject constructor(
     override val relationDao: RelationDao,
-    private val releaseLabelDao: ReleaseLabelDao
-) : ViewModel(), LabelStatsRepository {
+    private val eventPlaceDao: EventPlaceDao
+) : ViewModel(), PlaceStatsRepository {
 
-    override suspend fun getTotalLocalReleases(resourceId: String): Int =
-        releaseLabelDao.getNumberOfReleasesByLabel(resourceId)
+    override suspend fun getTotalLocalEvents(resourceId: String): Int =
+        eventPlaceDao.getNumberOfEventsByPlace(resourceId)
 
     fun getStats(resourceId: String, scope: CoroutineScope): StateFlow<Stats> {
         return scope.launchMolecule(RecompositionClock.ContextClock) {
-            getLabelStatsPresenter(
+            getPlaceStatsPresenter(
                 resourceId = resourceId,
                 repository = this
             )
@@ -42,26 +42,26 @@ class LabelStatsViewModel @Inject constructor(
 }
 
 @Composable
-fun getLabelStatsPresenter(
+fun getPlaceStatsPresenter(
     resourceId: String,
-    repository: LabelStatsRepository
+    repository: PlaceStatsRepository
 ): Stats {
     var totalRelations: Int? by remember { mutableStateOf(null) }
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
-    var totalRemoteReleases: Int? by remember { mutableStateOf(0) }
-    var totalLocalReleases by remember { mutableStateOf(0) }
+    var totalRemoteEvents: Int? by remember { mutableStateOf(0) }
+    var totalLocalEvents by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
         totalRelations = repository.getNumberOfRelationsByResource(resourceId)
         relationTypeCounts = repository.getCountOfEachRelationshipType(resourceId)
-        totalRemoteReleases = repository.getTotalRemoteReleases(resourceId)
-        totalLocalReleases = repository.getTotalLocalReleases(resourceId)
+        totalRemoteEvents = repository.getTotalRemoteEvents(resourceId)
+        totalLocalEvents = repository.getTotalLocalEvents(resourceId)
     }
 
     return Stats(
         totalRelations = totalRelations,
         relationTypeCounts = relationTypeCounts,
-        totalRemoteReleases = totalRemoteReleases,
-        totalLocalReleases = totalLocalReleases,
+        totalRemoteEvents = totalRemoteEvents,
+        totalLocalEvents = totalLocalEvents,
     )
 }

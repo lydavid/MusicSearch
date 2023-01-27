@@ -8,7 +8,7 @@ import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.recording.RecordingForListItem
 
 @Dao
-abstract class RecordingsWorksDao : BaseDao<RecordingWork>() {
+abstract class RecordingWorkDao : BaseDao<RecordingWork>() {
 
     companion object {
         private const val RECORDINGS_BY_WORK = """

@@ -22,7 +22,7 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.series.SeriesDao
-import ly.david.data.persistence.work.RecordingsWorksDao
+import ly.david.data.persistence.work.RecordingWorkDao
 import ly.david.data.persistence.work.WorkDao
 
 interface MusicBrainzDatabase {
@@ -40,7 +40,7 @@ interface MusicBrainzDatabase {
     fun getReleasesRecordingsDao(): ReleasesRecordingsDao
 
     fun getWorkDao(): WorkDao
-    fun getRecordingsWorksDao(): RecordingsWorksDao
+    fun getRecordingsWorksDao(): RecordingWorkDao
 
     fun getAreaDao(): AreaDao
     fun getAreaPlaceDao(): AreaPlaceDao

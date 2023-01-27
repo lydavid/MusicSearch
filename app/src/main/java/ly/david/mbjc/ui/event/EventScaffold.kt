@@ -29,6 +29,7 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.event.details.EventDetailsScreen
+import ly.david.mbjc.ui.event.stats.EventStatsScreen
 
 internal enum class EventTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
@@ -120,7 +121,10 @@ internal fun EventScaffold(
                 )
             }
             EventTab.STATS -> {
-
+                EventStatsScreen(
+                    eventId = eventId,
+                    tabs = EventTab.values().map { it.tab }
+                )
             }
         }
     }

@@ -171,7 +171,10 @@ internal fun ReleaseGroupScaffold(
                 )
             }
             ReleaseGroupTab.STATS -> {
-                ReleaseGroupStatsScreen(releaseGroupId = releaseGroupId)
+                ReleaseGroupStatsScreen(
+                    releaseGroupId = releaseGroupId,
+                    tabs = ReleaseGroupTab.values().map { it.tab }
+                )
             }
         }
     }

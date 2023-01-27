@@ -22,12 +22,28 @@ internal fun StatsScreen(
     LazyColumn {
         tabs.forEach { tab ->
             when (tab) {
+                Tab.EVENTS -> {
+                    addResourcesStatsSection(
+                        totalRemote = stats.totalRemoteEvents,
+                        totalLocal = stats.totalLocalEvents,
+                        headerRes = R.string.events,
+                        cachedLocalOfRemoteRes = R.string.cached_events
+                    )
+                }
                 Tab.PLACES -> {
                     addResourcesStatsSection(
                         totalRemote = stats.totalRemotePlaces,
                         totalLocal = stats.totalLocalPlaces,
                         headerRes = R.string.places,
                         cachedLocalOfRemoteRes = R.string.cached_places
+                    )
+                }
+                Tab.RECORDINGS -> {
+                    addResourcesStatsSection(
+                        totalRemote = stats.totalRemoteRecordings,
+                        totalLocal = stats.totalLocalRecordings,
+                        headerRes = R.string.recordings,
+                        cachedLocalOfRemoteRes = R.string.cached_recordings
                     )
                 }
                 Tab.RELATIONSHIPS -> {
@@ -37,7 +53,6 @@ internal fun StatsScreen(
                     )
                 }
                 Tab.RELEASES -> {
-                    // TODO: map tab to res, then places/releases can use same case
                     addResourcesStatsSection(
                         totalRemote = stats.totalRemoteReleases,
                         totalLocal = stats.totalLocalReleases,
@@ -52,14 +67,44 @@ internal fun StatsScreen(
                         releaseGroupTypeCounts = stats.releaseGroupTypeCounts
                     )
                 }
-                // TODO: rest
                 else -> {
-                    // Do nothing.
+                    // No stats for these tabs yet.
                 }
             }
         }
     }
 }
+
+//private data class StatsStringRes(
+//    val headerRes: Int,
+//    val cachedLocalOfRemoteRes: Int
+//)
+//
+//private fun Tab.getStringRes(): StatsStringRes {
+//    return when (this) {
+//        Tab.EVENTS -> StatsStringRes(
+//            headerRes = R.string.events,
+//            cachedLocalOfRemoteRes = R.string.cached_events
+//        )
+//        Tab.PLACES -> StatsStringRes(
+//            headerRes = R.string.places,
+//            cachedLocalOfRemoteRes = R.string.cached_places
+//        )
+//        Tab.RECORDINGS -> StatsStringRes(
+//            headerRes = R.string.recordings,
+//            cachedLocalOfRemoteRes = R.string.cached_recordings
+//        )
+//        Tab.RELEASES -> StatsStringRes(
+//            headerRes = R.string.releases,
+//            cachedLocalOfRemoteRes = R.string.cached_releases
+//        )
+//        // TODO: a more appropriate default?
+//        else -> StatsStringRes(
+//            headerRes = R.string.releases,
+//            cachedLocalOfRemoteRes = R.string.cached_releases
+//        )
+//    }
+//}
 
 // region Previews
 @DefaultPreviews

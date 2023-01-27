@@ -34,6 +34,7 @@ import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
+import ly.david.mbjc.ui.work.stats.WorkGroupStatsScreen
 
 internal enum class WorkTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
@@ -150,7 +151,10 @@ internal fun WorkScaffold(
                 )
             }
             WorkTab.STATS -> {
-
+                WorkGroupStatsScreen(
+                    workId,
+                    tabs = WorkTab.values().map { it.tab }
+                )
             }
         }
     }

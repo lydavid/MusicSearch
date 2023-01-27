@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.label.stats
+package ly.david.mbjc.ui.place.stats
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -10,13 +10,13 @@ import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.stats.StatsScreen
 
 @Composable
-internal fun LabelStatsScreen(
-    labelId: String,
+internal fun PlaceStatsScreen(
+    placeId: String,
     tabs: List<Tab>,
-    viewModel: LabelStatsViewModel = hiltViewModel()
+    viewModel: PlaceStatsViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val stats by remember { viewModel.getStats(labelId, coroutineScope) }.collectAsState()
+    val stats by remember { viewModel.getStats(placeId, coroutineScope) }.collectAsState()
 
     StatsScreen(
         tabs = tabs,

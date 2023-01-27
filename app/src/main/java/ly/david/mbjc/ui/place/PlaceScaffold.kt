@@ -35,6 +35,7 @@ import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
+import ly.david.mbjc.ui.place.stats.PlaceStatsScreen
 
 internal enum class PlaceTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
@@ -151,7 +152,10 @@ internal fun PlaceScaffold(
                 )
             }
             PlaceTab.STATS -> {
-
+                PlaceStatsScreen(
+                    placeId = placeId,
+                    tabs = PlaceTab.values().map { it.tab }
+                )
             }
         }
     }

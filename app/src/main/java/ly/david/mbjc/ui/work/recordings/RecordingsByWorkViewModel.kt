@@ -15,7 +15,7 @@ import ly.david.data.persistence.recording.toRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.work.RecordingWork
-import ly.david.data.persistence.work.RecordingsWorksDao
+import ly.david.data.persistence.work.RecordingWorkDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
@@ -26,7 +26,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val recordingDao: RecordingDao,
     private val relationDao: RelationDao,
-    private val recordingsWorksDao: RecordingsWorksDao,
+    private val recordingWorkDao: RecordingWorkDao,
 ) : ViewModel(),
     IPagedList<RecordingListItemModel> by pagedList,
     BrowseResourceUseCase<RecordingForListItem, RecordingListItemModel> {
@@ -61,7 +61,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
 
         val recordingMusicBrainzModels = response.recordings
         recordingDao.insertAll(recordingMusicBrainzModels.map { it.toRoomModel() })
-        recordingsWorksDao.insertAll(
+        recordingWorkDao.insertAll(
             recordingMusicBrainzModels.map { recording ->
                 RecordingWork(
                     recordingId = recording.id,
@@ -80,7 +80,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RECORDING)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        recordingsWorksDao.deleteRecordingsByWork(resourceId)
+        recordingWorkDao.deleteRecordingsByWork(resourceId)
         relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RECORDING)
     }
 
@@ -89,10 +89,10 @@ internal class RecordingsByWorkViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
-            recordingsWorksDao.getRecordingsByWork(resourceId)
+            recordingWorkDao.getRecordingsByWork(resourceId)
         }
         else -> {
-            recordingsWorksDao.getRecordingsByWorkFiltered(
+            recordingWorkDao.getRecordingsByWorkFiltered(
                 workId = resourceId,
                 query = "%$query%"
             )
