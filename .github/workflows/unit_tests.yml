@@ -6,8 +6,7 @@ on:
       - "*.md"
 
 jobs:
-  unit-test:
-    timeout-minutes: 10
+  config:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,6 +28,11 @@ jobs:
       - name: Grant permissions to gradlew
         run: chmod +x gradlew
 
+  unit-test:
+    needs: config
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
       - name: Run data unit tests
         uses: gradle/gradle-build-action@v2
         with:
