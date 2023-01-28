@@ -10,7 +10,7 @@ import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.area.ReleasesCountriesDao
+import ly.david.data.persistence.area.ReleaseCountryDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -25,7 +25,7 @@ internal class ReleasesByAreaViewModel @Inject constructor(
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
-    private val releasesCountriesDao: ReleasesCountriesDao,
+    private val releaseCountryDao: ReleaseCountryDao,
     private val releaseDao: ReleaseDao,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
@@ -57,7 +57,7 @@ internal class ReleasesByAreaViewModel @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releasesCountriesDao.insertAll(
+        releaseCountryDao.insertAll(
             releaseMusicBrainzModels.map { release ->
                 ReleaseCountry(
                     releaseId = release.id,
@@ -77,9 +77,9 @@ internal class ReleasesByAreaViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesCountriesDao.withTransaction {
-            releasesCountriesDao.deleteReleasesByCountry(resourceId)
-            releasesCountriesDao.deleteArtistReleaseLinks(resourceId)
+        releaseCountryDao.withTransaction {
+            releaseCountryDao.deleteReleasesByCountry(resourceId)
+            releaseCountryDao.deleteArtistReleaseLinks(resourceId)
             relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
         }
     }
@@ -89,10 +89,10 @@ internal class ReleasesByAreaViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
-            releasesCountriesDao.getReleasesByCountry(resourceId)
+            releaseCountryDao.getReleasesByCountry(resourceId)
         }
         else -> {
-            releasesCountriesDao.getReleasesByCountryFiltered(
+            releaseCountryDao.getReleasesByCountryFiltered(
                 areaId = resourceId,
                 query = "%$query%"
             )

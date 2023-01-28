@@ -7,7 +7,7 @@ import androidx.room.Entity
     tableName = "recording_release",
     primaryKeys = ["release_id", "recording_id"],
 )
-data class ReleaseRecording(
+data class RecordingRelease(
     @ColumnInfo(name = "release_id")
     val releaseId: String,
 

@@ -23,7 +23,7 @@ import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
 import ly.david.data.persistence.place.PlaceRoomModel
 import ly.david.data.persistence.recording.RecordingRoomModel
-import ly.david.data.persistence.recording.ReleaseRecording
+import ly.david.data.persistence.recording.RecordingRelease
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationRoomModel
@@ -69,7 +69,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         RecordingWork::class,
         ReleaseCountry::class,
         ReleaseLabel::class,
-        ReleaseRecording::class,
+        RecordingRelease::class,
         ReleaseReleaseGroup::class,
 
         // Additional features tables

@@ -2,7 +2,7 @@ package ly.david.data.persistence
 
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.AreaPlaceDao
-import ly.david.data.persistence.area.ReleasesCountriesDao
+import ly.david.data.persistence.area.ReleaseCountryDao
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.artist.release.ArtistReleaseDao
@@ -14,7 +14,7 @@ import ly.david.data.persistence.label.LabelDao
 import ly.david.data.persistence.label.ReleaseLabelDao
 import ly.david.data.persistence.place.PlaceDao
 import ly.david.data.persistence.recording.RecordingDao
-import ly.david.data.persistence.recording.ReleasesRecordingsDao
+import ly.david.data.persistence.recording.RecordingReleaseDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -37,15 +37,15 @@ interface MusicBrainzDatabase {
     fun getTrackDao(): TrackDao
 
     fun getRecordingDao(): RecordingDao
-    fun getReleasesRecordingsDao(): ReleasesRecordingsDao
+    fun getRecordingReleaseDao(): RecordingReleaseDao
 
     fun getWorkDao(): WorkDao
-    fun getRecordingsWorksDao(): RecordingWorkDao
+    fun getRecordingWorkDao(): RecordingWorkDao
 
     fun getAreaDao(): AreaDao
     fun getAreaPlaceDao(): AreaPlaceDao
     fun getEventPlaceDao(): EventPlaceDao
-    fun getReleasesCountriesDao(): ReleasesCountriesDao
+    fun getReleaseCountryDao(): ReleaseCountryDao
 
     fun getPlaceDao(): PlaceDao
 

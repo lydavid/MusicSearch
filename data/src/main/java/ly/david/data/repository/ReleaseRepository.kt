@@ -12,7 +12,7 @@ import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.toReleaseLabels
 import ly.david.data.network.toRoomModels
 import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.ReleasesCountriesDao
+import ly.david.data.persistence.area.ReleaseCountryDao
 import ly.david.data.persistence.area.getAreaCountryCodes
 import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
@@ -36,7 +36,7 @@ class ReleaseRepository @Inject constructor(
     private val releaseGroupDao: ReleaseGroupDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
-    private val releasesCountriesDao: ReleasesCountriesDao,
+    private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao
@@ -105,7 +105,7 @@ class ReleaseRepository @Inject constructor(
                     releaseEvent.area?.getAreaCountryCodes().orEmpty()
                 }.orEmpty()
             )
-            releasesCountriesDao.insertAll(release.getReleaseCountries())
+            releaseCountryDao.insertAll(release.getReleaseCountries())
         }
     }
 

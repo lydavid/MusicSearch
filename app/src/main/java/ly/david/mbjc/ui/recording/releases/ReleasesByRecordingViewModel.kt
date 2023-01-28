@@ -9,8 +9,8 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.recording.ReleaseRecording
-import ly.david.data.persistence.recording.ReleasesRecordingsDao
+import ly.david.data.persistence.recording.RecordingRelease
+import ly.david.data.persistence.recording.RecordingReleaseDao
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -26,7 +26,7 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val releaseDao: ReleaseDao,
     private val relationDao: RelationDao,
-    private val releasesRecordingsDao: ReleasesRecordingsDao
+    private val recordingReleaseDao: RecordingReleaseDao
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
     BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
@@ -57,9 +57,9 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        releasesRecordingsDao.insertAll(
+        recordingReleaseDao.insertAll(
             releaseMusicBrainzModels.map { release ->
-                ReleaseRecording(
+                RecordingRelease(
                     releaseId = release.id,
                     recordingId = resourceId
                 )
@@ -76,9 +76,9 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        releasesRecordingsDao.withTransaction {
-            releasesRecordingsDao.deleteReleasesByRecording(resourceId)
-            releasesRecordingsDao.deleteRecordingReleaseLinks(resourceId)
+        recordingReleaseDao.withTransaction {
+            recordingReleaseDao.deleteReleasesByRecording(resourceId)
+            recordingReleaseDao.deleteRecordingReleaseLinks(resourceId)
             relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
         }
     }
@@ -88,10 +88,10 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
-            releasesRecordingsDao.getReleasesByRecording(resourceId)
+            recordingReleaseDao.getReleasesByRecording(resourceId)
         }
         else -> {
-            releasesRecordingsDao.getReleasesByRecordingFiltered(
+            recordingReleaseDao.getReleasesByRecordingFiltered(
                 recordingId = resourceId,
                 query = "%$query%"
             )

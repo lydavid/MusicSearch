@@ -14,7 +14,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 import ly.david.data.persistence.area.AreaPlaceDao
-import ly.david.data.persistence.area.ReleasesCountriesDao
+import ly.david.data.persistence.area.ReleaseCountryDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.stats.PlacesStats
@@ -27,12 +27,12 @@ interface AreaStatsRepository : RelationsStats, ReleasesStats, PlacesStats
 @HiltViewModel
 class AreaStatsViewModel @Inject constructor(
     override val relationDao: RelationDao,
-    private val releasesCountriesDao: ReleasesCountriesDao,
+    private val releaseCountryDao: ReleaseCountryDao,
     private val areaPlaceDao: AreaPlaceDao
 ) : ViewModel(), AreaStatsRepository {
 
     override suspend fun getTotalLocalReleases(resourceId: String): Int =
-        releasesCountriesDao.getNumberOfReleasesByCountry(resourceId)
+        releaseCountryDao.getNumberOfReleasesByCountry(resourceId)
 
     override suspend fun getTotalLocalPlaces(resourceId: String): Int =
         areaPlaceDao.getNumberOfPlacesByArea(resourceId)

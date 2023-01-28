@@ -8,7 +8,7 @@ import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 
 @Dao
-abstract class ReleasesCountriesDao : BaseDao<ReleaseCountry>() {
+abstract class ReleaseCountryDao : BaseDao<ReleaseCountry>() {
 
     // TODO: one use for an intermediate country_area table
     //  is to make these more logical

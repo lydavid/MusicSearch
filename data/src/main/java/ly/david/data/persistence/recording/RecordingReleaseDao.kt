@@ -8,7 +8,7 @@ import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 
 @Dao
-abstract class ReleasesRecordingsDao : BaseDao<ReleaseRecording>() {
+abstract class RecordingReleaseDao : BaseDao<RecordingRelease>() {
 
     companion object {
         private const val RELEASES_BY_RECORDING = """

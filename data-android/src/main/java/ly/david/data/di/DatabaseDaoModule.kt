@@ -37,13 +37,13 @@ internal object DatabaseDaoModule {
     fun provideRecordingDao(db: MusicBrainzDatabase) = db.getRecordingDao()
 
     @Provides
-    fun provideReleasesRecordingsDao(db: MusicBrainzDatabase) = db.getReleasesRecordingsDao()
+    fun provideRecordingReleaseDao(db: MusicBrainzDatabase) = db.getRecordingReleaseDao()
 
     @Provides
     fun provideWorkDao(db: MusicBrainzDatabase) = db.getWorkDao()
 
     @Provides
-    fun provideRecordingsWorksDao(db: MusicBrainzDatabase) = db.getRecordingsWorksDao()
+    fun provideRecordingWorkDao(db: MusicBrainzDatabase) = db.getRecordingWorkDao()
 
     @Provides
     fun provideAreaDao(db: MusicBrainzDatabase) = db.getAreaDao()
@@ -55,7 +55,7 @@ internal object DatabaseDaoModule {
     fun provideEventPlaceDao(db: MusicBrainzDatabase) = db.getEventPlaceDao()
 
     @Provides
-    fun provideReleasesCountriesDao(db: MusicBrainzDatabase) = db.getReleasesCountriesDao()
+    fun provideReleaseCountryDao(db: MusicBrainzDatabase) = db.getReleaseCountryDao()
 
     @Provides
     fun providePlaceDao(db: MusicBrainzDatabase) = db.getPlaceDao()
