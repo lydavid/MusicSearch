@@ -3,7 +3,8 @@ name: Data Unit Tests
 on:
   push:
     paths:
-      - ".github/**"
+      - ".github/actions/**"
+      - ".github/workflows/data_unit_tests.yml"
       - "data/src/**"
       - "data/build.gradle"
 
