@@ -9,7 +9,7 @@ on:
       - "data/coverart/build.gradle"
 
 jobs:
-  data-coverart:
+  data-coverart-unit-test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:

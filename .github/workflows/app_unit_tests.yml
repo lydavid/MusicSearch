@@ -6,7 +6,7 @@ on:
       - "*.md"
 
 jobs:
-  app:
+  app-unit-test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:

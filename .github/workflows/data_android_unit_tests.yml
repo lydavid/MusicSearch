@@ -9,7 +9,7 @@ on:
       - "data-android/build.gradle"
 
 jobs:
-  data-android:
+  data-android-unit-test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
