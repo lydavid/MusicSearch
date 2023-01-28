@@ -1,12 +1,14 @@
-name: Unit Tests
+name: Android Data Unit Tests
 
 on:
   push:
-    paths-ignore:
-      - "*.md"
+    paths:
+      - ".github/**"
+      - "data-android/src/**"
+      - "data-android/build.gradle"
 
 jobs:
-  unit-test:
+  data-android:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -16,17 +18,9 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - name: Run data unit tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:test
-
       # TODO: This is reporting 0% coverage, probably because it doesn't test any of its own code
       - name: Run data-android unit tests with coverage
         run: ./gradlew data-android:createDebugUnitTestCoverageReport
-
-      - name: Run app unit tests with coverage
-        run: ./gradlew app:createDebugUnitTestCoverageReport
 
       # https://github.com/codecov/codecov-action#arguments
 #      - name: Upload coverage to Codecov
