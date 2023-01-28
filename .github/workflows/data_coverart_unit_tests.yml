@@ -8,7 +8,7 @@ on:
       - "data/coverart/build.gradle"
 
 jobs:
-  data:
+  data-coverart:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
