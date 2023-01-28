@@ -5,11 +5,11 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
+import ly.david.data.base.JsonUtils
+import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.di.MusicBrainzNetworkModule
 import ly.david.data.network.api.FakeMusicBrainzApiService
-import ly.david.data.network.api.JsonUtils
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

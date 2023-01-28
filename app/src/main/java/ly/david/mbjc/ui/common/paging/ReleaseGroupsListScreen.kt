@@ -14,7 +14,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader

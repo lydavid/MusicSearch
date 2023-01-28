@@ -18,7 +18,7 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
-import ly.david.data.network.api.coverart.trimCoverArtSuffix
+import ly.david.data.coverart.trimCoverArtSuffix
 
 @Composable
 internal fun SmallCoverArt(

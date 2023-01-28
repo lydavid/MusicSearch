@@ -1,5 +1,6 @@
 package ly.david.data.network.api
 
+import ly.david.data.base.JsonUtils
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -19,7 +20,6 @@ interface MusicBrainzApiServiceImpl {
         fun create(client: OkHttpClient): MusicBrainzApiService {
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
-                // TODO: should process 503 errors, then we should display alert saying we ran into it (rate limited etc)
                 .client(client)
                 .baseUrl(MUSIC_BRAINZ_API_BASE_URL)
                 .build()

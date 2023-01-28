@@ -13,7 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.api.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.mbjc.ui.release.ReleaseListItem

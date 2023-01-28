@@ -1,5 +1,7 @@
 package ly.david.data.network.api.coverart
 
+import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.getFrontCoverArtUrl
 import ly.david.data.persistence.release.ReleaseDao
 import retrofit2.HttpException
 
@@ -9,6 +11,8 @@ import retrofit2.HttpException
 interface GetReleaseCoverArtPath {
 
     val coverArtArchiveApiService: CoverArtArchiveApiService
+
+    // TODO: can't move to coverart module unless daos are moved to base
     val releaseDao: ReleaseDao
 
     /**

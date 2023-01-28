@@ -44,8 +44,7 @@ dependencies {
     api project(path: ':data')
     testImplementation project(path: ':test-data')
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi-kotlin:1.14.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"

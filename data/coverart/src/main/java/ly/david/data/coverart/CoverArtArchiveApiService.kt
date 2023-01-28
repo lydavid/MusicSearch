@@ -1,6 +1,6 @@
-package ly.david.data.network.api.coverart
+package ly.david.data.coverart
 
-import ly.david.data.network.api.JsonUtils
+import ly.david.data.base.JsonUtils
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

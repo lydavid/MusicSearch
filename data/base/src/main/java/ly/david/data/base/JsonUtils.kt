@@ -1,4 +1,4 @@
-package ly.david.data.network.api
+package ly.david.data.base
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

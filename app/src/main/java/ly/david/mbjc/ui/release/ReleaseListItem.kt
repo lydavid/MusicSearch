@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.network.api.coverart.buildCoverArtUrl
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt

@@ -17,7 +17,6 @@ import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.MainApp
-import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -76,10 +75,8 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
             .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
-        // TODO: could we search semantics with wildcards?
-        val resourceDescription = composeTestRule.activity.getString(lookupHistory.resource.getDisplayTextRes())
         composeTestRule
-            .onNodeWithText("$resourceDescription: ${lookupHistory.title}")
+            .onNodeWithText(lookupHistory.title)
             .assertIsDisplayed()
     }
 }

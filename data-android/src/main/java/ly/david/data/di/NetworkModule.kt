@@ -8,10 +8,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
+import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.CoverArtArchiveApiServiceImpl
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiServiceImpl
-import ly.david.data.network.api.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.CoverArtArchiveApiServiceImpl
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 

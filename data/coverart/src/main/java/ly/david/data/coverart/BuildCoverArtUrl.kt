@@ -1,9 +1,9 @@
-package ly.david.data.network.api.coverart
+package ly.david.data.coverart
 
 // TODO: for now, we will use request for large thumbnail instead of full-size since some of them might be MBs
 //  might be better user experience to allow them to choose what resolution to download, otherwise just show 500
-private const val SMALL_SUFFIX = "-250"
-private const val LARGE_SUFFIX = "-500"
+internal const val SMALL_SUFFIX = "-250"
+internal const val LARGE_SUFFIX = "-500"
 
 /**
  * Builds a fully qualified cover art url from [coverArtPath].
@@ -21,6 +21,3 @@ fun buildCoverArtUrl(
     }
 }
 
-fun String.trimCoverArtSuffix(): String {
-    return this.replace(SMALL_SUFFIX, "").replace(LARGE_SUFFIX, "")
-}

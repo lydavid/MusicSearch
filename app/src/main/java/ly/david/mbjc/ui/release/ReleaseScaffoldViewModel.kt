@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseScaffoldModel
@@ -29,9 +31,7 @@ import ly.david.data.domain.toTrackListItemModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
-import ly.david.data.network.api.coverart.buildCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao

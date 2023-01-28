@@ -1,5 +1,7 @@
 package ly.david.data.network.api.coverart
 
+import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.getFrontCoverArtUrl
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import retrofit2.HttpException
 

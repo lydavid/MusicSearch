@@ -6,8 +6,10 @@ plugins {
 // and selecting `Run Tests in 'MusicBrainzJetpackCompose.data.test' with Coverage`
 
 dependencies {
-    // Moshi
-    implementation "com.squareup.moshi:moshi-kotlin:1.14.0"
+    api project(path: ':data:base')
+    api project(path: ':data:coverart')
+
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
     // Retrofit
     api "com.squareup.retrofit2:retrofit:2.9.0"

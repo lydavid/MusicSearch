@@ -1,0 +1,7 @@
+plugins {
+    id "kotlin"
+}
+
+dependencies {
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+}
