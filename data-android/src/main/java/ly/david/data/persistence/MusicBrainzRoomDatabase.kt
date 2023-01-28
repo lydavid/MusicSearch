@@ -17,13 +17,13 @@ import ly.david.data.persistence.artist.credit.ArtistCreditResource
 import ly.david.data.persistence.artist.release.ArtistRelease
 import ly.david.data.persistence.event.EventPlace
 import ly.david.data.persistence.event.EventRoomModel
-import ly.david.data.persistence.history.LookupHistory
+import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.data.persistence.instrument.InstrumentRoomModel
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.ReleaseLabel
 import ly.david.data.persistence.place.PlaceRoomModel
-import ly.david.data.persistence.recording.RecordingRoomModel
 import ly.david.data.persistence.recording.RecordingRelease
+import ly.david.data.persistence.recording.RecordingRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.HasRelationsRoomModel
 import ly.david.data.persistence.relation.RelationRoomModel
@@ -41,7 +41,7 @@ import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 93,
+    version = 94,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -73,7 +73,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         ReleaseReleaseGroup::class,
 
         // Additional features tables
-        LookupHistory::class
+        LookupHistoryRoomModel::class
     ],
     views = [
         LabelWithCatalog::class,

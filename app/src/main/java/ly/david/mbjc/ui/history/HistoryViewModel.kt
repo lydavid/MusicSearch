@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.history.LookupHistory
+import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.data.persistence.history.LookupHistoryDao
 
 @HiltViewModel
@@ -28,7 +28,7 @@ internal class HistoryViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lookUpHistory: Flow<PagingData<LookupHistory>> =
+    val lookUpHistory: Flow<PagingData<LookupHistoryRoomModel>> =
         query.flatMapLatest { query ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,

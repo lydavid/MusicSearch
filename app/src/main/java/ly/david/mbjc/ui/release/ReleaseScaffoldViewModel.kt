@@ -31,7 +31,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
-import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
+import ly.david.data.network.api.coverart.buildCoverArtUrl
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -193,8 +193,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         releaseScaffoldModel: ReleaseScaffoldModel
     ) {
         val coverArtPath = releaseScaffoldModel.coverArtPath
-        url.value = buildReleaseCoverArtUrl(
-            releaseId = releaseId,
+        url.value = buildCoverArtUrl(
             coverArtPath = coverArtPath ?: getReleaseCoverArtPathFromNetwork(releaseId),
             thumbnail = false
         )

@@ -8,11 +8,11 @@ import java.util.Date
 import ly.david.data.persistence.BaseDao
 
 @Dao
-abstract class LookupHistoryDao : BaseDao<LookupHistory>() {
+abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")
-    abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistory>
+    abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistoryRoomModel>
 
     // TODO: can't search "release group", need to use "release_group" or "release-group"
     //  rather than having the user type "artist" to filter artist, use pills or something
@@ -26,7 +26,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistory>() {
         ORDER BY last_accessed DESC
         """
     )
-    abstract fun getAllLookupHistoryFiltered(query: String): PagingSource<Int, LookupHistory>
+    abstract fun getAllLookupHistoryFiltered(query: String): PagingSource<Int, LookupHistoryRoomModel>
 
     @Query(
         """
@@ -35,7 +35,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistory>() {
         WHERE mbid = :mbid
     """
     )
-    abstract suspend fun getLookupHistory(mbid: String): LookupHistory?
+    abstract suspend fun getLookupHistory(mbid: String): LookupHistoryRoomModel?
 
     @Query(
         """
@@ -45,10 +45,10 @@ abstract class LookupHistoryDao : BaseDao<LookupHistory>() {
     abstract suspend fun deleteAllHistory()
 
     /**
-     * Insert new [LookupHistory] if it doesn't exist, otherwise increment its visited count
+     * Insert new [LookupHistoryRoomModel] if it doesn't exist, otherwise increment its visited count
      * and its last visited timestamp.
      */
-    suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistory) {
+    suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistoryRoomModel) {
         val historyRecord = getLookupHistory(lookupHistory.mbid)
         if (historyRecord == null) {
             insert(lookupHistory)

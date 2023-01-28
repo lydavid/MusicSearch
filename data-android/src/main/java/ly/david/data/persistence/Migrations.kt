@@ -322,4 +322,16 @@ internal object Migrations {
             )
         }
     }
+
+    val ADD_UUID_TO_RELEASE_PATH_FOR_CONSISTENCY = object : Migration(93, 94) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                UPDATE release
+                SET cover_art_path = id || '/' || cover_art_path
+                WHERE cover_art_path IS NOT NULL AND cover_art_path != ''
+            """
+            )
+        }
+    }
 }

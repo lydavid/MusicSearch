@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.common.history
 
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.history.LookupHistory
+import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.data.persistence.history.LookupHistoryDao
 
 internal interface RecordLookupHistory {
@@ -14,7 +14,7 @@ internal interface RecordLookupHistory {
         searchHint: String = ""
     ) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
-            LookupHistory(
+            LookupHistoryRoomModel(
                 title = summary,
                 resource = resource,
                 mbid = resourceId,

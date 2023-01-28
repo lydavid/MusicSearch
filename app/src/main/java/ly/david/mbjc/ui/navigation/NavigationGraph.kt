@@ -24,7 +24,7 @@ import ly.david.mbjc.ui.experimental.ExperimentalScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
-import ly.david.mbjc.ui.history.HistoryScreenScaffold
+import ly.david.mbjc.ui.history.HistoryScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
@@ -281,7 +281,7 @@ internal fun NavigationGraph(
         composable(
             Destination.HISTORY.route
         ) {
-            HistoryScreenScaffold(
+            HistoryScaffold(
                 openDrawer = openDrawer,
                 onItemClick = onLookupItemClick
             )

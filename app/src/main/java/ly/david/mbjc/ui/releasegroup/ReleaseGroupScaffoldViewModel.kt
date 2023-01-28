@@ -12,7 +12,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
-import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
+import ly.david.data.network.api.coverart.buildCoverArtUrl
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.repository.ReleaseGroupRepository
@@ -94,7 +94,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
         val coverArtPath = releaseGroupScaffoldModel.coverArtPath
-        url.value = buildReleaseGroupCoverArtUrl(
+        url.value = buildCoverArtUrl(
             coverArtPath = coverArtPath ?: getReleaseGroupCoverArtPathFromNetwork(releaseGroupId),
             thumbnail = false
         )

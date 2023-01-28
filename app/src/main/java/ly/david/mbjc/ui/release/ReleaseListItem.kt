@@ -10,18 +10,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
+import ly.david.data.network.api.coverart.buildCoverArtUrl
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt
@@ -53,36 +52,19 @@ internal fun ReleaseListItem(
     ClickableListItem(
         onClick = { onClick(release) },
     ) {
-        // TODO: don't need constraint
-        ConstraintLayout(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            val (coverArt, content) = createRefs()
-
             SmallCoverArt(
-                modifier = Modifier
-                    .constrainAs(coverArt) {
-                        width = Dimension.value(64.dp)
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(content.start, margin = 16.dp)
-                        bottom.linkTo(parent.bottom)
-                    },
+                modifier = Modifier.padding(end = 16.dp),
                 placeholderIcon = Icons.Default.Album,
-                coverArtUrl = buildReleaseCoverArtUrl(release.id, release.coverArtPath.orEmpty())
+                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty())
             )
 
-            Column(
-                modifier = Modifier.constrainAs(content) {
-                    width = Dimension.fillToConstraints
-                    top.linkTo(parent.top)
-                    start.linkTo(coverArt.end)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                }
-            ) {
+            Column {
                 Text(
                     text = release.name,
                     style = TextStyles.getCardBodyTextStyle()

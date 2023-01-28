@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.ReleaseGroupListItemModel
-import ly.david.data.network.api.coverart.buildReleaseGroupCoverArtUrl
+import ly.david.data.network.api.coverart.buildCoverArtUrl
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
@@ -53,10 +53,9 @@ internal fun ReleaseGroupListItem(
                 .padding(vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             SmallCoverArt(
                 modifier = Modifier.padding(end = 16.dp),
-                coverArtUrl = buildReleaseGroupCoverArtUrl(releaseGroup.coverArtPath.orEmpty()),
+                coverArtUrl = buildCoverArtUrl(releaseGroup.coverArtPath.orEmpty()),
                 placeholderIcon = Icons.Default.Folder,
             )
 
