@@ -11,5 +11,5 @@ dependencies {
 
     // Test
     testImplementation 'junit:junit:4.13.2'
-    testImplementation "io.mockk:mockk:1.13.3"
+    testImplementation "io.mockk:mockk:1.13.4"
 }
