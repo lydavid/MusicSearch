@@ -2,6 +2,7 @@ package ly.david.data.persistence.area
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import ly.david.data.persistence.place.PlaceRoomModel
 
 /**
@@ -10,6 +11,7 @@ import ly.david.data.persistence.place.PlaceRoomModel
 @Entity(
     tableName = "area_place",
     primaryKeys = ["area_id", "place_id"],
+    indices = [Index(value = ["place_id"])]
 )
 data class AreaPlace(
     @ColumnInfo(name = "area_id")

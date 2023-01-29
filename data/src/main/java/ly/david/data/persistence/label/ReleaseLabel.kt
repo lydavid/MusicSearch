@@ -3,11 +3,13 @@ package ly.david.data.persistence.label
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import ly.david.data.persistence.release.ReleaseRoomModel
 
 @Entity(
     tableName = "release_label",
     primaryKeys = ["release_id", "label_id", "catalog_number"],
+    indices = [Index(value = ["label_id"])],
     foreignKeys = [
         ForeignKey(
             entity = LabelRoomModel::class,

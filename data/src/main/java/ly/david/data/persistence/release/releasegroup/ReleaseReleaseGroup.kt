@@ -2,6 +2,7 @@ package ly.david.data.persistence.release.releasegroup
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 
 /**
  * This is a junction table linking releases and release groups.
@@ -11,7 +12,8 @@ import androidx.room.Entity
  */
 @Entity(
     tableName = "release_release_group",
-    primaryKeys = ["release_id", "release_group_id"]
+    primaryKeys = ["release_id", "release_group_id"],
+    indices = [Index(value = ["release_group_id"])]
 )
 data class ReleaseReleaseGroup(
     @ColumnInfo(name = "release_id")
