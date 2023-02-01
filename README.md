@@ -1,29 +1,18 @@
-# MusicBrainzJetpackCompose
+# MusicSearch
+
+An Android app for browsing songs, artists, and anything related to them using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
+
 
 ## Features
 
-| Resource      | Search | Lookup | Browse by                             |
-|---------------|--------|--------|---------------------------------------|
-| area          | x      | x      |
-| artist        | x      | x      |
-| event         | x      | x      | place                                 |
-| genre         |        | x      |
-| instrument    | x      | x      |
-| label         | x      | x      |
-| place         | x      | x      | area                                  |
-| recording     | x      | x      | work                                  |
-| release       | x      | x      | area, label, recording, release-group |
-| release-group | x      | x      | artist                                |
-| series        | x      | x      |
-| work          | x      | x      |
-| url           |        | x      |
+- Search: browse MusicBrainz's massive database for any information related to your favorite artist or song
+- All data is cached on device after loading each page/tab
+- History: See every page you've visited, and quickly get back to them
+- Filter: Almost every tab allows you to search its content instantaneously
+- [Cover arts](https://coverartarchive.org/)
+- Dark theme
 
-## Code Coverage
 
-Instrumented test coverage for `app`
-`Run anything` -> `gradle app:createDebugAndroidTestCoverageReport`
+## Upcoming Features
 
-Unit test coverage for `data`
-`Run anything` -> `gradle data:createDebugUnitTestCoverageReport`
-
-TODO: Merge instrumented and unit test coverage. And merge all module reports.
+- Automatically detect playing Spotify song metadata, allowing you to deeplink search for the artist, album name, and track name
