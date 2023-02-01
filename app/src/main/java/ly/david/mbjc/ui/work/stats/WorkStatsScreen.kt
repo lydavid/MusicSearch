@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.Tab
@@ -16,6 +17,7 @@ import ly.david.mbjc.ui.stats.StatsScreen
 @Composable
 internal fun WorkGroupStatsScreen(
     workId: String,
+    modifier: Modifier = Modifier,
     tabs: List<Tab>,
     viewModel: WorkStatsViewModel = hiltViewModel()
 ) {
@@ -32,6 +34,7 @@ internal fun WorkGroupStatsScreen(
     }
 
     StatsScreen(
+        modifier = modifier,
         tabs = tabs,
         stats = Stats(
             totalRelations = totalRelations,

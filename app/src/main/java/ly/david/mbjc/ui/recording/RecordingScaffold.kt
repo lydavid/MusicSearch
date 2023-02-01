@@ -127,6 +127,7 @@ internal fun RecordingScaffold(
         when (selectedTab) {
             RecordingTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = recording
@@ -154,6 +155,7 @@ internal fun RecordingScaffold(
                 viewModel.loadRelations(recordingId)
 
                 RelationsScreen(
+                    modifier = Modifier.padding(innerPadding),
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
@@ -163,6 +165,7 @@ internal fun RecordingScaffold(
             RecordingTab.STATS -> {
                 RecordingStatsScreen(
                     recordingId = recordingId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = RecordingTab.values().map { it.tab }
                 )
             }

@@ -12,13 +12,14 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,12 +47,13 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 private const val DELAY_LOADING_MS = 300L
 
 /**
- * [SmallTopAppBar] with icon for [resource], scrollable [title]/[subtitle];
+ * [TopAppBar] with icon for [resource], scrollable [title]/[subtitle];
  * drawer button invoking [openDrawer] if not null, otherwise back button invoking [onBack];
  * and [Tab]s for each [tabsTitles].
  *
  * @param resource What [MusicBrainzResource]'s icon to display.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
@@ -72,7 +74,7 @@ internal fun ScrollableTopAppBar(
 ) {
 
     Column {
-        SmallTopAppBar(
+        TopAppBar(
             title = {
                 TitleBar(
                     resource = resource,

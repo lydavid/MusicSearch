@@ -14,8 +14,11 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
-internal fun FullScreenErrorWithRetry(onClick: () -> Unit = {}) {
-    FullScreenContent {
+internal fun FullScreenErrorWithRetry(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
+    FullScreenContent(modifier = modifier) {
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Center,

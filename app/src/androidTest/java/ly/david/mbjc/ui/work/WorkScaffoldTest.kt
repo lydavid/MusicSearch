@@ -44,6 +44,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         assertFieldsDisplayed()
     }
 
+    // TODO: flake
     @Test
     fun repeatVisit_localData() {
         runBlocking {
@@ -69,7 +70,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule
             .onNodeWithText(fakeWorkWithAllData.type!!)
             .assertIsDisplayed()
-        // Doesn't work cause it contains : but we shouldn't be testing for exact string here
+        // TODO: Doesn't work cause it contains : but we shouldn't be testing for exact string here
 //        composeTestRule
 //            .onNodeWithText(fakeWork.attributes!!.first().type)
 //            .assertIsDisplayed()

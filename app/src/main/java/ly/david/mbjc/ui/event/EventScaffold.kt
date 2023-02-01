@@ -98,6 +98,7 @@ internal fun EventScaffold(
         when (selectedTab) {
             EventTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = event
@@ -123,6 +124,7 @@ internal fun EventScaffold(
             EventTab.STATS -> {
                 EventStatsScreen(
                     eventId = eventId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = EventTab.values().map { it.tab }
                 )
             }

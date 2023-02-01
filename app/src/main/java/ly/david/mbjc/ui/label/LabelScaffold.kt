@@ -111,6 +111,7 @@ internal fun LabelScaffold(
         when (selectedTab) {
             LabelTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = label
@@ -138,6 +139,7 @@ internal fun LabelScaffold(
                 viewModel.loadRelations(labelId)
 
                 RelationsScreen(
+                    modifier = Modifier.padding(innerPadding),
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
@@ -147,6 +149,7 @@ internal fun LabelScaffold(
             LabelTab.STATS -> {
                 LabelStatsScreen(
                     labelId = labelId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = LabelTab.values().map { it.tab }
                 )
             }

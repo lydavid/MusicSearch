@@ -111,6 +111,7 @@ internal fun WorkScaffold(
         when (selectedTab) {
             WorkTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = work
@@ -152,7 +153,8 @@ internal fun WorkScaffold(
             }
             WorkTab.STATS -> {
                 WorkGroupStatsScreen(
-                    workId,
+                    workId = workId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = WorkTab.values().map { it.tab }
                 )
             }

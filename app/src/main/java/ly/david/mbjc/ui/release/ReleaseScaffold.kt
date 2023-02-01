@@ -138,6 +138,7 @@ internal fun ReleaseScaffold(
         when (selectedTab) {
             ReleaseTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     // TODO: [low] if you spam click this it won't work
                     //  but you can always change tabs or come back to reload
@@ -148,6 +149,7 @@ internal fun ReleaseScaffold(
                     //  want to see if deleting labels by release will cascade delete its junction table
                     ReleaseDetailsScreen(
                         release = it,
+                        modifier = Modifier.padding(innerPadding),
                         coverArtUrl = url,
                         onLabelClick = {
                             onItemClick(Destination.LOOKUP_LABEL, id, name)
@@ -172,6 +174,7 @@ internal fun ReleaseScaffold(
             }
             ReleaseTab.RELATIONSHIPS -> {
                 RelationsScreen(
+                    modifier = Modifier.padding(innerPadding),
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
@@ -181,6 +184,7 @@ internal fun ReleaseScaffold(
             ReleaseTab.STATS -> {
                 ReleaseStatsScreen(
                     releaseId = releaseId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = ReleaseTab.values().map { it.tab }
                 )
             }

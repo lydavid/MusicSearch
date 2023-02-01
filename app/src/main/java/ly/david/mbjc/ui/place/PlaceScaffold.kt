@@ -115,6 +115,7 @@ internal fun PlaceScaffold(
         when (selectedTab) {
             PlaceTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = place
@@ -154,6 +155,7 @@ internal fun PlaceScaffold(
             PlaceTab.STATS -> {
                 PlaceStatsScreen(
                     placeId = placeId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = PlaceTab.values().map { it.tab }
                 )
             }

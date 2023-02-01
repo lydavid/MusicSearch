@@ -98,6 +98,7 @@ internal fun SeriesScaffold(
         when (selectedTab) {
             SeriesTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = series
@@ -123,6 +124,7 @@ internal fun SeriesScaffold(
             SeriesTab.STATS -> {
                 SeriesStatsScreen(
                     seriesId = seriesId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = SeriesTab.values().map { it.tab }
                 )
             }

@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.search
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,15 +41,15 @@ internal fun ExposedDropdownMenuBox(
 
     var expanded by rememberSaveable { mutableStateOf(false) }
 
+    // TODO: this can't properly take up the full size allotted to it
+    //  so in landscape mode, it doesn't fill up half the screen
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = {
-            expanded = !expanded
-        },
+        onExpandedChange = { expanded = !expanded },
         modifier = modifier
     ) {
         TextField(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.menuAnchor(),
             readOnly = true,
             shape = RectangleShape,
             value = stringResource(id = selectedOption.getDisplayTextRes()),
@@ -68,9 +67,7 @@ internal fun ExposedDropdownMenuBox(
         ExposedDropdownMenu(
             modifier = modifier,
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
+            onDismissRequest = { expanded = false }
         ) {
             options.forEach { option ->
                 Surface(

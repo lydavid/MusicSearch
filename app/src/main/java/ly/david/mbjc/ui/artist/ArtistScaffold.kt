@@ -152,6 +152,7 @@ internal fun ArtistScaffold(
         when (selectedTab) {
             ArtistTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = artist
@@ -165,8 +166,8 @@ internal fun ArtistScaffold(
             }
             ArtistTab.RELEASE_GROUPS -> {
                 ReleaseGroupsByArtistScreen(
-                    modifier = Modifier.padding(innerPadding),
                     artistId = artistId,
+                    modifier = Modifier.padding(innerPadding),
                     searchText = filterText,
                     isSorted = isSorted,
                     snackbarHostState = snackbarHostState,
@@ -195,6 +196,7 @@ internal fun ArtistScaffold(
                 viewModel.loadRelations(artistId)
 
                 RelationsScreen(
+                    modifier = Modifier.padding(innerPadding),
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
@@ -204,6 +206,7 @@ internal fun ArtistScaffold(
             ArtistTab.STATS -> {
                 ArtistStatsScreen(
                     artistId = artistId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = ArtistTab.values().map { it.tab }
                 )
             }

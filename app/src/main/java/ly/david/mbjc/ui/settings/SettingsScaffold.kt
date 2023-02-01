@@ -1,12 +1,14 @@
 package ly.david.mbjc.ui.settings
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.BuildConfig
@@ -32,7 +34,7 @@ fun SettingsScaffold(
                 title = stringResource(id = R.string.settings),
             )
         },
-    ) {
+    ) { innerPadding ->
 
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(
@@ -40,6 +42,7 @@ fun SettingsScaffold(
         )
 
         SettingsScreen(
+            modifier = Modifier.padding(innerPadding),
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
@@ -50,13 +53,14 @@ fun SettingsScaffold(
 
 @Composable
 fun SettingsScreen(
+    modifier: Modifier = Modifier,
     theme: AppPreferences.Theme,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
     showMoreInfoInReleaseListItem: Boolean,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {}
 ) {
 
-    Column {
+    Column(modifier = modifier) {
 
         SettingWithDialogChoices(
             titleRes = R.string.theme,

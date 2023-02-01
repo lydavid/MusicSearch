@@ -173,6 +173,7 @@ internal fun AreaScaffold(
             AreaTab.STATS -> {
                 AreaStatsScreen(
                     areaId = areaId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = areaTabs.map { it.tab }
                 )
             }

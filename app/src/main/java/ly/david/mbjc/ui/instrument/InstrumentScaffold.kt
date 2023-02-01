@@ -98,6 +98,7 @@ internal fun InstrumentScaffold(
         when (selectedTab) {
             InstrumentTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = instrument
@@ -123,6 +124,7 @@ internal fun InstrumentScaffold(
             InstrumentTab.STATS -> {
                 InstrumentStatsScreen(
                     instrumentId = instrumentId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = InstrumentTab.values().map { it.tab }
                 )
             }

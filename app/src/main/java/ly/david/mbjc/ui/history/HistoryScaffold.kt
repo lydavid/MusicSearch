@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.history
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -7,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
@@ -42,8 +44,9 @@ internal fun HistoryScaffold(
                 },
             )
         },
-    ) {
+    ) { innerPadding ->
         HistoryScreen(
+            modifier = Modifier.padding(innerPadding),
             lazyPagingItems = lazyPagingItems,
             onItemClick = onItemClick
         )
@@ -52,11 +55,13 @@ internal fun HistoryScaffold(
 
 @Composable
 internal fun HistoryScreen(
+    modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     PagingLoadingAndErrorHandler(
+        modifier = modifier,
         lazyPagingItems = lazyPagingItems,
     ) { lookupHistory: LookupHistoryRoomModel? ->
         when (lookupHistory) {

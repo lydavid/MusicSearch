@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.stats
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
@@ -16,10 +17,11 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 @Composable
 internal fun StatsScreen(
+    modifier: Modifier = Modifier,
     tabs: List<Tab>,
     stats: Stats
 ) {
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->
             when (tab) {
                 Tab.EVENTS -> {

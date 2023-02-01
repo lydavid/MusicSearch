@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import java.util.Locale
 import ly.david.data.AreaType.COUNTRY
@@ -33,12 +34,16 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
+    modifier: Modifier = Modifier,
     coverArtUrl: String = "",
     onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
     lazyListState: LazyListState = rememberLazyListState()
 ) {
-    LazyColumn(state = lazyListState) {
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState
+    ) {
         item {
             BigCoverArt(coverArtUrl = coverArtUrl)
 

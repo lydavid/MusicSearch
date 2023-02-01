@@ -63,6 +63,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         assertFieldsDisplayed()
     }
 
+    // TODO: flake
     private fun assertFieldsDisplayed() {
         composeTestRule
             .onNodeWithText(fakeArea.name)

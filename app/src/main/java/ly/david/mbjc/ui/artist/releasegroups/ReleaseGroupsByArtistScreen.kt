@@ -15,8 +15,8 @@ import ly.david.mbjc.ui.common.paging.ReleaseGroupsListScreen
 
 @Composable
 internal fun ReleaseGroupsByArtistScreen(
-    modifier: Modifier,
     artistId: String,
+    modifier: Modifier,
     searchText: String,
     isSorted: Boolean,
     snackbarHostState: SnackbarHostState,

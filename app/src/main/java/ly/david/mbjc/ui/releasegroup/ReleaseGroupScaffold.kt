@@ -137,12 +137,14 @@ internal fun ReleaseGroupScaffold(
         when (selectedTab) {
             ReleaseGroupTab.DETAILS -> {
                 DetailsWithErrorHandling(
+                    modifier = Modifier.padding(innerPadding),
                     showError = showError,
                     onRetryClick = { forceRefresh = true },
                     scaffoldModel = releaseGroup
                 ) {
                     ReleaseGroupDetailsScreen(
                         releaseGroup = it,
+                        modifier = Modifier.padding(innerPadding),
                         coverArtUrl = url,
                         lazyListState = detailsLazyListState,
                     )
@@ -164,6 +166,7 @@ internal fun ReleaseGroupScaffold(
                 viewModel.loadRelations(releaseGroupId)
 
                 RelationsScreen(
+                    modifier = Modifier.padding(innerPadding),
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
@@ -173,6 +176,7 @@ internal fun ReleaseGroupScaffold(
             ReleaseGroupTab.STATS -> {
                 ReleaseGroupStatsScreen(
                     releaseGroupId = releaseGroupId,
+                    modifier = Modifier.padding(innerPadding),
                     tabs = ReleaseGroupTab.values().map { it.tab }
                 )
             }

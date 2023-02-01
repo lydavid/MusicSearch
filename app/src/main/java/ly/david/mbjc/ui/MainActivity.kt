@@ -76,14 +76,14 @@ internal fun MainApp(
     }
 
     ModalNavigationDrawer(
+        drawerState = drawerState,
         drawerContent = {
             NavigationDrawer(
                 selectedTopLevelDestination = currentTopLevelDestination,
                 closeDrawer = { coroutineScope.launch { drawerState.close() } },
                 navigateToTopLevelDestination = onTopLevelDestinationClick
             )
-        },
-        drawerState = drawerState
+        }
     ) {
         NavigationGraph(
             navController = navController,
