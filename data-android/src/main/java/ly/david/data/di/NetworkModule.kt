@@ -16,7 +16,7 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 
 private const val USER_AGENT = "User-Agent"
-private const val USER_AGENT_VALUE = "MusicBrainzJetpackCompose/0.1.0"
+private const val USER_AGENT_VALUE = "MusicSearch/0.1.0"
 private const val ACCEPT = "Accept"
 private const val ACCEPT_VALUE = "application/json"
 

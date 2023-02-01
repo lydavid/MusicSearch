@@ -3,7 +3,7 @@ plugins {
 }
 
 // See code coverage for non-android modules by right-clicking `test`
-// and selecting `Run Tests in 'MusicBrainzJetpackCompose.data.test' with Coverage`
+// and selecting `Run Tests in 'MusicSearch.data.test' with Coverage`
 
 dependencies {
     api project(path: ':data:base')

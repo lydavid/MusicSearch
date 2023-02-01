@@ -7,7 +7,7 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
-internal class MDJCApplication : Application() {
+internal class MusicSearchApplication : Application() {
 
     @Inject
     lateinit var imageLoaderFactory: ImageLoaderFactory
