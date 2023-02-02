@@ -12,7 +12,14 @@ An Android app for browsing songs, artists, and anything related to them using [
 - [Cover arts](https://coverartarchive.org/)
 - Dark theme
 
+## Screenshots
+
+TODO
 
 ## Upcoming Features
 
 - Automatically detect playing Spotify song metadata, allowing you to deeplink search for the artist, album name, and track name
+
+## Privacy Policy
+
+See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
