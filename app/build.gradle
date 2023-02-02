@@ -29,7 +29,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "ly.david.musicsearch"
+        applicationId "io.github.lydavid.musicsearch"
         minSdk 23
         targetSdk 33
         versionCode 2
