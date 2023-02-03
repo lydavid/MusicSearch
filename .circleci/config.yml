@@ -27,4 +27,4 @@ jobs:
 workflows:
   test-and-build:
     jobs:
-      - android-test:
+      - android-test
