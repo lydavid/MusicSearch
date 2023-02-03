@@ -38,6 +38,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    configurations {
+        all {
+            exclude group: 'androidx.lifecycle', module: 'lifecycle-runtime-ktx'
+            exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
+        }
+    }
 }
 
 dependencies {
@@ -45,6 +52,10 @@ dependencies {
     testImplementation project(path: ':test-data')
 
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
