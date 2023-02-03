@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - "*.md"
+      - ".circleci/**"
 
 jobs:
   app-unit-test:

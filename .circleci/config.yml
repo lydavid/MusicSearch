@@ -11,6 +11,7 @@ jobs:
       tag: 2022.12.1
     steps:
       - checkout
+      - run: chmod +x gradlew
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-30;google_apis;x86
       - run:
