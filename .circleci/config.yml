@@ -8,11 +8,13 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: large
+      # https://circleci.com/developer/images/image/cimg/android#image-tags
       tag: 2022.12.1
     steps:
       - checkout
       - run: chmod +x gradlew
       - android/start-emulator-and-run-tests:
+          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
           system-image: system-images;android-30;google_apis;x86
       - run:
           name: Save test results
