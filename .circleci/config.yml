@@ -16,26 +16,19 @@ jobs:
       tag: 2022.12.1
     steps:
       - checkout
+
       - run: chmod +x gradlew
+
+      - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/start-emulator-and-run-tests:
-          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest --no-daemon
-          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace --no-daemon
-#          system-image: system-images;android-30;google_apis;x86
-
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/app/build/outputs/androidTest-results/.*xml" -exec cp {} ~/test-results/junit/ \;
-          when: always
-
-      - store_test_results:
-          path: ~/test-results
+          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
+          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
+      #          system-image: system-images;android-30;google_apis;x86
 
       - store_artifacts:
-          path: ~/test-results/junit
+          path: ~/app/build/reports/coverage/androidTest/debug/connected
 
 workflows:
   test-and-build:
