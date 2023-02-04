@@ -7,6 +7,8 @@ orbs:
 
 jobs:
   android-test:
+    environment:
+      _JAVA_OPTIONS: "-Xmx3g"
     executor:
       name: android/android-machine
       resource-class: large
@@ -18,15 +20,15 @@ jobs:
 
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/start-emulator-and-run-tests:
-          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
-          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
+          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest --no-daemon
+          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace --no-daemon
 #          system-image: system-images;android-30;google_apis;x86
 
       - run:
           name: Save test results
           command: |
             mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+            find . -type f -regex ".*/app/build/outputs/androidTest-results/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
 
       - store_test_results:

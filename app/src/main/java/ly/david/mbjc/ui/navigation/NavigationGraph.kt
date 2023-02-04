@@ -62,10 +62,6 @@ internal fun NavigationGraph(
         startDestination = Destination.LOOKUP.route,
     ) {
 
-        val onReleaseGroupClick: (String) -> Unit = { releaseGroupId ->
-            navController.navigate("${Destination.LOOKUP_RELEASE_GROUP.route}/$releaseGroupId")
-        }
-
         // TODO: [low] should rethink this structure once we introduce more non-MB-resource destinations
         val onLookupItemClick: (Destination, String, String?) -> Unit = { destination, id, title ->
             when (destination) {
