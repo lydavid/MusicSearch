@@ -7,7 +7,8 @@ orbs:
 
 jobs:
   android-test:
-    #    environment:
+        environment:
+          GRADLE_USER_HOME: "~/.gradle"
     #      _JAVA_OPTIONS: "-Xmx3g"
     executor:
       name: android/android-machine
@@ -44,8 +45,6 @@ jobs:
       - android/start-emulator:
           avd-name: test
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
-
-      - run: cat ~/.gradle/gradle.properties
 
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/run-tests:
