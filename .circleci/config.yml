@@ -27,7 +27,7 @@ jobs:
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
-          system-image: system-images;android-33;google_apis;x86
+          system-image: system-images;android-30;google_apis;x86
 
       - store_artifacts:
           path: ~/app/build/reports/coverage/androidTest/debug/connected
