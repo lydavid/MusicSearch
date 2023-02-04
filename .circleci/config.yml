@@ -28,15 +28,14 @@ jobs:
           install: true
           system-image: system-images;android-30;google_apis;x86
 
+      - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
+
       # Find out what its config looks like
       - run: cat ~/.android/avd/test.avd/config.ini
 
       - android/start-emulator:
           avd-name: test
-          additional-args: "-memory 4096 -cores 3"
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
-
-      - run: cat ~/.android/avd/test.avd/config.ini
 
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/run-tests:
