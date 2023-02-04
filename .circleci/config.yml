@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   android: circleci/android@2.1.2
 
-# TODO: Running into https://issuetracker.google.com/issues/235259765
+# TODO: Running into https://issuetracker.google.com/issues/235259765 sometimes
 
 jobs:
   android-test:
@@ -15,17 +15,23 @@ jobs:
     steps:
       - checkout
       - run: chmod +x gradlew
+
+      # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/start-emulator-and-run-tests:
+          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
-          system-image: system-images;android-30;google_apis;x86
+#          system-image: system-images;android-30;google_apis;x86
+
       - run:
           name: Save test results
           command: |
             mkdir -p ~/test-results/junit/
             find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
+
       - store_test_results:
           path: ~/test-results
+
       - store_artifacts:
           path: ~/test-results/junit
 
