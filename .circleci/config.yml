@@ -21,11 +21,13 @@ jobs:
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
+      - run: sdkmanager --list
+
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/start-emulator-and-run-tests:
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
-      #          system-image: system-images;android-30;google_apis;x86
+          system-image: system-images;android-33;google_apis;x86
 
       - store_artifacts:
           path: ~/app/build/reports/coverage/androidTest/debug/connected
