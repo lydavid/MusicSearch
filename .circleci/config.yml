@@ -21,13 +21,25 @@ jobs:
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - run: sdkmanager --list
+      - run: echo $GRADLE_USER_HOME
+
+      - android/create-avd:
+          install: true
+          system-image: system-images;android-30;google_apis;x86
+
+      # Find out what its config looks like
+      - run: cat ~/.android/avd/test.avd/config.ini
+
+      - android/start-emulator:
+          avd-name: test
+          additional-args: "-memory 4096 -cores 3"
+          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
+
+      - run: cat ~/.android/avd/test.avd/config.ini
 
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
-      - android/start-emulator-and-run-tests:
-          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
+      - android/run-tests:
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
-          system-image: system-images;android-30;google_apis;x86
 
       - store_artifacts:
           path: ~/app/build/reports/coverage/androidTest/debug/connected
