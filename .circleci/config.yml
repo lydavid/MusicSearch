@@ -7,8 +7,8 @@ orbs:
 
 jobs:
   android-test:
-    environment:
-      _JAVA_OPTIONS: "-Xmx3g"
+#    environment:
+#      _JAVA_OPTIONS: "-Xmx3g"
     executor:
       name: android/android-machine
       resource-class: large
@@ -21,7 +21,11 @@ jobs:
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
+      - run: ls .gradle
+
       - run: echo $GRADLE_USER_HOME
+
+      - run: echo $USER_HOME
 
       - android/create-avd:
           avd-name: test
@@ -29,6 +33,8 @@ jobs:
           system-image: system-images;android-30;google_apis;x86
 
       - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
+
+      - run: printenv
 
       # Find out what its config looks like
       - run: cat ~/.android/avd/test.avd/config.ini
