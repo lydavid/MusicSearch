@@ -46,7 +46,7 @@ internal fun ReleaseListItem(
 
     LaunchedEffect(key1 = release.id) {
         if (release.coverArtPath == null) {
-            requestForMissingCoverArtPath()
+//            requestForMissingCoverArtPath()
         }
     }
 
