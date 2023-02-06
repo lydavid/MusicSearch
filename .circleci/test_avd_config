@@ -1,0 +1,6 @@
+hw.lcd.density=440
+hw.lcd.height=2340
+hw.lcd.width=1080
+hw.ramSize=1536
+vm.heapSize=256
+skin.name=1080x2340
