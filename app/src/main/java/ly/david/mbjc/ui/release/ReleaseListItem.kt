@@ -21,7 +21,6 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.network.api.coverart.buildReleaseCoverArtUrl
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt
@@ -71,7 +70,7 @@ internal fun ReleaseListItem(
                         bottom.linkTo(parent.bottom)
                     },
                 placeholderIcon = Icons.Default.Album,
-                coverArtUrl = buildReleaseCoverArtUrl(release.id, release.coverArtPath.orEmpty())
+                coverArtUrl = ""//buildReleaseCoverArtUrl(release.id, release.coverArtPath.orEmpty())
             )
 
             Column(
