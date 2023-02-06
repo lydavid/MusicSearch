@@ -1,0 +1,66 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@2.1.2
+
+# TODO: Running into https://issuetracker.google.com/issues/235259765 sometimes
+
+jobs:
+  android-test:
+    environment:
+      GRADLE_USER_HOME: "~/.gradle"
+    #      _JAVA_OPTIONS: "-Xmx3g"
+    executor:
+      name: android/android-machine
+      resource-class: large
+      # https://circleci.com/developer/images/image/cimg/android#image-tags
+      tag: 2022.12.1
+    steps:
+      - checkout
+
+      - run: chmod +x gradlew
+
+      - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - run: ls ~/.gradle
+
+      - run: cat ~/.gradle/gradle.properties
+
+      - run: echo $GRADLE_USER_HOME
+
+      - run: echo $USER_HOME
+
+      - android/create-avd:
+          avd-name: test
+          install: true
+          system-image: system-images;android-30;google_apis;x86
+
+      - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
+
+      - run: printenv
+
+      # Find out what its config looks like
+      - run: cat ~/.android/avd/test.avd/config.ini
+
+      - android/start-emulator:
+          avd-name: test
+          post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
+
+      # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
+      - android/run-tests:
+          max-tries: 1 # TODO: remove after so we account for flake
+          test-command: ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=ly.david.mbjc.ui.place.PlaceScaffoldTest
+      #          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
+
+      # Makes use of mock web server
+      - android/run-tests:
+          max-tries: 1
+          test-command: ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=ly.david.mbjc.ui.area.AreaScaffoldTest
+
+      - store_artifacts:
+          path: ~/app/build/reports/coverage/androidTest/debug/connected
+
+workflows:
+  test-and-build:
+    jobs:
+      - android-test
