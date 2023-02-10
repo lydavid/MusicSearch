@@ -2,6 +2,8 @@ package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -95,23 +97,21 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .assertIsDisplayed()
     }
 
-    // TODO: stats screen failing test:
-    //  java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken or in a snapshot that has not yet been applied
-//    @Test
-//    fun nonCountryStatsExcludesReleases() {
-//        setArea(fakeArea)
-//
-//        runBlocking { composeTestRule.awaitIdle() }
-//
-//        composeTestRule
-//            .onNodeWithText(stats)
-//            .performClick()
-//
-//        // Need to differentiate between Releases tab and header inside stats
-//        composeTestRule
-//            .onNode(hasText(releases).and(hasNoClickAction()))
-//            .assertDoesNotExist()
-//    }
+    @Test
+    fun nonCountryStatsExcludesReleases() {
+        setArea(fakeArea)
+
+        runBlocking { composeTestRule.awaitIdle() }
+
+        composeTestRule
+            .onNodeWithText(stats)
+            .performClick()
+
+        // Need to differentiate between Releases tab and header inside stats
+        composeTestRule
+            .onNode(hasText(releases).and(hasNoClickAction()))
+            .assertDoesNotExist()
+    }
 
     @Test
     fun showRetryButtonOnError() {
