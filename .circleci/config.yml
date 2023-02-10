@@ -19,17 +19,11 @@ jobs:
     steps:
       - checkout
 
+      - run: pwd
+
       - run: chmod +x gradlew
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - run: ls ~/.gradle
-
-      - run: cat ~/.gradle/gradle.properties
-
-      - run: echo $GRADLE_USER_HOME
-
-      - run: echo $USER_HOME
 
       - android/create-avd:
           avd-name: test
@@ -49,14 +43,8 @@ jobs:
 
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/run-tests:
-          max-tries: 1 # TODO: remove after so we account for flake
-          test-command: ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=ly.david.mbjc.ui.recording.RecordingScaffoldTest
-#          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
-
-      # Makes use of mock web server
-      - android/run-tests:
           max-tries: 1
-          test-command: ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=ly.david.mbjc.ui.area.AreaScaffoldTest
+          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
 
       - store_artifacts:
           path: ~/app/build/reports/coverage/androidTest/debug/connected
