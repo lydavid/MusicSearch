@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.place
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
@@ -96,8 +97,16 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(relationships)
             .performClick()
 
+        val relatedEventName = fakePlaceWithAllData.relations?.first()?.event?.name!!
+
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(relatedEventName)
+                .fetchSemanticsNodes().size == 1
+        }
+
         composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.relations?.first()?.event?.name ?: "")
+            .onNodeWithText(relatedEventName)
             .assertIsDisplayed()
     }
 }

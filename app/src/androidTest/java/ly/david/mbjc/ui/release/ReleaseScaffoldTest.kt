@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.release
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -10,7 +11,6 @@ import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.fakeArtistCredit
@@ -64,6 +64,13 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     }
 
     private fun assertFieldsDisplayed() {
+
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(fakeRelease.name)
+                .fetchSemanticsNodes().size == 1
+        }
+
         composeTestRule
             .onNodeWithText(fakeRelease.name)
             .assertIsDisplayed()
@@ -119,15 +126,21 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
             .onNodeWithText(relationships)
             .performClick()
 
-        composeTestRule.awaitIdle()
+        val relatedReleaseName = fakeReleaseWithRelation.relations?.first()?.release?.name!!
+
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(relatedReleaseName)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
-            .onNodeWithText(fakeReleaseWithRelation.relations?.first()?.release?.name ?: "")
+            .onNodeWithText(relatedReleaseName)
             .assertIsDisplayed()
     }
 
     @Test
-    fun showRetryButtonOnError() {
+    fun showRetryButtonOnError() = runTest {
         composeTestRule.activity.setContent {
             PreviewTheme {
                 ReleaseScaffold(
@@ -136,7 +149,11 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
             }
         }
 
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(retry)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
             .onNodeWithText(retry)

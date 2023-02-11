@@ -4,6 +4,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -69,6 +70,13 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     // TODO: flake
     private fun assertFieldsDisplayed() {
+
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(fakeArea.name)
+                .fetchSemanticsNodes().size == 1
+        }
+
         composeTestRule
             .onNodeWithText(fakeArea.name)
             .assertIsDisplayed()
@@ -84,7 +92,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     }
 
     @Test
-    fun areaHasRelations() = runTest {
+    fun hasRelations() = runTest {
         setArea(fakeAreaWithRelation)
 
         composeTestRule.awaitIdle()
@@ -93,11 +101,16 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .onNodeWithText(relationships)
             .performClick()
 
-        composeTestRule.awaitIdle()
+        val relatedAreaName = fakeAreaWithRelation.relations?.first()?.area?.name ?: ""
 
-        // Relations are loaded
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(relatedAreaName)
+                .fetchSemanticsNodes().size == 1
+        }
+
         composeTestRule
-            .onNodeWithText(fakeAreaWithRelation.relations?.first()?.area?.name ?: "")
+            .onNodeWithText(relatedAreaName)
             .assertIsDisplayed()
     }
 
@@ -162,7 +175,11 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun countryHasReleasesTab() = runTest {
         setArea(fakeCountry)
 
-        composeTestRule.awaitIdle()
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(releases)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
             .onNodeWithText(releases)
