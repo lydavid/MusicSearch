@@ -26,7 +26,7 @@ internal abstract class MainActivityTest {
         }
     }
 
-    fun waitThenPerformClick(text: String) {
+    fun waitForThenPerformClickOn(text: String) {
         waitForTextToShow(text)
 
         composeTestRule
@@ -34,7 +34,7 @@ internal abstract class MainActivityTest {
             .performClick()
     }
 
-    fun waitThenAssertIsDisplayed(text: String) {
+    fun waitForThenAssertIsDisplayed(text: String) {
         waitForTextToShow(text)
 
         composeTestRule

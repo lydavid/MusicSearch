@@ -2,9 +2,7 @@ package ly.david.mbjc.ui.work
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -42,7 +40,6 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     @Test
     fun firstVisit_noLocalData() = runTest {
         setWork(fakeWorkWithAllData)
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -52,25 +49,14 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     fun repeatVisit_localData() = runTest {
         repository.lookupWork(fakeWorkWithAllData.id)
         setWork(fakeWorkWithAllData)
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.getNameWithDisambiguation())
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeWorkWithAllData.getNameWithDisambiguation())
+        waitForThenAssertIsDisplayed(fakeWorkWithAllData.type!!)
 
-        composeTestRule
-            .onNodeWithText(details)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.type!!)
-            .assertIsDisplayed()
         // TODO: Doesn't work cause it contains : but we shouldn't be testing for exact string here
 //        composeTestRule
 //            .onNodeWithText(fakeWork.attributes!!.first().type)
@@ -84,22 +70,8 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     @Test
     fun hasRelations() = runTest {
         setWork(fakeWorkWithAllData)
-        composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        val relatedWorkName = fakeWorkWithAllData.relations?.first()?.work?.name!!
-
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(relatedWorkName)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(relatedWorkName)
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeWorkWithAllData.relations?.first()?.work?.name!!)
     }
 }

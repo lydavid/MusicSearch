@@ -2,10 +2,8 @@ package ly.david.mbjc.ui.place
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -46,7 +44,6 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     @Test
     fun firstVisit_noLocalData() = runTest {
         setPlace(fakePlaceWithAllData)
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -55,22 +52,14 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     fun repeatVisit_localData() = runTest {
         placeRepository.lookupPlace(fakePlaceWithAllData.id)
         setPlace(fakePlaceWithAllData)
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.getNameWithDisambiguation())
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.getNameWithDisambiguation())
 
-        composeTestRule
-            .onNodeWithText(details)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.area!!.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.area!!.name)
         composeTestRule
             .onNodeWithText(fakePlaceWithAllData.address)
             .assertIsDisplayed()
@@ -91,22 +80,8 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     @Test
     fun hasRelations() = runTest {
         setPlace(fakePlaceWithAllData)
-        composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        val relatedEventName = fakePlaceWithAllData.relations?.first()?.event?.name!!
-
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(relatedEventName)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(relatedEventName)
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
     }
 }

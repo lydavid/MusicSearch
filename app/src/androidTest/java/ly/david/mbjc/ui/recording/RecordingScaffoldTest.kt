@@ -48,37 +48,20 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
         setRecording(fakeRecording)
         composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeRecording.name)
-            .assertIsDisplayed()
+        assertFieldsDisplayed()
 
-        // Confirm that up navigation items exists
-        composeTestRule
-            .onNodeWithTag("TopBarSubtitle")
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit2.name)
-            .assertIsDisplayed()
     }
 
     @Test
     fun repeatVisit_localData() = runTest {
         recordingRepository.lookupRecording(fakeRecording.id)
         setRecording(fakeRecording)
-        composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeRecording.name)
-            .assertIsDisplayed()
+        assertFieldsDisplayed()
+    }
+
+    private fun assertFieldsDisplayed() {
+        waitForThenAssertIsDisplayed(fakeRecording.name)
 
         // Confirm that up navigation items exists
         composeTestRule

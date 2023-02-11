@@ -66,24 +66,24 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     // TODO: flake
     private fun assertFieldsDisplayed() {
-        waitThenAssertIsDisplayed(fakeArea.name)
-        waitThenPerformClick(places)
-        waitThenAssertIsDisplayed(fakePlace.name)
+        waitForThenAssertIsDisplayed(fakeArea.name)
+        waitForThenPerformClickOn(places)
+        waitForThenAssertIsDisplayed(fakePlace.name)
     }
 
     @Test
     fun hasRelations() = runTest {
         setArea(fakeAreaWithRelation)
 
-        waitThenPerformClick(relationships)
-        waitThenAssertIsDisplayed(fakeAreaWithRelation.relations?.first()?.area?.name!!)
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeAreaWithRelation.relations?.first()?.area?.name!!)
     }
 
     @Test
     fun nonCountryStatsExcludesReleases() = runTest {
         setArea(fakeArea)
 
-        waitThenPerformClick(stats)
+        waitForThenPerformClickOn(stats)
 
         composeTestRule.awaitIdle()
 
@@ -103,7 +103,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             }
         }
 
-        waitThenAssertIsDisplayed(retry)
+        waitForThenAssertIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(relationships)
@@ -132,8 +132,8 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun countryHasReleasesTab() = runTest {
         setArea(fakeCountry)
 
-        waitThenPerformClick(releases)
-        waitThenAssertIsDisplayed(fakeRelease.name)
+        waitForThenPerformClickOn(releases)
+        waitForThenAssertIsDisplayed(fakeRelease.name)
     }
 
 //    @Test

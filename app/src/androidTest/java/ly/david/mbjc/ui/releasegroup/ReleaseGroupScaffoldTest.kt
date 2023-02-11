@@ -1,8 +1,6 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -27,22 +25,12 @@ internal class ReleaseGroupScaffoldTest : MainActivityTestWithMockServer(), Stri
             }
         }
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(retry)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
 
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
     }
 }

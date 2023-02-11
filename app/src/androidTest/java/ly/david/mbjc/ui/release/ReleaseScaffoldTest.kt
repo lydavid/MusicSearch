@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.release
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -65,15 +64,7 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
 
     private fun assertFieldsDisplayed() {
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(fakeRelease.name)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(fakeRelease.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeRelease.name)
         composeTestRule
             .onNodeWithText(fakeLabelInfo.label!!.name)
             .assertIsDisplayed()
@@ -94,12 +85,8 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
         composeTestRule
             .onNodeWithText(tracks)
             .performClick()
-        composeTestRule
-            .onNodeWithText(fakeRelease.media!!.first().tracks!!.first().title)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeRelease.media!!.first().tracks!!.last().title)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeRelease.media!!.first().tracks!!.first().title)
+        waitForThenAssertIsDisplayed(fakeRelease.media!!.first().tracks!!.last().title)
         // TODO: attempted to test filtering but apparently our listitem nodes gets duplicated afterwards...
 
         // Confirm that up navigation items exists
@@ -120,23 +107,9 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     @Test
     fun hasRelations() = runTest {
         setRelease(fakeReleaseWithRelation)
-        composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        val relatedReleaseName = fakeReleaseWithRelation.relations?.first()?.release?.name!!
-
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(relatedReleaseName)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(relatedReleaseName)
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeReleaseWithRelation.relations?.first()?.release?.name!!)
     }
 
     @Test
@@ -149,23 +122,13 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
             }
         }
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(retry)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(tracks)
             .performClick()
 
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
     }
 
     // TODO: These only works when we use real ImageLoader...
