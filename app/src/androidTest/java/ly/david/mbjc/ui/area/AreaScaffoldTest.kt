@@ -54,8 +54,6 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun firstTimeVisit() = runTest {
         setArea(fakeArea)
 
-        composeTestRule.awaitIdle()
-
         assertFieldsDisplayed()
     }
 
@@ -63,7 +61,6 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun repeatVisit() = runTest {
         setArea(fakeArea)
         areaDao.insert(fakeArea.toAreaRoomModel())
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -95,7 +92,11 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun hasRelations() = runTest {
         setArea(fakeAreaWithRelation)
 
-        composeTestRule.awaitIdle()
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(relationships)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
             .onNodeWithText(relationships)
@@ -118,7 +119,11 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun nonCountryStatsExcludesReleases() = runTest {
         setArea(fakeArea)
 
-        composeTestRule.awaitIdle()
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(stats)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
             .onNodeWithText(stats)
@@ -142,7 +147,11 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             }
         }
 
-        composeTestRule.awaitIdle()
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(retry)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
             .onNodeWithText(retry)
