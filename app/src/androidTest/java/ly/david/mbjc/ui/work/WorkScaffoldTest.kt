@@ -6,7 +6,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.fakeWorkWithAllData
@@ -17,6 +18,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
 
@@ -37,21 +39,19 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setWork(fakeWorkWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     // TODO: flake
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            repository.lookupWork(fakeWorkWithAllData.id)
-            setWork(fakeWorkWithAllData)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        repository.lookupWork(fakeWorkWithAllData.id)
+        setWork(fakeWorkWithAllData)
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -80,9 +80,9 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun hasRelations() {
+    fun hasRelations() = runTest {
         setWork(fakeWorkWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(relationships)

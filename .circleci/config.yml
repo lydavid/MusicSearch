@@ -44,7 +44,8 @@ jobs:
       # See source command: https://circleci.com/developer/orbs/orb/circleci/android#commands-start-emulator-and-run-tests
       - android/run-tests:
           max-tries: 1
-          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
+          test-command: ./gradlew app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=ly.david.mbjc.ui.work.WorkScaffoldTest
+#          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
 
       - store_artifacts:
           path: ~/app/build/reports/coverage/androidTest/debug/connected

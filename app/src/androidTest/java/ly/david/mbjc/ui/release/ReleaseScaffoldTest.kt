@@ -110,7 +110,7 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     }
 
     @Test
-    fun releaseHasRelations() {
+    fun hasRelations() {
         setRelease(fakeReleaseWithRelation)
         runBlocking { composeTestRule.awaitIdle() }
 
