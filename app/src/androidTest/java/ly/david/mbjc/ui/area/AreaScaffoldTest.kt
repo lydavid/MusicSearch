@@ -4,7 +4,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -67,67 +66,24 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     // TODO: flake
     private fun assertFieldsDisplayed() {
-
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(fakeArea.name)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(fakeArea.name)
-            .assertIsDisplayed()
-
-        // TODO: can't differentiate between local/network
-        //  also maybe it's better to test this composables independently
-        composeTestRule
-            .onNodeWithText(places)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakePlace.name)
-            .assertIsDisplayed()
+        waitThenAssertIsDisplayed(fakeArea.name)
+        waitThenPerformClick(places)
+        waitThenAssertIsDisplayed(fakePlace.name)
     }
 
     @Test
     fun hasRelations() = runTest {
         setArea(fakeAreaWithRelation)
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(relationships)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        val relatedAreaName = fakeAreaWithRelation.relations?.first()?.area?.name ?: ""
-
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(relatedAreaName)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(relatedAreaName)
-            .assertIsDisplayed()
+        waitThenPerformClick(relationships)
+        waitThenAssertIsDisplayed(fakeAreaWithRelation.relations?.first()?.area?.name!!)
     }
 
     @Test
     fun nonCountryStatsExcludesReleases() = runTest {
         setArea(fakeArea)
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(stats)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
+        waitThenPerformClick(stats)
 
         composeTestRule.awaitIdle()
 
@@ -147,15 +103,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             }
         }
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(retry)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitThenAssertIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(relationships)
@@ -184,22 +132,8 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun countryHasReleasesTab() = runTest {
         setArea(fakeCountry)
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(releases)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(releases)
-            .performClick()
-
-        composeTestRule.awaitIdle()
-
-        // Releases are loaded
-        composeTestRule
-            .onNodeWithText(fakeRelease.name)
-            .assertIsDisplayed()
+        waitThenPerformClick(releases)
+        waitThenAssertIsDisplayed(fakeRelease.name)
     }
 
 //    @Test
