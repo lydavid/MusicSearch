@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.work
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -87,6 +88,12 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
+
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(fakeWorkWithAllData.relations?.first()?.work?.name!!)
+                .fetchSemanticsNodes().size == 1
+        }
 
         composeTestRule
             .onNodeWithText(fakeWorkWithAllData.relations?.first()?.work?.name!!)

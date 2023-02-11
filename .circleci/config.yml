@@ -48,7 +48,10 @@ jobs:
 #          test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
 
       - store_artifacts:
-          path: ~/app/build/reports/coverage/androidTest/debug/connected
+          path: app/build/reports/androidTests/connected
+
+      - store_artifacts:
+          path: app/build/reports/coverage/androidTest/debug/connected
 
 workflows:
   test-and-build:
