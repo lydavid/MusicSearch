@@ -9,7 +9,6 @@ import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
@@ -44,20 +43,18 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setPlace(fakePlaceWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            placeRepository.lookupPlace(fakePlaceWithAllData.id)
-            setPlace(fakePlaceWithAllData)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        placeRepository.lookupPlace(fakePlaceWithAllData.id)
+        setPlace(fakePlaceWithAllData)
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }

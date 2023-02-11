@@ -79,6 +79,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
+    // TODO: why does this take so long on CI? ~20s
     @Test
     fun hasRelations() = runTest {
         setWork(fakeWorkWithAllData)
@@ -90,12 +91,6 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
 
         val relatedWorkName = fakeWorkWithAllData.relations?.first()?.work?.name!!
 
-        // TODO: why does this take so long? 24.417s
-//        composeTestRule.waitUntil(10_000L) {
-//            composeTestRule
-//                .onAllNodesWithText(relatedWorkName)
-//                .fetchSemanticsNodes().size == 1
-//        }
         composeTestRule.awaitIdle()
 
         composeTestRule

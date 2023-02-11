@@ -9,7 +9,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.fakeArtistCredit
 import ly.david.data.network.fakeArtistCredit2
@@ -21,6 +22,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
 
@@ -42,9 +44,9 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setRecording(fakeRecording)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(stats)
@@ -66,12 +68,10 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            recordingRepository.lookupRecording(fakeRecording.id)
-            setRecording(fakeRecording)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        recordingRepository.lookupRecording(fakeRecording.id)
+        setRecording(fakeRecording)
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(stats)
@@ -93,18 +93,21 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
     }
 
 //    @Test
-//    fun recordingHasRelations() {
+//    fun hasRelations() = runTest {
+//        // TODO: fake recording with rel
 //        setRecording(fakeRecording)
 //
-//        runBlocking { composeTestRule.awaitIdle() }
+//        composeTestRule.awaitIdle()
 //
 //        composeTestRule
 //            .onNodeWithText(relationships)
 //            .performClick()
 //
+//        composeTestRule.awaitIdle()
+//
 //        // Relations are loaded
 //        composeTestRule
-//            .onNodeWithText(fakeAreaWithRelation.relations?.first()?.area?.name ?: "")
+//            .onNodeWithText(fakeAreaWithRelation.relations?.first()?.area?.name!!)
 //            .assertIsDisplayed()
 //    }
 }

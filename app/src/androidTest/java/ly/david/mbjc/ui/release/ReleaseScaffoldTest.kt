@@ -9,7 +9,9 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.fakeArtistCredit
 import ly.david.data.network.fakeArtistCredit2
@@ -25,6 +27,7 @@ import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
@@ -44,20 +47,18 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setRelease(fakeRelease)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            releaseRepository.lookupRelease(fakeRelease.id)
-            setRelease(fakeRelease)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        releaseRepository.lookupRelease(fakeRelease.id)
+        setRelease(fakeRelease)
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -110,13 +111,15 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     }
 
     @Test
-    fun hasRelations() {
+    fun hasRelations() = runTest {
         setRelease(fakeReleaseWithRelation)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
+
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(fakeReleaseWithRelation.relations?.first()?.release?.name ?: "")
