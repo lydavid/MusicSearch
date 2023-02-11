@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.work
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -89,14 +88,18 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(relationships)
             .performClick()
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(fakeWorkWithAllData.relations?.first()?.work?.name!!)
-                .fetchSemanticsNodes().size == 1
-        }
+        val relatedWorkName = fakeWorkWithAllData.relations?.first()?.work?.name!!
+
+        // TODO: why does this take so long? 24.417s
+//        composeTestRule.waitUntil(10_000L) {
+//            composeTestRule
+//                .onAllNodesWithText(relatedWorkName)
+//                .fetchSemanticsNodes().size == 1
+//        }
+        composeTestRule.awaitIdle()
 
         composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.relations?.first()?.work?.name!!)
+            .onNodeWithText(relatedWorkName)
             .assertIsDisplayed()
     }
 }

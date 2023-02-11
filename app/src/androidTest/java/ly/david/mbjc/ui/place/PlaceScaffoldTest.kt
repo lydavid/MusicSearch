@@ -8,7 +8,9 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
@@ -20,6 +22,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
 
@@ -88,9 +91,9 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun hasRelations() {
+    fun hasRelations() = runTest {
         setPlace(fakePlaceWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(relationships)
