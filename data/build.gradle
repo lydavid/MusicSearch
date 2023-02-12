@@ -1,6 +1,5 @@
 plugins {
     id "kotlin"
-    id "io.gitlab.arturbosch.detekt"
 }
 
 // See code coverage for non-android modules by right-clicking `test`
