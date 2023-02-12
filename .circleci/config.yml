@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@2.1.2
+  codecov: codecov/codecov@3.2.4
 
 # TODO: Running into https://issuetracker.google.com/issues/235259765 sometimes
 
@@ -41,9 +42,8 @@ jobs:
       - store_artifacts:
           path: app/build/reports/androidTests/connected
 
-      # TODO: rather than storing, submit to codecov
-      - store_artifacts:
-          path: app/build/reports/coverage/androidTest/debug/connected
+      - codecov/upload:
+          file: app/build/reports/coverage/androidTest/debug/connected/report.xml
 
 workflows:
   test-and-build:
