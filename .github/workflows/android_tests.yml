@@ -1,6 +1,10 @@
 name: Android Tests
 
-on: [ workflow_dispatch ]
+on:
+  push:
+    paths-ignore:
+      - "*.md"
+  workflow_dispatch
 
 jobs:
   android-test:
@@ -15,18 +19,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configure JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: "temurin"
-          java-version: "11"
-
-      # https://github.com/gradle/gradle-build-action
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - name: Grant permissions to gradlew
-        run: chmod +x gradlew
+      - id: setup
+        uses: ./.github/actions/setup
 
       - name: AVD cache
         uses: actions/cache@v3

@@ -1,14 +1,13 @@
 package ly.david.mbjc.ui.history
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 import ly.david.data.navigation.Destination
 import ly.david.data.network.lookupHistory
@@ -21,6 +20,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class HistoryScreenTest : MainActivityTest(), StringReferences {
 
@@ -44,39 +44,25 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun emptyLookupHistory() {
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                composeTestRule.awaitIdle()
-                navController.navigate(Destination.HISTORY.route)
-            }
+    fun emptyLookupHistory() = runTest {
+        withContext(Dispatchers.Main) {
+            composeTestRule.awaitIdle()
+            navController.navigate(Destination.HISTORY.route)
         }
 
-        composeTestRule
-            .onNodeWithText(historyScreenTitle)
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(noResultsFound)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(historyScreenTitle)
+        waitForThenAssertIsDisplayed(noResultsFound)
     }
 
     @Test
-    fun lookupHistoryWithAnItem() {
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                lookupHistoryDao.insert(lookupHistory)
-                composeTestRule.awaitIdle()
-                navController.navigate(Destination.HISTORY.route)
-            }
+    fun lookupHistoryWithAnItem() = runTest {
+        withContext(Dispatchers.Main) {
+            lookupHistoryDao.insert(lookupHistory)
+            composeTestRule.awaitIdle()
+            navController.navigate(Destination.HISTORY.route)
         }
 
-        composeTestRule
-            .onNodeWithText(historyScreenTitle)
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(lookupHistory.title)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(historyScreenTitle)
+        waitForThenAssertIsDisplayed(lookupHistory.title)
     }
 }

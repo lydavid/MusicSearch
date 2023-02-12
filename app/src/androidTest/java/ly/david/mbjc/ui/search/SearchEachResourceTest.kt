@@ -4,7 +4,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
@@ -30,7 +29,8 @@ import org.junit.runners.Parameterized
  */
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class SearchEachResourceTest(private val resource: MusicBrainzResource) : MainActivityTest(), StringReferences {
+internal class SearchEachResourceTest(private val resource: MusicBrainzResource) : MainActivityTest(),
+    StringReferences {
 
     companion object {
         @JvmStatic
@@ -60,9 +60,7 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
             .onNodeWithText(resourceLabel)
             .performClick()
 
-        composeTestRule
-            .onNodeWithTag(resource.resourceName)
-            .performClick()
+        waitForThenPerformClickOn(resource.resourceName)
 
         composeTestRule
             .onNodeWithText(composeTestRule.activity.getString(resource.getDisplayTextRes()))
@@ -76,9 +74,11 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
             .onNodeWithText(searchLabel)
             .performImeAction()
 
+        val name = resource.toFakeMusicBrainzModel().name!!
+        waitForThenAssertIsDisplayed(name)
+
         composeTestRule
-            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
-            .assertIsDisplayed()
+            .onNodeWithText(name)
             .performClick()
     }
 }
