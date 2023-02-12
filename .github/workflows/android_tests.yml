@@ -1,10 +1,10 @@
 name: Android Tests
 
 on:
+  workflow_dispatch:
   push:
     paths-ignore:
       - "*.md"
-  workflow_dispatch
 
 jobs:
   android-test:
