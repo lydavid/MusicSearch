@@ -1,3 +1,11 @@
+complexity:
+  LongParameterList:
+    ignoreDefaultParameters: true
+    ignoreAnnotated:
+      - "Composable"
+  LongMethod:
+    ignoreAnnotated:
+      - "Composable"
 naming:
   FunctionNaming:
     ignoreAnnotated:
