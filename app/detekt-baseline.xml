@@ -1,0 +1,496 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; releaseGroupListItem2 != null &amp;&amp; (releaseGroupListItem?.primaryType != releaseGroupListItem2.primaryType || releaseGroupListItem?.secondaryTypes != releaseGroupListItem2.secondaryTypes)</ID>
+    <ID>ComposableParamOrder:AreaDetailsScreen.kt$AreaDetailsScreen</ID>
+    <ID>ComposableParamOrder:AreaStatsScreen.kt$AreaStatsScreen</ID>
+    <ID>ComposableParamOrder:ArtistDetailsScreen.kt$ArtistDetailsScreen</ID>
+    <ID>ComposableParamOrder:ArtistScaffold.kt$ArtistScaffold</ID>
+    <ID>ComposableParamOrder:ArtistStatsScreen.kt$ArtistStatsScreen</ID>
+    <ID>ComposableParamOrder:BigCoverArt.kt$PainterImage</ID>
+    <ID>ComposableParamOrder:DetailsWithErrorHandling.kt$DetailsWithErrorHandling</ID>
+    <ID>ComposableParamOrder:EventDetailsScreen.kt$EventDetailsScreen</ID>
+    <ID>ComposableParamOrder:EventScaffold.kt$EventScaffold</ID>
+    <ID>ComposableParamOrder:EventStatsScreen.kt$EventStatsScreen</ID>
+    <ID>ComposableParamOrder:EventsByPlaceScreen.kt$EventsByPlaceScreen</ID>
+    <ID>ComposableParamOrder:ExperimentalSettingsScaffold.kt$SettingsScreen</ID>
+    <ID>ComposableParamOrder:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox</ID>
+    <ID>ComposableParamOrder:HistoryScaffold.kt$HistoryScreen</ID>
+    <ID>ComposableParamOrder:InstrumentDetailsScreen.kt$InstrumentDetailsScreen</ID>
+    <ID>ComposableParamOrder:InstrumentScaffold.kt$InstrumentScaffold</ID>
+    <ID>ComposableParamOrder:InstrumentStatsScreen.kt$InstrumentStatsScreen</ID>
+    <ID>ComposableParamOrder:LabelDetailsScreen.kt$LabelDetailsScreen</ID>
+    <ID>ComposableParamOrder:LabelScaffold.kt$LabelScaffold</ID>
+    <ID>ComposableParamOrder:LabelStatsScreen.kt$LabelStatsScreen</ID>
+    <ID>ComposableParamOrder:PagingLoadingAndErrorHandler.kt$PagingLoadingAndErrorHandler</ID>
+    <ID>ComposableParamOrder:PlaceDetailsScreen.kt$PlaceDetailsScreen</ID>
+    <ID>ComposableParamOrder:PlaceStatsScreen.kt$PlaceStatsScreen</ID>
+    <ID>ComposableParamOrder:PlacesByAreaScreen.kt$PlacesByAreaScreen</ID>
+    <ID>ComposableParamOrder:RecordingDetailsScreen.kt$RecordingDetailsScreen</ID>
+    <ID>ComposableParamOrder:RecordingStatsScreen.kt$RecordingStatsScreen</ID>
+    <ID>ComposableParamOrder:RecordingsByWorkScreen.kt$RecordingsByWorkScreen</ID>
+    <ID>ComposableParamOrder:RecordingsListScreen.kt$RecordingsListScreen</ID>
+    <ID>ComposableParamOrder:RelationsScreen.kt$RelationsScreen</ID>
+    <ID>ComposableParamOrder:ReleaseGroupStatsScreen.kt$ReleaseGroupStatsScreen</ID>
+    <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
+    <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByAreaScreen.kt$ReleasesByAreaScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByArtistScreen.kt$ReleasesByArtistScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByLabelScreen.kt$ReleasesByLabelScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByRecordingScreen.kt$ReleasesByRecordingScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByReleaseGroupScreen.kt$ReleasesByReleaseGroupScreen</ID>
+    <ID>ComposableParamOrder:ReleasesListScreen.kt$ReleasesListScreen</ID>
+    <ID>ComposableParamOrder:ScrollableTopAppBar.kt$ScrollableTopAppBar</ID>
+    <ID>ComposableParamOrder:ScrollableTopAppBar.kt$TitleBar</ID>
+    <ID>ComposableParamOrder:SearchMusicBrainzScreen.kt$SearchMusicBrainzScreen</ID>
+    <ID>ComposableParamOrder:SeriesDetailsScreen.kt$SeriesDetailsScreen</ID>
+    <ID>ComposableParamOrder:SeriesScaffold.kt$SeriesScaffold</ID>
+    <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
+    <ID>ComposableParamOrder:SettingsScaffold.kt$SettingsScreen</ID>
+    <ID>ComposableParamOrder:StatsScreen.kt$StatsScreen</ID>
+    <ID>ComposableParamOrder:ThreeSectionListItem.kt$ThreeSectionListItem</ID>
+    <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilter</ID>
+    <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilterInternal</ID>
+    <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
+    <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
+    <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
+    <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>ForbiddenComment:AreaDetailsScreen.kt$// TODO: api doesn't seem to include area containment</ID>
+    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: area</ID>
+    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: begin area</ID>
+    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: end area</ID>
+    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: isni code</ID>
+    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// todo: ipis code</ID>
+    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: disclaimer when turning on sort if we have not gotten all release groups</ID>
+    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: generalize switch menu item</ID>
+    <ID>ForbiddenComment:BigCoverArt.kt$// TODO: handle error with retry</ID>
+    <ID>ForbiddenComment:DevSettingsSection.kt$// TODO: if it starts true, it will be colored correctly but its position is wrong</ID>
+    <ID>ForbiddenComment:EventDetailsScreen.kt$// TODO: set list</ID>
+    <ID>ForbiddenComment:ExperimentalSettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
+    <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: can we avoid flow { emit { ?</ID>
+    <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: should use passed in stringRes</ID>
+    <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: this type of setting should go in AppPreferences</ID>
+    <ID>ForbiddenComment:ExposedDropdownMenuBox.kt$// TODO: this can't properly take up the full size allotted to it</ID>
+    <ID>ForbiddenComment:GenreScaffold.kt$// TODO: genre browsing isn't supported by API</ID>
+    <ID>ForbiddenComment:HistoryViewModel.kt$HistoryViewModel$// TODO: if we allow different sorting, then it will multiple these queries</ID>
+    <ID>ForbiddenComment:LabelDetailsScreen.kt$// TODO: area</ID>
+    <ID>ForbiddenComment:LabelDetailsScreen.kt$// TODO: lifespan, founded, defunct for end</ID>
+    <ID>ForbiddenComment:LabelListItem.kt$// TODO: area</ID>
+    <ID>ForbiddenComment:LabelListItem.kt$// TODO: lifespan</ID>
+    <ID>ForbiddenComment:LocalRemoteProgressBar.kt$// TODO: "cached" is misleading here</ID>
+    <ID>ForbiddenComment:LocalRemoteProgressBar.kt$// TODO: better copy</ID>
+    <ID>ForbiddenComment:NavigationGraph.kt$// TODO: [low] should rethink this structure once we introduce more non-MB-resource destinations</ID>
+    <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: Issue with indicator remaining on screen without delay in refresh</ID>
+    <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: cannot refresh</ID>
+    <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: going to another tab, and coming back will show same error message (doesn't make another call)</ID>
+    <ID>ForbiddenComment:PlaceListItem.kt$// TODO: too much information on list item?</ID>
+    <ID>ForbiddenComment:PlaceScaffold.kt$PlaceTab.RELATIONSHIPS$// TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place</ID>
+    <ID>ForbiddenComment:RelationsList.kt$RelationsList$// TODO: consider removing Header</ID>
+    <ID>ForbiddenComment:ReleaseDetailsScreen.kt$// TODO: Works for Latn but not Jpan or Kore</ID>
+    <ID>ForbiddenComment:ReleaseGroupListItem.kt$// TODO: have 2 modes: query and browse where some data is displayed differently</ID>
+    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: catalog number</ID>
+    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: rethink showing release country -&gt; could be misleading, and expensive joins</ID>
+    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: we probably need preferences to show/hide some of the content in this item</ID>
+    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: we'll likely run into 429 when loading many images at once, not much we can do about that right now</ID>
+    <ID>ForbiddenComment:ReleaseScaffold.kt$// TODO: [low] if you spam click this it won't work</ID>
+    <ID>ForbiddenComment:ReleaseScaffold.kt$// TODO: test refreshing this screen</ID>
+    <ID>ForbiddenComment:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$// TODO: ideal for selecting labels. though where would those labels be shown?</ID>
+    <ID>ForbiddenComment:ReleasesListScreen.kt$// TODO: Previewing compose paging currently not supported: https://issuetracker.google.com/issues/194544557#comment18</ID>
+    <ID>ForbiddenComment:ReleasesListScreen.kt$// TODO: timber these</ID>
+    <ID>ForbiddenComment:ScrollableTopAppBar.kt$// TODO: Can we split these concerns somehow?</ID>
+    <ID>ForbiddenComment:ScrollableTopAppBar.kt$// TODO: can we generalize adding a dropdown menu to a clickable composable?</ID>
+    <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: Seems like this is currently broken</ID>
+    <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: should see album type rather than year</ID>
+    <ID>ForbiddenComment:SeriesDetailsScreen.kt$// TODO: not enough info to warrant its own tab?</ID>
+    <ID>ForbiddenComment:SettingSwitch.kt$// TODO: unchecked color is hard to see</ID>
+    <ID>ForbiddenComment:SettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
+    <ID>ForbiddenComment:StatsScreen.kt$// // TODO: a more appropriate default?</ID>
+    <ID>ForbiddenComment:TextWithHeading.kt$// TODO: selecting this starting from heading will behave strangely for text with multiple lines</ID>
+    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: Filters</ID>
+    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: expand out from the icon</ID>
+    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: only do them when first clicking on search icon</ID>
+    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: when returning, focus is in front of search text</ID>
+    <ID>ForbiddenComment:WorkListItem.kt$// TODO: artists</ID>
+    <ID>ForbiddenComment:WorkListItem.kt$// TODO: writers</ID>
+    <ID>ForbiddenComment:WorkScaffold.kt$// TODO: browsing rather than lookup recording-rels doesn't include attributes</ID>
+    <ID>FunctionNaming:AddRelationshipsSection.kt$@DefaultPreviews @Composable private fun Default()</ID>
+    <ID>FunctionNaming:AddRelationshipsSection.kt$@DefaultPreviews @Composable private fun NoRelationships()</ID>
+    <ID>FunctionNaming:AddRelationshipsSection.kt$@DefaultPreviews @Composable private fun NullRelationships()</ID>
+    <ID>FunctionNaming:AddReleaseGroupsSection.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:AddReleasesSection.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:AreaDetailsScreen.kt$@Composable internal fun AreaDetailsScreen( modifier: Modifier = Modifier, area: AreaScaffoldModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:AreaDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:AreaListItem.kt$@Composable internal fun AreaListItem( area: AreaListItemModel, showType: Boolean = true, onAreaClick: AreaListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:AreaListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(AreaListItemPreviewParameterProvider::class) area: AreaListItemModel )</ID>
+    <ID>FunctionNaming:AreaListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun ReleaseEventPreview()</ID>
+    <ID>FunctionNaming:AreaScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun AreaScaffold( areaId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: AreaScaffoldViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:AreaStatsScreen.kt$@Composable internal fun AreaStatsScreen( areaId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: AreaStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ArtistDetailsScreen.kt$@Composable internal fun ArtistDetailsScreen( modifier: Modifier = Modifier, artist: ArtistListItemModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:ArtistDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:ArtistListItem..kt$@Composable internal fun ArtistListItem( artist: ArtistListItemModel, onArtistClick: ArtistListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ArtistListItem..kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview1( @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistListItemModel )</ID>
+    <ID>FunctionNaming:ArtistScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ArtistScaffold( artistId: String, titleWithDisambiguation: String? = null, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, onBack: () -&gt; Unit, // This can be hoisted up which would normally let us preview this, // but because it relies on compose paging, we can't preview. viewModel: ArtistScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ArtistStatsScreen.kt$@Composable internal fun ArtistStatsScreen( artistId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: ArtistStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:BigCoverArt.kt$@Composable internal fun BigCoverArt( modifier: Modifier = Modifier, coverArtUrl: String = "", )</ID>
+    <ID>FunctionNaming:BigCoverArt.kt$@Composable internal fun PainterImage( modifier: Modifier = Modifier, painter: Painter )</ID>
+    <ID>FunctionNaming:ClickableListItem.kt$@OptIn(ExperimentalMaterialApi::class) @Composable internal fun ClickableListItem( onClick: () -&gt; Unit, content: @Composable () -&gt; Unit )</ID>
+    <ID>FunctionNaming:CoordinateListItem.kt$@Composable internal fun CoordinateListItem( context: Context, coordinates: Coordinates, label: String? = null )</ID>
+    <ID>FunctionNaming:CoordinateListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun CoordinateCardPreview()</ID>
+    <ID>FunctionNaming:DetailsWithErrorHandling.kt$@Composable internal fun &lt;T&gt; DetailsWithErrorHandling( modifier: Modifier = Modifier, showError: Boolean, onRetryClick: () -&gt; Unit, scaffoldModel: T?, detailsScreen: @Composable ((T) -&gt; Unit) )</ID>
+    <ID>FunctionNaming:DevSettingsSection.kt$@Composable fun DevSettingsSection()</ID>
+    <ID>FunctionNaming:DisambiguationText.kt$@Composable internal fun DisambiguationText(disambiguation: String?)</ID>
+    <ID>FunctionNaming:DotsFlashing.kt$@Composable fun Dot(alpha: Float)</ID>
+    <ID>FunctionNaming:DotsFlashing.kt$@Composable internal fun DotsFlashing()</ID>
+    <ID>FunctionNaming:DotsFlashing.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:EventDetailsScreen.kt$@Composable internal fun EventDetailsScreen( modifier: Modifier = Modifier, event: EventListItemModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:EventDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:EventListItem.kt$@Composable internal fun EventListItem( event: EventListItemModel, onEventClick: EventListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:EventListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(EventPreviewParameterProvider::class) event: EventListItemModel )</ID>
+    <ID>FunctionNaming:EventScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun EventScaffold( eventId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: EventScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:EventStatsScreen.kt$@Composable internal fun EventStatsScreen( modifier: Modifier = Modifier, eventId: String, tabs: List&lt;Tab&gt;, viewModel: EventStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:EventsByPlaceScreen.kt$@Composable internal fun EventsByPlaceScreen( placeId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), eventsLazyListState: LazyListState = rememberLazyListState(), eventsLazyPagingItems: LazyPagingItems&lt;EventListItemModel&gt;, onEventClick: (destination: Destination, String, String) -&gt; Unit, onPagedEventsFlowChange: (Flow&lt;PagingData&lt;EventListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: EventsByPlaceViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ExperimentalScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ExperimentalScaffold( openDrawer: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:ExperimentalSettingsScaffold.kt$@Composable fun SettingsScreen( showTheme: Boolean = true, theme: AppPreferences.Theme, showAppVersion: Boolean = true, onThemeChange: (AppPreferences.Theme) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ExperimentalSettingsScaffold.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:ExperimentalSettingsScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ExperimentalSettingsScaffold( openDrawer: () -&gt; Unit = {}, viewModel: ExperimentalSettingsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ExposedDropdownMenuBox.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ExposedDropdownMenuBox( modifier: Modifier = Modifier, options: List&lt;MusicBrainzResource&gt;, selectedOption: MusicBrainzResource, onSelectOption: (MusicBrainzResource) -&gt; Unit )</ID>
+    <ID>FunctionNaming:FooterLoadingIndicator.kt$@Composable internal fun FooterLoadingIndicator()</ID>
+    <ID>FunctionNaming:FooterLoadingIndicator.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable internal fun FooterLoadingIndicatorPreview()</ID>
+    <ID>FunctionNaming:FullScreenContent.kt$@Composable internal fun FullScreenContent( modifier: Modifier = Modifier, content: @Composable ColumnScope.() -&gt; Unit )</ID>
+    <ID>FunctionNaming:FullScreenErrorWithRetry.kt$@Composable internal fun FullScreenErrorWithRetry( modifier: Modifier = Modifier, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:FullScreenErrorWithRetry.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:FullScreenLoadingIndicator.kt$@Composable internal fun FullScreenLoadingIndicator( modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:FullScreenLoadingIndicator.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:FullScreenText.kt$@Composable internal fun FullScreenText( text: String, )</ID>
+    <ID>FunctionNaming:FullScreenText.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:GenreScaffold.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:GenreScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun GenreScaffold( genreId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, viewModel: GenreScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:HistoryListItem.kt$@Composable internal fun HistoryListItem( lookupHistory: LookupHistoryRoomModel, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:HistoryListItem.kt$@DefaultPreviews @Composable private fun Preview( @PreviewParameter(LookupHistoryPreviewParameterProvider::class) history: LookupHistoryRoomModel )</ID>
+    <ID>FunctionNaming:HistoryScaffold.kt$@Composable internal fun HistoryScreen( modifier: Modifier = Modifier, lazyPagingItems: LazyPagingItems&lt;LookupHistoryRoomModel&gt;, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:HistoryScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun HistoryScaffold( onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, openDrawer: () -&gt; Unit = {}, viewModel: HistoryViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:InstrumentDetailsScreen.kt$@Composable internal fun InstrumentDetailsScreen( modifier: Modifier = Modifier, instrument: InstrumentListItemModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:InstrumentDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:InstrumentListItem.kt$@Composable internal fun InstrumentListItem( instrument: InstrumentListItemModel, onInstrumentClick: InstrumentListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:InstrumentListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel )</ID>
+    <ID>FunctionNaming:InstrumentScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun InstrumentScaffold( instrumentId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: InstrumentScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:InstrumentStatsScreen.kt$@Composable internal fun InstrumentStatsScreen( instrumentId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: InstrumentStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:LabelDetailsScreen.kt$@Composable internal fun LabelDetailsScreen( modifier: Modifier = Modifier, label: LabelListItemModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:LabelDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:LabelListItem.kt$@Composable internal fun LabelListItem( label: LabelListItemModel, onLabelClick: LabelListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:LabelListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Preview( @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelListItemModel )</ID>
+    <ID>FunctionNaming:LabelScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun LabelScaffold( labelId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: LabelScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:LabelStatsScreen.kt$@Composable internal fun LabelStatsScreen( labelId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: LabelStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:LifeSpanText.kt$@Composable internal fun LifeSpanText( lifeSpan: LifeSpan?, beginHeadingRes: Int = R.string.start_date, endHeadingRes: Int = R.string.end_date )</ID>
+    <ID>FunctionNaming:LifeSpanText.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(LifeSpanPreviewParameterProvider::class) lifeSpan: LifeSpan )</ID>
+    <ID>FunctionNaming:ListSeparatorHeader.kt$@Composable internal fun AttributesListSeparatorHeader(@StringRes resourceStringRes: Int)</ID>
+    <ID>FunctionNaming:ListSeparatorHeader.kt$@Composable internal fun InformationListSeparatorHeader(@StringRes resourceStringRes: Int)</ID>
+    <ID>FunctionNaming:ListSeparatorHeader.kt$@Composable internal fun ListSeparatorHeader(text: String)</ID>
+    <ID>FunctionNaming:ListSeparatorHeader.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun ListSeparatorHeaderPreview()</ID>
+    <ID>FunctionNaming:LocalRemoteProgressBar.kt$@Composable internal fun LocalRemoteProgressBar( totalRemote: Int?, totalLocal: Int, cachedLocalOfRemoteRes: Int )</ID>
+    <ID>FunctionNaming:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Empty()</ID>
+    <ID>FunctionNaming:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Full()</ID>
+    <ID>FunctionNaming:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Half()</ID>
+    <ID>FunctionNaming:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Overflow()</ID>
+    <ID>FunctionNaming:MainActivity.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun MainApp( navController: NavHostController )</ID>
+    <ID>FunctionNaming:MultipleChoiceDialog.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:MultipleChoiceDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun MultipleChoiceDialog( title: String, choices: List&lt;String&gt;, selectedChoiceIndex: Int, onSelectChoiceIndex: (Int) -&gt; Unit = {}, onDismiss: () -&gt; Unit = {}, )</ID>
+    <ID>FunctionNaming:NavigationDrawer.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun NavigationDrawer( selectedTopLevelDestination: Destination, closeDrawer: () -&gt; Unit = {}, navigateToTopLevelDestination: (Destination) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:NavigationDrawer.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun NavigationDrawerItem( icon: ImageVector, iconDescription: String, label: String, isSelected: Boolean, onClick: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:NavigationDrawer.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable internal fun NavigationDrawerPreview()</ID>
+    <ID>FunctionNaming:NavigationGraph.kt$@Composable internal fun NavigationGraph( navController: NavHostController, openDrawer: () -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:OverflowMenuScope.kt$@Composable internal fun OverflowMenuScope.CopyToClipboardMenuItem(resourceId: String)</ID>
+    <ID>FunctionNaming:OverflowMenuScope.kt$@Composable internal fun OverflowMenuScope.OpenInBrowserMenuItem(resource: MusicBrainzResource, resourceId: String)</ID>
+    <ID>FunctionNaming:PagingLoadingAndErrorHandler.kt$@Composable internal fun &lt;T : Any&gt; PagingLoadingAndErrorHandler( modifier: Modifier = Modifier, lazyPagingItems: LazyPagingItems&lt;T&gt;, somethingElseLoading: Boolean = false, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState? = null, noResultsText: String = stringResource(id = R.string.no_results_found), itemContent: @Composable LazyItemScope.(value: T?) -&gt; Unit )</ID>
+    <ID>FunctionNaming:PlaceDetailsScreen.kt$@Composable internal fun PlaceDetailsScreen( modifier: Modifier = Modifier, context: Context = LocalContext.current, place: PlaceListItemModel, lazyListState: LazyListState = rememberLazyListState(), onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:PlaceDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:PlaceListItem.kt$@Composable internal fun PlaceListItem( place: PlaceListItemModel, onPlaceClick: PlaceListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:PlaceListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(PlacePreviewParameterProvider::class) place: PlaceListItemModel )</ID>
+    <ID>FunctionNaming:PlaceScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun PlaceScaffold( placeId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: PlaceScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:PlaceStatsScreen.kt$@Composable internal fun PlaceStatsScreen( placeId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: PlaceStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:PlacesByAreaScreen.kt$@Composable internal fun PlacesByAreaScreen( areaId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), placesLazyListState: LazyListState = rememberLazyListState(), placesLazyPagingItems: LazyPagingItems&lt;PlaceListItemModel&gt;, onPlaceClick: (destination: Destination, String, String) -&gt; Unit, onPagedPlacesFlowChange: (Flow&lt;PagingData&lt;PlaceListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: PlacesByAreaViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:RecordingDetailsScreen.kt$@Composable internal fun RecordingDetailsScreen( modifier: Modifier = Modifier, recording: RecordingScaffoldModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:RecordingDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:RecordingListItem.kt$@Composable internal fun RecordingListItem( recording: RecordingListItemModel, onRecordingClick: RecordingListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:RecordingListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingListItemModel )</ID>
+    <ID>FunctionNaming:RecordingScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun RecordingScaffold( recordingId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: RecordingScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:RecordingStatsScreen.kt$@Composable internal fun RecordingStatsScreen( recordingId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: RecordingStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:RecordingsByWorkScreen.kt$@Composable internal fun RecordingsByWorkScreen( workId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), recordingsLazyListState: LazyListState = rememberLazyListState(), recordingsLazyPagingItems: LazyPagingItems&lt;RecordingListItemModel&gt;, onRecordingClick: (destination: Destination, String, String) -&gt; Unit, onPagedRecordingsFlowChange: (Flow&lt;PagingData&lt;RecordingListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: RecordingsByWorkViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:RecordingsListScreen.kt$@Composable internal fun RecordingsListScreen( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), lazyListState: LazyListState = rememberLazyListState(), lazyPagingItems: LazyPagingItems&lt;RecordingListItemModel&gt;, onRecordingClick: (String, String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:RelationListItem.kt$@Composable internal fun RelationListItem( relation: RelationListItemModel, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:RelationListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Artist()</ID>
+    <ID>FunctionNaming:RelationListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Recording()</ID>
+    <ID>FunctionNaming:RelationsScreen.kt$@Composable internal fun RelationsScreen( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, lazyListState: LazyListState, lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, )</ID>
+    <ID>FunctionNaming:ReleaseDetailsScreen.kt$@Composable internal fun ReleaseDetailsScreen( release: ReleaseScaffoldModel, modifier: Modifier = Modifier, coverArtUrl: String = "", onLabelClick: LabelListItemModel.() -&gt; Unit = {}, onAreaClick: AreaListItemModel.() -&gt; Unit = {}, lazyListState: LazyListState = rememberLazyListState() )</ID>
+    <ID>FunctionNaming:ReleaseDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:ReleaseGroupDetailsScreen.kt$@Composable internal fun ReleaseGroupDetailsScreen( releaseGroup: ReleaseGroupScaffoldModel, modifier: Modifier = Modifier, coverArtUrl: String = "", lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:ReleaseGroupListItem.kt$@Composable internal fun ReleaseGroupListItem( releaseGroup: ReleaseGroupListItemModel, requestForMissingCoverArtPath: suspend () -&gt; Unit = {}, onClick: ReleaseGroupListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ReleaseGroupListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:ReleaseGroupScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ReleaseGroupScaffold( releaseGroupId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ReleaseGroupStatsScreen.kt$@Composable internal fun ReleaseGroupStatsScreen( releaseGroupId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: ReleaseGroupStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ReleaseGroupsByArtistScreen.kt$@Composable internal fun ReleaseGroupsByArtistScreen( artistId: String, modifier: Modifier, searchText: String, isSorted: Boolean, snackbarHostState: SnackbarHostState, onReleaseGroupClick: (destination: Destination, String, String) -&gt; Unit, lazyListState: LazyListState, lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, onPagedReleaseGroupsChange: (Flow&lt;PagingData&lt;ListItemModel&gt;&gt;) -&gt; Unit, viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ReleaseGroupsListScreen.kt$@Composable internal fun ReleaseGroupsListScreen( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), lazyListState: LazyListState = rememberLazyListState(), lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, onReleaseGroupClick: (String, String) -&gt; Unit, viewModel: ReleaseGroupsListViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ReleaseListItem.kt$@Composable internal fun ReleaseListItem( release: ReleaseListItemModel, showMoreInfo: Boolean = true, requestForMissingCoverArtPath: suspend () -&gt; Unit = {}, onClick: ReleaseListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ReleaseListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseListItemModel )</ID>
+    <ID>FunctionNaming:ReleaseScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ReleaseScaffold( releaseId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: ReleaseScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ReleaseStatsScreen.kt$@Composable internal fun ReleaseStatsScreen( releaseId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: ReleaseStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ReleasesByAreaScreen.kt$@Composable internal fun ReleasesByAreaScreen( areaId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByAreaViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ReleasesByArtistScreen.kt$@Composable internal fun ReleasesByArtistScreen( artistId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, showMoreInfo: Boolean, viewModel: ReleasesByArtistViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ReleasesByLabelScreen.kt$@Composable internal fun ReleasesByLabelScreen( labelId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByLabelViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ReleasesByRecordingScreen.kt$@Composable internal fun ReleasesByRecordingScreen( recordingId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByRecordingViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ReleasesByReleaseGroupScreen.kt$@Composable internal fun ReleasesByReleaseGroupScreen( releaseGroupId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:ReleasesListScreen.kt$@Composable internal fun ReleasesListScreen( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), lazyListState: LazyListState = rememberLazyListState(), lazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, showMoreInfo: Boolean = true, onReleaseClick: (String, String) -&gt; Unit, viewModel: ReleasesListViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:ResourceIcon.kt$@Composable internal fun ResourceIcon( resource: MusicBrainzResource, modifier: Modifier = Modifier )</ID>
+    <ID>FunctionNaming:RetryButton.kt$@Composable internal fun RetryButton(onClick: () -&gt; Unit = {})</ID>
+    <ID>FunctionNaming:RetryButton.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@Composable private fun OverflowMenu( overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -&gt; Unit)? = null )</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@Composable private fun TabsBar( tabsTitle: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@Composable private fun TitleBar( resource: MusicBrainzResource? = null, title: String, subtitle: String = "", subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, )</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@DefaultPreviews @Composable private fun ScrollableTopAppBarIconPreview()</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@DefaultPreviews @Composable private fun ScrollableTopAppBarPreview()</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@DefaultPreviews @Composable private fun WithTabs()</ID>
+    <ID>FunctionNaming:ScrollableTopAppBar.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ScrollableTopAppBar( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", mainAction: @Composable (() -&gt; Unit)? = null, overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, // TODO: Can we split these concerns somehow? tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:SearchMusicBrainzScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:SearchScreenScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchScreenScaffold( openDrawer: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, )</ID>
+    <ID>FunctionNaming:SeriesDetailsScreen.kt$@Composable internal fun SeriesDetailsScreen( modifier: Modifier = Modifier, series: SeriesListItemModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:SeriesListItem.kt$@Composable internal fun SeriesListItem( series: SeriesListItemModel, onSeriesClick: SeriesListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:SeriesListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Preview( @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesListItemModel )</ID>
+    <ID>FunctionNaming:SeriesScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SeriesScaffold( seriesId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: SeriesScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:SeriesStatsScreen.kt$@Composable internal fun SeriesStatsScreen( seriesId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: SeriesStatsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:SettingSwitch.kt$@Composable fun SettingSwitch( header: String, checked: Boolean, onCheckedChange: (Boolean) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:SettingSwitch.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:SettingWithDialogChoices.kt$@Composable internal fun SettingWithDialogChoices( titleRes: Int, choices: List&lt;String&gt;, selectedChoiceIndex: Int, onSelectChoiceIndex: (Int) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingWithDialogChoices.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:SettingsScaffold.kt$@Composable fun SettingsScreen( modifier: Modifier = Modifier, theme: AppPreferences.Theme, onThemeChange: (AppPreferences.Theme) -&gt; Unit = {}, showMoreInfoInReleaseListItem: Boolean, onShowMoreInfoInReleaseListItemChange: (Boolean) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:SettingsScaffold.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:SettingsScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScaffold( openDrawer: () -&gt; Unit = {}, viewModel: SettingsViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:SimpleAlertDialog.kt$@Composable internal fun SimpleAlertDialog( title: String, confirmText: String, onDismiss: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SimpleAlertDialog.kt$@DefaultPreviews @Composable private fun Long()</ID>
+    <ID>FunctionNaming:SimpleAlertDialog.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:SmallCoverArt.kt$@Composable internal fun SmallCoverArt( modifier: Modifier = Modifier, coverArtUrl: String = "", placeholderIcon: ImageVector = Icons.Default.Album, )</ID>
+    <ID>FunctionNaming:SmallCoverArt.kt$@Composable private fun PlaceholderIcon( modifier: Modifier = Modifier, placeholderIcon: ImageVector = Icons.Default.Album, )</ID>
+    <ID>FunctionNaming:SpotifyScreen.kt$@Composable fun SpotifyBroadcastReceiver( onMetadataChange: (SpotifyMetadata) -&gt; Unit )</ID>
+    <ID>FunctionNaming:SpotifyScreen.kt$@Composable internal fun SpotifyScreen( searchMusicBrainz: (query: String, id: MusicBrainzResource) -&gt; Unit = { _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:StatsScreen.kt$@Composable internal fun StatsScreen( modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, stats: Stats )</ID>
+    <ID>FunctionNaming:StatsScreen.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:TextWithHeading.kt$@Composable internal fun TextWithHeading( heading: String, text: String )</ID>
+    <ID>FunctionNaming:TextWithHeading.kt$@Composable internal fun TextWithHeadingRes( @StringRes headingRes: Int, text: String )</ID>
+    <ID>FunctionNaming:TextWithHeading.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable internal fun BaseTheme(context: Context, darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -&gt; Unit)</ID>
+    <ID>FunctionNaming:Theme.kt$@ExcludeFromJacocoGeneratedReport @Composable internal fun PreviewTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ThreeSectionListItem.kt$@Composable internal fun ThreeSectionListItem( onClick: () -&gt; Unit = {}, startAlignment: Alignment.Horizontal = Alignment.Start, startContent: @Composable ColumnScope.() -&gt; Unit = {}, startMainPadding: Dp = 0.dp, mainContent: @Composable ColumnScope.() -&gt; Unit, endMainPadding: Dp = 0.dp, endContent: @Composable ColumnScope.() -&gt; Unit = {}, endAlignment: Alignment.Horizontal = Alignment.End, )</ID>
+    <ID>FunctionNaming:ThreeSectionListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun All()</ID>
+    <ID>FunctionNaming:ThreeSectionListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun NoEnd()</ID>
+    <ID>FunctionNaming:ThreeSectionListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun NoStart()</ID>
+    <ID>FunctionNaming:TopAppBarWithFilter.kt$@Composable internal fun TopAppBarWithFilter( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {}, showFilterIcon: Boolean = true, filterText: String = "", onFilterTextChange: (String) -&gt; Unit = {}, )</ID>
+    <ID>FunctionNaming:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun PreviewFilterMode()</ID>
+    <ID>FunctionNaming:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun PreviewNoSearch()</ID>
+    <ID>FunctionNaming:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun PreviewWithTabs()</ID>
+    <ID>FunctionNaming:TopAppBarWithFilter.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun TopAppBarWithFilterInternal( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {}, showFilterIcon: Boolean = true, filterText: String = "", onFilterTextChange: (String) -&gt; Unit = {}, isFilterMode: Boolean = false, onFilterModeChange: (Boolean) -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:TrackListItem.kt$@Composable internal fun TrackListItem( track: TrackListItemModel, // showTrackArtists: Boolean = false, onRecordingClick: (String, String) -&gt; Unit = { _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:TrackListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(TrackCardPreviewParameterProvider::class) track: TrackListItemModel )</ID>
+    <ID>FunctionNaming:TracksInReleaseScreen.kt$@Composable internal fun TracksInReleaseScreen( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), lazyListState: LazyListState = rememberLazyListState(), lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, onRecordingClick: (String, String) -&gt; Unit = { _, _ -&gt; }, )</ID>
+    <ID>FunctionNaming:WorkDetailsScreen.kt$@Composable internal fun WorkDetailsScreen( modifier: Modifier = Modifier, work: WorkListItemModel, lazyListState: LazyListState = rememberLazyListState(), )</ID>
+    <ID>FunctionNaming:WorkDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:WorkListItem.kt$@Composable internal fun WorkListItem( work: WorkListItemModel, onWorkClick: WorkListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>FunctionNaming:WorkListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>FunctionNaming:WorkScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun WorkScaffold( workId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: WorkScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>FunctionNaming:WorkStatsScreen.kt$@Composable internal fun WorkGroupStatsScreen( workId: String, modifier: Modifier = Modifier, tabs: List&lt;Tab&gt;, viewModel: WorkStatsViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:AreaListItem.kt$@Composable internal fun AreaListItem( area: AreaListItemModel, showType: Boolean = true, onAreaClick: AreaListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>LongMethod:AreaScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun AreaScaffold( areaId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: AreaScaffoldViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:ArtistScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ArtistScaffold( artistId: String, titleWithDisambiguation: String? = null, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, onBack: () -&gt; Unit, // This can be hoisted up which would normally let us preview this, // but because it relies on compose paging, we can't preview. viewModel: ArtistScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:EventScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun EventScaffold( eventId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: EventScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:InstrumentScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun InstrumentScaffold( instrumentId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: InstrumentScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:LabelScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun LabelScaffold( labelId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: LabelScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:NavigationGraph.kt$@Composable internal fun NavigationGraph( navController: NavHostController, openDrawer: () -&gt; Unit = {} )</ID>
+    <ID>LongMethod:PagingLoadingAndErrorHandler.kt$@Composable internal fun &lt;T : Any&gt; PagingLoadingAndErrorHandler( modifier: Modifier = Modifier, lazyPagingItems: LazyPagingItems&lt;T&gt;, somethingElseLoading: Boolean = false, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState? = null, noResultsText: String = stringResource(id = R.string.no_results_found), itemContent: @Composable LazyItemScope.(value: T?) -&gt; Unit )</ID>
+    <ID>LongMethod:PlaceScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun PlaceScaffold( placeId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: PlaceScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:RecordingScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun RecordingScaffold( recordingId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: RecordingScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:ReleaseDetailsScreen.kt$@Composable internal fun ReleaseDetailsScreen( release: ReleaseScaffoldModel, modifier: Modifier = Modifier, coverArtUrl: String = "", onLabelClick: LabelListItemModel.() -&gt; Unit = {}, onAreaClick: AreaListItemModel.() -&gt; Unit = {}, lazyListState: LazyListState = rememberLazyListState() )</ID>
+    <ID>LongMethod:ReleaseGroupScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ReleaseGroupScaffold( releaseGroupId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:ReleaseListItem.kt$@Composable internal fun ReleaseListItem( release: ReleaseListItemModel, showMoreInfo: Boolean = true, requestForMissingCoverArtPath: suspend () -&gt; Unit = {}, onClick: ReleaseListItemModel.() -&gt; Unit = {} )</ID>
+    <ID>LongMethod:ReleaseScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun ReleaseScaffold( releaseId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: ReleaseScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:ScrollableTopAppBar.kt$@Composable private fun TitleBar( resource: MusicBrainzResource? = null, title: String, subtitle: String = "", subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, )</ID>
+    <ID>LongMethod:SearchMusicBrainzScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:SeriesScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SeriesScaffold( seriesId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: SeriesScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongMethod:TopAppBarWithFilter.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable private fun TopAppBarWithFilterInternal( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {}, showFilterIcon: Boolean = true, filterText: String = "", onFilterTextChange: (String) -&gt; Unit = {}, isFilterMode: Boolean = false, onFilterModeChange: (Boolean) -&gt; Unit = {} )</ID>
+    <ID>LongMethod:WorkScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun WorkScaffold( workId: String, titleWithDisambiguation: String? = null, onBack: () -&gt; Unit = {}, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, viewModel: WorkScaffoldViewModel = hiltViewModel() )</ID>
+    <ID>LongParameterList:EventsByPlaceScreen.kt$( placeId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), eventsLazyListState: LazyListState = rememberLazyListState(), eventsLazyPagingItems: LazyPagingItems&lt;EventListItemModel&gt;, onEventClick: (destination: Destination, String, String) -&gt; Unit, onPagedEventsFlowChange: (Flow&lt;PagingData&lt;EventListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: EventsByPlaceViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:PagingLoadingAndErrorHandler.kt$( modifier: Modifier = Modifier, lazyPagingItems: LazyPagingItems&lt;T&gt;, somethingElseLoading: Boolean = false, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState? = null, noResultsText: String = stringResource(id = R.string.no_results_found), itemContent: @Composable LazyItemScope.(value: T?) -&gt; Unit )</ID>
+    <ID>LongParameterList:PlacesByAreaScreen.kt$( areaId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), placesLazyListState: LazyListState = rememberLazyListState(), placesLazyPagingItems: LazyPagingItems&lt;PlaceListItemModel&gt;, onPlaceClick: (destination: Destination, String, String) -&gt; Unit, onPagedPlacesFlowChange: (Flow&lt;PagingData&lt;PlaceListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: PlacesByAreaViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:RecordingsByWorkScreen.kt$( workId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), recordingsLazyListState: LazyListState = rememberLazyListState(), recordingsLazyPagingItems: LazyPagingItems&lt;RecordingListItemModel&gt;, onRecordingClick: (destination: Destination, String, String) -&gt; Unit, onPagedRecordingsFlowChange: (Flow&lt;PagingData&lt;RecordingListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: RecordingsByWorkViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:ReleaseDetailsScreen.kt$( release: ReleaseScaffoldModel, modifier: Modifier = Modifier, coverArtUrl: String = "", onLabelClick: LabelListItemModel.() -&gt; Unit = {}, onAreaClick: AreaListItemModel.() -&gt; Unit = {}, lazyListState: LazyListState = rememberLazyListState() )</ID>
+    <ID>LongParameterList:ReleaseGroupsByArtistScreen.kt$( artistId: String, modifier: Modifier, searchText: String, isSorted: Boolean, snackbarHostState: SnackbarHostState, onReleaseGroupClick: (destination: Destination, String, String) -&gt; Unit, lazyListState: LazyListState, lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, onPagedReleaseGroupsChange: (Flow&lt;PagingData&lt;ListItemModel&gt;&gt;) -&gt; Unit, viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel() )</ID>
+    <ID>LongParameterList:ReleaseGroupsListScreen.kt$( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), lazyListState: LazyListState = rememberLazyListState(), lazyPagingItems: LazyPagingItems&lt;ListItemModel&gt;, onReleaseGroupClick: (String, String) -&gt; Unit, viewModel: ReleaseGroupsListViewModel = hiltViewModel() )</ID>
+    <ID>LongParameterList:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$( override val releaseDao: ReleaseDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, override val lookupHistoryDao: LookupHistoryDao, override val coverArtArchiveApiService: CoverArtArchiveApiService, private val repository: ReleaseRepository, private val relationsList: RelationsList, )</ID>
+    <ID>LongParameterList:ReleasesByAreaScreen.kt$( areaId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByAreaViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:ReleasesByArtistScreen.kt$( artistId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, showMoreInfo: Boolean, viewModel: ReleasesByArtistViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:ReleasesByLabelScreen.kt$( labelId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByLabelViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:ReleasesByRecordingScreen.kt$( recordingId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByRecordingViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:ReleasesByReleaseGroupScreen.kt$( releaseGroupId: String, modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), releasesLazyListState: LazyListState = rememberLazyListState(), releasesLazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, onReleaseClick: (destination: Destination, String, String) -&gt; Unit, onPagedReleasesFlowChange: (Flow&lt;PagingData&lt;ReleaseListItemModel&gt;&gt;) -&gt; Unit, filterText: String, viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel(), )</ID>
+    <ID>LongParameterList:ReleasesListScreen.kt$( modifier: Modifier = Modifier, snackbarHostState: SnackbarHostState = SnackbarHostState(), lazyListState: LazyListState = rememberLazyListState(), lazyPagingItems: LazyPagingItems&lt;ReleaseListItemModel&gt;, showMoreInfo: Boolean = true, onReleaseClick: (String, String) -&gt; Unit, viewModel: ReleasesListViewModel = hiltViewModel() )</ID>
+    <ID>LongParameterList:ScrollableTopAppBar.kt$( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", mainAction: @Composable (() -&gt; Unit)? = null, overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, // TODO: Can we split these concerns somehow? tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {} )</ID>
+    <ID>LongParameterList:SearchMusicBrainzScreen.kt$( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>LongParameterList:ThreeSectionListItem.kt$( onClick: () -&gt; Unit = {}, startAlignment: Alignment.Horizontal = Alignment.Start, startContent: @Composable ColumnScope.() -&gt; Unit = {}, startMainPadding: Dp = 0.dp, mainContent: @Composable ColumnScope.() -&gt; Unit, endMainPadding: Dp = 0.dp, endContent: @Composable ColumnScope.() -&gt; Unit = {}, endAlignment: Alignment.Horizontal = Alignment.End, )</ID>
+    <ID>LongParameterList:TopAppBarWithFilter.kt$( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {}, showFilterIcon: Boolean = true, filterText: String = "", onFilterTextChange: (String) -&gt; Unit = {}, )</ID>
+    <ID>LongParameterList:TopAppBarWithFilter.kt$( onBack: () -&gt; Unit = {}, openDrawer: (() -&gt; Unit)? = null, resource: MusicBrainzResource? = null, title: String, subtitle: String = "", overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -&gt; Unit)? = null, tabsTitles: List&lt;String&gt; = listOf(), selectedTabIndex: Int = 0, onSelectTabIndex: (Int) -&gt; Unit = {}, showFilterIcon: Boolean = true, filterText: String = "", onFilterTextChange: (String) -&gt; Unit = {}, isFilterMode: Boolean = false, onFilterModeChange: (Boolean) -&gt; Unit = {} )</ID>
+    <ID>MagicNumber:AddRelationshipsSection.kt$3</ID>
+    <ID>MagicNumber:AddRelationshipsSection.kt$4</ID>
+    <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
+    <ID>MagicNumber:AddRelationshipsSection.kt$6</ID>
+    <ID>MagicNumber:AddRelationshipsSection.kt$7</ID>
+    <ID>MagicNumber:Color.kt$0xFFB388FF</ID>
+    <ID>MagicNumber:Color.kt$0xFFD84315</ID>
+    <ID>MagicNumber:Color.kt$0xFFFF5722</ID>
+    <ID>MagicNumber:Color.kt$0xFFFFAB91</ID>
+    <ID>MagicNumber:DotsFlashing.kt$0.2f</ID>
+    <ID>MagicNumber:DotsFlashing.kt$4</ID>
+    <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
+    <ID>MagicNumber:SmallCoverArt.kt$64</ID>
+    <ID>MagicNumber:StatsScreen.kt$17</ID>
+    <ID>MagicNumber:StatsScreen.kt$397</ID>
+    <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
+    <ID>MatchingDeclarationName:AreaScaffold.kt$AreaTab</ID>
+    <ID>MatchingDeclarationName:ArtistScaffold.kt$ArtistTab</ID>
+    <ID>MatchingDeclarationName:EventScaffold.kt$EventTab</ID>
+    <ID>MatchingDeclarationName:InstrumentScaffold.kt$InstrumentTab</ID>
+    <ID>MatchingDeclarationName:LabelScaffold.kt$LabelTab</ID>
+    <ID>MatchingDeclarationName:PlaceScaffold.kt$PlaceTab</ID>
+    <ID>MatchingDeclarationName:PreviewAnnotations.kt$DefaultPreviews</ID>
+    <ID>MatchingDeclarationName:RecordingScaffold.kt$RecordingTab</ID>
+    <ID>MatchingDeclarationName:ReleaseGroupScaffold.kt$ReleaseGroupTab</ID>
+    <ID>MatchingDeclarationName:ReleaseGroupsListScreen.kt$ReleaseGroupsListViewModel : ViewModelGetReleaseGroupCoverArtPath</ID>
+    <ID>MatchingDeclarationName:ReleaseScaffold.kt$ReleaseTab</ID>
+    <ID>MatchingDeclarationName:ReleasesListScreen.kt$ReleasesListViewModel : ViewModelGetReleaseCoverArtPath</ID>
+    <ID>MatchingDeclarationName:SeriesScaffold.kt$SeriesTab</ID>
+    <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
+    <ID>MatchingDeclarationName:WorkScaffold.kt$WorkTab</ID>
+    <ID>MaxLineLength:ArtistScaffold.kt$val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)</ID>
+    <ID>MaxLineLength:ArtistScaffold.kt$viewModel.appPreferences.setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)</ID>
+    <ID>MaxLineLength:EventListItem.kt$EventPreviewParameterProvider$disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, a Rolling Stone Magazine 30th anniversary special"</ID>
+    <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
+    <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
+    <ID>MaxLineLength:LabelListItem.kt$LabelCardPreviewParameterProvider$disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"</ID>
+    <ID>MaxLineLength:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$.</ID>
+    <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
+    <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
+    <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
+    <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
+    <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$SettingsScreen</ID>
+    <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
+    <ID>ModifierMissing:SettingsScaffold.kt$SettingsScaffold</ID>
+    <ID>ModifierReused:ExposedDropdownMenuBox.kt$DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } )</ID>
+    <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } }</ID>
+    <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox( expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier ) { TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() ) // Focusing on this "consumes" a back press, and is independent of onDismissRequest. ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } } }</ID>
+    <ID>ModifierReused:ExposedDropdownMenuBox.kt$TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() )</ID>
+    <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
+    <ID>SwallowedException:AreaScaffoldViewModel.kt$AreaScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:LabelScaffoldViewModel.kt$LabelScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:PlaceScaffoldViewModel.kt$PlaceScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:RecordingScaffoldViewModel.kt$RecordingScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:ReleaseGroupScaffoldViewModel.kt$ReleaseGroupScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:ReleaseGroupsListScreen.kt$ex: Exception</ID>
+    <ID>SwallowedException:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
+    <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:AreaScaffoldViewModel.kt$AreaScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:LabelScaffoldViewModel.kt$LabelScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:PlaceScaffoldViewModel.kt$PlaceScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:RecordingScaffoldViewModel.kt$RecordingScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ReleaseGroupScaffoldViewModel.kt$ReleaseGroupScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
+    <ID>UnnecessaryAbstractClass:PreferencesModule.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
+    <ID>UnstableCollections:AreaStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:ArtistStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:EventStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzResource&gt;</ID>
+    <ID>UnstableCollections:InstrumentStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:LabelStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:PlaceStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:RecordingStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:ReleaseGroupStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:ReleaseStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:ScrollableTopAppBar.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:SeriesStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:SettingWithDialogChoices.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:StatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnusedPrivateMember:AddRelationshipsSection.kt$@DefaultPreviews @Composable private fun Default()</ID>
+    <ID>UnusedPrivateMember:AddRelationshipsSection.kt$@DefaultPreviews @Composable private fun NoRelationships()</ID>
+    <ID>UnusedPrivateMember:AddRelationshipsSection.kt$@DefaultPreviews @Composable private fun NullRelationships()</ID>
+    <ID>UnusedPrivateMember:AddReleaseGroupsSection.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:AddReleasesSection.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:AreaDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:AreaListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(AreaListItemPreviewParameterProvider::class) area: AreaListItemModel )</ID>
+    <ID>UnusedPrivateMember:AreaListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun ReleaseEventPreview()</ID>
+    <ID>UnusedPrivateMember:ArtistDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:ArtistListItem..kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview1( @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistListItemModel )</ID>
+    <ID>UnusedPrivateMember:CoordinateListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun CoordinateCardPreview()</ID>
+    <ID>UnusedPrivateMember:DotsFlashing.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:EventDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:EventListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(EventPreviewParameterProvider::class) event: EventListItemModel )</ID>
+    <ID>UnusedPrivateMember:ExperimentalSettingsScaffold.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:FullScreenErrorWithRetry.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:FullScreenLoadingIndicator.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:FullScreenText.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:GenreScaffold.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:HistoryListItem.kt$@DefaultPreviews @Composable private fun Preview( @PreviewParameter(LookupHistoryPreviewParameterProvider::class) history: LookupHistoryRoomModel )</ID>
+    <ID>UnusedPrivateMember:InstrumentDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:InstrumentListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel )</ID>
+    <ID>UnusedPrivateMember:LabelDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:LifeSpanText.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(LifeSpanPreviewParameterProvider::class) lifeSpan: LifeSpan )</ID>
+    <ID>UnusedPrivateMember:ListSeparatorHeader.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun ListSeparatorHeaderPreview()</ID>
+    <ID>UnusedPrivateMember:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Empty()</ID>
+    <ID>UnusedPrivateMember:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Full()</ID>
+    <ID>UnusedPrivateMember:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Half()</ID>
+    <ID>UnusedPrivateMember:LocalRemoteProgressBar.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Overflow()</ID>
+    <ID>UnusedPrivateMember:MultipleChoiceDialog.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:PlaceDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:PlaceListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(PlacePreviewParameterProvider::class) place: PlaceListItemModel )</ID>
+    <ID>UnusedPrivateMember:RecordingDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:RecordingListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingListItemModel )</ID>
+    <ID>UnusedPrivateMember:RelationListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Artist()</ID>
+    <ID>UnusedPrivateMember:RelationListItem.kt$@Preview @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Recording()</ID>
+    <ID>UnusedPrivateMember:ReleaseDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:ReleaseGroupListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:ReleaseListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseListItemModel )</ID>
+    <ID>UnusedPrivateMember:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$private val coverArtArchiveApiService: CoverArtArchiveApiService</ID>
+    <ID>UnusedPrivateMember:RetryButton.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:ScrollableTopAppBar.kt$@DefaultPreviews @Composable private fun ScrollableTopAppBarIconPreview()</ID>
+    <ID>UnusedPrivateMember:ScrollableTopAppBar.kt$@DefaultPreviews @Composable private fun ScrollableTopAppBarPreview()</ID>
+    <ID>UnusedPrivateMember:ScrollableTopAppBar.kt$@DefaultPreviews @Composable private fun WithTabs()</ID>
+    <ID>UnusedPrivateMember:SettingSwitch.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:SettingWithDialogChoices.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:SettingsScaffold.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:SimpleAlertDialog.kt$@DefaultPreviews @Composable private fun Long()</ID>
+    <ID>UnusedPrivateMember:SimpleAlertDialog.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:StatsScreen.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:TextWithHeading.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:ThreeSectionListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun All()</ID>
+    <ID>UnusedPrivateMember:ThreeSectionListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun NoEnd()</ID>
+    <ID>UnusedPrivateMember:ThreeSectionListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun NoStart()</ID>
+    <ID>UnusedPrivateMember:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun PreviewFilterMode()</ID>
+    <ID>UnusedPrivateMember:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun PreviewNoSearch()</ID>
+    <ID>UnusedPrivateMember:TopAppBarWithFilter.kt$@DefaultPreviews @Composable private fun PreviewWithTabs()</ID>
+    <ID>UnusedPrivateMember:TrackListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview( @PreviewParameter(TrackCardPreviewParameterProvider::class) track: TrackListItemModel )</ID>
+    <ID>UnusedPrivateMember:WorkDetailsScreen.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+    <ID>UnusedPrivateMember:WorkListItem.kt$@ExcludeFromJacocoGeneratedReport @DefaultPreviews @Composable private fun Preview()</ID>
+  </CurrentIssues>
+</SmellBaseline>
