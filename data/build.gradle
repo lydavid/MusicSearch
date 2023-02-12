@@ -9,20 +9,20 @@ dependencies {
     api project(path: ':data:base')
     api project(path: ':data:coverart')
 
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation libs.moshi.kotlin
 
     // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation libs.retrofit
+    implementation libs.retrofit.converter.moshi
 
     // Room
-    implementation "androidx.room:room-common:$room_version"
+    implementation libs.room.common
 
     // Paging
     implementation "androidx.paging:paging-common-ktx:3.1.1"
 
     // Hilt
-    implementation "com.google.dagger:dagger:$hilt_version"
+    implementation libs.dagger
 
     // Test
     testImplementation 'junit:junit:4.13.2'

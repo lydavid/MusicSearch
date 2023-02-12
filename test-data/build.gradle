@@ -6,11 +6,8 @@ plugins {
 
 android {
     namespace 'ly.david.data'
-    compileSdk 33
 
     defaultConfig {
-        minSdk 23
-        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -31,22 +28,15 @@ android {
             consumerProguardFiles 'consumer-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 }
 
 dependencies {
     api project(path: ':data')
 
-    implementation "androidx.room:room-runtime:$room_version"
+    implementation libs.room.runtime
 
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    implementation libs.hilt.android
+    kapt libs.hilt.android.compiler
+    kaptTest libs.hilt.android.compiler
+    implementation libs.hilt.android.testing
 }

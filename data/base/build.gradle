@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation libs.moshi.kotlin
 }
