@@ -2,12 +2,6 @@ plugins {
     id "kotlin"
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-}
-
 dependencies {
     implementation project(path: ':data:base')
 

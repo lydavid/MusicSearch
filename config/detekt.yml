@@ -1,0 +1,17 @@
+complexity:
+  LongParameterList:
+    ignoreDefaultParameters: true
+    ignoreAnnotated:
+      - "Composable"
+  LongMethod:
+    ignoreAnnotated:
+      - "Composable"
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - "Composable"
+style:
+  UnusedPrivateMember:
+    ignoreAnnotated:
+      - "DefaultPreviews"
+      - "Preview"
