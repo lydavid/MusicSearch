@@ -10,3 +10,8 @@ naming:
   FunctionNaming:
     ignoreAnnotated:
       - "Composable"
+style:
+  UnusedPrivateMember:
+    ignoreAnnotated:
+      - "DefaultPreviews"
+      - "Preview"
