@@ -10,10 +10,13 @@ jobs:
   android-test:
     timeout-minutes: 60
     runs-on: macos-latest
+    env:
+      GRADLE_USER_HOME: "~/.gradle"
+      JVM_OPTS: -Xmx8g
     strategy:
       matrix:
-        api-level: [ 29 ]
-        arch: [ x86_64 ]
+        api-level: [ 30 ]
+        arch: [ x86 ]
         target: [ google_apis ]
     steps:
       - name: Checkout
@@ -21,6 +24,8 @@ jobs:
 
       - id: setup
         uses: ./.github/actions/setup
+
+      - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
       - name: AVD cache
         uses: actions/cache@v3
@@ -30,6 +35,8 @@ jobs:
             ~/.android/avd/*
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}
+
+      - run: ~/.android/avd/test.avd/config.ini
 
       # https://github.com/ReactiveCircus/android-emulator-runner
       - name: Create AVD and generate snapshot for caching
@@ -43,6 +50,8 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
+
+      - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
 
       - name: Run android tests with code coverage
         uses: reactivecircus/android-emulator-runner@v2
