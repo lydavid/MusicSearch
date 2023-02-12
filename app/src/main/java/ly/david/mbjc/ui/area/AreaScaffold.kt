@@ -131,8 +131,8 @@ internal fun AreaScaffold(
                     scaffoldModel = area
                 ) {
                     AreaDetailsScreen(
-                        modifier = Modifier.padding(innerPadding),
                         area = it,
+                        modifier = Modifier.padding(innerPadding),
                         lazyListState = detailsLazyListState
                     )
                 }
@@ -149,32 +149,32 @@ internal fun AreaScaffold(
             AreaTab.RELEASES -> {
                 ReleasesByAreaScreen(
                     areaId = areaId,
+                    filterText = filterText,
+                    releasesLazyPagingItems = releasesLazyPagingItems,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
                     releasesLazyListState = releasesLazyListState,
-                    releasesLazyPagingItems = releasesLazyPagingItems,
                     onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-                    onReleaseClick = onItemClick,
-                    filterText = filterText
+                    onReleaseClick = onItemClick
                 )
             }
             AreaTab.PLACES -> {
                 PlacesByAreaScreen(
                     areaId = areaId,
+                    filterText = filterText,
+                    placesLazyListState = placesLazyListState,
                     modifier = Modifier.padding(innerPadding),
                     snackbarHostState = snackbarHostState,
-                    placesLazyListState = placesLazyListState,
                     placesLazyPagingItems = placesLazyPagingItems,
                     onPagedPlacesFlowChange = { pagedPlacesFlow = it },
-                    onPlaceClick = onItemClick,
-                    filterText = filterText
+                    onPlaceClick = onItemClick
                 )
             }
             AreaTab.STATS -> {
                 AreaStatsScreen(
                     areaId = areaId,
-                    modifier = Modifier.padding(innerPadding),
-                    tabs = areaTabs.map { it.tab }
+                    tabs = areaTabs.map { it.tab },
+                    modifier = Modifier.padding(innerPadding)
                 )
             }
         }

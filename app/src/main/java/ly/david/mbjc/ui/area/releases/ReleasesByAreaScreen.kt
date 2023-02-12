@@ -17,13 +17,13 @@ import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 @Composable
 internal fun ReleasesByAreaScreen(
     areaId: String,
+    filterText: String,
+    releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     releasesLazyListState: LazyListState = rememberLazyListState(),
-    releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
-    onReleaseClick: (destination: Destination, String, String) -> Unit,
-    onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit,
-    filterText: String,
+    onReleaseClick: (destination: Destination, String, String) -> Unit = { _, _, _ -> },
+    onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
     viewModel: ReleasesByAreaViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {

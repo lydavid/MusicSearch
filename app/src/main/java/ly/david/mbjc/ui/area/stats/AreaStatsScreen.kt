@@ -16,8 +16,8 @@ import ly.david.mbjc.ui.stats.StatsScreen
 @Composable
 internal fun AreaStatsScreen(
     areaId: String,
-    modifier: Modifier = Modifier,
     tabs: List<Tab>,
+    modifier: Modifier = Modifier,
     viewModel: AreaStatsViewModel = hiltViewModel()
 ) {
     var totalRelations: Int? by remember { mutableStateOf(null) }
@@ -37,7 +37,6 @@ internal fun AreaStatsScreen(
     }
 
     StatsScreen(
-        modifier = modifier,
         tabs = tabs,
         stats = Stats(
             totalRelations = totalRelations,
@@ -46,6 +45,7 @@ internal fun AreaStatsScreen(
             totalLocalReleases = totalLocalReleases,
             totalRemotePlaces = totalRemotePlaces,
             totalLocalPlaces = totalLocalPlaces
-        )
+        ),
+        modifier = modifier
     )
 }

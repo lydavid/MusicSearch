@@ -3,8 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; releaseGroupListItem2 != null &amp;&amp; (releaseGroupListItem?.primaryType != releaseGroupListItem2.primaryType || releaseGroupListItem?.secondaryTypes != releaseGroupListItem2.secondaryTypes)</ID>
-    <ID>ComposableParamOrder:AreaDetailsScreen.kt$AreaDetailsScreen</ID>
-    <ID>ComposableParamOrder:AreaStatsScreen.kt$AreaStatsScreen</ID>
     <ID>ComposableParamOrder:ArtistDetailsScreen.kt$ArtistDetailsScreen</ID>
     <ID>ComposableParamOrder:ArtistScaffold.kt$ArtistScaffold</ID>
     <ID>ComposableParamOrder:ArtistStatsScreen.kt$ArtistStatsScreen</ID>
@@ -23,19 +21,15 @@
     <ID>ComposableParamOrder:LabelDetailsScreen.kt$LabelDetailsScreen</ID>
     <ID>ComposableParamOrder:LabelScaffold.kt$LabelScaffold</ID>
     <ID>ComposableParamOrder:LabelStatsScreen.kt$LabelStatsScreen</ID>
-    <ID>ComposableParamOrder:PagingLoadingAndErrorHandler.kt$PagingLoadingAndErrorHandler</ID>
     <ID>ComposableParamOrder:PlaceDetailsScreen.kt$PlaceDetailsScreen</ID>
     <ID>ComposableParamOrder:PlaceStatsScreen.kt$PlaceStatsScreen</ID>
-    <ID>ComposableParamOrder:PlacesByAreaScreen.kt$PlacesByAreaScreen</ID>
     <ID>ComposableParamOrder:RecordingDetailsScreen.kt$RecordingDetailsScreen</ID>
     <ID>ComposableParamOrder:RecordingStatsScreen.kt$RecordingStatsScreen</ID>
     <ID>ComposableParamOrder:RecordingsByWorkScreen.kt$RecordingsByWorkScreen</ID>
     <ID>ComposableParamOrder:RecordingsListScreen.kt$RecordingsListScreen</ID>
-    <ID>ComposableParamOrder:RelationsScreen.kt$RelationsScreen</ID>
     <ID>ComposableParamOrder:ReleaseGroupStatsScreen.kt$ReleaseGroupStatsScreen</ID>
     <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByAreaScreen.kt$ReleasesByAreaScreen</ID>
     <ID>ComposableParamOrder:ReleasesByArtistScreen.kt$ReleasesByArtistScreen</ID>
     <ID>ComposableParamOrder:ReleasesByLabelScreen.kt$ReleasesByLabelScreen</ID>
     <ID>ComposableParamOrder:ReleasesByRecordingScreen.kt$ReleasesByRecordingScreen</ID>
@@ -48,7 +42,6 @@
     <ID>ComposableParamOrder:SeriesScaffold.kt$SeriesScaffold</ID>
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
     <ID>ComposableParamOrder:SettingsScaffold.kt$SettingsScreen</ID>
-    <ID>ComposableParamOrder:StatsScreen.kt$StatsScreen</ID>
     <ID>ComposableParamOrder:ThreeSectionListItem.kt$ThreeSectionListItem</ID>
     <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilter</ID>
     <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilterInternal</ID>
@@ -105,7 +98,6 @@
     <ID>ForbiddenComment:SeriesDetailsScreen.kt$// TODO: not enough info to warrant its own tab?</ID>
     <ID>ForbiddenComment:SettingSwitch.kt$// TODO: unchecked color is hard to see</ID>
     <ID>ForbiddenComment:SettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
-    <ID>ForbiddenComment:StatsScreen.kt$// // TODO: a more appropriate default?</ID>
     <ID>ForbiddenComment:TextWithHeading.kt$// TODO: selecting this starting from heading will behave strangely for text with multiple lines</ID>
     <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: Filters</ID>
     <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: expand out from the icon</ID>
@@ -120,16 +112,10 @@
     <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$6</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$7</ID>
-    <ID>MagicNumber:Color.kt$0xFFB388FF</ID>
-    <ID>MagicNumber:Color.kt$0xFFD84315</ID>
-    <ID>MagicNumber:Color.kt$0xFFFF5722</ID>
-    <ID>MagicNumber:Color.kt$0xFFFFAB91</ID>
     <ID>MagicNumber:DotsFlashing.kt$0.2f</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MagicNumber:SmallCoverArt.kt$64</ID>
-    <ID>MagicNumber:StatsScreen.kt$17</ID>
-    <ID>MagicNumber:StatsScreen.kt$397</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
     <ID>MatchingDeclarationName:AreaScaffold.kt$AreaTab</ID>
     <ID>MatchingDeclarationName:ArtistScaffold.kt$ArtistTab</ID>

@@ -17,9 +17,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 @Composable
 internal fun StatsScreen(
-    modifier: Modifier = Modifier,
     tabs: List<Tab>,
-    stats: Stats
+    stats: Stats,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->
@@ -77,37 +77,6 @@ internal fun StatsScreen(
     }
 }
 
-//private data class StatsStringRes(
-//    val headerRes: Int,
-//    val cachedLocalOfRemoteRes: Int
-//)
-//
-//private fun Tab.getStringRes(): StatsStringRes {
-//    return when (this) {
-//        Tab.EVENTS -> StatsStringRes(
-//            headerRes = R.string.events,
-//            cachedLocalOfRemoteRes = R.string.cached_events
-//        )
-//        Tab.PLACES -> StatsStringRes(
-//            headerRes = R.string.places,
-//            cachedLocalOfRemoteRes = R.string.cached_places
-//        )
-//        Tab.RECORDINGS -> StatsStringRes(
-//            headerRes = R.string.recordings,
-//            cachedLocalOfRemoteRes = R.string.cached_recordings
-//        )
-//        Tab.RELEASES -> StatsStringRes(
-//            headerRes = R.string.releases,
-//            cachedLocalOfRemoteRes = R.string.cached_releases
-//        )
-//        // TODO: a more appropriate default?
-//        else -> StatsStringRes(
-//            headerRes = R.string.releases,
-//            cachedLocalOfRemoteRes = R.string.cached_releases
-//        )
-//    }
-//}
-
 // region Previews
 @DefaultPreviews
 @Composable
@@ -129,8 +98,8 @@ private fun Preview() {
                     ),
                     totalRelations = 696,
                     relationTypeCounts = listOf(
-                        RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, 17),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, 397),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, count = 17),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, count = 397),
                     ),
                     totalRemoteReleases = 20,
                     totalLocalReleases = 15

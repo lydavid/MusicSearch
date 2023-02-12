@@ -19,13 +19,13 @@ import ly.david.mbjc.ui.place.PlaceListItem
 @Composable
 internal fun PlacesByAreaScreen(
     areaId: String,
+    filterText: String,
+    placesLazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     placesLazyListState: LazyListState = rememberLazyListState(),
-    placesLazyPagingItems: LazyPagingItems<PlaceListItemModel>,
-    onPlaceClick: (destination: Destination, String, String) -> Unit,
-    onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit,
-    filterText: String,
+    onPlaceClick: (destination: Destination, String, String) -> Unit = { _, _, _ -> },
+    onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit = {},
     viewModel: PlacesByAreaViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {
@@ -35,9 +35,9 @@ internal fun PlacesByAreaScreen(
     viewModel.updateQuery(filterText)
 
     PagingLoadingAndErrorHandler(
+        lazyPagingItems = placesLazyPagingItems,
         modifier = modifier,
         lazyListState = placesLazyListState,
-        lazyPagingItems = placesLazyPagingItems,
         snackbarHostState = snackbarHostState
     ) { placeListItemModel: PlaceListItemModel? ->
         when (placeListItemModel) {

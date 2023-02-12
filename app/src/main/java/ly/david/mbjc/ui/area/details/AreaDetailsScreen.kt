@@ -19,8 +19,8 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 
 @Composable
 internal fun AreaDetailsScreen(
-    modifier: Modifier = Modifier,
     area: AreaScaffoldModel,
+    modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(

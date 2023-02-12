@@ -45,10 +45,10 @@ import ly.david.mbjc.ui.common.fullscreen.FullScreenText
  */
 @Composable
 internal fun <T : Any> PagingLoadingAndErrorHandler(
-    modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<T>,
-    somethingElseLoading: Boolean = false,
+    modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
+    somethingElseLoading: Boolean = false,
     snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit

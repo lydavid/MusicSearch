@@ -6,11 +6,15 @@ complexity:
   LongMethod:
     ignoreAnnotated:
       - "Composable"
+  TooManyFunctions:
+    active: false
 naming:
   FunctionNaming:
     ignoreAnnotated:
       - "Composable"
 style:
+  MagicNumber:
+    ignorePropertyDeclaration: true
   UnusedPrivateMember:
     ignoreAnnotated:
       - "DefaultPreviews"
