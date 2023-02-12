@@ -1,6 +1,7 @@
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     id("com.android.application") version "7.4.1" apply false
@@ -16,6 +17,14 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+
+    plugins.withType<JavaBasePlugin>().configureEach {
+        extensions.configure<JavaPluginExtension> {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(11))
+            }
+        }
     }
 
     plugins.withType<BasePlugin>().configureEach {
@@ -37,7 +46,7 @@ allprojects {
     }
 
     // ./gradlew assembleRelease -Pmbjc.enableComposeCompilerReports=true --rerun-tasks
-    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+    tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")
 
@@ -77,5 +86,4 @@ allprojects {
             txt.required.set(true)
         }
     }
-
 }
