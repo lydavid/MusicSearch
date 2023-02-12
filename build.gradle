@@ -53,15 +53,27 @@ allprojects {
     detekt {
         buildUponDefaultConfig = true
         allRules = false
-        config = files("${project.rootDir}/config/detekt.yml") // Use a single config file
-        baseline = file("${projectDir}/config/baseline.xml") // Each module has its own baseline otherwise they overwrite each other
         parallel = true
+
+        // Use a single config file
+        config = files("${project.rootDir}/config/detekt.yml")
+
+        // Each module has its own baseline otherwise they overwrite each other
+        baseline = file("${projectDir}/config/baseline.xml")
     }
     tasks.withType(Detekt).configureEach {
         reports {
-            html.required.set(true) // observe findings in your browser with structure and code snippets
-            txt.required.set(true) // similar to the console output, contains issue signature to manually edit baseline files
+            // observe findings in your browser with structure and code snippets
+            html.required.set(true)
+
+            // similar to the console output, contains issue signature to manually edit baseline files
+            txt.required.set(true)
         }
+    }
+
+    // TODO: only need to apply this to any ui modules
+    dependencies {
+        detektPlugins "com.twitter.compose.rules:detekt:0.0.26"
     }
 }
 

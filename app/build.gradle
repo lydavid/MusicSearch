@@ -167,6 +167,4 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-
-    detektPlugins "com.twitter.compose.rules:detekt:0.0.26"
 }
