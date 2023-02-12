@@ -18,10 +18,12 @@ plugins {
     id "com.android.application" version '7.4.1' apply false
     id "com.android.library" version '7.4.1' apply false
     id "org.jetbrains.kotlin.android" version "1.8.0" apply false
-    id "io.gitlab.arturbosch.detekt" version "1.22.0" apply true
+    id "io.gitlab.arturbosch.detekt" version "1.22.0" apply false
 }
 
 allprojects {
+    apply plugin: "io.gitlab.arturbosch.detekt"
+
     repositories {
         google()
         mavenCentral()
@@ -30,6 +32,7 @@ allprojects {
     // ./gradlew assembleRelease -Pmbjc.enableComposeCompilerReports=true --rerun-tasks
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8
             freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
 
             if (project.findProperty("mbjc.enableComposeCompilerReports") == "true") {
@@ -46,11 +49,13 @@ allprojects {
             }
         }
     }
+
     detekt {
         buildUponDefaultConfig = true
         allRules = false
-        config = files("$projectDir/config/detekt.yml")
-        baseline = file("$projectDir/config/baseline.xml")
+        config = files("${project.rootDir}/config/detekt.yml") // Use a single config file
+        baseline = file("${projectDir}/config/baseline.xml") // Each module has its own baseline otherwise they overwrite each other
+        parallel = true
     }
     tasks.withType(Detekt).configureEach {
         reports {
@@ -59,7 +64,6 @@ allprojects {
         }
     }
 }
-
 
 task clean(type: Delete) {
     delete rootProject.buildDir

@@ -3,12 +3,6 @@ plugins {
     id "io.gitlab.arturbosch.detekt"
 }
 
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-}
-
 dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 }
