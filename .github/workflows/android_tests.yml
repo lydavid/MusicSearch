@@ -36,8 +36,6 @@ jobs:
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}
 
-      - run: ~/.android/avd/test.avd/config.ini
-
       # https://github.com/ReactiveCircus/android-emulator-runner
       - name: Create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
