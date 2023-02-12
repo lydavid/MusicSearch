@@ -9,7 +9,8 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.fakeArtistCredit
 import ly.david.data.network.fakeArtistCredit2
@@ -25,6 +26,7 @@ import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
@@ -44,28 +46,25 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setRelease(fakeRelease)
-        runBlocking { composeTestRule.awaitIdle() }
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            releaseRepository.lookupRelease(fakeRelease.id)
-            setRelease(fakeRelease)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        releaseRepository.lookupRelease(fakeRelease.id)
+        setRelease(fakeRelease)
+        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        composeTestRule
-            .onNodeWithText(fakeRelease.name)
-            .assertIsDisplayed()
+
+        waitForThenAssertIsDisplayed(fakeRelease.name)
         composeTestRule
             .onNodeWithText(fakeLabelInfo.label!!.name)
             .assertIsDisplayed()
@@ -86,12 +85,8 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
         composeTestRule
             .onNodeWithText(tracks)
             .performClick()
-        composeTestRule
-            .onNodeWithText(fakeRelease.media!!.first().tracks!!.first().title)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeRelease.media!!.first().tracks!!.last().title)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeRelease.media!!.first().tracks!!.first().title)
+        waitForThenAssertIsDisplayed(fakeRelease.media!!.first().tracks!!.last().title)
         // TODO: attempted to test filtering but apparently our listitem nodes gets duplicated afterwards...
 
         // Confirm that up navigation items exists
@@ -110,21 +105,15 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     }
 
     @Test
-    fun releaseHasRelations() {
+    fun hasRelations() = runTest {
         setRelease(fakeReleaseWithRelation)
-        runBlocking { composeTestRule.awaitIdle() }
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(fakeReleaseWithRelation.relations?.first()?.release?.name ?: "")
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeReleaseWithRelation.relations?.first()?.release?.name!!)
     }
 
     @Test
-    fun showRetryButtonOnError() {
+    fun showRetryButtonOnError() = runTest {
         composeTestRule.activity.setContent {
             PreviewTheme {
                 ReleaseScaffold(
@@ -133,19 +122,13 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
             }
         }
 
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(tracks)
             .performClick()
 
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
     }
 
     // TODO: These only works when we use real ImageLoader...

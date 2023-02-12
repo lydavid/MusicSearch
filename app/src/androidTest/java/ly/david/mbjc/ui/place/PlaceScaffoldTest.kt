@@ -4,11 +4,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
 
@@ -41,35 +42,24 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setPlace(fakePlaceWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
 
         assertFieldsDisplayed()
     }
 
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            placeRepository.lookupPlace(fakePlaceWithAllData.id)
-            setPlace(fakePlaceWithAllData)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        placeRepository.lookupPlace(fakePlaceWithAllData.id)
+        setPlace(fakePlaceWithAllData)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.getNameWithDisambiguation())
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.getNameWithDisambiguation())
 
-        composeTestRule
-            .onNodeWithText(details)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.area!!.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.area!!.name)
         composeTestRule
             .onNodeWithText(fakePlaceWithAllData.address)
             .assertIsDisplayed()
@@ -88,16 +78,10 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun hasRelations() {
+    fun hasRelations() = runTest {
         setPlace(fakePlaceWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.relations?.first()?.event?.name ?: "")
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
     }
 }

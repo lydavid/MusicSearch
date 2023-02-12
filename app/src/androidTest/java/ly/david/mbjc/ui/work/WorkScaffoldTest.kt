@@ -3,10 +3,10 @@ package ly.david.mbjc.ui.work
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.fakeWorkWithAllData
@@ -17,6 +17,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
 
@@ -37,39 +38,25 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun firstVisit_noLocalData() {
+    fun firstVisit_noLocalData() = runTest {
         setWork(fakeWorkWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
 
         assertFieldsDisplayed()
     }
 
     // TODO: flake
     @Test
-    fun repeatVisit_localData() {
-        runBlocking {
-            repository.lookupWork(fakeWorkWithAllData.id)
-            setWork(fakeWorkWithAllData)
-            composeTestRule.awaitIdle()
-        }
+    fun repeatVisit_localData() = runTest {
+        repository.lookupWork(fakeWorkWithAllData.id)
+        setWork(fakeWorkWithAllData)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        composeTestRule
-            .onNodeWithText(stats)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.getNameWithDisambiguation())
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeWorkWithAllData.getNameWithDisambiguation())
+        waitForThenAssertIsDisplayed(fakeWorkWithAllData.type!!)
 
-        composeTestRule
-            .onNodeWithText(details)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.type!!)
-            .assertIsDisplayed()
         // TODO: Doesn't work cause it contains : but we shouldn't be testing for exact string here
 //        composeTestRule
 //            .onNodeWithText(fakeWork.attributes!!.first().type)
@@ -79,17 +66,12 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
+    // TODO: why does this take so long on CI? ~20s
     @Test
-    fun hasRelations() {
+    fun hasRelations() = runTest {
         setWork(fakeWorkWithAllData)
-        runBlocking { composeTestRule.awaitIdle() }
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.relations?.first()?.work?.name!!)
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeWorkWithAllData.relations?.first()?.work?.name!!)
     }
 }

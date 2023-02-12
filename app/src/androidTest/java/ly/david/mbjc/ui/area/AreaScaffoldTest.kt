@@ -2,11 +2,14 @@ package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.fakeArea
 import ly.david.data.network.fakeAreaWithRelation
@@ -27,6 +30,7 @@ import org.junit.Test
  * However, try to refrain from testing the details of constituent composables such as its cards.
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
@@ -46,75 +50,51 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     // region General
     @Test
-    fun firstTimeVisit() {
+    fun firstTimeVisit() = runTest {
         setArea(fakeArea)
 
         assertFieldsDisplayed()
     }
 
     @Test
-    fun repeatVisit() {
+    fun repeatVisit() = runTest {
         setArea(fakeArea)
-        runBlocking {
-            areaDao.insert(fakeArea.toAreaRoomModel())
-            composeTestRule.awaitIdle()
-        }
+        areaDao.insert(fakeArea.toAreaRoomModel())
 
         assertFieldsDisplayed()
     }
 
     // TODO: flake
     private fun assertFieldsDisplayed() {
-        composeTestRule
-            .onNodeWithText(fakeArea.name)
-            .assertIsDisplayed()
-
-        // TODO: can't differentiate between local/network
-        //  also maybe it's better to test this composables independently
-        composeTestRule
-            .onNodeWithText(places)
-            .performClick()
-        composeTestRule
-            .onNodeWithText(fakePlace.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeArea.name)
+        waitForThenPerformClickOn(places)
+        waitForThenAssertIsDisplayed(fakePlace.name)
     }
 
     @Test
-    fun areaHasRelations() {
+    fun hasRelations() = runTest {
         setArea(fakeAreaWithRelation)
 
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        // Relations are loaded
-        composeTestRule
-            .onNodeWithText(fakeAreaWithRelation.relations?.first()?.area?.name ?: "")
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeAreaWithRelation.relations?.first()?.area?.name!!)
     }
 
-    // TODO: stats screen failing test:
-    //  java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken or in a snapshot that has not yet been applied
-//    @Test
-//    fun nonCountryStatsExcludesReleases() {
-//        setArea(fakeArea)
-//
-//        runBlocking { composeTestRule.awaitIdle() }
-//
-//        composeTestRule
-//            .onNodeWithText(stats)
-//            .performClick()
-//
-//        // Need to differentiate between Releases tab and header inside stats
-//        composeTestRule
-//            .onNode(hasText(releases).and(hasNoClickAction()))
-//            .assertDoesNotExist()
-//    }
+    @Test
+    fun nonCountryStatsExcludesReleases() = runTest {
+        setArea(fakeArea)
+
+        waitForThenPerformClickOn(stats)
+
+        composeTestRule.awaitIdle()
+
+        // Need to differentiate between Releases tab and header inside stats
+        composeTestRule
+            .onNode(hasText(releases).and(hasNoClickAction()))
+            .assertDoesNotExist()
+    }
 
     @Test
-    fun showRetryButtonOnError() {
+    fun showRetryButtonOnError() = runTest {
         composeTestRule.activity.setContent {
             PreviewTheme {
                 AreaScaffold(
@@ -123,11 +103,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             }
         }
 
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(relationships)
@@ -153,19 +129,11 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     // region Country
     @Test
-    fun countryHasReleasesTab() {
+    fun countryHasReleasesTab() = runTest {
         setArea(fakeCountry)
 
-        runBlocking { composeTestRule.awaitIdle() }
-
-        composeTestRule
-            .onNodeWithText(releases)
-            .performClick()
-
-        // Releases are loaded
-        composeTestRule
-            .onNodeWithText(fakeRelease.name)
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(releases)
+        waitForThenAssertIsDisplayed(fakeRelease.name)
     }
 
 //    @Test

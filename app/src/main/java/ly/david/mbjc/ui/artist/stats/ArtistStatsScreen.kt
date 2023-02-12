@@ -1,13 +1,17 @@
 package ly.david.mbjc.ui.artist.stats
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import ly.david.data.persistence.relation.RelationTypeCount
+import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
 import ly.david.mbjc.ui.common.Tab
+import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen
 
 @Composable
@@ -17,12 +21,35 @@ internal fun ArtistStatsScreen(
     tabs: List<Tab>,
     viewModel: ArtistStatsViewModel = hiltViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val stats by remember { viewModel.getStats(artistId, coroutineScope) }.collectAsState()
+    var totalRemoteReleaseGroups: Int? by remember { mutableStateOf(null) }
+    var totalLocalReleaseGroups by remember { mutableStateOf(0) }
+    var releaseGroupTypeCounts by remember { mutableStateOf(listOf<ReleaseGroupTypeCount>()) }
+    var totalRemoteReleases: Int? by remember { mutableStateOf(0) }
+    var totalLocalReleases by remember { mutableStateOf(0) }
+    var totalRelations: Int? by remember { mutableStateOf(null) }
+    var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
+
+    LaunchedEffect(Unit) {
+        totalRemoteReleaseGroups = viewModel.getTotalRemoteReleaseGroups(artistId)
+        totalLocalReleaseGroups = viewModel.getTotalLocalReleaseGroups(artistId)
+        releaseGroupTypeCounts = viewModel.getCountOfEachAlbumType(artistId)
+        totalRemoteReleases = viewModel.getTotalRemoteReleases(artistId)
+        totalLocalReleases = viewModel.getTotalLocalReleases(artistId)
+        totalRelations = viewModel.getNumberOfRelationsByResource(artistId)
+        relationTypeCounts = viewModel.getCountOfEachRelationshipType(artistId)
+    }
 
     StatsScreen(
         modifier = modifier,
         tabs = tabs,
-        stats = stats
+        stats = Stats(
+            totalRemoteReleaseGroups = totalRemoteReleaseGroups,
+            totalLocalReleaseGroups = totalLocalReleaseGroups,
+            releaseGroupTypeCounts = releaseGroupTypeCounts,
+            totalRemoteReleases = totalRemoteReleases,
+            totalLocalReleases = totalLocalReleases,
+            totalRelations = totalRelations,
+            relationTypeCounts = relationTypeCounts
+        )
     )
 }

@@ -17,7 +17,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.mbjc.MainActivityTest
@@ -31,6 +32,7 @@ import org.junit.runner.RunWith
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachResourceTest].
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {
@@ -75,8 +77,8 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
 //    }
 
     @Test
-    fun searchWithEmptyText_thenOkay() {
-        runBlocking { composeTestRule.awaitIdle() }
+    fun searchWithEmptyText_thenOkay() = runTest {
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(searchLabel)
@@ -97,8 +99,8 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
     }
 
     @Test
-    fun enterSearchText_thenClear() {
-        runBlocking { composeTestRule.awaitIdle() }
+    fun enterSearchText_thenClear() = runTest {
+        composeTestRule.awaitIdle()
 
         composeTestRule
             .onNodeWithText(searchLabel)
@@ -122,8 +124,8 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
     // TODO: flaked
     //  No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
     @Test
-    fun deeplinkToSearchWithQueryAndResource() {
-        runBlocking { composeTestRule.awaitIdle() }
+    fun deeplinkToSearchWithQueryAndResource() = runTest {
+        composeTestRule.awaitIdle()
 
         composeTestRule.activityRule.scenario.onActivity {
             val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -134,8 +136,6 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             it.startActivity(intent)
         }
 
-        composeTestRule
-            .onNodeWithText(fakeReleaseGroup.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
     }
 }

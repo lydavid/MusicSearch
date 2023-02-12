@@ -2,12 +2,14 @@ package ly.david.mbjc
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
@@ -19,6 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class LookupEachResourceErrorTest(
@@ -50,13 +53,17 @@ internal class LookupEachResourceErrorTest(
     }
 
     @Test
-    fun lookupEachResourceError() {
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                composeTestRule.awaitIdle()
-                val resourceId = "error"
-                navController.goToResource(destination = resource.toDestination(), id = resourceId)
-            }
+    fun lookupEachResourceError() = runTest {
+        withContext(Dispatchers.Main) {
+            composeTestRule.awaitIdle()
+            val resourceId = "error"
+            navController.goToResource(destination = resource.toDestination(), id = resourceId)
+        }
+
+        composeTestRule.waitUntil(10_000L) {
+            composeTestRule
+                .onAllNodesWithText(retry)
+                .fetchSemanticsNodes().size == 1
         }
 
         composeTestRule
