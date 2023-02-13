@@ -1,15 +1,16 @@
-name: Data Unit Tests
+name: Checks (data:coverart)
 
 on:
   push:
     paths:
       - ".github/actions/**"
-      - ".github/workflows/data_unit_tests.yml"
-      - "data/src/**"
-      - "data/build.gradle"
+      - ".github/workflows/data_coverart_checks.yml"
+      - "data/coverart/src/**"
+      - "data/coverart/build.gradle"
+      - "*.gradle.kts"
 
 jobs:
-  data-unit-test:
+  checks:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +20,10 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
+      - name: Detekt
+        run: ./gradlew data:coverart:detekt
+
       - name: Run data unit tests
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: data:test
+          arguments: data:coverart:test

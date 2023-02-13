@@ -1,15 +1,16 @@
-name: Android Data Unit Tests
+name: Checks (data-android)
 
 on:
   push:
     paths:
       - ".github/actions/**"
-      - ".github/workflows/data_android_unit_tests.yml"
+      - ".github/workflows/data-android_checks.yml"
       - "data-android/src/**"
       - "data-android/build.gradle"
+      - "*.gradle.kts"
 
 jobs:
-  data-android-unit-test:
+  checks:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -18,6 +19,9 @@ jobs:
 
       - id: setup
         uses: ./.github/actions/setup
+
+      - name: Detekt
+        run: ./gradlew data-android:detekt
 
       # TODO: This is reporting 0% coverage, probably because it doesn't test any of its own code
       - name: Run data-android unit tests with coverage

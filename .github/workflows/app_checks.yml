@@ -1,4 +1,4 @@
-name: App Unit Tests
+name: Checks (app)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - ".circleci/config.yml"
 
 jobs:
-  app-unit-test:
+  checks:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
@@ -16,6 +16,9 @@ jobs:
 
       - id: setup
         uses: ./.github/actions/setup
+
+      - name: Detekt
+        run: ./gradlew app:detekt
 
       - name: Run app unit tests with coverage
         run: ./gradlew app:createDebugUnitTestCoverageReport
