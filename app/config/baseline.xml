@@ -90,7 +90,6 @@
     <ID>ForbiddenComment:ReleaseScaffold.kt$// TODO: test refreshing this screen</ID>
     <ID>ForbiddenComment:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$// TODO: ideal for selecting labels. though where would those labels be shown?</ID>
     <ID>ForbiddenComment:ReleasesListScreen.kt$// TODO: Previewing compose paging currently not supported: https://issuetracker.google.com/issues/194544557#comment18</ID>
-    <ID>ForbiddenComment:ReleasesListScreen.kt$// TODO: timber these</ID>
     <ID>ForbiddenComment:ScrollableTopAppBar.kt$// TODO: Can we split these concerns somehow?</ID>
     <ID>ForbiddenComment:ScrollableTopAppBar.kt$// TODO: can we generalize adding a dropdown menu to a clickable composable?</ID>
     <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: Seems like this is currently broken</ID>
@@ -151,7 +150,6 @@
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox( expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier ) { TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() ) // Focusing on this "consumes" a back press, and is independent of onDismissRequest. ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } } }</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() )</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
-    <ID>SwallowedException:AreaScaffoldViewModel.kt$AreaScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
@@ -164,7 +162,6 @@
     <ID>SwallowedException:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:AreaScaffoldViewModel.kt$AreaScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>

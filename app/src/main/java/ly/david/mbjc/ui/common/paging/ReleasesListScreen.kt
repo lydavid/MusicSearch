@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.common.paging
 
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -11,12 +10,13 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.mbjc.ui.release.ReleaseListItem
+import timber.log.Timber
 
 @HiltViewModel
 internal class ReleasesListViewModel @Inject constructor(
@@ -49,9 +49,7 @@ internal fun ReleasesListScreen(
                         try {
                             viewModel.getReleaseCoverArtPathFromNetwork(releaseId = releaseListItemModel.id)
                         } catch (ex: Exception) {
-                            // TODO: timber these
-                            Log.d("Remove This", "ReleasesListScreen: $ex")
-                            // Do nothing.
+                            Timber.e(ex)
                         }
                     }
                 ) {

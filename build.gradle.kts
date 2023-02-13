@@ -1,3 +1,4 @@
+
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
@@ -9,6 +10,8 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.0" apply false
     id("com.google.dagger.hilt.android") version "2.45" apply false
     id("io.gitlab.arturbosch.detekt") version "1.22.0" apply true
+    id("com.google.gms.google-services") version "4.3.15" apply false
+    id("com.google.firebase.crashlytics") version "2.9.2" apply false
 }
 
 allprojects {
