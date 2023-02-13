@@ -1,5 +1,6 @@
 package ly.david.data.network.api
 
+import java.io.IOException
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
@@ -150,51 +151,51 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
 
     // region Lookup
     override suspend fun lookupArea(areaId: String, include: String?): AreaMusicBrainzModel {
-        return fakeAreas.firstOrNull { it.id == areaId } ?: throw Exception()
+        return fakeAreas.firstOrNull { it.id == areaId } ?: throw IOException()
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
-        return fakeArtists.firstOrNull { it.id == artistId } ?: throw Exception()
+        return fakeArtists.firstOrNull { it.id == artistId } ?: throw IOException()
     }
 
     override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
-        return fakeEvents.firstOrNull { it.id == eventId } ?: throw Exception()
+        return fakeEvents.firstOrNull { it.id == eventId } ?: throw IOException()
     }
 
     override suspend fun lookupGenre(genreId: String, include: String?): GenreMusicBrainzModel {
-        return fakeGenres.firstOrNull { it.id == genreId } ?: throw Exception()
+        return fakeGenres.firstOrNull { it.id == genreId } ?: throw IOException()
     }
 
     override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
-        return fakeInstruments.firstOrNull { it.id == instrumentId } ?: throw Exception()
+        return fakeInstruments.firstOrNull { it.id == instrumentId } ?: throw IOException()
     }
 
     override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
-        return fakeLabels.firstOrNull { it.id == labelId } ?: throw Exception()
+        return fakeLabels.firstOrNull { it.id == labelId } ?: throw IOException()
     }
 
     override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
-        return fakePlaces.firstOrNull { it.id == placeId } ?: throw Exception()
+        return fakePlaces.firstOrNull { it.id == placeId } ?: throw IOException()
     }
 
     override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
-        return fakeRecordings.firstOrNull { it.id == recordingId } ?: throw Exception()
+        return fakeRecordings.firstOrNull { it.id == recordingId } ?: throw IOException()
     }
 
     override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
-        return fakeReleases.firstOrNull { it.id == releaseId } ?: throw Exception()
+        return fakeReleases.firstOrNull { it.id == releaseId } ?: throw IOException()
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
-        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId } ?: throw Exception()
+        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId } ?: throw IOException()
     }
 
     override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
-        return fakeSeriesList.firstOrNull { it.id == seriesId } ?: throw Exception()
+        return fakeSeriesList.firstOrNull { it.id == seriesId } ?: throw IOException()
     }
 
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
-        return fakeWorks.firstOrNull { it.id == workId } ?: throw Exception()
+        return fakeWorks.firstOrNull { it.id == workId } ?: throw IOException()
     }
     // endregion
 }

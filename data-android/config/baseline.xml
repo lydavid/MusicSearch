@@ -6,34 +6,8 @@
     <ID>ForbiddenComment:NetworkModule.kt$NetworkModule$// TODO: how come we were able to use named parameters before?</ID>
     <ID>ForbiddenComment:NetworkModule.kt$NetworkModule$// TODO: make sure when doing swipe to refresh, we actually fetch from network not this cache</ID>
     <ID>LongMethod:ArtistReleaseGroupDaoTest.kt$ArtistReleaseGroupDaoTest$@Test fun `delete release groups by artist`()</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$10</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$11</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$29</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$30</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$32</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$33</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$34</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$35</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$36</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$37</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$40</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$41</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$43</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$44</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$79</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$80</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$86</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$87</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$88</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$89</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$90</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$91</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$92</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$93</ID>
-    <ID>MagicNumber:Migrations.kt$Migrations.&lt;no name provided&gt;$94</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$1024L</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$50L</ID>
-    <ID>TooManyFunctions:DatabaseDaoModule.kt$DatabaseDaoModule</ID>
     <ID>UnnecessaryAbstractClass:HiltTest.kt$HiltTest$HiltTest</ID>
     <ID>UnnecessaryAbstractClass:MusicBrainzRoomDatabase.kt$MusicBrainzRoomDatabase$MusicBrainzRoomDatabase</ID>
   </CurrentIssues>

@@ -187,9 +187,5 @@
     <ID>SwallowedException:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
-    <ID>TooManyFunctions:LookupApi.kt$LookupApi</ID>
-    <ID>TooManyFunctions:MusicBrainzDatabase.kt$MusicBrainzDatabase</ID>
-    <ID>TooManyFunctions:RelationDao.kt$RelationDao : BaseDao</ID>
-    <ID>TooManyFunctions:SearchApi.kt$SearchApi</ID>
   </CurrentIssues>
 </SmellBaseline>

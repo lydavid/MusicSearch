@@ -1,9 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:FakeMusicBrainzApiService.kt$FakeMusicBrainzApiService$Exception()</ID>
-    <ID>TooGenericExceptionThrown:FakeMusicBrainzApiService.kt$FakeMusicBrainzApiService$throw Exception()</ID>
-    <ID>TooManyFunctions:FakeMusicBrainzApiService.kt$FakeMusicBrainzApiService : MusicBrainzApiService</ID>
-  </CurrentIssues>
+  <CurrentIssues></CurrentIssues>
 </SmellBaseline>
