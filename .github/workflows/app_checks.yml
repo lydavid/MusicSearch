@@ -7,6 +7,7 @@ on:
       - ".circleci/config.yml"
 
 jobs:
+  # When we change the name of this job, make sure to update GitHub's branch protection to the new name
   checks:
     timeout-minutes: 10
     runs-on: ubuntu-latest
