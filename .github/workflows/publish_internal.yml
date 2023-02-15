@@ -1,0 +1,47 @@
+name: Publish internal build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-internal:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      # After these 3 steps, the workspace contains credentials file.
+      # Take care not to commit it or upload artifacts with it.
+      - name: Write to keystore.properties
+        run: |
+          mkdir -p ignore_folder
+          echo "storePassword=${{ secrets.RELEASE_STORE_PASSWORD }}" >> ignore_folder/keystore.properties
+          echo "keyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> ignore_folder/keystore.properties
+        shell: bash
+
+      - name: Convert base64 to files
+        run: |
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> app/google-services.json
+          echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> ignore_folder/release-keystore.jks
+        shell: bash
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1.0.0
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+
+      - name: Publish build to internal track
+        if: github.ref == "refs/heads/master"
+        uses: r0adkll/upload-google-play@v1.1.1
+        with:
+          serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
+          packageName: io.github.lydavid.musicsearch
+          track: internal
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          mappingFile: app/build/outputs/mapping/release/mapping.txt
