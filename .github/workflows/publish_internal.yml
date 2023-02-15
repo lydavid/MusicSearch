@@ -7,6 +7,8 @@ jobs:
   publish-internal:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,7 +39,6 @@ jobs:
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
       - name: Publish build to internal track
-        if: github.ref == 'refs/heads/master'
         uses: r0adkll/upload-google-play@v1.1.1
         with:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
