@@ -25,6 +25,9 @@ interface AppPreferences {
     val theme: Flow<Theme>
     fun setTheme(theme: Theme)
 
+    val useMaterialYou: Flow<Boolean>
+    fun setUseMaterialYou(use: Boolean)
+
     val showMoreInfoInReleaseListItem: Flow<Boolean>
     fun setShowMoreInfoInReleaseListItem(show: Boolean)
 
@@ -32,6 +35,10 @@ interface AppPreferences {
 
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
+
+private const val USE_MATERIAL_YOU_KEY = "useMaterialYou"
+private val USE_MATERIAL_YOU_PREFERENCE = booleanPreferencesKey(USE_MATERIAL_YOU_KEY)
+
 private const val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY = "showMoreInfoInReleaseListItem"
 private val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE =
     booleanPreferencesKey(SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY)
@@ -53,6 +60,21 @@ class AppPreferencesImpl @Inject constructor(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[THEME_PREFERENCE] = theme.name
+            }
+        }
+    }
+
+    override val useMaterialYou: Flow<Boolean>
+        get() = preferencesDataStore.data
+            .map {
+                it[USE_MATERIAL_YOU_PREFERENCE] ?: true
+            }
+            .distinctUntilChanged()
+
+    override fun setUseMaterialYou(use: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[USE_MATERIAL_YOU_PREFERENCE] = use
             }
         }
     }

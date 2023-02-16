@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 
 @Composable
-fun AppPreferences.shouldUseDarkColors(): Boolean {
+fun AppPreferences.useDarkTheme(): Boolean {
     val themePreference = theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
     return when (themePreference.value) {
         AppPreferences.Theme.LIGHT -> false

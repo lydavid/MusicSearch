@@ -37,6 +37,7 @@ fun SettingsScaffold(
     ) { innerPadding ->
 
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
+        val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(
             initial = true
         )
@@ -45,6 +46,8 @@ fun SettingsScaffold(
             modifier = Modifier.padding(innerPadding),
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
+            useMaterialYou = useMaterialYou,
+            onUseMaterialYouChange = { viewModel.appPreferences.setUseMaterialYou(it) },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) }
         )
@@ -56,6 +59,8 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     theme: AppPreferences.Theme,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
+    useMaterialYou: Boolean,
+    onUseMaterialYouChange: (Boolean) -> Unit = {},
     showMoreInfoInReleaseListItem: Boolean,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {}
 ) {
@@ -67,6 +72,12 @@ fun SettingsScreen(
             choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
             selectedChoiceIndex = theme.ordinal,
             onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
+        )
+
+        SettingSwitch(
+            header = "Use Material You",
+            checked = useMaterialYou,
+            onCheckedChange = onUseMaterialYouChange
         )
 
         SettingSwitch(
@@ -99,6 +110,7 @@ private fun Preview() {
         Surface {
             SettingsScreen(
                 theme = AppPreferences.Theme.SYSTEM,
+                useMaterialYou = true,
                 showMoreInfoInReleaseListItem = true
             )
         }

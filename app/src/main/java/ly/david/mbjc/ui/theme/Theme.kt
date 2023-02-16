@@ -39,11 +39,17 @@ private val LightColorScheme = lightColorScheme(
  * Fallback to default color scheme for devices before Android 12.
  */
 @Composable
-internal fun BaseTheme(context: Context, darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+internal fun BaseTheme(
+    context: Context,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    materialYou: Boolean = true,
+    content: @Composable () -> Unit
+) {
     val isAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val useMaterialYou = materialYou && isAndroid12
     val colorSchemes = when {
-        isAndroid12 && darkTheme -> dynamicDarkColorScheme(context)
-        isAndroid12 -> dynamicLightColorScheme(context)
+        useMaterialYou && darkTheme -> dynamicDarkColorScheme(context)
+        useMaterialYou -> dynamicLightColorScheme(context)
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

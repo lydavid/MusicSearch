@@ -23,7 +23,8 @@ import ly.david.data.navigation.getTopLevelRoute
 import ly.david.mbjc.ui.navigation.NavigationDrawer
 import ly.david.mbjc.ui.navigation.NavigationGraph
 import ly.david.mbjc.ui.settings.AppPreferences
-import ly.david.mbjc.ui.settings.shouldUseDarkColors
+import ly.david.mbjc.ui.settings.useDarkTheme
+import ly.david.mbjc.ui.settings.useMaterialYou
 import ly.david.mbjc.ui.theme.BaseTheme
 
 @AndroidEntryPoint
@@ -39,7 +40,8 @@ internal class MainActivity : ComponentActivity() {
 
             BaseTheme(
                 context = this,
-                darkTheme = appPreferences.shouldUseDarkColors()
+                darkTheme = appPreferences.useDarkTheme(),
+                materialYou = appPreferences.useMaterialYou()
             ) {
                 MainApp(navController)
             }
