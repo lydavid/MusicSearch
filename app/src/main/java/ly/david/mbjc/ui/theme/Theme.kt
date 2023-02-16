@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Orange200,
+    primary = PrimaryDark,
 //    primaryVariant = Orange700,
 //    secondary = Purple200,
 //    background = Color.Black,
@@ -21,7 +21,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Orange500,
+    primary = PrimaryLight,
 //    primaryVariant = Orange700,
 //    secondary = Purple200,
 //    background = Color.White,
