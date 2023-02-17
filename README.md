@@ -11,14 +11,20 @@ An Android app for browsing songs, artists, and anything related to them using [
 - Filter: Almost every tab allows you to search its content instantaneously
 - [Cover arts](https://coverartarchive.org/)
 - Dark theme
+- Material You theme
+
 
 ## Screenshots
 
-TODO
+| Search artist     | Release groups by artist | Release details   | Release tracks    | Artist stats      |
+|-------------------|--------------------------|-------------------|-------------------|-------------------|
+| ![](assets/1.png) | ![](assets/2.png)        | ![](assets/3.png) | ![](assets/4.png) | ![](assets/5.png) |
+
 
 ## Upcoming Features
 
 - Automatically detect playing Spotify song metadata, allowing you to deeplink search for the artist, album name, and track name
+
 
 ## Privacy Policy
 
