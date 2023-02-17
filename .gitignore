@@ -24,5 +24,12 @@ local.properties
 # Includes example screenshots, example json responses, and app release keystore
 /ignore_folder
 
+# Ignore app release keystore
+keystore.properties
+release-keystore.jks
+
+# Ignore Firebase key
+app/google-services.json
+
 # Ignore generated credentials from google-github-actions/auth
 gha-creds-*.json

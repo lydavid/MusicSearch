@@ -10,15 +10,15 @@ android {
         release {
 
             // https://developer.android.com/studio/publish/app-signing#secure-shared-keystore
-            def keystorePropertiesExists = rootProject.file("ignore_folder/keystore.properties").exists()
-            def releaseKeystoreExists = rootProject.file("ignore_folder/release-keystore.jks").exists()
+            def keystorePropertiesExists = rootProject.file("keystore.properties").exists()
+            def releaseKeystoreExists = rootProject.file("release-keystore.jks").exists()
 
             if (keystorePropertiesExists && releaseKeystoreExists) {
-                def keystorePropertiesFile = rootProject.file("ignore_folder/keystore.properties")
+                def keystorePropertiesFile = rootProject.file("keystore.properties")
                 def keystoreProperties = new Properties()
                 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-                storeFile rootProject.file("ignore_folder/release-keystore.jks")
+                storeFile rootProject.file("release-keystore.jks")
                 keyAlias "mbjc"
                 storePassword keystoreProperties["storePassword"]
                 keyPassword keystoreProperties["keyPassword"]
