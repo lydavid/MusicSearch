@@ -17,3 +17,6 @@ workflows:
             .*src.*\.kt run_android_test true
             .*\.gradle run_android_test true
             .*\.gradle\.kts run_android_test true
+            gradle/.* run_android_test true
+            gradlew run_android_test true
+            gradlew.bat run_android_test true
