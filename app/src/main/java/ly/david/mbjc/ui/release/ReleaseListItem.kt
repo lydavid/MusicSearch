@@ -1,16 +1,18 @@
 package ly.david.mbjc.ui.release
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -24,7 +26,6 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -35,9 +36,11 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 //  with cover art loaded by default, we can prob hide the other info by default
 // TODO: we'll likely run into 429 when loading many images at once, not much we can do about that right now
 //  see: https://tickets.metabrainz.org/browse/LB-1139 and https://tickets.metabrainz.org/browse/CAA-141
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ReleaseListItem(
     release: ReleaseListItemModel,
+    modifier: Modifier = Modifier,
     showMoreInfo: Boolean = true,
     requestForMissingCoverArtPath: suspend () -> Unit = {},
     onClick: ReleaseListItemModel.() -> Unit = {}
@@ -49,27 +52,16 @@ internal fun ReleaseListItem(
         }
     }
 
-    ClickableListItem(
-        onClick = { onClick(release) },
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            SmallCoverArt(
-                modifier = Modifier.padding(end = 16.dp),
-                placeholderIcon = Icons.Default.Album,
-                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty())
+    ListItem(
+        headlineText = {
+            Text(
+                text = release.name,
+                style = TextStyles.getCardBodyTextStyle()
             )
-
+        },
+        modifier = modifier.clickable { onClick(release) },
+        supportingText = {
             Column {
-                Text(
-                    text = release.name,
-                    style = TextStyles.getCardBodyTextStyle()
-                )
-
                 release.disambiguation.ifNotNullOrEmpty {
                     Text(
                         text = "($it)",
@@ -141,16 +133,18 @@ internal fun ReleaseListItem(
                             style = TextStyles.getCardBodySubTextStyle()
                         )
                     }
-                }
 
-                // TODO: catalog number
-//            Text(
-//                text = release.name,
-//                style = TextStyles.getCardBodyTextStyle(),
-//            )
+                    // TODO: catalog number
+                }
             }
+        },
+        leadingContent = {
+            SmallCoverArt(
+                placeholderIcon = Icons.Default.Album,
+                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty())
+            )
         }
-    }
+    )
 }
 
 // region Previews
@@ -210,7 +204,8 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
                 ReleaseCountry("1", countryId = "2"),
                 ReleaseCountry("1", countryId = "3"),
                 ReleaseCountry("1", countryId = "4"),
-            )
+            ),
+            formattedArtistCredits = "Some artist feat. another"
         ),
     )
 }

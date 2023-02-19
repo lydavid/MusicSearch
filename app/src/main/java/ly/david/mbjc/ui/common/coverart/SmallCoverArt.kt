@@ -19,6 +19,7 @@ import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
 import ly.david.data.coverart.trimCoverArtSuffix
+import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
 
 @Composable
 internal fun SmallCoverArt(
@@ -31,7 +32,7 @@ internal fun SmallCoverArt(
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(coverArtUrl.useHttps())
-                .size(Size(64, 64))
+                .size(Size(SMALL_COVER_ART_SIZE, SMALL_COVER_ART_SIZE))
                 .scale(Scale.FIT)
                 .crossfade(true)
                 .memoryCacheKey(coverArtUrl.trimCoverArtSuffix())
@@ -46,7 +47,7 @@ internal fun SmallCoverArt(
             is AsyncImagePainter.State.Success -> {
                 Image(
                     modifier = modifier
-                        .size(64.dp),
+                        .size(SMALL_COVER_ART_SIZE.dp),
                     painter = painter,
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
@@ -69,8 +70,8 @@ private fun PlaceholderIcon(
 ) {
     Icon(
         modifier = modifier
-            .size(64.dp),
+            .size(SMALL_COVER_ART_SIZE.dp),
         imageVector = placeholderIcon,
-        contentDescription = "No cover art"
+        contentDescription = ""
     )
 }

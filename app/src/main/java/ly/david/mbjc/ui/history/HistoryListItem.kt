@@ -1,17 +1,16 @@
 package ly.david.mbjc.ui.history
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -23,43 +22,32 @@ import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.mbjc.ui.common.getDisplayTextRes
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryRoomModel,
+    modifier: Modifier = Modifier,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
-    ClickableListItem(
-        onClick = {
+    ListItem(
+        headlineText = {
+            Text(
+                text = lookupHistory.title,
+                style = TextStyles.getCardBodyTextStyle(),
+                modifier = Modifier.fillMaxWidth()
+            )
+        },
+        modifier = modifier.clickable {
             onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid, lookupHistory.title)
         },
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            ResourceIcon(
-                resource = lookupHistory.resource,
-                modifier = Modifier
-                    .size(64.dp)
-                    .padding(end = 16.dp)
-            )
-            
+        supportingText = {
             Column {
-                Text(
-                    text = lookupHistory.title,
-                    style = TextStyles.getCardBodyTextStyle(),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
                 val resource = stringResource(id = lookupHistory.resource.getDisplayTextRes())
                 Text(
                     text = resource,
@@ -67,24 +55,25 @@ internal fun HistoryListItem(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Row {
-                    Text(
-                        text = "Last visited: ${lookupHistory.lastAccessed.toDisplayDate()}",
-                        style = TextStyles.getCardBodySubTextStyle(),
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                            .fillMaxWidth(),
-                        text = lookupHistory.numberOfVisits.toString(),
-                        style = TextStyles.getCardBodySubTextStyle(),
-                        textAlign = TextAlign.End
-                    )
-                }
+                Text(
+                    text = "Last visited: ${lookupHistory.lastAccessed.toDisplayDate()}",
+                    style = TextStyles.getCardBodySubTextStyle(),
+                )
             }
+        },
+        leadingContent = {
+            ResourceIcon(
+                resource = lookupHistory.resource,
+                modifier = Modifier.size(SMALL_COVER_ART_SIZE.dp)
+            )
+        },
+        trailingContent = {
+            Text(
+                text = lookupHistory.numberOfVisits.toString(),
+                style = TextStyles.getCardBodySubTextStyle()
+            )
         }
-    }
+    )
 }
 
 private fun Date.toDisplayDate(): String {
