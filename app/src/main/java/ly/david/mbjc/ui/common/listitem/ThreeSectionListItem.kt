@@ -17,6 +17,8 @@ import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 
+// TODO: replaceable with material3 ListItem:
+//  https://developer.android.com/images/reference/androidx/compose/material3/lists.png
 /**
  * Partitions a list item into three parts with [mainContent] in the center.
  *

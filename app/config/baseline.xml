@@ -58,7 +58,6 @@
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: disclaimer when turning on sort if we have not gotten all release groups</ID>
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: generalize switch menu item</ID>
     <ID>ForbiddenComment:BigCoverArt.kt$// TODO: handle error with retry</ID>
-    <ID>ForbiddenComment:DevSettingsSection.kt$// TODO: if it starts true, it will be colored correctly but its position is wrong</ID>
     <ID>ForbiddenComment:EventDetailsScreen.kt$// TODO: set list</ID>
     <ID>ForbiddenComment:ExperimentalSettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
     <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: can we avoid flow { emit { ?</ID>
@@ -95,9 +94,9 @@
     <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: Seems like this is currently broken</ID>
     <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: should see album type rather than year</ID>
     <ID>ForbiddenComment:SeriesDetailsScreen.kt$// TODO: not enough info to warrant its own tab?</ID>
-    <ID>ForbiddenComment:SettingSwitch.kt$// TODO: unchecked color is hard to see</ID>
     <ID>ForbiddenComment:SettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
     <ID>ForbiddenComment:TextWithHeading.kt$// TODO: selecting this starting from heading will behave strangely for text with multiple lines</ID>
+    <ID>ForbiddenComment:ThreeSectionListItem.kt$// TODO: replaceable with material3 ListItem:</ID>
     <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: Filters</ID>
     <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: expand out from the icon</ID>
     <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: only do them when first clicking on search icon</ID>
