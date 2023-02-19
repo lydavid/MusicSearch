@@ -19,13 +19,6 @@ data class ReleaseGroupRoomModel(
     @ColumnInfo(name = "primary_type") override val primaryType: String? = null,
     @ColumnInfo(name = "secondary_types") override val secondaryTypes: List<String>? = null,
 
-    // TODO: remove
-    /**
-     * Whether this release group has a cover art.
-     * - `null`: Don't know.
-     */
-    @ColumnInfo(name = "has_cover_art", defaultValue = "null") val hasCoverArt: Boolean? = null,
-
     /**
      * Release group cover art actually comes from a release.
      * Since multiple releases can belong to a release group, we just store the release id as part of this path.

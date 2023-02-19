@@ -25,7 +25,6 @@ data class ReleaseGroupListItemModel(
     override val secondaryTypes: List<String>? = null,
 
     val formattedArtistCredits: String? = null,
-    val hasCoverArt: Boolean? = null,
     val coverArtPath: String? = null,
 ) : ListItemModel(), ReleaseGroup
 
@@ -49,7 +48,6 @@ fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemMod
         disambiguation = disambiguation,
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
-        hasCoverArt = hasCoverArt,
         coverArtPath = coverArtPath
     )
 }
@@ -63,7 +61,6 @@ fun ReleaseGroupForListItem.toReleaseGroupListItemModel(): ReleaseGroupListItemM
         primaryType = releaseGroup.primaryType,
         secondaryTypes = releaseGroup.secondaryTypes,
         formattedArtistCredits = artistCreditNames,
-        hasCoverArt = releaseGroup.hasCoverArt,
         coverArtPath = releaseGroup.coverArtPath
     )
 }

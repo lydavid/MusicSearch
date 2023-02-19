@@ -36,13 +36,4 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>(), ArtistCreditD
         """
     )
     abstract suspend fun setReleaseGroupCoverArtPath(releaseGroupId: String, coverArtPath: String)
-
-    @Query(
-        """
-            UPDATE release_group
-            SET has_cover_art = :hasCoverArt
-            WHERE id = :releaseGroupId
-        """
-    )
-    abstract suspend fun setReleaseGroupHasCoverArt(releaseGroupId: String, hasCoverArt: Boolean)
 }

@@ -334,4 +334,7 @@ internal object Migrations {
             )
         }
     }
+
+    @DeleteColumn(tableName = "release_group", columnName = "has_cover_art")
+    class DeleteHasCoverArtFromReleaseGroup : AutoMigrationSpec
 }

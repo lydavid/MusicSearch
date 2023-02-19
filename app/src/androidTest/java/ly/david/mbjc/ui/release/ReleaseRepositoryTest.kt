@@ -69,7 +69,6 @@ class ReleaseRepositoryTest {
                     primaryType = null,
                     secondaryTypes = listOf(),
                     formattedArtistCredits = null,
-                    hasCoverArt = null,
                     coverArtPath = null
                 ),
                 areas = listOf(
