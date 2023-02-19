@@ -1,12 +1,12 @@
 package ly.david.mbjc.ui.common
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
@@ -24,7 +25,6 @@ import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MultipleChoiceDialog(
     title: String,
@@ -50,25 +50,32 @@ internal fun MultipleChoiceDialog(
                     style = TextStyles.getCardTitleTextStyle(),
                 )
 
-                choices.forEachIndexed { index, choice ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                onSelectChoiceIndex(index)
-                                onDismiss()
-                            },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(selected = index == selectedChoiceIndex,
-                            onClick = {
-                                onSelectChoiceIndex(index)
-                                onDismiss()
-                            })
-                        Text(
-                            text = choice,
-                            style = TextStyles.getCardBodyTextStyle(),
-                        )
+                Column(modifier = Modifier.selectableGroup()) {
+                    choices.forEachIndexed { index, choice ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .selectable(
+                                    selected = index == selectedChoiceIndex,
+                                    onClick = {
+                                        onSelectChoiceIndex(index)
+                                        onDismiss()
+                                    },
+                                    role = Role.RadioButton
+                                )
+                                .padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = index == selectedChoiceIndex,
+                                onClick = null,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            Text(
+                                text = choice,
+                                style = TextStyles.getCardBodyTextStyle(),
+                            )
+                        }
                     }
                 }
 
