@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Switch
-import androidx.compose.material.SwitchDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,15 +36,9 @@ fun SettingSwitch(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // TODO: unchecked color is hard to see
         Switch(
             checked = checked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                uncheckedThumbColor = MaterialTheme.colorScheme.surface,
-                uncheckedTrackColor = MaterialTheme.colorScheme.onSurface
-            )
+            onCheckedChange = onCheckedChange
         )
     }
 }

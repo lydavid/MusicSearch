@@ -11,21 +11,20 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
 
-            // https://developer.android.com/jetpack/androidx/releases/compose
             version("compose-foundation", "1.3.1")
             version("compose-material", "1.3.1")
             version("compose-material3", "1.0.1")
             version("compose-ui", "1.3.3")
-
             version("hilt", "2.45")
             version("hilt-navigation", "1.0.0")
             version("moshi", "1.14.0")
             version("retrofit", "2.9.0")
             version("room", "2.5.0")
 
+            // https://developer.android.com/jetpack/androidx/releases/compose
             library("compose-foundation", "androidx.compose.foundation", "foundation").versionRef("compose-foundation")
-            library("compose-material", "androidx.compose.material", "material").versionRef("compose-material")
             library("compose-material-icons-extended", "androidx.compose.material", "material-icons-extended").versionRef("compose-material")
+            library("compose-material3", "androidx.compose.material3", "material3").versionRef("compose-material3")
             library("compose-ui", "androidx.compose.ui", "ui").versionRef("compose-ui")
             library("compose-ui-preview", "androidx.compose.ui", "ui-tooling-preview").versionRef("compose-ui")
             library("compose-ui-test", "androidx.compose.ui", "ui-test-junit4").versionRef("compose-ui")
