@@ -7,6 +7,8 @@ import android.content.IntentFilter
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -16,9 +18,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.theme.TextStyles.getCardTitleTextStyle
 
 object BroadcastTypes {
     private const val SPOTIFY_PACKAGE = "com.spotify.music"
@@ -104,48 +108,65 @@ internal fun SpotifyScreen(
     searchMusicBrainz: (query: String, id: MusicBrainzResource) -> Unit = { _, _ -> },
 ) {
 
-    var spotifyMetadata: SpotifyMetadata by remember { mutableStateOf(SpotifyMetadata()) }
+    var metadata: SpotifyMetadata by remember { mutableStateOf(SpotifyMetadata()) }
 
     SpotifyBroadcastReceiver {
-        spotifyMetadata = it
+        metadata = it
     }
 
-    Column {
+    Surface {
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
 
-        spotifyMetadata.trackId.ifNotNullOrEmpty {
-            Text(text = it)
-        }
+            metadata.trackId.ifNotNullOrEmpty {
+                Text(
+                    text = it,
+                    style = getCardTitleTextStyle()
+                )
+            }
 
-        spotifyMetadata.artistName.ifNotNullOrEmpty {
-            Text(
-                modifier = Modifier.clickable {
-                    searchMusicBrainz(it, MusicBrainzResource.ARTIST)
-                },
-                text = it
-            )
-        }
-        spotifyMetadata.albumName.ifNotNullOrEmpty {
-            Text(
-                modifier = Modifier.clickable {
-                    searchMusicBrainz(it, MusicBrainzResource.RELEASE_GROUP)
-                },
-                text = it
-            )
-        }
-        spotifyMetadata.trackName.ifNotNullOrEmpty {
-            Text(
-                modifier = Modifier.clickable {
-                    searchMusicBrainz(it, MusicBrainzResource.RECORDING)
-                },
-                text = it
-            )
-        }
+            metadata.artistName.ifNotNullOrEmpty { artistName ->
+                Text(
+                    modifier = Modifier.clickable {
+                        searchMusicBrainz(artistName, MusicBrainzResource.ARTIST)
+                    },
+                    text = artistName,
+                    style = getCardTitleTextStyle()
+                )
 
-        spotifyMetadata.trackLengthInSec.ifNotNull {
-            Text(text = it.toString())
-        }
-        spotifyMetadata.timeSentInMs.ifNotNull {
-            Text(text = it.toString())
+                metadata.albumName.ifNotNullOrEmpty { albumName ->
+                    Text(
+                        modifier = Modifier.clickable {
+                            searchMusicBrainz("$albumName AND artist:$artistName", MusicBrainzResource.RELEASE_GROUP)
+                        },
+                        text = albumName,
+                        style = getCardTitleTextStyle()
+                    )
+                }
+
+                metadata.trackName.ifNotNullOrEmpty { trackName ->
+                    Text(
+                        modifier = Modifier.clickable {
+                            searchMusicBrainz("$trackName AND artist:$artistName", MusicBrainzResource.RECORDING)
+                        },
+                        text = trackName,
+                        style = getCardTitleTextStyle()
+                    )
+                }
+            }
+
+            metadata.trackLengthInSec.ifNotNull {
+                Text(
+                    text = it.toString(),
+                    style = getCardTitleTextStyle()
+
+                )
+            }
+            metadata.timeSentInMs.ifNotNull {
+                Text(
+                    text = it.toString(),
+                    style = getCardTitleTextStyle()
+                )
+            }
         }
     }
 }
