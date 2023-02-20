@@ -52,7 +52,6 @@ internal fun NavigationDrawer(
 
         NavigationDrawerItem(
             icon = Icons.Default.Search,
-            iconDescription = "",
             label = stringResource(id = R.string.search_musicbrainz),
             isSelected = selectedTopLevelDestination == Destination.LOOKUP
         ) {
@@ -61,7 +60,6 @@ internal fun NavigationDrawer(
         }
         NavigationDrawerItem(
             icon = Icons.Default.History,
-            iconDescription = "",
             label = stringResource(id = R.string.history),
             isSelected = selectedTopLevelDestination == Destination.HISTORY
         ) {
@@ -73,7 +71,6 @@ internal fun NavigationDrawer(
 
         NavigationDrawerItem(
             icon = Icons.Default.Settings,
-            iconDescription = "",
             label = stringResource(id = R.string.settings),
             isSelected = selectedTopLevelDestination == Destination.SETTINGS
         ) {
@@ -84,7 +81,6 @@ internal fun NavigationDrawer(
         if (BuildConfig.DEBUG) {
             NavigationDrawerItem(
                 icon = Icons.Default.Science,
-                iconDescription = "",
                 label = "Experimental",
                 isSelected = selectedTopLevelDestination == Destination.EXPERIMENTAL
             ) {
@@ -99,7 +95,6 @@ internal fun NavigationDrawer(
 @Composable
 internal fun NavigationDrawerItem(
     icon: ImageVector,
-    iconDescription: String,
     label: String,
     isSelected: Boolean,
     onClick: () -> Unit = {}
@@ -127,7 +122,7 @@ internal fun NavigationDrawerItem(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = iconDescription,
+                contentDescription = null,
                 tint = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.width(16.dp))

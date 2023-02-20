@@ -72,6 +72,6 @@ private fun PlaceholderIcon(
         modifier = modifier
             .size(SMALL_COVER_ART_SIZE.dp),
         imageVector = placeholderIcon,
-        contentDescription = ""
+        contentDescription = null
     )
 }

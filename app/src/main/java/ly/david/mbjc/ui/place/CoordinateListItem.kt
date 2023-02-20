@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.Coordinates
 import ly.david.data.common.showMap
 import ly.david.data.formatForDisplay
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
@@ -40,7 +42,7 @@ internal fun CoordinateListItem(
             Icon(
                 modifier = Modifier.padding(end = 8.dp),
                 imageVector = Icons.Default.PinDrop,
-                contentDescription = "Open in Google Maps"
+                contentDescription = stringResource(id = R.string.open_google_maps)
             )
             Text(
                 text = text,

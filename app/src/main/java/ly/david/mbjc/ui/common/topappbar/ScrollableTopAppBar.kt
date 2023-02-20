@@ -219,7 +219,10 @@ private fun OverflowMenu(
 
     if (overflowDropdownMenuItems != null) {
         IconButton(onClick = { showMenu = !showMenu }) {
-            Icon(Icons.Default.MoreVert, contentDescription = "More actions.")
+            Icon(
+                imageVector = Icons.Default.MoreVert,
+                contentDescription = stringResource(id = R.string.more_actions)
+            )
         }
         DropdownMenu(
             expanded = showMenu,

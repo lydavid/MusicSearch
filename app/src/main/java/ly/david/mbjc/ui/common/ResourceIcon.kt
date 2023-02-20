@@ -47,6 +47,6 @@ internal fun ResourceIcon(
                 return
             }
         },
-        contentDescription = ""
+        contentDescription = null
     )
 }
