@@ -115,6 +115,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                                 mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
 
                             ListSeparator(
+                                id = "${medium.id}",
                                 text = medium.format.orEmpty() +
                                     (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
                                     medium.title.transformThisIfNotNullOrEmpty { " ($it)" }

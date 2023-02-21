@@ -35,6 +35,7 @@ import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.settings.SettingsScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
+import timber.log.Timber
 
 private const val ID = "id"
 private const val TITLE = "title"
@@ -95,6 +96,7 @@ internal fun NavigationGraph(
 
         val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
             val route = Destination.LOOKUP.route + "?query=${query}&type=${type.resourceName}"
+            Timber.d("1. $query")
             navController.navigate(route)
         }
 
@@ -123,6 +125,8 @@ internal fun NavigationGraph(
         ) { entry ->
             val query = entry.arguments?.getString("query")
             val type = entry.arguments?.getString("type")?.toMusicBrainzResource()
+
+            Timber.d("2. $query")
 
             SearchScreenScaffold(
                 openDrawer = openDrawer,

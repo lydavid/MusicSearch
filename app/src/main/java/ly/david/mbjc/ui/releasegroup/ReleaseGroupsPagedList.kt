@@ -66,12 +66,15 @@ internal class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<
                     pagingData.map {
                         it.toReleaseGroupListItemModel()
                     }
-                        .insertSeparators { releaseGroupListItem: ReleaseGroupListItemModel?, releaseGroupListItem2: ReleaseGroupListItemModel? ->
-                            if (sorted && releaseGroupListItem2 != null &&
-                                (releaseGroupListItem?.primaryType != releaseGroupListItem2.primaryType ||
-                                    releaseGroupListItem?.secondaryTypes != releaseGroupListItem2.secondaryTypes)
+                        .insertSeparators { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
+                            if (sorted && rg2 != null &&
+                                (rg1?.primaryType != rg2.primaryType ||
+                                    rg1?.secondaryTypes != rg2.secondaryTypes)
                             ) {
-                                ListSeparator(releaseGroupListItem2.getDisplayTypes())
+                                ListSeparator(
+                                    id = "${rg1?.id}_${rg2.id}",
+                                    text = rg2.getDisplayTypes()
+                                )
                             } else {
                                 null
                             }

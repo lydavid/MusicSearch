@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.common.paging
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -10,11 +11,11 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.coverart.CoverArtArchiveApiService
 import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
@@ -26,6 +27,7 @@ internal class ReleaseGroupsListViewModel @Inject constructor(
     override val releaseGroupDao: ReleaseGroupDao
 ) : ViewModel(), GetReleaseGroupCoverArtPath
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ReleaseGroupsListScreen(
     modifier: Modifier = Modifier,
@@ -45,6 +47,7 @@ internal fun ReleaseGroupsListScreen(
             is ReleaseGroupListItemModel -> {
                 ReleaseGroupListItem(
                     releaseGroup = listItemModel,
+                    modifier = Modifier.animateItemPlacement(),
                     requestForMissingCoverArtPath = {
                         try {
                             viewModel.getReleaseGroupCoverArtPathFromNetwork(releaseGroupId = listItemModel.id)

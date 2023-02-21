@@ -17,7 +17,7 @@ internal interface RecordLookupHistory {
             LookupHistoryRoomModel(
                 title = summary,
                 resource = resource,
-                mbid = resourceId,
+                id = resourceId,
                 searchHint = searchHint
             )
         )

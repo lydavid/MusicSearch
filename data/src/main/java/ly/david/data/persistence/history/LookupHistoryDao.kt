@@ -49,7 +49,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
      * and its last visited timestamp.
      */
     suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistoryRoomModel) {
-        val historyRecord = getLookupHistory(lookupHistory.mbid)
+        val historyRecord = getLookupHistory(lookupHistory.id)
         if (historyRecord == null) {
             insert(lookupHistory)
         } else {

@@ -18,8 +18,8 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -101,6 +101,7 @@ private fun Artist() {
         Surface {
             RelationListItem(
                 relation = RelationListItemModel(
+                    id = "2_0",
                     linkedResourceId = "2",
                     linkedResource = MusicBrainzResource.ARTIST,
                     label = "miscellaneous support",
@@ -121,6 +122,7 @@ private fun Recording() {
         Surface {
             RelationListItem(
                 relation = RelationListItemModel(
+                    id = "2_1",
                     linkedResourceId = "2",
                     linkedResource = MusicBrainzResource.RECORDING,
                     label = "DJ-mixes",

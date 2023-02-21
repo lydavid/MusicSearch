@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
+import ly.david.data.domain.Identifiable
 import ly.david.data.network.MusicBrainzResource
 
 // TODO: We can probably make this stable by mapping it to a ui model
@@ -14,10 +15,10 @@ import ly.david.data.network.MusicBrainzResource
 @Entity(tableName = "lookup_history")
 data class LookupHistoryRoomModel(
     // MusicBrainz id
-    @PrimaryKey @ColumnInfo(name = "mbid") val mbid: String,
+    @PrimaryKey @ColumnInfo(name = "mbid") override val id: String,
     @ColumnInfo(name = "title") val title: String = "",
     @ColumnInfo(name = "resource") val resource: MusicBrainzResource,
     @ColumnInfo(name = "number_of_visits") val numberOfVisits: Int = 1,
     @ColumnInfo(name = "last_accessed") val lastAccessed: Date = Date(),
     @ColumnInfo(name = "search_hint", defaultValue = "") val searchHint: String = ""
-)
+): Identifiable

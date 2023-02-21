@@ -24,6 +24,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import ly.david.data.domain.Identifiable
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.RetryButton
 import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
@@ -34,8 +35,10 @@ import ly.david.mbjc.ui.common.fullscreen.FullScreenText
  * Handles loading and errors for paging screens.
  *
  * Also handles swipe to refresh. The source for [lazyPagingItems] is expected to implement refresh behaviour.
- * This can be done using one of [BrowseResourceRemoteMediator] or [LookupResourceRemoteMediator].
+ * This can be done using [BrowseResourceRemoteMediator] or [LookupResourceRemoteMediator].
  *
+ * @param lazyPagingItems The items to display. Their [Identifiable.id] must be unique.
+ *  This is already true for any item that uses MB's UUID, but separators must also have a unique id.
  * @param modifier For lazy column containing [itemContent].
  * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.
  *  Although this should be decoupled, some screens' paged contents relies on a lookup that feeds data into Room,
@@ -44,7 +47,7 @@ import ly.david.mbjc.ui.common.fullscreen.FullScreenText
  *  @param itemContent Composable UI for each [lazyPagingItems].
  */
 @Composable
-internal fun <T : Any> PagingLoadingAndErrorHandler(
+internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
@@ -109,7 +112,10 @@ internal fun <T : Any> PagingLoadingAndErrorHandler(
                     modifier = modifier,
                     state = lazyListState,
                 ) {
-                    itemsIndexed(lazyPagingItems) { index: Int, value: T? ->
+                    itemsIndexed(
+                        items = lazyPagingItems,
+                        key = { _, item -> item.id }
+                    ) { index: Int, value: T? ->
                         itemContent(value)
 
                         // Is this inefficient? At least it preserves list state on configuration change.

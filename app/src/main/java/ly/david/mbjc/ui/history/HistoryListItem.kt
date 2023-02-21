@@ -44,7 +44,7 @@ internal fun HistoryListItem(
             )
         },
         modifier = modifier.clickable {
-            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.mbid, lookupHistory.title)
+            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.id, lookupHistory.title)
         },
         supportingText = {
             Column {
@@ -86,18 +86,18 @@ internal class LookupHistoryPreviewParameterProvider : PreviewParameterProvider<
         LookupHistoryRoomModel(
             title = "欠けた心象、世のよすが",
             resource = MusicBrainzResource.RELEASE_GROUP,
-            mbid = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+            id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
             numberOfVisits = 9999
         ),
         LookupHistoryRoomModel(
             title = "欠けた心象、世のよすが",
             resource = MusicBrainzResource.RELEASE,
-            mbid = "165f6643-2edb-4795-9abe-26bd0533e59d"
+            id = "165f6643-2edb-4795-9abe-26bd0533e59d"
         ),
         LookupHistoryRoomModel(
             title = "月詠み",
             resource = MusicBrainzResource.ARTIST,
-            mbid = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
+            id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
         )
     )
 }

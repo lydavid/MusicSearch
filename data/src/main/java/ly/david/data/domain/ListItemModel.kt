@@ -14,25 +14,36 @@ import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
 
+interface Identifiable {
+    val id: String
+}
+
 /**
  * Data that can be displayed in lists should extend this.
  */
-sealed class ListItemModel
+sealed class ListItemModel: Identifiable
 
 /**
  * Content that appears in front of a list of [ListItemModel].
  */
-object Header : ListItemModel()
+object Header : ListItemModel() {
+    override val id: String = "Header"
+}
 
 /**
  * Represents the end of the list of [ListItemModel] being displayed.
  */
-object EndOfList : ListItemModel()
+object EndOfList : ListItemModel() {
+    override val id: String = "EndOfList"
+}
 
 /**
  * Represents a separator with [text] that can be inserted between two list items.
  */
-class ListSeparator(val text: String) : ListItemModel()
+class ListSeparator(
+    override val id: String,
+    val text: String
+) : ListItemModel()
 
 /**
  * Converts a [MusicBrainzModel] that we got from the network to its UI version for display.
