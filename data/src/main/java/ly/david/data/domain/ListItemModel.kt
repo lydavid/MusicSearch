@@ -14,10 +14,6 @@ import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
 
-interface Identifiable {
-    val id: String
-}
-
 /**
  * Data that can be displayed in lists should extend this.
  */
