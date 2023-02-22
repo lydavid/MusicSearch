@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import androidx.test.espresso.Espresso
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -61,7 +60,9 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
-        Espresso.pressBack()
+        composeTestRule
+            .onNodeWithText(searchLabel)
+            .performClick()
 
         composeTestRule
             .onNodeWithText(searchDrawerLabel)
