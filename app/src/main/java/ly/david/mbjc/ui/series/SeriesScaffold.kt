@@ -46,6 +46,7 @@ internal enum class SeriesTab(val tab: Tab) {
 @Composable
 internal fun SeriesScaffold(
     seriesId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -72,6 +73,7 @@ internal fun SeriesScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             ScrollableTopAppBar(
                 resource = resource,

@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.common
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -54,7 +55,6 @@ internal fun MultipleChoiceDialog(
                     choices.forEachIndexed { index, choice ->
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
                                 .selectable(
                                     selected = index == selectedChoiceIndex,
                                     onClick = {
@@ -63,7 +63,9 @@ internal fun MultipleChoiceDialog(
                                     },
                                     role = Role.RadioButton
                                 )
-                                .padding(8.dp),
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp)
+                                .heightIn(min = 48.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(

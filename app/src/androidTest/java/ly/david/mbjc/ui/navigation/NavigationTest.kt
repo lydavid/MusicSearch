@@ -3,14 +3,14 @@ package ly.david.mbjc.ui.navigation
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.filterToOne
-import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.test.espresso.Espresso
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -42,47 +42,29 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun openNavigationDrawer_goToHistory_returnToSearch() {
+    fun clickHistory_thenClickSearch() {
 
         // Main title
         composeTestRule
-            .onAllNodesWithText(searchDrawerLabel)
-            .filterToOne(matcher = hasNoClickAction())
+            .onNodeWithText(searchDrawerLabel)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithContentDescription(navDrawerIconContentDescription)
+            .onNodeWithText(history)
             .performClick()
 
         composeTestRule
-            .onNodeWithText(appName)
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(historyDrawerLabel)
-            .performClick()
-
-        // Confirm that the drawer has closed.
-        composeTestRule
-            .onNodeWithContentDescription(navDrawerIconContentDescription)
-            .assertIsDisplayed()
+            .onNode(hasText(searchDrawerLabel))
+            .assertDoesNotExist()
 
         composeTestRule
             .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
 
-        composeTestRule
-            .onNodeWithContentDescription(navDrawerIconContentDescription)
-            .performClick()
+        Espresso.pressBack()
 
         composeTestRule
-            .onAllNodesWithText(searchDrawerLabel)
-            .filterToOne(matcher = hasClickAction())
-            .performClick()
-
-        composeTestRule
-            .onAllNodesWithText(searchDrawerLabel)
-            .filterToOne(matcher = hasNoClickAction())
+            .onNodeWithText(searchDrawerLabel)
             .assertIsDisplayed()
     }
 
@@ -106,38 +88,13 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
     }
 
-    @Test
-    fun openNavigationDrawer_goToSettings() {
-        composeTestRule
-            .onNodeWithContentDescription(navDrawerIconContentDescription)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(settings)
-            .performClick()
-
-        // Header
-        composeTestRule
-            .onAllNodesWithText(settings)
-            .filterToOne(hasNoClickAction())
-            .assertIsDisplayed()
-    }
-
     /**
      * Ensure we don't run into another BackHandler that eats up all of our hardware back presses.
      */
     @Test
     fun pressHardwareBackButton() {
         composeTestRule
-            .onNodeWithContentDescription(navDrawerIconContentDescription)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithContentDescription(navDrawerIconContentDescription)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(historyDrawerLabel)
+            .onNodeWithText(history)
             .performClick()
 
         composeTestRule
@@ -152,6 +109,25 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
             .onAllNodesWithText(searchDrawerLabel)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
+
+        // TODO: come back once we have its scaffold set up
+//        composeTestRule
+//            .onNodeWithText(collections)
+//            .performClick()
+//
+//        composeTestRule
+//            .onAllNodesWithText(collections)
+//            .filterToOne(hasNoClickAction())
+//            .assertIsDisplayed()
+//
+//        composeTestRule.activityRule.scenario.onActivity {
+//            it.onBackPressedDispatcher.onBackPressed()
+//        }
+//
+//        composeTestRule
+//            .onAllNodesWithText(searchDrawerLabel)
+//            .filterToOne(matcher = hasNoClickAction())
+//            .assertIsDisplayed()
 
         composeTestRule
             .onNodeWithText(settings)

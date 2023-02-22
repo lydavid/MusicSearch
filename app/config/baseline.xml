@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; releaseGroupListItem2 != null &amp;&amp; (releaseGroupListItem?.primaryType != releaseGroupListItem2.primaryType || releaseGroupListItem?.secondaryTypes != releaseGroupListItem2.secondaryTypes)</ID>
+    <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
     <ID>ComposableParamOrder:ArtistDetailsScreen.kt$ArtistDetailsScreen</ID>
     <ID>ComposableParamOrder:ArtistScaffold.kt$ArtistScaffold</ID>
     <ID>ComposableParamOrder:ArtistStatsScreen.kt$ArtistStatsScreen</ID>
@@ -135,14 +135,11 @@
     <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
     <ID>MaxLineLength:LabelListItem.kt$LabelCardPreviewParameterProvider$disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"</ID>
-    <ID>MaxLineLength:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$.</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
-    <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$SettingsScreen</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
-    <ID>ModifierMissing:SettingsScaffold.kt$SettingsScaffold</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } )</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } }</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox( expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier ) { TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() ) // Focusing on this "consumes" a back press, and is independent of onDismissRequest. ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } } }</ID>

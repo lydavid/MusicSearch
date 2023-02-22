@@ -3,16 +3,21 @@ package ly.david.mbjc.ui.search
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasImeAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isDialog
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -80,8 +85,11 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
     fun searchWithEmptyText_thenOkay() = runTest {
         composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(searchLabel)
+        val searchFieldNode: SemanticsNodeInteraction = composeTestRule
+            .onAllNodesWithText(searchLabel)
+            .filterToOne(hasImeAction(ImeAction.Search))
+
+        searchFieldNode
             .assert(hasText(""))
             .performImeAction()
 
@@ -102,8 +110,11 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
     fun enterSearchText_thenClear() = runTest {
         composeTestRule.awaitIdle()
 
-        composeTestRule
-            .onNodeWithText(searchLabel)
+        val searchFieldNode: SemanticsNodeInteraction = composeTestRule
+            .onAllNodesWithText(searchLabel)
+            .filterToOne(hasImeAction(ImeAction.Search))
+
+        searchFieldNode
             .assert(hasText(""))
             .performTextInput("Hello there")
 
@@ -116,8 +127,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             .onNodeWithContentDescription(clearSearchContentDescription)
             .assertDoesNotExist()
 
-        composeTestRule
-            .onNodeWithText(searchLabel)
+        searchFieldNode
             .assert(hasText(""))
     }
 

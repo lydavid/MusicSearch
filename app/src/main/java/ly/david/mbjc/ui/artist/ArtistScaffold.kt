@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -17,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
@@ -52,6 +54,7 @@ internal enum class ArtistTab(val tab: Tab) {
 @Composable
 internal fun ArtistScaffold(
     artistId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit,
@@ -66,11 +69,11 @@ internal fun ArtistScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
-
     val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
     LaunchedEffect(key1 = artistId) {
@@ -85,12 +88,14 @@ internal fun ArtistScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
                 onBack = onBack,
                 resource = resource,
                 title = title,
+                scrollBehavior = scrollBehavior,
                 showFilterIcon = selectedTab in listOf(ArtistTab.RELEASE_GROUPS, ArtistTab.RELEASES),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
@@ -158,7 +163,9 @@ internal fun ArtistScaffold(
                     scaffoldModel = artist
                 ) {
                     ArtistDetailsScreen(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                         artist = it,
                         lazyListState = detailsLazyListState
                     )
@@ -167,7 +174,9 @@ internal fun ArtistScaffold(
             ArtistTab.RELEASE_GROUPS -> {
                 ReleaseGroupsByArtistScreen(
                     artistId = artistId,
-                    modifier = Modifier.padding(innerPadding),
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     searchText = filterText,
                     isSorted = isSorted,
                     snackbarHostState = snackbarHostState,
@@ -182,7 +191,9 @@ internal fun ArtistScaffold(
             ArtistTab.RELEASES -> {
                 ReleasesByArtistScreen(
                     artistId = artistId,
-                    modifier = Modifier.padding(innerPadding),
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     snackbarHostState = snackbarHostState,
                     releasesLazyListState = releasesLazyListState,
                     releasesLazyPagingItems = releasesLazyPagingItems,
@@ -196,7 +207,9 @@ internal fun ArtistScaffold(
                 viewModel.loadRelations(artistId)
 
                 RelationsScreen(
-                    modifier = Modifier.padding(innerPadding),
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     onItemClick = onItemClick,
                     snackbarHostState = snackbarHostState,
                     lazyListState = relationsLazyListState,
@@ -206,7 +219,9 @@ internal fun ArtistScaffold(
             ArtistTab.STATS -> {
                 ArtistStatsScreen(
                     artistId = artistId,
-                    modifier = Modifier.padding(innerPadding),
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     tabs = ArtistTab.values().map { it.tab }
                 )
             }

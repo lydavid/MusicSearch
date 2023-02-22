@@ -1,14 +1,19 @@
 package ly.david.mbjc.ui.search
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.filterToOne
+import androidx.compose.ui.test.hasImeAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -30,7 +35,9 @@ import org.junit.runners.Parameterized
  */
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class SearchEachResourceTest(private val resource: MusicBrainzResource) : MainActivityTest(), StringReferences {
+internal class SearchEachResourceTest(
+    private val resource: MusicBrainzResource
+) : MainActivityTest(), StringReferences {
 
     companion object {
         @JvmStatic
@@ -54,6 +61,7 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
         }
     }
 
+    // TODO:
     @Test
     fun searchEachResource() {
         composeTestRule
@@ -68,12 +76,14 @@ internal class SearchEachResourceTest(private val resource: MusicBrainzResource)
             .onNodeWithText(composeTestRule.activity.getString(resource.getDisplayTextRes()))
             .assertIsDisplayed()
 
-        composeTestRule
-            .onNodeWithText(searchLabel)
-            .assert(hasText(""))
+        val searchFieldNode: SemanticsNodeInteraction = composeTestRule
+            .onAllNodesWithText(searchLabel)
+            .filterToOne(hasImeAction(ImeAction.Search))
+
+        searchFieldNode.assert(hasText(""))
             .performTextInput("Random search text")
-        composeTestRule
-            .onNodeWithText(searchLabel)
+
+        searchFieldNode
             .performImeAction()
 
         composeTestRule

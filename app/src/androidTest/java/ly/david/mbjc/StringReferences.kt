@@ -17,10 +17,10 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.search_cannot_be_empty)
     val appName
         get() = composeTestRule.activity.resources.getString(R.string.app_name)
-    val navDrawerIconContentDescription
-        get() = composeTestRule.activity.resources.getString(R.string.open_nav_drawer)
-    val historyDrawerLabel
+    val history
         get() = composeTestRule.activity.resources.getString(R.string.history)
+    val collections
+        get() = composeTestRule.activity.resources.getString(R.string.collections)
     val settings
         get() = composeTestRule.activity.resources.getString(R.string.settings)
     val historyScreenTitle

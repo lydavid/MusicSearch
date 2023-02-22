@@ -50,6 +50,7 @@ internal enum class PlaceTab(val tab: Tab) {
 @Composable
 internal fun PlaceScaffold(
     placeId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -78,6 +79,7 @@ internal fun PlaceScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,

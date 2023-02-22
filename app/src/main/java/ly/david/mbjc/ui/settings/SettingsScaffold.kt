@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.settings
 
+import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import ly.david.data.navigation.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
@@ -24,13 +26,15 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScaffold(
-    openDrawer: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    onDestinationClick: (Destination) -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             ScrollableTopAppBar(
-                openDrawer = openDrawer,
+                showBackButton = false,
                 title = stringResource(id = R.string.settings),
             )
         },
@@ -44,6 +48,7 @@ fun SettingsScaffold(
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
+            onDestinationClick = onDestinationClick,
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
             useMaterialYou = useMaterialYou,
@@ -57,6 +62,7 @@ fun SettingsScaffold(
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
+    onDestinationClick: (Destination) -> Unit = {},
     theme: AppPreferences.Theme,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
     useMaterialYou: Boolean,
@@ -74,11 +80,14 @@ fun SettingsScreen(
             onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
         )
 
-        SettingSwitch(
-            header = "Use Material You",
-            checked = useMaterialYou,
-            onCheckedChange = onUseMaterialYouChange
-        )
+        val isAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+        if (isAndroid12) {
+            SettingSwitch(
+                header = "Use Material You",
+                checked = useMaterialYou,
+                onCheckedChange = onUseMaterialYouChange
+            )
+        }
 
         SettingSwitch(
             header = "Show more info in release list items",
@@ -97,6 +106,7 @@ fun SettingsScreen(
 
         if (BuildConfig.DEBUG) {
             DevSettingsSection(
+                onDestinationClick = onDestinationClick
             )
         }
     }

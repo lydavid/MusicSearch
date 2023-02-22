@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.experimental
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.mbjc.BuildConfig
@@ -26,7 +28,6 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExperimentalSettingsScaffold(
-    openDrawer: () -> Unit = {},
     viewModel: ExperimentalSettingsViewModel = hiltViewModel()
 ) {
 
@@ -35,7 +36,6 @@ fun ExperimentalSettingsScaffold(
     Scaffold(
         topBar = {
             TopAppBarWithFilter(
-                openDrawer = openDrawer,
                 title = stringResource(id = R.string.settings),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -44,7 +44,7 @@ fun ExperimentalSettingsScaffold(
                 },
             )
         },
-    ) {
+    ) { innerPadding ->
 
         val showTheme by viewModel.showTheme.collectAsState(initial = true)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
@@ -53,6 +53,7 @@ fun ExperimentalSettingsScaffold(
         SettingsScreen(
             showTheme = showTheme,
             theme = theme,
+            modifier = Modifier.padding(innerPadding),
             showAppVersion = showAppVersion,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
         )
@@ -63,11 +64,12 @@ fun ExperimentalSettingsScaffold(
 fun SettingsScreen(
     showTheme: Boolean = true,
     theme: AppPreferences.Theme,
+    modifier: Modifier = Modifier,
     showAppVersion: Boolean = true,
     onThemeChange: (AppPreferences.Theme) -> Unit = {}
 ) {
 
-    Column {
+    Column(modifier = modifier) {
 
         if (showTheme) {
             SettingWithDialogChoices(

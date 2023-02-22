@@ -50,6 +50,7 @@ internal enum class RecordingTab(val tab: Tab) {
 @Composable
 internal fun RecordingScaffold(
     recordingId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -78,6 +79,7 @@ internal fun RecordingScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,

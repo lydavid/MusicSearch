@@ -18,7 +18,7 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchScreenScaffold(
-    openDrawer: () -> Unit = {},
+    modifier: Modifier = Modifier,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     searchQuery: String? = null,
     searchOption: MusicBrainzResource? = null,
@@ -28,11 +28,12 @@ internal fun SearchScreenScaffold(
     val lazyListState = rememberLazyListState()
 
     Scaffold(
+        modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ScrollableTopAppBar(
+                showBackButton = false,
                 title = stringResource(id = R.string.search_musicbrainz),
-                openDrawer = openDrawer
             )
         },
     ) { innerPadding ->

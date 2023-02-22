@@ -54,6 +54,7 @@ internal enum class AreaTab(val tab: Tab) {
 @Composable
 internal fun AreaScaffold(
     areaId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -82,6 +83,7 @@ internal fun AreaScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(

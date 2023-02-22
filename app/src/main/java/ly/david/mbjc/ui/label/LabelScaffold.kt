@@ -47,6 +47,7 @@ internal enum class LabelTab(val tab: Tab) {
 @Composable
 internal fun LabelScaffold(
     labelId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -74,6 +75,7 @@ internal fun LabelScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,

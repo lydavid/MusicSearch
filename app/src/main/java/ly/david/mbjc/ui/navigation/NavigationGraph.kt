@@ -1,6 +1,10 @@
 package ly.david.mbjc.ui.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -20,7 +24,6 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold
-import ly.david.mbjc.ui.experimental.ExperimentalScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
@@ -54,7 +57,7 @@ internal fun NavHostController.goTo(destination: Destination) {
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    openDrawer: () -> Unit = {}
+    modifier: Modifier = Modifier,
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
 
@@ -64,7 +67,7 @@ internal fun NavigationGraph(
     ) {
 
         // TODO: [low] should rethink this structure once we introduce more non-MB-resource destinations
-        val onLookupItemClick: (Destination, String, String?) -> Unit = { destination, id, title ->
+        val onDestinationClick: (Destination, String, String?) -> Unit = { destination, id, title ->
             when (destination) {
                 Destination.LOOKUP_AREA,
                 Destination.LOOKUP_ARTIST,
@@ -83,8 +86,8 @@ internal fun NavigationGraph(
                 }
                 Destination.LOOKUP,
                 Destination.HISTORY,
-                Destination.SETTINGS,
-                Destination.EXPERIMENTAL -> {
+                Destination.COLLECTIONS,
+                Destination.SETTINGS -> {
                     // Not handled.
                 }
                 Destination.EXPERIMENTAL_SETTINGS,
@@ -102,8 +105,8 @@ internal fun NavigationGraph(
 
         composable(Destination.LOOKUP.route) {
             SearchScreenScaffold(
-                openDrawer = openDrawer,
-                onItemClick = onLookupItemClick
+                modifier = modifier,
+                onItemClick = onDestinationClick
             )
         }
 
@@ -129,8 +132,8 @@ internal fun NavigationGraph(
             Timber.d("2. $query")
 
             SearchScreenScaffold(
-                openDrawer = openDrawer,
-                onItemClick = onLookupItemClick,
+                modifier = modifier,
+                onItemClick = onDestinationClick,
                 searchQuery = query,
                 searchOption = type
             )
@@ -142,9 +145,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             AreaScaffold(
                 areaId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -154,8 +158,9 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             ArtistScaffold(
                 artistId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
-                onItemClick = onLookupItemClick,
+                onItemClick = onDestinationClick,
                 onBack = navController::navigateUp,
             )
         }
@@ -166,9 +171,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             EventScaffold(
                 eventId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -178,6 +184,7 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             GenreScaffold(
                 genreId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp
             )
@@ -189,9 +196,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             InstrumentScaffold(
                 instrumentId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -201,9 +209,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             LabelScaffold(
                 labelId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -213,9 +222,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             PlaceScaffold(
                 placeId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -225,9 +235,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             RecordingScaffold(
                 recordingId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick,
+                onItemClick = onDestinationClick,
             )
         }
 
@@ -237,9 +248,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             ReleaseScaffold(
                 releaseId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick,
+                onItemClick = onDestinationClick,
             )
         }
         addResourceScreen(
@@ -248,9 +260,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             ReleaseGroupScaffold(
                 releaseGroupId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -260,9 +273,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             SeriesScaffold(
                 seriesId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -272,9 +286,10 @@ internal fun NavigationGraph(
         ) { resourceId, title ->
             WorkScaffold(
                 workId = resourceId,
+                modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupItemClick
+                onItemClick = onDestinationClick
             )
         }
 
@@ -282,8 +297,8 @@ internal fun NavigationGraph(
             Destination.HISTORY.route
         ) {
             HistoryScaffold(
-                openDrawer = openDrawer,
-                onItemClick = onLookupItemClick
+                modifier = modifier,
+                onItemClick = onDestinationClick
             )
         }
 
@@ -291,25 +306,23 @@ internal fun NavigationGraph(
             Destination.SETTINGS.route
         ) {
             SettingsScaffold(
-                openDrawer = openDrawer
+                modifier = modifier,
+                onDestinationClick = { onDestinationClick(it, "", null) }
             )
         }
 
         composable(
-            Destination.EXPERIMENTAL.route
+            Destination.COLLECTIONS.route
         ) {
-            ExperimentalScaffold(
-                openDrawer = openDrawer,
-                onItemClick = onLookupItemClick
-            )
+            Surface(modifier = modifier.fillMaxSize()) {
+                Text(text = "TODO")
+            }
         }
 
         composable(
             Destination.EXPERIMENTAL_SETTINGS.route
         ) {
-            ExperimentalSettingsScaffold(
-                openDrawer = openDrawer
-            )
+            ExperimentalSettingsScaffold()
         }
 
         composable(

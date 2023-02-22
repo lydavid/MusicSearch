@@ -9,7 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,6 +19,7 @@ import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,7 +48,7 @@ private const val DELAY_LOADING_MS = 300L
 
 /**
  * [TopAppBar] with icon for [resource], scrollable [title]/[subtitle];
- * drawer button invoking [openDrawer] if not null, otherwise back button invoking [onBack];
+ * back button if [showBackButton], invoking [onBack];
  * and [Tab]s for each [tabsTitles].
  *
  * @param resource What [MusicBrainzResource]'s icon to display.
@@ -57,10 +57,11 @@ private const val DELAY_LOADING_MS = 300L
 @Composable
 internal fun ScrollableTopAppBar(
     onBack: () -> Unit = {},
-    openDrawer: (() -> Unit)? = null,
+    showBackButton: Boolean = true,
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 
     mainAction: @Composable (() -> Unit)? = null,
 
@@ -83,18 +84,11 @@ internal fun ScrollableTopAppBar(
                     subtitleDropdownMenuItems = subtitleDropdownMenuItems
                 )
             },
+            scrollBehavior = scrollBehavior,
             navigationIcon = {
-                IconButton(onClick = {
-                    if (openDrawer == null) {
-                        onBack()
-                    } else {
-                        openDrawer.invoke()
-                    }
-                }) {
-                    if (openDrawer == null) {
+                if (showBackButton) {
+                    IconButton(onClick = { onBack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.back))
-                    } else {
-                        Icon(Icons.Default.Menu, contentDescription = stringResource(id = R.string.open_nav_drawer))
                     }
                 }
             },
@@ -263,6 +257,7 @@ private fun TabsBar(
 }
 
 // region Preview
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun ScrollableTopAppBarPreview() {
@@ -274,6 +269,7 @@ private fun ScrollableTopAppBarPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun ScrollableTopAppBarIconPreview() {
@@ -286,6 +282,7 @@ private fun ScrollableTopAppBarIconPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun WithTabs() {

@@ -34,6 +34,7 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun GenreScaffold(
     genreId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     viewModel: GenreScaffoldViewModel = hiltViewModel()
@@ -57,6 +58,7 @@ internal fun GenreScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             ScrollableTopAppBar(
                 resource = resource,

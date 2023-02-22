@@ -17,8 +17,10 @@ import ly.david.data.network.RESOURCE_WORK
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"
+private const val TOP_LEVEL_COLLECTIONS = "collections"
 private const val TOP_LEVEL_SETTINGS = "settings"
-private const val TOP_LEVEL_EXPERIMENTAL = "experimental"
+
+private const val EXPERIMENTAL = "experimental"
 
 /**
  * This divider should be the same used for dividing parameters such as {artistId} passed to navigation.
@@ -48,11 +50,11 @@ enum class Destination(val route: String) {
     LOOKUP_URL("$TOP_LEVEL_LOOKUP$DIVIDER$RESOURCE_URL"),
 
     HISTORY(TOP_LEVEL_HISTORY),
+    COLLECTIONS(TOP_LEVEL_COLLECTIONS),
     SETTINGS(TOP_LEVEL_SETTINGS),
 
-    EXPERIMENTAL(TOP_LEVEL_EXPERIMENTAL),
-    EXPERIMENTAL_SETTINGS("$TOP_LEVEL_EXPERIMENTAL$DIVIDER" + "SETTINGS"),
-    EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_EXPERIMENTAL$DIVIDER" + "SPOTIFY")
+    EXPERIMENTAL_SETTINGS("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "SETTINGS"),
+    EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "SPOTIFY")
 }
 
 fun MusicBrainzResource.toDestination() =
@@ -82,7 +84,7 @@ fun String.getTopLevelRoute(): String = this.split(DIVIDER).first()
  */
 fun String.getTopLevelDestination(): Destination = when (this) {
     TOP_LEVEL_HISTORY -> Destination.HISTORY
-    TOP_LEVEL_EXPERIMENTAL -> Destination.EXPERIMENTAL
+    TOP_LEVEL_COLLECTIONS -> Destination.COLLECTIONS
     TOP_LEVEL_SETTINGS -> Destination.SETTINGS
     else -> Destination.LOOKUP
 }

@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,13 +43,15 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 /**
  * [ScrollableTopAppBar] with filtering.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TopAppBarWithFilter(
     onBack: () -> Unit = {},
-    openDrawer: (() -> Unit)? = null,
+    showBackButton: Boolean = true,
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -72,10 +75,11 @@ internal fun TopAppBarWithFilter(
 
     TopAppBarWithFilterInternal(
         onBack = onBack,
-        openDrawer = openDrawer,
+        showBackButton = showBackButton,
         resource = resource,
         title = title,
         subtitle = subtitle,
+        scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
         tabsTitles = tabsTitles,
@@ -93,10 +97,11 @@ internal fun TopAppBarWithFilter(
 @Composable
 private fun TopAppBarWithFilterInternal(
     onBack: () -> Unit = {},
-    openDrawer: (() -> Unit)? = null,
+    showBackButton: Boolean = true,
     resource: MusicBrainzResource? = null,
     title: String,
     subtitle: String = "",
+    scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     tabsTitles: List<String> = listOf(),
@@ -183,10 +188,11 @@ private fun TopAppBarWithFilterInternal(
     ) {
         ScrollableTopAppBar(
             onBack = onBack,
-            openDrawer = openDrawer,
+            showBackButton = showBackButton,
             resource = resource,
             title = title,
             subtitle = subtitle,
+            scrollBehavior = scrollBehavior,
             mainAction = {
                 if (showFilterIcon) {
                     IconButton(onClick = {
@@ -209,6 +215,7 @@ private fun TopAppBarWithFilterInternal(
 }
 
 // region Previews
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun Preview() {
@@ -219,6 +226,7 @@ private fun Preview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun PreviewFilterMode() {
@@ -232,6 +240,7 @@ private fun PreviewFilterMode() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun PreviewNoSearch() {
@@ -245,6 +254,7 @@ private fun PreviewNoSearch() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
 private fun PreviewWithTabs() {

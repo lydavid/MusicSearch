@@ -23,8 +23,8 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryScaffold(
+    modifier: Modifier = Modifier,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    openDrawer: () -> Unit = {},
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
 
@@ -33,9 +33,10 @@ internal fun HistoryScaffold(
         .collectAsLazyPagingItems()
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                openDrawer = openDrawer,
+                showBackButton = false,
                 title = stringResource(id = R.string.recent_history),
                 filterText = filterText,
                 onFilterTextChange = {

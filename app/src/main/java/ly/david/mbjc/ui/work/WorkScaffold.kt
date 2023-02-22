@@ -47,6 +47,7 @@ internal enum class WorkTab(val tab: Tab) {
 @Composable
 internal fun WorkScaffold(
     workId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -74,6 +75,7 @@ internal fun WorkScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,

@@ -56,6 +56,7 @@ internal enum class ReleaseGroupTab(val tab: Tab) {
 @Composable
 internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
+    modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -85,6 +86,7 @@ internal fun ReleaseGroupScaffold(
     }
 
     Scaffold(
+        modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
