@@ -21,9 +21,9 @@ An Android app for browsing songs, artists, and anything related to them using [
 | ![](assets/1.png) | ![](assets/2.png)        | ![](assets/3.png) | ![](assets/4.png) | ![](assets/5.png) |
 
 
-## Upcoming Features
+## Development Notes, Upcoming Features & More
 
-- Automatically detect playing Spotify song metadata, allowing you to deeplink search for the artist, album name, and track name
+[See here](./docs/README.md) for notes on upcoming features and my development processes.
 
 
 ## Privacy Policy
