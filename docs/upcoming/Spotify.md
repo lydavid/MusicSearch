@@ -16,7 +16,7 @@ You will have to turn this feature on from inside Spotify's settings: https://de
 
 - [x] Use a broadcast receiver to listen to Spotify's broadcast notifications
 - [ ] Find a place to put this flow
-  - [ ] Inside advanced search?
+  - [ ] Inside [advanced search](advanced_search.md)?
 - [x] Support deeplinking search
   - [x] artist: Artist
   - [x] album: Release Group, Artist

@@ -8,6 +8,6 @@ A place to document my development, testing, and release processes.
 
 ## Upcoming features
 
-- [Advanced Search](./upcoming/Advanced%20Search.md)
-- [Search History](./upcoming/Search%20History.md)
-- [Search Spotify artists, albums, and tracks](./upcoming/Spotify.md)
+- [Advanced Search](./upcoming/advanced_search.md)
+- [Search History](./upcoming/search_history.md)
+- [Search Spotify artists, albums, and tracks](./upcoming/spotify.md)
