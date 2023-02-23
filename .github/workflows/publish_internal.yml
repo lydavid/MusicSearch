@@ -1,6 +1,8 @@
 name: Publish internal build
 
 on:
+  schedule:
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 jobs:
@@ -8,13 +10,23 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       id-token: write # This is required for requesting the JWT
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
+      #      - name: Make sure latest commit was not a bump by this workflow
+
       - id: setup
         uses: ./.github/actions/setup
+
+      # -b preserves our line separator preference
+      - name: Bump version code
+        run: |
+          vc=$(grep 'versionCode' app/build.gradle | sed 's/[^0-9]//g')
+          sed -i "s/versionCode $vc/versionCode $(($vc + 1))/" app/build.gradle
+        shell: bash
 
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
@@ -41,6 +53,7 @@ jobs:
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
       - name: Publish build to internal track
+        id: publish_internal
         uses: r0adkll/upload-google-play@v1.1.1
         with:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
@@ -48,3 +61,10 @@ jobs:
           track: internal
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
+
+      - name: Commit version code bump
+        if: steps.publish_internal.outcome == 'success'
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: Bump internal version
+          file_pattern: 'app/build.gradle'
