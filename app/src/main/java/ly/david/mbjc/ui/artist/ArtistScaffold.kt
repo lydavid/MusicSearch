@@ -29,7 +29,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
@@ -48,7 +47,7 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class, InternalCoroutinesApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 internal fun ArtistScaffold(
     artistId: String,
@@ -66,17 +65,16 @@ internal fun ArtistScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
+    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState()
 
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
     val showMoreInfoInReleaseListItem
         by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
-
-    val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
-    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
 
     LaunchedEffect(key1 = artistId) {
         viewModel.setTitle(titleWithDisambiguation)
@@ -164,9 +162,8 @@ internal fun ArtistScaffold(
         HorizontalPager(
             count = ArtistTab.values().size,
             state = pagerState
-        ) {
-
-            when (ArtistTab.values()[it]) {
+        ) { page ->
+            when (ArtistTab.values()[page]) {
                 ArtistTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
@@ -235,11 +232,11 @@ internal fun ArtistScaffold(
                 ArtistTab.STATS -> {
                     ArtistStatsScreen(
                         artistId = artistId,
+                        tabs = ArtistTab.values().map { it.tab },
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = ArtistTab.values().map { it.tab }
+                            .nestedScroll(scrollBehavior.nestedScrollConnection)
                     )
                 }
             }

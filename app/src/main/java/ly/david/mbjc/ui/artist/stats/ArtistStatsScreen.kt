@@ -17,8 +17,8 @@ import ly.david.mbjc.ui.stats.StatsScreen
 @Composable
 internal fun ArtistStatsScreen(
     artistId: String,
-    modifier: Modifier = Modifier,
     tabs: List<Tab>,
+    modifier: Modifier = Modifier,
     viewModel: ArtistStatsViewModel = hiltViewModel()
 ) {
     var totalRemoteReleaseGroups: Int? by remember { mutableStateOf(null) }

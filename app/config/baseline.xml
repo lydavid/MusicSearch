@@ -5,7 +5,6 @@
     <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
     <ID>ComposableParamOrder:ArtistDetailsScreen.kt$ArtistDetailsScreen</ID>
     <ID>ComposableParamOrder:ArtistScaffold.kt$ArtistScaffold</ID>
-    <ID>ComposableParamOrder:ArtistStatsScreen.kt$ArtistStatsScreen</ID>
     <ID>ComposableParamOrder:BigCoverArt.kt$PainterImage</ID>
     <ID>ComposableParamOrder:DetailsWithErrorHandling.kt$DetailsWithErrorHandling</ID>
     <ID>ComposableParamOrder:EventDetailsScreen.kt$EventDetailsScreen</ID>
@@ -114,8 +113,6 @@
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
-    <ID>MatchingDeclarationName:AreaScaffold.kt$AreaTab</ID>
-    <ID>MatchingDeclarationName:ArtistScaffold.kt$ArtistTab</ID>
     <ID>MatchingDeclarationName:EventScaffold.kt$EventTab</ID>
     <ID>MatchingDeclarationName:InstrumentScaffold.kt$InstrumentTab</ID>
     <ID>MatchingDeclarationName:LabelScaffold.kt$LabelTab</ID>
@@ -129,8 +126,6 @@
     <ID>MatchingDeclarationName:SeriesScaffold.kt$SeriesTab</ID>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
     <ID>MatchingDeclarationName:WorkScaffold.kt$WorkTab</ID>
-    <ID>MaxLineLength:ArtistScaffold.kt$val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)</ID>
-    <ID>MaxLineLength:ArtistScaffold.kt$viewModel.appPreferences.setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)</ID>
     <ID>MaxLineLength:EventListItem.kt$EventPreviewParameterProvider$disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, a Rolling Stone Magazine 30th anniversary special"</ID>
     <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>

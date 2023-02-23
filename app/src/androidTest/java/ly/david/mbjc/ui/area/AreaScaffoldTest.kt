@@ -85,9 +85,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
         waitForThenPerformClickOn(stats)
 
-        composeTestRule.awaitIdle()
-
-        // Need to differentiate between Releases tab and header inside stats
+        // Differentiate between Releases tab and header inside stats
         composeTestRule
             .onNode(hasText(releases).and(hasNoClickAction()))
             .assertDoesNotExist()
@@ -136,20 +134,13 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         waitForThenAssertIsDisplayed(fakeRelease.name)
     }
 
-//    @Test
-//    fun countryStatsIncludesReleases() {
-//        setArea(fakeCountry)
-//
-//        runBlocking { composeTestRule.awaitIdle() }
-//
-//        composeTestRule
-//            .onNodeWithText(stats)
-//            .performClick()
-//
-//        // Need to differentiate between Releases tab and header inside stats
-//        composeTestRule
-//            .onNode(hasText(releases).and(hasNoClickAction()), useUnmergedTree = true)
-//            .assertIsDisplayed()
-//    }
+    @Test
+    fun countryStatsIncludesReleases() = runTest {
+        setArea(fakeCountry)
+
+        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(stats)
+        waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
+    }
     // endregion
 }
