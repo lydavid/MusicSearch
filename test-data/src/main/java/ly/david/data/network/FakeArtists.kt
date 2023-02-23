@@ -1,10 +1,31 @@
 package ly.david.data.network
 
+import ly.david.data.LifeSpan
 import ly.david.data.network.api.SearchArtistsResponse
+
+val fakeArtistGroup = ArtistMusicBrainzModel(
+    id = "artist2",
+    name = "An Artist Group",
+    type = "Group"
+)
 
 val fakeArtist = ArtistMusicBrainzModel(
     id = "artist1",
     name = "Artist Name",
+    type = "Person",
+    gender = "Male",
+    lifeSpan = LifeSpan(
+        begin = "2000-10-10",
+    ),
+    relations = listOf(
+        RelationMusicBrainzModel(
+            type = "",
+            typeId = "6ed4bfc4-0a0d-44c0-b025-b7fc4d900b67",
+            direction = Direction.FORWARD,
+            targetType = MusicBrainzResource.ARTIST,
+            artist = fakeArtistGroup
+        )
+    )
 )
 
 val fakeArtistCredit = ArtistCreditMusicBrainzModel(

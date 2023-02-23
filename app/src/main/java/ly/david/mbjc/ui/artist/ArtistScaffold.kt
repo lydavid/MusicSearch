@@ -54,7 +54,7 @@ internal fun ArtistScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
 
     // This can be hoisted up which would normally let us preview this,
     // but because it relies on compose paging, we can't preview.
