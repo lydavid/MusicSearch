@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.artist
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -15,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -24,8 +26,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
@@ -34,7 +41,6 @@ import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -42,15 +48,7 @@ import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
-internal enum class ArtistTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-    RELEASE_GROUPS(Tab.RELEASE_GROUPS),
-    RELEASES(Tab.RELEASES),
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class, InternalCoroutinesApi::class)
 @Composable
 internal fun ArtistScaffold(
     artistId: String,
@@ -65,7 +63,6 @@ internal fun ArtistScaffold(
 ) {
     val resource = MusicBrainzResource.ARTIST
     val snackbarHostState = remember { SnackbarHostState() }
-    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var isSorted by rememberSaveable { mutableStateOf(false) }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
@@ -74,14 +71,23 @@ internal fun ArtistScaffold(
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
-    val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+    val showMoreInfoInReleaseListItem
+        by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
+
+    val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState()
+    var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
 
     LaunchedEffect(key1 = artistId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        selectedTab = ArtistTab.values()[pagerState.currentPage]
+    }
+
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-        viewModel.onSelectedTabChange(
+        viewModel.loadDataForTab(
             artistId = artistId,
             selectedTab = selectedTab
         )
@@ -118,7 +124,8 @@ internal fun ArtistScaffold(
                         DropdownMenuItem(
                             text = { Text(if (showMoreInfoInReleaseListItem) "Show less info" else "Show more info") },
                             onClick = {
-                                viewModel.appPreferences.setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)
+                                viewModel.appPreferences
+                                    .setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)
                                 closeMenu()
                             }
                         )
@@ -130,7 +137,7 @@ internal fun ArtistScaffold(
                 },
                 tabsTitles = ArtistTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { selectedTab = ArtistTab.values()[it] }
+                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
             )
         },
     ) { innerPadding ->
@@ -154,76 +161,87 @@ internal fun ArtistScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
-        when (selectedTab) {
-            ArtistTab.DETAILS -> {
-                DetailsWithErrorHandling(
-                    modifier = Modifier.padding(innerPadding),
-                    showError = showError,
-                    onRetryClick = { forceRefresh = true },
-                    scaffoldModel = artist
-                ) {
-                    ArtistDetailsScreen(
+        HorizontalPager(
+            count = ArtistTab.values().size,
+            state = pagerState
+        ) {
+
+            when (ArtistTab.values()[it]) {
+                ArtistTab.DETAILS -> {
+                    DetailsWithErrorHandling(
+                        modifier = Modifier.padding(innerPadding),
+                        showError = showError,
+                        onRetryClick = { forceRefresh = true },
+                        scaffoldModel = artist
+                    ) { artist ->
+                        ArtistDetailsScreen(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize()
+                                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            artist = artist,
+                            lazyListState = detailsLazyListState
+                        )
+                    }
+                }
+                ArtistTab.RELEASE_GROUPS -> {
+                    ReleaseGroupsByArtistScreen(
+                        artistId = artistId,
                         modifier = Modifier
                             .padding(innerPadding)
+                            .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        artist = it,
-                        lazyListState = detailsLazyListState
+                        searchText = filterText,
+                        isSorted = isSorted,
+                        snackbarHostState = snackbarHostState,
+                        onReleaseGroupClick = onItemClick,
+                        lazyListState = releaseGroupsLazyListState,
+                        lazyPagingItems = releaseGroupsLazyPagingItems,
+                        onPagedReleaseGroupsChange = {
+                            pagedReleaseGroups = it
+                        }
                     )
                 }
-            }
-            ArtistTab.RELEASE_GROUPS -> {
-                ReleaseGroupsByArtistScreen(
-                    artistId = artistId,
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    searchText = filterText,
-                    isSorted = isSorted,
-                    snackbarHostState = snackbarHostState,
-                    onReleaseGroupClick = onItemClick,
-                    lazyListState = releaseGroupsLazyListState,
-                    lazyPagingItems = releaseGroupsLazyPagingItems,
-                    onPagedReleaseGroupsChange = {
-                        pagedReleaseGroups = it
-                    }
-                )
-            }
-            ArtistTab.RELEASES -> {
-                ReleasesByArtistScreen(
-                    artistId = artistId,
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    snackbarHostState = snackbarHostState,
-                    releasesLazyListState = releasesLazyListState,
-                    releasesLazyPagingItems = releasesLazyPagingItems,
-                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-                    onReleaseClick = onItemClick,
-                    filterText = filterText,
-                    showMoreInfo = showMoreInfoInReleaseListItem
-                )
-            }
-            ArtistTab.RELATIONSHIPS -> {
-                viewModel.loadRelations(artistId)
+                ArtistTab.RELEASES -> {
+                    ReleasesByArtistScreen(
+                        artistId = artistId,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                        onReleaseClick = onItemClick,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem
+                    )
+                }
+                ArtistTab.RELATIONSHIPS -> {
+                    viewModel.loadRelations(artistId)
 
-                RelationsScreen(
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    onItemClick = onItemClick,
-                    snackbarHostState = snackbarHostState,
-                    lazyListState = relationsLazyListState,
-                    lazyPagingItems = relationsLazyPagingItems,
-                )
-            }
-            ArtistTab.STATS -> {
-                ArtistStatsScreen(
-                    artistId = artistId,
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    tabs = ArtistTab.values().map { it.tab }
-                )
+                    RelationsScreen(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onItemClick = onItemClick,
+                        snackbarHostState = snackbarHostState,
+                        lazyListState = relationsLazyListState,
+                        lazyPagingItems = relationsLazyPagingItems,
+                    )
+                }
+                ArtistTab.STATS -> {
+                    ArtistStatsScreen(
+                        artistId = artistId,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        tabs = ArtistTab.values().map { it.tab }
+                    )
+                }
             }
         }
     }

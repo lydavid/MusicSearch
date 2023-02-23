@@ -38,7 +38,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    fun onSelectedTabChange(
+    fun loadDataForTab(
         artistId: String,
         selectedTab: ArtistTab
     ) {

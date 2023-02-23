@@ -113,8 +113,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
-    // Accompanist
-    implementation "com.google.accompanist:accompanist-swiperefresh:0.28.0"
+    implementation libs.accompanist.swiperefresh
+    implementation libs.accompanist.pager
 
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"

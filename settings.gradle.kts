@@ -11,6 +11,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
 
+            version("accompanist", "0.28.0")
             version("compose-foundation", "1.3.1")
             version("compose-material", "1.3.1")
             version("compose-material3", "1.0.1")
@@ -20,6 +21,9 @@ dependencyResolutionManagement {
             version("moshi", "1.14.0")
             version("retrofit", "2.9.0")
             version("room", "2.5.0")
+
+            library("accompanist-swiperefresh", "com.google.accompanist", "accompanist-swiperefresh").versionRef("accompanist")
+            library("accompanist-pager", "com.google.accompanist", "accompanist-pager").versionRef("accompanist")
 
             // https://developer.android.com/jetpack/androidx/releases/compose
             library("compose-foundation", "androidx.compose.foundation", "foundation").versionRef("compose-foundation")
