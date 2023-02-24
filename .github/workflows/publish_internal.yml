@@ -21,6 +21,7 @@ jobs:
         run: |
           status='skip'
           if ! (git log --oneline -n 1 | grep -c "Bump internal version"); then status='deploy'; fi
+          echo "status=$status" >> $GITHUB_OUTPUT
         shell: bash
 
   publish-internal:
