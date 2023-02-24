@@ -25,7 +25,7 @@ jobs:
 
   publish-internal:
     needs: check
-    if: needs.check.outputs.status = 'deploy'
+    if: needs.check.outputs.status == 'deploy'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
