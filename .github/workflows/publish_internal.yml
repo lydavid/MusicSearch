@@ -6,7 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.early_exit.outputs.status }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Cannot early exit jobs with GHA yet
+      # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
+      - name: Determine whether to exit early based on previous commit
+        id: early_exit
+        run: |
+          status='skip'
+          if (git log --oneline -n 1 | grep -c "Bump internal version"); then status='deploy'; fi
+        shell: bash
+
   publish-internal:
+    needs: check
+    if: needs.check.outputs.status = 'deploy'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
