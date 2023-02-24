@@ -20,7 +20,7 @@ jobs:
         id: early_exit
         run: |
           status='skip'
-          if (git log --oneline -n 1 | grep -c "Bump internal version"); then status='deploy'; fi
+          if ! (git log --oneline -n 1 | grep -c "Bump internal version"); then status='deploy'; fi
         shell: bash
 
   publish-internal:
