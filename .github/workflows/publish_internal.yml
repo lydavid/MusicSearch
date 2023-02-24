@@ -15,8 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      #      - name: Make sure latest commit was not a bump by this workflow
+        with:
+          token: ${{ secrets.PAT }}
 
       - id: setup
         uses: ./.github/actions/setup
@@ -25,7 +25,7 @@ jobs:
       - name: Bump version code
         run: |
           vc=$(grep 'versionCode' app/build.gradle | sed 's/[^0-9]//g')
-          sed -i "s/versionCode $vc/versionCode $(($vc + 1))/" app/build.gradle
+          sed -bi "s/versionCode $vc/versionCode $(($vc + 1))/" app/build.gradle
         shell: bash
 
       # After this step, the workspace contains credentials file.
