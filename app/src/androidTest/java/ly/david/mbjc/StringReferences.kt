@@ -31,6 +31,8 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.places)
     val releases
         get() = composeTestRule.activity.resources.getString(R.string.releases)
+    val releaseGroups
+        get() = composeTestRule.activity.resources.getString(R.string.release_groups)
     val stats
         get() = composeTestRule.activity.resources.getString(R.string.stats)
     val tracks
