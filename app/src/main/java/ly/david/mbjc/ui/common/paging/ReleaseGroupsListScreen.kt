@@ -11,21 +11,25 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
+import ly.david.data.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 
 @HiltViewModel
 internal class ReleaseGroupsListViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
-    override val releaseGroupDao: ReleaseGroupDao
-) : ViewModel(), GetReleaseGroupCoverArtPath
+    private val releaseGroupDao: ReleaseGroupDao
+) : ViewModel(), GetReleaseGroupCoverArtPath {
+    override val updateReleaseGroupCoverArtDao: UpdateReleaseGroupCoverArtDao
+        get() = releaseGroupDao
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

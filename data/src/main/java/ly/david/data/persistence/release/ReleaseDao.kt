@@ -3,12 +3,13 @@ package ly.david.data.persistence.release
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.artist.credit.ArtistCreditDao
 
 @Dao
-abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
+abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao, UpdateReleaseCoverArtDao {
 
     @Transaction
     open suspend fun insertAllReleasesWithArtistCredits(releases: List<ReleaseMusicBrainzModel>) {
@@ -71,5 +72,5 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
             WHERE id = :releaseId
         """
     )
-    abstract suspend fun setReleaseCoverArtPath(releaseId: String, coverArtPath: String)
+    abstract override suspend fun setReleaseCoverArtPath(releaseId: String, coverArtPath: String)
 }

@@ -10,19 +10,23 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
+import ly.david.data.coverart.GetReleaseCoverArtPath
 import ly.david.data.persistence.release.ReleaseDao
+import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.mbjc.ui.release.ReleaseListItem
 import timber.log.Timber
 
 @HiltViewModel
 internal class ReleasesListViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
-    override val releaseDao: ReleaseDao
-) : ViewModel(), GetReleaseCoverArtPath
+    private val releaseDao: ReleaseDao
+) : ViewModel(), GetReleaseCoverArtPath {
+    override val updateReleaseCoverArtDao: UpdateReleaseCoverArtDao
+        get() = releaseDao
+}
 
 @Composable
 internal fun ReleasesListScreen(

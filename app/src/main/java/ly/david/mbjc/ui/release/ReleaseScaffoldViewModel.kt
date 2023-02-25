@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
@@ -31,7 +31,7 @@ import ly.david.data.domain.toTrackListItemModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.api.coverart.GetReleaseCoverArtPath
+import ly.david.data.coverart.GetReleaseCoverArtPath
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -40,6 +40,7 @@ import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
+import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -48,7 +49,7 @@ import ly.david.mbjc.ui.common.paging.RelationsList
 
 @HiltViewModel
 internal class ReleaseScaffoldViewModel @Inject constructor(
-    override val releaseDao: ReleaseDao,
+    private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     override val lookupHistoryDao: LookupHistoryDao,
@@ -58,6 +59,9 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
     GetReleaseCoverArtPath {
+
+    override val updateReleaseCoverArtDao: UpdateReleaseCoverArtDao
+        get() = releaseDao
 
     private data class ViewModelState(
         val releaseId: String = "",

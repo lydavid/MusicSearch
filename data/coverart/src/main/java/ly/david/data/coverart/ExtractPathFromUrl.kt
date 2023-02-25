@@ -1,4 +1,4 @@
-package ly.david.data.network.api.coverart
+package ly.david.data.coverart
 
 internal fun String.extractPathFromUrl(): String {
     val splitUrl = this.split("/")

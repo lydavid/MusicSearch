@@ -1,13 +1,12 @@
-package ly.david.data.coverart
+package ly.david.data.coverart.api
 
 import ly.david.data.base.JsonUtils
+import ly.david.data.coverart.COVER_ART_ARCHIVE_BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-
-internal const val COVER_ART_ARCHIVE_BASE_URL = "https://coverartarchive.org/"
 
 interface CoverArtArchiveApiService {
     /**

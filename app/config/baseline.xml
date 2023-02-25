@@ -52,6 +52,7 @@
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: disclaimer when turning on sort if we have not gotten all release groups</ID>
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: generalize switch menu item</ID>
     <ID>ForbiddenComment:BigCoverArt.kt$// TODO: handle error with retry</ID>
+    <ID>ForbiddenComment:CollectionGroup.kt$// TODO: decide whether user should click into a collection group</ID>
     <ID>ForbiddenComment:EventDetailsScreen.kt$// TODO: set list</ID>
     <ID>ForbiddenComment:ExperimentalSettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
     <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: can we avoid flow { emit { ?</ID>
@@ -98,7 +99,6 @@
     <ID>ForbiddenComment:WorkListItem.kt$// TODO: artists</ID>
     <ID>ForbiddenComment:WorkListItem.kt$// TODO: writers</ID>
     <ID>ForbiddenComment:WorkScaffold.kt$// TODO: browsing rather than lookup recording-rels doesn't include attributes</ID>
-    <ID>LongParameterList:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$( override val releaseDao: ReleaseDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, override val lookupHistoryDao: LookupHistoryDao, override val coverArtArchiveApiService: CoverArtArchiveApiService, private val repository: ReleaseRepository, private val relationsList: RelationsList, )</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$3</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$4</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
@@ -121,6 +121,8 @@
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
+    <ID>ModifierReused:CollectionListScaffold.kt$LazyColumn(modifier = modifier .padding(innerPadding) .fillMaxSize()) { items(MusicBrainzResource.values()) { CollectionGroup(musicBrainzResource = it) } }</ID>
+    <ID>ModifierReused:CollectionListScaffold.kt$Scaffold( modifier = modifier, topBar = { ScrollableTopAppBar( showBackButton = false, title = stringResource(id = R.string.collections), ) }, ) { innerPadding -&gt; LazyColumn(modifier = modifier .padding(innerPadding) .fillMaxSize()) { items(MusicBrainzResource.values()) { CollectionGroup(musicBrainzResource = it) } } }</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } )</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } }</ID>
     <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox( expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier ) { TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() ) // Focusing on this "consumes" a back press, and is independent of onDismissRequest. ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } } }</ID>
@@ -169,6 +171,7 @@
     <ID>UnstableCollections:StatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
+    <ID>UnusedPrivateMember:CollectionListScaffold.kt$onDestinationClick: (destination: Destination, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
     <ID>UnusedPrivateMember:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$private val coverArtArchiveApiService: CoverArtArchiveApiService</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -9,7 +9,7 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.coverart.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.persistence.artist.release.ArtistRelease
 import ly.david.data.persistence.artist.release.ArtistReleaseDao
 import ly.david.data.persistence.relation.BrowseResourceCount

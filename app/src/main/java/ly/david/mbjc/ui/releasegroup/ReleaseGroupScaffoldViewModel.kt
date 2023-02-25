@@ -6,15 +6,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.coverart.CoverArtArchiveApiService
-import ly.david.data.network.api.coverart.GetReleaseGroupCoverArtPath
-import ly.david.data.coverart.buildCoverArtUrl
+import ly.david.data.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
@@ -27,10 +28,13 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
-    override val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupDao: ReleaseGroupDao,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
     GetReleaseGroupCoverArtPath {
+
+    override val updateReleaseGroupCoverArtDao: UpdateReleaseGroupCoverArtDao
+        get() = releaseGroupDao
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP

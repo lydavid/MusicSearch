@@ -12,7 +12,6 @@
     <ID>ForbiddenComment:ArtistCreditResource.kt$ArtistCreditResource$// TODO: can't FK to multiple tables directly?</ID>
     <ID>ForbiddenComment:ArtistRelease.kt$// TODO: we actually don't want to cascade delete in any scenario where another resource screen can delete the same resource</ID>
     <ID>ForbiddenComment:ArtistReleaseGroupDao.kt$ArtistReleaseGroupDao.Companion$// TODO: we're able to filter on date's month/day even though we don't display it. Could be confusing</ID>
-    <ID>ForbiddenComment:GetReleaseCoverArtPath.kt$GetReleaseCoverArtPath$// TODO: can't move to coverart module unless daos are moved to base</ID>
     <ID>ForbiddenComment:InstrumentRepository.kt$InstrumentRepository$// TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them</ID>
     <ID>ForbiddenComment:Iso3166_1.kt$Iso3166_1$// TODO: ref countries_areas instead</ID>
     <ID>ForbiddenComment:LabelListItemModel.kt$LabelListItemModel$// TODO: don't need this in scaffold model</ID>
@@ -23,7 +22,6 @@
     <ID>ForbiddenComment:LookupHistoryDao.kt$LookupHistoryDao$// TODO: can't search "release group", need to use "release_group" or "release-group"</ID>
     <ID>ForbiddenComment:LookupHistoryRoomModel.kt$// TODO: We can probably make this stable by mapping it to a ui model</ID>
     <ID>ForbiddenComment:MediumRoomModel.kt$MediumRoomModel$// TODO: release_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.MediumRoomModel</ID>
-    <ID>ForbiddenComment:MusicBrainzResource.kt$// TODO: rather than storing displayTextRes in this</ID>
     <ID>ForbiddenComment:RelationDao.kt$RelationDao$// TODO: right now we're unsure if there's collision with mbid between resources</ID>
     <ID>ForbiddenComment:RelationMusicBrainzModel.kt$AttributeValue$// TODO: add the rest of relationship attributes</ID>
     <ID>ForbiddenComment:RelationMusicBrainzModel.kt$RelationMusicBrainzModel$// TODO: we should order with backward relations first</ID>
@@ -45,8 +43,6 @@
     <ID>ForbiddenComment:ReleaseRoomModel.kt$ReleaseRoomModel$// TODO: separate table</ID>
     <ID>ForbiddenComment:RoutesTest.kt$RoutesTest$// TODO: we just have LOOKUP as a fallback case, until we have other sub-routes, we can't test this</ID>
     <ID>ForbiddenComment:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$// TODO: The following are not queryable. Is there a better model to switch on?</ID>
-    <ID>ForbiddenComment:StringExt.kt$// TODO: Support these flags</ID>
-    <ID>ForbiddenComment:StringExt.kt$// TODO: unused</ID>
     <ID>ForbiddenComment:TrackRoomModel.kt$TrackRoomModel$// TODO: check that deleting a release will delete all media and tracks</ID>
     <ID>ForbiddenComment:TrackRoomModel.kt$TrackRoomModel$// TODO: medium_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.TrackRoomModel</ID>
     <ID>ForbiddenComment:TrackRoomModel.kt$TrackRoomModel$// TODO: when adding a new required field, need to specify defaultValue for migration</ID>
@@ -55,11 +51,6 @@
     <ID>LongMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
     <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, resource: MusicBrainzResource, queryString: String, currentOffset: Int, limit: Int ): QueryResults</ID>
     <ID>LongParameterList:ReleaseRepository.kt$ReleaseRepository$( private val musicBrainzApiService: MusicBrainzApiService, private val releaseDao: ReleaseDao, private val releaseReleaseGroupDao: ReleaseReleaseGroupDao, private val releaseGroupDao: ReleaseGroupDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, private val releaseCountryDao: ReleaseCountryDao, private val areaDao: AreaDao, private val labelDao: LabelDao, private val releaseLabelDao: ReleaseLabelDao )</ID>
-    <ID>MagicNumber:GetReleaseCoverArtPath.kt$GetReleaseCoverArtPath$404</ID>
-    <ID>MagicNumber:GetReleaseGroupCoverArtPath.kt$GetReleaseGroupCoverArtPath$404</ID>
-    <ID>MagicNumber:IntExt.kt$10</ID>
-    <ID>MagicNumber:StringExt.kt$0x1F1E6</ID>
-    <ID>MagicNumber:StringExt.kt$0x41</ID>
     <ID>MatchingDeclarationName:FetchedRelations.kt$HasRelationsRoomModel</ID>
     <ID>MaxLineLength:ArtistRelease.kt$// TODO: we actually don't want to cascade delete in any scenario where another resource screen can delete the same resource</ID>
     <ID>MaxLineLength:BrowseApi.kt$BrowseApi$// todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here</ID>
@@ -181,7 +172,6 @@
     <ID>MaxLineLength:TrackRoomModel.kt$TrackRoomModel$// TODO: medium_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.TrackRoomModel</ID>
     <ID>ReturnCount:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, RM&gt; ): MediatorResult</ID>
     <ID>ReturnCount:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
-    <ID>ReturnCount:StringExt.kt$fun String.toFlagEmoji(): String</ID>
     <ID>SwallowedException:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
     <ID>SwallowedException:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>

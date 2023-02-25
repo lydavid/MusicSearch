@@ -3,6 +3,7 @@ complexity:
     ignoreDefaultParameters: true
     ignoreAnnotated:
       - "Composable"
+      - "HiltViewModel"
   LongMethod:
     ignoreAnnotated:
       - "Composable"
