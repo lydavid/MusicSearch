@@ -7,17 +7,14 @@
     <ID>ComposableParamOrder:BigCoverArt.kt$PainterImage</ID>
     <ID>ComposableParamOrder:DetailsWithErrorHandling.kt$DetailsWithErrorHandling</ID>
     <ID>ComposableParamOrder:EventDetailsScreen.kt$EventDetailsScreen</ID>
-    <ID>ComposableParamOrder:EventScaffold.kt$EventScaffold</ID>
     <ID>ComposableParamOrder:EventStatsScreen.kt$EventStatsScreen</ID>
     <ID>ComposableParamOrder:EventsByPlaceScreen.kt$EventsByPlaceScreen</ID>
     <ID>ComposableParamOrder:ExperimentalSettingsScaffold.kt$SettingsScreen</ID>
     <ID>ComposableParamOrder:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox</ID>
     <ID>ComposableParamOrder:HistoryScaffold.kt$HistoryScreen</ID>
     <ID>ComposableParamOrder:InstrumentDetailsScreen.kt$InstrumentDetailsScreen</ID>
-    <ID>ComposableParamOrder:InstrumentScaffold.kt$InstrumentScaffold</ID>
     <ID>ComposableParamOrder:InstrumentStatsScreen.kt$InstrumentStatsScreen</ID>
     <ID>ComposableParamOrder:LabelDetailsScreen.kt$LabelDetailsScreen</ID>
-    <ID>ComposableParamOrder:LabelScaffold.kt$LabelScaffold</ID>
     <ID>ComposableParamOrder:LabelStatsScreen.kt$LabelStatsScreen</ID>
     <ID>ComposableParamOrder:PlaceDetailsScreen.kt$PlaceDetailsScreen</ID>
     <ID>ComposableParamOrder:PlaceStatsScreen.kt$PlaceStatsScreen</ID>
@@ -37,7 +34,6 @@
     <ID>ComposableParamOrder:ScrollableTopAppBar.kt$TitleBar</ID>
     <ID>ComposableParamOrder:SearchMusicBrainzScreen.kt$SearchMusicBrainzScreen</ID>
     <ID>ComposableParamOrder:SeriesDetailsScreen.kt$SeriesDetailsScreen</ID>
-    <ID>ComposableParamOrder:SeriesScaffold.kt$SeriesScaffold</ID>
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
     <ID>ComposableParamOrder:SettingsScaffold.kt$SettingsScreen</ID>
     <ID>ComposableParamOrder:ThreeSectionListItem.kt$ThreeSectionListItem</ID>
@@ -75,7 +71,7 @@
     <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: cannot refresh</ID>
     <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: going to another tab, and coming back will show same error message (doesn't make another call)</ID>
     <ID>ForbiddenComment:PlaceListItem.kt$// TODO: too much information on list item?</ID>
-    <ID>ForbiddenComment:PlaceScaffold.kt$PlaceTab.RELATIONSHIPS$// TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place</ID>
+    <ID>ForbiddenComment:PlaceTab.kt$PlaceTab.RELATIONSHIPS$// TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place</ID>
     <ID>ForbiddenComment:RelationsList.kt$RelationsList$// TODO: consider removing Header</ID>
     <ID>ForbiddenComment:ReleaseDetailsScreen.kt$// TODO: Works for Latn but not Jpan or Kore</ID>
     <ID>ForbiddenComment:ReleaseGroupListItem.kt$// TODO: have 2 modes: query and browse where some data is displayed differently</ID>
@@ -112,19 +108,10 @@
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
-    <ID>MatchingDeclarationName:EventScaffold.kt$EventTab</ID>
-    <ID>MatchingDeclarationName:InstrumentScaffold.kt$InstrumentTab</ID>
-    <ID>MatchingDeclarationName:LabelScaffold.kt$LabelTab</ID>
-    <ID>MatchingDeclarationName:PlaceScaffold.kt$PlaceTab</ID>
     <ID>MatchingDeclarationName:PreviewAnnotations.kt$DefaultPreviews</ID>
-    <ID>MatchingDeclarationName:RecordingScaffold.kt$RecordingTab</ID>
-    <ID>MatchingDeclarationName:ReleaseGroupScaffold.kt$ReleaseGroupTab</ID>
     <ID>MatchingDeclarationName:ReleaseGroupsListScreen.kt$ReleaseGroupsListViewModel : ViewModelGetReleaseGroupCoverArtPath</ID>
-    <ID>MatchingDeclarationName:ReleaseScaffold.kt$ReleaseTab</ID>
     <ID>MatchingDeclarationName:ReleasesListScreen.kt$ReleasesListViewModel : ViewModelGetReleaseCoverArtPath</ID>
-    <ID>MatchingDeclarationName:SeriesScaffold.kt$SeriesTab</ID>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
-    <ID>MatchingDeclarationName:WorkScaffold.kt$WorkTab</ID>
     <ID>MaxLineLength:EventListItem.kt$EventPreviewParameterProvider$disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, a Rolling Stone Magazine 30th anniversary special"</ID>
     <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>

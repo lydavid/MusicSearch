@@ -2,11 +2,11 @@ package ly.david.mbjc.ui.release
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +20,7 @@ import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseEvent
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.network.fakeReleaseWithRelation
+import ly.david.data.network.fakeTrack
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -42,13 +43,11 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
                 ReleaseScaffold(releaseId = releaseMusicBrainzModel.id)
             }
         }
-        composeTestRule.onRoot(useUnmergedTree = true).printToLog(this::class.java.simpleName)
     }
 
     @Test
     fun firstVisit_noLocalData() = runTest {
         setRelease(fakeRelease)
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -57,7 +56,6 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
     fun repeatVisit_localData() = runTest {
         releaseRepository.lookupRelease(fakeRelease.id)
         setRelease(fakeRelease)
-        composeTestRule.awaitIdle()
 
         assertFieldsDisplayed()
     }
@@ -88,6 +86,13 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
         waitForThenAssertIsDisplayed(fakeRelease.media!!.first().tracks!!.first().title)
         waitForThenAssertIsDisplayed(fakeRelease.media!!.first().tracks!!.last().title)
         // TODO: attempted to test filtering but apparently our listitem nodes gets duplicated afterwards...
+
+        waitForThenPerformClickOn(tracks)
+        waitForThenAssertIsDisplayed(fakeTrack.title)
+
+        // TODO: no tracks stats
+        waitForThenPerformClickOn(stats)
+        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
 
         // Confirm that up navigation items exists
         composeTestRule

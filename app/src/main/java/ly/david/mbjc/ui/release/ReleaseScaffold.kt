@@ -25,7 +25,6 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -35,13 +34,6 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
-
-internal enum class ReleaseTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-    TRACKS(Tab.TRACKS),
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
-}
 
 /**
  * The top-level screen for a release.

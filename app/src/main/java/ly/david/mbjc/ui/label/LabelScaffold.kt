@@ -25,7 +25,6 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -36,20 +35,13 @@ import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 
-internal enum class LabelTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-    RELEASES(Tab.RELEASES),
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LabelScaffold(
     labelId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: LabelScaffoldViewModel = hiltViewModel()
 ) {

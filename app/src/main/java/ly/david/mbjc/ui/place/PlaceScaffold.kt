@@ -26,7 +26,6 @@ import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -36,15 +35,6 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 import ly.david.mbjc.ui.place.stats.PlaceStatsScreen
-
-internal enum class PlaceTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-
-    // TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    EVENTS(Tab.EVENTS),
-    STATS(Tab.STATS)
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

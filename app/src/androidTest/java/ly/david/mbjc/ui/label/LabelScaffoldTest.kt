@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist
+package ly.david.mbjc.ui.label
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.hasNoClickAction
@@ -8,11 +8,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.ArtistMusicBrainzModel
-import ly.david.data.network.fakeArtist
+import ly.david.data.network.LabelMusicBrainzModel
+import ly.david.data.network.fakeLabel
 import ly.david.data.network.fakeRelease
-import ly.david.data.network.fakeReleaseGroup
-import ly.david.data.repository.ArtistRepository
+import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -20,58 +19,50 @@ import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
-internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class LabelScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
     @Inject
-    lateinit var artistRepository: ArtistRepository
+    lateinit var labelRepository: LabelRepository
 
-    private fun setArtist(artistMusicBrainzModel: ArtistMusicBrainzModel) {
+    private fun setLabel(labelMusicBrainzModel: LabelMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
-                ArtistScaffold(artistId = artistMusicBrainzModel.id)
+                LabelScaffold(labelId = labelMusicBrainzModel.id)
             }
         }
     }
 
     @Test
     fun firstVisit_noLocalData() = runTest {
-        setArtist(fakeArtist)
+        setLabel(fakeLabel)
 
         assertFieldsDisplayed()
     }
 
     @Test
     fun repeatVisit_localData() = runTest {
-        artistRepository.lookupArtist(fakeArtist.id)
-        setArtist(fakeArtist)
+        labelRepository.lookupLabel(fakeLabel.id)
+        setLabel(fakeLabel)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(fakeArtist.getNameWithDisambiguation())
-
-        waitForThenAssertIsDisplayed(fakeArtist.type!!)
-        waitForThenAssertIsDisplayed(fakeArtist.gender!!)
-
-        waitForThenPerformClickOn(releaseGroups)
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        waitForThenAssertIsDisplayed(fakeLabel.getNameWithDisambiguation())
 
         waitForThenPerformClickOn(releases)
         waitForThenAssertIsDisplayed(fakeRelease.name)
 
         waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(releaseGroups).and(hasNoClickAction()))
         waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
         waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
     }
 
-    // TODO: For some reason, there's a problem with waiting for this if we put it in above function
     @Test
     fun hasRelations() = runTest {
-        setArtist(fakeArtist)
+        setLabel(fakeLabel)
 
         waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakeArtist.relations?.first()?.artist?.name!!)
+        waitForThenAssertIsDisplayed(fakeLabel.relations?.first()?.artist?.name!!)
     }
 }

@@ -25,7 +25,6 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -35,13 +34,6 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 import ly.david.mbjc.ui.work.stats.WorkGroupStatsScreen
-
-internal enum class WorkTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    RECORDINGS(Tab.RECORDINGS),
-    STATS(Tab.STATS)
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

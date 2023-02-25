@@ -2,6 +2,8 @@ package ly.david.mbjc.ui.work
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -9,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.network.fakeRecording
 import ly.david.data.network.fakeWorkWithAllData
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.MainActivityTest
@@ -44,7 +47,6 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         assertFieldsDisplayed()
     }
 
-    // TODO: flake
     @Test
     fun repeatVisit_localData() = runTest {
         repository.lookupWork(fakeWorkWithAllData.id)
@@ -57,16 +59,19 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(fakeWorkWithAllData.getNameWithDisambiguation())
         waitForThenAssertIsDisplayed(fakeWorkWithAllData.type!!)
 
-        // TODO: Doesn't work cause it contains : but we shouldn't be testing for exact string here
-//        composeTestRule
-//            .onNodeWithText(fakeWork.attributes!!.first().type)
-//            .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(fakeWorkWithAllData.attributes!!.first().value)
             .assertIsDisplayed()
+
+        waitForThenPerformClickOn(recordings)
+        waitForThenAssertIsDisplayed(fakeRecording.name)
+
+        waitForThenPerformClickOn(stats)
+        waitForThenAssertIsDisplayed(hasText(recordings).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
     }
 
-    // TODO: why does this take so long on CI? ~20s
+    // TODO: why does this take so long on CI? ~20s. is relations query really inefficient?
     @Test
     fun hasRelations() = runTest {
         setWork(fakeWorkWithAllData)

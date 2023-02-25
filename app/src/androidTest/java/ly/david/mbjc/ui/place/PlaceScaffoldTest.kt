@@ -2,9 +2,9 @@ package ly.david.mbjc.ui.place
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
-import androidx.compose.ui.test.printToLog
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,6 +12,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
+import ly.david.data.network.fakeEvent
 import ly.david.data.network.fakePlaceWithAllData
 import ly.david.data.repository.PlaceRepository
 import ly.david.mbjc.MainActivityTest
@@ -38,7 +39,6 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
                 PlaceScaffold(placeId = placeMusicBrainzModel.id)
             }
         }
-        composeTestRule.onRoot(useUnmergedTree = true).printToLog(this::class.java.simpleName)
     }
 
     @Test
@@ -75,6 +75,13 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         composeTestRule
             .onNodeWithText(fakePlaceWithAllData.lifeSpan?.end!!)
             .assertIsDisplayed()
+
+        waitForThenPerformClickOn(events)
+        waitForThenAssertIsDisplayed(fakeEvent.name)
+
+        waitForThenPerformClickOn(stats)
+        waitForThenAssertIsDisplayed(hasText(events).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
     }
 
     @Test

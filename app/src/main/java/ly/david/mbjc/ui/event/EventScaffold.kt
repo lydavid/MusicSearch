@@ -21,7 +21,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -30,12 +29,6 @@ import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.event.details.EventDetailsScreen
 import ly.david.mbjc.ui.event.stats.EventStatsScreen
-
-internal enum class EventTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
-}
 
 /**
  * The top-level screen for an event.
@@ -48,7 +41,7 @@ internal fun EventScaffold(
     eventId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
-    onBack: () -> Unit,
+    onBack: () -> Unit = {},
     onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: EventScaffoldViewModel = hiltViewModel()
 ) {

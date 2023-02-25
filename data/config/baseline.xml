@@ -37,7 +37,6 @@
     <ID>ForbiddenComment:ReleaseDao.kt$ReleaseDao$// TODO: simplify</ID>
     <ID>ForbiddenComment:ReleaseForListItem.kt$ReleaseForListItem$// TODO: we've lost the ability to filter on this field</ID>
     <ID>ForbiddenComment:ReleaseGroupListItemModel.kt$// TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable</ID>
-    <ID>ForbiddenComment:ReleaseGroupRoomModel.kt$ReleaseGroupRoomModel$// TODO: remove</ID>
     <ID>ForbiddenComment:ReleaseMusicBrainzModel.kt$ReleaseMusicBrainzModel$// TODO: rather than using this field, use the first release-event</ID>
     <ID>ForbiddenComment:ReleaseReleaseGroupDao.kt$ReleaseReleaseGroupDao$// TODO: put this in release group dao? only used by ReleaseGroupRepository</ID>
     <ID>ForbiddenComment:ReleaseRepository.kt$ReleaseRepository$// TODO: move back to ui folder</ID>

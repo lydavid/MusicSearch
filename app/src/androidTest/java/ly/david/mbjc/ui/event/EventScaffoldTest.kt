@@ -1,0 +1,63 @@
+package ly.david.mbjc.ui.event
+
+import androidx.activity.compose.setContent
+import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasText
+import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import ly.david.data.getNameWithDisambiguation
+import ly.david.data.network.EventMusicBrainzModel
+import ly.david.data.network.fakeEvent
+import ly.david.data.repository.EventRepository
+import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.StringReferences
+import ly.david.mbjc.ui.theme.PreviewTheme
+import org.junit.Test
+
+@OptIn(ExperimentalCoroutinesApi::class)
+@HiltAndroidTest
+internal class EventScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+
+    @Inject
+    lateinit var eventRepository: EventRepository
+
+    private fun setEvent(eventMusicBrainzModel: EventMusicBrainzModel) {
+        composeTestRule.activity.setContent {
+            PreviewTheme {
+                EventScaffold(eventId = eventMusicBrainzModel.id)
+            }
+        }
+    }
+
+    @Test
+    fun firstVisit_noLocalData() = runTest {
+        setEvent(fakeEvent)
+
+        assertFieldsDisplayed()
+    }
+
+    @Test
+    fun repeatVisit_localData() = runTest {
+        eventRepository.lookupEvent(fakeEvent.id)
+        setEvent(fakeEvent)
+
+        assertFieldsDisplayed()
+    }
+
+    private fun assertFieldsDisplayed() {
+        waitForThenAssertIsDisplayed(fakeEvent.getNameWithDisambiguation())
+
+        waitForThenPerformClickOn(stats)
+        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+    }
+
+    @Test
+    fun hasRelations() = runTest {
+        setEvent(fakeEvent)
+
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(fakeEvent.relations?.first()?.area?.name!!)
+    }
+}

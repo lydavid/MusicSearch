@@ -5,6 +5,15 @@ import ly.david.data.network.api.SearchInstrumentsResponse
 val fakeInstrument = InstrumentMusicBrainzModel(
     id = "instrument1",
     name = "Instrument Name",
+    relations = listOf(
+        RelationMusicBrainzModel(
+            type = "",
+            typeId = "0b67183b-9f36-4b09-b561-0fa531508f91",
+            direction = Direction.BACKWARD,
+            targetType = MusicBrainzResource.AREA,
+            area = fakeArea
+        )
+    )
 )
 
 val fakeInstruments = listOf(

@@ -27,8 +27,12 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.recent_history)
     val noResultsFound
         get() = composeTestRule.activity.resources.getString(R.string.no_results_found)
+    val events
+        get() = composeTestRule.activity.resources.getString(R.string.events)
     val places
         get() = composeTestRule.activity.resources.getString(R.string.places)
+    val recordings
+        get() = composeTestRule.activity.resources.getString(R.string.recordings)
     val releases
         get() = composeTestRule.activity.resources.getString(R.string.releases)
     val releaseGroups

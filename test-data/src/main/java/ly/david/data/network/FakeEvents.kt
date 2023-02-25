@@ -5,7 +5,16 @@ import ly.david.data.network.api.SearchEventsResponse
 
 val fakeEvent = EventMusicBrainzModel(
     id = "event1",
-    name = "Event Name"
+    name = "Event Name",
+    relations = listOf(
+        RelationMusicBrainzModel(
+            type = "",
+            typeId = "542f8484-8bc7-3ce5-a022-747850b2b928",
+            direction = Direction.FORWARD,
+            targetType = MusicBrainzResource.AREA,
+            area = fakeArea
+        )
+    )
 )
 
 val fakeEvents = listOf(

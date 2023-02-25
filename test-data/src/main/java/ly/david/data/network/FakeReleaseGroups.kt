@@ -6,6 +6,16 @@ import ly.david.data.network.api.SearchReleaseGroupsResponse
 val fakeReleaseGroup = ReleaseGroupMusicBrainzModel(
     id = "fakeReleaseGroup1",
     name = "Release Group Name",
+    artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
+    relations = listOf(
+        RelationMusicBrainzModel(
+            type = "",
+            typeId = "5e2907db-49ec-4a48-9f11-dfb99d2603ff",
+            direction = Direction.BACKWARD,
+            targetType = MusicBrainzResource.ARTIST,
+            artist = fakeArtist
+        )
+    )
 )
 
 val fakeReleaseGroupWithArtistCredits = ReleaseGroupMusicBrainzModel(

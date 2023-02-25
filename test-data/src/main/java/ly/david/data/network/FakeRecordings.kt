@@ -9,6 +9,15 @@ val fakeRecording = RecordingMusicBrainzModel(
     firstReleaseDate = "2022-11-06",
     length = 25300000,
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
+    relations = listOf(
+        RelationMusicBrainzModel(
+            type = "",
+            typeId = "4f4aa317-c3c4-4001-ac23-fb8cf0bc543c",
+            direction = Direction.BACKWARD,
+            targetType = MusicBrainzResource.AREA,
+            area = fakeArea
+        )
+    )
 )
 
 val fakeRecordings = listOf(

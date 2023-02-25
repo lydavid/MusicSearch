@@ -29,7 +29,6 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.Tab
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -39,13 +38,6 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
-
-internal enum class ReleaseGroupTab(val tab: Tab) {
-    DETAILS(Tab.DETAILS),
-    RELEASES(Tab.RELEASES),
-    RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS),
-}
 
 /**
  * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756

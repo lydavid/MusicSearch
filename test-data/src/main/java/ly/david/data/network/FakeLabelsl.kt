@@ -6,7 +6,16 @@ val fakeLabel = LabelMusicBrainzModel(
     id = "label1",
     name = "Label Name 1",
     labelCode = 123,
-    type = "Imprint"
+    type = "Imprint",
+    relations = listOf(
+        RelationMusicBrainzModel(
+            type = "",
+            typeId = "fe16f2bd-d324-435a-8076-bcf43b805bd9",
+            direction = Direction.BACKWARD,
+            targetType = MusicBrainzResource.ARTIST,
+            artist = fakeArtist
+        )
+    )
 )
 
 val fakeLabel2 = LabelMusicBrainzModel(
