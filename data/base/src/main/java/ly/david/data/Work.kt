@@ -1,6 +1,6 @@
 package ly.david.data
 
-internal interface Work: NameWithDisambiguation {
+interface Work: NameWithDisambiguation {
     val id: String
     override val name: String
     override val disambiguation: String?

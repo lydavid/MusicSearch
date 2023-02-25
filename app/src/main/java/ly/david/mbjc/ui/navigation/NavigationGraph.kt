@@ -1,8 +1,5 @@
 package ly.david.mbjc.ui.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +20,7 @@ import ly.david.data.network.toMusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
+import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
@@ -80,7 +78,18 @@ internal fun NavigationGraph(
                 Destination.LOOKUP_RELEASE,
                 Destination.LOOKUP_RELEASE_GROUP,
                 Destination.LOOKUP_SERIES,
-                Destination.LOOKUP_WORK -> navController.goToResource(destination, id, title)
+                Destination.LOOKUP_WORK,
+                Destination.COLLECTIONS_AREA,
+                Destination.COLLECTIONS_ARTIST,
+                Destination.COLLECTIONS_EVENT,
+                Destination.COLLECTIONS_INSTRUMENT,
+                Destination.COLLECTIONS_LABEL,
+                Destination.COLLECTIONS_PLACE,
+                Destination.COLLECTIONS_RECORDING,
+                Destination.COLLECTIONS_RELEASE,
+                Destination.COLLECTIONS_RELEASE_GROUP,
+                Destination.COLLECTIONS_SERIES,
+                Destination.COLLECTIONS_WORK -> navController.goToResource(destination, id, title)
                 Destination.LOOKUP_URL -> {
                     // Expected to be handled elsewhere.
                 }
@@ -307,16 +316,21 @@ internal fun NavigationGraph(
         ) {
             SettingsScaffold(
                 modifier = modifier,
-                onDestinationClick = { onDestinationClick(it, "", null) }
+                onDestinationClick = { destination ->
+                    onDestinationClick(destination, "", null)
+                }
             )
         }
 
         composable(
             Destination.COLLECTIONS.route
         ) {
-            Surface(modifier = modifier.fillMaxSize()) {
-                Text(text = "TODO")
-            }
+            CollectionListScaffold(
+                modifier = modifier,
+                onDestinationClick = { destination, id ->
+                    onDestinationClick(destination, id, null)
+                }
+            )
         }
 
         composable(

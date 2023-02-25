@@ -2,19 +2,19 @@ package ly.david.data.network
 
 import com.squareup.moshi.Json
 
-internal const val RESOURCE_AREA = "area"
-internal const val RESOURCE_ARTIST = "artist"
-internal const val RESOURCE_EVENT = "event"
-internal const val RESOURCE_GENRE = "genre"
-internal const val RESOURCE_INSTRUMENT = "instrument"
-internal const val RESOURCE_LABEL = "label"
-internal const val RESOURCE_PLACE = "place"
-internal const val RESOURCE_RECORDING = "recording"
-internal const val RESOURCE_RELEASE = "release"
-internal const val RESOURCE_RELEASE_GROUP = "release-group"
-internal const val RESOURCE_SERIES = "series"
-internal const val RESOURCE_WORK = "work"
-internal const val RESOURCE_URL = "url"
+const val RESOURCE_AREA = "area"
+const val RESOURCE_ARTIST = "artist"
+const val RESOURCE_EVENT = "event"
+const val RESOURCE_GENRE = "genre"
+const val RESOURCE_INSTRUMENT = "instrument"
+const val RESOURCE_LABEL = "label"
+const val RESOURCE_PLACE = "place"
+const val RESOURCE_RECORDING = "recording"
+const val RESOURCE_RELEASE = "release"
+const val RESOURCE_RELEASE_GROUP = "release-group"
+const val RESOURCE_SERIES = "series"
+const val RESOURCE_WORK = "work"
+const val RESOURCE_URL = "url"
 
 // TODO: rather than storing displayTextRes in this
 //  map it in :app, then :data doesn't reference strings at all

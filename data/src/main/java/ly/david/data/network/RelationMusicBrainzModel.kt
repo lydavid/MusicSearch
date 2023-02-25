@@ -37,8 +37,7 @@ data class RelationMusicBrainzModel(
     @Json(name = "series") val series: SeriesMusicBrainzModel? = null,
     @Json(name = "work") val work: WorkMusicBrainzModel? = null,
     @Json(name = "url") val url: UrlMusicBrainzModel? = null,
-
-    ) : ILifeSpan
+) : ILifeSpan
 
 enum class Direction {
     @Json(name = "backward") BACKWARD,

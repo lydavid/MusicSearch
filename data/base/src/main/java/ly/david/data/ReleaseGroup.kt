@@ -3,7 +3,7 @@ package ly.david.data
 /**
  * Defines common properties between domain, network and persistence model.
  */
-internal interface ReleaseGroup : NameWithDisambiguation, ReleaseGroupTypes {
+interface ReleaseGroup : NameWithDisambiguation, ReleaseGroupTypes {
 
     val id: String
     override val name: String

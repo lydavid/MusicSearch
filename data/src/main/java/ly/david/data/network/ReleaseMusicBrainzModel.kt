@@ -1,6 +1,5 @@
 package ly.david.data.network
 
-import androidx.room.ColumnInfo
 import com.squareup.moshi.Json
 import ly.david.data.NameWithDisambiguation
 import ly.david.data.Release
@@ -45,33 +44,6 @@ data class ReleaseMusicBrainzModel(
 
     @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
 ) : MusicBrainzModel(), Release
-
-data class CoverArtArchive(
-//    @Json(name = "darkened") val darkened: Boolean = false,
-//    @Json(name = "artwork") val artwork: Boolean = false,
-//    @Json(name = "back") val back: Boolean = false,
-//    @Json(name = "front") val front: Boolean = false,
-
-    @ColumnInfo(name = "cover_art_count", defaultValue = "0")
-    @Json(name = "count")
-    val count: Int = 0
-)
-
-data class TextRepresentation(
-    /**
-     * See: https://en.wikipedia.org/wiki/ISO_15924
-     */
-    @ColumnInfo(name = "script")
-    @Json(name = "script")
-    val script: String? = null,
-
-    /**
-     * See: https://en.wikipedia.org/wiki/ISO_639-3
-     */
-    @ColumnInfo(name = "language")
-    @Json(name = "language")
-    val language: String? = null,
-)
 
 data class ReleaseEvent(
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,

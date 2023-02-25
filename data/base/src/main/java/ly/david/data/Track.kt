@@ -3,7 +3,7 @@ package ly.david.data
 /**
  * Represents a Track in a [Medium].
  */
-internal interface Track {
+interface Track {
     val id: String
     val position: Int
     val number: String

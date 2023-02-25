@@ -6,7 +6,7 @@ import ly.david.data.network.TextRepresentation
 /**
  * Defines common properties between domain, network and persistence model.
  */
-internal interface Release : NameWithDisambiguation {
+interface Release : NameWithDisambiguation {
     val id: String
     override val name: String
     override val disambiguation: String
