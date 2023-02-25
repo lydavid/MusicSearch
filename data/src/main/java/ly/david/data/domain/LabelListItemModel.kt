@@ -1,6 +1,7 @@
 package ly.david.data.domain
 
 import ly.david.data.Label
+import ly.david.data.network.LabelInfo
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.release.LabelWithCatalog
@@ -43,3 +44,21 @@ internal fun LabelWithCatalog.toLabelListItemModel() =
         labelCode = label.labelCode,
         catalogNumber = releaseLabel.catalogNumber
     )
+
+fun List<LabelInfo>.toLabelListItemModels(): List<LabelListItemModel> {
+    return this.mapNotNull { labelInfo ->
+        val label = labelInfo.label
+        if (label == null) {
+            null
+        } else {
+            LabelListItemModel(
+                id = label.id,
+                name = label.name,
+                disambiguation = label.disambiguation,
+                type = label.type,
+                labelCode = label.labelCode,
+                catalogNumber = labelInfo.catalogNumber
+            )
+        }
+    }
+}

@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ConstructorParameterNaming:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$@Json(name = "iso-3166-1-codes") val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
+    <ID>ForbiddenComment:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$// TODO: fd6d47bd-d574-49a1-97d3-b8e5431cd25d uses "iso-3166-2-codes"</ID>
+    <ID>ForbiddenComment:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$// TODO: what is an example of a country with more than 1 code?</ID>
+    <ID>ForbiddenComment:LookupApi.kt$LookupApi$// TODO: Separate tab: artists, events, labels, releases, recordings, places, works</ID>
+    <ID>ForbiddenComment:LookupApi.kt$LookupApi$// TODO: lookup with all rels might be a bit too much, especially since there's no pagination</ID>
+    <ID>ForbiddenComment:LookupApi.kt$LookupApi$// TODO: place-rels doesn't return anything</ID>
+    <ID>ForbiddenComment:LookupApi.kt$LookupApi.Companion$// TODO: use this if we decide to split area relations lookup</ID>
+    <ID>ForbiddenComment:MusicBrainzModel.kt$// TODO: Identifiable?</ID>
+    <ID>ForbiddenComment:RelationMusicBrainzModel.kt$AttributeValue$// TODO: add the rest of relationship attributes</ID>
+    <ID>ForbiddenComment:RelationMusicBrainzModel.kt$RelationMusicBrainzModel$// TODO: we should order with backward relations first</ID>
+    <ID>ForbiddenComment:RelationshipHeaders.kt$// TODO: Deal with attributes: if an attribute exists, then use appropriate {half:half-}{step} in label?</ID>
+    <ID>ForbiddenComment:ReleaseMusicBrainzModel.kt$ReleaseMusicBrainzModel$// TODO: rather than using this field, use the first release-event</ID>
+    <ID>MaxLineLength:BrowseApi.kt$BrowseApi$// todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here</ID>
+    <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
+    <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
+    <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
+    <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
+    <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
+    <ID>MaxLineLength:RelationMusicBrainzModel.kt$RelationMusicBrainzModel$@Json(name = "target-credit") val targetCredit: String? = null</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"01d3488d-8d2a-4cff-9226-5250404db4dc" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"26b5d3aa-7d05-4121-a9eb-bf8a9aeb6e28" to ("mail-order purchase page for the score of" to "purchase score for mail-order")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"287361d2-1dce-4d39-9f82-222b786e2b30" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"68ac61a1-6151-48bf-8596-ac3bcc3a41a2" to ("download purchase page for the score of" to "purchase score for download")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"7fd5fbc0-fbf4-4d04-be23-417d50a4dc30" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"fc399d47-23a7-4c28-bfcf-0607a562b644" to ("transliterated/translated track listings" to "transliterated/translated track listing of")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$"fd841726-ba3c-47f7-af8e-6734ab6243ff" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0084e70a-873e-4f7f-b3ff-635b9e863dae" to ("{additional:additionally} {instrument:%|instruments} {co:co-}arranged" to "{additional} {instrument:%|instruments} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "01323b4f-7aba-410c-8c91-cb224b963a40" to ("{additional} liner notes {translator}" to "{additional} liner notes {translator}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "023a6c6d-80af-4f88-ae69-f5f6213f9bf4" to ("{additional} {assistant} {associate} {co:co-}recording engineer for" to "{additional} {assistant} {associate} {co:co-}recording engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "04e1f0b6-ef40-4168-ba25-42a87729fe09" to ("{additional:additionally} orchestrated" to "{additional:additionally} orchestrator"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "069c1cf0-a9b2-448e-8486-1eced48b48f9" to ("{additional} editing location for" to "{additional:additionally} edited at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0748fa55-56b5-4ad5-8ce8-15b97f82a0c2" to ("{additional:additionally} {assistant} {associate} {co:co-}balance engineered" to "{additional} {assistant} {associate} {co:co-}balance engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "07e6b4eb-5891-4646-b167-f96c5a4ccc77" to ("{additional} shooting location for" to "{additional:additionally} shot at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0a1771e1-8639-4740-8a43-bdafc050c3da" to ("{additional:additionally} orchestrated" to "{additional} orchestrator"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0c050cf9-885b-49fe-9a12-5ca04e2db8da" to ("{additional:additionally} shot for" to "{additional:additionally} shot at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0cd6aa63-c297-42ed-8725-c16d31913a98" to ("{additional:additionally} {assistant} {associate} {co:co-}sound engineered" to "{additional} {assistant} {associate} {co:co-}sound engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0eb67a3e-796b-4394-ab6e-1224f43236b6" to ("{additional} creative direction" to "{additional} creative direction"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "0fdbe3c6-7700-4a31-ae54-b53f06ae1cfa" to ("{additional} {guest} {solo} {vocal:%|vocals}" to "{additional} {guest} {solo} {vocal:%|vocals}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "11d74801-1493-4a5d-bc0f-4ddc537acddb" to ("{additional} mixing location for" to "{additional:additionally} mixed at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "18f159bb-44f0-4aef-b198-a4736ad9b659" to ("{additional:additionally} {instrument:%|instruments} {co:co-}arranged" to "{additional} {instrument:%|instruments} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "1a900189-53ba-442a-9406-49c43ddecb3f" to ("{additional} legal representation" to "{additional} legal representation"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "1c73465d-9bf7-41f4-bcb6-fb1852ffa64c" to ("{additional} producing location for" to "{additional:additionally} produced at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "22661fb8-cdb7-4f67-8385-b2a8be6c9f0d" to ("{additional:additionally} {co:co-}arranged" to "{additional} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "271306ca-c77f-4fe0-94bc-dd4b87ae0205" to ("{additional:additionally} {assistant} {associate} {co:co-}sound engineered" to "{additional} {assistant} {associate} {co:co-}sound engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "307e95dd-88b5-419b-8223-b146d4a0d439" to ("{additional} design/illustration" to "{additional} design/illustration"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "30adb2d7-dbcc-4393-9230-2098510ce3c1" to ("{additional} {assistant} {associate} {co:co-}mastering" to "{additional} {assistant} {associate} {co:co-}mastering"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "32af03cf-8879-4d07-b7c2-68c6cbf060bd" to ("{additional} remixing location for" to "{additional:additionally} remixed at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "34d5334e-a4c8-4b65-a5f8-bbcc9c81d13d" to ("{additional:additionally} {co:co-}arranged" to "{additional} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "354043e1-bdc2-4c7f-b338-2bf9c1d56e88" to ("{additional} recording location for" to "{additional:additionally} recorded in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "36c50022-44e0-488d-994b-33f11d20301e" to ("{additional} {assistant} {associate} {instrument} programming" to "{additional} {assistant} {associate} {instrument} programming"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "37ef3a0c-cac3-4172-b09b-4ca98d2857fc" to ("{additional} recording location for" to "{additional:additionally} recorded in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "38fa7405-f9a5-48cb-827a-8ac601933ba0" to ("{additional:additionally} orchestrated" to "{additional} orchestrator"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "3a24272b-3273-456a-9be8-421580513d4b" to ("{additional} engineering location for" to "{additional:additionally} engineered in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "3b1fae9f-5b22-42c5-a40c-d1e5c9b90251" to ("{additional} recording location for" to "{additional:additionally} recorded at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "3e3102e1-1896-4f50-b5b2-dd9824e46efe" to ("{additional:additionally} {assistant} {associate} {co:co-}mixed" to "{additional} {assistant} {associate} {co:co-}mixer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "40dff87a-e475-4aa6-b615-9935b564d756" to ("{additional:additionally} {assistant} {associate} {co:co-}edited" to "{additional} {assistant} {associate} {co:co-}editor"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "43ba113b-968f-4fa9-93b2-73e60f954c90" to ("{additional} lyrics writing location for" to "{additional} lyrics written in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "468ec917-4be7-4a9a-8dbd-e740d049c5a2" to ("{additional} arranging location for" to "{additional:additionally} arranged in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "4820daa1-98d6-4f8b-aa4b-6895c5b79b27" to ("{additional:additionally} {instrument:%|instruments} {co:co-}arranged" to "{additional} {instrument:%|instruments} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "4af8e696-2690-486f-87db-bc8ec2bfe859" to ("{additional} design/illustration" to "{additional} design/illustration"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "5147db55-6240-4479-bfa9-0589455f1c50" to ("{additional} remixing location for" to "{additional:additionally} remixed in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "5293c7f7-7950-4fef-b367-b0062b99c4e7" to ("{additional} composing location for" to "{additional:additionally} composed in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "582f6452-ff89-4f3b-9e78-eff5b842e208" to ("{additional} remixing location for" to "{additional:additionally} remixed in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "59054b12-01ac-43ee-a618-285fd397e461" to ("{additional} {guest} {solo} {instrument:%|instruments}" to "{additional} {guest} {solo} {instrument:%|instruments}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "5be4c609-9afa-4ea0-910b-12ffb71e3821" to ("{additional} {original} {eponymous} member of" to "{additional} {original} {eponymous} members"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "5c0ceac3-feb4-41f0-868d-dc06f6e27fc0" to ("{additional:additionally} {assistant} {associate} {co:co-}{executive:executive }produced" to "{additional} {assistant} {associate} {co:co-}{executive:executive }producer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "5d075afa-6bb8-4327-9528-e3e4d3d68f49" to ("{additional} {re}mastering location for" to "{additional:additionally} {re}mastered at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "5dcc52af-7064-4051-8d62-7d80f4c3c907" to ("{additional:additionally} {assistant} {associate} {co:co-}{executive:executive }engineered" to "{additional} {assistant} {associate} {co:co-}{executive:executive }engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "617063ad-dbb5-4877-9ba0-ba2b9198d5a7" to ("{additional} {assistant} {associate} {instrument} programming" to "{additional} {assistant} {associate} {instrument} programming"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "628a9658-f54c-4142-b0c0-95f031b544da" to ("{additional:additionally} {guest} {solo} performed" to "{additional} {guest} {solo} performer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "653b7420-c418-4bdc-83a5-6b2f44a65915" to ("{additional} mixing location for" to "{additional:additionally} mixed in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "67555849-61e5-455b-96e3-29733f0115f5" to ("{additional} {guest} {solo} {instrument:%|instruments}" to "{additional} {guest} {solo} {instrument:%|instruments}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "69230b8a-aa15-46e5-b540-b6302d60eb22" to ("{additional} libretto writing location for" to "libretto {additional:additionally} written in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "6a88b92b-8fb5-41b3-aa1f-169ee7e05ed6" to ("{additional:additionally} {vocal:%|vocals} {co:co-}arranged" to "{additional} {vocal:%|vocals} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "6bc3827d-bc20-4621-ae14-9c3707ad140a" to ("{additional} producing location for" to "{additional:additionally} produced at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "6cc958c0-533b-4540-a281-058fbb941890" to ("{additional:additionally} {assistant} {associate} {co:co-}mixed" to "{additional} {assistant} {associate} {co:co-}mixer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "72e1f4d8-011b-49ab-bba4-6990981c972e" to ("{anniversary:anniversary tours|supporting tours}" to "{anniversary:anniversary tour for|tour in support of}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "7440b539-19ab-4243-8c03-4f5942ca2218" to ("later {translated} {parody} versions" to "{translated} {parody} version of"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "75c09861-6857-4ec0-9729-84eefde7fc86" to ("{additional} {minor} collaborator on" to "{additional} {minor} collaborators"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "79a01829-749c-44c3-8b9e-65243b302f81" to ("{additional} translating location for" to "{additional:additionally} translated in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "7ddb04ae-6c8a-41bd-95c2-392994d663db" to ("produced material that was {additional:additionally} sampled in" to "contains {additional} samples by"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "83f72956-2007-4bca-8a97-0ae539cca99d" to ("produced material that was {additional:additionally} sampled in" to "contains {additional} samples by"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "84453d28-c3e8-4864-9aae-25aa968bcf9e" to ("{additional} {assistant} {associate} {co:co-}{re}mastering" to "{additional} {assistant} {associate} {co:co-}{re}mastering"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "87e922ba-872e-418a-9f41-0a63aa3c30cc" to ("{additional:additionally} {assistant} {associate} {co:co-}{executive:executive }engineered" to "{additional} {assistant} {associate} {co:co-}{executive:executive }engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "88183045-b769-48ba-a55c-c58450903241" to ("{additional} remixing location for" to "{additional:additionally} remixed at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "888a2320-52e4-4fe8-a8a0-7a4c8dfde167" to ("{additional:additionally} {guest} {solo} performed" to "{additional} {guest} {solo} performer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "8a2799e8-a7e2-41ce-a7da-b5f520687216" to ("{additional:additionally} {vocal:%|vocals} {co:co-}arranged" to "{additional} {vocal:%|vocals} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "8bf377ba-8d71-4ecc-97f2-7bb2d8a2a75f" to ("{additional:additionally} {assistant} {associate} {co:co-}{executive:executive }produced" to "{additional} {assistant} {associate} {co:co-}{executive:executive }producer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "8d60be20-959c-4f5b-85f6-2b1f44321d11" to ("{additional} producing location for" to "{additional:additionally} produced in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "8ebfc2f6-0ac7-40f6-b03e-67fe3428f5d4" to ("{additional} mixing location for" to "{additional:additionally} mixed at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "93078fc7-6585-40a7-ab7f-6acb9da65b84" to ("{additional} producing location for" to "{additional:additionally} produced in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "967746f9-9d79-456c-9d1e-50116f0b27fc" to ("{additional} samples from" to "{additional:additionally} sampled by"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "97169e5e-c978-486e-a5ea-da353ca9ea42" to ("{additional:additionally} {assistant} {associate} {co:co-}balance engineered" to "{additional} {assistant} {associate} {co:co-}balance engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "9b678c30-453a-47c4-8f69-9ba96b2c5e9c" to ("{additional} editing location for" to "{additional:additionally} edited at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "a01ee869-80a8-45ef-9447-c59e91aa7926" to ("{additional} {assistant} {associate} {co:co-}recording engineer for" to "{additional} {assistant} {associate} {co:co-}recording engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "a3005666-a872-32c3-ad06-98af558e99b0" to ("{live} {medley:medley including a} {partial} {instrumental} {cover} {karaoke} recording of" to "{live} {medley:medleys including} {partial} {instrumental} {cover} {karaoke} recordings"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "a4c3fb3a-66f8-4362-9507-bb846fe86b64" to ("contracted {co:co-}{executive:executive }production for" to "{co:co-}{executive:executive }produced for"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "ad462279-14b0-4180-9b58-571d0eef7c51" to ("{additional} recording location for" to "{additional:additionally} recorded at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "aede7c5e-8bd3-4f07-bad2-c3d159e8c1c5" to ("{additional} engineering location for" to "{additional:additionally} engineered in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "b04848d7-dbd9-4be0-9d8c-13df6d6e40db" to ("{additional:additionally} {assistant} {associate} {co:co-}audio engineered" to "{additional} {assistant} {associate} {co:co-}audio engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "b35aae66-5578-41d1-b34b-1c9b1897ad49" to ("{additional} engineering location for" to "{additional:additionally} engineered at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "bd780597-0b67-4b97-a4a0-671a70e1182d" to ("{instrument:%|instruments} technician for" to "{instrument:%|instruments} technician"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "beaff7ea-771d-4f0d-aeb7-633bdddfa196" to ("{additional} composing location for" to "{additional:additionally} composed at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "ca8d6d99-b847-439c-b0ec-33d8a1b942bc" to ("{additional:additionally} {assistant} {associate} {co:co-}audio engineered" to "{additional} {assistant} {associate} {co:co-}audio engineer"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "cac01ac7-4159-42fd-9f2b-c5a7a5624079" to ("{assistant} {principal} {guest} conductor {emeritus} for" to "{assistant} {principal} {guest} conductor {emeritus}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "ce1529b0-2fd9-4dcc-82d2-4036a044b5b9" to ("contracted {co:co-}{executive:executive }production for" to "{co:co-}{executive:executive }produced for"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "d3fd781c-5894-47e2-8c12-86cc0e2c8d08" to ("{additional:additionally} {co:co-}arranged" to "{additional} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "d7d9128d-e676-4d8f-a353-f48a55a98501" to ("{additional:additionally} {vocal:%|vocals} {co:co-}arranged" to "{additional} {vocal:%|vocals} {co:co-}arranger"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "d92ee325-0d37-4d1c-aea1-436f36e13565" to ("{additional} shooting location for" to "{additional:additionally} shot in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "dfd87666-da9b-43ac-b45e-7ad01b355746" to ("{additional} lyrics writing location for" to "{additional} lyrics written at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "e02f372b-33c3-41fc-88ba-6b3e95f50d77" to ("{additional} writing location for" to "{additional:additionally} written in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "e035ac25-a2ff-48a6-9fb6-077692c67241" to ("{additional} creative direction" to "{additional} creative direction"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "e24482da-f568-46ba-a428-9fa56615c7b2" to ("{additional} editing location for" to "{additional:additionally} edited in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "e42af9dd-4203-480c-9178-ee4f67ba2609" to ("{additional} editing location for" to "{additional:additionally} edited in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "e7f4918a-48e9-49ca-8e3d-ee5eb0dc0ff4" to ("{additional} writing location for" to "{additional:additionally} written at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "e88fefc3-042b-4f28-83af-6a79793b630b" to ("{instrument:%|instruments} technician for" to "{instrument:%|instruments} technician"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "eb10f8a0-0f4c-4dce-aa47-87bcb2bc42f3" to ("{additional} {guest} {solo} {vocal:%|vocals}" to "{additional} {guest} {solo} {vocal:%|vocals}"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "ee380877-3636-462b-b407-ab39370a787e" to ("{additional} {re}mastering location for" to "{additional:additionally} {re}mastered in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "eef56d04-852a-4ce6-bfc9-678c19392a16" to ("{additional} mixing location for" to "{additional:additionally} mixed in"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "f2144669-1eff-46e9-a8aa-2717c0b619f6" to ("{additional} libretto writing location for" to "libretto {additional:additionally} written at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "f30c29d3-a3f1-420d-9b6c-a750fd6bc2aa" to ("{additional:additionally} {assistant} {associate} {co:co-}edited" to "{additional} {assistant} {associate} {co:co-}editor"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "f845a95e-b2b5-4a94-9645-fc8b031ab0bd" to ("{additional} engineering location for" to "{additional:additionally} engineered at"),</ID>
+    <ID>MaxLineLength:RelationshipHeaders.kt$// "fc206200-021c-4b28-97ea-36e4c1391068" to ("{additional} arranging location for" to "{additional:additionally} arranged at"),</ID>
+    <ID>MaxLineLength:ReleaseGroupMusicBrainzModel.kt$ReleaseGroupMusicBrainzModel$// audio drama, audiobook, broadcast, compilation, dj-mix, interview, live, mixtape/street, remix, soundtrack, spokenword</ID>
+    <ID>MaxLineLength:ReleaseMusicBrainzModel.kt$ReleaseMusicBrainzModel$// lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels</ID>
+  </CurrentIssues>
+</SmellBaseline>

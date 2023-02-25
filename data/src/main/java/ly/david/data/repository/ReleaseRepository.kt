@@ -9,8 +9,6 @@ import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.toReleaseLabels
-import ly.david.data.network.toRoomModels
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.ReleaseCountryDao
 import ly.david.data.persistence.area.getAreaCountryCodes
@@ -18,6 +16,8 @@ import ly.david.data.persistence.area.getReleaseCountries
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.label.LabelDao
 import ly.david.data.persistence.label.ReleaseLabelDao
+import ly.david.data.persistence.label.toReleaseLabels
+import ly.david.data.persistence.label.toRoomModels
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao

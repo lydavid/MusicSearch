@@ -9,8 +9,8 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.toReleaseLabels
 import ly.david.data.persistence.label.ReleaseLabelDao
+import ly.david.data.persistence.label.toReleaseLabels
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao

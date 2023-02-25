@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import ly.david.data.network.LabelInfo
 import ly.david.data.persistence.release.ReleaseRoomModel
 
 @Entity(
@@ -37,3 +38,17 @@ data class ReleaseLabel(
     @ColumnInfo(name = "catalog_number")
     val catalogNumber: String = ""
 )
+
+fun List<LabelInfo>.toReleaseLabels(releaseId: String, labelId: String? = null): List<ReleaseLabel> {
+    return this
+        .filter { it.label?.id == labelId || labelId == null }
+        .mapNotNull { labelInfo ->
+            val label = labelInfo.label
+            if (label == null) {
+                null
+            } else {
+                ReleaseLabel(releaseId, label.id, labelInfo.catalogNumber.orEmpty())
+            }
+        }
+}
+

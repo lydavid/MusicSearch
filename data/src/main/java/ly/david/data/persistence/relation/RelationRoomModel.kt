@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import java.net.URLDecoder
 import ly.david.data.Relation
+import ly.david.data.common.emptyToNull
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.getDisplayNames
 import ly.david.data.getLifeSpanForDisplay
@@ -81,140 +82,120 @@ fun RelationMusicBrainzModel.toRelationRoomModel(
     order: Int,
 ): RelationRoomModel? {
 
-    val linkedResourceId: String
-    val name: String
-    val disambiguation: String?
+    var linkedResourceId: String = ""
+    var linkedResourceName: String = ""
+    var linkedResourceDisambiguation: String? = null
     var additionalInfo: String? = null
-    when (targetType) {
+    val linkedTargetType = targetType
+    when (linkedTargetType) {
         MusicBrainzResource.ARTIST -> {
             if (artist == null) return null
-            linkedResourceId = artist.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                artist.name
-            } else {
-                targetCredit
+            artist?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             }
-            disambiguation = artist.disambiguation
-            additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
         }
         MusicBrainzResource.RELEASE_GROUP -> {
             if (releaseGroup == null) return null
-            linkedResourceId = releaseGroup.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                releaseGroup.name
-            } else {
-                targetCredit
-            }
-            disambiguation = releaseGroup.disambiguation
-            additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+            releaseGroup?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+            } ?: return null
         }
         MusicBrainzResource.RELEASE -> {
             if (release == null) return null
-            linkedResourceId = release.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                release.name
-            } else {
-                targetCredit
-            }
-            disambiguation = release.disambiguation
-            additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+            release?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+                additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+            } ?: return null
         }
         MusicBrainzResource.RECORDING -> {
             if (recording == null) return null
-            linkedResourceId = recording.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                recording.name
-            } else {
-                targetCredit
-            }
-            disambiguation = recording.disambiguation
-            additionalInfo = recording.artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" } +
-                getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+            recording?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+                additionalInfo = artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" } +
+                    getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
+            } ?: return null
         }
         MusicBrainzResource.LABEL -> {
             if (label == null) return null
-            linkedResourceId = label.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                label.name
-            } else {
-                targetCredit
-            }
-            disambiguation = label.disambiguation
+            label?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
         MusicBrainzResource.AREA -> {
             if (area == null) return null
-            linkedResourceId = area.id
-            name = area.name
-            disambiguation = area.disambiguation
+            area?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
         MusicBrainzResource.PLACE -> {
             if (place == null) return null
-            linkedResourceId = place.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                place.name
-            } else {
-                targetCredit
-            }
-            disambiguation = place.disambiguation
+            place?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
         MusicBrainzResource.WORK -> {
             if (work == null) return null
-            linkedResourceId = work.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                work.name
-            } else {
-                targetCredit
-            }
-            disambiguation = work.disambiguation
+            work?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
         MusicBrainzResource.INSTRUMENT -> {
             if (instrument == null) return null
-            linkedResourceId = instrument.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                instrument.name
-            } else {
-                targetCredit
-            }
-            disambiguation = instrument.disambiguation
+            instrument?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
-
         MusicBrainzResource.GENRE -> {
             if (genre == null) return null
-            linkedResourceId = genre.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                genre.name
-            } else {
-                targetCredit
-            }
-            disambiguation = genre.disambiguation
+            genre?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
-
-        MusicBrainzResource.URL -> {
-            if (url == null) return null
-            linkedResourceId = url.id
-            name = URLDecoder.decode(url.resource, "utf-8")
-            disambiguation = null
-        }
-
         MusicBrainzResource.EVENT -> {
             if (event == null) return null
-            linkedResourceId = event.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                event.name
-            } else {
-                targetCredit
-            }
-            disambiguation = event.disambiguation
+            event?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
         }
         MusicBrainzResource.SERIES -> {
             if (series == null) return null
-            linkedResourceId = series.id
-            name = if (targetCredit.isNullOrEmpty()) {
-                series.name
-            } else {
-                targetCredit
-            }
-            disambiguation = series.disambiguation
+            series?.apply {
+                linkedResourceId = id
+                linkedResourceName = targetCredit.emptyToNull() ?: name
+                linkedResourceDisambiguation = disambiguation
+            } ?: return null
+        }
+        MusicBrainzResource.URL -> {
+            if (url == null) return null
+            url?.apply {
+                linkedResourceId = id
+                linkedResourceName = URLDecoder.decode(resource, "utf-8")
+                linkedResourceDisambiguation = null
+            } ?: return null
         }
         null -> return null
     }
@@ -222,11 +203,11 @@ fun RelationMusicBrainzModel.toRelationRoomModel(
     return RelationRoomModel(
         resourceId = resourceId,
         linkedResourceId = linkedResourceId,
-        linkedResource = targetType,
+        linkedResource = linkedTargetType,
         order = order,
         label = getHeader(),
-        name = name,
-        disambiguation = disambiguation,
+        name = linkedResourceName,
+        disambiguation = linkedResourceDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo
     )

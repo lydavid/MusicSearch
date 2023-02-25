@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.Label
+import ly.david.data.network.LabelInfo
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
@@ -34,3 +35,20 @@ internal fun LabelMusicBrainzModel.toLabelRoomModel() =
         type = type,
         labelCode = labelCode
     )
+
+fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
+    return this.mapNotNull { labelInfo ->
+        val label = labelInfo.label
+        if (label == null) {
+            null
+        } else {
+            LabelRoomModel(
+                id = label.id,
+                name = label.name,
+                disambiguation = label.disambiguation,
+                type = label.type,
+                labelCode = label.labelCode
+            )
+        }
+    }
+}

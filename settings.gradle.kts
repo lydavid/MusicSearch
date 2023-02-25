@@ -67,7 +67,8 @@ include(
     ":app",
     ":data-android",
     ":data",
-    ":test-data",
+    ":data:base",
     ":data:coverart",
-    ":data:base"
+    ":data:musicbrainz",
+    ":test-data"
 )

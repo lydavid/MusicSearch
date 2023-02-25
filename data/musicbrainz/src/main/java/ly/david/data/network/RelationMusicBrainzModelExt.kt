@@ -9,7 +9,7 @@ import ly.david.data.common.transformThisIfNotNullOrEmpty
  *
  * All attributes/attribute-value pairs should be comma-separated.
  */
-internal fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
+fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
     attributes?.joinToString(", ") { attribute ->
         when (attribute) {
             "task" -> {
@@ -27,7 +27,7 @@ internal fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String
 /**
  * Returns a human-readable label for this relationship based on its type and link direction.
  */
-internal fun RelationMusicBrainzModel.getHeader(): String {
+fun RelationMusicBrainzModel.getHeader(): String {
 
     val labels: Pair<String, String>? = relationshipHeaders[typeId]
 

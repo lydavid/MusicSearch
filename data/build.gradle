@@ -8,6 +8,7 @@ plugins {
 dependencies {
     api project(path: ':data:base')
     api project(path: ':data:coverart')
+    api project(path: ':data:musicbrainz')
 
     implementation libs.moshi.kotlin
 

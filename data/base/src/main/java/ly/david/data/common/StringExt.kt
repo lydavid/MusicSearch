@@ -63,6 +63,14 @@ inline fun String?.transformThisIfNotNullOrEmpty(block: (String) -> String): Str
     }
 }
 
+fun String?.emptyToNull(): String? {
+    return when {
+        this == null -> null
+        this.isEmpty() -> null
+        else -> this
+    }
+}
+
 /**
  * Converts a country code to flag emoji.
  * Copied from: [https://stackoverflow.com/a/50963795].
