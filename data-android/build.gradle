@@ -63,7 +63,7 @@ dependencies {
     kaptTest libs.hilt.android.compiler
     testImplementation libs.hilt.android.testing
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation libs.junit
     testImplementation 'androidx.test.ext:junit-ktx:1.1.5'
     testImplementation "org.robolectric:robolectric:4.9.2"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"

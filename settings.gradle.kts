@@ -18,6 +18,8 @@ dependencyResolutionManagement {
             version("compose-ui", "1.3.3")
             version("hilt", "2.45")
             version("hilt-navigation", "1.0.0")
+            version("junit", "4.13.2")
+            version("mockk", "1.13.4")
             version("moshi", "1.14.0")
             version("retrofit", "2.9.0")
             version("room", "2.5.0")
@@ -39,6 +41,10 @@ dependencyResolutionManagement {
             library("hilt-android-compiler", "com.google.dagger", "hilt-android-compiler").versionRef("hilt")
             library("hilt-android-testing", "com.google.dagger", "hilt-android-testing").versionRef("hilt")
             library("hilt-navigation-compose", "androidx.hilt", "hilt-navigation-compose").versionRef("hilt-navigation")
+
+            library("junit", "junit", "junit").versionRef("junit")
+
+            library("mockk", "io.mockk", "mockk").versionRef("mockk")
 
             library("moshi-kotlin", "com.squareup.moshi", "moshi-kotlin").versionRef("moshi")
 

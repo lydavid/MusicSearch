@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation libs.moshi.kotlin
     implementation libs.room.common
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation "io.mockk:mockk:1.13.4"
+
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }
