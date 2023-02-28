@@ -5,8 +5,8 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
-    id("com.android.application") version "7.4.1" apply false
-    id("com.android.library") version "7.4.1" apply false
+    id("com.android.application") version "7.4.2" apply false
+    id("com.android.library") version "7.4.2" apply false
     id("org.jetbrains.kotlin.android") version "1.8.10" apply false
     id("com.google.dagger.hilt.android") version "2.45" apply false
     id("io.gitlab.arturbosch.detekt") version "1.22.0" apply true
@@ -45,7 +45,7 @@ allprojects {
             }
         }
         dependencies {
-            detektPlugins("io.nlopez.compose.rules:detekt:0.1.1")
+            detektPlugins("io.nlopez.compose.rules:detekt:0.1.2")
         }
     }
 
