@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.mbjc.ui.common.dialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

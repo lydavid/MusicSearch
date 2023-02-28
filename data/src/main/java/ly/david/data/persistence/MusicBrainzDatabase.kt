@@ -6,6 +6,7 @@ import ly.david.data.persistence.area.ReleaseCountryDao
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.artist.release.ArtistReleaseDao
+import ly.david.data.persistence.collection.CollectionDao
 import ly.david.data.persistence.event.EventDao
 import ly.david.data.persistence.event.EventPlaceDao
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -59,4 +60,6 @@ interface MusicBrainzDatabase {
 
     fun getRelationDao(): RelationDao
     fun getLookupHistoryDao(): LookupHistoryDao
+
+    fun getCollectionDao(): CollectionDao
 }

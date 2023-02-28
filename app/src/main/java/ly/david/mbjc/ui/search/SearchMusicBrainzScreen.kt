@@ -58,7 +58,7 @@ import ly.david.data.network.searchableResources
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.artist.ArtistListItem
-import ly.david.mbjc.ui.common.SimpleAlertDialog
+import ly.david.mbjc.ui.common.dialog.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.event.EventListItem

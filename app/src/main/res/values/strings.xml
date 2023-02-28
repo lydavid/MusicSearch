@@ -107,4 +107,8 @@
 
     <string name="more_actions">More actions</string>
     <string name="open_google_maps">Open in Google maps</string>
+
+    <string name="create_collection">Create a collection</string>
+    <string name="name">Name</string>
+    <string name="collection_name_placeholder">Enter a collection name</string>
 </resources>

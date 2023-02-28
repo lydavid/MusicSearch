@@ -128,6 +128,13 @@ internal fun ArtistScaffold(
                             }
                         )
                     }
+
+                    // TODO: item to add this artist to list
+                    //  - bring up bottom sheet with all artist lists, and button to create new artist list?
+                    //  - click on list to add artist to it
+                    //      - if already in list, say so
+                    //  - see wikipedia saved ux
+                    //  - cannot delete from here
                 },
                 filterText = filterText,
                 onFilterTextChange = {

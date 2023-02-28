@@ -89,5 +89,20 @@ val searchableResources: List<MusicBrainzResource>
         MusicBrainzResource.WORK,
     )
 
+val collectableResources: List<MusicBrainzResource>
+    get() = listOf(
+        MusicBrainzResource.AREA,
+        MusicBrainzResource.ARTIST,
+        MusicBrainzResource.EVENT,
+        MusicBrainzResource.INSTRUMENT,
+        MusicBrainzResource.LABEL,
+        MusicBrainzResource.PLACE,
+        MusicBrainzResource.RECORDING,
+        MusicBrainzResource.RELEASE,
+        MusicBrainzResource.RELEASE_GROUP,
+        MusicBrainzResource.SERIES,
+        MusicBrainzResource.WORK,
+    )
+
 fun String.toMusicBrainzResource(): MusicBrainzResource? =
     MusicBrainzResource.values().firstOrNull { this == it.resourceName }

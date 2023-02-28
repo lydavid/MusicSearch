@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -52,6 +53,9 @@ private const val DELAY_LOADING_MS = 300L
  * and [Tab]s for each [tabsTitles].
  *
  * @param resource What [MusicBrainzResource]'s icon to display.
+ * @param actions Actions displayed in a [RowScope].
+ * @param overflowDropdownMenuItems If set, displays three-ellipses action button at the end of the bar.
+ *  When clicked, the items in this composable will be displayed in a dropdown menu.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +67,7 @@ internal fun ScrollableTopAppBar(
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
 
-    mainAction: @Composable (() -> Unit)? = null,
+    actions: @Composable () -> Unit = {},
 
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -93,7 +97,7 @@ internal fun ScrollableTopAppBar(
                 }
             },
             actions = {
-                mainAction?.invoke()
+                actions()
                 OverflowMenu(overflowDropdownMenuItems = overflowDropdownMenuItems)
             }
         )
