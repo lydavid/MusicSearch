@@ -1,9 +1,8 @@
 package ly.david.mbjc.ui.collections
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Card
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,21 +14,45 @@ import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.mbjc.ui.theme.TextStyles
 
 @Composable
 internal fun CollectionListItem(
-    collectionListItemModel: CollectionListItemModel
+    collection: CollectionListItemModel,
+    modifier: Modifier = Modifier,
+    onClick: CollectionListItemModel.() -> Unit = {}
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Row {
+    ListItem(
+        headlineText = {
+            Text(
+                text = collection.name,
+                style = TextStyles.getCardBodyTextStyle()
+            )
+        },
+        modifier = modifier.clickable { onClick(collection) },
+        supportingText = {
+            // TODO: if we add more content to this column, it messes up any BottomModalSheet
+            Text(
+                text = collection.description,
+                style = TextStyles.getCardBodyTextStyle()
+            )
+        },
+        leadingContent = {
+            // TODO: consider a different way to indicate what collection this is
+            //  and don't need it when viewed from within an entity's page
+
             ResourceIcon(
-                resource = collectionListItemModel.entity,
+                resource = collection.entity,
                 modifier = Modifier.size(SMALL_COVER_ART_SIZE.dp)
             )
-
-            Text(text = collectionListItemModel.name)
+        },
+        trailingContent = {
+            Text(
+                text = collection.entityIds.size.toString(),
+                style = TextStyles.getCardBodyTextStyle()
+            )
         }
-    }
+    )
 }
 
 @DefaultPreviews
@@ -38,10 +61,15 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             CollectionListItem(
-                collectionListItemModel = CollectionListItemModel(
+                collection = CollectionListItemModel(
                     id = "0",
                     name = "My collection",
-                    entity = MusicBrainzResource.RECORDING
+                    description = "Some songs",
+                    entity = MusicBrainzResource.RECORDING,
+                    entityIds = listOf(
+                        "1b1e4b65-9b1a-48cd-8e3a-b4824f15bf0c",
+                        "b437fbda-9c32-4078-afa2-1afb98ff0d74"
+                    )
                 )
             )
         }

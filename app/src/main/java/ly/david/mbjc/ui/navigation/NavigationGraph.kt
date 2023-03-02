@@ -14,13 +14,14 @@ import androidx.navigation.navDeepLink
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toDestination
+import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.toMusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
+import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
@@ -106,6 +107,10 @@ internal fun NavigationGraph(
             }
         }
 
+        val onCollectionClick: (String) -> Unit = { collectionId ->
+            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
+        }
+
         val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
             val route = Destination.LOOKUP.route + "?query=${query}&type=${type.resourceName}"
             Timber.d("1. $query")
@@ -148,7 +153,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.AREA,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -161,7 +166,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.ARTIST,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -174,7 +179,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.EVENT,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -187,7 +192,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.GENRE,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -199,7 +204,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.INSTRUMENT,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -212,7 +217,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.LABEL,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -225,7 +230,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.PLACE,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -238,7 +243,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.RECORDING,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -251,7 +256,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.RELEASE,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -263,7 +268,7 @@ internal fun NavigationGraph(
                 onItemClick = onDestinationClick,
             )
         }
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.RELEASE_GROUP,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -276,7 +281,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.SERIES,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -289,7 +294,7 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.WORK,
             deeplinkSchema = deeplinkSchema
         ) { resourceId, title ->
@@ -327,6 +332,23 @@ internal fun NavigationGraph(
         ) {
             CollectionListScaffold(
                 modifier = modifier,
+                onCollectionClick = onCollectionClick
+            )
+        }
+
+        composable(
+            route = "${Destination.COLLECTIONS.route}/{$ID}",
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$deeplinkSchema://${Destination.COLLECTIONS.route}/{$ID}"
+                }
+            )
+        ) { entry ->
+            val collectionId = entry.arguments?.getString(ID) ?: return@composable
+
+            CollectionScaffold(
+                collectionId = collectionId,
+                modifier = modifier,
                 onDestinationClick = { destination, id ->
                     onDestinationClick(destination, id, null)
                 }
@@ -349,13 +371,13 @@ internal fun NavigationGraph(
     }
 }
 
-private fun NavGraphBuilder.addResourceScreen(
+private fun NavGraphBuilder.addLookupResourceScreen(
     resource: MusicBrainzResource,
     deeplinkSchema: String,
     scaffold: @Composable (resourceId: String, titleWithDisambiguation: String?) -> Unit
 ) {
     composable(
-        "${resource.toDestination().route}/{$ID}?$TITLE={$TITLE}",
+        route = "${resource.toLookupDestination().route}/{$ID}?$TITLE={$TITLE}",
         arguments = listOf(
             navArgument(ID) {
                 type = NavType.StringType // Make argument type safe

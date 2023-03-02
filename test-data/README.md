@@ -14,6 +14,12 @@ Note the `'`. Need to include this when building uri with `&`.
 adb shell am start -d '"mbjc://lookup?query=tsukuyomi&type=artist"' -a android.intent.action.VIEW
 ```
 
+## Collection
+
+```shell
+adb shell am start -d "mbjc://collections/1" -a android.intent.action.VIEW
+```
+
 ## Artist
 
 ```sh

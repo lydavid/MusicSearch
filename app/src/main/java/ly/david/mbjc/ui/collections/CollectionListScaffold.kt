@@ -1,28 +1,17 @@
 package ly.david.mbjc.ui.collections
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -32,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.dialog.CreateCollectionDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -42,13 +30,13 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
- * Presents a list of all of your collections.
+ * Displays a list of all of your collections.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionListScaffold(
     modifier: Modifier = Modifier,
-    onDestinationClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onCollectionClick: (id: String) -> Unit = {},
     viewModel: CollectionViewModel = hiltViewModel()
 ) {
 
@@ -58,11 +46,9 @@ fun CollectionListScaffold(
 
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    var skipHalfExpanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberSheetState(skipHalfExpanded = skipHalfExpanded)
 
+    // TODO: we might be able to hoist this up to NavigationGraph, then we don't need to repeat it everywhere
     if (showDialog) {
         CreateCollectionDialog(
             onDismiss = { showDialog = false },
@@ -108,7 +94,8 @@ fun CollectionListScaffold(
             when (collectionListItemModel) {
                 is CollectionListItemModel -> {
                     CollectionListItem(
-                        collectionListItemModel
+                        collection = collectionListItemModel,
+                        onClick = { onCollectionClick(id) }
                     )
                 }
                 else -> {
@@ -117,45 +104,7 @@ fun CollectionListScaffold(
             }
         }
 
-        // TODO: use bottom sheet for viewing collections from entity pages
-        //  include button to pop up create dialog
-        // Sheet content
-        if (openBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { openBottomSheet = false },
-                sheetState = bottomSheetState,
 
-                ) {
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                    Button(
-                        // Note: If you provide logic outside of onDismissRequest to remove the sheet,
-                        // you must additionally handle intended state cleanup, if any.
-                        onClick = {
-                            scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
-                                if (!bottomSheetState.isVisible) {
-                                    openBottomSheet = false
-                                }
-                            }
-                        }
-                    ) {
-                        Text("Hide Bottom Sheet")
-                    }
-                }
-                LazyColumn {
-                    items(50) {
-                        ListItem(
-                            headlineText = { Text("Item $it") },
-                            leadingContent = {
-                                Icon(
-                                    Icons.Default.Favorite,
-                                    contentDescription = "Localized description"
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-        }
     }
 }
 

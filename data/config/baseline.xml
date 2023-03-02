@@ -6,9 +6,14 @@
     <ID>ConstructorParameterNaming:AreaListItemModel.kt$AreaListItemModel$val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
     <ID>ConstructorParameterNaming:AreaScaffoldModel.kt$AreaScaffoldModel$val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
     <ID>CyclomaticComplexMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
+    <ID>EmptyFunctionBlock:ArtistRepository.kt$ArtistRepository${ }</ID>
     <ID>ForbiddenComment:ArtistCreditResource.kt$ArtistCreditResource$// TODO: can't FK to multiple tables directly?</ID>
     <ID>ForbiddenComment:ArtistRelease.kt$// TODO: we actually don't want to cascade delete in any scenario where another resource screen can delete the same resource</ID>
     <ID>ForbiddenComment:ArtistReleaseGroupDao.kt$ArtistReleaseGroupDao.Companion$// TODO: we're able to filter on date's month/day even though we don't display it. Could be confusing</ID>
+    <ID>ForbiddenComment:CollectionDao.kt$CollectionDao$// TODO: can we compare types due to typeconverter?</ID>
+    <ID>ForbiddenComment:CollectionDao.kt$CollectionDao$// TODO: paged? should be able to if bottom sheet presenting this is lazy column</ID>
+    <ID>ForbiddenComment:CollectionRoomModel.kt$CollectionRoomModel$// TODO: This cannot convert to a MB collection 1-for-1 because we will need them to generate a UUID for us</ID>
+    <ID>ForbiddenComment:Destination.kt$Destination.COLLECTIONS_AREA$// TODO: probably don't need separate routes for each of these</ID>
     <ID>ForbiddenComment:InstrumentRepository.kt$InstrumentRepository$// TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them</ID>
     <ID>ForbiddenComment:Iso3166_1.kt$Iso3166_1$// TODO: ref countries_areas instead</ID>
     <ID>ForbiddenComment:LabelListItemModel.kt$LabelListItemModel$// TODO: don't need this in scaffold model</ID>
@@ -52,5 +57,8 @@
     <ID>SwallowedException:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
+    <ID>UnusedPrivateMember:ArtistRepository.kt$ArtistRepository$artistId: String</ID>
+    <ID>UnusedPrivateMember:ArtistRepository.kt$ArtistRepository$collectionId: Long</ID>
+    <ID>UnusedPrivateMember:ArtistRepository.kt$ArtistRepository$private val collectionDao: CollectionDao</ID>
   </CurrentIssues>
 </SmellBaseline>

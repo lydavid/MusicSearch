@@ -1,0 +1,19 @@
+package ly.david.mbjc.ui.collections
+
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import ly.david.data.navigation.Destination
+
+/**
+ * A single collection.
+ * Displays all items in this collection.
+ */
+@Composable
+internal fun CollectionScaffold(
+    collectionId: String,
+    modifier: Modifier = Modifier,
+    onDestinationClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+) {
+    Text(text = collectionId)
+}

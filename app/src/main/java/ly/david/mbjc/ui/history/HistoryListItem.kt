@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toDestination
+import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.ResourceIcon
@@ -44,7 +44,7 @@ internal fun HistoryListItem(
             )
         },
         modifier = modifier.clickable {
-            onItemClick(lookupHistory.resource.toDestination(), lookupHistory.id, lookupHistory.title)
+            onItemClick(lookupHistory.resource.toLookupDestination(), lookupHistory.id, lookupHistory.title)
         },
         supportingText = {
             Column {

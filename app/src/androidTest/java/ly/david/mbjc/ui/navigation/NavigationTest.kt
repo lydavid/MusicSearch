@@ -14,7 +14,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import ly.david.data.navigation.toDestination
+import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -77,7 +77,7 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
                 composeTestRule.awaitIdle()
                 val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
                 navController.goToResource(
-                    destination = MusicBrainzResource.ARTIST.toDestination(),
+                    destination = MusicBrainzResource.ARTIST.toLookupDestination(),
                     id = resourceId,
                     title = title
                 )

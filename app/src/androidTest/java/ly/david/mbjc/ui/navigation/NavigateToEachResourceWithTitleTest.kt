@@ -9,7 +9,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import ly.david.data.navigation.toDestination
+import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTestWithMockServer
@@ -56,7 +56,7 @@ internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBr
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()
                 val resourceId = resource.toFakeMusicBrainzModel().id
-                navController.goToResource(destination = resource.toDestination(), id = resourceId, title = title)
+                navController.goToResource(destination = resource.toLookupDestination(), id = resourceId, title = title)
             }
         }
 

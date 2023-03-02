@@ -20,6 +20,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.collection.CollectionDao
 import ly.david.data.persistence.collection.CollectionRoomModel
+import ly.david.data.persistence.collection.CollectionWithEntities
 
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
@@ -45,7 +46,7 @@ class CollectionViewModel @Inject constructor(
                     }
                 }
             ).flow.map { pagingData ->
-                pagingData.map { collection: CollectionRoomModel ->
+                pagingData.map { collection: CollectionWithEntities ->
                     collection.toCollectionListItemModel()
                 }
             }

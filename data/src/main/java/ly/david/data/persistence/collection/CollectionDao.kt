@@ -2,6 +2,8 @@ package ly.david.data.persistence.collection
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.network.MusicBrainzResource
@@ -12,7 +14,7 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM collection")
-    abstract fun getAllCollections(): PagingSource<Int, CollectionRoomModel>
+    abstract fun getAllCollections(): PagingSource<Int, CollectionWithEntities>
 
     @Transaction
     @Query(
@@ -22,16 +24,8 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
         WHERE name LIKE :query
         """
     )
-    abstract fun getAllCollectionsFiltered(query: String): PagingSource<Int, CollectionRoomModel>
+    abstract fun getAllCollectionsFiltered(query: String): PagingSource<Int, CollectionWithEntities>
 
-
-    // TODO: "resource" or "entity"? for now, just call it resource, do renaming later. delete this todo
-    // TODO: add artist. Would need .insert for CollectionArtistRoomModel with artist.id and
-    //  collection id (from getAllCollectionsOfType -> when we click on a collection to add to, we should have its id)
-//    abstract suspend fun addEntityToCollection(mbid: String, resource: MusicBrainzResource)
-    // TODO: instead of CollectionArtistRoomModel, CollectionReleaseRoomModel,
-    //  can we just have one to make many-to-many between collection and mb resource?
-    //  would lose on FK only. This could be a good thing, because deleting a resource should not delete it from collections
 
     // TODO: can we compare types due to typeconverter?
     // TODO: paged? should be able to if bottom sheet presenting this is lazy column
@@ -44,5 +38,8 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
         ORDER BY name
         """
     )
-    abstract fun getAllCollectionsOfType(resource: MusicBrainzResource): PagingSource<Int, CollectionRoomModel>
+    abstract fun getAllCollectionsOfType(resource: MusicBrainzResource): PagingSource<Int, CollectionWithEntities>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertEntityIntoCollection(collectionEntityRoomModel: CollectionEntityRoomModel): Long
 }

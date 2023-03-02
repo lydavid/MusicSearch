@@ -16,7 +16,7 @@ import ly.david.data.common.openUrl
 import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toDestination
+import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
@@ -33,7 +33,7 @@ internal fun RelationListItem(
     val context = LocalContext.current
 
     ClickableListItem(onClick = {
-        val destination = relation.linkedResource.toDestination()
+        val destination = relation.linkedResource.toLookupDestination()
         if (destination == Destination.LOOKUP_URL) {
             context.openUrl(relation.name)
         } else {

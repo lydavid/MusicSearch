@@ -53,6 +53,8 @@ enum class Destination(val route: String) {
 
 
     COLLECTIONS(TOP_LEVEL_COLLECTIONS),
+
+    // TODO: probably don't need separate routes for each of these
     COLLECTIONS_AREA("$TOP_LEVEL_COLLECTIONS$DIVIDER$RESOURCE_AREA"),
     COLLECTIONS_ARTIST("$TOP_LEVEL_COLLECTIONS$DIVIDER$RESOURCE_ARTIST"),
     COLLECTIONS_EVENT("$TOP_LEVEL_COLLECTIONS$DIVIDER$RESOURCE_EVENT"),
@@ -71,7 +73,7 @@ enum class Destination(val route: String) {
     EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "SPOTIFY")
 }
 
-fun MusicBrainzResource.toDestination() =
+fun MusicBrainzResource.toLookupDestination() =
     when (this) {
         MusicBrainzResource.AREA -> Destination.LOOKUP_AREA
         MusicBrainzResource.ARTIST -> Destination.LOOKUP_ARTIST

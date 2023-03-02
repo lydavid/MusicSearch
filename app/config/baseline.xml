@@ -42,6 +42,7 @@
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
+    <ID>CyclomaticComplexMethod:ArtistScaffold.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class) @Composable internal fun ArtistScaffold( artistId: String, modifier: Modifier = Modifier, titleWithDisambiguation: String? = null, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, onBack: () -&gt; Unit = {}, // This can be hoisted up which would normally let us preview this, // but because it relies on compose paging, we can't preview. viewModel: ArtistScaffoldViewModel = hiltViewModel() )</ID>
     <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
     <ID>ForbiddenComment:AreaDetailsScreen.kt$// TODO: api doesn't seem to include area containment</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: area</ID>
@@ -49,10 +50,16 @@
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: end area</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: isni code</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// todo: ipis code</ID>
+    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: create collection</ID>
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: disclaimer when turning on sort if we have not gotten all release groups</ID>
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: generalize switch menu item</ID>
+    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: how to generalize this to all collectable screens?</ID>
+    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: item to add this artist to list</ID>
     <ID>ForbiddenComment:BigCoverArt.kt$// TODO: handle error with retry</ID>
-    <ID>ForbiddenComment:CollectionGroup.kt$// TODO: decide whether user should click into a collection group</ID>
+    <ID>ForbiddenComment:CollectionListItem.kt$// TODO: consider a different way to indicate what collection this is</ID>
+    <ID>ForbiddenComment:CollectionListItem.kt$// TODO: if we add more content to this column, it messes up any BottomModalSheet</ID>
+    <ID>ForbiddenComment:CollectionListScaffold.kt$// TODO: we might be able to hoist this up to NavigationGraph, then we don't need to repeat it everywhere</ID>
+    <ID>ForbiddenComment:CreateCollectionDialog.kt$// TODO: handle next focus</ID>
     <ID>ForbiddenComment:EventDetailsScreen.kt$// TODO: set list</ID>
     <ID>ForbiddenComment:ExperimentalSettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
     <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: can we avoid flow { emit { ?</ID>
@@ -121,12 +128,6 @@
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
-    <ID>ModifierReused:CollectionListScaffold.kt$LazyColumn(modifier = modifier .padding(innerPadding) .fillMaxSize()) { items(MusicBrainzResource.values()) { CollectionGroup(musicBrainzResource = it) } }</ID>
-    <ID>ModifierReused:CollectionListScaffold.kt$Scaffold( modifier = modifier, topBar = { ScrollableTopAppBar( showBackButton = false, title = stringResource(id = R.string.collections), ) }, ) { innerPadding -&gt; LazyColumn(modifier = modifier .padding(innerPadding) .fillMaxSize()) { items(MusicBrainzResource.values()) { CollectionGroup(musicBrainzResource = it) } } }</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } )</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } }</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox( expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier ) { TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() ) // Focusing on this "consumes" a back press, and is independent of onDismissRequest. ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } } }</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() )</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
     <ID>SwallowedException:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
@@ -171,7 +172,8 @@
     <ID>UnstableCollections:StatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnusedPrivateMember:CollectionListScaffold.kt$onDestinationClick: (destination: Destination, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
+    <ID>UnusedPrivateMember:CollectionScaffold.kt$modifier: Modifier = Modifier</ID>
+    <ID>UnusedPrivateMember:CollectionScaffold.kt$onDestinationClick: (destination: Destination, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
     <ID>UnusedPrivateMember:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$private val coverArtArchiveApiService: CoverArtArchiveApiService</ID>
   </CurrentIssues>
 </SmellBaseline>
