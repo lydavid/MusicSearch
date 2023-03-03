@@ -13,7 +13,6 @@
     <ID>ForbiddenComment:CollectionDao.kt$CollectionDao$// TODO: can we compare types due to typeconverter?</ID>
     <ID>ForbiddenComment:CollectionDao.kt$CollectionDao$// TODO: paged? should be able to if bottom sheet presenting this is lazy column</ID>
     <ID>ForbiddenComment:CollectionRoomModel.kt$CollectionRoomModel$// TODO: This cannot convert to a MB collection 1-for-1 because we will need them to generate a UUID for us</ID>
-    <ID>ForbiddenComment:Destination.kt$Destination.COLLECTIONS_AREA$// TODO: probably don't need separate routes for each of these</ID>
     <ID>ForbiddenComment:InstrumentRepository.kt$InstrumentRepository$// TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them</ID>
     <ID>ForbiddenComment:Iso3166_1.kt$Iso3166_1$// TODO: ref countries_areas instead</ID>
     <ID>ForbiddenComment:LabelListItemModel.kt$LabelListItemModel$// TODO: don't need this in scaffold model</ID>

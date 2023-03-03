@@ -23,6 +23,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
@@ -42,6 +43,7 @@ internal fun SeriesScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: () -> Unit = {},
     viewModel: SeriesScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.SERIES
@@ -74,6 +76,7 @@ internal fun SeriesScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource, seriesId)
                     CopyToClipboardMenuItem(seriesId)
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 tabsTitles = SeriesTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

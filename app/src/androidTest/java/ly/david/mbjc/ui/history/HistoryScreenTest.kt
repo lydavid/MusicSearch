@@ -16,7 +16,7 @@ import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -38,7 +38,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                MainApp(navController)
+                TopLevelScaffold(navController)
             }
         }
     }

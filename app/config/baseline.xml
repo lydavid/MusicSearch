@@ -42,19 +42,15 @@
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
-    <ID>CyclomaticComplexMethod:ArtistScaffold.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class) @Composable internal fun ArtistScaffold( artistId: String, modifier: Modifier = Modifier, titleWithDisambiguation: String? = null, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, onBack: () -&gt; Unit = {}, // This can be hoisted up which would normally let us preview this, // but because it relies on compose paging, we can't preview. viewModel: ArtistScaffoldViewModel = hiltViewModel() )</ID>
-    <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
     <ID>ForbiddenComment:AreaDetailsScreen.kt$// TODO: api doesn't seem to include area containment</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: area</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: begin area</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: end area</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: isni code</ID>
     <ID>ForbiddenComment:ArtistDetailsScreen.kt$// todo: ipis code</ID>
-    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: create collection</ID>
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: disclaimer when turning on sort if we have not gotten all release groups</ID>
     <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: generalize switch menu item</ID>
-    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: how to generalize this to all collectable screens?</ID>
-    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: item to add this artist to list</ID>
     <ID>ForbiddenComment:BigCoverArt.kt$// TODO: handle error with retry</ID>
     <ID>ForbiddenComment:CollectionListItem.kt$// TODO: consider a different way to indicate what collection this is</ID>
     <ID>ForbiddenComment:CollectionListItem.kt$// TODO: if we add more content to this column, it messes up any BottomModalSheet</ID>
@@ -74,7 +70,6 @@
     <ID>ForbiddenComment:LabelListItem.kt$// TODO: lifespan</ID>
     <ID>ForbiddenComment:LocalRemoteProgressBar.kt$// TODO: "cached" is misleading here</ID>
     <ID>ForbiddenComment:LocalRemoteProgressBar.kt$// TODO: better copy</ID>
-    <ID>ForbiddenComment:NavigationGraph.kt$// TODO: [low] should rethink this structure once we introduce more non-MB-resource destinations</ID>
     <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: Issue with indicator remaining on screen without delay in refresh</ID>
     <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: cannot refresh</ID>
     <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: going to another tab, and coming back will show same error message (doesn't make another call)</ID>
@@ -173,7 +168,7 @@
     <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnusedPrivateMember:CollectionScaffold.kt$modifier: Modifier = Modifier</ID>
-    <ID>UnusedPrivateMember:CollectionScaffold.kt$onDestinationClick: (destination: Destination, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
+    <ID>UnusedPrivateMember:CollectionScaffold.kt$onEntityClick: (entity: MusicBrainzResource, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
     <ID>UnusedPrivateMember:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$private val coverArtArchiveApiService: CoverArtArchiveApiService</ID>
   </CurrentIssues>
 </SmellBaseline>

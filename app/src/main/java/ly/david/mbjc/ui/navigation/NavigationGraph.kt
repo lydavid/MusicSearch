@@ -1,33 +1,8 @@
 package ly.david.mbjc.ui.navigation
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -36,44 +11,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import androidx.paging.Pager
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
-import androidx.paging.map
-import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.toMusicBrainzResource
-import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.collection.CollectionDao
-import ly.david.data.persistence.collection.CollectionEntityRoomModel
-import ly.david.data.persistence.collection.CollectionRoomModel
-import ly.david.data.persistence.collection.CollectionWithEntities
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
-import ly.david.mbjc.ui.collections.CollectionListItem
 import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
-import ly.david.mbjc.ui.common.dialog.CreateCollectionDialog
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
@@ -88,7 +36,6 @@ import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.settings.SettingsScaffold
-import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.work.WorkScaffold
 import timber.log.Timber
 
@@ -106,157 +53,14 @@ internal fun NavHostController.goTo(destination: Destination) {
     this.navigate(route)
 }
 
-// TODO: move these out of navigation to top-level
-@HiltViewModel
-internal class AppTopLevelViewModel @Inject constructor(
-    private val collectionDao: CollectionDao,
-) : ViewModel() {
-
-    val resource: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val collections: Flow<PagingData<CollectionListItemModel>> =
-        resource.flatMapLatest {
-            Pager(
-                config = MusicBrainzPagingConfig.pagingConfig,
-                pagingSourceFactory = {
-                    collectionDao.getAllCollectionsOfType(it)
-                }
-            ).flow.map { pagingData ->
-                pagingData.map { collection: CollectionWithEntities ->
-                    collection.toCollectionListItemModel()
-                }
-            }
-        }
-            .distinctUntilChanged()
-            .cachedIn(viewModelScope)
-
-    fun addToCollection(collectionId: Long, artistId: String) {
-        viewModelScope.launch {
-            collectionDao.insertEntityIntoCollection(
-                CollectionEntityRoomModel(collectionId, artistId)
-            )
-        }
-    }
-
-    suspend fun createNewCollection(name: String, entity: MusicBrainzResource) {
-        collectionDao.insert(
-            CollectionRoomModel(
-                name = name,
-                entity = entity
-            )
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun CollectionBottomSheet(
-    bottomSheetState: SheetState,
-    scope: CoroutineScope,
-    collections: LazyPagingItems<CollectionListItemModel>,
-    onDismiss: () -> Unit,
-    onCreateCollectionButtonClick: () -> Unit,
-    onAddToCollection: suspend (collectionId: Long) -> Unit
-) {
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        sheetState = bottomSheetState,
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = stringResource(id = R.string.add_to_collection),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                style = TextStyles.getCardBodyTextStyle()
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            IconButton(onClick = onCreateCollectionButtonClick) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.create_collection)
-                )
-            }
-        }
-
-        Divider(modifier = Modifier.padding(top = 16.dp))
-
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            items(collections) { collection ->
-                when (collection) {
-                    is CollectionListItemModel -> {
-                        CollectionListItem(
-                            collection = collection,
-                            onClick = {
-                                scope.launch {
-                                    onAddToCollection(collection.id.toLong())
-                                    bottomSheetState.hide()
-                                }.invokeOnCompletion {
-                                    if (!bottomSheetState.isVisible) {
-                                        onDismiss()
-                                    }
-                                }
-                            }
-                        )
-                    }
-                    else -> {
-                        // Do nothing.
-                    }
-                }
-            }
-            item {
-                Spacer(modifier = Modifier.padding(bottom = 16.dp))
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: AppTopLevelViewModel = hiltViewModel()
+    onAddToCollectionMenuClick: () -> Unit = {},
+    onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> }
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
-
-    val scope = rememberCoroutineScope()
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val bottomSheetState = rememberSheetState()
-    var showDialog by rememberSaveable { mutableStateOf(false) }
-    var selectedEntityId by rememberSaveable { mutableStateOf("") }
-    val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
-        .collectAsLazyPagingItems()
-
-    if (showDialog) {
-        CreateCollectionDialog(
-            onDismiss = { showDialog = false },
-            onSubmit = { name, entity ->
-                scope.launch {
-                    viewModel.createNewCollection(name, entity)
-                }
-            }
-        )
-    }
-
-    if (openBottomSheet) {
-        CollectionBottomSheet(
-            bottomSheetState = bottomSheetState,
-            scope = scope,
-            collections = collections,
-            onDismiss = { openBottomSheet = false },
-            onCreateCollectionButtonClick = { showDialog = true },
-            onAddToCollection = { collectionId ->
-                if (selectedEntityId.isNotEmpty()) {
-                    viewModel.addToCollection(collectionId, selectedEntityId)
-                }
-            }
-        )
-    }
 
     NavHost(
         navController = navController,
@@ -264,8 +68,7 @@ internal fun NavigationGraph(
     ) {
 
         val onLookupEntityClick: (MusicBrainzResource, String, String?) -> Unit = { entity, id, title ->
-            viewModel.resource.value = entity
-            selectedEntityId = id
+            onSelectedEntityChange(entity, id)
             navController.goToResource(entity, id, title)
         }
 
@@ -325,10 +128,7 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = {
-
-                    openBottomSheet = true
-                }
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -342,11 +142,7 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onItemClick = onLookupEntityClick,
                 onBack = navController::navigateUp,
-                onAddToCollectionMenuClick = {
-                    viewModel.resource.value = MusicBrainzResource.ARTIST
-                    selectedEntityId = resourceId
-                    openBottomSheet = true
-                }
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -359,7 +155,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -384,7 +181,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -397,7 +195,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -410,7 +209,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -424,6 +224,7 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -437,6 +238,7 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
         addLookupResourceScreen(
@@ -448,7 +250,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -461,7 +264,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -474,7 +278,8 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 

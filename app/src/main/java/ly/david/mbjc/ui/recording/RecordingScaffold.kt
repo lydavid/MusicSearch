@@ -30,6 +30,7 @@ import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
@@ -45,6 +46,7 @@ internal fun RecordingScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: () -> Unit = {},
     viewModel: RecordingScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RECORDING
@@ -80,6 +82,7 @@ internal fun RecordingScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = recordingId)
                     CopyToClipboardMenuItem(recordingId)
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 subtitleDropdownMenuItems = {
                     recording?.artistCredits?.forEach { artistCredit ->

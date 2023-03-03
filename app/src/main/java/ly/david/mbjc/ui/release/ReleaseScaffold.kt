@@ -27,6 +27,7 @@ import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
@@ -45,6 +46,7 @@ internal fun ReleaseScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: () -> Unit = {},
     viewModel: ReleaseScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE
@@ -82,6 +84,7 @@ internal fun ReleaseScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE, resourceId = releaseId)
                     CopyToClipboardMenuItem(resourceId = releaseId)
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 subtitleDropdownMenuItems = {
                     release?.artistCredits?.forEach { artistCredit ->
