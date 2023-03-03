@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
@@ -42,7 +41,7 @@ internal fun EventScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: EventScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.EVENT

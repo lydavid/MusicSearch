@@ -12,7 +12,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.place.PlaceListItem
 
@@ -24,7 +24,7 @@ internal fun PlacesByAreaScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     placesLazyListState: LazyListState = rememberLazyListState(),
-    onPlaceClick: (destination: Destination, String, String) -> Unit = { _, _, _ -> },
+    onPlaceClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit = {},
     viewModel: PlacesByAreaViewModel = hiltViewModel(),
 ) {
@@ -43,7 +43,7 @@ internal fun PlacesByAreaScreen(
         when (placeListItemModel) {
             is PlaceListItemModel -> {
                 PlaceListItem(place = placeListItemModel) {
-                    onPlaceClick(Destination.LOOKUP_PLACE, id, getNameWithDisambiguation())
+                    onPlaceClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
                 }
             }
             else -> {

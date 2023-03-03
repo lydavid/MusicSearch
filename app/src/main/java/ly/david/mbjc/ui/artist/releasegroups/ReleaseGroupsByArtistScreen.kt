@@ -10,7 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.ListItemModel
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.ReleaseGroupsListScreen
 
 @Composable
@@ -20,7 +20,7 @@ internal fun ReleaseGroupsByArtistScreen(
     searchText: String,
     isSorted: Boolean,
     snackbarHostState: SnackbarHostState,
-    onReleaseGroupClick: (destination: Destination, String, String) -> Unit,
+    onReleaseGroupClick: (entity: MusicBrainzResource, String, String) -> Unit,
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     onPagedReleaseGroupsChange: (Flow<PagingData<ListItemModel>>) -> Unit,
@@ -40,7 +40,7 @@ internal fun ReleaseGroupsByArtistScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         onReleaseGroupClick = { id, title ->
-            onReleaseGroupClick(Destination.LOOKUP_RELEASE_GROUP, id, title)
+            onReleaseGroupClick(MusicBrainzResource.RELEASE_GROUP, id, title)
         }
     )
 }

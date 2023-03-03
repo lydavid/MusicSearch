@@ -11,7 +11,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 
 @Composable
@@ -21,7 +21,7 @@ internal fun ReleasesByRecordingScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     releasesLazyListState: LazyListState = rememberLazyListState(),
     releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
-    onReleaseClick: (destination: Destination, String, String) -> Unit,
+    onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit,
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit,
     filterText: String,
     viewModel: ReleasesByRecordingViewModel = hiltViewModel(),
@@ -39,7 +39,7 @@ internal fun ReleasesByRecordingScreen(
         lazyListState = releasesLazyListState,
         lazyPagingItems = releasesLazyPagingItems,
         onReleaseClick = { id, title ->
-            onReleaseClick(Destination.LOOKUP_RELEASE, id, title)
+            onReleaseClick(MusicBrainzResource.RELEASE, id, title)
         }
     )
 }

@@ -22,7 +22,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
@@ -45,7 +44,7 @@ internal fun ReleaseScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: ReleaseScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE
@@ -91,7 +90,7 @@ internal fun ReleaseScaffold(
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
+                                onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
                             })
                     }
                     release?.releaseGroup?.let { releaseGroup ->
@@ -100,7 +99,7 @@ internal fun ReleaseScaffold(
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.RELEASE_GROUP) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(Destination.LOOKUP_RELEASE_GROUP, releaseGroup.id, null)
+                                onItemClick(MusicBrainzResource.RELEASE_GROUP, releaseGroup.id, null)
                             })
                     }
                 },
@@ -146,10 +145,10 @@ internal fun ReleaseScaffold(
                         modifier = Modifier.padding(innerPadding),
                         coverArtUrl = url,
                         onLabelClick = {
-                            onItemClick(Destination.LOOKUP_LABEL, id, name)
+                            onItemClick(MusicBrainzResource.LABEL, id, name)
                         },
                         onAreaClick = {
-                            onItemClick(Destination.LOOKUP_AREA, id, name)
+                            onItemClick(MusicBrainzResource.AREA, id, name)
                         },
                         lazyListState = detailsLazyListState,
                     )
@@ -162,7 +161,7 @@ internal fun ReleaseScaffold(
                     lazyListState = tracksLazyListState,
                     lazyPagingItems = tracksLazyPagingItems,
                     onRecordingClick = { id, title ->
-                        onItemClick(Destination.LOOKUP_RECORDING, id, title)
+                        onItemClick(MusicBrainzResource.RECORDING, id, title)
                     }
                 )
             }

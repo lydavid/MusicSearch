@@ -42,7 +42,7 @@ internal fun WorkScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: WorkScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.WORK

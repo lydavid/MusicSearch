@@ -3,7 +3,7 @@ package ly.david.mbjc.ui.collections
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 
 /**
  * A single collection.
@@ -13,7 +13,7 @@ import ly.david.data.navigation.Destination
 internal fun CollectionScaffold(
     collectionId: String,
     modifier: Modifier = Modifier,
-    onDestinationClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
+    onEntityClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
 ) {
     Text(text = collectionId)
 }

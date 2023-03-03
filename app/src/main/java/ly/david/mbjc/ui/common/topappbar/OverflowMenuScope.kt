@@ -43,3 +43,16 @@ internal fun OverflowMenuScope.CopyToClipboardMenuItem(resourceId: String) {
         }
     )
 }
+
+@Composable
+internal fun OverflowMenuScope.AddToCollectionMenuItem(onClick: () -> Unit) {
+    DropdownMenuItem(
+        text = {
+            Text(stringResource(id = R.string.add_to_collection))
+        },
+        onClick = {
+            onClick()
+            closeMenu()
+        }
+    )
+}

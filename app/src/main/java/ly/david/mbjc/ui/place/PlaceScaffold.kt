@@ -43,7 +43,7 @@ internal fun PlaceScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: PlaceScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.PLACE

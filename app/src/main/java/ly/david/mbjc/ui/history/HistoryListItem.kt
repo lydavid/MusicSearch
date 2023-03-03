@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -17,8 +16,6 @@ import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.ResourceIcon
@@ -28,12 +25,11 @@ import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryRoomModel,
     modifier: Modifier = Modifier,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     ListItem(
         headlineText = {
@@ -44,7 +40,7 @@ internal fun HistoryListItem(
             )
         },
         modifier = modifier.clickable {
-            onItemClick(lookupHistory.resource.toLookupDestination(), lookupHistory.id, lookupHistory.title)
+            onItemClick(lookupHistory.resource, lookupHistory.id, lookupHistory.title)
         },
         supportingText = {
             Column {

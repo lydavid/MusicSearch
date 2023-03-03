@@ -19,7 +19,7 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 @Composable
 internal fun SearchScreenScaffold(
     modifier: Modifier = Modifier,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     searchQuery: String? = null,
     searchOption: MusicBrainzResource? = null,
 ) {

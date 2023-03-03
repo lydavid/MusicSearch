@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
@@ -51,7 +50,7 @@ internal fun ReleaseGroupScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE_GROUP
@@ -99,7 +98,7 @@ internal fun ReleaseGroupScaffold(
                                 closeMenu()
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
-                                onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
+                                onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
                             })
                     }
                 },
