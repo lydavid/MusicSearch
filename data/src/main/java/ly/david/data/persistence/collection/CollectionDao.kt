@@ -27,8 +27,6 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
     abstract fun getAllCollectionsFiltered(query: String): PagingSource<Int, CollectionWithEntities>
 
 
-    // TODO: can we compare types due to typeconverter?
-    // TODO: paged? should be able to if bottom sheet presenting this is lazy column
     @Transaction
     @Query(
         """

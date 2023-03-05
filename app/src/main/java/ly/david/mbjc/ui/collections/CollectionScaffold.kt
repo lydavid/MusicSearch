@@ -15,5 +15,8 @@ internal fun CollectionScaffold(
     modifier: Modifier = Modifier,
     onEntityClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
 ) {
+
+    // TODO: list of X by collection
+
     Text(text = collectionId)
 }

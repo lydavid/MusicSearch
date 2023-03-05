@@ -7,6 +7,8 @@ import ly.david.mbjc.ui.MainActivity
 internal interface StringReferences {
     val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 
+    val deeplinkSchema
+        get() = composeTestRule.activity.resources.getString(R.string.deeplink_schema)
     val searchDrawerLabel
         get() = composeTestRule.activity.resources.getString(R.string.search_musicbrainz)
     val searchLabel

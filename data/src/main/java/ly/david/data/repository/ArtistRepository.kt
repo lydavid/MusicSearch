@@ -9,13 +9,11 @@ import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.artist.ArtistDao
 import ly.david.data.persistence.artist.toArtistRoomModel
-import ly.david.data.persistence.collection.CollectionDao
 
 @Singleton
 class ArtistRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistDao: ArtistDao,
-    private val collectionDao: CollectionDao
 ): RelationsListRepository {
 
     suspend fun lookupArtist(artistId: String): ArtistListItemModel {
@@ -36,9 +34,5 @@ class ArtistRepository @Inject constructor(
             artistId = resourceId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
-    }
-
-    suspend fun addArtistToCollection(artistId: String, collectionId: Long) {
-
     }
 }

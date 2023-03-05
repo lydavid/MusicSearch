@@ -12,17 +12,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.launch
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.dialog.CreateCollectionDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
@@ -37,28 +34,13 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 fun CollectionListScaffold(
     modifier: Modifier = Modifier,
     onCollectionClick: (id: String) -> Unit = {},
+    onCreateCollectionClick: () -> Unit = {},
     viewModel: CollectionViewModel = hiltViewModel()
 ) {
 
     var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.collections)
         .collectAsLazyPagingItems()
-
-    var showDialog by rememberSaveable { mutableStateOf(false) }
-
-    val scope = rememberCoroutineScope()
-
-    // TODO: we might be able to hoist this up to NavigationGraph, then we don't need to repeat it everywhere
-    if (showDialog) {
-        CreateCollectionDialog(
-            onDismiss = { showDialog = false },
-            onSubmit = { name, entity ->
-                scope.launch {
-                    viewModel.createNewCollection(name, entity)
-                }
-            }
-        )
-    }
 
     Scaffold(
         modifier = modifier,
@@ -72,9 +54,7 @@ fun CollectionListScaffold(
                     viewModel.updateQuery(query = filterText)
                 },
                 additionalActions = {
-                    IconButton(onClick = {
-                        showDialog = true
-                    }) {
+                    IconButton(onClick = onCreateCollectionClick) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = stringResource(id = R.string.create_collection)

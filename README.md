@@ -21,9 +21,9 @@ An Android app for browsing songs, artists, and anything related to them using [
 | ![](assets/1.png) | ![](assets/2.png)        | ![](assets/3.png) | ![](assets/4.png) | ![](assets/5.png) |
 
 
-## Development Notes, Upcoming Features & More
+## Development
 
-[See here](./docs/README.md) for notes on upcoming features and my development processes.
+[See here](./docs/README.md) for notes on upcoming features and some development processes.
 
 
 ## Privacy Policy

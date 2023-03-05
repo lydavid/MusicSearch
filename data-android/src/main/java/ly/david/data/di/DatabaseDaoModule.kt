@@ -83,4 +83,7 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideCollectionDao(db: MusicBrainzDatabase) = db.getCollectionDao()
+
+    @Provides
+    fun provideCollectionEntityDao(db: MusicBrainzDatabase) = db.getCollectionEntityDao()
 }

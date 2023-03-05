@@ -1,15 +1,18 @@
 package ly.david.mbjc.ui.settings
 
 import android.os.Build
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.navigation.Destination
@@ -30,6 +33,9 @@ fun SettingsScaffold(
     onDestinationClick: (Destination) -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
+
+    val context = LocalContext.current
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -48,6 +54,7 @@ fun SettingsScaffold(
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
+            onLoginClick = { viewModel.login(context) },
             onDestinationClick = onDestinationClick,
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
@@ -62,6 +69,7 @@ fun SettingsScaffold(
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
+    onLoginClick: () -> Unit = {},
     onDestinationClick: (Destination) -> Unit = {},
     theme: AppPreferences.Theme,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
@@ -72,6 +80,13 @@ fun SettingsScreen(
 ) {
 
     Column(modifier = modifier) {
+
+        Text(
+            text = "login",
+            modifier = Modifier.clickable {
+                onLoginClick()
+            }
+        )
 
         SettingWithDialogChoices(
             titleRes = R.string.theme,

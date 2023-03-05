@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist.releases
+package ly.david.mbjc.ui.collections.releases
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,8 +20,16 @@ import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
 
+// TODO: we will need something similar to ReleasesByArtistViewModel if we sync with MB's collection
+//  consider how we can integrate local collections with mb's collections before committing too much
+//  - users can create collections in our app without making a mb account
+//  - after auth, they can choose to sync their collections to mb
+//  - collections without a mb id will be pushed to mb, then the newly created mbid will be saved
+//  - collections from mb will be pulled into our db
+//  - refreshing a collection will pull data from mb -> but how do we sync? what if user adds on our app, refreshing shouldn't delete it
+// TODO: research ANKI syncing
 @HiltViewModel
-internal class ReleasesByArtistViewModel @Inject constructor(
+internal class ReleasesByCollectionViewModel @Inject constructor(
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,

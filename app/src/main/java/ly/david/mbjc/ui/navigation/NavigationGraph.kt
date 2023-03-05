@@ -58,9 +58,13 @@ internal fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     onAddToCollectionMenuClick: () -> Unit = {},
-    onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> }
+    onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onCreateCollectionClick: () -> Unit = {}
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
+    val uriPrefix = "$deeplinkSchema://app/"
+
+    // TODO: where should oauth2 land? if we don't specify, could it just stay on whatever screen they were on?
 
     NavHost(
         navController = navController,
@@ -101,7 +105,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://${Destination.LOOKUP.route}?query={query}&type={type}"
+                    uriPattern = "$uriPrefix${Destination.LOOKUP.route}?query={query}&type={type}"
                 }
             )
         ) { entry ->
@@ -120,7 +124,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.AREA,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             AreaScaffold(
                 areaId = resourceId,
@@ -134,7 +138,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.ARTIST,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             ArtistScaffold(
                 artistId = resourceId,
@@ -148,7 +152,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.EVENT,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             EventScaffold(
                 eventId = resourceId,
@@ -162,7 +166,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.GENRE,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             GenreScaffold(
                 genreId = resourceId,
@@ -174,7 +178,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.INSTRUMENT,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             InstrumentScaffold(
                 instrumentId = resourceId,
@@ -188,7 +192,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.LABEL,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             LabelScaffold(
                 labelId = resourceId,
@@ -202,7 +206,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.PLACE,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             PlaceScaffold(
                 placeId = resourceId,
@@ -216,7 +220,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.RECORDING,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             RecordingScaffold(
                 recordingId = resourceId,
@@ -230,7 +234,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.RELEASE,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             ReleaseScaffold(
                 releaseId = resourceId,
@@ -243,7 +247,7 @@ internal fun NavigationGraph(
         }
         addLookupResourceScreen(
             resource = MusicBrainzResource.RELEASE_GROUP,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             ReleaseGroupScaffold(
                 releaseGroupId = resourceId,
@@ -257,7 +261,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.SERIES,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             SeriesScaffold(
                 seriesId = resourceId,
@@ -271,7 +275,7 @@ internal fun NavigationGraph(
 
         addLookupResourceScreen(
             resource = MusicBrainzResource.WORK,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             WorkScaffold(
                 workId = resourceId,
@@ -298,7 +302,8 @@ internal fun NavigationGraph(
         ) {
             CollectionListScaffold(
                 modifier = modifier,
-                onCollectionClick = onCollectionClick
+                onCollectionClick = onCollectionClick,
+                onCreateCollectionClick = onCreateCollectionClick
             )
         }
 
@@ -306,7 +311,7 @@ internal fun NavigationGraph(
             route = "${Destination.COLLECTIONS.route}/{$ID}",
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://${Destination.COLLECTIONS.route}/{$ID}"
+                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}"
                 }
             )
         ) { entry ->
@@ -362,7 +367,7 @@ internal fun NavigationGraph(
 
 private fun NavGraphBuilder.addLookupResourceScreen(
     resource: MusicBrainzResource,
-    deeplinkSchema: String,
+    uriPrefix: String,
     scaffold: @Composable (resourceId: String, titleWithDisambiguation: String?) -> Unit
 ) {
     composable(
@@ -379,7 +384,7 @@ private fun NavGraphBuilder.addLookupResourceScreen(
         ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$deeplinkSchema://${resource.resourceName}/{$ID}?$TITLE={$TITLE}"
+                uriPattern = "$uriPrefix${resource.resourceName}/{$ID}?$TITLE={$TITLE}"
             }
         )
     ) { entry: NavBackStackEntry ->

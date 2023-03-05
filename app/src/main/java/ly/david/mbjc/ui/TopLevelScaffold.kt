@@ -17,7 +17,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.launch
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.getTopLevelDestination
@@ -56,18 +55,16 @@ internal fun TopLevelScaffold(
     val scope = rememberCoroutineScope()
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberSheetState()
-    var showDialog by rememberSaveable { mutableStateOf(false) }
+    var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
     var selectedEntityId by rememberSaveable { mutableStateOf("") }
     val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
         .collectAsLazyPagingItems()
 
-    if (showDialog) {
+    if (showCreateCollectionDialog) {
         CreateCollectionDialog(
-            onDismiss = { showDialog = false },
+            onDismiss = { showCreateCollectionDialog = false },
             onSubmit = { name, entity ->
-                scope.launch {
-                    viewModel.createNewCollection(name, entity)
-                }
+                viewModel.createNewCollection(name, entity)
             }
         )
     }
@@ -78,7 +75,7 @@ internal fun TopLevelScaffold(
             scope = scope,
             collections = collections,
             onDismiss = { openBottomSheet = false },
-            onCreateCollectionButtonClick = { showDialog = true },
+            onCreateCollectionClick = { showCreateCollectionDialog = true },
             onAddToCollection = { collectionId ->
                 if (selectedEntityId.isNotEmpty()) {
                     viewModel.addToCollection(collectionId, selectedEntityId)
@@ -103,8 +100,11 @@ internal fun TopLevelScaffold(
                 openBottomSheet = true
             },
             onSelectedEntityChange = { entity, id ->
-                viewModel.resource.value = entity
+                viewModel.setEntity(entity)
                 selectedEntityId = id
+            },
+            onCreateCollectionClick = {
+                showCreateCollectionDialog = true
             }
         )
     }

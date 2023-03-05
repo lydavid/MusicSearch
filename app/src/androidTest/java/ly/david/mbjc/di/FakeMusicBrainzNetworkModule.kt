@@ -40,4 +40,8 @@ internal object FakeMusicBrainzNetworkModule {
     @Singleton
     @Provides
     fun provideMusicBrainzApi(): MusicBrainzApiService = FakeMusicBrainzApiService()
+
+//    @Singleton
+//    @Provides
+//    fun provideMusicBrainzAuth(): MusicBrainzAuthService =
 }

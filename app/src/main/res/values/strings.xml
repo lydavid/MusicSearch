@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MusicSearch</string>
-    <string name="deeplink_schema" translatable="false">mbjc</string>
+    <string name="deeplink_schema" translatable="false">io.github.lydavid.musicsearch</string>
 
     <string name="theme">Theme</string>
     <string name="light">Light</string>

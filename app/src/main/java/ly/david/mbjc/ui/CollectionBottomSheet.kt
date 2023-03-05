@@ -35,7 +35,7 @@ internal fun CollectionBottomSheet(
     scope: CoroutineScope,
     collections: LazyPagingItems<CollectionListItemModel>,
     onDismiss: () -> Unit,
-    onCreateCollectionButtonClick: () -> Unit,
+    onCreateCollectionClick: () -> Unit,
     onAddToCollection: suspend (collectionId: Long) -> Unit
 ) {
     ModalBottomSheet(
@@ -52,7 +52,7 @@ internal fun CollectionBottomSheet(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            IconButton(onClick = onCreateCollectionButtonClick) {
+            IconButton(onClick = onCreateCollectionClick) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(id = R.string.create_collection)

@@ -66,4 +66,10 @@ object MusicBrainzNetworkModule {
     fun provideMusicBrainzApi(
         okHttpClient: OkHttpClient
     ): MusicBrainzApiService = MusicBrainzApiServiceImpl.create(okHttpClient)
+
+//    @Singleton
+//    @Provides
+//    fun provideMusicBrainzAuth(
+//        okHttpClient: OkHttpClient
+//    ): MusicBrainzAuthService = MusicBrainzAuthServiceImpl.create(okHttpClient)
 }

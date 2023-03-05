@@ -32,6 +32,7 @@ internal fun CollectionListItem(
         modifier = modifier.clickable { onClick(collection) },
         supportingText = {
             // TODO: if we add more content to this column, it messes up any BottomModalSheet
+            //  problem seems to appear when list is of certain length (eg. 4 items) regardless of this
             Text(
                 text = collection.description,
                 style = TextStyles.getCardBodyTextStyle()
