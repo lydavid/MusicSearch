@@ -43,6 +43,9 @@ dependencies {
 
     implementation libs.moshi.kotlin
 
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'net.openid:appauth:0.11.1'
+
     // Retrofit
     implementation libs.retrofit
     implementation libs.retrofit.converter.moshi

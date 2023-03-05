@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.settings
 
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.navigation.Destination
@@ -25,6 +25,7 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
 import ly.david.mbjc.ui.theme.PreviewTheme
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +35,19 @@ fun SettingsScaffold(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
 
-    val context = LocalContext.current
+    val authLauncher = rememberLauncherForActivityResult(contract = viewModel.getAuthorizationRequest()) { result ->
+        when {
+            result.exception != null -> {
+                Timber.e(result.exception)
+            }
+            result.response != null -> {
+                viewModel.performTokenRequest(result.response)
+            }
+            else -> {
+                Timber.e("getAuthorizationRequest's result intent is null")
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -54,7 +67,7 @@ fun SettingsScaffold(
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
-            onLoginClick = { viewModel.login(context) },
+            onLoginClick = { authLauncher.launch(Unit) },
             onDestinationClick = onDestinationClick,
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },

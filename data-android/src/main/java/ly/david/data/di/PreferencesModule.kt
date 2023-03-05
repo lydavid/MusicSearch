@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +17,6 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import ly.david.mbjc.ui.settings.AppPreferences
-import ly.david.mbjc.ui.settings.AppPreferencesImpl
 
 private const val SETTINGS_KEY = "settings"
 
@@ -42,12 +39,4 @@ internal object PreferencesModule {
             produceFile = { context.preferencesDataStoreFile(SETTINGS_KEY) }
         )
     }
-}
-
-@InstallIn(SingletonComponent::class)
-@Module
-internal abstract class PreferencesModuleBinds {
-    @Singleton
-    @Binds
-    abstract fun provideAppPreferences(bind: AppPreferencesImpl): AppPreferences
 }

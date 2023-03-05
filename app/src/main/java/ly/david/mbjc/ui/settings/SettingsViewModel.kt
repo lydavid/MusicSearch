@@ -1,44 +1,60 @@
 package ly.david.mbjc.ui.settings
 
 import android.content.Context
-import android.net.Uri
+import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
-import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_ID
+import net.openid.appauth.AuthState
+import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
+import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
-import net.openid.appauth.AuthorizationServiceConfiguration
-import net.openid.appauth.ResponseTypeValues
+import net.openid.appauth.ClientAuthentication
+
+class MusicBrainzAuthContract(
+    private val authRequest: AuthorizationRequest,
+    private val authService: AuthorizationService
+): ActivityResultContract<Unit, MusicBrainzAuthContract.Result>() {
+
+    data class Result(
+        val response: AuthorizationResponse?,
+        val exception: AuthorizationException?,
+    )
+
+    override fun createIntent(context: Context, input: Unit): Intent {
+        return authService.getAuthorizationRequestIntent(authRequest)
+    }
+
+    override fun parseResult(resultCode: Int, intent: Intent?): Result {
+        val response = intent?.run { AuthorizationResponse.fromIntent(intent) }
+        val exception = AuthorizationException.fromIntent(intent)
+        return Result(
+            response = response,
+            exception = exception
+        )
+    }
+}
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     val appPreferences: AppPreferences,
-//    private val musicBrainzAuthService: MusicBrainzAuthService
+    private val authRequest: AuthorizationRequest,
+    private val authService: AuthorizationService,
+    private val clientAuth: ClientAuthentication
 ) : ViewModel() {
 
-    fun login(context: Context) {
-        val serviceConfig = AuthorizationServiceConfiguration(
-            Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/authorize"),  // authorization endpoint
-            Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/token") // token endpoint
-        )
-        val authRequestBuilder = AuthorizationRequest.Builder(
-            serviceConfig,
-            MUSIC_BRAINZ_OAUTH_CLIENT_ID,
-            ResponseTypeValues.CODE,
-            Uri.parse("io.github.lydavid.musicsearch://oauth2/redirect")
-        )
+    fun getAuthorizationRequest() = MusicBrainzAuthContract(authRequest, authService)
 
-        val authRequest: AuthorizationRequest = authRequestBuilder
-            .setScope("collection profile")
-            .build()
-
-        val authService = AuthorizationService(context)
-
-        val authIntent = authService.getAuthorizationRequestIntent(authRequest)
-//            .addFlags(FLAG_ACTIVITY_PREVIOUS_IS_TOP)
-//            .setFlags(FLAG_ACTIVITY_CLEAR_TASK)
-        context.startActivity(authIntent)
+    fun performTokenRequest(authorizationResponse: AuthorizationResponse) {
+        authService.performTokenRequest(
+            authorizationResponse.createTokenExchangeRequest(),
+            clientAuth
+        ) { response, exception ->
+            val authState = AuthState()
+            authState.update(response, exception)
+            appPreferences.setAuthState(authState)
+        }
     }
 }

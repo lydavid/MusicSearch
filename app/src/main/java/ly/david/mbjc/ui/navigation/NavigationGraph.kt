@@ -64,8 +64,6 @@ internal fun NavigationGraph(
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
     val uriPrefix = "$deeplinkSchema://app/"
 
-    // TODO: where should oauth2 land? if we don't specify, could it just stay on whatever screen they were on?
-
     NavHost(
         navController = navController,
         startDestination = Destination.LOOKUP.route,

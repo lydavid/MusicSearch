@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicSearch">
 
-        <!-- TODO: singleTask let us return from oauth to same screen, but now we can't start deeplinks while our app is open -->
         <activity
             android:name="ly.david.mbjc.ui.MainActivity"
             android:exported="true"
@@ -34,8 +33,6 @@
                     android:scheme="${applicationId}" />
             </intent-filter>
         </activity>
-
-        <!-- TODO: to preserve deeplinking, need to make sure above host won't match below -->
         <activity
             android:name="net.openid.appauth.RedirectUriReceiverActivity"
             android:exported="true"
@@ -49,8 +46,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:path="/redirect"
                     android:host="oauth2"
+                    android:path="/redirect"
                     android:scheme="${applicationId}" />
 
             </intent-filter>
