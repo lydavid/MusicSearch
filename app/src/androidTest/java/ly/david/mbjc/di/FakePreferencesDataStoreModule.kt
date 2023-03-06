@@ -18,15 +18,16 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import ly.david.data.di.PreferencesDataStoreModule
 
 private const val TEST_SETTINGS_KEY = "test_settings"
 
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [PreferencesModule::class]
+    replaces = [PreferencesDataStoreModule::class]
 )
-internal object FakePreferencesModule {
+internal object FakePreferencesDataStoreModule {
 
     @Provides
     @Singleton

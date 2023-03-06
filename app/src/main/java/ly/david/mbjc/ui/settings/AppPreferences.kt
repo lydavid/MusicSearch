@@ -13,14 +13,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.mbjc.R
-import net.openid.appauth.AuthState
-import timber.log.Timber
 
 interface AppPreferences {
-
-    // TODO: if we wrap authstate with our own, then we move to data-android
-    val authState: Flow<AuthState?>
-    fun setAuthState(authState: AuthState?)
 
     enum class Theme(@StringRes val textRes: Int) {
         LIGHT(R.string.light),
@@ -39,9 +33,6 @@ interface AppPreferences {
 
 }
 
-private const val MB_AUTH_KEY = "musicBrainzAuth"
-private val MB_AUTH_PREFERENCE = stringPreferencesKey(MB_AUTH_KEY)
-
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
 
@@ -56,23 +47,6 @@ class AppPreferencesImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope
 ) : AppPreferences {
-
-    override val authState: Flow<AuthState?>
-        get() = preferencesDataStore.data
-            .map {
-                AuthState.jsonDeserialize(it[MB_AUTH_PREFERENCE].orEmpty())
-            }
-            .distinctUntilChanged()
-
-    override fun setAuthState(authState: AuthState?) {
-        coroutineScope.launch {
-            val serializedAuthState = authState?.jsonSerializeString() ?: return@launch
-            Timber.d("serializedAuthState=$serializedAuthState")
-            preferencesDataStore.edit {
-                it[MB_AUTH_PREFERENCE] = serializedAuthState
-            }
-        }
-    }
 
     override val theme: Flow<AppPreferences.Theme>
         get() = preferencesDataStore.data

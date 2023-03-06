@@ -141,7 +141,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 val query = "some query" // The query doesn't matter for this test since we're returning fakes.
                 val resource = MusicBrainzResource.RELEASE_GROUP.resourceName
-                data = Uri.parse("$deeplinkSchema://lookup?query=$query&type=$resource")
+                data = Uri.parse("$deeplinkSchema://app/lookup?query=$query&type=$resource")
             }
             it.startActivity(intent)
         }

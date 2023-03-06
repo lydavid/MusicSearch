@@ -1,4 +1,4 @@
-package ly.david.mbjc.di
+package ly.david.data.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -22,7 +22,7 @@ private const val SETTINGS_KEY = "settings"
 
 @InstallIn(SingletonComponent::class)
 @Module
-internal object PreferencesModule {
+object PreferencesDataStoreModule {
 
     // https://medium.com/androiddevelopers/datastore-and-dependency-injection-ea32b95704e3
     @Provides

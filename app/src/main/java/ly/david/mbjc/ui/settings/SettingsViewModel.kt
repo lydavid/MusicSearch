@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.auth.MusicBrainzAuthState
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
@@ -40,6 +41,7 @@ class MusicBrainzAuthContract(
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     val appPreferences: AppPreferences,
+    private val musicBrainzAuthState: MusicBrainzAuthState,
     private val authRequest: AuthorizationRequest,
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication
@@ -54,7 +56,7 @@ class SettingsViewModel @Inject constructor(
         ) { response, exception ->
             val authState = AuthState()
             authState.update(response, exception)
-            appPreferences.setAuthState(authState)
+            musicBrainzAuthState.setAuthState(authState)
         }
     }
 }
