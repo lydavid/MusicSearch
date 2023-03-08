@@ -44,6 +44,7 @@ enum class Direction {
     @Json(name = "forward") FORWARD
 }
 
+// TODO: instead of this, just use Map<String, String>
 // TODO: add the rest of relationship attributes
 //  there isn't actually that many of them
 //  https://musicbrainz.org/relationship-attributes
