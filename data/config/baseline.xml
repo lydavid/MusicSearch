@@ -6,41 +6,6 @@
     <ID>ConstructorParameterNaming:AreaListItemModel.kt$AreaListItemModel$val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
     <ID>ConstructorParameterNaming:AreaScaffoldModel.kt$AreaScaffoldModel$val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
     <ID>CyclomaticComplexMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
-    <ID>EmptyFunctionBlock:ArtistRepository.kt$ArtistRepository${ }</ID>
-    <ID>ForbiddenComment:ArtistCreditResource.kt$ArtistCreditResource$// TODO: can't FK to multiple tables directly?</ID>
-    <ID>ForbiddenComment:ArtistRelease.kt$// TODO: we actually don't want to cascade delete in any scenario where another resource screen can delete the same resource</ID>
-    <ID>ForbiddenComment:ArtistReleaseGroupDao.kt$ArtistReleaseGroupDao.Companion$// TODO: we're able to filter on date's month/day even though we don't display it. Could be confusing</ID>
-    <ID>ForbiddenComment:CollectionDao.kt$CollectionDao$// TODO: can we compare types due to typeconverter?</ID>
-    <ID>ForbiddenComment:CollectionDao.kt$CollectionDao$// TODO: paged? should be able to if bottom sheet presenting this is lazy column</ID>
-    <ID>ForbiddenComment:CollectionRoomModel.kt$CollectionRoomModel$// TODO: This cannot convert to a MB collection 1-for-1 because we will need them to generate a UUID for us</ID>
-    <ID>ForbiddenComment:InstrumentRepository.kt$InstrumentRepository$// TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them</ID>
-    <ID>ForbiddenComment:Iso3166_1.kt$Iso3166_1$// TODO: ref countries_areas instead</ID>
-    <ID>ForbiddenComment:LabelListItemModel.kt$LabelListItemModel$// TODO: don't need this in scaffold model</ID>
-    <ID>ForbiddenComment:LookupHistoryDao.kt$LookupHistoryDao$// TODO: can't search "release group", need to use "release_group" or "release-group"</ID>
-    <ID>ForbiddenComment:LookupHistoryRoomModel.kt$// TODO: We can probably make this stable by mapping it to a ui model</ID>
-    <ID>ForbiddenComment:MediumRoomModel.kt$MediumRoomModel$// TODO: release_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.MediumRoomModel</ID>
-    <ID>ForbiddenComment:RelationDao.kt$RelationDao$// TODO: right now we're unsure if there's collision with mbid between resources</ID>
-    <ID>ForbiddenComment:RelationRoomModel.kt$// TODO: [low priority] recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.</ID>
-    <ID>ForbiddenComment:RelationRoomModel.kt$RelationRoomModel$// TODO: an artist can appear multiple times similar to artist credits</ID>
-    <ID>ForbiddenComment:RelationRoomModel.kt$RelationRoomModel$// TODO: can we make it nullable so that we don't pass url id?</ID>
-    <ID>ForbiddenComment:ReleaseCountry.kt$// TODO: do we need this table?</ID>
-    <ID>ForbiddenComment:ReleaseCountry.kt$ReleaseCountry$// TODO: test inserting these from area releases tab first</ID>
-    <ID>ForbiddenComment:ReleaseCountryDao.kt$ReleaseCountryDao.Companion$// TODO: one use for an intermediate country_area table</ID>
-    <ID>ForbiddenComment:ReleaseDao.kt$ReleaseDao$// TODO: simplify</ID>
-    <ID>ForbiddenComment:ReleaseForListItem.kt$ReleaseForListItem$// TODO: we've lost the ability to filter on this field</ID>
-    <ID>ForbiddenComment:ReleaseGroupListItemModel.kt$// TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable</ID>
-    <ID>ForbiddenComment:ReleaseReleaseGroupDao.kt$ReleaseReleaseGroupDao$// TODO: put this in release group dao? only used by ReleaseGroupRepository</ID>
-    <ID>ForbiddenComment:ReleaseRepository.kt$ReleaseRepository$// TODO: move back to ui folder</ID>
-    <ID>ForbiddenComment:ReleaseRepository.kt$ReleaseRepository$// TODO: split up what data to include when calling from details/tracks tabs?</ID>
-    <ID>ForbiddenComment:ReleaseRoomModel.kt$ReleaseRoomModel$// TODO: might be able to remove this unless we care about the number of cover art it has</ID>
-    <ID>ForbiddenComment:ReleaseRoomModel.kt$ReleaseRoomModel$// TODO: separate table</ID>
-    <ID>ForbiddenComment:RoutesTest.kt$RoutesTest$// TODO: we just have LOOKUP as a fallback case, until we have other sub-routes, we can't test this</ID>
-    <ID>ForbiddenComment:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$// TODO: The following are not queryable. Is there a better model to switch on?</ID>
-    <ID>ForbiddenComment:TrackRoomModel.kt$TrackRoomModel$// TODO: check that deleting a release will delete all media and tracks</ID>
-    <ID>ForbiddenComment:TrackRoomModel.kt$TrackRoomModel$// TODO: medium_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.TrackRoomModel</ID>
-    <ID>ForbiddenComment:TrackRoomModel.kt$TrackRoomModel$// TODO: when adding a new required field, need to specify defaultValue for migration</ID>
-    <ID>ForbiddenComment:WorkAttributeRoomModel.kt$WorkAttributeRoomModel$// TODO: underscore, but should it be in its own table? what will we use type_id for?</ID>
-    <ID>ForbiddenComment:WorkListItemModel.kt$WorkListItemModel$// TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name</ID>
     <ID>LongMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
     <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, resource: MusicBrainzResource, queryString: String, currentOffset: Int, limit: Int ): QueryResults</ID>
     <ID>LongParameterList:ReleaseRepository.kt$ReleaseRepository$( private val musicBrainzApiService: MusicBrainzApiService, private val releaseDao: ReleaseDao, private val releaseReleaseGroupDao: ReleaseReleaseGroupDao, private val releaseGroupDao: ReleaseGroupDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, private val releaseCountryDao: ReleaseCountryDao, private val areaDao: AreaDao, private val labelDao: LabelDao, private val releaseLabelDao: ReleaseLabelDao )</ID>
@@ -56,8 +21,6 @@
     <ID>SwallowedException:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
-    <ID>UnusedPrivateMember:ArtistRepository.kt$ArtistRepository$artistId: String</ID>
-    <ID>UnusedPrivateMember:ArtistRepository.kt$ArtistRepository$collectionId: Long</ID>
-    <ID>UnusedPrivateMember:ArtistRepository.kt$ArtistRepository$private val collectionDao: CollectionDao</ID>
+    <ID>UnusedPrivateMember:CollectionEntityDao.kt$CollectionEntityDao.Companion$private const val SELECT_RELEASES_ID_BY_COLLECTION = """ SELECT r.id $RELEASES_BY_COLLECTION """</ID>
   </CurrentIssues>
 </SmellBaseline>

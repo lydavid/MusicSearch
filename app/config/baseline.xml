@@ -26,6 +26,7 @@
     <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
     <ID>ComposableParamOrder:ReleasesByArtistScreen.kt$ReleasesByArtistScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByCollectionScreen.kt$ReleasesByCollectionScreen</ID>
     <ID>ComposableParamOrder:ReleasesByLabelScreen.kt$ReleasesByLabelScreen</ID>
     <ID>ComposableParamOrder:ReleasesByRecordingScreen.kt$ReleasesByRecordingScreen</ID>
     <ID>ComposableParamOrder:ReleasesByReleaseGroupScreen.kt$ReleasesByReleaseGroupScreen</ID>
@@ -43,64 +44,6 @@
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
     <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
-    <ID>ForbiddenComment:AreaDetailsScreen.kt$// TODO: api doesn't seem to include area containment</ID>
-    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: area</ID>
-    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: begin area</ID>
-    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: end area</ID>
-    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// TODO: isni code</ID>
-    <ID>ForbiddenComment:ArtistDetailsScreen.kt$// todo: ipis code</ID>
-    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: disclaimer when turning on sort if we have not gotten all release groups</ID>
-    <ID>ForbiddenComment:ArtistScaffold.kt$// TODO: generalize switch menu item</ID>
-    <ID>ForbiddenComment:BigCoverArt.kt$// TODO: handle error with retry</ID>
-    <ID>ForbiddenComment:CollectionListItem.kt$// TODO: consider a different way to indicate what collection this is</ID>
-    <ID>ForbiddenComment:CollectionListItem.kt$// TODO: if we add more content to this column, it messes up any BottomModalSheet</ID>
-    <ID>ForbiddenComment:CollectionListScaffold.kt$// TODO: we might be able to hoist this up to NavigationGraph, then we don't need to repeat it everywhere</ID>
-    <ID>ForbiddenComment:CreateCollectionDialog.kt$// TODO: handle next focus</ID>
-    <ID>ForbiddenComment:EventDetailsScreen.kt$// TODO: set list</ID>
-    <ID>ForbiddenComment:ExperimentalSettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
-    <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: can we avoid flow { emit { ?</ID>
-    <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: should use passed in stringRes</ID>
-    <ID>ForbiddenComment:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$// TODO: this type of setting should go in AppPreferences</ID>
-    <ID>ForbiddenComment:ExposedDropdownMenuBox.kt$// TODO: this can't properly take up the full size allotted to it</ID>
-    <ID>ForbiddenComment:GenreScaffold.kt$// TODO: genre browsing isn't supported by API</ID>
-    <ID>ForbiddenComment:HistoryViewModel.kt$HistoryViewModel$// TODO: if we allow different sorting, then it will multiple these queries</ID>
-    <ID>ForbiddenComment:LabelDetailsScreen.kt$// TODO: area</ID>
-    <ID>ForbiddenComment:LabelDetailsScreen.kt$// TODO: lifespan, founded, defunct for end</ID>
-    <ID>ForbiddenComment:LabelListItem.kt$// TODO: area</ID>
-    <ID>ForbiddenComment:LabelListItem.kt$// TODO: lifespan</ID>
-    <ID>ForbiddenComment:LocalRemoteProgressBar.kt$// TODO: "cached" is misleading here</ID>
-    <ID>ForbiddenComment:LocalRemoteProgressBar.kt$// TODO: better copy</ID>
-    <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: Issue with indicator remaining on screen without delay in refresh</ID>
-    <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: cannot refresh</ID>
-    <ID>ForbiddenComment:PagingLoadingAndErrorHandler.kt$// TODO: going to another tab, and coming back will show same error message (doesn't make another call)</ID>
-    <ID>ForbiddenComment:PlaceListItem.kt$// TODO: too much information on list item?</ID>
-    <ID>ForbiddenComment:PlaceTab.kt$PlaceTab.RELATIONSHIPS$// TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place</ID>
-    <ID>ForbiddenComment:RelationsList.kt$RelationsList$// TODO: consider removing Header</ID>
-    <ID>ForbiddenComment:ReleaseDetailsScreen.kt$// TODO: Works for Latn but not Jpan or Kore</ID>
-    <ID>ForbiddenComment:ReleaseGroupListItem.kt$// TODO: have 2 modes: query and browse where some data is displayed differently</ID>
-    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: catalog number</ID>
-    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: rethink showing release country -&gt; could be misleading, and expensive joins</ID>
-    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: we probably need preferences to show/hide some of the content in this item</ID>
-    <ID>ForbiddenComment:ReleaseListItem.kt$// TODO: we'll likely run into 429 when loading many images at once, not much we can do about that right now</ID>
-    <ID>ForbiddenComment:ReleaseScaffold.kt$// TODO: [low] if you spam click this it won't work</ID>
-    <ID>ForbiddenComment:ReleaseScaffold.kt$// TODO: test refreshing this screen</ID>
-    <ID>ForbiddenComment:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$// TODO: ideal for selecting labels. though where would those labels be shown?</ID>
-    <ID>ForbiddenComment:ReleasesListScreen.kt$// TODO: Previewing compose paging currently not supported: https://issuetracker.google.com/issues/194544557#comment18</ID>
-    <ID>ForbiddenComment:ScrollableTopAppBar.kt$// TODO: Can we split these concerns somehow?</ID>
-    <ID>ForbiddenComment:ScrollableTopAppBar.kt$// TODO: can we generalize adding a dropdown menu to a clickable composable?</ID>
-    <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: Seems like this is currently broken</ID>
-    <ID>ForbiddenComment:SearchMusicBrainzScreen.kt$// TODO: should see album type rather than year</ID>
-    <ID>ForbiddenComment:SeriesDetailsScreen.kt$// TODO: not enough info to warrant its own tab?</ID>
-    <ID>ForbiddenComment:SettingsScaffold.kt$// TODO: sharedpreference to use artist sort name throughout app</ID>
-    <ID>ForbiddenComment:TextWithHeading.kt$// TODO: selecting this starting from heading will behave strangely for text with multiple lines</ID>
-    <ID>ForbiddenComment:ThreeSectionListItem.kt$// TODO: replaceable with material3 ListItem:</ID>
-    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: Filters</ID>
-    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: expand out from the icon</ID>
-    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: only do them when first clicking on search icon</ID>
-    <ID>ForbiddenComment:TopAppBarWithFilter.kt$// TODO: when returning, focus is in front of search text</ID>
-    <ID>ForbiddenComment:WorkListItem.kt$// TODO: artists</ID>
-    <ID>ForbiddenComment:WorkListItem.kt$// TODO: writers</ID>
-    <ID>ForbiddenComment:WorkScaffold.kt$// TODO: browsing rather than lookup recording-rels doesn't include attributes</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$3</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$4</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
@@ -120,6 +63,7 @@
     <ID>MaxLineLength:LabelListItem.kt$LabelCardPreviewParameterProvider$disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
+    <ID>MaxLineLength:ReleasesByCollectionViewModel.kt$ReleasesByCollectionViewModel$// - refreshing a collection will pull data from mb -&gt; but how do we sync? what if user adds on our app, refreshing shouldn't delete it</ID>
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
@@ -148,8 +92,9 @@
     <ID>TooGenericExceptionCaught:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:SettingsViewModel.kt$SettingsViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
-    <ID>UnnecessaryAbstractClass:PreferencesModule.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
+    <ID>UnnecessaryAbstractClass:PreferencesModuleBinds.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
     <ID>UnstableCollections:AreaStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:ArtistStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:EventStatsScreen.kt$List&lt;Tab&gt;</ID>
@@ -169,6 +114,6 @@
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnusedPrivateMember:CollectionScaffold.kt$modifier: Modifier = Modifier</ID>
     <ID>UnusedPrivateMember:CollectionScaffold.kt$onEntityClick: (entity: MusicBrainzResource, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
-    <ID>UnusedPrivateMember:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$private val coverArtArchiveApiService: CoverArtArchiveApiService</ID>
+    <ID>UnusedPrivateMember:SettingsScaffold.kt$val logoutLauncher = rememberLauncherForActivityResult(contract = viewModel.getLogoutContract()) { result -&gt; when { result.exception != null -&gt; { Timber.e(result.exception) } result.response != null -&gt; { viewModel.musicBrainzAuthState.setUsername("") Timber.d("${result.response}") // viewModel.clearToken() } else -&gt; { Timber.e("logout's result intent is null") } } }</ID>
   </CurrentIssues>
 </SmellBaseline>
