@@ -31,3 +31,10 @@ To make sure we only have one activity accept the redirect uri, we need to make 
 Activity has a different `host` from `RedirectUriReceiverActivity`.
 This also means we can keep our app's activity's launchMode as the default, allowing us to
 deeplink test any of our screens without stopping our app.
+
+## OAuth 2 vs OpenID
+
+OpenID providers must support GET and POST: https://github.com/openid/AppAuth-Android/issues/801
+But OAuth 2 on its own does not.
+MusicBrainz has OAuth 2 but not OpenID.
+

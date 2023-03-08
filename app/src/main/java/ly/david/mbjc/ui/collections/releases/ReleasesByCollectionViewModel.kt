@@ -110,7 +110,6 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
         return roomModel.toReleaseListItemModel()
     }
 
-    // TODO: ideal for selecting labels. though where would those labels be shown?
     override fun postFilter(listItemModel: ReleaseListItemModel): Boolean {
         return true
     }
