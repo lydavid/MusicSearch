@@ -3,17 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ConstructorParameterNaming:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$@Json(name = "iso-3166-1-codes") val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
-    <ID>ForbiddenComment:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$// TODO: fd6d47bd-d574-49a1-97d3-b8e5431cd25d uses "iso-3166-2-codes"</ID>
-    <ID>ForbiddenComment:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$// TODO: what is an example of a country with more than 1 code?</ID>
-    <ID>ForbiddenComment:LookupApi.kt$LookupApi$// TODO: Separate tab: artists, events, labels, releases, recordings, places, works</ID>
-    <ID>ForbiddenComment:LookupApi.kt$LookupApi$// TODO: lookup with all rels might be a bit too much, especially since there's no pagination</ID>
-    <ID>ForbiddenComment:LookupApi.kt$LookupApi$// TODO: place-rels doesn't return anything</ID>
-    <ID>ForbiddenComment:LookupApi.kt$LookupApi.Companion$// TODO: use this if we decide to split area relations lookup</ID>
-    <ID>ForbiddenComment:MusicBrainzModel.kt$// TODO: Identifiable?</ID>
-    <ID>ForbiddenComment:RelationMusicBrainzModel.kt$AttributeValue$// TODO: add the rest of relationship attributes</ID>
-    <ID>ForbiddenComment:RelationMusicBrainzModel.kt$RelationMusicBrainzModel$// TODO: we should order with backward relations first</ID>
-    <ID>ForbiddenComment:RelationshipHeaders.kt$// TODO: Deal with attributes: if an attribute exists, then use appropriate {half:half-}{step} in label?</ID>
-    <ID>ForbiddenComment:ReleaseMusicBrainzModel.kt$ReleaseMusicBrainzModel$// TODO: rather than using this field, use the first release-event</ID>
     <ID>MaxLineLength:BrowseApi.kt$BrowseApi$// todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here</ID>
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>

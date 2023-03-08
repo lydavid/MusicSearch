@@ -2,9 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ForbiddenComment:ArtistReleaseGroupDaoTest.kt$ArtistReleaseGroupDaoTest$// TODO: generic</ID>
-    <ID>ForbiddenComment:NetworkModule.kt$NetworkModule$// TODO: how come we were able to use named parameters before?</ID>
-    <ID>ForbiddenComment:NetworkModule.kt$NetworkModule$// TODO: make sure when doing swipe to refresh, we actually fetch from network not this cache</ID>
     <ID>LongMethod:ArtistReleaseGroupDaoTest.kt$ArtistReleaseGroupDaoTest$@Test fun `delete release groups by artist`()</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$1024L</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$50L</ID>
