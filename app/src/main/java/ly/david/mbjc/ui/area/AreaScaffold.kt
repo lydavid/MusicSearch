@@ -42,6 +42,7 @@ import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
@@ -56,7 +57,8 @@ internal fun AreaScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: () -> Unit = {},
     viewModel: AreaScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzResource.AREA
@@ -100,6 +102,7 @@ internal fun AreaScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
                     CopyToClipboardMenuItem(areaId)
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = areaTabs.indexOf(selectedTab),

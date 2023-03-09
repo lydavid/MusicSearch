@@ -149,6 +149,8 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:5.0.1"
 
+    implementation 'net.openid:appauth:0.11.1'
+
     // Test - General
     testImplementation libs.junit
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"

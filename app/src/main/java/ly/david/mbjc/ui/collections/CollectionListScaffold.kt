@@ -2,49 +2,89 @@ package ly.david.mbjc.ui.collections
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import ly.david.data.navigation.Destination
-import ly.david.data.network.MusicBrainzResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.CollectionListItemModel
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.theme.PreviewTheme
 
 /**
- * Presents a list of all of your collections.
+ * Displays a list of all of your collections.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionListScaffold(
     modifier: Modifier = Modifier,
-    onDestinationClick: (destination: Destination, id: String) -> Unit = { _, _ -> },
-//    viewModel: SettingsViewModel = hiltViewModel()
+    onCollectionClick: (id: String) -> Unit = {},
+    onCreateCollectionClick: () -> Unit = {},
+    viewModel: CollectionViewModel = hiltViewModel()
 ) {
+
+    var filterText by rememberSaveable { mutableStateOf("") }
+    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.collections)
+        .collectAsLazyPagingItems()
+
     Scaffold(
         modifier = modifier,
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 showBackButton = false,
                 title = stringResource(id = R.string.collections),
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                    viewModel.updateQuery(query = filterText)
+                },
+                additionalActions = {
+                    IconButton(onClick = onCreateCollectionClick) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(id = R.string.create_collection)
+                        )
+                    }
+                }
             )
         },
     ) { innerPadding ->
 
-        LazyColumn(modifier = modifier
-            .padding(innerPadding)
-            .fillMaxSize()) {
-
-            items(MusicBrainzResource.values()) {
-                CollectionGroup(musicBrainzResource = it)
+        PagingLoadingAndErrorHandler(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            lazyPagingItems = lazyPagingItems,
+        ) { collectionListItemModel: CollectionListItemModel? ->
+            when (collectionListItemModel) {
+                is CollectionListItemModel -> {
+                    CollectionListItem(
+                        collection = collectionListItemModel,
+                        onClick = { onCollectionClick(id) }
+                    )
+                }
+                else -> {
+                    // Do nothing.
+                }
             }
         }
+
+
     }
 }
 

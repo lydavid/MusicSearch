@@ -28,7 +28,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -51,7 +51,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                MainApp(navController)
+                TopLevelScaffold(navController)
             }
         }
     }
@@ -141,7 +141,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 val query = "some query" // The query doesn't matter for this test since we're returning fakes.
                 val resource = MusicBrainzResource.RELEASE_GROUP.resourceName
-                data = Uri.parse("mbjc://lookup?query=$query&type=$resource")
+                data = Uri.parse("$deeplinkSchema://app/lookup?query=$query&type=$resource")
             }
             it.startActivity(intent)
         }

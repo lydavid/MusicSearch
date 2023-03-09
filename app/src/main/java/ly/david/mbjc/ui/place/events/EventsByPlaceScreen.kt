@@ -12,7 +12,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.event.EventListItem
 
@@ -23,7 +23,7 @@ internal fun EventsByPlaceScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     eventsLazyListState: LazyListState = rememberLazyListState(),
     eventsLazyPagingItems: LazyPagingItems<EventListItemModel>,
-    onEventClick: (destination: Destination, String, String) -> Unit,
+    onEventClick: (entity: MusicBrainzResource, String, String) -> Unit,
     onPagedEventsFlowChange: (Flow<PagingData<EventListItemModel>>) -> Unit,
     filterText: String,
     viewModel: EventsByPlaceViewModel = hiltViewModel(),
@@ -43,7 +43,7 @@ internal fun EventsByPlaceScreen(
         when (eventListItemModel) {
             is EventListItemModel -> {
                 EventListItem(event = eventListItemModel) {
-                    onEventClick(Destination.LOOKUP_EVENT, id, getNameWithDisambiguation())
+                    onEventClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
                 }
             }
             else -> {

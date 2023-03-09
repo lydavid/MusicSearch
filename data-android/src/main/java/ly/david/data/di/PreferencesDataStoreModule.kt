@@ -1,4 +1,4 @@
-package ly.david.mbjc.di
+package ly.david.data.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +17,12 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import ly.david.mbjc.ui.settings.AppPreferences
-import ly.david.mbjc.ui.settings.AppPreferencesImpl
 
 private const val SETTINGS_KEY = "settings"
 
 @InstallIn(SingletonComponent::class)
 @Module
-internal object PreferencesModule {
+object PreferencesDataStoreModule {
 
     // https://medium.com/androiddevelopers/datastore-and-dependency-injection-ea32b95704e3
     @Provides
@@ -42,12 +39,4 @@ internal object PreferencesModule {
             produceFile = { context.preferencesDataStoreFile(SETTINGS_KEY) }
         )
     }
-}
-
-@InstallIn(SingletonComponent::class)
-@Module
-internal abstract class PreferencesModuleBinds {
-    @Singleton
-    @Binds
-    abstract fun provideAppPreferences(bind: AppPreferencesImpl): AppPreferences
 }

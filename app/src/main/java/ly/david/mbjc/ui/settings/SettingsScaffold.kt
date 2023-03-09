@@ -1,6 +1,7 @@
 package ly.david.mbjc.ui.settings
 
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,9 +20,11 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.settings.components.ProfileCard
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
 import ly.david.mbjc.ui.theme.PreviewTheme
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,6 +33,21 @@ fun SettingsScaffold(
     onDestinationClick: (Destination) -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
+
+    val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) { result ->
+        when {
+            result.exception != null -> {
+                Timber.e(result.exception)
+            }
+            result.response != null -> {
+                viewModel.performTokenRequest(result.response)
+            }
+            else -> {
+                Timber.e("login's result intent is null")
+            }
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -40,6 +58,7 @@ fun SettingsScaffold(
         },
     ) { innerPadding ->
 
+        val username by viewModel.musicBrainzAuthState.username.collectAsState(initial = "")
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(
@@ -48,6 +67,9 @@ fun SettingsScaffold(
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
+            username = username,
+            onLoginClick = { loginLauncher.launch(Unit) },
+            onLogoutClick = { viewModel.logout() },
             onDestinationClick = onDestinationClick,
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
@@ -62,6 +84,9 @@ fun SettingsScaffold(
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
+    username: String = "",
+    onLoginClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {},
     onDestinationClick: (Destination) -> Unit = {},
     theme: AppPreferences.Theme,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
@@ -72,6 +97,12 @@ fun SettingsScreen(
 ) {
 
     Column(modifier = modifier) {
+
+        ProfileCard(
+            username = username,
+            onLoginClick = onLoginClick,
+            onLogoutClick = onLogoutClick
+        )
 
         SettingWithDialogChoices(
             titleRes = R.string.theme,

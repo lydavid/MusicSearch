@@ -21,5 +21,6 @@
     <ID>SwallowedException:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
+    <ID>UnusedPrivateMember:CollectionEntityDao.kt$CollectionEntityDao.Companion$private const val SELECT_RELEASES_ID_BY_COLLECTION = """ SELECT r.id $RELEASES_BY_COLLECTION """</ID>
   </CurrentIssues>
 </SmellBaseline>

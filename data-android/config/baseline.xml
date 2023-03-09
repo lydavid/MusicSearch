@@ -6,6 +6,7 @@
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$1024L</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$50L</ID>
     <ID>UnnecessaryAbstractClass:HiltTest.kt$HiltTest$HiltTest</ID>
+    <ID>UnnecessaryAbstractClass:MusicBrainzAuthStateBinds.kt$MusicBrainzAuthStateBinds$MusicBrainzAuthStateBinds</ID>
     <ID>UnnecessaryAbstractClass:MusicBrainzRoomDatabase.kt$MusicBrainzRoomDatabase$MusicBrainzRoomDatabase</ID>
   </CurrentIssues>
 </SmellBaseline>

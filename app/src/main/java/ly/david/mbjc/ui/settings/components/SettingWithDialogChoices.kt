@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.MultipleChoiceDialog
+import ly.david.mbjc.ui.common.dialog.MultipleChoiceDialog
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.mbjc.ui.theme.PreviewTheme

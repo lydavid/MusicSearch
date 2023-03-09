@@ -25,12 +25,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
@@ -45,7 +45,8 @@ internal fun RecordingScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: () -> Unit = {},
     viewModel: RecordingScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RECORDING
@@ -81,6 +82,7 @@ internal fun RecordingScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = recordingId)
                     CopyToClipboardMenuItem(recordingId)
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 subtitleDropdownMenuItems = {
                     recording?.artistCredits?.forEach { artistCredit ->
@@ -89,7 +91,7 @@ internal fun RecordingScaffold(
                             leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(Destination.LOOKUP_ARTIST, artistCredit.artistId, null)
+                                onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
                             })
                     }
                 },

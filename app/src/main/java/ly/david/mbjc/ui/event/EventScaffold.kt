@@ -19,11 +19,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
@@ -42,7 +42,8 @@ internal fun EventScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: () -> Unit = {},
     viewModel: EventScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.EVENT
@@ -75,6 +76,7 @@ internal fun EventScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource, eventId)
                     CopyToClipboardMenuItem(eventId)
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 tabsTitles = EventTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

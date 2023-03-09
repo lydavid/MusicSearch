@@ -43,9 +43,14 @@ dependencies {
 
     implementation libs.moshi.kotlin
 
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'net.openid:appauth:0.11.1'
+
     // Retrofit
     implementation libs.retrofit
     implementation libs.retrofit.converter.moshi
+
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
 
     // Room
     implementation libs.room.runtime

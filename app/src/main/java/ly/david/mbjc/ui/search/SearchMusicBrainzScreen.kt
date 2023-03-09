@@ -10,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -52,13 +51,12 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.SeriesListItemModel
 import ly.david.data.domain.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.artist.ArtistListItem
-import ly.david.mbjc.ui.common.SimpleAlertDialog
+import ly.david.mbjc.ui.common.dialog.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.event.EventListItem
@@ -71,13 +69,12 @@ import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import ly.david.mbjc.ui.series.SeriesListItem
 import ly.david.mbjc.ui.work.WorkListItem
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchMusicBrainzScreen(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     searchQuery: String? = null,
     searchOption: MusicBrainzResource? = null,
     viewModel: SearchMusicBrainzViewModel = hiltViewModel()
@@ -174,58 +171,58 @@ internal fun SearchMusicBrainzScreen(
             when (listItemModel) {
                 is ArtistListItemModel -> {
                     ArtistListItem(artist = listItemModel) {
-                        onItemClick(Destination.LOOKUP_ARTIST, id, null)
+                        onItemClick(MusicBrainzResource.ARTIST, id, null)
                     }
                 }
                 is ReleaseGroupListItemModel -> {
                     // TODO: should see album type rather than year
                     ReleaseGroupListItem(releaseGroup = listItemModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE_GROUP, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.RELEASE_GROUP, id, getNameWithDisambiguation())
                     }
                 }
                 is ReleaseListItemModel -> {
                     ReleaseListItem(release = listItemModel) {
-                        onItemClick(Destination.LOOKUP_RELEASE, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
                     }
                 }
                 is RecordingListItemModel -> {
                     RecordingListItem(recording = listItemModel) {
-                        onItemClick(Destination.LOOKUP_RECORDING, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.RECORDING, id, getNameWithDisambiguation())
                     }
                 }
                 is WorkListItemModel -> {
                     WorkListItem(work = listItemModel) {
-                        onItemClick(Destination.LOOKUP_WORK, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.WORK, id, getNameWithDisambiguation())
                     }
                 }
                 is AreaListItemModel -> {
                     AreaListItem(area = listItemModel) {
-                        onItemClick(Destination.LOOKUP_AREA, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.AREA, id, getNameWithDisambiguation())
                     }
                 }
                 is PlaceListItemModel -> {
                     PlaceListItem(place = listItemModel) {
-                        onItemClick(Destination.LOOKUP_PLACE, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
                     }
                 }
                 is InstrumentListItemModel -> {
                     InstrumentListItem(instrument = listItemModel) {
-                        onItemClick(Destination.LOOKUP_INSTRUMENT, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.INSTRUMENT, id, getNameWithDisambiguation())
                     }
                 }
                 is LabelListItemModel -> {
                     LabelListItem(label = listItemModel) {
-                        onItemClick(Destination.LOOKUP_LABEL, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.LABEL, id, getNameWithDisambiguation())
                     }
                 }
                 is EventListItemModel -> {
                     EventListItem(event = listItemModel) {
-                        onItemClick(Destination.LOOKUP_EVENT, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
                     }
                 }
                 is SeriesListItemModel -> {
                     SeriesListItem(series = listItemModel) {
-                        onItemClick(Destination.LOOKUP_SERIES, id, getNameWithDisambiguation())
+                        onItemClick(MusicBrainzResource.SERIES, id, getNameWithDisambiguation())
                     }
                 }
                 is EndOfList -> {

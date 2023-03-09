@@ -9,7 +9,6 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.persistence.artist.release.ArtistRelease
 import ly.david.data.persistence.artist.release.ArtistReleaseDao
 import ly.david.data.persistence.relation.BrowseResourceCount
@@ -28,7 +27,6 @@ internal class ReleasesByArtistViewModel @Inject constructor(
     private val relationDao: RelationDao,
     private val artistReleaseDao: ArtistReleaseDao,
     private val releaseDao: ReleaseDao,
-    private val coverArtArchiveApiService: CoverArtArchiveApiService,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
     BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {

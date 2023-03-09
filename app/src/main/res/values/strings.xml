@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MusicSearch</string>
-    <string name="deeplink_schema" translatable="false">mbjc</string>
+    <string name="deeplink_schema" translatable="false">io.github.lydavid.musicsearch</string>
 
     <string name="theme">Theme</string>
     <string name="light">Light</string>
@@ -107,4 +107,9 @@
 
     <string name="more_actions">More actions</string>
     <string name="open_google_maps">Open in Google maps</string>
+
+    <string name="create_collection">Create a collection</string>
+    <string name="name">Name</string>
+    <string name="collection_name_placeholder">Enter a collection name</string>
+    <string name="add_to_collection">Add to collection</string>
 </resources>

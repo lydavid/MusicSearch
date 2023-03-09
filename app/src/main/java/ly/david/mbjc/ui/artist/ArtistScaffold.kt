@@ -43,6 +43,7 @@ import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
@@ -53,9 +54,9 @@ internal fun ArtistScaffold(
     artistId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit = {},
-
+    onAddToCollectionMenuClick: () -> Unit = {},
     // This can be hoisted up which would normally let us preview this,
     // but because it relies on compose paging, we can't preview.
     viewModel: ArtistScaffoldViewModel = hiltViewModel()
@@ -128,6 +129,8 @@ internal fun ArtistScaffold(
                             }
                         )
                     }
+
+                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 filterText = filterText,
                 onFilterTextChange = {

@@ -14,13 +14,14 @@ import androidx.navigation.navDeepLink
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toDestination
+import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.toMusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
+import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
@@ -41,8 +42,8 @@ import timber.log.Timber
 private const val ID = "id"
 private const val TITLE = "title"
 
-internal fun NavHostController.goToResource(destination: Destination, id: String, title: String? = null) {
-    var route = "${destination.route}/$id"
+internal fun NavHostController.goToResource(entity: MusicBrainzResource, id: String, title: String? = null) {
+    var route = "${entity.toLookupDestination().route}/$id"
     if (!title.isNullOrEmpty()) route += "?$TITLE=${URLEncoder.encode(title, StandardCharsets.UTF_8.toString())}"
     this.navigate(route)
 }
@@ -56,54 +57,25 @@ internal fun NavHostController.goTo(destination: Destination) {
 internal fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    onAddToCollectionMenuClick: () -> Unit = {},
+    onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onCreateCollectionClick: () -> Unit = {}
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
+    val uriPrefix = "$deeplinkSchema://app/"
 
     NavHost(
         navController = navController,
         startDestination = Destination.LOOKUP.route,
     ) {
 
-        // TODO: [low] should rethink this structure once we introduce more non-MB-resource destinations
-        val onDestinationClick: (Destination, String, String?) -> Unit = { destination, id, title ->
-            when (destination) {
-                Destination.LOOKUP_AREA,
-                Destination.LOOKUP_ARTIST,
-                Destination.LOOKUP_EVENT,
-                Destination.LOOKUP_GENRE,
-                Destination.LOOKUP_INSTRUMENT,
-                Destination.LOOKUP_LABEL,
-                Destination.LOOKUP_PLACE,
-                Destination.LOOKUP_RECORDING,
-                Destination.LOOKUP_RELEASE,
-                Destination.LOOKUP_RELEASE_GROUP,
-                Destination.LOOKUP_SERIES,
-                Destination.LOOKUP_WORK,
-                Destination.COLLECTIONS_AREA,
-                Destination.COLLECTIONS_ARTIST,
-                Destination.COLLECTIONS_EVENT,
-                Destination.COLLECTIONS_INSTRUMENT,
-                Destination.COLLECTIONS_LABEL,
-                Destination.COLLECTIONS_PLACE,
-                Destination.COLLECTIONS_RECORDING,
-                Destination.COLLECTIONS_RELEASE,
-                Destination.COLLECTIONS_RELEASE_GROUP,
-                Destination.COLLECTIONS_SERIES,
-                Destination.COLLECTIONS_WORK -> navController.goToResource(destination, id, title)
-                Destination.LOOKUP_URL -> {
-                    // Expected to be handled elsewhere.
-                }
-                Destination.LOOKUP,
-                Destination.HISTORY,
-                Destination.COLLECTIONS,
-                Destination.SETTINGS -> {
-                    // Not handled.
-                }
-                Destination.EXPERIMENTAL_SETTINGS,
-                Destination.EXPERIMENTAL_SPOTIFY -> {
-                    navController.goTo(destination)
-                }
-            }
+        val onLookupEntityClick: (MusicBrainzResource, String, String?) -> Unit = { entity, id, title ->
+            onSelectedEntityChange(entity, id)
+            navController.goToResource(entity, id, title)
+        }
+
+        val onCollectionClick: (String) -> Unit = { collectionId ->
+            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
         }
 
         val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
@@ -115,7 +87,7 @@ internal fun NavigationGraph(
         composable(Destination.LOOKUP.route) {
             SearchScreenScaffold(
                 modifier = modifier,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick
             )
         }
 
@@ -131,7 +103,7 @@ internal fun NavigationGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$deeplinkSchema://${Destination.LOOKUP.route}?query={query}&type={type}"
+                    uriPattern = "$uriPrefix${Destination.LOOKUP.route}?query={query}&type={type}"
                 }
             )
         ) { entry ->
@@ -142,54 +114,57 @@ internal fun NavigationGraph(
 
             SearchScreenScaffold(
                 modifier = modifier,
-                onItemClick = onDestinationClick,
+                onItemClick = onLookupEntityClick,
                 searchQuery = query,
                 searchOption = type
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.AREA,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             AreaScaffold(
                 areaId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.ARTIST,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             ArtistScaffold(
                 artistId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
-                onItemClick = onDestinationClick,
+                onItemClick = onLookupEntityClick,
                 onBack = navController::navigateUp,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.EVENT,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             EventScaffold(
                 eventId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.GENRE,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             GenreScaffold(
                 genreId = resourceId,
@@ -199,106 +174,114 @@ internal fun NavigationGraph(
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.INSTRUMENT,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             InstrumentScaffold(
                 instrumentId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.LABEL,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             LabelScaffold(
                 labelId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.PLACE,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             PlaceScaffold(
                 placeId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.RECORDING,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             RecordingScaffold(
                 recordingId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick,
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.RELEASE,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             ReleaseScaffold(
                 releaseId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick,
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.RELEASE_GROUP,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             ReleaseGroupScaffold(
                 releaseGroupId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.SERIES,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             SeriesScaffold(
                 seriesId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
-        addResourceScreen(
+        addLookupResourceScreen(
             resource = MusicBrainzResource.WORK,
-            deeplinkSchema = deeplinkSchema
+            uriPrefix = uriPrefix
         ) { resourceId, title ->
             WorkScaffold(
                 workId = resourceId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick,
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
 
@@ -307,8 +290,50 @@ internal fun NavigationGraph(
         ) {
             HistoryScaffold(
                 modifier = modifier,
-                onItemClick = onDestinationClick
+                onItemClick = onLookupEntityClick
             )
+        }
+
+
+        composable(
+            Destination.COLLECTIONS.route
+        ) {
+            CollectionListScaffold(
+                modifier = modifier,
+                onCollectionClick = onCollectionClick,
+                onCreateCollectionClick = onCreateCollectionClick
+            )
+        }
+
+        composable(
+            route = "${Destination.COLLECTIONS.route}/{$ID}",
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}"
+                }
+            )
+        ) { entry ->
+            val collectionId = entry.arguments?.getString(ID) ?: return@composable
+
+            CollectionScaffold(
+                collectionId = collectionId,
+                modifier = modifier,
+                onEntityClick = { entity, id ->
+                    onLookupEntityClick(entity, id, null)
+                }
+            )
+        }
+
+        val onSettingsClick: (Destination) -> Unit = { destination ->
+            when (destination) {
+                Destination.EXPERIMENTAL_SETTINGS,
+                Destination.EXPERIMENTAL_SPOTIFY -> {
+                    navController.goTo(destination)
+                }
+                else -> {
+                    // Nothing.
+                }
+            }
         }
 
         composable(
@@ -317,18 +342,7 @@ internal fun NavigationGraph(
             SettingsScaffold(
                 modifier = modifier,
                 onDestinationClick = { destination ->
-                    onDestinationClick(destination, "", null)
-                }
-            )
-        }
-
-        composable(
-            Destination.COLLECTIONS.route
-        ) {
-            CollectionListScaffold(
-                modifier = modifier,
-                onDestinationClick = { destination, id ->
-                    onDestinationClick(destination, id, null)
+                    onSettingsClick(destination)
                 }
             )
         }
@@ -349,13 +363,13 @@ internal fun NavigationGraph(
     }
 }
 
-private fun NavGraphBuilder.addResourceScreen(
+private fun NavGraphBuilder.addLookupResourceScreen(
     resource: MusicBrainzResource,
-    deeplinkSchema: String,
+    uriPrefix: String,
     scaffold: @Composable (resourceId: String, titleWithDisambiguation: String?) -> Unit
 ) {
     composable(
-        "${resource.toDestination().route}/{$ID}?$TITLE={$TITLE}",
+        route = "${resource.toLookupDestination().route}/{$ID}?$TITLE={$TITLE}",
         arguments = listOf(
             navArgument(ID) {
                 type = NavType.StringType // Make argument type safe
@@ -368,7 +382,7 @@ private fun NavGraphBuilder.addResourceScreen(
         ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$deeplinkSchema://${resource.resourceName}/{$ID}?$TITLE={$TITLE}"
+                uriPattern = "$uriPrefix${resource.resourceName}/{$ID}?$TITLE={$TITLE}"
             }
         )
     ) { entry: NavBackStackEntry ->

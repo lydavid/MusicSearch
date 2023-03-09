@@ -14,7 +14,7 @@ dependencyResolutionManagement {
             version("accompanist", "0.28.0")
             version("compose-foundation", "1.3.1")
             version("compose-material", "1.3.1")
-            version("compose-material3", "1.0.1")
+            version("compose-material3", "1.1.0-alpha07")
             version("compose-ui", "1.3.3")
             version("hilt", "2.45")
             version("hilt-navigation", "1.0.0")

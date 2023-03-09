@@ -22,7 +22,7 @@ import ly.david.data.network.searchableResources
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
@@ -56,7 +56,7 @@ internal class SearchEachResourceTest(
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                MainApp(navController)
+                TopLevelScaffold(navController)
             }
         }
     }

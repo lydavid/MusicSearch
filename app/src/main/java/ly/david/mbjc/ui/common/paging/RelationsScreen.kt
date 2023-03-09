@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RelationListItemModel
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.relation.RelationListItem
 
 @Composable
@@ -17,7 +17,7 @@ internal fun RelationsScreen(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,

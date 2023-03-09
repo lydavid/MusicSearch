@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:name=".MusicSearchApplication"
@@ -9,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicSearch">
+
         <activity
             android:name="ly.david.mbjc.ui.MainActivity"
             android:exported="true"
@@ -27,8 +29,27 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="*"
-                    android:scheme="@string/deeplink_schema" />
+                    android:host="app"
+                    android:scheme="${applicationId}" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="net.openid.appauth.RedirectUriReceiverActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth2"
+                    android:path="/redirect"
+                    android:scheme="${applicationId}" />
+
             </intent-filter>
         </activity>
     </application>

@@ -63,6 +63,7 @@ internal fun TopAppBarWithFilter(
     showFilterIcon: Boolean = true,
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
+    additionalActions: @Composable () -> Unit = {},
 ) {
     var isFilterMode by rememberSaveable { mutableStateOf(false) }
 
@@ -89,7 +90,8 @@ internal fun TopAppBarWithFilter(
         filterText = filterText,
         onFilterTextChange = onFilterTextChange,
         isFilterMode = isFilterMode,
-        onFilterModeChange = { isFilterMode = it }
+        onFilterModeChange = { isFilterMode = it },
+        additionalActions = additionalActions
     )
 }
 
@@ -111,7 +113,8 @@ private fun TopAppBarWithFilterInternal(
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
     isFilterMode: Boolean = false,
-    onFilterModeChange: (Boolean) -> Unit = {}
+    onFilterModeChange: (Boolean) -> Unit = {},
+    additionalActions: @Composable () -> Unit = {},
 ) {
 
     val focusRequester = remember { FocusRequester() }
@@ -193,7 +196,7 @@ private fun TopAppBarWithFilterInternal(
             title = title,
             subtitle = subtitle,
             scrollBehavior = scrollBehavior,
-            mainAction = {
+            actions = {
                 if (showFilterIcon) {
                     IconButton(onClick = {
                         onFilterModeChange(true)
@@ -204,6 +207,7 @@ private fun TopAppBarWithFilterInternal(
                         )
                     }
                 }
+                additionalActions()
             },
             overflowDropdownMenuItems = overflowDropdownMenuItems,
             subtitleDropdownMenuItems = subtitleDropdownMenuItems,

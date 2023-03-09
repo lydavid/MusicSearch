@@ -12,7 +12,7 @@ import kotlinx.coroutines.SupervisorJob
 // Read more: https://medium.com/androiddevelopers/create-an-application-coroutinescope-using-hilt-dd444e721528
 @InstallIn(SingletonComponent::class)
 @Module
-object CoroutinesScopesModule {
+internal object CoroutinesScopesModule {
 
     @Singleton // Provide always the same instance
     @Provides

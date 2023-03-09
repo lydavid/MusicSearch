@@ -10,6 +10,7 @@ import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.di.MusicBrainzNetworkModule
 import ly.david.data.network.api.FakeMusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzAuthApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -40,4 +41,18 @@ internal object FakeMusicBrainzNetworkModule {
     @Singleton
     @Provides
     fun provideMusicBrainzApi(): MusicBrainzApiService = FakeMusicBrainzApiService()
+
+    @Singleton
+    @Provides
+    fun provideMusicBrainzAuthApi(
+        okHttpClient: OkHttpClient
+    ): MusicBrainzAuthApi {
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
+            .client(okHttpClient)
+            .baseUrl("https://localhost:$TEST_PORT")
+            .build()
+
+        return retrofit.create(MusicBrainzAuthApi::class.java)
+    }
 }

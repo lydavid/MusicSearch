@@ -15,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
 import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.listitem.ClickableListItem
@@ -27,17 +25,17 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun RelationListItem(
     relation: RelationListItemModel,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     val context = LocalContext.current
 
     ClickableListItem(onClick = {
-        val destination = relation.linkedResource.toDestination()
-        if (destination == Destination.LOOKUP_URL) {
+        val entity = relation.linkedResource
+        if (entity == MusicBrainzResource.URL) {
             context.openUrl(relation.name)
         } else {
-            onItemClick(destination, relation.linkedResourceId, relation.getNameWithDisambiguation())
+            onItemClick(entity, relation.linkedResourceId, relation.getNameWithDisambiguation())
         }
     }) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {

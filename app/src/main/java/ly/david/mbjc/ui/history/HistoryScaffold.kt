@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.navigation.Destination
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -24,7 +24,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 @Composable
 internal fun HistoryScaffold(
     modifier: Modifier = Modifier,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
 
@@ -58,7 +58,7 @@ internal fun HistoryScaffold(
 internal fun HistoryScreen(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
-    onItemClick: (destination: Destination, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     PagingLoadingAndErrorHandler(

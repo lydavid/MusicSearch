@@ -28,8 +28,6 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.getDisplayTextRes
 
-// https://developer.android.com/reference/kotlin/androidx/compose/material/package-summary#ExposedDropdownMenuBox(kotlin.Boolean,kotlin.Function1,androidx.compose.ui.Modifier,kotlin.Function1)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ExposedDropdownMenuBox(
@@ -49,7 +47,7 @@ internal fun ExposedDropdownMenuBox(
         modifier = modifier
     ) {
         TextField(
-            modifier = modifier.menuAnchor(),
+            modifier = Modifier.menuAnchor(),
             readOnly = true,
             shape = RectangleShape,
             value = stringResource(id = selectedOption.getDisplayTextRes()),
@@ -65,7 +63,7 @@ internal fun ExposedDropdownMenuBox(
 
         // Focusing on this "consumes" a back press, and is independent of onDismissRequest.
         ExposedDropdownMenu(
-            modifier = modifier,
+            modifier = Modifier,
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
@@ -79,7 +77,7 @@ internal fun ExposedDropdownMenuBox(
                     }
                 ) {
                     DropdownMenuItem(
-                        modifier = modifier.semantics {
+                        modifier = Modifier.semantics {
                             testTag = option.resourceName
                         },
                         text = {

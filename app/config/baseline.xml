@@ -26,6 +26,7 @@
     <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
     <ID>ComposableParamOrder:ReleasesByArtistScreen.kt$ReleasesByArtistScreen</ID>
+    <ID>ComposableParamOrder:ReleasesByCollectionScreen.kt$ReleasesByCollectionScreen</ID>
     <ID>ComposableParamOrder:ReleasesByLabelScreen.kt$ReleasesByLabelScreen</ID>
     <ID>ComposableParamOrder:ReleasesByRecordingScreen.kt$ReleasesByRecordingScreen</ID>
     <ID>ComposableParamOrder:ReleasesByReleaseGroupScreen.kt$ReleasesByReleaseGroupScreen</ID>
@@ -42,7 +43,7 @@
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
-    <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (destination: Destination, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$3</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$4</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
@@ -62,15 +63,10 @@
     <ID>MaxLineLength:LabelListItem.kt$LabelCardPreviewParameterProvider$disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
+    <ID>MaxLineLength:ReleasesByCollectionViewModel.kt$ReleasesByCollectionViewModel$// - refreshing a collection will pull data from mb -&gt; but how do we sync? what if user adds on our app, refreshing shouldn't delete it</ID>
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
-    <ID>ModifierReused:CollectionListScaffold.kt$LazyColumn(modifier = modifier .padding(innerPadding) .fillMaxSize()) { items(MusicBrainzResource.values()) { CollectionGroup(musicBrainzResource = it) } }</ID>
-    <ID>ModifierReused:CollectionListScaffold.kt$Scaffold( modifier = modifier, topBar = { ScrollableTopAppBar( showBackButton = false, title = stringResource(id = R.string.collections), ) }, ) { innerPadding -&gt; LazyColumn(modifier = modifier .padding(innerPadding) .fillMaxSize()) { items(MusicBrainzResource.values()) { CollectionGroup(musicBrainzResource = it) } } }</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } )</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } }</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox( expanded = expanded, onExpandedChange = { expanded = !expanded }, modifier = modifier ) { TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() ) // Focusing on this "consumes" a back press, and is independent of onDismissRequest. ExposedDropdownMenu( modifier = modifier, expanded = expanded, onDismissRequest = { expanded = false } ) { options.forEach { option -&gt; Surface( modifier = Modifier.fillMaxSize(), color = if (selectedOption == option) { MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) } else { MaterialTheme.colorScheme.background } ) { DropdownMenuItem( modifier = modifier.semantics { testTag = option.resourceName }, text = { Row(verticalAlignment = CenterVertically) { ResourceIcon( modifier = Modifier.padding(end = 8.dp), resource = option ) Text(text = stringResource(id = option.getDisplayTextRes())) } }, onClick = { onSelectOption(option) expanded = false } ) } } } }</ID>
-    <ID>ModifierReused:ExposedDropdownMenuBox.kt$TextField( modifier = modifier.menuAnchor(), readOnly = true, shape = RectangleShape, value = stringResource(id = selectedOption.getDisplayTextRes()), onValueChange = { }, label = { Text(stringResource(id = R.string.resource)) }, trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon( expanded = expanded ) }, colors = ExposedDropdownMenuDefaults.textFieldColors() )</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
     <ID>SwallowedException:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
@@ -96,8 +92,9 @@
     <ID>TooGenericExceptionCaught:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:SettingsViewModel.kt$SettingsViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
-    <ID>UnnecessaryAbstractClass:PreferencesModule.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
+    <ID>UnnecessaryAbstractClass:PreferencesModuleBinds.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
     <ID>UnstableCollections:AreaStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:ArtistStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:EventStatsScreen.kt$List&lt;Tab&gt;</ID>
@@ -115,7 +112,8 @@
     <ID>UnstableCollections:StatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnusedPrivateMember:CollectionListScaffold.kt$onDestinationClick: (destination: Destination, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
-    <ID>UnusedPrivateMember:ReleasesByArtistViewModel.kt$ReleasesByArtistViewModel$private val coverArtArchiveApiService: CoverArtArchiveApiService</ID>
+    <ID>UnusedPrivateMember:CollectionScaffold.kt$modifier: Modifier = Modifier</ID>
+    <ID>UnusedPrivateMember:CollectionScaffold.kt$onEntityClick: (entity: MusicBrainzResource, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
+    <ID>UnusedPrivateMember:SettingsScaffold.kt$val logoutLauncher = rememberLauncherForActivityResult(contract = viewModel.getLogoutContract()) { result -&gt; when { result.exception != null -&gt; { Timber.e(result.exception) } result.response != null -&gt; { viewModel.musicBrainzAuthState.setUsername("") Timber.d("${result.response}") // viewModel.clearToken() } else -&gt; { Timber.e("logout's result intent is null") } } }</ID>
   </CurrentIssues>
 </SmellBaseline>

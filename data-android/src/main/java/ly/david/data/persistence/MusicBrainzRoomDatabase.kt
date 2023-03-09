@@ -15,6 +15,8 @@ import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
 import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 import ly.david.data.persistence.artist.credit.ArtistCreditResource
 import ly.david.data.persistence.artist.release.ArtistRelease
+import ly.david.data.persistence.collection.CollectionEntityRoomModel
+import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.data.persistence.event.EventPlace
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.history.LookupHistoryRoomModel
@@ -41,7 +43,7 @@ import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
 @Database(
-    version = 96,
+    version = 97,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -73,7 +75,10 @@ import ly.david.data.persistence.work.WorkRoomModel
         ReleaseReleaseGroup::class,
 
         // Additional features tables
-        LookupHistoryRoomModel::class
+        LookupHistoryRoomModel::class,
+
+        CollectionRoomModel::class,
+        CollectionEntityRoomModel::class
     ],
     views = [
         LabelWithCatalog::class,
@@ -162,6 +167,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 89, to = 90),
         AutoMigration(from = 94, to = 95),
         AutoMigration(from = 95, to = 96, spec = Migrations.DeleteHasCoverArtFromReleaseGroup::class),
+        AutoMigration(from = 96, to = 97),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

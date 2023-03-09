@@ -11,9 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
-import ly.david.data.navigation.toDestination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.MainApp
+import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToResource
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
@@ -47,7 +46,7 @@ internal class LookupEachResourceErrorTest(
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
-                MainApp(navController)
+                TopLevelScaffold(navController)
             }
         }
     }
@@ -57,7 +56,7 @@ internal class LookupEachResourceErrorTest(
         withContext(Dispatchers.Main) {
             composeTestRule.awaitIdle()
             val resourceId = "error"
-            navController.goToResource(destination = resource.toDestination(), id = resourceId)
+            navController.goToResource(entity = resource, id = resourceId)
         }
 
         composeTestRule.waitUntil(10_000L) {
