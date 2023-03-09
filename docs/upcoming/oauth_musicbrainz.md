@@ -10,10 +10,16 @@ This is completely optional for users.
     - [x] Save AuthState including Bearer token
     - [x] Pass bearer token to MB api request if it exists
       - Need to pass through `provideOkHttpClient`
-      - We don't need it passed to `provideCoverArtArchiveApi`, so redo structure
-- [ ] Login card
-  - [ ] Profile name
-  - [ ] Logout card
+      - We don't need it passed to `provideCoverArtArchiveApi`
+- [x] Login card
+  - [x] Profile name
+  - [x] Logout card
+- [x] Reactive authentication works fine for us for now
+  - Solution from: https://github.com/MrNtlu/Token-Authentication
+    - search `.authenticator` to learn more from OkHttp's docs
+  - Downside: calls to user and collections will be done twice, the first time without authorization header
+  - Upside: The majority of our calls don't require authorization so we don't needlessly send it in the header
+
 
 ## Clear web browser from backstack after OAuth flow while keeping deeplinking ability
 
@@ -37,4 +43,3 @@ deeplink test any of our screens without stopping our app.
 OpenID providers must support GET and POST: https://github.com/openid/AppAuth-Android/issues/801
 But OAuth 2 on its own does not.
 MusicBrainz has OAuth 2 but not OpenID.
-

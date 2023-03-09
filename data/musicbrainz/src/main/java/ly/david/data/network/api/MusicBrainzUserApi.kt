@@ -2,6 +2,8 @@ package ly.david.data.network.api
 
 import com.squareup.moshi.Json
 import ly.david.data.base.JsonUtils
+import ly.david.data.network.USER_AGENT
+import ly.david.data.network.USER_AGENT_VALUE
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -19,7 +21,9 @@ const val MUSIC_BRAINZ_OAUTH_CLIENT_SECRET = "nnkNItEfufwKj0-yjgmgZVrnzrXRQBN7"
 
 interface MusicBrainzUserApi {
     @GET("userinfo")
-    suspend fun getUserInfo(): UserInfo
+    suspend fun getUserInfo(
+//        @Header("Authorization") authHeader: String?
+    ): UserInfo
 
 }
 
@@ -37,9 +41,6 @@ interface MusicBrainzUserApiImpl {
     }
 }
 
-private const val USER_AGENT = "User-Agent"
-private const val USER_AGENT_VALUE = "MusicSearch/0.2.1 (https://github.com/lydavid/MusicSearch)"
-
 interface MusicBrainzLogoutApi {
 
     data class LogoutRequest(
@@ -48,7 +49,6 @@ interface MusicBrainzLogoutApi {
         @Json(name = "client_secret") val clientSecret: String = MUSIC_BRAINZ_OAUTH_CLIENT_SECRET
     )
 
-    // TODO: while this works, since we're not using appauth, it's data is out of sync
     @FormUrlEncoded
     @POST("revoke")
     suspend fun logout(

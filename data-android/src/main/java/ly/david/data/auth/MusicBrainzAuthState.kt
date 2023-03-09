@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.common.transformThisIfNotNullOrEmpty
 import net.openid.appauth.AuthState
 
 private const val MB_AUTH_KEY = "musicBrainzAuth"
@@ -20,6 +21,7 @@ private val MB_USERNAME_PREFERENCE = stringPreferencesKey(MB_USERNAME)
 
 interface MusicBrainzAuthState {
     suspend fun getAuthState(): AuthState?
+    val authBearer: Flow<String?>
     fun setAuthState(authState: AuthState?)
     val username: Flow<String>
     fun setUsername(username: String)
@@ -36,6 +38,23 @@ class MusicBrainzAuthStateImpl @Inject constructor(
         if (jsonString.isNullOrEmpty()) return null
         return AuthState.jsonDeserialize(jsonString)
     }
+
+    override val authBearer: Flow<String?>
+        get() = preferencesDataStore.data
+            .map { preferences ->
+                val jsonString = preferences[MB_AUTH_PREFERENCE]
+                if (jsonString.isNullOrEmpty()) return@map null
+                val authState = AuthState.jsonDeserialize(jsonString) ?: return@map null
+                authState.idToken?.transformThisIfNotNullOrEmpty { "Bearer $it" }
+            }
+            .distinctUntilChanged()
+//    {
+//        val preferences = preferencesDataStore.data.first()
+//        val jsonString = preferences[MB_AUTH_PREFERENCE]
+//        if (jsonString.isNullOrEmpty()) return null
+//        val authState = AuthState.jsonDeserialize(jsonString) ?: return null
+//        return authState.idToken?
+//    }
 
     override fun setAuthState(authState: AuthState?) {
         coroutineScope.launch {

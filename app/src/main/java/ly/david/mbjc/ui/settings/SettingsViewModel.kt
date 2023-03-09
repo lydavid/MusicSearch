@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import ly.david.data.auth.MusicBrainzAuthState
 import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_ID
 import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_SECRET
@@ -100,17 +99,25 @@ class SettingsViewModel @Inject constructor(
     private val clientAuth: ClientAuthentication
 ) : ViewModel() {
 
+//    private val bearer: StateFlow<String?> = musicBrainzAuthState.authBearer.stateIn(
+//        scope = viewModelScope,
+//        initialValue = null,
+//        started = SharingStarted.WhileSubscribed(5000)
+//    )
+
     init {
         // TODO: remove
-        viewModelScope.launch {
-            try {
-                val username = musicBrainzUserApi.getUserInfo().username
-                Timber.d("$username")
-
-            } catch (ex: Exception) {
-                Timber.d("$ex")
-            }
-        }
+//        viewModelScope.launch {
+//            try {
+////                val bearer = bearer.value
+////                Timber.d("$bearer")
+//                val username = musicBrainzUserApi.getUserInfo().username
+//                Timber.d("$username")
+//
+//            } catch (ex: Exception) {
+//                Timber.d("$ex")
+//            }
+//        }
     }
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
@@ -121,21 +128,18 @@ class SettingsViewModel @Inject constructor(
             clientAuth
         ) { response, exception ->
             viewModelScope.launch {
-                runBlocking {
-                    val authState = AuthState()
-                    authState.update(response, exception)
-                    musicBrainzAuthState.setAuthState(authState)
+                val authState = AuthState()
+                authState.update(response, exception)
+                musicBrainzAuthState.setAuthState(authState)
 
-                    // TODO: we get 401 after logging out, then logging back in
-                    try {
-                        Timber.d("${authState.accessToken}")
-                        Timber.d("${response?.accessToken}")
-                        val username = musicBrainzUserApi.getUserInfo().username ?: return@runBlocking
-                        musicBrainzAuthState.setUsername(username)
-                    } catch (ex: Exception) {
-                        Timber.d("oof")
-                        Timber.d("$ex")
-                    }
+                try {
+                    Timber.d("${authState.accessToken}")
+                    Timber.d("${response?.accessToken}")
+                    val username = musicBrainzUserApi.getUserInfo().username ?: return@launch
+                    musicBrainzAuthState.setUsername(username)
+                } catch (ex: Exception) {
+                    // TODO: snackbar
+                    Timber.e("$ex")
                 }
             }
         }
@@ -153,7 +157,6 @@ class SettingsViewModel @Inject constructor(
                 musicBrainzAuthState.setAuthState(null)
                 musicBrainzAuthState.setUsername("")
 
-
             } catch (ex: Exception) {
                 Timber.d("${ex.message}")
 
@@ -164,16 +167,5 @@ class SettingsViewModel @Inject constructor(
                 musicBrainzAuthState.setUsername("")
             }
         }
-    }
-
-//    fun getLogoutContract() = MusicBrainzLogoutContract(
-//        authService,
-//        serviceConfig,
-//        null//musicBrainzAuthState.getAuthState()?.idToken
-//    )
-
-    fun clearToken() {
-        // TODO: can't set auth state to null? just set it to empty?
-        // TODO: unset username
     }
 }
