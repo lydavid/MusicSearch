@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.settings
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,19 +9,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import ly.david.data.auth.MusicBrainzAuthState
-import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_ID
-import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_SECRET
-import ly.david.data.network.api.MusicBrainzLogoutApi
-import ly.david.data.network.api.MusicBrainzUserApi
+import ly.david.data.network.api.MusicBrainzAuthApi
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
-import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ClientAuthentication
-import net.openid.appauth.EndSessionRequest
-import net.openid.appauth.EndSessionResponse
 import timber.log.Timber
 
 class MusicBrainzLoginContract(
@@ -49,76 +42,15 @@ class MusicBrainzLoginContract(
     }
 }
 
-class MusicBrainzLogoutContract(
-    private val authService: AuthorizationService,
-    private val serviceConfig: AuthorizationServiceConfiguration,
-    private val idToken: String?
-) : ActivityResultContract<Unit, MusicBrainzLogoutContract.Result>() {
-
-    data class Result(
-        val response: EndSessionResponse?,
-        val exception: AuthorizationException?,
-    )
-
-    override fun createIntent(context: Context, input: Unit): Intent {
-
-        val endSessionRequest = EndSessionRequest.Builder(serviceConfig)
-            .setAdditionalParameters(
-                mapOf(
-//                    "token" to idToken,
-                    "client_id" to MUSIC_BRAINZ_OAUTH_CLIENT_ID,
-                    "client_secret" to MUSIC_BRAINZ_OAUTH_CLIENT_SECRET
-                )
-            )
-            .setIdTokenHint(idToken)
-            .setPostLogoutRedirectUri(Uri.parse("io.github.lydavid.musicsearch://oauth2/redirect"))
-            .build()
-
-        return authService.getEndSessionRequestIntent(endSessionRequest)
-    }
-
-    override fun parseResult(resultCode: Int, intent: Intent?): Result {
-        val response = intent?.run { EndSessionResponse.fromIntent(intent) }
-        val exception = AuthorizationException.fromIntent(intent)
-        return Result(
-            response = response,
-            exception = exception
-        )
-    }
-}
-
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     val appPreferences: AppPreferences,
     val musicBrainzAuthState: MusicBrainzAuthState,
-    private val musicBrainzUserApi: MusicBrainzUserApi,
-    private val musicBrainzLogoutApi: MusicBrainzLogoutApi,
+    private val musicBrainzAuthApi: MusicBrainzAuthApi,
     private val authRequest: AuthorizationRequest,
-    private val serviceConfig: AuthorizationServiceConfiguration,
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication
 ) : ViewModel() {
-
-//    private val bearer: StateFlow<String?> = musicBrainzAuthState.authBearer.stateIn(
-//        scope = viewModelScope,
-//        initialValue = null,
-//        started = SharingStarted.WhileSubscribed(5000)
-//    )
-
-    init {
-        // TODO: remove
-//        viewModelScope.launch {
-//            try {
-////                val bearer = bearer.value
-////                Timber.d("$bearer")
-//                val username = musicBrainzUserApi.getUserInfo().username
-//                Timber.d("$username")
-//
-//            } catch (ex: Exception) {
-//                Timber.d("$ex")
-//            }
-//        }
-    }
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
 
@@ -135,7 +67,7 @@ class SettingsViewModel @Inject constructor(
                 try {
                     Timber.d("${authState.accessToken}")
                     Timber.d("${response?.accessToken}")
-                    val username = musicBrainzUserApi.getUserInfo().username ?: return@launch
+                    val username = musicBrainzAuthApi.getUserInfo().username ?: return@launch
                     musicBrainzAuthState.setUsername(username)
                 } catch (ex: Exception) {
                     // TODO: snackbar
@@ -145,25 +77,19 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun getLogoutContract() = MusicBrainzLogoutContract(authService, serviceConfig, null)
-
     fun logout() {
         viewModelScope.launch {
             val authState = musicBrainzAuthState.getAuthState() ?: return@launch
             try {
-                musicBrainzLogoutApi.logout(
+                musicBrainzAuthApi.logout(
                     token = authState.refreshToken.orEmpty()
                 )
                 musicBrainzAuthState.setAuthState(null)
                 musicBrainzAuthState.setUsername("")
 
             } catch (ex: Exception) {
-                Timber.d("${ex.message}")
-
-                ex.stackTrace.iterator().forEach {
-
-                    Timber.d("${it}")
-                }
+                // TODO: snackbar
+                Timber.e("$ex")
                 musicBrainzAuthState.setUsername("")
             }
         }

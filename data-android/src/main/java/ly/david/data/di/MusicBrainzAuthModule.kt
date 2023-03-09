@@ -19,7 +19,7 @@ import net.openid.appauth.ResponseTypeValues
 
 @InstallIn(SingletonComponent::class)
 @Module
-internal object MusicBrainzAuthComponent {
+internal object MusicBrainzAuthModule {
 
     @Provides
     fun provideAuthorizationService(
@@ -34,7 +34,7 @@ internal object MusicBrainzAuthComponent {
             Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/authorize"),
             Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/token"),
             null,
-            Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/revoke"),
+            Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/revoke") // Doesn't work cause GET revoke not implemented
         )
     }
 

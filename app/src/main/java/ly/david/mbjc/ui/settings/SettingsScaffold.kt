@@ -48,22 +48,6 @@ fun SettingsScaffold(
         }
     }
 
-    val logoutLauncher = rememberLauncherForActivityResult(contract = viewModel.getLogoutContract()) { result ->
-        when {
-            result.exception != null -> {
-                Timber.e(result.exception)
-            }
-            result.response != null -> {
-                viewModel.musicBrainzAuthState.setUsername("")
-                Timber.d("${result.response}")
-//                viewModel.clearToken()
-            }
-            else -> {
-                Timber.e("logout's result intent is null")
-            }
-        }
-    }
-
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -75,7 +59,6 @@ fun SettingsScaffold(
     ) { innerPadding ->
 
         val username by viewModel.musicBrainzAuthState.username.collectAsState(initial = "")
-
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(

@@ -15,9 +15,8 @@ import ly.david.data.network.USER_AGENT
 import ly.david.data.network.USER_AGENT_VALUE
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiServiceImpl
-import ly.david.data.network.api.MusicBrainzLogoutApi
-import ly.david.data.network.api.MusicBrainzUserApi
-import ly.david.data.network.api.MusicBrainzUserApiImpl
+import ly.david.data.network.api.MusicBrainzAuthApi
+import ly.david.data.network.api.MusicBrainzAuthApiImpl
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -88,12 +87,7 @@ object MusicBrainzNetworkModule {
 
     @Singleton
     @Provides
-    fun provideMusicBrainzUserApi(
+    fun provideMusicBrainzAuthApi(
         okHttpClient: OkHttpClient
-    ): MusicBrainzUserApi = MusicBrainzUserApiImpl.create(okHttpClient)
-
-    @Singleton
-    @Provides
-    fun provideMusicBrainzLogoutApi(
-    ): MusicBrainzLogoutApi = MusicBrainzLogoutApi.create()
+    ): MusicBrainzAuthApi = MusicBrainzAuthApiImpl.create(okHttpClient)
 }
