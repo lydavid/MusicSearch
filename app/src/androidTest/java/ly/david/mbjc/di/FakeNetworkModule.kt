@@ -44,7 +44,7 @@ internal object FakeNetworkModule {
 
     @Singleton
     @Provides
-    fun providerMockWebServer(
+    fun provideMockWebServer(
         heldCertificate: HeldCertificate
     ): MockWebServer {
         val serverCertificates: HandshakeCertificates = HandshakeCertificates.Builder()

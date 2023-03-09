@@ -5,17 +5,15 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
-import ly.david.data.base.JsonUtils
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.di.MusicBrainzNetworkModule
 import ly.david.data.network.api.FakeMusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 internal const val TEST_PORT = 8080
+private const val TEST_BASE_URL = "https://localhost:$TEST_PORT"
 
 @Module
 @TestInstallIn(
@@ -27,12 +25,10 @@ internal object FakeMusicBrainzNetworkModule {
     @Singleton
     @Provides
     fun provideCoverArtArchiveApi(
-        okHttpClient: OkHttpClient
+        builder: Retrofit.Builder
     ): CoverArtArchiveApiService {
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
-            .client(okHttpClient)
-            .baseUrl("https://localhost:$TEST_PORT")
+        val retrofit = builder
+            .baseUrl(TEST_BASE_URL)
             .build()
 
         return retrofit.create(CoverArtArchiveApiService::class.java)
@@ -45,12 +41,10 @@ internal object FakeMusicBrainzNetworkModule {
     @Singleton
     @Provides
     fun provideMusicBrainzAuthApi(
-        okHttpClient: OkHttpClient
+        builder: Retrofit.Builder
     ): MusicBrainzAuthApi {
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
-            .client(okHttpClient)
-            .baseUrl("https://localhost:$TEST_PORT")
+        val retrofit = builder
+            .baseUrl(TEST_BASE_URL)
             .build()
 
         return retrofit.create(MusicBrainzAuthApi::class.java)

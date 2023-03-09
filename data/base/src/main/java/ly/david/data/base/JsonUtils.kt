@@ -10,7 +10,3 @@ object JsonUtils {
             .build()
     }
 }
-
-internal fun Any.toJson(): String = JsonUtils.moshi.adapter(Any::class.java).lenient().toJson(this)
-
-internal fun <T> String.fromJson(type: Class<T>): T? = JsonUtils.moshi.adapter(type).lenient().fromJson(this)

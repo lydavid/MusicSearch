@@ -9,14 +9,8 @@ import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
-import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.coverart.api.CoverArtArchiveApiServiceImpl
 import ly.david.data.network.USER_AGENT
 import ly.david.data.network.USER_AGENT_VALUE
-import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.network.api.MusicBrainzApiServiceImpl
-import ly.david.data.network.api.MusicBrainzAuthApi
-import ly.david.data.network.api.MusicBrainzAuthApiImpl
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -67,27 +61,4 @@ object NetworkModule {
 
         return clientBuilder.build()
     }
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-object MusicBrainzNetworkModule {
-
-    @Singleton
-    @Provides
-    fun provideCoverArtArchiveApi(
-        okHttpClient: OkHttpClient
-    ): CoverArtArchiveApiService = CoverArtArchiveApiServiceImpl.create(okHttpClient)
-
-    @Singleton
-    @Provides
-    fun provideMusicBrainzApi(
-        okHttpClient: OkHttpClient
-    ): MusicBrainzApiService = MusicBrainzApiServiceImpl.create(okHttpClient)
-
-    @Singleton
-    @Provides
-    fun provideMusicBrainzAuthApi(
-        okHttpClient: OkHttpClient
-    ): MusicBrainzAuthApi = MusicBrainzAuthApiImpl.create(okHttpClient)
 }

@@ -1,10 +1,7 @@
 package ly.david.data.coverart.api
 
-import ly.david.data.base.JsonUtils
 import ly.david.data.coverart.COVER_ART_ARCHIVE_BASE_URL
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -28,10 +25,8 @@ interface CoverArtArchiveApiService {
 
 interface CoverArtArchiveApiServiceImpl {
     companion object {
-        fun create(client: OkHttpClient): CoverArtArchiveApiService {
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
-                .client(client)
+        fun create(builder: Retrofit.Builder): CoverArtArchiveApiService {
+            val retrofit = builder
                 .baseUrl(COVER_ART_ARCHIVE_BASE_URL)
                 .build()
 

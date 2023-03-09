@@ -1,9 +1,6 @@
 package ly.david.data.network.api
 
-import ly.david.data.base.JsonUtils
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -31,11 +28,8 @@ interface MusicBrainzAuthApi {
 
 interface MusicBrainzAuthApiImpl {
     companion object {
-        fun create(client: OkHttpClient): MusicBrainzAuthApi {
-            // TODO: generalize instantiating retrofit. expose builder, then add baseurl and build
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
-                .client(client)
+        fun create(builder: Retrofit.Builder): MusicBrainzAuthApi {
+            val retrofit = builder
                 .baseUrl("$MUSIC_BRAINZ_BASE_URL/oauth2/")
                 .build()
 
