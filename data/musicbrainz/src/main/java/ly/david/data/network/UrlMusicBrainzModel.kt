@@ -1,7 +1,7 @@
 package ly.david.data.network
 
 import com.squareup.moshi.Json
-import ly.david.data.MusicBrainzId
+import ly.david.data.Identifiable
 
 data class UrlMusicBrainzModel(
 
@@ -12,4 +12,4 @@ data class UrlMusicBrainzModel(
      * The url itself.
      */
     @Json(name = "resource") val resource: String
-): MusicBrainzId
+): Identifiable
