@@ -24,7 +24,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import ly.david.data.domain.Identifiable
+import ly.david.data.Identifiable
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.RetryButton
 import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry

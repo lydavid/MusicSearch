@@ -1,10 +1,9 @@
 package ly.david.data.network
 
-import ly.david.data.MusicBrainzId
+import ly.david.data.Identifiable
 import ly.david.data.NameWithDisambiguation
 
-// TODO: Identifiable?
 /**
- * Data that comes from network call to Music Brainz.
+ * Data that comes from MusicBrainz.
  */
-sealed class MusicBrainzModel : MusicBrainzId, NameWithDisambiguation
+sealed class MusicBrainzModel : Identifiable, NameWithDisambiguation

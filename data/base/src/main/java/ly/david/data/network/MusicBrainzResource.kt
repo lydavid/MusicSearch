@@ -16,8 +16,6 @@ const val RESOURCE_SERIES = "series"
 const val RESOURCE_WORK = "work"
 const val RESOURCE_URL = "url"
 
-// TODO: rather than storing displayTextRes in this
-//  map it in :app, then :data doesn't reference strings at all
 /**
  * These are resources available for lookup requests. Many of them are query-able as well.
  *

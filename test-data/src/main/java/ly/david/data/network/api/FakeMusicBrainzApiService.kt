@@ -198,4 +198,8 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return fakeWorks.firstOrNull { it.id == workId } ?: throw IOException()
     }
     // endregion
+
+    override suspend fun getAllCollectionsByUser(username: String, include: String?): BrowseCollectionResponse {
+        TODO("Not yet implemented")
+    }
 }

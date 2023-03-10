@@ -1,5 +1,6 @@
 package ly.david.data.domain
 
+import ly.david.data.Identifiable
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
@@ -17,7 +18,7 @@ import ly.david.data.network.WorkMusicBrainzModel
 /**
  * Data that can be displayed in lists should extend this.
  */
-sealed class ListItemModel: Identifiable
+sealed class ListItemModel : Identifiable
 
 /**
  * Content that appears in front of a list of [ListItemModel].
@@ -44,8 +45,9 @@ class ListSeparator(
 /**
  * Converts a [MusicBrainzModel] that we got from the network to its UI version for display.
  *
- * We can map a [MusicBrainzModel] to [ListItemModel] but not the other way around because there are [ListItemModel] such as
- * [EndOfList] that do not have a 1-to-1 mapping. We could still do it, but the result will be nullable.
+ * We can map a [MusicBrainzModel] to [ListItemModel] but not the other way around
+ * because there are [ListItemModel] such as [EndOfList] that do not have a 1-to-1 mapping.
+ * We could still do it, but the result will be nullable.
  *
  * It seems like this needs to be in the same directory as [ListItemModel] or else it tells us to add an else branch.
  */
