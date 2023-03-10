@@ -29,3 +29,7 @@ data class CollectionRoomModel(
      */
 //    val typeId: String
 )
+
+//fun CollectionMusicBrainzModel.toCollectionRoomModel(): CollectionRoomModel {
+//
+//}

@@ -35,7 +35,7 @@ fun CollectionListScaffold(
     modifier: Modifier = Modifier,
     onCollectionClick: (id: String) -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
-    viewModel: CollectionViewModel = hiltViewModel()
+    viewModel: CollectionListViewModel = hiltViewModel()
 ) {
 
     var filterText by rememberSaveable { mutableStateOf("") }

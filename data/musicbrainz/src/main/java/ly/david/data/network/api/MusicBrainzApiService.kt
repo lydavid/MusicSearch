@@ -4,14 +4,8 @@ import retrofit2.Retrofit
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 
-/**
- * Contract for MusicBrainz API.
- */
-interface MusicBrainzApiService : SearchApi, BrowseApi, LookupApi
+interface MusicBrainzApiService : SearchApi, BrowseApi, LookupApi, CollectionApi
 
-/**
- * Implementation of MusicBrainz API.
- */
 interface MusicBrainzApiServiceImpl {
     companion object {
         fun create(builder: Retrofit.Builder): MusicBrainzApiService {

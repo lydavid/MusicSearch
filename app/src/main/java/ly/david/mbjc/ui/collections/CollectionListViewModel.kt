@@ -11,23 +11,46 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import ly.david.data.auth.MusicBrainzAuthState
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.toCollectionListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
+import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.collection.CollectionDao
-import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.data.persistence.collection.CollectionWithEntities
+import timber.log.Timber
 
 @HiltViewModel
-class CollectionViewModel @Inject constructor(
-    private val collectionDao: CollectionDao
+class CollectionListViewModel @Inject constructor(
+    private val collectionDao: CollectionDao,
+    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzAuthState: MusicBrainzAuthState
 ) : ViewModel() {
 
     private val query: MutableStateFlow<String> = MutableStateFlow("")
+
+    init {
+        viewModelScope.launch {
+            try {
+                musicBrainzAuthState.username.collectLatest {
+                    val collections =
+                        musicBrainzApiService.getAllCollectionsByUser(
+                            username = it,
+                            include = USER_COLLECTIONS
+                        )
+                    Timber.d("${collections.collections}")
+                }
+            } catch (ex: Exception) {
+                Timber.e(ex)
+            }
+        }
+    }
 
     fun updateQuery(query: String) {
         this.query.value = query
@@ -53,11 +76,4 @@ class CollectionViewModel @Inject constructor(
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
-
-    suspend fun createNewCollection(name: String, entity: MusicBrainzResource) {
-        collectionDao.insert(CollectionRoomModel(
-            name = name,
-            entity = entity
-        ))
-    }
 }

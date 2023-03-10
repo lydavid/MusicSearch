@@ -81,6 +81,7 @@
     <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:CollectionListViewModel.kt$CollectionListViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
@@ -114,6 +115,5 @@
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnusedPrivateMember:CollectionScaffold.kt$modifier: Modifier = Modifier</ID>
     <ID>UnusedPrivateMember:CollectionScaffold.kt$onEntityClick: (entity: MusicBrainzResource, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
-    <ID>UnusedPrivateMember:SettingsScaffold.kt$val logoutLauncher = rememberLauncherForActivityResult(contract = viewModel.getLogoutContract()) { result -&gt; when { result.exception != null -&gt; { Timber.e(result.exception) } result.response != null -&gt; { viewModel.musicBrainzAuthState.setUsername("") Timber.d("${result.response}") // viewModel.clearToken() } else -&gt; { Timber.e("logout's result intent is null") } } }</ID>
   </CurrentIssues>
 </SmellBaseline>
