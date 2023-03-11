@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Login
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -24,12 +26,10 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun ProfileCard(
     username: String,
+    showLogin: Boolean,
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
 ) {
-
-    val showLogin = username.isEmpty()
-
     Card(
         onClick = {
             if (showLogin) {
@@ -52,7 +52,6 @@ internal fun ProfileCard(
             )
 
             Column {
-                // TODO: state where user has gotten auth, but we're stilling retrieving their username
                 if (showLogin) {
                     Text(
                         text = "Login to MusicBrainz",
@@ -63,10 +62,14 @@ internal fun ProfileCard(
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 } else {
-                    Text(
-                        text = username,
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
+                    if (username.isEmpty()) {
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp))
+                    } else {
+                        Text(
+                            text = username,
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
                     Text(
                         text = "Click to logout from MusicBrainz",
                         style = TextStyles.getCardBodySubTextStyle(),
@@ -82,7 +85,10 @@ internal fun ProfileCard(
 private fun LoggedOut() {
     PreviewTheme {
         Surface {
-            ProfileCard(username = "")
+            ProfileCard(
+                username = "bob",
+                showLogin = false
+            )
         }
     }
 }
@@ -92,7 +98,23 @@ private fun LoggedOut() {
 private fun LoggedIn() {
     PreviewTheme {
         Surface {
-            ProfileCard(username = "bob")
+            ProfileCard(
+                username = "bob",
+                showLogin = false
+            )
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun LoggedInWaitingForUsername() {
+    PreviewTheme {
+        Surface {
+            ProfileCard(
+                username = "",
+                showLogin = false
+            )
         }
     }
 }

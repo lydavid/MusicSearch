@@ -65,8 +65,6 @@ class SettingsViewModel @Inject constructor(
                 musicBrainzAuthState.setAuthState(authState)
 
                 try {
-                    Timber.d("${authState.accessToken}")
-                    Timber.d("${response?.accessToken}")
                     val username = musicBrainzAuthApi.getUserInfo().username ?: return@launch
                     musicBrainzAuthState.setUsername(username)
                 } catch (ex: Exception) {
@@ -84,12 +82,11 @@ class SettingsViewModel @Inject constructor(
                 musicBrainzAuthApi.logout(
                     token = authState.refreshToken.orEmpty()
                 )
-                musicBrainzAuthState.setAuthState(null)
-                musicBrainzAuthState.setUsername("")
-
             } catch (ex: Exception) {
                 // TODO: snackbar
                 Timber.e("$ex")
+            } finally {
+                musicBrainzAuthState.setAuthState(null)
                 musicBrainzAuthState.setUsername("")
             }
         }

@@ -21,7 +21,8 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
-import timber.log.Timber
+
+private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
 
 @HiltViewModel
 internal class CollectionListViewModel @Inject constructor(
@@ -43,19 +44,24 @@ internal class CollectionListViewModel @Inject constructor(
         viewModelScope.launch {
             // Hack: We're using username in place of a UUID
             musicBrainzAuthState.username.collectLatest { username ->
-                loadPagedResources(username)
+                if (username.isEmpty()) {
+                    // This id lets the rest of the functions know to avoid network requests
+                    loadPagedResources(ONLY_GIVE_ME_LOCAL_COLLECTIONS)
+                } else {
+                    loadPagedResources(username)
+                }
             }
         }
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response =
-            musicBrainzApiService.browseCollectionsByUser(
-                username = resourceId,
-                offset = nextOffset,
-                include = USER_COLLECTIONS
-            )
-        Timber.d("${response.collections}")
+        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
+
+        val response = musicBrainzApiService.browseCollectionsByUser(
+            username = resourceId,
+            offset = nextOffset,
+            include = USER_COLLECTIONS
+        )
 
         if (response.offset == 0) {
             relationDao.insertBrowseResourceCount(
@@ -77,19 +83,6 @@ internal class CollectionListViewModel @Inject constructor(
         val collectionMusicBrainzModels = response.collections
         collectionDao.insertAll(collectionMusicBrainzModels.map { it.toCollectionRoomModel() })
 
-        // TODO: Should we handle a user logging in with multiple accounts?
-        //  not right now.
-        //  Once a collection is in our local db, we will continue to show it even if they log out.
-        //  How do we handle refresh then?
-//        artistReleaseDao.insertAll(
-//            collectionMusicBrainzModels.map { release ->
-//                ArtistRelease(
-//                    artistId = resourceId,
-//                    releaseId = release.id
-//                )
-//            }
-//        )
-
         return collectionMusicBrainzModels.size
     }
 
@@ -98,14 +91,20 @@ internal class CollectionListViewModel @Inject constructor(
     }
 
     override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? {
+        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
+
         return relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.COLLECTION)?.remoteCount
     }
 
     override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String): Int {
+        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
+
         return relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.COLLECTION)?.localCount ?: 0
     }
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return
+
         collectionDao.withTransaction {
             // We do not delete collections who do not have a mbid because they only exist locally
             collectionDao.deleteMusicBrainzCollections()

@@ -47,6 +47,10 @@ Search `collectableResources` to find all the entities that can be collected.
     - We currently show a count in collections list, which is based on sum of its linked entities but because we don't insert all its entities on initial pull, we don't have that info
       - We could get it from `area-count` etc -> would mean we need to store/update its count in `collection` 
   - [ ] Insert into DB
+- What happens when the user logs out?
+  - [x] Local collections should remain
+  - [x] Any collections already downloaded by MB should remain
+  - [x] If there are outstanding collections to fetch from MB, do not try to fetch them only to fail and show an error
 
 
 ### Push collections to MB

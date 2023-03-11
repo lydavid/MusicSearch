@@ -59,6 +59,7 @@ fun SettingsScaffold(
     ) { innerPadding ->
 
         val username by viewModel.musicBrainzAuthState.username.collectAsState(initial = "")
+        val authState by viewModel.musicBrainzAuthState.authStateFlow.collectAsState(initial = null)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
         val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(
@@ -68,6 +69,7 @@ fun SettingsScaffold(
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
             username = username,
+            showLogin = authState == null,
             onLoginClick = { loginLauncher.launch(Unit) },
             onLogoutClick = { viewModel.logout() },
             onDestinationClick = onDestinationClick,
@@ -85,6 +87,7 @@ fun SettingsScaffold(
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     username: String = "",
+    showLogin: Boolean = true,
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     onDestinationClick: (Destination) -> Unit = {},
@@ -100,6 +103,7 @@ fun SettingsScreen(
 
         ProfileCard(
             username = username,
+            showLogin = showLogin,
             onLoginClick = onLoginClick,
             onLogoutClick = onLogoutClick
         )
