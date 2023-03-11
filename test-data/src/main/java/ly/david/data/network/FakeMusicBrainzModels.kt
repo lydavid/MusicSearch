@@ -15,4 +15,5 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): MusicBrainzModel =
         MusicBrainzResource.SERIES -> fakeSeries
         MusicBrainzResource.WORK -> fakeWorkWithAllData
         MusicBrainzResource.URL -> TODO() // url doesn't have name with disambiguation
+        MusicBrainzResource.COLLECTION -> TODO()
     }

@@ -5,9 +5,14 @@ only the entities you want.
 
 Search `collectableResources` to find all the entities that can be collected.
 
+## Links
+
+- https://wiki.musicbrainz.org/MusicBrainz_API#collections
+
+
 ## Prerequisites
 
-- [OAuth with MusicBrainz](oauth_musicbrainz.md)
+- [x] [OAuth with MusicBrainz](oauth_musicbrainz.md)
 
 ## Implementation
 
@@ -29,20 +34,25 @@ Search `collectableResources` to find all the entities that can be collected.
   - [ ] When pulling collections from MusicBrainz, we will have store its mbid
   - [ ] Collections created in our app do not have an mbid
     - [ ] After pushing our collections to MB, we can update it with the newly created mbid
-- [ ] Pull all collections into local database (DB)
+- [x] Pull all collections into local database (DB)
   - [x] Will need profile's username to get their private collections
     - https://musicbrainz.org/ws/2/collection?editor={username}&inc=user-collections
   - [x] if username (and auth state) exists, query for user's collections
     - otherwise we don't query for any collections at all because we need their username
     - technically, if the user knew their or someone's username, they could input it to see their public collections
       - out of scope
-  - [ ] Insert all collections into DB (this is just the info about each collection, not its content)
+  - [x] Insert all collections into DB (this is just the info about each collection, not its content)
 - [ ] On clicking a MB collection, query for its content from MB
+  - Should we query for their content as the user scrolls?
+    - We currently show a count in collections list, which is based on sum of its linked entities but because we don't insert all its entities on initial pull, we don't have that info
+      - We could get it from `area-count` etc -> would mean we need to store/update its count in `collection` 
   - [ ] Insert into DB
 
 
 ### Push collections to MB
-
+- [ ] POST with XML data
 
 ### Sync between MB and DB
-
+- What happens when there are changes in both remote and local?
+- How do we detect changes in remote?
+- Research ANKI

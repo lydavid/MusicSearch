@@ -23,5 +23,6 @@ fun MusicBrainzResource.getDisplayTextRes(): Int {
         MusicBrainzResource.SERIES -> R.string.series
         MusicBrainzResource.WORK -> R.string.work
         MusicBrainzResource.URL -> R.string.url
+        MusicBrainzResource.COLLECTION -> R.string.collection
     }
 }

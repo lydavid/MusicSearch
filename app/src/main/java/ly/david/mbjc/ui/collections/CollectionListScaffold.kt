@@ -10,6 +10,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,7 +32,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CollectionListScaffold(
+internal fun CollectionListScaffold(
     modifier: Modifier = Modifier,
     onCollectionClick: (id: String) -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
@@ -39,8 +40,12 @@ fun CollectionListScaffold(
 ) {
 
     var filterText by rememberSaveable { mutableStateOf("") }
-    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.collections)
+    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedResources)
         .collectAsLazyPagingItems()
+
+    LaunchedEffect(Unit) {
+        viewModel.getUsernameThenLoadCollections()
+    }
 
     Scaffold(
         modifier = modifier,

@@ -21,6 +21,7 @@
     <string name="series">Series</string>
     <string name="work">Work</string>
     <string name="url">URL</string>
+    <string name="collection">Collection</string>
 
     <string name="back">Back</string>
     <string name="open_in_browser">Open in browser</string>

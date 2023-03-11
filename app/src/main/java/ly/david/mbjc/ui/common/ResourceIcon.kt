@@ -29,18 +29,18 @@ internal fun ResourceIcon(
     Icon(
         modifier = modifier,
         imageVector = when (resource) {
+            MusicBrainzResource.AREA -> Icons.Default.Public
             MusicBrainzResource.ARTIST -> Icons.Default.Person
-            MusicBrainzResource.RELEASE_GROUP -> Icons.Default.Folder
-            MusicBrainzResource.RELEASE -> Icons.Default.Album
-            MusicBrainzResource.RECORDING -> Icons.Default.Mic
-            MusicBrainzResource.WORK -> Icons.Default.MusicNote
+            MusicBrainzResource.EVENT -> Icons.Default.Event
+            MusicBrainzResource.GENRE -> Icons.Default.TheaterComedy
+            MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
             MusicBrainzResource.LABEL -> Icons.Default.CorporateFare
             MusicBrainzResource.PLACE -> Icons.Default.Place
-            MusicBrainzResource.AREA -> Icons.Default.Public
-            MusicBrainzResource.EVENT -> Icons.Default.Event
+            MusicBrainzResource.RECORDING -> Icons.Default.Mic
+            MusicBrainzResource.RELEASE -> Icons.Default.Album
+            MusicBrainzResource.RELEASE_GROUP -> Icons.Default.Folder
             MusicBrainzResource.SERIES -> Icons.Default.List
-            MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
-            MusicBrainzResource.GENRE -> Icons.Default.TheaterComedy
+            MusicBrainzResource.WORK -> Icons.Default.MusicNote
             else -> {
                 // Non-searchable resources like Genre, URL
                 // No icons.

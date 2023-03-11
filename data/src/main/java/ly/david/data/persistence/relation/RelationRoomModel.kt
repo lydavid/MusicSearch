@@ -82,8 +82,8 @@ fun RelationMusicBrainzModel.toRelationRoomModel(
     order: Int,
 ): RelationRoomModel? {
 
-    var linkedResourceId: String = ""
-    var linkedResourceName: String = ""
+    var linkedResourceId = ""
+    var linkedResourceName = ""
     var linkedResourceDisambiguation: String? = null
     var additionalInfo: String? = null
     val linkedTargetType = targetType
@@ -197,7 +197,7 @@ fun RelationMusicBrainzModel.toRelationRoomModel(
                 linkedResourceDisambiguation = null
             } ?: return null
         }
-        null -> return null
+        else -> return null
     }
 
     return RelationRoomModel(

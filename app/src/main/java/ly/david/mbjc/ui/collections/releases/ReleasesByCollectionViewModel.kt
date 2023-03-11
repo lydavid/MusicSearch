@@ -27,7 +27,6 @@ import ly.david.mbjc.ui.common.paging.PagedList
 //  - collections without a mb id will be pushed to mb, then the newly created mbid will be saved
 //  - collections from mb will be pulled into our db
 //  - refreshing a collection will pull data from mb -> but how do we sync? what if user adds on our app, refreshing shouldn't delete it
-// TODO: research ANKI syncing
 @HiltViewModel
 internal class ReleasesByCollectionViewModel @Inject constructor(
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,

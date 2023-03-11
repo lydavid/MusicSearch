@@ -12,8 +12,10 @@ interface CollectionApi {
     }
 
     @GET("collection")
-    suspend fun getAllCollectionsByUser(
+    suspend fun browseCollectionsByUser(
         @Query("editor") username: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
         @Query("inc") include: String? = null
     ): BrowseCollectionResponse
 }

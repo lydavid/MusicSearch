@@ -199,7 +199,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
     // endregion
 
-    override suspend fun getAllCollectionsByUser(username: String, include: String?): BrowseCollectionResponse {
+    override suspend fun browseCollectionsByUser(
+        username: String,
+        limit: Int,
+        offset: Int,
+        include: String?
+    ): BrowseCollectionResponse {
         TODO("Not yet implemented")
     }
 }

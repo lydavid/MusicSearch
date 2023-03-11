@@ -2,8 +2,6 @@ package ly.david.data.persistence.collection
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.network.MusicBrainzResource
@@ -38,6 +36,11 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
     )
     abstract fun getAllCollectionsOfType(resource: MusicBrainzResource): PagingSource<Int, CollectionWithEntities>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertEntityIntoCollection(collectionEntityRoomModel: CollectionEntityRoomModel): Long
+    @Query(
+        """
+        DELETE FROM collection 
+        WHERE mbid IS NOT NULL
+        """
+    )
+    abstract suspend fun deleteMusicBrainzCollections()
 }

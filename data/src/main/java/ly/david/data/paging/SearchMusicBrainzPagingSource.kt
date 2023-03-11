@@ -206,9 +206,15 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            // TODO: The following are not queryable. Is there a better model to switch on?
-            MusicBrainzResource.GENRE -> TODO()
-            MusicBrainzResource.URL -> TODO()
+            // TODO: The following are not searchable. Is there a better model to switch on?
+            MusicBrainzResource.COLLECTION,
+            MusicBrainzResource.GENRE,
+            MusicBrainzResource.URL -> {
+                QueryResults(
+                    offset = 0,
+                    data = listOf()
+                )
+            }
         }
     }
 }

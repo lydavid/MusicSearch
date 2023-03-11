@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 
 const val RESOURCE_AREA = "area"
 const val RESOURCE_ARTIST = "artist"
+const val RESOURCE_COLLECTION = "collection"
 const val RESOURCE_EVENT = "event"
 const val RESOURCE_GENRE = "genre"
 const val RESOURCE_INSTRUMENT = "instrument"
@@ -27,6 +28,9 @@ enum class MusicBrainzResource(val resourceName: String) {
 
     @Json(name = "artist")
     ARTIST(RESOURCE_ARTIST),
+
+    @Json(name = "collection")
+    COLLECTION(RESOURCE_COLLECTION),
 
     @Json(name = "event")
     EVENT(RESOURCE_EVENT),

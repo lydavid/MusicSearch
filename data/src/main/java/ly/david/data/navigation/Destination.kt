@@ -74,6 +74,7 @@ fun MusicBrainzResource.toLookupDestination() =
         MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES
         MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
         MusicBrainzResource.URL -> Destination.LOOKUP_URL
+        MusicBrainzResource.COLLECTION -> Destination.COLLECTIONS
     }
 
 /**
