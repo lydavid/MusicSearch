@@ -19,6 +19,7 @@ import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.persistence.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.persistence.collection.CollectionDao
 import ly.david.data.persistence.collection.CollectionEntityDao
 import ly.david.data.persistence.collection.CollectionEntityRoomModel
@@ -56,12 +57,20 @@ internal class TopLevelViewModel @Inject constructor(
 
     fun addToCollection(collectionId: Long, artistId: String) {
         viewModelScope.launch {
-            collectionEntityDao.insert(
-                CollectionEntityRoomModel(
-                    id = collectionId,
-                    entityId = artistId
+            collectionEntityDao.withTransaction {
+                val insertedOneEntry = collectionEntityDao.insert(
+                    CollectionEntityRoomModel(
+                        id = collectionId,
+                        entityId = artistId
+                    )
                 )
-            )
+                if (insertedOneEntry != INSERTION_FAILED_DUE_TO_CONFLICT) {
+                    val collection = collectionDao.getCollection(collectionId)
+                    collectionDao.update(
+                        collection.copy(entityCount = collection.entityCount + 1)
+                    )
+                }
+            }
         }
     }
 

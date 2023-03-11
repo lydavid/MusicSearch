@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.network.CollectionMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.getCount
 import ly.david.data.persistence.RoomModel
 
 @Entity(
@@ -17,6 +18,7 @@ data class CollectionRoomModel(
     @ColumnInfo(name = "entity") val entity: MusicBrainzResource,
     @ColumnInfo(name = "type") val type: String? = null,
     @ColumnInfo(name = "type-id") val typeId: String? = null,
+    @ColumnInfo(name = "entity-count", defaultValue = "0") val entityCount: Int = 0,
 ): RoomModel
 
 fun CollectionMusicBrainzModel.toCollectionRoomModel(): CollectionRoomModel {
@@ -25,6 +27,7 @@ fun CollectionMusicBrainzModel.toCollectionRoomModel(): CollectionRoomModel {
         name = name,
         entity = entity,
         type = type,
-        typeId = typeId
+        typeId = typeId,
+        entityCount = getCount()
     )
 }

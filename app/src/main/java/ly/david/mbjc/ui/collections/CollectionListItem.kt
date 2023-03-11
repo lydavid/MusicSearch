@@ -49,7 +49,7 @@ internal fun CollectionListItem(
         },
         trailingContent = {
             Text(
-                text = collection.entityIds.size.toString(),
+                text = collection.entityCount.toString(),
                 style = TextStyles.getCardBodyTextStyle()
             )
         }
