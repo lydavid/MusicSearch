@@ -81,7 +81,6 @@
     <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:CollectionListViewModel.kt$CollectionListViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>

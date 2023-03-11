@@ -1,4 +1,6 @@
 complexity:
+  CyclomaticComplexMethod:
+    ignoreSimpleWhenEntries: true
   LongParameterList:
     ignoreDefaultParameters: true
     ignoreAnnotated:
