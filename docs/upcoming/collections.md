@@ -49,9 +49,32 @@ Search `collectableResources` to find all the entities that can be collected.
 
 ### Push collection content to MB, synchronize
 - [ ] POST with XML data
-- Cannot push local collections to MB cause webservice not implemented: https://tickets.metabrainz.org/browse/MBS-11914
-- We can at least update our existing MB collections with our local database
-  - What happens when there are changes in both remote and local?
-  - How do we detect changes in remote?
+  - PUT /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;c410a773-c6eb-4bc0-9df8-042fe6645c63?client=example.app-0.4.7
+  - DELETE /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;?client=example.app-0.4.7
+  - You may submit up to ~400 entities in a single request, separated by a semicolon (;)
+- [ ] Unidirectional sync where MB is source of truth
+  - local additions/deletions will be overwritten
+  - This will be supported the moment we copy/paste our paging code
+  - [ ] An easier way to always keep remote up to date is to immediate PUT/DELETE an entity
+    - Will work unless user does not have connection or is not logged in (they have to be logged in to fetch remote collections)
+- [ ] Bidirectional sync
   - Research ANKI
+  - `collection` scenarios (this is just unidirectional)
+    - not in remote, not in local -> do nothing
+    - in remote, in local -> do nothing
+    - not in remote, in local -> delete
+      - Normally if it was added to local at a later timestamp, local should be pushed to remote but POST collection is not supported
+    - in remote, not in local -> insert
+  - `collection_entity` scenarios
+    - not in remote, not in local -> do nothing
+    - in remote, in local -> do nothing
+    - not in remote, in local -> ?
+    - in remote, not in local -> ?
+  - What happens when there are changes in both remote and local?
+    - How do we detect changes in remote? MB's schema would need to support it
+    - global last_sync_time
+      - and in `collection` table
+  - deletions may need to be soft (with a flag)
+- Cannot push local collections to MB cause webservice not implemented: https://tickets.metabrainz.org/browse/MBS-11914
+  - So we can only update existing collections
 

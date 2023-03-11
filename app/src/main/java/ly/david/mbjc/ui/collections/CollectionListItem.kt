@@ -1,7 +1,12 @@
 package ly.david.mbjc.ui.collections
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Cloud
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,10 +53,19 @@ internal fun CollectionListItem(
             )
         },
         trailingContent = {
-            Text(
-                text = collection.entityCount.toString(),
-                style = TextStyles.getCardBodyTextStyle()
-            )
+            Row {
+                if (collection.isRemote) {
+                    Icon(
+                        modifier = Modifier.padding(end = 4.dp),
+                        imageVector = Icons.Outlined.Cloud,
+                        contentDescription = null
+                    )
+                }
+                Text(
+                    text = collection.entityCount.toString(),
+                    style = TextStyles.getCardBodyTextStyle()
+                )
+            }
         }
     )
 }
@@ -64,9 +78,11 @@ private fun Preview() {
             CollectionListItem(
                 collection = CollectionListItemModel(
                     id = "0",
-                    name = "My collection",
+                    name = "My collection with a very long title",
                     description = "Some songs",
                     entity = MusicBrainzResource.RECORDING,
+                    isRemote = true,
+                    entityCount = 9999,
                     entityIds = listOf(
                         "1b1e4b65-9b1a-48cd-8e3a-b4824f15bf0c",
                         "b437fbda-9c32-4078-afa2-1afb98ff0d74"

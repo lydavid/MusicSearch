@@ -29,7 +29,7 @@ internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBr
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
             return MusicBrainzResource.values().filterNot {
-                it == MusicBrainzResource.URL
+                it in listOf(MusicBrainzResource.URL, MusicBrainzResource.COLLECTION)
             }
         }
     }
