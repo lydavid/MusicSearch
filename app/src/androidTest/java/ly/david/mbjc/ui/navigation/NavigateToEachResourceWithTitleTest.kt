@@ -11,6 +11,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.toFakeMusicBrainzModel
+import ly.david.data.network.resourceUri
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -50,7 +51,7 @@ internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBr
 
     @Test
     fun navigateToEachResourceScreenWithCustomTitle() {
-        val title = resource.resourceName
+        val title = resource.resourceUri
         runBlocking {
             withContext(Dispatchers.Main) {
                 composeTestRule.awaitIdle()

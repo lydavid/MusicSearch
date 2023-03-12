@@ -18,6 +18,8 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.resourceUriPlural
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.persistence.collection.CollectionDao
@@ -30,6 +32,7 @@ import ly.david.data.persistence.collection.CollectionWithEntities
 internal class TopLevelViewModel @Inject constructor(
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
+    private val musicBrainzApiService: MusicBrainzApiService
 ) : ViewModel() {
 
     val entity: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
@@ -55,17 +58,32 @@ internal class TopLevelViewModel @Inject constructor(
         this.entity.value = entity
     }
 
-    fun addToCollection(collectionId: Long, artistId: String) {
+    fun addToCollection(collectionId: Long, entityId: String) {
         viewModelScope.launch {
             collectionEntityDao.withTransaction {
                 val insertedOneEntry = collectionEntityDao.insert(
                     CollectionEntityRoomModel(
                         id = collectionId,
-                        entityId = artistId
+                        entityId = entityId
                     )
                 )
+
+                // TODO: if we insert into remote collection, then refresh collection, we lose our collection_entity
+                //  which increments the collection despite it not adding to MB
+                //  MB returns 200 even if entity already exists in collection
+                //  Possible workaround: do not manually increment for remote collection -> but would need to requery it for its count
+                //      or we can fetch all of the collection's content before inserting -> could take a long time if its large
+                //  For remote collections, we could not show its count until we fetch its content? strange ux
                 if (insertedOneEntry != INSERTION_FAILED_DUE_TO_CONFLICT) {
                     val collection = collectionDao.getCollection(collectionId)
+                    val collectionMBid = collection.mbid
+                    if (collectionMBid != null) {
+                        musicBrainzApiService.uploadToCollection(
+                            collectionId = collectionMBid,
+                            resourceUriPlural = entity.value.resourceUriPlural,
+                            mbids = entityId
+                        )
+                    }
                     collectionDao.update(
                         collection.copy(entityCount = collection.entityCount + 1)
                     )

@@ -17,6 +17,7 @@ import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.toMusicBrainzResource
+import ly.david.data.network.resourceUri
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -79,7 +80,7 @@ internal fun NavigationGraph(
         }
 
         val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
-            val route = Destination.LOOKUP.route + "?query=${query}&type=${type.resourceName}"
+            val route = Destination.LOOKUP.route + "?query=${query}&type=${type.resourceUri}"
             Timber.d("1. $query")
             navController.navigate(route)
         }
@@ -382,7 +383,7 @@ private fun NavGraphBuilder.addLookupResourceScreen(
         ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$uriPrefix${resource.resourceName}/{$ID}?$TITLE={$TITLE}"
+                uriPattern = "$uriPrefix${resource.resourceUri}/{$ID}?$TITLE={$TITLE}"
             }
         )
     ) { entry: NavBackStackEntry ->

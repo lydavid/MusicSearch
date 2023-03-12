@@ -20,6 +20,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
 import ly.david.data.network.toFakeMusicBrainzModel
+import ly.david.data.network.resourceUri
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -69,7 +70,7 @@ internal class SearchEachResourceTest(
             .performClick()
 
         composeTestRule
-            .onNodeWithTag(resource.resourceName)
+            .onNodeWithTag(resource.resourceUri)
             .performClick()
 
         composeTestRule

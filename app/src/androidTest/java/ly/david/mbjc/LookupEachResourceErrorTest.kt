@@ -32,7 +32,7 @@ internal class LookupEachResourceErrorTest(
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
             return MusicBrainzResource.values().filterNot {
-                it == MusicBrainzResource.URL
+                it in listOf(MusicBrainzResource.URL, MusicBrainzResource.COLLECTION)
             }
         }
     }

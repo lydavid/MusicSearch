@@ -3,6 +3,8 @@ package ly.david.data.network.api
 import com.squareup.moshi.Json
 import ly.david.data.network.CollectionMusicBrainzModel
 import retrofit2.http.GET
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CollectionApi {
@@ -18,6 +20,14 @@ interface CollectionApi {
         @Query("offset") offset: Int = 0,
         @Query("inc") include: String? = null
     ): BrowseCollectionResponse
+
+    @PUT("collection/{collectionId}/{resourceUriPlural}/{mbids}")
+    suspend fun uploadToCollection(
+        @Path("collectionId") collectionId: String,
+        @Path("resourceUriPlural") resourceUriPlural: String,
+        @Path("mbids") mbids: String,
+        @Query("client") client: String = "MusicSearch-0.2.1" // TODO: version should come from one source
+    )
 }
 
 data class BrowseCollectionResponse(

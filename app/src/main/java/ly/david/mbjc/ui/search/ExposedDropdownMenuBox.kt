@@ -24,6 +24,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.resourceUri
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.getDisplayTextRes
@@ -78,7 +79,7 @@ internal fun ExposedDropdownMenuBox(
                 ) {
                     DropdownMenuItem(
                         modifier = Modifier.semantics {
-                            testTag = option.resourceName
+                            testTag = option.resourceUri
                         },
                         text = {
                             Row(verticalAlignment = CenterVertically) {

@@ -25,9 +25,10 @@ Search `collectableResources` to find all the entities that can be collected.
   - [x] An entity can only appear once in any given collection
   - [x] A collection only holds one type of entity
 - [x] Can filter all collections by their name
-  - [ ] Filter by description
+  - Filter by description (MB WS doesn't return description -> out of scope)
 - [ ] After adding an entity to a collection, show a snackbar saying whether it succeeded or it was already part of it
-
+  - [ ] also, show an indicator that an entity is already in the collection
+    - does not work for remote collections before we get its content
 
 ### Pull collections from MB
 - [x] Optional MusicBrainz id (mbid) for collection
@@ -48,8 +49,11 @@ Search `collectableResources` to find all the entities that can be collected.
 
 
 ### Push collection content to MB, synchronize
-- [ ] POST with XML data
+- XML payload not needed for collections!
+  - Otherwise would need to try https://github.com/Tickaroo/tikxml
+- [ ] Add to collection
   - PUT /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;c410a773-c6eb-4bc0-9df8-042fe6645c63?client=example.app-0.4.7
+- [ ] Delete from collection
   - DELETE /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;?client=example.app-0.4.7
   - You may submit up to ~400 entities in a single request, separated by a semicolon (;)
 - [ ] Unidirectional sync where MB is source of truth
@@ -57,24 +61,8 @@ Search `collectableResources` to find all the entities that can be collected.
   - This will be supported the moment we copy/paste our paging code
   - [ ] An easier way to always keep remote up to date is to immediate PUT/DELETE an entity
     - Will work unless user does not have connection or is not logged in (they have to be logged in to fetch remote collections)
-- [ ] Bidirectional sync
-  - Research ANKI
-  - `collection` scenarios (this is just unidirectional)
-    - not in remote, not in local -> do nothing
-    - in remote, in local -> do nothing
-    - not in remote, in local -> delete
-      - Normally if it was added to local at a later timestamp, local should be pushed to remote but POST collection is not supported
-    - in remote, not in local -> insert
-  - `collection_entity` scenarios
-    - not in remote, not in local -> do nothing
-    - in remote, in local -> do nothing
-    - not in remote, in local -> ?
-    - in remote, not in local -> ?
-  - What happens when there are changes in both remote and local?
-    - How do we detect changes in remote? MB's schema would need to support it
-    - global last_sync_time
-      - and in `collection` table
-  - deletions may need to be soft (with a flag)
+- Bidirectional sync (out of scope)
+  - would need a timestamp field in MB and locally
 - Cannot push local collections to MB cause webservice not implemented: https://tickets.metabrainz.org/browse/MBS-11914
   - So we can only update existing collections
 

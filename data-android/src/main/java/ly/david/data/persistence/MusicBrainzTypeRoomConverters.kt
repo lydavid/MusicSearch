@@ -3,6 +3,7 @@ package ly.david.data.persistence
 import androidx.room.TypeConverter
 import java.util.Date
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.resourceUri
 
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
@@ -28,10 +29,10 @@ internal class MusicBrainzRoomTypeConverters {
 
     @TypeConverter
     fun toResource(string: String?): MusicBrainzResource? =
-        MusicBrainzResource.values().firstOrNull { it.resourceName == string }
+        MusicBrainzResource.values().firstOrNull { it.resourceUri == string }
 
     @TypeConverter
-    fun fromResource(resource: MusicBrainzResource?): String? = resource?.resourceName
+    fun fromResource(resource: MusicBrainzResource?): String? = resource?.resourceUri
 
     @TypeConverter
     fun toDate(dateLong: Long): Date = Date(dateLong)

@@ -26,6 +26,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.fakeReleaseGroup
+import ly.david.data.network.resourceUri
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -140,7 +141,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
         composeTestRule.activityRule.scenario.onActivity {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 val query = "some query" // The query doesn't matter for this test since we're returning fakes.
-                val resource = MusicBrainzResource.RELEASE_GROUP.resourceName
+                val resource = MusicBrainzResource.RELEASE_GROUP.resourceUri
                 data = Uri.parse("$deeplinkSchema://app/lookup?query=$query&type=$resource")
             }
             it.startActivity(intent)

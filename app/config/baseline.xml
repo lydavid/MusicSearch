@@ -64,6 +64,8 @@
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
     <ID>MaxLineLength:ReleasesByCollectionViewModel.kt$ReleasesByCollectionViewModel$// - refreshing a collection will pull data from mb -&gt; but how do we sync? what if user adds on our app, refreshing shouldn't delete it</ID>
+    <ID>MaxLineLength:TopLevelViewModel.kt$TopLevelViewModel$// Possible workaround: do not manually increment for remote collection -&gt; but would need to requery it for its count</ID>
+    <ID>MaxLineLength:TopLevelViewModel.kt$TopLevelViewModel$// or we can fetch all of the collection's content before inserting -&gt; could take a long time if its large</ID>
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
