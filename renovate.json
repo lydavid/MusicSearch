@@ -9,6 +9,18 @@
       "automerge": true,
       "automergeType": "pr",
       "platformAutomerge": true
+    },
+    {
+      "matchPackagePatterns": [
+        "androidx.compose.compiler:compiler"
+      ],
+      "groupName": "kotlin"
+    },
+    {
+      "matchPackagePatterns": [
+        "org.jetbrains.kotlin.*"
+      ],
+      "groupName": "kotlin"
     }
   ]
 }
