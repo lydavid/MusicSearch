@@ -40,9 +40,6 @@ import ly.david.mbjc.ui.common.fullscreen.FullScreenText
  * @param lazyPagingItems The items to display. Their [Identifiable.id] must be unique.
  *  This is already true for any item that uses MB's UUID, but separators must also have a unique id.
  * @param modifier For lazy column containing [itemContent].
- * @param somethingElseLoading Whether something else is loading, in which case this should present a loading state.
- *  Although this should be decoupled, some screens' paged contents relies on a lookup that feeds data into Room,
- *  which is then loaded with pagination.
  *
  *  @param itemContent Composable UI for each [lazyPagingItems].
  */
@@ -51,7 +48,6 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
-    somethingElseLoading: Boolean = false,
     snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit
@@ -88,7 +84,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
 
         // This doesn't affect "loads" from db/source.
         when {
-            lazyPagingItems.loadState.refresh is LoadState.Loading || somethingElseLoading -> {
+            lazyPagingItems.loadState.refresh is LoadState.Loading -> {
                 FullScreenLoadingIndicator()
             }
             lazyPagingItems.loadState.refresh is LoadState.Error -> {

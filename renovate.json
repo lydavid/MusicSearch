@@ -5,7 +5,12 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true,
       "automergeType": "pr",
       "platformAutomerge": true
@@ -21,6 +26,12 @@
         "org.jetbrains.kotlin.*"
       ],
       "groupName": "kotlin"
+    },
+    {
+      "matchPackagePatterns": [
+        "androidx.paging:paging-compose"
+      ],
+      "allowedVersions": "!/.*1\\.0\\.0-alpha.*$/"
     }
   ]
 }
