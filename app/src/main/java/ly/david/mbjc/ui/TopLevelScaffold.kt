@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -25,6 +26,7 @@ import ly.david.mbjc.ui.common.dialog.CreateCollectionDialog
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,9 +35,15 @@ internal fun TopLevelScaffold(
     viewModel: TopLevelViewModel = hiltViewModel()
 ) {
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val scope = rememberCoroutineScope()
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    val bottomSheetState = rememberSheetState()
+    var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
+    var selectedEntityId by rememberSaveable { mutableStateOf("") }
+    val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
+        .collectAsLazyPagingItems()
 
-    // Note that destination?.route includes parameters such as artistId
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: Destination.LOOKUP.route
     val currentTopLevelDestination: Destination = currentRoute.getTopLevelRoute().getTopLevelDestination()
 
@@ -52,13 +60,19 @@ internal fun TopLevelScaffold(
         }
     }
 
-    val scope = rememberCoroutineScope()
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val bottomSheetState = rememberSheetState()
-    var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
-    var selectedEntityId by rememberSaveable { mutableStateOf("") }
-    val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
-        .collectAsLazyPagingItems()
+    val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) { result ->
+        when {
+            result.exception != null -> {
+                Timber.e(result.exception)
+            }
+            result.response != null -> {
+                viewModel.performTokenRequest(result.response)
+            }
+            else -> {
+                Timber.e("login's result intent is null")
+            }
+        }
+    }
 
     if (showCreateCollectionDialog) {
         CreateCollectionDialog(
@@ -69,6 +83,7 @@ internal fun TopLevelScaffold(
         )
     }
 
+    // TODO: bottom sheet seems to crash after switching between portrait and landscape then back to portrait
     if (openBottomSheet) {
         CollectionBottomSheet(
             bottomSheetState = bottomSheetState,
@@ -96,6 +111,12 @@ internal fun TopLevelScaffold(
         NavigationGraph(
             navController = navController,
             modifier = Modifier.padding(innerPadding),
+            onLoginClick = {
+                loginLauncher.launch(Unit)
+            },
+            onLogoutClick = {
+                viewModel.logout()
+            },
             onAddToCollectionMenuClick = {
                 openBottomSheet = true
             },

@@ -38,8 +38,25 @@ Activity has a different `host` from `RedirectUriReceiverActivity`.
 This also means we can keep our app's activity's launchMode as the default, allowing us to
 deeplink test any of our screens without stopping our app.
 
+
 ## OAuth 2 vs OpenID
 
 OpenID providers must support GET and POST: https://github.com/openid/AppAuth-Android/issues/801
 But OAuth 2 on its own does not.
 MusicBrainz has OAuth 2 but not OpenID.
+
+
+## Refresh experience
+
+Right now, after token expiration, the user must go to Settings, click logout, click login,
+then login to MusicBrainz. That's a lot of user friction.
+
+- Can we automatically refresh token?
+  - Doesn't seem like it
+  - But we can offer a way for them to refresh their credentials instead of logging out then in
+- [ ] Otherwise show a prompt to tell them to login again
+  - check authState?.needsTokenRefresh
+  - lift login logic to top level
+    - delegate to collections
+    - delegate to each screen that can add to remote collections
+      - when user tries to add to remote collection, show prompt

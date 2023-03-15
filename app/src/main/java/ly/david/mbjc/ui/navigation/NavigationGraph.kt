@@ -16,8 +16,8 @@ import java.nio.charset.StandardCharsets
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.toMusicBrainzResource
 import ly.david.data.network.resourceUri
+import ly.david.data.network.toMusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -58,6 +58,8 @@ internal fun NavHostController.goTo(destination: Destination) {
 internal fun NavigationGraph(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    onLoginClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {},
     onAddToCollectionMenuClick: () -> Unit = {},
     onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {}
@@ -344,7 +346,9 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 onDestinationClick = { destination ->
                     onSettingsClick(destination)
-                }
+                },
+                onLoginClick = onLoginClick,
+                onLogoutClick = onLogoutClick
             )
         }
 

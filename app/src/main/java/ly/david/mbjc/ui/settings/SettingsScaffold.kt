@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.settings
 
 import android.os.Build
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,29 +23,16 @@ import ly.david.mbjc.ui.settings.components.ProfileCard
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
 import ly.david.mbjc.ui.theme.PreviewTheme
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScaffold(
     modifier: Modifier = Modifier,
     onDestinationClick: (Destination) -> Unit = {},
+    onLoginClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
-
-    val loginLauncher = rememberLauncherForActivityResult(contract = viewModel.getLoginContract()) { result ->
-        when {
-            result.exception != null -> {
-                Timber.e(result.exception)
-            }
-            result.response != null -> {
-                viewModel.performTokenRequest(result.response)
-            }
-            else -> {
-                Timber.e("login's result intent is null")
-            }
-        }
-    }
 
     Scaffold(
         modifier = modifier,
@@ -70,8 +56,8 @@ fun SettingsScaffold(
             modifier = Modifier.padding(innerPadding),
             username = username,
             showLogin = authState == null,
-            onLoginClick = { loginLauncher.launch(Unit) },
-            onLogoutClick = { viewModel.logout() },
+            onLoginClick = onLoginClick,
+            onLogoutClick = onLogoutClick,
             onDestinationClick = onDestinationClick,
             theme = theme,
             onThemeChange = { viewModel.appPreferences.setTheme(it) },
