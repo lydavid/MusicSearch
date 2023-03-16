@@ -9,12 +9,12 @@ import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
-import ly.david.data.network.USER_AGENT
-import ly.david.data.network.USER_AGENT_VALUE
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
+private const val USER_AGENT = "User-Agent"
+private const val USER_AGENT_VALUE = "MusicSearch/0.2.1 (https://github.com/lydavid/MusicSearch)"
 private const val ACCEPT = "Accept"
 private const val ACCEPT_VALUE = "application/json"
 
