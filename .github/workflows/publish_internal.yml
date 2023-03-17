@@ -20,7 +20,7 @@ jobs:
         id: early_exit
         run: |
           status='skip'
-          if ! (git log --oneline -n 1 | grep -c "Bump internal version"); then status='deploy'; fi
+          if ! (git log --oneline -n 1 | grep -c "Bump version"); then status='deploy'; fi
           echo "status=$status" >> $GITHUB_OUTPUT
         shell: bash
 
@@ -44,8 +44,15 @@ jobs:
       # -b preserves our line separator preference
       - name: Bump version code
         run: |
-          vc=$(grep 'versionCode' app/build.gradle.kts | sed 's/[^0-9]//g')
-          sed -bi "s/versionCode = $vc/versionCode = $(($vc + 1))/" app/build.gradle.kts
+          VC=$(grep 'versionCode' app/build.gradle.kts | sed 's/[^0-9]//g')
+          sed -bi "s/versionCode = $VC/versionCode = $(($VC + 1))/" app/build.gradle.kts
+        shell: bash
+
+      - name: Bump version name
+        run: |
+          VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
+          newVN=$(echo ${VN} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          sed -bi "s/versionName = \"$VN\"/versionName = \"$newVN\"/" app/build.gradle.kts
         shell: bash
 
       # After this step, the workspace contains credentials file.
@@ -86,5 +93,5 @@ jobs:
         if: steps.publish_internal.outcome == 'success'
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
-          commit_message: Bump internal version
+          commit_message: Bump version
           file_pattern: 'app/build.gradle.kts'
