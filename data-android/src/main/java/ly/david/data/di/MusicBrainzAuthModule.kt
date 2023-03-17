@@ -19,7 +19,7 @@ import net.openid.appauth.ResponseTypeValues
 
 @InstallIn(SingletonComponent::class)
 @Module
-internal object MusicBrainzAuthModule {
+object MusicBrainzAuthModule {
 
     @Provides
     fun provideAuthorizationService(
