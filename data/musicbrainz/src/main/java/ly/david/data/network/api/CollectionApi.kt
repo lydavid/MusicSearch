@@ -26,7 +26,7 @@ interface CollectionApi {
         @Path("collectionId") collectionId: String,
         @Path("resourceUriPlural") resourceUriPlural: String,
         @Path("mbids") mbids: String,
-        @Query("client") client: String = "MusicSearch-0.2.1" // TODO: version should come from one source
+        @Query("client") client: String = "MusicSearch"
     )
 }
 

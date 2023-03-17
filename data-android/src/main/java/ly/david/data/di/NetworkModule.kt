@@ -14,7 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 private const val USER_AGENT = "User-Agent"
-private const val USER_AGENT_VALUE = "MusicSearch/0.2.1 (https://github.com/lydavid/MusicSearch)"
+private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
 private const val ACCEPT = "Accept"
 private const val ACCEPT_VALUE = "application/json"
 
