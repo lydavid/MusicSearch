@@ -32,7 +32,7 @@ android {
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
         versionCode = 18
-        versionName = "0.2.1"
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
