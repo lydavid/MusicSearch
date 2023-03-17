@@ -44,8 +44,8 @@ jobs:
       # -b preserves our line separator preference
       - name: Bump version code
         run: |
-          vc=$(grep 'versionCode' app/build.gradle | sed 's/[^0-9]//g')
-          sed -bi "s/versionCode $vc/versionCode $(($vc + 1))/" app/build.gradle
+          vc=$(grep 'versionCode' app/build.gradle.kts | sed 's/[^0-9]//g')
+          sed -bi "s/versionCode = $vc/versionCode = $(($vc + 1))/" app/build.gradle.kts
         shell: bash
 
       # After this step, the workspace contains credentials file.
@@ -87,4 +87,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: Bump internal version
-          file_pattern: 'app/build.gradle'
+          file_pattern: 'app/build.gradle.kts'
