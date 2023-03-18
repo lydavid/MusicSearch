@@ -26,9 +26,8 @@ Search `collectableResources` to find all the entities that can be collected.
   - [x] A collection only holds one type of entity
 - [x] Can filter all collections by their name
   - Filter by description (MB WS doesn't return description -> out of scope)
-- [ ] After adding an entity to a collection, show a snackbar saying whether it succeeded or it was already part of it
-  - [ ] also, show an indicator that an entity is already in the collection
-    - does not work for remote collections before we get its content
+- [ ] show an indicator that an entity is already in the collection
+  - does not work for remote collections before we get its content
 
 ### Pull collections from MB
 - [x] Optional MusicBrainz id (mbid) for collection
@@ -51,8 +50,11 @@ Search `collectableResources` to find all the entities that can be collected.
 ### Push collection content to MB, synchronize
 - XML payload not needed for collections!
   - Otherwise would need to try https://github.com/Tickaroo/tikxml
-- [ ] Add to collection
+- [x] Add to collection
   - PUT /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;c410a773-c6eb-4bc0-9df8-042fe6645c63?client=example.app-0.4.7
+  - [ ] Do not crash on 401 or other exceptions
+    - [ ] fail snackbar
+    - [ ] show a snackbar saying whether it succeeded or it was already part of it
 - [ ] Delete from collection
   - DELETE /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;?client=example.app-0.4.7
   - You may submit up to ~400 entities in a single request, separated by a semicolon (;)
