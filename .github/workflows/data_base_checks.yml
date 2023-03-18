@@ -6,7 +6,7 @@ on:
       - ".github/actions/**"
       - ".github/workflows/data_base_checks.yml"
       - "data/base/src/**"
-      - "data/base/build.gradle"
+      - "data/base/build.gradle.kts"
       - "*.gradle.kts"
 
 jobs:

@@ -9,6 +9,8 @@ plugins {
 }
 
 android {
+    namespace = "ly.david.mbjc"
+
     signingConfigs {
         create("release") {
 
@@ -87,7 +89,6 @@ android {
 //            }
 //        }
 //    }
-    namespace = "ly.david.mbjc"
 }
 
 dependencies {

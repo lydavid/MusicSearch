@@ -6,7 +6,7 @@ on:
       - ".github/actions/**"
       - ".github/workflows/data_coverart_checks.yml"
       - "data/coverart/src/**"
-      - "data/coverart/build.gradle"
+      - "data/coverart/build.gradle.kts"
       - "*.gradle.kts"
 
 jobs:
