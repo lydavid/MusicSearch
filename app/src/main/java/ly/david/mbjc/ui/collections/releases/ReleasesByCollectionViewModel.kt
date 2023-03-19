@@ -62,10 +62,6 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
         val collection = collectionDao.getCollection(resourceId)
-        // TODO: mbid should never be null right now
-        if (collection?.mbid == null) {
-            return releaseMusicBrainzModels.size
-        }
         collectionEntityDao.insertAll(
             releaseMusicBrainzModels.map { release ->
                 CollectionEntityRoomModel(

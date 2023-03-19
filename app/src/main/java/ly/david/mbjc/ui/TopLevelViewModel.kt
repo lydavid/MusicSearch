@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -100,7 +101,7 @@ internal class TopLevelViewModel @Inject constructor(
         this.entity.value = entity
     }
 
-    fun addToCollection(collectionId: Long, entityId: String) {
+    fun addToCollection(collectionId: String, entityId: String) {
         viewModelScope.launch {
             collectionEntityDao.withTransaction {
                 val insertedOneEntry = collectionEntityDao.insert(
@@ -120,10 +121,9 @@ internal class TopLevelViewModel @Inject constructor(
                 //      Could have a "Remote" and "Local" filter pills at the top
                 if (insertedOneEntry != INSERTION_FAILED_DUE_TO_CONFLICT) {
                     val collection = collectionDao.getCollection(collectionId)
-                    val collectionMBid = collection.mbid
-                    if (collectionMBid != null) {
+                    if (collection.isRemote) {
                         musicBrainzApiService.uploadToCollection(
-                            collectionId = collectionMBid,
+                            collectionId = collectionId,
                             resourceUriPlural = entity.value.resourceUriPlural,
                             mbids = entityId
                         )
@@ -140,6 +140,7 @@ internal class TopLevelViewModel @Inject constructor(
         viewModelScope.launch {
             collectionDao.insert(
                 CollectionRoomModel(
+                    id = UUID.randomUUID().toString(),
                     name = name,
                     entity = entity
                 )

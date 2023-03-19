@@ -39,7 +39,7 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
     @Query(
         """
         DELETE FROM collection 
-        WHERE mbid IS NOT NULL
+        WHERE is_remote
         """
     )
     abstract suspend fun deleteMusicBrainzCollections()
@@ -51,14 +51,5 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
         WHERE id = :id
     """
     )
-    abstract suspend fun getCollection(id: Long): CollectionRoomModel
-
-    @Query(
-        """
-        SELECT * 
-        FROM collection
-        WHERE mbid = :mbid
-    """
-    )
-    abstract suspend fun getCollection(mbid: String): CollectionRoomModel?
+    abstract suspend fun getCollection(id: String): CollectionRoomModel
 }

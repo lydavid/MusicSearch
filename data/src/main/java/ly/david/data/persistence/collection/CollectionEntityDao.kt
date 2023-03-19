@@ -20,7 +20,7 @@ abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>() {
             INNER JOIN collection c ON c.id = ce.id
             LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-            WHERE c.mbid = :collectionId
+            WHERE c.id = :collectionId
         """
 
         private const val SELECT_RELEASES_BY_COLLECTION = """

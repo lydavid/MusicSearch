@@ -12,19 +12,18 @@ import ly.david.data.persistence.RoomModel
     tableName = "collection"
 )
 data class CollectionRoomModel(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
-    @ColumnInfo(name = "mbid") val mbid: String? = null,
-    @ColumnInfo(name = "is_remote", defaultValue = "false") val isRemote: Boolean = false,
+    @PrimaryKey @ColumnInfo(name = "id") val id: String,
+    @ColumnInfo(name = "is_remote") val isRemote: Boolean = false,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "entity") val entity: MusicBrainzResource,
     @ColumnInfo(name = "type") val type: String? = null,
-    @ColumnInfo(name = "type-id") val typeId: String? = null,
-    @ColumnInfo(name = "entity-count", defaultValue = "0") val entityCount: Int = 0,
+    @ColumnInfo(name = "type_id") val typeId: String? = null,
+    @ColumnInfo(name = "entity_count") val entityCount: Int = 0,
 ): RoomModel
 
 fun CollectionMusicBrainzModel.toCollectionRoomModel(): CollectionRoomModel {
     return CollectionRoomModel(
-        mbid = id,
+        id = id,
         name = name,
         entity = entity,
         type = type,

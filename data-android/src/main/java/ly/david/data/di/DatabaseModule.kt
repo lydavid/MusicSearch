@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.persistence.Migrations.ADD_FK_TO_RELEASES_RELEASE_GROUPS
 import ly.david.data.persistence.Migrations.ADD_UUID_TO_RELEASE_PATH_FOR_CONSISTENCY
+import ly.david.data.persistence.Migrations.CHANGE_COLLECTION_PRIMARY_KEY_TO_UUID
 import ly.david.data.persistence.Migrations.CHANGE_LOOKUP_HISTORY_PK
 import ly.david.data.persistence.Migrations.MIGRATION_10_11
 import ly.david.data.persistence.Migrations.MIGRATION_29_30
@@ -52,6 +53,7 @@ object DatabaseModule {
             .addMigrations(ADD_UUID_TO_RELEASE_PATH_FOR_CONSISTENCY)
             .addMigrations(UPDATE_IS_REMOTE)
             .addMigrations(SET_RANDOM_UUID)
+            .addMigrations(CHANGE_COLLECTION_PRIMARY_KEY_TO_UUID)
             .fallbackToDestructiveMigration()
             .build()
     }

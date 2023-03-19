@@ -80,7 +80,7 @@ internal fun CollectionListScaffold(
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collectionListItemModel,
-                        onClick = { onCollectionClick(mbid ?: id) }
+                        onClick = { onCollectionClick(id) }
                     )
                 }
                 else -> {

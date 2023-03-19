@@ -83,7 +83,6 @@ internal fun TopLevelScaffold(
         )
     }
 
-    // TODO: bottom sheet seems to crash after switching between portrait and landscape then back to portrait
     if (openBottomSheet) {
         CollectionBottomSheet(
             bottomSheetState = bottomSheetState,

@@ -36,7 +36,7 @@ internal fun CollectionBottomSheet(
     collections: LazyPagingItems<CollectionListItemModel>,
     onDismiss: () -> Unit,
     onCreateCollectionClick: () -> Unit,
-    onAddToCollection: suspend (collectionId: Long) -> Unit
+    onAddToCollection: suspend (collectionId: String) -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -72,7 +72,7 @@ internal fun CollectionBottomSheet(
                             collection = collection,
                             onClick = {
                                 scope.launch {
-                                    onAddToCollection(collection.id.toLong())
+                                    onAddToCollection(collection.id)
                                     bottomSheetState.hide()
                                 }.invokeOnCompletion {
                                     if (!bottomSheetState.isVisible) {

@@ -5,7 +5,6 @@ import ly.david.data.persistence.collection.CollectionWithEntities
 
 data class CollectionListItemModel(
     override val id: String,
-    val mbid: String? = null,
     val isRemote: Boolean,
     val name: String,
     val description: String = "",
@@ -16,8 +15,7 @@ data class CollectionListItemModel(
 
 fun CollectionWithEntities.toCollectionListItemModel() =
     CollectionListItemModel(
-        id = collection.id.toString(),
-        mbid = collection.mbid,
+        id = collection.id,
         isRemote = collection.isRemote,
         name = collection.name,
         entity = collection.entity,

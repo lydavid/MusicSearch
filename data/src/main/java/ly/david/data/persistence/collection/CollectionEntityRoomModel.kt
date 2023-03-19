@@ -19,11 +19,8 @@ import androidx.room.ForeignKey
 )
 data class CollectionEntityRoomModel(
     @ColumnInfo(name = "id")
-    val id: Long,
+    val id: String,
 
     @ColumnInfo(name = "entity_id")
-    val entityId: String,
-
-    @ColumnInfo(name = "mbid")
-    val mbid: String? = null,
+    val entityId: String
 )

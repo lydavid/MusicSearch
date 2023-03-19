@@ -77,8 +77,7 @@ private fun Preview() {
         Surface {
             CollectionListItem(
                 collection = CollectionListItemModel(
-                    id = "0",
-                    mbid = "abc123",
+                    id = "3048448c-0605-494a-9e9f-c1a0521906f1",
                     isRemote = true,
                     name = "My collection with a very long title",
                     description = "Some songs",
