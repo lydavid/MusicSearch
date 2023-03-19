@@ -356,7 +356,7 @@ internal object Migrations {
         }
     }
 
-    val SET_RANDOM_UUID = object : Migration(99, 100) {
+    val SET_RANDOM_UUID = object : Migration(101, 102) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.query("SELECT id FROM collection").use { cursor ->
                 while (cursor.moveToNext()) {

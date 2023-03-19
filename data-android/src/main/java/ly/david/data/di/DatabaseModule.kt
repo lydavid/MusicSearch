@@ -20,6 +20,7 @@ import ly.david.data.persistence.Migrations.MOVE_COVER_ART_URL_TO_RELEASES
 import ly.david.data.persistence.Migrations.MOVE_RELEASE_GROUP_ID_OUT_OF_RELEASE
 import ly.david.data.persistence.Migrations.REMOVE_LEADING_CAA_PATH
 import ly.david.data.persistence.Migrations.REMOVE_LEADING_CAA_PATH_FOR_RELEASE_GROUP
+import ly.david.data.persistence.Migrations.SET_RANDOM_UUID
 import ly.david.data.persistence.Migrations.TRIM_250_JPG_FOR_RELEASE
 import ly.david.data.persistence.Migrations.TRIM_250_JPG_FOR_RELEASE_GROUP
 import ly.david.data.persistence.Migrations.UPDATE_IS_REMOTE
@@ -50,6 +51,7 @@ object DatabaseModule {
             .addMigrations(TRIM_250_JPG_FOR_RELEASE)
             .addMigrations(ADD_UUID_TO_RELEASE_PATH_FOR_CONSISTENCY)
             .addMigrations(UPDATE_IS_REMOTE)
+            .addMigrations(SET_RANDOM_UUID)
             .fallbackToDestructiveMigration()
             .build()
     }

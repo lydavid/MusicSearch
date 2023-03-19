@@ -24,6 +24,6 @@ data class CollectionEntityRoomModel(
     @ColumnInfo(name = "entity_id")
     val entityId: String,
 
-//    @ColumnInfo(name = "mbid")
-//    val mbid: String? = null,
+    @ColumnInfo(name = "mbid")
+    val mbid: String? = null,
 )

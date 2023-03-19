@@ -42,7 +42,7 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
-const val DATABASE_VERSION = 101
+const val DATABASE_VERSION = 102
 
 @Database(
     version = DATABASE_VERSION,
