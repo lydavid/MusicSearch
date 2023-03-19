@@ -1,79 +1,54 @@
 package ly.david.mbjc.ui.releasegroup.releases
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
-import ly.david.data.persistence.release.toRoomModel
-import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
-import ly.david.mbjc.ui.common.paging.IPagedList
+import ly.david.mbjc.ui.common.ReleasesByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class ReleasesByReleaseGroupViewModel @Inject constructor(
-    private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val releaseDao: ReleaseDao,
-    private val relationDao: RelationDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
-) : ViewModel(),
-    IPagedList<ReleaseListItemModel> by pagedList,
-    BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
+    private val relationDao: RelationDao,
+    pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
+    releaseDao: ReleaseDao,
+) : ReleasesByEntityViewModel(
+    relationDao = relationDao,
+    releaseDao = releaseDao,
+    pagedList = pagedList
+) {
 
-    init {
-        pagedList.scope = viewModelScope
-        pagedList.useCase = this
+    override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
+        return musicBrainzApiService.browseReleasesByReleaseGroup(
+            releaseGroupId = entityId,
+            offset = offset
+        )
     }
 
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByReleaseGroup(
-            releaseGroupId = resourceId,
-            offset = nextOffset
-        )
-
-        if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.RELEASE,
-                    localCount = response.releases.size,
-                    remoteCount = response.count
-                )
-            )
-        } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
-        }
-
-        val releaseMusicBrainzModels = response.releases
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
+    override suspend fun insertAllLinkingModels(
+        entityId: String,
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+    ) {
         releaseReleaseGroupDao.insertAll(
             releaseMusicBrainzModels.map { release ->
                 ReleaseReleaseGroup(
                     releaseId = release.id,
-                    releaseGroupId = resourceId
+                    releaseGroupId = entityId
                 )
             }
         )
-
-        return releaseMusicBrainzModels.size
     }
-
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
-
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         releaseReleaseGroupDao.withTransaction {
@@ -96,9 +71,5 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
-    }
-
-    override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
-        return roomModel.toReleaseListItemModel()
     }
 }

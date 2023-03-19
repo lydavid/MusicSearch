@@ -60,6 +60,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
     //  https://issuetracker.google.com/issues/248274004
     //  Fixed in: androidx.compose.material:material:1.4.0-alpha03
     //  Pulling down doesn't guarantee a refresh. Let's just wait for next release.
+    //  Not available in M3: https://issuetracker.google.com/issues/261760718
 //    fun refresh() = refreshScope.launch {
 //        refreshing = true
 //        lazyPagingItems.refresh()
@@ -101,6 +102,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
                 // TODO: cannot refresh
                 //  also there should be a difference between 0 out of 0, and 0 out of 1 found
                 //  the latter should offer a retry button
+
                 FullScreenText(noResultsText)
             }
             else -> {

@@ -1,79 +1,54 @@
 package ly.david.mbjc.ui.artist.releases
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.artist.release.ArtistRelease
 import ly.david.data.persistence.artist.release.ArtistReleaseDao
-import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
-import ly.david.data.persistence.release.toRoomModel
-import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
-import ly.david.mbjc.ui.common.paging.IPagedList
+import ly.david.mbjc.ui.common.ReleasesByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class ReleasesByArtistViewModel @Inject constructor(
-    private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val relationDao: RelationDao,
     private val artistReleaseDao: ArtistReleaseDao,
-    private val releaseDao: ReleaseDao,
-) : ViewModel(),
-    IPagedList<ReleaseListItemModel> by pagedList,
-    BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
+    private val relationDao: RelationDao,
+    releaseDao: ReleaseDao,
+    pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
+) : ReleasesByEntityViewModel(
+    relationDao = relationDao,
+    releaseDao = releaseDao,
+    pagedList = pagedList
+) {
 
-    init {
-        pagedList.scope = viewModelScope
-        pagedList.useCase = this
+    override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
+        return musicBrainzApiService.browseReleasesByArtist(
+            artistId = entityId,
+            offset = offset
+        )
     }
 
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByArtist(
-            artistId = resourceId,
-            offset = nextOffset
-        )
-
-        if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.RELEASE,
-                    localCount = response.releases.size,
-                    remoteCount = response.count
-                )
-            )
-        } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
-        }
-
-        val releaseMusicBrainzModels = response.releases
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
+    override suspend fun insertAllLinkingModels(
+        entityId: String,
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+    ) {
         artistReleaseDao.insertAll(
             releaseMusicBrainzModels.map { release ->
                 ArtistRelease(
-                    artistId = resourceId,
+                    artistId = entityId,
                     releaseId = release.id
                 )
             }
         )
-
-        return releaseMusicBrainzModels.size
     }
-
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
-
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         artistReleaseDao.withTransaction {
@@ -96,10 +71,6 @@ internal class ReleasesByArtistViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
-    }
-
-    override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
-        return roomModel.toReleaseListItemModel()
     }
 
     // TODO: ideal for selecting labels. though where would those labels be shown?

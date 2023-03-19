@@ -12,7 +12,6 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.collections.releases.ReleasesByCollectionViewModel
 import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 
 @Composable
@@ -25,7 +24,7 @@ internal fun ReleasesByAreaScreen(
     releasesLazyListState: LazyListState = rememberLazyListState(),
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
-    viewModel: ReleasesByCollectionViewModel = hiltViewModel(),
+    viewModel: ReleasesByAreaViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {
         viewModel.loadPagedResources(areaId)
