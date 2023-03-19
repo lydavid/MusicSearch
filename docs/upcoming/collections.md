@@ -40,6 +40,8 @@ Search `collectableResources` to find all the entities that can be collected.
       - out of scope
   - [x] Insert all collections into DB (this is just the info about each collection, not its content)
 - [ ] On clicking a MB collection, query for its content from MB
+  - [ ] Start off with releases by collection
+    - [ ] cover art
   - [ ] Insert into DB
 - What happens when the user logs out?
   - [x] Local collections should remain

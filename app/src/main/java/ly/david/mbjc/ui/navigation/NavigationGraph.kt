@@ -22,7 +22,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
-import ly.david.mbjc.ui.collections.CollectionScaffold
+import ly.david.mbjc.ui.collections.MusicBrainzCollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
@@ -314,12 +314,10 @@ internal fun NavigationGraph(
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
 
-            CollectionScaffold(
+            MusicBrainzCollectionScaffold(
                 collectionId = collectionId,
                 modifier = modifier,
-                onEntityClick = { entity, id ->
-                    onLookupEntityClick(entity, id, null)
-                }
+                onItemClick = onLookupEntityClick
             )
         }
 

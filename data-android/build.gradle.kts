@@ -15,6 +15,11 @@ android {
                 arg("room.schemaLocation", "$projectDir/schemas")
             }
         }
+
+        // Need this or else we won't be able to compile androidTest for this module
+        manifestPlaceholders += mapOf(
+            "appAuthRedirectScheme" to "",
+        )
     }
 
     buildTypes {

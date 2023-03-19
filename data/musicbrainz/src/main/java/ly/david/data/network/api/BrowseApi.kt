@@ -56,6 +56,13 @@ interface BrowseApi {
     ): BrowseReleasesResponse
 
     @GET("release")
+    suspend fun browseReleasesByCollection(
+        @Query("collection") collectionId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0
+    ): BrowseReleasesResponse
+
+    @GET("release")
     suspend fun browseReleasesByLabel(
         @Query("label") labelId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,

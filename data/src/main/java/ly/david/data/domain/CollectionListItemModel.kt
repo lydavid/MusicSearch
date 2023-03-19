@@ -5,7 +5,7 @@ import ly.david.data.persistence.collection.CollectionWithEntities
 
 data class CollectionListItemModel(
     override val id: String,
-    val isRemote: Boolean = false,
+    val mbid: String? = null,
     val name: String,
     val description: String = "",
     val entity: MusicBrainzResource,
@@ -13,10 +13,12 @@ data class CollectionListItemModel(
     val entityIds: List<String> = listOf()
 ) : ListItemModel()
 
+fun CollectionListItemModel.isRemote() = mbid != null
+
 fun CollectionWithEntities.toCollectionListItemModel() =
     CollectionListItemModel(
         id = collection.id.toString(),
-        isRemote = collection.mbid != null,
+        mbid = collection.mbid,
         name = collection.name,
         entity = collection.entity,
         entityCount = collection.entityCount,

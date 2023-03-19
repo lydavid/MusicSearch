@@ -16,7 +16,7 @@ import ly.david.mbjc.ui.common.paging.ReleasesListScreen
 
 @Composable
 internal fun ReleasesByCollectionScreen(
-    artistId: String,
+    collectionId: String,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     releasesLazyListState: LazyListState = rememberLazyListState(),
@@ -27,8 +27,8 @@ internal fun ReleasesByCollectionScreen(
     showMoreInfo: Boolean,
     viewModel: ReleasesByCollectionViewModel = hiltViewModel(),
 ) {
-    LaunchedEffect(key1 = artistId) {
-        viewModel.loadPagedResources(artistId)
+    LaunchedEffect(key1 = collectionId) {
+        viewModel.loadPagedResources(collectionId)
         onPagedReleasesFlowChange(viewModel.pagedResources)
     }
     viewModel.updateQuery(filterText)

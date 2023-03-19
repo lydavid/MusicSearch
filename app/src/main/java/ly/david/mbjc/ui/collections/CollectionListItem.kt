@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.domain.CollectionListItemModel
+import ly.david.data.domain.isRemote
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
@@ -54,7 +55,7 @@ internal fun CollectionListItem(
         },
         trailingContent = {
             Row {
-                if (collection.isRemote) {
+                if (collection.isRemote()) {
                     Icon(
                         modifier = Modifier.padding(end = 4.dp),
                         imageVector = Icons.Outlined.Cloud,
@@ -78,10 +79,10 @@ private fun Preview() {
             CollectionListItem(
                 collection = CollectionListItemModel(
                     id = "0",
+                    mbid = "abc123",
                     name = "My collection with a very long title",
                     description = "Some songs",
                     entity = MusicBrainzResource.RECORDING,
-                    isRemote = true,
                     entityCount = 9999,
                     entityIds = listOf(
                         "1b1e4b65-9b1a-48cd-8e3a-b4824f15bf0c",

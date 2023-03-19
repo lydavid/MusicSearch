@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.navigation.Destination
+import ly.david.data.persistence.DATABASE_VERSION
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
@@ -20,6 +21,7 @@ fun DevSettingsSection(
 
         // Bump this by searching for `versionCode`
         TextWithHeading(heading = "Internal version", text = BuildConfig.VERSION_CODE.toString())
+        TextWithHeading(heading = "Database version", text = "$DATABASE_VERSION")
 
         Text(
             modifier = Modifier

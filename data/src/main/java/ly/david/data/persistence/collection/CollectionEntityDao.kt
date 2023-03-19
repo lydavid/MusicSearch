@@ -20,7 +20,7 @@ abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>() {
             INNER JOIN collection c ON c.id = ce.id
             LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-            WHERE c.id = :collectionId
+            WHERE c.mbid = :collectionId
         """
 
         private const val SELECT_RELEASES_BY_COLLECTION = """
@@ -81,7 +81,7 @@ abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesByCollection(collectionId: Long): PagingSource<Int, ReleaseForListItem>
+    abstract fun getReleasesByCollection(collectionId: String): PagingSource<Int, ReleaseForListItem>
 
     @Transaction
     @Query(
@@ -91,8 +91,8 @@ abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesByArtistFiltered(
-        collectionId: Long,
+    abstract fun getReleasesByCollectionFiltered(
+        collectionId: String,
         query: String
     ): PagingSource<Int, ReleaseForListItem>
 }

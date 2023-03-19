@@ -9,8 +9,9 @@ import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.artist.release.ArtistRelease
-import ly.david.data.persistence.artist.release.ArtistReleaseDao
+import ly.david.data.persistence.collection.CollectionDao
+import ly.david.data.persistence.collection.CollectionEntityDao
+import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
@@ -20,14 +21,13 @@ import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
 
-// TODO: will we need one set of these screen/VM for every entity by collection?
-//  as long as these entities have their own tables, it seems like we will...
 @HiltViewModel
 internal class ReleasesByCollectionViewModel @Inject constructor(
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val relationDao: RelationDao,
-    private val artistReleaseDao: ArtistReleaseDao,
+    private val collectionDao: CollectionDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val releaseDao: ReleaseDao,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
@@ -38,9 +38,11 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
         pagedList.useCase = this
     }
 
+    // TODO: this assumes our collection will always query from MB...
+    //  this won't work for local collections where its id is just a long rather than string UUID
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleasesByArtist(
-            artistId = resourceId,
+        val response = musicBrainzApiService.browseReleasesByCollection(
+            collectionId = resourceId,
             offset = nextOffset
         )
 
@@ -59,11 +61,16 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
 
         val releaseMusicBrainzModels = response.releases
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        artistReleaseDao.insertAll(
+        val collection = collectionDao.getCollection(resourceId)
+        // TODO: mbid should never be null right now
+        if (collection?.mbid == null) {
+            return releaseMusicBrainzModels.size
+        }
+        collectionEntityDao.insertAll(
             releaseMusicBrainzModels.map { release ->
-                ArtistRelease(
-                    artistId = resourceId,
-                    releaseId = release.id
+                CollectionEntityRoomModel(
+                    id = collection.id,
+                    entityId = release.id
                 )
             }
         )
@@ -78,11 +85,11 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
         relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        artistReleaseDao.withTransaction {
-            artistReleaseDao.deleteReleasesByArtist(resourceId)
-            artistReleaseDao.deleteArtistReleaseLinks(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
-        }
+//        collectionEntityDao.withTransaction {
+//            collectionEntityDao.deleteReleasesByArtist(resourceId)
+//            collectionEntityDao.deleteArtistReleaseLinks(resourceId)
+//            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+//        }
     }
 
     override fun getLinkedResourcesPagingSource(
@@ -90,11 +97,11 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
-            artistReleaseDao.getReleasesByArtist(resourceId)
+            collectionEntityDao.getReleasesByCollection(resourceId)
         }
         else -> {
-            artistReleaseDao.getReleasesByArtistFiltered(
-                artistId = resourceId,
+            collectionEntityDao.getReleasesByCollectionFiltered(
+                collectionId = resourceId,
                 query = "%$query%"
             )
         }
