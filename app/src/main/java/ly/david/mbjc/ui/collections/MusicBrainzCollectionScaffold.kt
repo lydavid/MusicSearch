@@ -44,7 +44,7 @@ internal fun MusicBrainzCollectionScaffold(
         collectionId = collectionId,
         filterText = "",
         releasesLazyPagingItems = releasesLazyPagingItems,
-        modifier = Modifier
+        modifier = modifier
 //            .padding(innerPadding)
             .fillMaxSize(),
 //            .nestedScroll(scrollBehavior.nestedScrollConnection),

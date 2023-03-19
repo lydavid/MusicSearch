@@ -24,6 +24,7 @@ data class CollectionRoomModel(
 fun CollectionMusicBrainzModel.toCollectionRoomModel(): CollectionRoomModel {
     return CollectionRoomModel(
         id = id,
+        isRemote = true,
         name = name,
         entity = entity,
         type = type,
