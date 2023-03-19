@@ -216,4 +216,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     ) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun browseReleasesByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseReleasesResponse {
+        TODO("Not yet implemented")
+    }
 }
