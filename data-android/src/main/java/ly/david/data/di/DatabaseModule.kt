@@ -22,6 +22,7 @@ import ly.david.data.persistence.Migrations.REMOVE_LEADING_CAA_PATH
 import ly.david.data.persistence.Migrations.REMOVE_LEADING_CAA_PATH_FOR_RELEASE_GROUP
 import ly.david.data.persistence.Migrations.TRIM_250_JPG_FOR_RELEASE
 import ly.david.data.persistence.Migrations.TRIM_250_JPG_FOR_RELEASE_GROUP
+import ly.david.data.persistence.Migrations.UPDATE_IS_REMOTE
 import ly.david.data.persistence.MusicBrainzDatabase
 import ly.david.data.persistence.MusicBrainzRoomDatabase
 
@@ -48,6 +49,7 @@ object DatabaseModule {
             .addMigrations(TRIM_250_JPG_FOR_RELEASE_GROUP)
             .addMigrations(TRIM_250_JPG_FOR_RELEASE)
             .addMigrations(ADD_UUID_TO_RELEASE_PATH_FOR_CONSISTENCY)
+            .addMigrations(UPDATE_IS_REMOTE)
             .fallbackToDestructiveMigration()
             .build()
     }

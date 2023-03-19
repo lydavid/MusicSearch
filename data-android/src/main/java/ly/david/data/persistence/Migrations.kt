@@ -7,6 +7,7 @@ import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import java.util.UUID
 
 internal object Migrations {
 
@@ -337,4 +338,94 @@ internal object Migrations {
 
     @DeleteColumn(tableName = "release_group", columnName = "has_cover_art")
     class DeleteHasCoverArtFromReleaseGroup : AutoMigrationSpec
+
+    val UPDATE_IS_REMOTE = object : Migration(100, 101) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            // ALTER TABLE doesn't work, have to use auto migration to add columns
+//            database.query(
+//                """
+//                ALTER TABLE collection ADD COLUMN is_remote INTEGER NOT NULL DEFAULT 0
+//            """
+//            )
+
+            database.query(
+                """
+                UPDATE collection SET is_remote = (CASE WHEN mbid IS NULL THEN 0 ELSE 1 END)
+            """
+            )
+        }
+    }
+
+    val SET_RANDOM_UUID = object : Migration(99, 100) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.query("SELECT id FROM collection").use { cursor ->
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(0)
+                    val uuid = UUID.randomUUID().toString()
+                    database.execSQL("UPDATE collection SET mbid = '$uuid' WHERE id = $id")
+                }
+            }
+
+            database.execSQL("ALTER TABLE collection_entity ADD COLUMN mbid TEXT")
+
+            database.execSQL(
+                """
+                UPDATE collection_entity 
+                SET mbid = (SELECT mbid FROM collection WHERE collection.id = collection_entity.id)
+                """
+            )
+        }
+    }
+
+    val ADD_MBID_TO_COLLECTION_ENTITY = object : Migration(101, 102) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+
+//            database.execSQL(
+//                """
+//                    CREATE TABLE IF NOT EXISTS new_collection
+//                    (`id` TEXT NOT NULL,
+//                    `name` TEXT NOT NULL,
+//                    `entity` TEXT NOT NULL,
+//                    `type` TEXT,
+//                    `type-id` TEXT,
+//                    `entity-count` INTEGER NOT NULL,
+//                    PRIMARY KEY(`id`))
+//                    """
+//            )
+
+//            database.execSQL(
+//                """
+//                    INSERT INTO new_collection (id, name, entity, type, type-id, entity-count)
+//                    SELECT mbid, name, entity, type, type-id, entity-count
+//                    FROM collection
+//                """
+//            )
+//
+//
+//            database.execSQL(
+//                """
+//                    CREATE TABLE IF NOT EXISTS new_collection_entity
+//                     (`id` TEXT NOT NULL,
+//                     `entity_id` TEXT NOT NULL,
+//                     PRIMARY KEY(`id`, `entity_id`),
+//                     FOREIGN KEY(`id`) REFERENCES `collection`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )
+//                """
+//            )
+//
+//            database.execSQL("ALTER TABLE collection_entity ADD COLUMN mbid TEXT")
+//            database.execSQL("UPDATE collection_entity SET mbid = (SELECT mbid FROM new_collection WHERE new_collection.id = collection_entity.id)")
+//
+//            database.execSQL(
+//                """
+//                DROP TABLE collection
+//            """
+//            )
+//
+//            database.execSQL(
+//                """
+//                ALTER TABLE new_collection RENAME TO collection
+//            """
+//            )
+        }
+    }
 }

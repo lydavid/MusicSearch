@@ -14,6 +14,7 @@ import ly.david.data.persistence.RoomModel
 data class CollectionRoomModel(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "mbid") val mbid: String? = null,
+    @ColumnInfo(name = "is_remote", defaultValue = "false") val isRemote: Boolean = false,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "entity") val entity: MusicBrainzResource,
     @ColumnInfo(name = "type") val type: String? = null,

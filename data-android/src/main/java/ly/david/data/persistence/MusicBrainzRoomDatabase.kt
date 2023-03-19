@@ -42,8 +42,10 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
+const val DATABASE_VERSION = 101
+
 @Database(
-    version = 99,
+    version = DATABASE_VERSION,
     entities = [
         // Main tables
         ArtistRoomModel::class, ReleaseGroupRoomModel::class, ReleaseRoomModel::class,
@@ -170,6 +172,7 @@ import ly.david.data.persistence.work.WorkRoomModel
         AutoMigration(from = 96, to = 97),
         AutoMigration(from = 97, to = 98),
         AutoMigration(from = 98, to = 99),
+        AutoMigration(from = 99, to = 100),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
