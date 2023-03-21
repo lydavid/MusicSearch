@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.zIndex
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -120,75 +122,71 @@ private fun TopAppBarWithFilterInternal(
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    // TODO: expand out from the icon
-    AnimatedVisibility(
-        visible = isFilterMode,
-        enter = expandVertically(),
-        exit = shrinkVertically { fullHeight -> fullHeight / 2 }
-    ) {
+    Box {
+        AnimatedVisibility(
+            visible = isFilterMode,
+            modifier = Modifier.zIndex(1f),
+            enter = expandVertically(),
+            exit = shrinkVertically()
+        ) {
 
-        // TODO: when returning, focus is in front of search text
-        //  most apps seems to not bring up the keyboard when returning
-        LaunchedEffect(Unit) {
-            // TODO: only do them when first clicking on search icon
-            focusRequester.requestFocus()
-        }
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+            }
 
-        Surface {
-            Column {
-                TextField(
-                    modifier = Modifier
-                        .focusRequester(focusRequester)
-                        .fillMaxWidth(),
-                    maxLines = 1,
-                    singleLine = true,
-                    colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
-                    ),
-                    leadingIcon = {
-                        IconButton(onClick = {
-                            onFilterModeChange(false)
-                            onFilterTextChange("")
-                        }) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
+            Surface {
+                Column {
+                    TextField(
+                        modifier = Modifier
+                            .focusRequester(focusRequester)
+                            .fillMaxWidth(),
+                        maxLines = 1,
+                        singleLine = true,
+                        colors = TextFieldDefaults.textFieldColors(
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent
+                        ),
+                        leadingIcon = {
+                            IconButton(onClick = {
+                                onFilterModeChange(false)
+                                onFilterTextChange("")
+                            }) {
+                                Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
+                            }
+                        },
+                        placeholder = { Text(stringResource(id = R.string.filter)) },
+                        trailingIcon = {
+                            if (filterText.isEmpty()) return@TextField
+                            IconButton(onClick = {
+                                onFilterTextChange("")
+                                focusRequester.requestFocus()
+                            }) {
+                                Icon(
+                                    Icons.Default.Clear,
+                                    contentDescription = stringResource(id = R.string.clear_filter)
+                                )
+                            }
+                        },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        keyboardActions = KeyboardActions(
+                            onSearch = {
+                                focusManager.clearFocus()
+                            }
+                        ),
+                        value = filterText,
+                        onValueChange = {
+                            onFilterTextChange(it)
                         }
-                    },
-                    placeholder = { Text(stringResource(id = R.string.filter)) },
-                    trailingIcon = {
-                        if (filterText.isEmpty()) return@TextField
-                        IconButton(onClick = {
-                            onFilterTextChange("")
-                            focusRequester.requestFocus()
-                        }) {
-                            Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_filter))
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            focusManager.clearFocus()
-                        }
-                    ),
-                    value = filterText,
-                    onValueChange = {
-                        onFilterTextChange(it)
-                    }
-                )
+                    )
 
-                // TODO: Filters
+                    // TODO: Filters
 
-                Divider()
+                    Divider()
+                }
             }
         }
-    }
 
-    AnimatedVisibility(
-        visible = !isFilterMode,
-        enter = expandVertically(),
-        exit = shrinkVertically()
-    ) {
         ScrollableTopAppBar(
             onBack = onBack,
             showBackButton = showBackButton,
