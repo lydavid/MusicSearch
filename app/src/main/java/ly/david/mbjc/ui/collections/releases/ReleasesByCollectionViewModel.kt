@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.ReleaseListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -19,7 +20,7 @@ import ly.david.mbjc.ui.common.paging.PagedList
 internal class ReleasesByCollectionViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val collectionEntityDao: CollectionEntityDao,
-    relationDao: RelationDao,
+    private val relationDao: RelationDao,
     releaseDao: ReleaseDao,
     pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
 ) : ReleasesByEntityViewModel(
@@ -51,11 +52,10 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
     }
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-//        collectionEntityDao.withTransaction {
-//            collectionEntityDao.deleteReleasesByArtist(resourceId)
-//            collectionEntityDao.deleteArtistReleaseLinks(resourceId)
-//            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
-//        }
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(

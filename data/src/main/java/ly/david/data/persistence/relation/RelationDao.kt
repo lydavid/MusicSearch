@@ -118,5 +118,15 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
     )
     abstract suspend fun deleteBrowseResourceCountByResource(resourceId: String, browseResource: MusicBrainzResource)
+
+    @Query(
+        """
+        DELETE FROM browse_resource_count
+        WHERE resource_id IN
+            (SELECT id FROM collection 
+            WHERE is_remote)
+        """
+    )
+    abstract suspend fun deleteAllBrowseResourceCountByRemoteCollections()
     // endregion
 }

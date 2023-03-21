@@ -106,9 +106,8 @@ internal class CollectionListViewModel @Inject constructor(
         if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return
 
         collectionDao.withTransaction {
-            // We do not delete collections who do not have a mbid because they only exist locally
+            relationDao.deleteAllBrowseResourceCountByRemoteCollections()
             collectionDao.deleteMusicBrainzCollections()
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.COLLECTION)
         }
     }
 

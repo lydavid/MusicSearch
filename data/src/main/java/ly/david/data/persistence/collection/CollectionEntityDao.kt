@@ -55,8 +55,8 @@ abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>() {
 //    )
 //    abstract suspend fun deleteReleasesByArtist(artistId: String)
 //
-//    @Query("DELETE FROM artist_release WHERE artist_id = :artistId")
-//    abstract suspend fun deleteArtistReleaseLinks(artistId: String)
+    @Query("DELETE FROM collection_entity WHERE id = :collectionId")
+    abstract suspend fun deleteCollectionEntityLinks(collectionId: String)
 
 //    @Query(
 //        """
