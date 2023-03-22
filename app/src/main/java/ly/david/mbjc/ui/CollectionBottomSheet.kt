@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.collections.CollectionListItem
 import ly.david.mbjc.ui.theme.TextStyles
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun CollectionBottomSheet(
     bottomSheetState: SheetState,
@@ -70,6 +71,7 @@ internal fun CollectionBottomSheet(
                     is CollectionListItemModel -> {
                         CollectionListItem(
                             collection = collection,
+                            modifier = Modifier.animateItemPlacement(),
                             onClick = {
                                 scope.launch {
                                     onAddToCollection(collection.id)

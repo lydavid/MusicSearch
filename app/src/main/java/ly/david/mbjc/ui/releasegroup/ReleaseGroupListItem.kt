@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,7 +29,6 @@ import ly.david.mbjc.ui.theme.getSubTextColor
  *
  * Type is not displayed because it's displayed as a separator.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ReleaseGroupListItem(
     releaseGroup: ReleaseGroupListItemModel,

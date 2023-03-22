@@ -1,15 +1,16 @@
 package ly.david.mbjc.ui.release.tracks
 
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.TrackListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.listitem.ThreeSectionListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.recording.RecordingListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -21,26 +22,27 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun TrackListItem(
     track: TrackListItemModel,
+    modifier: Modifier = Modifier,
 //    showTrackArtists: Boolean = false,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
-    ThreeSectionListItem(
-        onClick = { onRecordingClick(track.recordingId, track.title) },
-        startContent = {
-            Text(
-                text = track.number,
-                style = TextStyles.getCardBodyTextStyle()
-            )
-        },
-        startMainPadding = 16.dp,
-        mainContent = {
+    ListItem(
+        headlineText = {
             Text(
                 text = track.title,
                 style = TextStyles.getCardTitleTextStyle(),
             )
         },
-        endMainPadding = 4.dp,
-        endContent = {
+        modifier = modifier.clickable {
+            onRecordingClick(track.recordingId, track.title)
+        },
+        leadingContent = {
+            Text(
+                text = track.number,
+                style = TextStyles.getCardBodyTextStyle()
+            )
+        },
+        trailingContent = {
             Text(
                 text = track.length.toDisplayTime(),
                 style = TextStyles.getCardBodyTextStyle()

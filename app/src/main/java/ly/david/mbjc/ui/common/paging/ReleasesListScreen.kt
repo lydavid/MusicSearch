@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.common.paging
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -10,12 +11,12 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.coverart.GetReleaseCoverArtPath
+import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.coverart.GetReleaseCoverArtPath
 import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.mbjc.ui.release.ReleaseListItem
 import timber.log.Timber
 
@@ -28,6 +29,7 @@ internal class ReleasesListViewModel @Inject constructor(
         get() = releaseDao
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun ReleasesListScreen(
     modifier: Modifier = Modifier,
@@ -48,6 +50,7 @@ internal fun ReleasesListScreen(
             is ReleaseListItemModel -> {
                 ReleaseListItem(
                     release = releaseListItemModel,
+                    modifier = Modifier.animateItemPlacement(),
                     showMoreInfo = showMoreInfo,
                     requestForMissingCoverArtPath = {
                         try {

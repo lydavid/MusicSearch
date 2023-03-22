@@ -24,10 +24,12 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun PlaceListItem(
     place: PlaceListItemModel,
+    modifier: Modifier = Modifier,
     onPlaceClick: PlaceListItemModel.() -> Unit = {}
 ) {
     ClickableListItem(
         onClick = { onPlaceClick(place) },
+        modifier = modifier
     ) {
         Column(modifier = Modifier.padding(vertical = 16.dp)) {
             place.run {

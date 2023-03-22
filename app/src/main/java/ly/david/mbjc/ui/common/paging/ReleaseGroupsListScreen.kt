@@ -11,16 +11,17 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.coverart.GetReleaseGroupCoverArtPath
+import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
+import timber.log.Timber
 
 @HiltViewModel
 internal class ReleaseGroupsListViewModel @Inject constructor(
@@ -56,7 +57,7 @@ internal fun ReleaseGroupsListScreen(
                         try {
                             viewModel.getReleaseGroupCoverArtPathFromNetwork(releaseGroupId = listItemModel.id)
                         } catch (ex: Exception) {
-                            // Do nothing.
+                            Timber.e(ex)
                         }
                     }
                 ) {

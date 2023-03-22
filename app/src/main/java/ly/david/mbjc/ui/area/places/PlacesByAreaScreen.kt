@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.area.places
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -16,6 +17,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.place.PlaceListItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun PlacesByAreaScreen(
     areaId: String,
@@ -42,7 +44,10 @@ internal fun PlacesByAreaScreen(
     ) { placeListItemModel: PlaceListItemModel? ->
         when (placeListItemModel) {
             is PlaceListItemModel -> {
-                PlaceListItem(place = placeListItemModel) {
+                PlaceListItem(
+                    place = placeListItemModel,
+                    modifier = Modifier.animateItemPlacement(),
+                ) {
                     onPlaceClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
                 }
             }

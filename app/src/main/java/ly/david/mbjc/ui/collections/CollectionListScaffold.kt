@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.collections
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -30,7 +31,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 /**
  * Displays a list of all of your collections.
  */
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun CollectionListScaffold(
     modifier: Modifier = Modifier,
@@ -80,6 +81,7 @@ internal fun CollectionListScaffold(
                 is CollectionListItemModel -> {
                     CollectionListItem(
                         collection = collectionListItemModel,
+                        modifier = Modifier.animateItemPlacement(),
                         onClick = { onCollectionClick(id) }
                     )
                 }

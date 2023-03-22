@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.release.tracks
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -18,6 +19,7 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
  * Tracks are recordings that are part of a release. It includes reference to recording,
  * but some of its details might be different for a given release.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TracksInReleaseScreen(
     modifier: Modifier = Modifier,
@@ -36,6 +38,7 @@ internal fun TracksInReleaseScreen(
             is TrackListItemModel -> {
                 TrackListItem(
                     track = listItemModel,
+                    modifier = Modifier.animateItemPlacement(),
 //                            showTrackArtists = shouldShowTrackArtists,
                     onRecordingClick = onRecordingClick
                 )

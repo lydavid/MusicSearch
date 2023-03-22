@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.common.paging
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -10,6 +11,7 @@ import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.ui.recording.RecordingListItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun RecordingsListScreen(
     modifier: Modifier = Modifier,
@@ -26,7 +28,10 @@ internal fun RecordingsListScreen(
     ) { recordingListItemModel: RecordingListItemModel? ->
         when (recordingListItemModel) {
             is RecordingListItemModel -> {
-                RecordingListItem(recording = recordingListItemModel) {
+                RecordingListItem(
+                    recording = recordingListItemModel,
+                    modifier = Modifier.animateItemPlacement(),
+                ) {
                     onRecordingClick(id, getNameWithDisambiguation())
                 }
             }

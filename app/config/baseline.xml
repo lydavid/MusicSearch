@@ -77,7 +77,6 @@
     <ID>SwallowedException:PlaceScaffoldViewModel.kt$PlaceScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:RecordingScaffoldViewModel.kt$RecordingScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:ReleaseGroupScaffoldViewModel.kt$ReleaseGroupScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:ReleaseGroupsListScreen.kt$ex: Exception</ID>
     <ID>SwallowedException:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
