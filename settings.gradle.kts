@@ -15,7 +15,7 @@ dependencyResolutionManagement {
             version("coil", "2.3.0")
             version("compose-foundation", "1.4.0")
             version("compose-material", "1.4.0")
-            version("compose-material3", "1.1.0-alpha07")
+            version("compose-material3", "1.1.0-beta01")
             version("compose-ui", "1.4.0")
             version("hilt", "2.45")
             version("hilt-navigation", "1.0.0")
