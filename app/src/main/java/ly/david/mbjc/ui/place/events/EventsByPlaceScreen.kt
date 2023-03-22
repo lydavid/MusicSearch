@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.place.events
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -16,6 +17,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.event.EventListItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun EventsByPlaceScreen(
     placeId: String,
@@ -42,7 +44,10 @@ internal fun EventsByPlaceScreen(
     ) { eventListItemModel: EventListItemModel? ->
         when (eventListItemModel) {
             is EventListItemModel -> {
-                EventListItem(event = eventListItemModel) {
+                EventListItem(
+                    event = eventListItemModel,
+                    modifier = Modifier.animateItemPlacement(),
+                ) {
                     onEventClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
                 }
             }
