@@ -1,10 +1,5 @@
 package ly.david.data.common
 
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
 private const val YEAR_FIRST_INDEX = 0
 private const val YEAR_LAST_INDEX = 4
 
@@ -24,30 +19,6 @@ fun String.getYear(): String =
  * Cover Art Archive gives us urls with http.
  */
 fun String.useHttps(): String = replace("http://", "https://")
-
-private const val MUSIC_BRAINZ_DATE_FORMAT = "yyyy-MM-dd"
-private const val MUSIC_BRAINZ_YEAR_MONTH_FORMAT = "yyyy-MM-dd"
-private const val MUSIC_BRAINZ_YEAR_ONLY_FORMAT = "yyyy"
-
-// TODO: unused
-/**
- * Turns a MusicBrainz string date field to [Date] object.
- */
-fun String.toDate(): Date? {
-    return when {
-        isEmpty() -> null
-        else -> try {
-            val dateFormat = SimpleDateFormat(MUSIC_BRAINZ_DATE_FORMAT, Locale.getDefault())
-            dateFormat.parse(this)
-        } catch (ex: ParseException) {
-            val dateFormat = SimpleDateFormat(MUSIC_BRAINZ_YEAR_MONTH_FORMAT, Locale.getDefault())
-            dateFormat.parse(this)
-        } catch (ex: ParseException) {
-            val dateFormat = SimpleDateFormat(MUSIC_BRAINZ_YEAR_ONLY_FORMAT, Locale.getDefault())
-            dateFormat.parse(this)
-        }
-    }
-}
 
 inline fun String?.ifNotNullOrEmpty(block: (String) -> Unit) {
     if (!this.isNullOrEmpty()) {
