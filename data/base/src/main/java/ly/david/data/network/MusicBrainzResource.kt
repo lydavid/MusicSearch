@@ -137,7 +137,7 @@ val MusicBrainzResource.resourceUri: String
         MusicBrainzResource.INSTRUMENT -> RESOURCE_INSTRUMENT
         MusicBrainzResource.LABEL -> RESOURCE_LABEL
         MusicBrainzResource.PLACE -> RESOURCE_PLACE
-        MusicBrainzResource.RECORDING -> RESOURCE_COLLECTION
+        MusicBrainzResource.RECORDING -> RESOURCE_RECORDING
         MusicBrainzResource.RELEASE -> RESOURCE_RELEASE
         MusicBrainzResource.RELEASE_GROUP -> RESOURCE_RELEASE_GROUP
         MusicBrainzResource.SERIES -> RESOURCE_SERIES
@@ -158,7 +158,7 @@ val MusicBrainzResource.resourceUriPlural: String
         MusicBrainzResource.INSTRUMENT -> PLURAL_RESOURCE_INSTRUMENT
         MusicBrainzResource.LABEL -> PLURAL_RESOURCE_LABEL
         MusicBrainzResource.PLACE -> PLURAL_RESOURCE_PLACE
-        MusicBrainzResource.RECORDING -> PLURAL_RESOURCE_COLLECTION
+        MusicBrainzResource.RECORDING -> PLURAL_RESOURCE_RECORDING
         MusicBrainzResource.RELEASE -> PLURAL_RESOURCE_RELEASE
         MusicBrainzResource.RELEASE_GROUP -> PLURAL_RESOURCE_RELEASE_GROUP
         MusicBrainzResource.SERIES -> PLURAL_RESOURCE_SERIES

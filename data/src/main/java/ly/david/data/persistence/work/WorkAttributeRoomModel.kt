@@ -22,8 +22,7 @@ import ly.david.data.network.WorkAttributeMusicBrainzModel
 data class WorkAttributeRoomModel(
     @ColumnInfo(name = "work_id") val workId: String,
     @ColumnInfo(name = "type") override val type: String,
-    // TODO: underscore, but should it be in its own table? what will we use type_id for?
-    @ColumnInfo(name = "type-id") override val typeId: String,
+    @ColumnInfo(name = "type_id") override val typeId: String,
     @ColumnInfo(name = "value") override val value: String
 ) : WorkAttribute
 

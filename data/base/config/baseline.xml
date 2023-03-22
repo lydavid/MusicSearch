@@ -6,6 +6,5 @@
     <ID>MagicNumber:StringExt.kt$0x1F1E6</ID>
     <ID>MagicNumber:StringExt.kt$0x41</ID>
     <ID>ReturnCount:StringExt.kt$fun String.toFlagEmoji(): String</ID>
-    <ID>UnusedPrivateMember:MusicBrainzResource.kt$private const val PLURAL_RESOURCE_RECORDING = "recordings"</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -113,7 +113,5 @@
     <ID>UnstableCollections:StatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnusedPrivateMember:CollectionScaffold.kt$modifier: Modifier = Modifier</ID>
-    <ID>UnusedPrivateMember:CollectionScaffold.kt$onEntityClick: (entity: MusicBrainzResource, id: String) -&gt; Unit = { _, _ -&gt; }</ID>
   </CurrentIssues>
 </SmellBaseline>

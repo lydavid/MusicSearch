@@ -432,4 +432,23 @@ internal object Migrations {
             )
         }
     }
+
+    val CHANGE_LOOKUP_COLLECTION_TO_RECORDING = object : Migration(103, 104) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                UPDATE lookup_history SET resource = "recording" WHERE resource = "collection"
+            """
+            )
+
+            // If our schema doesn't change, no migration takes place,
+            // so even though we just want to update a column due to a bug,
+            // we will have to make a schema change as well
+            database.execSQL(
+                """
+                ALTER TABLE work_attribute RENAME COLUMN `type-id` TO `type_id`
+            """
+            )
+        }
+    }
 }
