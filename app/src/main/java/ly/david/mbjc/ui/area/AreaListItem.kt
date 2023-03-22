@@ -1,17 +1,17 @@
 package ly.david.mbjc.ui.area
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import ly.david.data.AreaType.COUNTRY
 import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.ifNotNull
@@ -22,7 +22,6 @@ import ly.david.data.domain.AreaListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.showReleases
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -34,28 +33,13 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun AreaListItem(
     area: AreaListItemModel,
+    modifier: Modifier = Modifier,
     showType: Boolean = true,
     onAreaClick: AreaListItemModel.() -> Unit = {}
 ) {
-    ClickableListItem(
-        onClick = { onAreaClick(area) },
-    ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-        ) {
-            val (mainSection, endSection) = createRefs()
-
-            Column(
-                modifier = Modifier
-                    .constrainAs(mainSection) {
-                        width = Dimension.fillToConstraints
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        end.linkTo(endSection.start)
-                    }
-            ) {
+    ListItem(
+        headlineText = {
+            Column {
                 // Misnomer here, but it's the same condition to show this tab and to show flags
                 val areaName = if (area.showReleases()) {
                     val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
@@ -87,22 +71,21 @@ internal fun AreaListItem(
                     )
                 }
             }
-
+        },
+        modifier = modifier.clickable {
+            onAreaClick(area)
+        },
+        trailingContent = {
             area.date.ifNotNullOrEmpty {
-                Text(
-                    text = it,
-                    style = TextStyles.getCardBodyTextStyle(),
-                    modifier = Modifier
-                        .constrainAs(endSection) {
-                            width = Dimension.wrapContent
-                            start.linkTo(mainSection.end, margin = 4.dp)
-                            top.linkTo(parent.top)
-                            end.linkTo(parent.end)
-                        }
-                )
+                Column(horizontalAlignment = Alignment.End) {
+                    Text(
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
             }
         }
-    }
+    )
 }
 
 // Cannot be private.

@@ -1,8 +1,9 @@
 package ly.david.mbjc.ui.instrument
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.InstrumentListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -22,43 +22,40 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun InstrumentListItem(
     instrument: InstrumentListItemModel,
+    modifier: Modifier = Modifier,
     onInstrumentClick: InstrumentListItemModel.() -> Unit = {}
 ) {
-    ClickableListItem(
-        onClick = { onInstrumentClick(instrument) },
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        ) {
-
-            instrument.run {
-                Text(
-                    text = name,
-                    style = TextStyles.getCardTitleTextStyle()
-                )
-
-                DisambiguationText(disambiguation = disambiguation)
-
-                type.ifNotNullOrEmpty {
+    ListItem(
+        headlineText = {
+            Column {
+                instrument.run {
                     Text(
-                        text = it,
-                        modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodyTextStyle(),
+                        text = name,
+                        style = TextStyles.getCardTitleTextStyle()
                     )
-                }
 
-                description.ifNotNullOrEmpty {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
+                    DisambiguationText(disambiguation = disambiguation)
+
+                    type.ifNotNullOrEmpty {
+                        Text(
+                            text = it,
+                            modifier = Modifier.padding(top = 4.dp),
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
+
+                    description.ifNotNullOrEmpty {
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = it,
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
                 }
             }
-        }
-    }
+        },
+        modifier = modifier.clickable { onInstrumentClick(instrument) },
+    )
 }
 
 // Cannot be private.

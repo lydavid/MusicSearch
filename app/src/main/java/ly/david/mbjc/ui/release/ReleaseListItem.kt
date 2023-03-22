@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,7 +35,6 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 //  with cover art loaded by default, we can prob hide the other info by default
 // TODO: we'll likely run into 429 when loading many images at once, not much we can do about that right now
 //  see: https://tickets.metabrainz.org/browse/LB-1139 and https://tickets.metabrainz.org/browse/CAA-141
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ReleaseListItem(
     release: ReleaseListItemModel,

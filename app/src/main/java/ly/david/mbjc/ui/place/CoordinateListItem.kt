@@ -2,11 +2,13 @@ package ly.david.mbjc.ui.place
 
 import android.content.Context
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +22,6 @@ import ly.david.data.Coordinates
 import ly.david.data.common.showMap
 import ly.david.data.formatForDisplay
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
@@ -28,28 +29,32 @@ import ly.david.mbjc.ui.theme.TextStyles
 internal fun CoordinateListItem(
     context: Context,
     coordinates: Coordinates,
+    modifier: Modifier = Modifier,
     label: String? = null
 ) {
 
     val text = coordinates.formatForDisplay() ?: return
 
-    ClickableListItem(onClick = {
-        context.showMap(coordinates, label)
-    }) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                modifier = Modifier.padding(end = 8.dp),
-                imageVector = Icons.Default.PinDrop,
-                contentDescription = stringResource(id = R.string.open_google_maps)
-            )
-            Text(
-                text = text,
-                style = TextStyles.getCardBodyTextStyle(),
-            )
+    ListItem(
+        headlineText = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.padding(end = 8.dp),
+                    imageVector = Icons.Default.PinDrop,
+                    contentDescription = stringResource(id = R.string.open_google_maps)
+                )
+                Text(
+                    text = text,
+                    style = TextStyles.getCardBodyTextStyle(),
+                )
+            }
+        },
+        modifier = modifier.clickable {
+            context.showMap(coordinates, label)
         }
-    }
+    )
 }
 
 @Preview
