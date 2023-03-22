@@ -11,9 +11,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.paging.ReleasesListScreen
+import ly.david.mbjc.ui.common.screen.ReleasesListScreen
 
 @Composable
 internal fun ReleasesByLabelScreen(

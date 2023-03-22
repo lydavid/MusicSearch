@@ -53,8 +53,6 @@
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
     <ID>MatchingDeclarationName:PreviewAnnotations.kt$DefaultPreviews</ID>
-    <ID>MatchingDeclarationName:ReleaseGroupsListScreen.kt$ReleaseGroupsListViewModel : ViewModelGetReleaseGroupCoverArtPath</ID>
-    <ID>MatchingDeclarationName:ReleasesListScreen.kt$ReleasesListViewModel : ViewModelGetReleaseCoverArtPath</ID>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
     <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>

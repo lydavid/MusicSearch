@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.mbjc.ui.common.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
@@ -7,30 +7,15 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.paging.compose.LazyPagingItems
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import ly.david.data.coverart.GetReleaseGroupCoverArtPath
-import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
-import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import timber.log.Timber
-
-@HiltViewModel
-internal class ReleaseGroupsListViewModel @Inject constructor(
-    override val coverArtArchiveApiService: CoverArtArchiveApiService,
-    private val releaseGroupDao: ReleaseGroupDao
-) : ViewModel(), GetReleaseGroupCoverArtPath {
-    override val updateReleaseGroupCoverArtDao: UpdateReleaseGroupCoverArtDao
-        get() = releaseGroupDao
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

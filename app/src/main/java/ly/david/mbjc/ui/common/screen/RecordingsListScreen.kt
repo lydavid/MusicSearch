@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.mbjc.ui.common.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.getNameWithDisambiguation
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.recording.RecordingListItem
 
 @OptIn(ExperimentalFoundationApi::class)
