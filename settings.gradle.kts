@@ -22,7 +22,7 @@ dependencyResolutionManagement {
             version("mockk", "1.13.4")
             version("moshi", "1.14.0")
             version("retrofit", "2.9.0")
-            version("room", "2.5.0")
+            version("room", "2.5.1")
 
             library("accompanist-swiperefresh", "com.google.accompanist", "accompanist-swiperefresh").versionRef("accompanist")
             library("accompanist-pager", "com.google.accompanist", "accompanist-pager").versionRef("accompanist")
