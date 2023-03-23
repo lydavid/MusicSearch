@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.releasegroup
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
@@ -161,14 +162,16 @@ internal fun ReleaseGroupScaffold(
             ReleaseGroupTab.RELEASES -> {
                 ReleasesByReleaseGroupScreen(
                     releaseGroupId = releaseGroupId,
-                    modifier = Modifier.padding(innerPadding),
+                    filterText = filterText,
+                    showMoreInfo = showMoreInfoInReleaseListItem,
                     snackbarHostState = snackbarHostState,
                     releasesLazyListState = releasesLazyListState,
                     releasesLazyPagingItems = releasesLazyPagingItems,
-                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
                     onReleaseClick = onItemClick,
-                    filterText = filterText,
-                    showMoreInfo = showMoreInfoInReleaseListItem
+                    onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                 )
             }
             ReleaseGroupTab.RELATIONSHIPS -> {

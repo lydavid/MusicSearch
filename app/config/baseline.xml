@@ -25,11 +25,6 @@
     <ID>ComposableParamOrder:ReleaseGroupStatsScreen.kt$ReleaseGroupStatsScreen</ID>
     <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByArtistScreen.kt$ReleasesByArtistScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByCollectionScreen.kt$ReleasesByCollectionScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByLabelScreen.kt$ReleasesByLabelScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByRecordingScreen.kt$ReleasesByRecordingScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByReleaseGroupScreen.kt$ReleasesByReleaseGroupScreen</ID>
     <ID>ComposableParamOrder:ReleasesListScreen.kt$ReleasesListScreen</ID>
     <ID>ComposableParamOrder:ScrollableTopAppBar.kt$ScrollableTopAppBar</ID>
     <ID>ComposableParamOrder:ScrollableTopAppBar.kt$TitleBar</ID>

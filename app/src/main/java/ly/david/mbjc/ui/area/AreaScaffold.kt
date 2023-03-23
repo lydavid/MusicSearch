@@ -183,16 +183,16 @@ internal fun AreaScaffold(
                     ReleasesByAreaScreen(
                         areaId = areaId,
                         filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
                         releasesLazyPagingItems = releasesLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        releasesLazyListState = releasesLazyListState,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                         onReleaseClick = onItemClick,
-                        showMoreInfo = showMoreInfoInReleaseListItem
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
                 AreaTab.PLACES -> {

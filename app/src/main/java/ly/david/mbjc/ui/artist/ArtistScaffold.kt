@@ -194,17 +194,17 @@ internal fun ArtistScaffold(
                 ArtistTab.RELEASES -> {
                     ReleasesByArtistScreen(
                         artistId = artistId,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        releasesLazyListState = releasesLazyListState,
-                        releasesLazyPagingItems = releasesLazyPagingItems,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                         onReleaseClick = onItemClick,
-                        filterText = filterText,
-                        showMoreInfo = showMoreInfoInReleaseListItem
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
                 ArtistTab.RELATIONSHIPS -> {

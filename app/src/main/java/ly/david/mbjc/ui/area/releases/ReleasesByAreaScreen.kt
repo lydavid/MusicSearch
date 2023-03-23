@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.area.releases
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,13 +17,13 @@ import ly.david.mbjc.ui.common.screen.ReleasesListScreen
 internal fun ReleasesByAreaScreen(
     areaId: String,
     filterText: String,
+    showMoreInfo: Boolean,
+    snackbarHostState: SnackbarHostState,
+    releasesLazyListState: LazyListState,
     releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    releasesLazyListState: LazyListState = rememberLazyListState(),
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
-    showMoreInfo: Boolean,
     viewModel: ReleasesByAreaViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {

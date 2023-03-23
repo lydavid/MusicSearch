@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.artist.releases
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,14 +16,14 @@ import ly.david.mbjc.ui.common.screen.ReleasesListScreen
 @Composable
 internal fun ReleasesByArtistScreen(
     artistId: String,
-    modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    releasesLazyListState: LazyListState = rememberLazyListState(),
-    releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
-    onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit,
-    onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit,
     filterText: String,
     showMoreInfo: Boolean,
+    snackbarHostState: SnackbarHostState,
+    releasesLazyListState: LazyListState,
+    releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    modifier: Modifier = Modifier,
+    onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
     viewModel: ReleasesByArtistViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = artistId) {

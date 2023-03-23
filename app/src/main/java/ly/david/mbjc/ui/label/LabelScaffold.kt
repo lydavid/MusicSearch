@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.label
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -134,14 +135,16 @@ internal fun LabelScaffold(
             LabelTab.RELEASES -> {
                 ReleasesByLabelScreen(
                     labelId = labelId,
-                    modifier = Modifier.padding(innerPadding),
+                    filterText = filterText,
+                    showMoreInfo = showMoreInfoInReleaseListItem,
                     snackbarHostState = snackbarHostState,
                     releasesLazyListState = releasesLazyListState,
                     releasesLazyPagingItems = releasesLazyPagingItems,
-                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
                     onReleaseClick = onItemClick,
-                    filterText = filterText,
-                    showMoreInfo = showMoreInfoInReleaseListItem
+                    onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                 )
             }
             LabelTab.RELATIONSHIPS -> {
