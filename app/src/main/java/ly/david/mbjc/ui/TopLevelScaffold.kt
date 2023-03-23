@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,6 +35,10 @@ internal fun TopLevelScaffold(
     navController: NavHostController,
     viewModel: TopLevelViewModel = hiltViewModel()
 ) {
+
+    val sortReleaseGroupListItems by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
+    val showMoreInfoInReleaseListItem
+        by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
     val scope = rememberCoroutineScope()
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
@@ -125,7 +130,11 @@ internal fun TopLevelScaffold(
             },
             onCreateCollectionClick = {
                 showCreateCollectionDialog = true
-            }
+            },
+            showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+            onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) },
+            sortReleaseGroupListItems = sortReleaseGroupListItems,
+            onSortReleaseGroupListItemsChange = { viewModel.appPreferences.setSortReleaseGroupListItems(it) }
         )
     }
 }

@@ -61,7 +61,11 @@ internal fun NavigationGraph(
     onLogoutClick: () -> Unit = {},
     onAddToCollectionMenuClick: () -> Unit = {},
     onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
-    onCreateCollectionClick: () -> Unit = {}
+    onCreateCollectionClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
     val uriPrefix = "$deeplinkSchema://app/"
@@ -143,7 +147,11 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onItemClick = onLookupEntityClick,
                 onBack = navController::navigateUp,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
         }
 
@@ -342,7 +350,11 @@ internal fun NavigationGraph(
                     onSettingsClick(destination)
                 },
                 onLoginClick = onLoginClick,
-                onLogoutClick = onLogoutClick
+                onLogoutClick = onLogoutClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
         }
 

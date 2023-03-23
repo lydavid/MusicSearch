@@ -31,6 +31,10 @@ fun SettingsScaffold(
     onDestinationClick: (Destination) -> Unit = {},
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
 
@@ -48,10 +52,6 @@ fun SettingsScaffold(
         val authState by viewModel.musicBrainzAuthState.authStateFlow.collectAsState(initial = null)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
-        val showMoreInfoInReleaseListItem
-            by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
-        val sortReleaseGroupListItems
-            by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
@@ -65,9 +65,9 @@ fun SettingsScaffold(
             useMaterialYou = useMaterialYou,
             onUseMaterialYouChange = { viewModel.appPreferences.setUseMaterialYou(it) },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) },
+            onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = { viewModel.appPreferences.setSortReleaseGroupListItems(it) }
+            onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
         )
     }
 }

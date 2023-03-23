@@ -33,6 +33,7 @@ import ly.david.data.persistence.collection.CollectionEntityDao
 import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.data.persistence.collection.CollectionWithEntities
+import ly.david.mbjc.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
@@ -67,6 +68,8 @@ class MusicBrainzLoginContract(
 
 @HiltViewModel
 internal class TopLevelViewModel @Inject constructor(
+    val appPreferences: AppPreferences,
+
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val musicBrainzApiService: MusicBrainzApiService,

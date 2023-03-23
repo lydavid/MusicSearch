@@ -56,8 +56,10 @@ internal fun ArtistScaffold(
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit = {},
     onAddToCollectionMenuClick: () -> Unit = {},
-    // This can be hoisted up which would normally let us preview this,
-    // but because it relies on compose paging, we can't preview.
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     viewModel: ArtistScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.ARTIST
@@ -72,9 +74,6 @@ internal fun ArtistScaffold(
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
-    val isSorted by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
-    val showMoreInfoInReleaseListItem
-        by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
     LaunchedEffect(key1 = artistId) {
         viewModel.setTitle(titleWithDisambiguation)
@@ -108,10 +107,8 @@ internal fun ArtistScaffold(
                         ToggleMenuItem(
                             toggleOnText = R.string.sort,
                             toggleOffText = R.string.unsort,
-                            toggled = isSorted,
-                            onToggle = {
-                                viewModel.appPreferences.setSortReleaseGroupListItems(it)
-                            }
+                            toggled = sortReleaseGroupListItems,
+                            onToggle = onSortReleaseGroupListItemsChange
                         )
                     }
                     if (selectedTab == ArtistTab.RELEASES) {
@@ -119,9 +116,7 @@ internal fun ArtistScaffold(
                             toggleOnText = R.string.show_more_info,
                             toggleOffText = R.string.show_less_info,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = {
-                                viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it)
-                            }
+                            onToggle = onShowMoreInfoInReleaseListItemChange
                         )
                     }
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
@@ -186,7 +181,7 @@ internal fun ArtistScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         searchText = filterText,
-                        isSorted = isSorted,
+                        isSorted = sortReleaseGroupListItems,
                         snackbarHostState = snackbarHostState,
                         onReleaseGroupClick = onItemClick,
                         lazyListState = releaseGroupsLazyListState,
