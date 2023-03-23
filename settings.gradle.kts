@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         create("libs") {
 
             version("accompanist", "0.30.0")
-            version("compose-foundation", "1.3.1")
+            version("compose-foundation", "1.4.0")
             version("compose-material", "1.4.0")
             version("compose-material3", "1.1.0-alpha07")
             version("compose-ui", "1.4.0")
