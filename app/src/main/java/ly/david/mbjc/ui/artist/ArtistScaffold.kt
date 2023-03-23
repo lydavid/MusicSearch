@@ -3,12 +3,10 @@ package ly.david.mbjc.ui.artist
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,16 +33,18 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
@@ -104,31 +104,25 @@ internal fun ArtistScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
                     CopyToClipboardMenuItem(artistId)
-
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(if (isSorted) "Un-sort" else "Sort")
-                            },
-                            onClick = {
-                                closeMenu()
-                                // TODO: disclaimer when turning on sort if we have not gotten all release groups
-                                isSorted = !isSorted
-                            }
+                        ToggleMenuItem(
+                            toggleOnText = R.string.sort,
+                            toggleOffText = R.string.unsort,
+                            toggled = isSorted,
+                            onToggle = { isSorted = it }
                         )
                     }
-                    // TODO: generalize switch menu item
                     if (selectedTab == ArtistTab.RELEASES) {
-                        DropdownMenuItem(
-                            text = { Text(if (showMoreInfoInReleaseListItem) "Show less info" else "Show more info") },
-                            onClick = {
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = {
                                 viewModel.appPreferences
                                     .setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)
-                                closeMenu()
                             }
                         )
                     }
-
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 filterText = filterText,

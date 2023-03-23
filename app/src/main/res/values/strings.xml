@@ -108,6 +108,10 @@
 
     <string name="more_actions">More actions</string>
     <string name="open_google_maps">Open in Google maps</string>
+    <string name="sort">Sort</string>
+    <string name="unsort">Un-sort</string>
+    <string name="show_more_info">Show more info</string>
+    <string name="show_less_info">Show less info</string>
 
     <string name="create_collection">Create a collection</string>
     <string name="name">Name</string>
