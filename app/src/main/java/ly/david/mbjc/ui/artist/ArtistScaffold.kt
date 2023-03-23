@@ -63,7 +63,6 @@ internal fun ArtistScaffold(
     val resource = MusicBrainzResource.ARTIST
     val snackbarHostState = remember { SnackbarHostState() }
     var filterText by rememberSaveable { mutableStateOf("") }
-    var isSorted by rememberSaveable { mutableStateOf(false) }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -73,6 +72,7 @@ internal fun ArtistScaffold(
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
+    val isSorted by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
     val showMoreInfoInReleaseListItem
         by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
@@ -109,7 +109,9 @@ internal fun ArtistScaffold(
                             toggleOnText = R.string.sort,
                             toggleOffText = R.string.unsort,
                             toggled = isSorted,
-                            onToggle = { isSorted = it }
+                            onToggle = {
+                                viewModel.appPreferences.setSortReleaseGroupListItems(it)
+                            }
                         )
                     }
                     if (selectedTab == ArtistTab.RELEASES) {
@@ -118,8 +120,7 @@ internal fun ArtistScaffold(
                             toggleOffText = R.string.show_less_info,
                             toggled = showMoreInfoInReleaseListItem,
                             onToggle = {
-                                viewModel.appPreferences
-                                    .setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)
+                                viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it)
                             }
                         )
                     }

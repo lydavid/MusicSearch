@@ -31,6 +31,8 @@ interface AppPreferences {
     val showMoreInfoInReleaseListItem: Flow<Boolean>
     fun setShowMoreInfoInReleaseListItem(show: Boolean)
 
+    val sortReleaseGroupListItems: Flow<Boolean>
+    fun setSortReleaseGroupListItems(show: Boolean)
 }
 
 private const val THEME_KEY = "theme"
@@ -42,6 +44,10 @@ private val USE_MATERIAL_YOU_PREFERENCE = booleanPreferencesKey(USE_MATERIAL_YOU
 private const val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY = "showMoreInfoInReleaseListItem"
 private val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE =
     booleanPreferencesKey(SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY)
+
+private const val SORT_RELEASE_GROUP_LIST_ITEMS = "sortReleaseGroupListItems"
+private val SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE =
+    booleanPreferencesKey(SORT_RELEASE_GROUP_LIST_ITEMS)
 
 class AppPreferencesImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
@@ -90,6 +96,21 @@ class AppPreferencesImpl @Inject constructor(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE] = show
+            }
+        }
+    }
+
+    override val sortReleaseGroupListItems: Flow<Boolean>
+        get() = preferencesDataStore.data
+            .map {
+                it[SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE] ?: true
+            }
+            .distinctUntilChanged()
+
+    override fun setSortReleaseGroupListItems(show: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE] = show
             }
         }
     }
