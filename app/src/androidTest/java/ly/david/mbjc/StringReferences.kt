@@ -67,4 +67,14 @@ internal interface StringReferences {
         get() = composeTestRule.activity.resources.getString(R.string.dark)
     val system
         get() = composeTestRule.activity.resources.getString(R.string.system)
+    val moreActions
+        get() = composeTestRule.activity.resources.getString(R.string.more_actions)
+    val sort
+        get() = composeTestRule.activity.resources.getString(R.string.sort)
+    val unsort
+        get() = composeTestRule.activity.resources.getString(R.string.unsort)
+    val showMoreInfo
+        get() = composeTestRule.activity.resources.getString(R.string.show_more_info)
+    val showLessInfo
+        get() = composeTestRule.activity.resources.getString(R.string.show_less_info)
 }

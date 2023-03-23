@@ -7,6 +7,7 @@ val fakeReleaseGroup = ReleaseGroupMusicBrainzModel(
     id = "fakeReleaseGroup1",
     name = "Release Group Name",
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
+    primaryType = "Album",
     relations = listOf(
         RelationMusicBrainzModel(
             type = "",

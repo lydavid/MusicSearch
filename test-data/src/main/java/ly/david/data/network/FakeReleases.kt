@@ -11,6 +11,7 @@ val fakeReleaseEvent = ReleaseEvent(
 val fakeRelease = ReleaseMusicBrainzModel(
     id = "fakeRelease1",
     name = "Release Name",
+    date = "2023-03-22",
     artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
     releaseGroup = fakeReleaseGroup,
     releaseEvents = listOf(
