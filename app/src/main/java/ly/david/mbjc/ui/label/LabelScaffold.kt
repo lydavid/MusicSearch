@@ -24,12 +24,14 @@ import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
@@ -44,6 +46,8 @@ internal fun LabelScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: LabelScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.LABEL
@@ -77,6 +81,14 @@ internal fun LabelScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.LABEL, resourceId = labelId)
                     CopyToClipboardMenuItem(labelId)
+                    if (selectedTab == LabelTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange
+                        )
+                    }
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 tabsTitles = LabelTab.values().map { stringResource(id = it.tab.titleRes) },
@@ -128,7 +140,8 @@ internal fun LabelScaffold(
                     releasesLazyPagingItems = releasesLazyPagingItems,
                     onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     onReleaseClick = onItemClick,
-                    filterText = filterText
+                    filterText = filterText,
+                    showMoreInfo = showMoreInfoInReleaseListItem
                 )
             }
             LabelTab.RELATIONSHIPS -> {

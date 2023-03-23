@@ -24,6 +24,7 @@ internal fun ReleasesByReleaseGroupScreen(
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit,
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit,
     filterText: String,
+    showMoreInfo: Boolean,
     viewModel: ReleasesByReleaseGroupViewModel = hiltViewModel(),
 ) {
 
@@ -38,6 +39,7 @@ internal fun ReleasesByReleaseGroupScreen(
         snackbarHostState = snackbarHostState,
         lazyListState = releasesLazyListState,
         lazyPagingItems = releasesLazyPagingItems,
+        showMoreInfo = showMoreInfo,
         onReleaseClick = { id, title ->
             onReleaseClick(MusicBrainzResource.RELEASE, id, title)
         }

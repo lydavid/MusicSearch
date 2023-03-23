@@ -24,6 +24,7 @@ internal fun ReleasesByAreaScreen(
     releasesLazyListState: LazyListState = rememberLazyListState(),
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
+    showMoreInfo: Boolean,
     viewModel: ReleasesByAreaViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {
@@ -38,6 +39,7 @@ internal fun ReleasesByAreaScreen(
         snackbarHostState = snackbarHostState,
         lazyListState = releasesLazyListState,
         lazyPagingItems = releasesLazyPagingItems,
+        showMoreInfo = showMoreInfo,
         onReleaseClick = { id, title ->
             onReleaseClick(MusicBrainzResource.RELEASE, id, title)
         }

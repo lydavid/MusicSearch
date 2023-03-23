@@ -133,7 +133,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -205,7 +207,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -233,7 +237,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -260,7 +266,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 

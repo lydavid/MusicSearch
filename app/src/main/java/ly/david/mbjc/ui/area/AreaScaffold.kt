@@ -34,16 +34,18 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 /**
@@ -58,6 +60,8 @@ internal fun AreaScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: AreaScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzResource.AREA
@@ -101,6 +105,14 @@ internal fun AreaScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
                     CopyToClipboardMenuItem(areaId)
+                    if (selectedTab == AreaTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange
+                        )
+                    }
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
@@ -179,7 +191,8 @@ internal fun AreaScaffold(
                         snackbarHostState = snackbarHostState,
                         releasesLazyListState = releasesLazyListState,
                         onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-                        onReleaseClick = onItemClick
+                        onReleaseClick = onItemClick,
+                        showMoreInfo = showMoreInfoInReleaseListItem
                     )
                 }
                 AreaTab.PLACES -> {
