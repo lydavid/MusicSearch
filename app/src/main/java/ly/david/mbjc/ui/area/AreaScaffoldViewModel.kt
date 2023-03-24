@@ -41,7 +41,7 @@ internal class AreaScaffoldViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    fun onSelectedTabChange(
+    fun loadDataForTab(
         areaId: String,
         selectedTab: AreaTab
     ) {

@@ -57,8 +57,6 @@
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
-    <ID>SwallowedException:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:LabelScaffoldViewModel.kt$LabelScaffoldViewModel$ex: Exception</ID>
@@ -68,8 +66,6 @@
     <ID>SwallowedException:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
     <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:LabelScaffoldViewModel.kt$LabelScaffoldViewModel$ex: Exception</ID>

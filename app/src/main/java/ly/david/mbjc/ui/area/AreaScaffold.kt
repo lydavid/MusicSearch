@@ -87,7 +87,7 @@ internal fun AreaScaffold(
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-        viewModel.onSelectedTabChange(
+        viewModel.loadDataForTab(
             areaId = areaId,
             selectedTab = selectedTab
         )

@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.event
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -15,6 +16,8 @@ import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
+import retrofit2.HttpException
+import timber.log.Timber
 
 @HiltViewModel
 internal class EventScaffoldViewModel @Inject constructor(
@@ -36,7 +39,7 @@ internal class EventScaffoldViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    fun onSelectedTabChange(
+    fun loadDataForTab(
         eventId: String,
         selectedTab: EventTab
     ) {
@@ -50,7 +53,11 @@ internal class EventScaffoldViewModel @Inject constructor(
                         }
                         event.value = eventListItemModel
                         isError.value = false
-                    } catch (ex: Exception) {
+                    } catch (ex: HttpException) {
+                        Timber.e(ex)
+                        isError.value = true
+                    } catch (ex: IOException) {
+                        Timber.e(ex)
                         isError.value = true
                     }
 

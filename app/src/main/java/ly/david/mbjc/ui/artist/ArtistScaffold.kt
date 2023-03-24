@@ -63,13 +63,14 @@ internal fun ArtistScaffold(
     viewModel: ArtistScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.ARTIST
+    val scope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    val pagerState = rememberPagerState()
+
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
 
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
@@ -92,7 +93,6 @@ internal fun ArtistScaffold(
 
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
                 onBack = onBack,
@@ -130,6 +130,7 @@ internal fun ArtistScaffold(
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
             )
         },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
@@ -208,8 +209,6 @@ internal fun ArtistScaffold(
                     )
                 }
                 ArtistTab.RELATIONSHIPS -> {
-                    viewModel.loadRelations(artistId)
-
                     RelationsScreen(
                         modifier = Modifier
                             .padding(innerPadding)
