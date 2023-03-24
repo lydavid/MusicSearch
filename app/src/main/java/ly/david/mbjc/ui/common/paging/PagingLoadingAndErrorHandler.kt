@@ -74,6 +74,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = { lazyPagingItems.refresh() },
+        modifier = modifier,
         indicator = { state: SwipeRefreshState, refreshTrigger: Dp ->
             SwipeRefreshIndicator(
                 state = state,
@@ -106,10 +107,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
                 FullScreenText(noResultsText)
             }
             else -> {
-                LazyColumn(
-                    modifier = modifier,
-                    state = lazyListState,
-                ) {
+                LazyColumn(state = lazyListState) {
                     itemsIndexed(
                         items = lazyPagingItems,
                         key = { _, item -> item.id }
