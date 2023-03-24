@@ -3,24 +3,27 @@ package ly.david.mbjc.ui.releasegroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import ly.david.data.coverart.GetReleaseGroupCoverArtPath
+import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
+import retrofit2.HttpException
+import timber.log.Timber
 
 @HiltViewModel
 internal class ReleaseGroupScaffoldViewModel @Inject constructor(
@@ -42,7 +45,6 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     override val isError = MutableStateFlow(false)
 
     val subtitle = MutableStateFlow("")
-    val isFullScreenError = MutableStateFlow(false)
     val releaseGroup: MutableStateFlow<ReleaseGroupScaffoldModel?> = MutableStateFlow(null)
     val url = MutableStateFlow("")
 
@@ -51,7 +53,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    fun onSelectedTabChange(
+    fun loadDataForTab(
         releaseGroupId: String,
         selectedTab: ReleaseGroupTab
     ) {
@@ -68,9 +70,13 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
 
                         getCoverArtUrl(releaseGroupId, releaseGroupListItemModel)
 
-                        isFullScreenError.value = false
-                    } catch (ex: Exception) {
-                        isFullScreenError.value = true
+                        isError.value = false
+                    } catch (ex: HttpException) {
+                        Timber.e(ex)
+                        isError.value = true
+                    } catch (ex: IOException) {
+                        Timber.e(ex)
+                        isError.value = true
                     }
 
                     if (!recordedLookup) {

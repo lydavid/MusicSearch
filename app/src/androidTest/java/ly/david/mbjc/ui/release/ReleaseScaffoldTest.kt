@@ -127,13 +127,13 @@ internal class ReleaseScaffoldTest : MainActivityTestWithMockServer(), StringRef
             }
         }
 
-        waitForThenAssertIsDisplayed(retry)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(tracks)
             .performClick()
 
-        waitForThenAssertIsDisplayed(retry)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 
     // TODO: These only works when we use real ImageLoader...

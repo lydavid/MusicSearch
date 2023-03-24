@@ -127,7 +127,7 @@ internal fun ArtistScaffold(
                 },
                 tabsTitles = ArtistTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

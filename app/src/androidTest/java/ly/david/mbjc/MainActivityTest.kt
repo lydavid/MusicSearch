@@ -1,9 +1,12 @@
 package ly.david.mbjc
 
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -19,15 +22,12 @@ internal abstract class MainActivityTest {
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
+    @OptIn(ExperimentalTestApi::class)
     private fun waitForNodeToShow(matcher: SemanticsMatcher) {
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodes(matcher)
-                .fetchSemanticsNodes().size == 1
-        }
+        composeTestRule.waitUntilAtLeastOneExists(matcher, 10_000L)
     }
 
-    private fun waitForTextToShow(text: String) {
+    fun waitForTextToShow(text: String) {
         waitForNodeToShow(hasText(text))
     }
 
@@ -44,6 +44,15 @@ internal abstract class MainActivityTest {
 
         composeTestRule
             .onNodeWithText(text)
+            .assertIsDisplayed()
+    }
+
+    fun waitForThenAssertAtLeastOneIsDisplayed(text: String) {
+        waitForTextToShow(text)
+
+        composeTestRule
+            .onAllNodesWithText(text)
+            .onFirst()
             .assertIsDisplayed()
     }
 

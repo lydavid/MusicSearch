@@ -10,6 +10,7 @@ import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +22,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.coverart.GetReleaseCoverArtPath
+import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ListItemModel
@@ -31,7 +34,6 @@ import ly.david.data.domain.toTrackListItemModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.coverart.GetReleaseCoverArtPath
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
@@ -40,12 +42,13 @@ import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
-import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
+import retrofit2.HttpException
+import timber.log.Timber
 
 @HiltViewModel
 internal class ReleaseScaffoldViewModel @Inject constructor(
@@ -150,7 +153,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         }
     }
 
-    fun onSelectedTabChange(
+    fun loadDataForTab(
         releaseId: String,
         selectedTab: ReleaseTab
     ) {
@@ -168,7 +171,11 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                         getCoverArtUrl(releaseId, releaseScaffoldModel)
 
                         isError.value = false
-                    } catch (ex: Exception) {
+                    } catch (ex: HttpException) {
+                        Timber.e(ex)
+                        isError.value = true
+                    } catch (ex: IOException) {
+                        Timber.e(ex)
                         isError.value = true
                     }
 

@@ -4,6 +4,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -101,14 +103,20 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             }
         }
 
-        waitForThenAssertIsDisplayed(retry)
+        waitForTextToShow(retry)
+        composeTestRule
+            .onAllNodesWithText(retry)
+            .onFirst()
+            .assertIsDisplayed()
 
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
 
+        waitForTextToShow(retry)
         composeTestRule
-            .onNodeWithText(retry)
+            .onAllNodesWithText(retry)
+            .onFirst()
             .assertIsDisplayed()
 
         // TODO: showing "no results"

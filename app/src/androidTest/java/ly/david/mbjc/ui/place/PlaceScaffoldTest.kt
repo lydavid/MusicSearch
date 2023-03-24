@@ -15,23 +15,17 @@ import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.fakeEvent
 import ly.david.data.network.fakePlaceWithAllData
 import ly.david.data.repository.PlaceRepository
-import ly.david.mbjc.MainActivityTest
+import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
-internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
+internal class PlaceScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 
     @Inject
     lateinit var placeRepository: PlaceRepository
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-    }
 
     private fun setPlace(placeMusicBrainzModel: PlaceMusicBrainzModel) {
         composeTestRule.activity.setContent {
@@ -77,7 +71,7 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
 
         waitForThenPerformClickOn(events)
-        waitForThenAssertIsDisplayed(fakeEvent.name)
+        waitForThenAssertAtLeastOneIsDisplayed(fakeEvent.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(events).and(hasNoClickAction()))
@@ -89,6 +83,6 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         setPlace(fakePlaceWithAllData)
 
         waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
+        waitForThenAssertAtLeastOneIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
     }
 }

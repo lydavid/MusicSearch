@@ -82,7 +82,6 @@ internal class ReleaseGroupScaffoldTest : MainActivityTestWithMockServer(), Stri
         waitForThenAssertIsDisplayed(fakeReleaseGroup.relations?.first()?.artist?.name!!)
     }
 
-
     @Test
     fun showRetryButtonOnError() = runTest {
         composeTestRule.activity.setContent {
@@ -93,12 +92,12 @@ internal class ReleaseGroupScaffoldTest : MainActivityTestWithMockServer(), Stri
             }
         }
 
-        waitForThenAssertIsDisplayed(retry)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
 
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
 
-        waitForThenAssertIsDisplayed(retry)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 }
