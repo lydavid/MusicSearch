@@ -1,8 +1,11 @@
 package ly.david.mbjc.ui.area
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -24,9 +27,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
@@ -51,7 +51,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 /**
  * The top-level screen for an area.
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun AreaScaffold(
     areaId: String,
@@ -147,7 +147,7 @@ internal fun AreaScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            count = areaTabs.size,
+            pageCount = areaTabs.size,
             state = pagerState
         ) { page ->
             when (areaTabs[page]) {

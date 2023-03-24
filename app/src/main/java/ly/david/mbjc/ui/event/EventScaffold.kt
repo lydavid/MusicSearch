@@ -1,8 +1,11 @@
 package ly.david.mbjc.ui.event
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -23,9 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
@@ -44,7 +44,7 @@ import ly.david.mbjc.ui.event.stats.EventStatsScreen
  *
  * All of its content are relationships, there's no browsing supported in the API.
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun EventScaffold(
     eventId: String,
@@ -112,7 +112,7 @@ internal fun EventScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            count = EventTab.values().size,
+            pageCount = EventTab.values().size,
             state = pagerState
         ) { page ->
             when (EventTab.values()[page]) {
