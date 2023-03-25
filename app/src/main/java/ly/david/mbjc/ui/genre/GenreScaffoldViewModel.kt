@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.genre
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -13,6 +14,8 @@ import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import retrofit2.HttpException
+import timber.log.Timber
 
 @HiltViewModel
 internal class GenreScaffoldViewModel @Inject constructor(
@@ -38,7 +41,11 @@ internal class GenreScaffoldViewModel @Inject constructor(
                 }
                 genre.value = eventListItemModel
                 isError.value = false
-            } catch (ex: Exception) {
+            } catch (ex: HttpException) {
+                Timber.e(ex)
+                isError.value = true
+            } catch (ex: IOException) {
+                Timber.e(ex)
                 isError.value = true
             }
 

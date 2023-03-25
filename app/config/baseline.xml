@@ -57,8 +57,6 @@
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
-    <ID>SwallowedException:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:TopLevelViewModel.kt$TopLevelViewModel$ex: Exception</ID>
