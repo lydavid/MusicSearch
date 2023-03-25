@@ -333,7 +333,12 @@ internal fun NavigationGraph(
             MusicBrainzCollectionScaffold(
                 collectionId = collectionId,
                 modifier = modifier,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onBack = navController::navigateUp,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
         }
 
