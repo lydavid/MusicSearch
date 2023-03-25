@@ -16,7 +16,7 @@ import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
 
-internal abstract class ReleasesByEntityViewModel constructor(
+internal abstract class ReleasesByEntityViewModel(
     private val relationDao: RelationDao,
     private val releaseDao: ReleaseDao,
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>
@@ -37,7 +37,7 @@ internal abstract class ReleasesByEntityViewModel constructor(
     )
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response: BrowseReleasesResponse = browseReleasesByEntity(resourceId, nextOffset)
+        val response = browseReleasesByEntity(resourceId, nextOffset)
 
         if (response.offset == 0) {
             relationDao.insertBrowseResourceCount(
@@ -49,7 +49,11 @@ internal abstract class ReleasesByEntityViewModel constructor(
                 )
             )
         } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
+            relationDao.incrementLocalCountForResource(
+                resourceId = resourceId,
+                browseResource = MusicBrainzResource.RELEASE,
+                additionalOffset = response.releases.size
+            )
         }
 
         val releaseMusicBrainzModels = response.releases

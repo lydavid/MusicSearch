@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.artist.releasegroups
+package ly.david.mbjc.ui.collections.releasegroups
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -6,17 +6,17 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.artist.ArtistReleaseGroup
-import ly.david.data.persistence.artist.ArtistReleaseGroupDao
+import ly.david.data.persistence.collection.CollectionEntityDao
+import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.mbjc.ui.common.ReleaseGroupsByEntityViewModel
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupsPagedList
 
 @HiltViewModel
-internal class ReleaseGroupsByArtistViewModel @Inject constructor(
+internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
@@ -27,8 +27,8 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 ) {
 
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
-        return musicBrainzApiService.browseReleaseGroupsByArtist(
-            artistId = entityId,
+        return musicBrainzApiService.browseReleaseGroupsByCollection(
+            collectionId = entityId,
             offset = offset
         )
     }
@@ -37,37 +37,39 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
         entityId: String,
         releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>
     ) {
-        artistReleaseGroupDao.insertAll(
+        collectionEntityDao.insertAll(
             releaseGroupMusicBrainzModels.map { releaseGroup ->
-                ArtistReleaseGroup(
-                    artistId = entityId,
-                    releaseGroupId = releaseGroup.id
+                CollectionEntityRoomModel(
+                    id = entityId,
+                    entityId = releaseGroup.id
                 )
             }
         )
     }
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        artistReleaseGroupDao.deleteReleaseGroupsByArtist(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE_GROUP)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE_GROUP)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(resourceId: String, query: String, sorted: Boolean) = when {
         sorted && query.isEmpty() -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtistSorted(resourceId)
+            collectionEntityDao.getReleaseGroupsByCollectionSorted(resourceId)
         }
         sorted -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
-                artistId = resourceId,
+            collectionEntityDao.getReleaseGroupsByCollectionFilteredSorted(
+                collectionId = resourceId,
                 query = "%$query%"
             )
         }
         query.isEmpty() -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtist(resourceId)
+            collectionEntityDao.getReleaseGroupsByCollection(resourceId)
         }
         else -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtistFiltered(
-                artistId = resourceId,
+            collectionEntityDao.getReleaseGroupsByCollectionFiltered(
+                collectionId = resourceId,
                 query = "%$query%"
             )
         }

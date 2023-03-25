@@ -94,6 +94,14 @@ interface BrowseApi {
         @Query("offset") offset: Int = 0,
         @Query("inc") include: String = "artist-credits"
     ): BrowseReleaseGroupsResponse
+
+    @GET("release-group")
+    suspend fun browseReleaseGroupsByCollection(
+        @Query("collection") collectionId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+        @Query("inc") include: String = "artist-credits"
+    ): BrowseReleaseGroupsResponse
 }
 
 /**
