@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.work.recordings
+package ly.david.mbjc.ui.collections.recordings
 
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,18 +8,18 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.persistence.collection.CollectionEntityDao
+import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.RecordingForListItem
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.work.RecordingWork
-import ly.david.data.persistence.work.RecordingWorkDao
 import ly.david.mbjc.ui.common.RecordingsByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
-internal class RecordingsByWorkViewModel @Inject constructor(
+internal class RecordingsByCollectionViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val recordingWorkDao: RecordingWorkDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     recordingDao: RecordingDao,
     pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
@@ -30,8 +30,8 @@ internal class RecordingsByWorkViewModel @Inject constructor(
 ) {
 
     override suspend fun browseRecordingsByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
-        return musicBrainzApiService.browseRecordingsByWork(
-            workId = entityId,
+        return musicBrainzApiService.browseRecordingsByCollection(
+            collectionId = entityId,
             offset = offset
         )
     }
@@ -40,19 +40,21 @@ internal class RecordingsByWorkViewModel @Inject constructor(
         entityId: String,
         recordingMusicBrainzModels: List<RecordingMusicBrainzModel>
     ) {
-        recordingWorkDao.insertAll(
+        collectionEntityDao.insertAll(
             recordingMusicBrainzModels.map { recording ->
-                RecordingWork(
-                    recordingId = recording.id,
-                    workId = entityId
+                CollectionEntityRoomModel(
+                    id = entityId,
+                    entityId = recording.id
                 )
             }
         )
     }
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        recordingWorkDao.deleteRecordingsByWork(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RECORDING)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RECORDING)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(
@@ -60,11 +62,11 @@ internal class RecordingsByWorkViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
-            recordingWorkDao.getRecordingsByWork(resourceId)
+            collectionEntityDao.getRecordingsByCollection(resourceId)
         }
         else -> {
-            recordingWorkDao.getRecordingsByWorkFiltered(
-                workId = resourceId,
+            collectionEntityDao.getRecordingsByCollectionFiltered(
+                collectionId = resourceId,
                 query = "%$query%"
             )
         }

@@ -26,9 +26,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.collections.recordings.RecordingsByCollectionScreen
 import ly.david.mbjc.ui.collections.releasegroups.ReleaseGroupsByCollectionScreen
 import ly.david.mbjc.ui.collections.releases.ReleasesByCollectionScreen
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
@@ -62,6 +64,12 @@ internal fun MusicBrainzCollectionScaffold(
     var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
     var entity: MusicBrainzResource? by rememberSaveable { mutableStateOf(null) }
     var filterText by rememberSaveable { mutableStateOf("") }
+
+    val recordingsLazyListState = rememberLazyListState()
+    var pagedRecordingsFlow: Flow<PagingData<RecordingListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val recordingsLazyPagingItems: LazyPagingItems<RecordingListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedRecordingsFlow)
+            .collectAsLazyPagingItems()
 
     val releasesLazyListState = rememberLazyListState()
     var pagedReleasesFlow: Flow<PagingData<ReleaseListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -115,6 +123,21 @@ internal fun MusicBrainzCollectionScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         when (entity) {
+            MusicBrainzResource.RECORDING -> {
+                RecordingsByCollectionScreen(
+                    collectionId = collectionId,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    snackbarHostState = snackbarHostState,
+                    recordingsLazyListState = recordingsLazyListState,
+                    recordingsLazyPagingItems = recordingsLazyPagingItems,
+                    onPagedRecordingsFlowChange = { pagedRecordingsFlow = it },
+                    onRecordingClick = onItemClick,
+                    filterText = filterText
+                )
+            }
             MusicBrainzResource.RELEASE -> {
                 ReleasesByCollectionScreen(
                     collectionId = collectionId,

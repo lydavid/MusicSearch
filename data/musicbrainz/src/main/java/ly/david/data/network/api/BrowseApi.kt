@@ -35,6 +35,13 @@ interface BrowseApi {
     ): BrowsePlacesResponse
 
     @GET("recording")
+    suspend fun browseRecordingsByCollection(
+        @Query("collection") collectionId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowseRecordingsResponse
+
+    @GET("recording")
     suspend fun browseRecordingsByWork(
         @Query("work") workId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,

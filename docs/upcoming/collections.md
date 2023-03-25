@@ -26,8 +26,7 @@ Search `collectableResources` to find all the entities that can be collected.
   - [x] A collection only holds one type of entity
 - [x] Can filter all collections by their name
   - Filter by description (MB WS doesn't return description -> out of scope)
-- [ ] show an indicator that an entity is already in the collection
-  - does not work for remote collections before we get its content
+
 
 ### Pull collections from MB
 - [x] Optional MusicBrainz id (mbid) for collection
@@ -39,10 +38,10 @@ Search `collectableResources` to find all the entities that can be collected.
     - technically, if the user knew their or someone's username, they could input it to see their public collections
       - out of scope
   - [x] Insert all collections into DB (this is just the info about each collection, not its content)
-- [ ] On clicking a MB collection, query for its content from MB
+- [x] On clicking a MB collection, query for its content from MB
   - Start off with releases by collection
     - [x] cover art
-    - [ ] scaffold
+    - [x] scaffold
     - [x] Insert into DB
 - What happens when the user logs out?
   - [x] Local collections should remain
@@ -58,16 +57,23 @@ Search `collectableResources` to find all the entities that can be collected.
   - [ ] Do not crash on 401 or other exceptions
     - [ ] fail snackbar
     - [ ] show a snackbar saying whether it succeeded or it was already part of it
+  - [ ] show an indicator that an entity is already in the collection
+    - this won't be accurate for remote collections before we get its content by clicking into it
+    - nothing reasonable we can do about it, just open an issue to track this
 - [ ] Delete from collection
   - DELETE /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;?client=example.app-0.4.7
   - You may submit up to ~400 entities in a single request, separated by a semicolon (;)
-- [ ] Unidirectional sync where MB is source of truth
+- [x] Unidirectional sync where MB is source of truth
   - local additions/deletions will be overwritten
   - This will be supported the moment we copy/paste our paging code
-  - [ ] An easier way to always keep remote up to date is to immediate PUT/DELETE an entity
+  - [x] An easier way to always keep remote up to date is to immediate PUT/DELETE an entity
     - Will work unless user does not have connection or is not logged in (they have to be logged in to fetch remote collections)
 - Bidirectional sync (out of scope)
   - would need a timestamp field in MB and locally
 - Cannot push local collections to MB cause webservice not implemented: https://tickets.metabrainz.org/browse/MBS-11914
   - So we can only update existing collections
 
+### Local collections
+- [ ] Make a separate scaffold for it
+- [ ] Allow filtering local/remote collections from list of collections screen (this helps convey their difference)
+  - see GitHub's filter pills

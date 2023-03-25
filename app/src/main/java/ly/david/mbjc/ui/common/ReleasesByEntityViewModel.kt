@@ -26,7 +26,7 @@ internal abstract class ReleasesByEntityViewModel(
 
     init {
         pagedList.scope = viewModelScope
-        pagedList.useCase = this
+        this.also { pagedList.useCase = it }
     }
 
     abstract suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse

@@ -24,7 +24,7 @@ internal abstract class ReleaseGroupsByEntityViewModel(
 
     init {
         releaseGroupsPagedList.scope = viewModelScope
-        releaseGroupsPagedList.useCase = this
+        this.also { releaseGroupsPagedList.useCase = it }
     }
 
     abstract suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse
