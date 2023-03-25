@@ -34,6 +34,13 @@ interface BrowseApi {
         @Query("offset") offset: Int = 0,
     ): BrowsePlacesResponse
 
+    @GET("place")
+    suspend fun browsePlacesByCollection(
+        @Query("collection") collectionId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowsePlacesResponse
+
     @GET("recording")
     suspend fun browseRecordingsByCollection(
         @Query("collection") collectionId: String,

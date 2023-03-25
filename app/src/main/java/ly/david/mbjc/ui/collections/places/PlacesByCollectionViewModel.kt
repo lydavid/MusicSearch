@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.area.places
+package ly.david.mbjc.ui.collections.places
 
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,8 +8,8 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.area.AreaPlace
-import ly.david.data.persistence.area.AreaPlaceDao
+import ly.david.data.persistence.collection.CollectionEntityDao
+import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.place.PlaceDao
 import ly.david.data.persistence.place.PlaceRoomModel
 import ly.david.data.persistence.relation.RelationDao
@@ -17,9 +17,9 @@ import ly.david.mbjc.ui.common.PlacesByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
-internal class PlacesByAreaViewModel @Inject constructor(
+internal class PlacesByCollectionViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val areaPlaceDao: AreaPlaceDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     placeDao: PlaceDao,
     pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
@@ -30,26 +30,28 @@ internal class PlacesByAreaViewModel @Inject constructor(
 ) {
 
     override suspend fun browsePlacesByEntity(entityId: String, offset: Int): BrowsePlacesResponse {
-        return musicBrainzApiService.browsePlacesByArea(
-            areaId = entityId,
+        return musicBrainzApiService.browsePlacesByCollection(
+            collectionId = entityId,
             offset = offset
         )
     }
 
     override suspend fun insertAllLinkingModels(entityId: String, placeMusicBrainzModels: List<PlaceMusicBrainzModel>) {
-        areaPlaceDao.insertAll(
+        collectionEntityDao.insertAll(
             placeMusicBrainzModels.map { place ->
-                AreaPlace(
-                    areaId = entityId,
-                    placeId = place.id
+                CollectionEntityRoomModel(
+                    id = entityId,
+                    entityId = place.id
                 )
             }
         )
     }
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        areaPlaceDao.deletePlacesByArea(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.PLACE)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.PLACE)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(
@@ -57,11 +59,11 @@ internal class PlacesByAreaViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, PlaceRoomModel> = when {
         query.isEmpty() -> {
-            areaPlaceDao.getPlacesByArea(resourceId)
+            collectionEntityDao.getPlacesByCollection(resourceId)
         }
         else -> {
-            areaPlaceDao.getPlacesByAreaFiltered(
-                areaId = resourceId,
+            collectionEntityDao.getPlacesByCollectionFiltered(
+                collectionId = resourceId,
                 query = "%$query%"
             )
         }

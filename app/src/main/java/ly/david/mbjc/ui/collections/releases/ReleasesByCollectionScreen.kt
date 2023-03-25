@@ -19,8 +19,8 @@ internal fun ReleasesByCollectionScreen(
     filterText: String,
     showMoreInfo: Boolean,
     snackbarHostState: SnackbarHostState,
-    releasesLazyListState: LazyListState,
-    releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    lazyListState: LazyListState,
+    lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
@@ -30,13 +30,14 @@ internal fun ReleasesByCollectionScreen(
         viewModel.loadPagedResources(collectionId)
         onPagedReleasesFlowChange(viewModel.pagedResources)
     }
+
     viewModel.updateQuery(filterText)
 
     ReleasesListScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        lazyListState = releasesLazyListState,
-        lazyPagingItems = releasesLazyPagingItems,
+        lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
         showMoreInfo = showMoreInfo,
         onReleaseClick = { id, title ->
             onReleaseClick(MusicBrainzResource.RELEASE, id, title)

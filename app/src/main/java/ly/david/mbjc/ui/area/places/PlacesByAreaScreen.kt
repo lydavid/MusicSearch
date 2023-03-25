@@ -1,8 +1,6 @@
 package ly.david.mbjc.ui.area.places
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,20 +10,17 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.PlaceListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.place.PlaceListItem
+import ly.david.mbjc.ui.common.screen.PlacesListScreen
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun PlacesByAreaScreen(
     areaId: String,
     filterText: String,
+    snackbarHostState: SnackbarHostState,
+    placesLazyListState: LazyListState,
     placesLazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    placesLazyListState: LazyListState = rememberLazyListState(),
     onPlaceClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit = {},
     viewModel: PlacesByAreaViewModel = hiltViewModel(),
@@ -34,26 +29,14 @@ internal fun PlacesByAreaScreen(
         viewModel.loadPagedResources(areaId)
         onPagedPlacesFlowChange(viewModel.pagedResources)
     }
+
     viewModel.updateQuery(filterText)
 
-    PagingLoadingAndErrorHandler(
+    PlacesListScreen(
+        snackbarHostState = snackbarHostState,
+        lazyListState = placesLazyListState,
         lazyPagingItems = placesLazyPagingItems,
         modifier = modifier,
-        lazyListState = placesLazyListState,
-        snackbarHostState = snackbarHostState
-    ) { placeListItemModel: PlaceListItemModel? ->
-        when (placeListItemModel) {
-            is PlaceListItemModel -> {
-                PlaceListItem(
-                    place = placeListItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onPlaceClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
-                }
-            }
-            else -> {
-                // Do nothing.
-            }
-        }
-    }
+        onPlaceClick = onPlaceClick
+    )
 }

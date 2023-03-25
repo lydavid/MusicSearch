@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.collections.recordings
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,27 +16,27 @@ import ly.david.mbjc.ui.common.screen.RecordingsListScreen
 @Composable
 internal fun RecordingsByCollectionScreen(
     collectionId: String,
-    modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    recordingsLazyListState: LazyListState = rememberLazyListState(),
-    recordingsLazyPagingItems: LazyPagingItems<RecordingListItemModel>,
-    onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit,
-    onPagedRecordingsFlowChange: (Flow<PagingData<RecordingListItemModel>>) -> Unit,
     filterText: String,
+    snackbarHostState: SnackbarHostState,
+    lazyListState: LazyListState,
+    lazyPagingItems: LazyPagingItems<RecordingListItemModel>,
+    modifier: Modifier = Modifier,
+    onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onPagedRecordingsFlowChange: (Flow<PagingData<RecordingListItemModel>>) -> Unit = {},
     viewModel: RecordingsByCollectionViewModel = hiltViewModel(),
 ) {
-
     LaunchedEffect(key1 = collectionId) {
         viewModel.loadPagedResources(collectionId)
         onPagedRecordingsFlowChange(viewModel.pagedResources)
     }
+
     viewModel.updateQuery(filterText)
 
     RecordingsListScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        lazyListState = recordingsLazyListState,
-        lazyPagingItems = recordingsLazyPagingItems,
+        lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
         onRecordingClick = { id, title ->
             onRecordingClick(MusicBrainzResource.RECORDING, id, title)
         }

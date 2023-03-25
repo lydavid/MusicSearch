@@ -241,4 +241,8 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     ): BrowseRecordingsResponse {
         TODO("Not yet implemented")
     }
+
+    override suspend fun browsePlacesByCollection(collectionId: String, limit: Int, offset: Int): BrowsePlacesResponse {
+        TODO("Not yet implemented")
+    }
 }

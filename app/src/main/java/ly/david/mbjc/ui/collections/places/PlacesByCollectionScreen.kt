@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.collections.releasegroups
+package ly.david.mbjc.ui.collections.places
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -9,38 +9,34 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.screen.ReleaseGroupsListScreen
+import ly.david.mbjc.ui.common.screen.PlacesListScreen
 
 @Composable
-internal fun ReleaseGroupsByCollectionScreen(
+internal fun PlacesByCollectionScreen(
     collectionId: String,
     filterText: String,
-    isSorted: Boolean,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     modifier: Modifier = Modifier,
-    onReleaseGroupClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-    onPagedReleaseGroupsChange: (Flow<PagingData<ListItemModel>>) -> Unit = {},
-    viewModel: ReleaseGroupsByCollectionViewModel = hiltViewModel()
+    onPlaceClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit = {},
+    viewModel: PlacesByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
         viewModel.loadPagedResources(collectionId)
-        onPagedReleaseGroupsChange(viewModel.pagedResources)
+        onPagedPlacesFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(query = filterText)
-    viewModel.updateSorted(sorted = isSorted)
+    viewModel.updateQuery(filterText)
 
-    ReleaseGroupsListScreen(
-        modifier = modifier,
+    PlacesListScreen(
         snackbarHostState = snackbarHostState,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        onReleaseGroupClick = { id, title ->
-            onReleaseGroupClick(MusicBrainzResource.RELEASE_GROUP, id, title)
-        }
+        modifier = modifier,
+        onPlaceClick = onPlaceClick
     )
 }

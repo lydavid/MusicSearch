@@ -1,31 +1,28 @@
-package ly.david.data.persistence.area
+package ly.david.data.persistence.collection
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.persistence.BaseDao
 import ly.david.data.persistence.place.PlaceRoomModel
 
-@Dao
-abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
+interface CollectionPlaceDao {
 
     companion object {
-        private const val PLACES_BY_AREA = """
+        private const val PLACES_BY_COLLECTION = """
             FROM place p
-            INNER JOIN area_place ap ON p.id = ap.place_id
-            INNER JOIN area a ON a.id = ap.area_id
-            WHERE a.id = :areaId
+            INNER JOIN collection_entity ce ON p.id = ce.entity_id
+            INNER JOIN collection c ON c.id = ce.id
+            WHERE c.id = :collectionId
         """
 
-        private const val SELECT_PLACE_BY_AREA = """
+        private const val SELECT_PLACE_BY_COLLECTION = """
             SELECT p.*
-            $PLACES_BY_AREA
+            $PLACES_BY_COLLECTION
         """
 
-        private const val SELECT_PLACE_ID_BY_AREA = """
+        private const val SELECT_PLACE_ID_BY_COLLECTION = """
             SELECT p.id
-            $PLACES_BY_AREA
+            $PLACES_BY_COLLECTION
         """
 
         private const val ORDER_BY_ADDRESS = """
@@ -43,43 +40,43 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
     @Query(
         """
         DELETE FROM place WHERE id IN (
-        $SELECT_PLACE_ID_BY_AREA
+        $SELECT_PLACE_ID_BY_COLLECTION
         )
         """
     )
-    abstract suspend fun deletePlacesByArea(areaId: String)
+    suspend fun deletePlacesByCollection(collectionId: String)
 
     @Query(
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
-            $PLACES_BY_AREA
+            $PLACES_BY_COLLECTION
             ),
             0
         ) AS count
     """
     )
-    abstract suspend fun getNumberOfPlacesByArea(areaId: String): Int
+    suspend fun getNumberOfPlacesByCollection(collectionId: String): Int
 
     @Transaction
     @Query(
         """
-        $SELECT_PLACE_BY_AREA
+        $SELECT_PLACE_BY_COLLECTION
         $ORDER_BY_ADDRESS
     """
     )
-    abstract fun getPlacesByArea(areaId: String): PagingSource<Int, PlaceRoomModel>
+    fun getPlacesByCollection(collectionId: String): PagingSource<Int, PlaceRoomModel>
 
     @Transaction
     @Query(
         """
-        $SELECT_PLACE_BY_AREA
+        $SELECT_PLACE_BY_COLLECTION
         $FILTERED
         $ORDER_BY_ADDRESS
     """
     )
-    abstract fun getPlacesByAreaFiltered(
-        areaId: String,
+    fun getPlacesByCollectionFiltered(
+        collectionId: String,
         query: String
     ): PagingSource<Int, PlaceRoomModel>
 }

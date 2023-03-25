@@ -5,6 +5,7 @@ import ly.david.data.persistence.BaseDao
 
 @Dao
 abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>(),
+    CollectionPlaceDao,
     CollectionRecordingDao,
     CollectionReleaseDao,
     CollectionReleaseGroupDao
