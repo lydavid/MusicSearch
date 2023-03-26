@@ -32,9 +32,6 @@ internal open class MainActivityTestWithMockServer : MainActivityTest() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 return MockResponse()
                     .setResponseCode(404)
-                // TODO: this does work, but then we need to fake the imageloader's network call, which is not working
-                //  also try to move these assets into test-data
-//                    .setBody(readFileWithNewLineFromResources("release_cover_arts_response.json"))
             }
         }
     }

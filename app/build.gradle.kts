@@ -142,9 +142,9 @@ dependencies {
     kaptAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
 
-    // Coil
-    implementation("io.coil-kt:coil-base:2.3.0")
-    implementation("io.coil-kt:coil-compose:2.3.0")
+    implementation(libs.coil.base)
+    implementation(libs.coil.compose)
+    androidTestImplementation(libs.coil.test)
 
     // Tried this for UScript.getName(UScript.getCodeFromName(it))
 //    implementation "com.ibm.icu:icu4j:72.1"
