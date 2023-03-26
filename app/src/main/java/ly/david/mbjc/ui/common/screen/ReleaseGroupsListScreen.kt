@@ -12,6 +12,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
@@ -24,7 +25,7 @@ internal fun ReleaseGroupsListScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<ListItemModel>,
-    onReleaseGroupClick: (String, String) -> Unit,
+    onReleaseGroupClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     viewModel: ReleaseGroupsListViewModel = hiltViewModel()
 ) {
     PagingLoadingAndErrorHandler(
@@ -46,7 +47,7 @@ internal fun ReleaseGroupsListScreen(
                         }
                     }
                 ) {
-                    onReleaseGroupClick(id, getNameWithDisambiguation())
+                    onReleaseGroupClick(MusicBrainzResource.RELEASE_GROUP, id, getNameWithDisambiguation())
                 }
             }
             is ListSeparator -> {

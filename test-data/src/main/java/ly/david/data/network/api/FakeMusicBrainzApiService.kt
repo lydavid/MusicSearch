@@ -217,6 +217,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         TODO("Not yet implemented")
     }
 
+    // TODO: move these together with browse
     override suspend fun browseReleasesByCollection(
         collectionId: String,
         limit: Int,
@@ -243,6 +244,10 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun browsePlacesByCollection(collectionId: String, limit: Int, offset: Int): BrowsePlacesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun browseEventsByCollection(collectionId: String, limit: Int, offset: Int): BrowseEventsResponse {
         TODO("Not yet implemented")
     }
 }

@@ -169,8 +169,8 @@ internal fun PlaceScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         snackbarHostState = snackbarHostState,
-                        eventsLazyListState = eventsLazyListState,
-                        eventsLazyPagingItems = eventsLazyPagingItems,
+                        lazyListState = eventsLazyListState,
+                        lazyPagingItems = eventsLazyPagingItems,
                         onPagedEventsFlowChange = { pagedEventsFlow = it },
                         onEventClick = onItemClick,
                         filterText = filterText

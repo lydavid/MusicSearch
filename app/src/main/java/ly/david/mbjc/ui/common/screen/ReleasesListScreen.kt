@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
+import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.release.ReleaseListItem
 import timber.log.Timber
@@ -22,7 +23,7 @@ internal fun ReleasesListScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     showMoreInfo: Boolean = true,
-    onReleaseClick: (String, String) -> Unit,
+    onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     viewModel: ReleasesListViewModel = hiltViewModel()
 ) {
     PagingLoadingAndErrorHandler(
@@ -45,7 +46,7 @@ internal fun ReleasesListScreen(
                         }
                     }
                 ) {
-                    onReleaseClick(id, getNameWithDisambiguation())
+                    onReleaseClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
                 }
             }
             else -> {

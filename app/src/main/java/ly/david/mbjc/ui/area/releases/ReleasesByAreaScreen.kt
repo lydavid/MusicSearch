@@ -39,8 +39,6 @@ internal fun ReleasesByAreaScreen(
         lazyListState = releasesLazyListState,
         lazyPagingItems = releasesLazyPagingItems,
         showMoreInfo = showMoreInfo,
-        onReleaseClick = { id, title ->
-            onReleaseClick(MusicBrainzResource.RELEASE, id, title)
-        }
+        onReleaseClick = onReleaseClick
     )
 }

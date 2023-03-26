@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
 
-interface CollectionReleaseGroupDao {
+interface ReleaseGroupsByCollectionDao {
 
     companion object {
         private const val RELEASE_GROUPS_BY_COLLECTION = """

@@ -1,30 +1,28 @@
-package ly.david.data.persistence.event
+package ly.david.data.persistence.collection
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.event.EventRoomModel
 
-@Dao
-abstract class EventPlaceDao : BaseDao<EventPlace>() {
+interface EventsByCollectionDao {
 
     companion object {
-        private const val EVENTS_BY_PLACE = """
+        private const val EVENTS_BY_COLLECTION = """
             FROM event e
-            INNER JOIN event_place ep ON e.id = ep.event_id
-            INNER JOIN place p ON p.id = ep.place_id
-            WHERE p.id = :placeId
+            INNER JOIN collection_entity ce ON e.id = ce.entity_id
+            INNER JOIN collection c ON c.id = ce.id
+            WHERE c.id = :collectionId
         """
 
-        private const val SELECT_EVENT_BY_PLACE = """
+        private const val SELECT_EVENT_BY_COLLECTION = """
             SELECT e.*
-            $EVENTS_BY_PLACE
+            $EVENTS_BY_COLLECTION
         """
 
-        private const val SELECT_EVENT_ID_BY_PLACE = """
+        private const val SELECT_EVENT_ID_BY_COLLECTION = """
             SELECT e.id
-            $EVENTS_BY_PLACE
+            $EVENTS_BY_COLLECTION
         """
 
         private const val ORDER_BY_DATE_NAME = """
@@ -42,43 +40,43 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
     @Query(
         """
         DELETE FROM event WHERE id IN (
-        $SELECT_EVENT_ID_BY_PLACE
+        $SELECT_EVENT_ID_BY_COLLECTION
         )
         """
     )
-    abstract suspend fun deleteEventsByPlace(placeId: String)
+    suspend fun deleteEventsByCollection(collectionId: String)
 
     @Query(
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
-            $EVENTS_BY_PLACE
+            $EVENTS_BY_COLLECTION
             ),
             0
         ) AS count
     """
     )
-    abstract suspend fun getNumberOfEventsByPlace(placeId: String): Int
+    suspend fun getNumberOfEventsByCollection(collectionId: String): Int
 
     @Transaction
     @Query(
         """
-        $SELECT_EVENT_BY_PLACE
+        $SELECT_EVENT_BY_COLLECTION
         $ORDER_BY_DATE_NAME
     """
     )
-    abstract fun getEventsByPlace(placeId: String): PagingSource<Int, EventRoomModel>
+    fun getEventsByCollection(collectionId: String): PagingSource<Int, EventRoomModel>
 
     @Transaction
     @Query(
         """
-        $SELECT_EVENT_BY_PLACE
+        $SELECT_EVENT_BY_COLLECTION
         $FILTERED
         $ORDER_BY_DATE_NAME
     """
     )
-    abstract fun getEventsByPlaceFiltered(
-        placeId: String,
+    fun getEventsByCollectionFiltered(
+        collectionId: String,
         query: String
     ): PagingSource<Int, EventRoomModel>
 }

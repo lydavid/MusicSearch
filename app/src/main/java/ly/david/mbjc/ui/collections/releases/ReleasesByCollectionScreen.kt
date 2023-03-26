@@ -39,8 +39,6 @@ internal fun ReleasesByCollectionScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         showMoreInfo = showMoreInfo,
-        onReleaseClick = { id, title ->
-            onReleaseClick(MusicBrainzResource.RELEASE, id, title)
-        }
+        onReleaseClick = onReleaseClick
     )
 }

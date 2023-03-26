@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.place.events
+package ly.david.mbjc.ui.collections.events
 
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,18 +8,18 @@ import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.BrowseEventsResponse
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.persistence.collection.CollectionEntityDao
+import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.event.EventDao
-import ly.david.data.persistence.event.EventPlace
-import ly.david.data.persistence.event.EventPlaceDao
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.ui.common.EventsByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
-internal class EventsByPlaceViewModel @Inject constructor(
+internal class EventsByCollectionViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val eventPlaceDao: EventPlaceDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     eventDao: EventDao,
     pagedList: PagedList<EventRoomModel, EventListItemModel>,
@@ -30,26 +30,28 @@ internal class EventsByPlaceViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEventsByEntity(entityId: String, offset: Int): BrowseEventsResponse {
-        return musicBrainzApiService.browseEventsByPlace(
-            placeId = entityId,
+        return musicBrainzApiService.browseEventsByCollection(
+            collectionId = entityId,
             offset = offset
         )
     }
 
     override suspend fun insertAllLinkingModels(entityId: String, eventMusicBrainzModels: List<EventMusicBrainzModel>) {
-        eventPlaceDao.insertAll(
+        collectionEntityDao.insertAll(
             eventMusicBrainzModels.map { event ->
-                EventPlace(
-                    eventId = event.id,
-                    placeId = entityId
+                CollectionEntityRoomModel(
+                    id = entityId,
+                    entityId = event.id
                 )
             }
         )
     }
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        eventPlaceDao.deleteEventsByPlace(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.EVENT)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.EVENT)
+        }
     }
 
     override fun getLinkedResourcesPagingSource(
@@ -57,11 +59,11 @@ internal class EventsByPlaceViewModel @Inject constructor(
         query: String
     ): PagingSource<Int, EventRoomModel> = when {
         query.isEmpty() -> {
-            eventPlaceDao.getEventsByPlace(resourceId)
+            collectionEntityDao.getEventsByCollection(resourceId)
         }
         else -> {
-            eventPlaceDao.getEventsByPlaceFiltered(
-                placeId = resourceId,
+            collectionEntityDao.getEventsByCollectionFiltered(
+                collectionId = resourceId,
                 query = "%$query%"
             )
         }

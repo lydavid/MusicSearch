@@ -5,7 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.recording.RecordingForListItem
 
-interface CollectionRecordingDao {
+interface RecordingsByCollectionDao {
 
     companion object {
         private const val RECORDINGS_BY_COLLECTION = """

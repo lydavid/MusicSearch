@@ -39,8 +39,6 @@ internal fun ReleaseGroupsByCollectionScreen(
         snackbarHostState = snackbarHostState,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        onReleaseGroupClick = { id, title ->
-            onReleaseGroupClick(MusicBrainzResource.RELEASE_GROUP, id, title)
-        }
+        onReleaseGroupClick = onReleaseGroupClick
     )
 }

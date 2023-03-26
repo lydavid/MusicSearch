@@ -5,7 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.place.PlaceRoomModel
 
-interface CollectionPlaceDao {
+interface PlacesByCollectionDao {
 
     companion object {
         private const val PLACES_BY_COLLECTION = """

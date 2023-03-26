@@ -5,7 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.persistence.release.ReleaseForListItem
 
-interface CollectionReleaseDao {
+interface ReleasesByCollectionDao {
 
     // TODO: note it may be possible that a release gets deleted locally, meaning we won't be able to join it...
     //  don't really need to deal with this for now cause we only allow deleting when refreshing
@@ -25,11 +25,6 @@ interface CollectionReleaseDao {
             $RELEASES_BY_COLLECTION
         """
 
-        private const val SELECT_RELEASES_ID_BY_COLLECTION = """
-            SELECT r.id
-            $RELEASES_BY_COLLECTION
-        """
-
         private const val ORDER_BY_DATE_AND_TITLE = """
             ORDER BY r.date, r.name
         """
@@ -42,34 +37,6 @@ interface CollectionReleaseDao {
             )
         """
     }
-
-    //    @Query(
-//        """
-//        DELETE FROM release WHERE id IN (
-//        $SELECT_RELEASES_ID_BY_COLLECTION
-//        )
-//        """
-//    )
-//    abstract suspend fun deleteReleasesByArtist(artistId: String)
-//
-    @Query("DELETE FROM collection_entity WHERE id = :collectionId")
-    suspend fun deleteCollectionEntityLinks(collectionId: String)
-
-//    @Query(
-//        """
-//        SELECT IFNULL(
-//            (SELECT COUNT(*) FROM
-//                (SELECT DISTINCT ar.release_id, ar.artist_id
-//                FROM release r
-//                INNER JOIN artist_release ar ON r.id = ar.release_id
-//                INNER JOIN artist a ON a.id = ar.artist_id
-//                WHERE a.id = :artistId)
-//            ),
-//            0
-//        ) AS count
-//    """
-//    )
-//    abstract suspend fun getNumberOfReleasesByArtist(artistId: String): Int
 
     @Transaction
     @Query(

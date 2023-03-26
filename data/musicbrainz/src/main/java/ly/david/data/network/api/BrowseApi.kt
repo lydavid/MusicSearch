@@ -21,6 +21,13 @@ internal const val LABELS = "labels"
 interface BrowseApi {
 
     @GET("event")
+    suspend fun browseEventsByCollection(
+        @Query("collection") collectionId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowseEventsResponse
+
+    @GET("event")
     suspend fun browseEventsByPlace(
         @Query("place") placeId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,

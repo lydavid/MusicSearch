@@ -38,8 +38,6 @@ internal fun RecordingsByWorkScreen(
         snackbarHostState = snackbarHostState,
         lazyListState = recordingsLazyListState,
         lazyPagingItems = recordingsLazyPagingItems,
-        onRecordingClick = { id, title ->
-            onRecordingClick(MusicBrainzResource.RECORDING, id, title)
-        }
+        onRecordingClick = onRecordingClick
     )
 }
