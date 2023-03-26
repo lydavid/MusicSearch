@@ -143,7 +143,7 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
 
     // Coil
-    implementation("io.coil-kt:coil-base:2.2.2")
+    implementation("io.coil-kt:coil-base:2.3.0")
     implementation("io.coil-kt:coil-compose:2.2.2")
 
     // Tried this for UScript.getName(UScript.getCodeFromName(it))
