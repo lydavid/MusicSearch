@@ -144,7 +144,7 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-base:2.3.0")
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("io.coil-kt:coil-compose:2.3.0")
 
     // Tried this for UScript.getName(UScript.getCodeFromName(it))
 //    implementation "com.ibm.icu:icu4j:72.1"
