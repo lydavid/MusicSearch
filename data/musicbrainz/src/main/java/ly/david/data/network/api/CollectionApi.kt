@@ -33,5 +33,5 @@ interface CollectionApi {
 data class BrowseCollectionResponse(
     @Json(name = "collection-count") override val count: Int,
     @Json(name = "collection-offset") override val offset: Int,
-    @Json(name = "collections") val collections: List<CollectionMusicBrainzModel>
-) : Browsable
+    @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>
+) : Browsable<CollectionMusicBrainzModel>

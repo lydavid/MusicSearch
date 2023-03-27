@@ -42,7 +42,7 @@ internal abstract class ReleaseGroupsByEntityViewModel(
                 browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE_GROUP,
-                    localCount = response.releaseGroups.size,
+                    localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
@@ -50,11 +50,11 @@ internal abstract class ReleaseGroupsByEntityViewModel(
             relationDao.incrementLocalCountForResource(
                 resourceId = resourceId,
                 browseResource = MusicBrainzResource.RELEASE_GROUP,
-                additionalOffset = response.releaseGroups.size
+                additionalOffset = response.musicBrainzModels.size
             )
         }
 
-        val releaseGroupMusicBrainzModels = response.releaseGroups
+        val releaseGroupMusicBrainzModels = response.musicBrainzModels
         releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(releaseGroupMusicBrainzModels)
         insertAllLinkingModels(resourceId, releaseGroupMusicBrainzModels)
 

@@ -24,6 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.ListItemModel
@@ -32,6 +33,7 @@ import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.mbjc.ui.collections.events.EventsByCollectionScreen
 import ly.david.mbjc.ui.collections.places.PlacesByCollectionScreen
 import ly.david.mbjc.ui.collections.recordings.RecordingsByCollectionScreen
@@ -68,6 +70,12 @@ internal fun MusicBrainzCollectionScaffold(
     var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
     var entity: MusicBrainzResource? by rememberSaveable { mutableStateOf(null) }
     var filterText by rememberSaveable { mutableStateOf("") }
+
+    val artistsLazyListState = rememberLazyListState()
+    var pagedArtistsFlow: Flow<PagingData<ArtistListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val artistsLazyPagingItems: LazyPagingItems<ArtistListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedArtistsFlow)
+            .collectAsLazyPagingItems()
 
     val eventsLazyListState = rememberLazyListState()
     var pagedEventsFlow: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -139,6 +147,21 @@ internal fun MusicBrainzCollectionScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         when (entity) {
+            MusicBrainzResource.ARTIST -> {
+                ArtistsByCollectionScreen(
+                    collectionId = collectionId,
+                    filterText = filterText,
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = artistsLazyListState,
+                    lazyPagingItems = artistsLazyPagingItems,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    onPagedArtistsFlowChange = { pagedArtistsFlow = it },
+                    onArtistClick = onItemClick
+                )
+            }
             MusicBrainzResource.EVENT -> {
                 EventsByCollectionScreen(
                     collectionId = collectionId,

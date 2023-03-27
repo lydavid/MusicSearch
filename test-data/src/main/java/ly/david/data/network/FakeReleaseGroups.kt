@@ -28,7 +28,7 @@ val fakeReleaseGroupWithArtistCredits = ReleaseGroupMusicBrainzModel(
 val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     count = 1,
     offset = 0,
-    releaseGroups = listOf(fakeReleaseGroup)
+    musicBrainzModels = listOf(fakeReleaseGroup)
 )
 
 val fakeReleaseGroups = listOf(

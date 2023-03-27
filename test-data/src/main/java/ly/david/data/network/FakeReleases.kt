@@ -50,7 +50,7 @@ val fakeReleases = listOf(
 val browseReleasesResponse = BrowseReleasesResponse(
     count = 1,
     offset = 0,
-    releases = listOf(fakeRelease)
+    musicBrainzModels = listOf(fakeRelease)
 )
 
 val searchReleasesResponse = SearchReleasesResponse(

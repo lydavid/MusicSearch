@@ -1,7 +1,9 @@
 package ly.david.data.network.api
 
 import com.squareup.moshi.Json
+import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
+import ly.david.data.network.MusicBrainzModel
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
@@ -19,6 +21,13 @@ internal const val LABELS = "labels"
  * This is the only type of request with pagination.
  */
 interface BrowseApi {
+
+    @GET("artist")
+    suspend fun browseArtistsByCollection(
+        @Query("collection") collectionId: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+    ): BrowseArtistsResponse
 
     @GET("event")
     suspend fun browseEventsByCollection(
@@ -128,37 +137,44 @@ interface BrowseApi {
 /**
  * Generic response fields from a Browse request.
  */
-interface Browsable {
+interface Browsable<MM : MusicBrainzModel> {
     val count: Int
     val offset: Int
+    val musicBrainzModels: List<MM>
 }
+
+data class BrowseArtistsResponse(
+    @Json(name = "artist-count") override val count: Int,
+    @Json(name = "artist-offset") override val offset: Int,
+    @Json(name = "artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>
+) : Browsable<ArtistMusicBrainzModel>
 
 data class BrowseEventsResponse(
     @Json(name = "event-count") override val count: Int,
     @Json(name = "event-offset") override val offset: Int,
-    @Json(name = "events") val events: List<EventMusicBrainzModel>
-) : Browsable
+    @Json(name = "events") override val musicBrainzModels: List<EventMusicBrainzModel>
+) : Browsable<EventMusicBrainzModel>
 
 data class BrowsePlacesResponse(
     @Json(name = "place-count") override val count: Int,
     @Json(name = "place-offset") override val offset: Int,
-    @Json(name = "places") val places: List<PlaceMusicBrainzModel>
-) : Browsable
+    @Json(name = "places") override val musicBrainzModels: List<PlaceMusicBrainzModel>
+) : Browsable<PlaceMusicBrainzModel>
 
 data class BrowseRecordingsResponse(
     @Json(name = "recording-count") override val count: Int,
     @Json(name = "recording-offset") override val offset: Int,
-    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
-) : Browsable
+    @Json(name = "recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>
+) : Browsable<RecordingMusicBrainzModel>
 
 data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,
     @Json(name = "release-offset") override val offset: Int,
-    @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
-) : Browsable
+    @Json(name = "releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>
+) : Browsable<ReleaseMusicBrainzModel>
 
 data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") override val count: Int,
     @Json(name = "release-group-offset") override val offset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
-) : Browsable
+    @Json(name = "release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>
+) : Browsable<ReleaseGroupMusicBrainzModel>

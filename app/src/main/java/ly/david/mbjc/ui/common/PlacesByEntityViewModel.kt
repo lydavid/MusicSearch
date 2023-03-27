@@ -44,15 +44,15 @@ internal abstract class PlacesByEntityViewModel(
                 browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.PLACE,
-                    localCount = response.places.size,
+                    localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.PLACE, response.places.size)
+            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.PLACE, response.musicBrainzModels.size)
         }
 
-        val placeMusicBrainzModels = response.places
+        val placeMusicBrainzModels = response.musicBrainzModels
         placeDao.insertAll(placeMusicBrainzModels.map { it.toPlaceRoomModel() })
         insertAllLinkingModels(resourceId, placeMusicBrainzModels)
 

@@ -44,7 +44,7 @@ internal abstract class RecordingsByEntityViewModel(
                 browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.RECORDING,
-                    localCount = response.recordings.size,
+                    localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
@@ -52,11 +52,11 @@ internal abstract class RecordingsByEntityViewModel(
             relationDao.incrementLocalCountForResource(
                 resourceId,
                 MusicBrainzResource.RECORDING,
-                response.recordings.size
+                response.musicBrainzModels.size
             )
         }
 
-        val recordingMusicBrainzModels = response.recordings
+        val recordingMusicBrainzModels = response.musicBrainzModels
         recordingDao.insertAll(recordingMusicBrainzModels.map { it.toRoomModel() })
         insertAllLinkingModels(resourceId, recordingMusicBrainzModels)
 

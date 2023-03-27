@@ -24,7 +24,7 @@ val fakeEvents = listOf(
 val browseEventsResponse = BrowseEventsResponse(
     count = 1,
     offset = 0,
-    events = listOf(fakeEvent)
+    musicBrainzModels = listOf(fakeEvent)
 )
 
 val searchEventsResponse = SearchEventsResponse(

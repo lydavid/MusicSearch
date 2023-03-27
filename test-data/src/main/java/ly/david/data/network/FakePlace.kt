@@ -48,7 +48,7 @@ val fakePlaces = listOf(
 val browsePlacesResponse = BrowsePlacesResponse(
     count = 1,
     offset = 0,
-    places = listOf(fakePlace)
+    musicBrainzModels = listOf(fakePlace)
 )
 
 val searchPlacesResponse = SearchPlacesResponse(

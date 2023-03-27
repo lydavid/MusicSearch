@@ -44,7 +44,7 @@ internal abstract class ReleasesByEntityViewModel(
                 browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE,
-                    localCount = response.releases.size,
+                    localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
@@ -52,11 +52,11 @@ internal abstract class ReleasesByEntityViewModel(
             relationDao.incrementLocalCountForResource(
                 resourceId = resourceId,
                 browseResource = MusicBrainzResource.RELEASE,
-                additionalOffset = response.releases.size
+                additionalOffset = response.musicBrainzModels.size
             )
         }
 
-        val releaseMusicBrainzModels = response.releases
+        val releaseMusicBrainzModels = response.musicBrainzModels
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
         insertAllLinkingModels(resourceId, releaseMusicBrainzModels)
 

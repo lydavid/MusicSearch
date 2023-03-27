@@ -250,4 +250,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseEventsByCollection(collectionId: String, limit: Int, offset: Int): BrowseEventsResponse {
         TODO("Not yet implemented")
     }
+
+    override suspend fun browseArtistsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseArtistsResponse {
+        TODO("Not yet implemented")
+    }
 }
