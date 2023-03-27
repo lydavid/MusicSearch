@@ -7,7 +7,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,21 +23,31 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.InstrumentListItemModel
+import ly.david.data.domain.LabelListItemModel
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.domain.ReleaseListItemModel
+import ly.david.data.domain.SeriesListItemModel
+import ly.david.data.domain.WorkListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.collections.areas.AreasByCollectionScreen
 import ly.david.mbjc.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.mbjc.ui.collections.events.EventsByCollectionScreen
+import ly.david.mbjc.ui.collections.instruments.InstrumentsByCollectionScreen
+import ly.david.mbjc.ui.collections.labels.LabelsByCollectionScreen
 import ly.david.mbjc.ui.collections.places.PlacesByCollectionScreen
 import ly.david.mbjc.ui.collections.recordings.RecordingsByCollectionScreen
 import ly.david.mbjc.ui.collections.releasegroups.ReleaseGroupsByCollectionScreen
 import ly.david.mbjc.ui.collections.releases.ReleasesByCollectionScreen
+import ly.david.mbjc.ui.collections.series.SeriesByCollectionScreen
+import ly.david.mbjc.ui.collections.works.WorksByCollectionScreen
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
@@ -71,6 +80,12 @@ internal fun MusicBrainzCollectionScaffold(
     var entity: MusicBrainzResource? by rememberSaveable { mutableStateOf(null) }
     var filterText by rememberSaveable { mutableStateOf("") }
 
+    val areasLazyListState = rememberLazyListState()
+    var pagedAreasFlow: Flow<PagingData<AreaListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val areasLazyPagingItems: LazyPagingItems<AreaListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedAreasFlow)
+            .collectAsLazyPagingItems()
+
     val artistsLazyListState = rememberLazyListState()
     var pagedArtistsFlow: Flow<PagingData<ArtistListItemModel>> by remember { mutableStateOf(emptyFlow()) }
     val artistsLazyPagingItems: LazyPagingItems<ArtistListItemModel> =
@@ -81,6 +96,18 @@ internal fun MusicBrainzCollectionScaffold(
     var pagedEventsFlow: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
     val eventsLazyPagingItems: LazyPagingItems<EventListItemModel> =
         rememberFlowWithLifecycleStarted(pagedEventsFlow)
+            .collectAsLazyPagingItems()
+
+    val instrumentsLazyListState = rememberLazyListState()
+    var pagedInstrumentsFlow: Flow<PagingData<InstrumentListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val instrumentsLazyPagingItems: LazyPagingItems<InstrumentListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedInstrumentsFlow)
+            .collectAsLazyPagingItems()
+
+    val labelsLazyListState = rememberLazyListState()
+    var pagedLabelsFlow: Flow<PagingData<LabelListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val labelsLazyPagingItems: LazyPagingItems<LabelListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedLabelsFlow)
             .collectAsLazyPagingItems()
 
     val placesLazyListState = rememberLazyListState()
@@ -105,6 +132,18 @@ internal fun MusicBrainzCollectionScaffold(
     var pagedReleaseGroups: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
     val releaseGroupsLazyPagingItems = rememberFlowWithLifecycleStarted(pagedReleaseGroups)
         .collectAsLazyPagingItems()
+
+    val seriesLazyListState = rememberLazyListState()
+    var pagedSeriesFlow: Flow<PagingData<SeriesListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val seriesLazyPagingItems: LazyPagingItems<SeriesListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedSeriesFlow)
+            .collectAsLazyPagingItems()
+
+    val worksLazyListState = rememberLazyListState()
+    var pagedWorksFlow: Flow<PagingData<WorkListItemModel>> by remember { mutableStateOf(emptyFlow()) }
+    val worksLazyPagingItems: LazyPagingItems<WorkListItemModel> =
+        rememberFlowWithLifecycleStarted(pagedWorksFlow)
+            .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = collectionId) {
         collection = viewModel.getCollection(collectionId)
@@ -147,6 +186,21 @@ internal fun MusicBrainzCollectionScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         when (entity) {
+            MusicBrainzResource.AREA -> {
+                AreasByCollectionScreen(
+                    collectionId = collectionId,
+                    filterText = filterText,
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = areasLazyListState,
+                    lazyPagingItems = areasLazyPagingItems,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    onPagedAreasFlowChange = { pagedAreasFlow = it },
+                    onAreaClick = onItemClick
+                )
+            }
             MusicBrainzResource.ARTIST -> {
                 ArtistsByCollectionScreen(
                     collectionId = collectionId,
@@ -175,6 +229,36 @@ internal fun MusicBrainzCollectionScaffold(
                         .nestedScroll(scrollBehavior.nestedScrollConnection),
                     onPagedEventsFlowChange = { pagedEventsFlow = it },
                     onEventClick = onItemClick
+                )
+            }
+            MusicBrainzResource.INSTRUMENT -> {
+                InstrumentsByCollectionScreen(
+                    collectionId = collectionId,
+                    filterText = filterText,
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = instrumentsLazyListState,
+                    lazyPagingItems = instrumentsLazyPagingItems,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    onPagedInstrumentsFlowChange = { pagedInstrumentsFlow = it },
+                    onInstrumentClick = onItemClick
+                )
+            }
+            MusicBrainzResource.LABEL -> {
+                LabelsByCollectionScreen(
+                    collectionId = collectionId,
+                    filterText = filterText,
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = labelsLazyListState,
+                    lazyPagingItems = labelsLazyPagingItems,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    onPagedLabelsFlowChange = { pagedLabelsFlow = it },
+                    onLabelClick = onItemClick
                 )
             }
             MusicBrainzResource.PLACE -> {
@@ -241,11 +325,43 @@ internal fun MusicBrainzCollectionScaffold(
                     }
                 )
             }
+            MusicBrainzResource.SERIES -> {
+                SeriesByCollectionScreen(
+                    collectionId = collectionId,
+                    filterText = filterText,
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = seriesLazyListState,
+                    lazyPagingItems = seriesLazyPagingItems,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    onPagedSeriesFlowChange = { pagedSeriesFlow = it },
+                    onSeriesClick = onItemClick
+                )
+            }
+            MusicBrainzResource.WORK -> {
+                WorksByCollectionScreen(
+                    collectionId = collectionId,
+                    filterText = filterText,
+                    snackbarHostState = snackbarHostState,
+                    lazyListState = worksLazyListState,
+                    lazyPagingItems = worksLazyPagingItems,
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                    onPagedWorksFlowChange = { pagedWorksFlow = it },
+                    onWorkClick = onItemClick
+                )
+            }
+            MusicBrainzResource.COLLECTION,
+            MusicBrainzResource.GENRE,
+            MusicBrainzResource.URL -> {
+                error("Collections by ${entity?.name} not supported.")
+            }
             null -> {
                 FullScreenLoadingIndicator()
-            }
-            else -> {
-                Text(text = collectionId)
             }
         }
     }

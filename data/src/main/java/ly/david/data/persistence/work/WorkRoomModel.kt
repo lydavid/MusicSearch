@@ -19,7 +19,7 @@ data class WorkRoomModel(
     @ColumnInfo(name = "iswcs", defaultValue = "null") override val iswcs: List<String>? = null,
 ) : RoomModel, Work
 
-internal fun WorkMusicBrainzModel.toWorkRoomModel() =
+fun WorkMusicBrainzModel.toWorkRoomModel() =
     WorkRoomModel(
         id = id,
         name = name,

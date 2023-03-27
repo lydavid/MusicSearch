@@ -26,7 +26,7 @@ internal fun LabelMusicBrainzModel.toLabelListItemModel() =
         labelCode = labelCode
     )
 
-internal fun LabelRoomModel.toLabelListItemModel() =
+fun LabelRoomModel.toLabelListItemModel() =
     LabelListItemModel(
         id = id,
         name = name,

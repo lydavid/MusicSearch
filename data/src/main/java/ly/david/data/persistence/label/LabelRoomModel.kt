@@ -27,7 +27,7 @@ data class LabelRoomModel(
     override val labelCode: Int? = null,
 ) : RoomModel, Label
 
-internal fun LabelMusicBrainzModel.toLabelRoomModel() =
+fun LabelMusicBrainzModel.toLabelRoomModel() =
     LabelRoomModel(
         id = id,
         name = name,

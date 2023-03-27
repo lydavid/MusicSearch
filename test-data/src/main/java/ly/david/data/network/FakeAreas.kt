@@ -1,6 +1,7 @@
 package ly.david.data.network
 
 import ly.david.data.AreaType
+import ly.david.data.network.api.BrowseAreasResponse
 import ly.david.data.network.api.SearchAreasResponse
 
 /**
@@ -39,8 +40,14 @@ val fakeAreas = listOf(
     fakeAreaWithRelation
 )
 
+val browseAreasResponse = BrowseAreasResponse(
+    count = 1,
+    offset = 0,
+    musicBrainzModels = listOf(fakeArea)
+)
+
 val searchAreasResponse = SearchAreasResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeArea)
+    areas = listOf(element = fakeArea)
 )

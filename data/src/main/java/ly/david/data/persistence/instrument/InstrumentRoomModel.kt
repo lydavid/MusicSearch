@@ -26,7 +26,7 @@ data class InstrumentRoomModel(
     override val description: String?,
 ) : RoomModel, Instrument
 
-internal fun InstrumentMusicBrainzModel.toInstrumentRoomModel() =
+fun InstrumentMusicBrainzModel.toInstrumentRoomModel() =
     InstrumentRoomModel(
         id = id,
         name = name,

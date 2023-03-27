@@ -14,6 +14,6 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): MusicBrainzModel =
         MusicBrainzResource.RELEASE_GROUP -> fakeReleaseGroup
         MusicBrainzResource.SERIES -> fakeSeries
         MusicBrainzResource.WORK -> fakeWorkWithAllData
-        MusicBrainzResource.URL -> TODO() // url doesn't have name with disambiguation
-        MusicBrainzResource.COLLECTION -> TODO()
+        MusicBrainzResource.URL,
+        MusicBrainzResource.COLLECTION -> error("Not supported.")
     }

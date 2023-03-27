@@ -19,7 +19,7 @@ interface CollectionApi {
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
         @Query("inc") include: String? = null
-    ): BrowseCollectionResponse
+    ): BrowseCollectionsResponse
 
     @PUT("collection/{collectionId}/{resourceUriPlural}/{mbids}")
     suspend fun uploadToCollection(
@@ -30,7 +30,7 @@ interface CollectionApi {
     )
 }
 
-data class BrowseCollectionResponse(
+data class BrowseCollectionsResponse(
     @Json(name = "collection-count") override val count: Int,
     @Json(name = "collection-offset") override val offset: Int,
     @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>

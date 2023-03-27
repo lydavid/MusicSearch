@@ -13,6 +13,8 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.network.browseAreasResponse
+import ly.david.data.network.browseCollectionsResponse
 import ly.david.data.network.browseEventsResponse
 import ly.david.data.network.browsePlacesResponse
 import ly.david.data.network.browseRecordingsResponse
@@ -204,8 +206,8 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         limit: Int,
         offset: Int,
         include: String?
-    ): BrowseCollectionResponse {
-        TODO("Not yet implemented")
+    ): BrowseCollectionsResponse {
+        return browseCollectionsResponse
     }
 
     override suspend fun uploadToCollection(
@@ -256,6 +258,30 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         limit: Int,
         offset: Int
     ): BrowseArtistsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun browseAreasByCollection(collectionId: String, limit: Int, offset: Int): BrowseAreasResponse {
+        return browseAreasResponse
+    }
+
+    override suspend fun browseInstrumentsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseInstrumentsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun browseLabelsByCollection(collectionId: String, limit: Int, offset: Int): BrowseLabelsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun browseSeriesByCollection(collectionId: String, limit: Int, offset: Int): BrowseSeriesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun browseWorksByCollection(collectionId: String, limit: Int, offset: Int): BrowseWorksResponse {
         TODO("Not yet implemented")
     }
 }

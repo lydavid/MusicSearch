@@ -5,11 +5,11 @@ import com.squareup.moshi.Json
 data class CollectionMusicBrainzModel(
     @Json(name = "id") override val id: String,
     @Json(name = "name") override val name: String,
-    override val disambiguation: String?, // TODO: unused, is MusicBrainzModel too strict?
+    override val disambiguation: String? = null, // TODO: unused, is MusicBrainzModel too strict?
     @Json(name = "entity-type") val entity: MusicBrainzResource,
     @Json(name = "type") val type: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
-    @Json(name = "editor") val editor: String,
+    @Json(name = "editor") val editor: String = "",
 
     @Json(name = "area-count") val areaCount: Int? = null,
     @Json(name = "artist-count") val artistCount: Int? = null,
