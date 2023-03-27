@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.RecordingListItemModel
+import ly.david.data.domain.toRecordingListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
@@ -12,8 +13,9 @@ import ly.david.data.persistence.collection.CollectionEntityDao
 import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.RecordingForListItem
+import ly.david.data.persistence.recording.toRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.RecordingsByEntityViewModel
+import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
@@ -21,15 +23,16 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
-    recordingDao: RecordingDao,
+    private val recordingDao: RecordingDao,
     pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
-) : RecordingsByEntityViewModel(
+) : BrowseEntitiesByEntityViewModel
+<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
+    byEntity = MusicBrainzResource.RECORDING,
     relationDao = relationDao,
-    recordingDao = recordingDao,
     pagedList = pagedList
 ) {
 
-    override suspend fun browseRecordingsByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
+    override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
         return musicBrainzApiService.browseRecordingsByCollection(
             collectionId = entityId,
             offset = offset
@@ -38,10 +41,11 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        recordingMusicBrainzModels: List<RecordingMusicBrainzModel>
+        musicBrainzModels: List<RecordingMusicBrainzModel>
     ) {
+        recordingDao.insertAll(musicBrainzModels.map { it.toRoomModel() })
         collectionEntityDao.insertAll(
-            recordingMusicBrainzModels.map { recording ->
+            musicBrainzModels.map { recording ->
                 CollectionEntityRoomModel(
                     id = entityId,
                     entityId = recording.id
@@ -70,5 +74,9 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
+    }
+
+    override fun transformRoomToListItemModel(roomModel: RecordingForListItem): RecordingListItemModel {
+        return roomModel.toRecordingListItemModel()
     }
 }

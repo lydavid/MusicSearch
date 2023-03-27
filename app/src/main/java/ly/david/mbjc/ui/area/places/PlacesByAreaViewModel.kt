@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.toPlaceListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
@@ -12,8 +13,9 @@ import ly.david.data.persistence.area.AreaPlace
 import ly.david.data.persistence.area.AreaPlaceDao
 import ly.david.data.persistence.place.PlaceDao
 import ly.david.data.persistence.place.PlaceRoomModel
+import ly.david.data.persistence.place.toPlaceRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.PlacesByEntityViewModel
+import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
@@ -21,24 +23,25 @@ internal class PlacesByAreaViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val areaPlaceDao: AreaPlaceDao,
     private val relationDao: RelationDao,
-    placeDao: PlaceDao,
+    private val placeDao: PlaceDao,
     pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
-) : PlacesByEntityViewModel(
+) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
+    byEntity = MusicBrainzResource.PLACE,
     relationDao = relationDao,
-    placeDao = placeDao,
     pagedList = pagedList
 ) {
 
-    override suspend fun browsePlacesByEntity(entityId: String, offset: Int): BrowsePlacesResponse {
+    override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowsePlacesResponse {
         return musicBrainzApiService.browsePlacesByArea(
             areaId = entityId,
             offset = offset
         )
     }
 
-    override suspend fun insertAllLinkingModels(entityId: String, placeMusicBrainzModels: List<PlaceMusicBrainzModel>) {
+    override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<PlaceMusicBrainzModel>) {
+        placeDao.insertAll(musicBrainzModels.map { it.toPlaceRoomModel() })
         areaPlaceDao.insertAll(
-            placeMusicBrainzModels.map { place ->
+            musicBrainzModels.map { place ->
                 AreaPlace(
                     areaId = entityId,
                     placeId = place.id
@@ -65,5 +68,9 @@ internal class PlacesByAreaViewModel @Inject constructor(
                 query = "%$query%"
             )
         }
+    }
+
+    override fun transformRoomToListItemModel(roomModel: PlaceRoomModel): PlaceListItemModel {
+        return roomModel.toPlaceListItemModel()
     }
 }
