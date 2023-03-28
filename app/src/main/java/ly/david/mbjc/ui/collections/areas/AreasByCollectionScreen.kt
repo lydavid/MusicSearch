@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 @Composable
 internal fun AreasByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -30,6 +31,7 @@ internal fun AreasByCollectionScreen(
     viewModel: AreasByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedAreasFlowChange(viewModel.pagedResources)
     }

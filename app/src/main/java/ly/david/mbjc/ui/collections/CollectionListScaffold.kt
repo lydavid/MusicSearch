@@ -36,7 +36,7 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun CollectionListScaffold(
     modifier: Modifier = Modifier,
-    onCollectionClick: (id: String) -> Unit = {},
+    onCollectionClick: (id: String, isRemote: Boolean) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {},
     viewModel: CollectionListViewModel = hiltViewModel()
 ) {
@@ -85,7 +85,7 @@ internal fun CollectionListScaffold(
                     CollectionListItem(
                         collection = collectionListItemModel,
                         modifier = Modifier.animateItemPlacement(),
-                        onClick = { onCollectionClick(id) }
+                        onClick = { onCollectionClick(id, isRemote) }
                     )
                 }
                 else -> {

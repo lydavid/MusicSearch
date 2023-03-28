@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.instrument.InstrumentListItem
 @Composable
 internal fun InstrumentsByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -30,6 +31,7 @@ internal fun InstrumentsByCollectionScreen(
     viewModel: InstrumentsByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedInstrumentsFlowChange(viewModel.pagedResources)
     }

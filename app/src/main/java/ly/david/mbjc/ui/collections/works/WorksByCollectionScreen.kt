@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.work.WorkListItem
 @Composable
 internal fun WorksByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -30,6 +31,7 @@ internal fun WorksByCollectionScreen(
     viewModel: WorksByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedWorksFlowChange(viewModel.pagedResources)
     }

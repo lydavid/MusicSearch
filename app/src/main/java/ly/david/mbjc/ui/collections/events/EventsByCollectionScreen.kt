@@ -16,6 +16,7 @@ import ly.david.mbjc.ui.common.screen.EventsListScreen
 @Composable
 internal fun EventsByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -26,6 +27,7 @@ internal fun EventsByCollectionScreen(
     viewModel: EventsByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedEventsFlowChange(viewModel.pagedResources)
     }

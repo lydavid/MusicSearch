@@ -74,6 +74,12 @@ Search `collectableResources` to find all the entities that can be collected.
   - So we can only update existing collections
 
 ### Local collections
-- [ ] Make a separate scaffold for it
 - [ ] Allow filtering local/remote collections from list of collections screen (this helps convey their difference)
   - see GitHub's filter pills
+
+
+### Testing
+- [ ] Filter list of collection
+- [ ] Click on each collection type
+  - [ ] Need to fake/mock datastore username
+  - [ ] Click on an entity inside each collection

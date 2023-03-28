@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.series.SeriesListItem
 @Composable
 internal fun SeriesByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -30,6 +31,7 @@ internal fun SeriesByCollectionScreen(
     viewModel: SeriesByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedSeriesFlowChange(viewModel.pagedResources)
     }

@@ -16,6 +16,7 @@ import ly.david.mbjc.ui.common.screen.RecordingsListScreen
 @Composable
 internal fun RecordingsByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -26,6 +27,7 @@ internal fun RecordingsByCollectionScreen(
     viewModel: RecordingsByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedRecordingsFlowChange(viewModel.pagedResources)
     }

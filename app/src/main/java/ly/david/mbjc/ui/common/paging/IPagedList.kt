@@ -8,11 +8,13 @@ import ly.david.data.domain.ListItemModel
 internal interface IPagedList<LI : ListItemModel> {
     data class ViewModelState(
         val resourceId: String = "",
-        val query: String = ""
+        val query: String = "",
+        val isRemote: Boolean = true
     )
 
     val resourceId: MutableStateFlow<String>
     val query: MutableStateFlow<String>
+    val isRemote: MutableStateFlow<Boolean>
 
     fun loadPagedResources(resourceId: String) {
         this.resourceId.value = resourceId
@@ -22,6 +24,10 @@ internal interface IPagedList<LI : ListItemModel> {
         this.query.value = query
     }
 
+    fun setRemote(isRemote: Boolean) {
+        this.isRemote.value = isRemote
+    }
+
     val pagedResources: Flow<PagingData<LI>>
 }
 
@@ -29,6 +35,7 @@ internal interface SortablePagedList<LI : ListItemModel> : IPagedList<LI> {
     data class ViewModelState(
         val resourceId: String = "",
         val query: String = "",
+        val isRemote: Boolean = true,
         val sorted: Boolean = false
     )
 

@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 @Composable
 internal fun ArtistsByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -30,6 +31,7 @@ internal fun ArtistsByCollectionScreen(
     viewModel: ArtistsByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedArtistsFlowChange(viewModel.pagedResources)
     }

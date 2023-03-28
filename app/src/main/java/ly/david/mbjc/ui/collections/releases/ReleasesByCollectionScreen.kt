@@ -16,6 +16,7 @@ import ly.david.mbjc.ui.common.screen.ReleasesListScreen
 @Composable
 internal fun ReleasesByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     showMoreInfo: Boolean,
     snackbarHostState: SnackbarHostState,
@@ -27,6 +28,7 @@ internal fun ReleasesByCollectionScreen(
     viewModel: ReleasesByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedReleasesFlowChange(viewModel.pagedResources)
     }

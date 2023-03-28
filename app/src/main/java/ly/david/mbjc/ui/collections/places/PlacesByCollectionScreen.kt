@@ -16,6 +16,7 @@ import ly.david.mbjc.ui.common.screen.PlacesListScreen
 @Composable
 internal fun PlacesByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -26,6 +27,7 @@ internal fun PlacesByCollectionScreen(
     viewModel: PlacesByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedPlacesFlowChange(viewModel.pagedResources)
     }

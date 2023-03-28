@@ -20,6 +20,7 @@ import ly.david.mbjc.ui.label.LabelListItem
 @Composable
 internal fun LabelsByCollectionScreen(
     collectionId: String,
+    isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -30,6 +31,7 @@ internal fun LabelsByCollectionScreen(
     viewModel: LabelsByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
+        viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
         onPagedLabelsFlowChange(viewModel.pagedResources)
     }

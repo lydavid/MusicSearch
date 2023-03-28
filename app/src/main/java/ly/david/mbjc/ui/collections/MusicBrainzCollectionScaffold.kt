@@ -64,6 +64,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 @Composable
 internal fun MusicBrainzCollectionScaffold(
     collectionId: String,
+    isRemote: Boolean,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -189,6 +190,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.AREA -> {
                 AreasByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = areasLazyListState,
@@ -204,6 +206,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.ARTIST -> {
                 ArtistsByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = artistsLazyListState,
@@ -219,6 +222,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.EVENT -> {
                 EventsByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = eventsLazyListState,
@@ -234,6 +238,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.INSTRUMENT -> {
                 InstrumentsByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = instrumentsLazyListState,
@@ -249,6 +254,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.LABEL -> {
                 LabelsByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = labelsLazyListState,
@@ -264,6 +270,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.PLACE -> {
                 PlacesByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = placesLazyListState,
@@ -279,6 +286,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.RECORDING -> {
                 RecordingsByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = recordingsLazyListState,
@@ -294,6 +302,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.RELEASE -> {
                 ReleasesByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     showMoreInfo = showMoreInfoInReleaseListItem,
                     snackbarHostState = snackbarHostState,
@@ -310,6 +319,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.RELEASE_GROUP -> {
                 ReleaseGroupsByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     isSorted = sortReleaseGroupListItems,
                     snackbarHostState = snackbarHostState,
@@ -328,6 +338,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.SERIES -> {
                 SeriesByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = seriesLazyListState,
@@ -343,6 +354,7 @@ internal fun MusicBrainzCollectionScaffold(
             MusicBrainzResource.WORK -> {
                 WorksByCollectionScreen(
                     collectionId = collectionId,
+                    isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
                     lazyListState = worksLazyListState,
