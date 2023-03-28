@@ -1,5 +1,6 @@
 package ly.david.data.network
 
+import ly.david.data.network.api.BrowseWorksResponse
 import ly.david.data.network.api.SearchWorksResponse
 
 val fakeWorkAttribute = WorkAttributeMusicBrainzModel(
@@ -34,6 +35,12 @@ val fakeWorkWithAllData = WorkMusicBrainzModel(
 val fakeWorks = listOf(
     fakeWorkWithAllData,
     fakeWork2
+)
+
+val browseWorksResponse = BrowseWorksResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeWorkWithAllData)
 )
 
 val searchWorksResponse = SearchWorksResponse(

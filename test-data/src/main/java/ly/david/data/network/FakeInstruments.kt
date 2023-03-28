@@ -1,5 +1,6 @@
 package ly.david.data.network
 
+import ly.david.data.network.api.BrowseInstrumentsResponse
 import ly.david.data.network.api.SearchInstrumentsResponse
 
 val fakeInstrument = InstrumentMusicBrainzModel(
@@ -18,6 +19,12 @@ val fakeInstrument = InstrumentMusicBrainzModel(
 
 val fakeInstruments = listOf(
     fakeInstrument
+)
+
+val browseInstrumentsResponse = BrowseInstrumentsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeInstrument)
 )
 
 val searchInstrumentsResponse = SearchInstrumentsResponse(

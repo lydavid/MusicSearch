@@ -6,7 +6,13 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.collectableResources
+import ly.david.data.persistence.collection.CollectionDao
+import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -21,6 +27,7 @@ import org.junit.runners.Parameterized
 /**
  * Tests interacting with [CollectionListScaffold] and [MusicBrainzCollectionScaffold].
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class CollectionTest(
@@ -31,11 +38,14 @@ internal class CollectionTest(
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<MusicBrainzResource> {
-            return listOf(MusicBrainzResource.AREA)
+            return collectableResources
         }
     }
 
     private lateinit var navController: NavHostController
+
+    @Inject
+    lateinit var collectionDao: CollectionDao
 
     @Before
     fun setupApp() {
@@ -50,11 +60,54 @@ internal class CollectionTest(
     }
 
     @Test
-    fun searchEachResource() {
+    fun onlyLocalCollections() = runTest {
         composeTestRule
             .onNodeWithText(collections)
             .performClick()
 
-        // TODO: won't see any collections unless we fake musicBrainzAuthState.username
+        val name = "local $entity collection"
+
+        collectionDao.insert(
+            CollectionRoomModel(
+                id = entity.name,
+                name = name,
+                entity = entity,
+                isRemote = false
+            )
+        )
+
+        // Name is in list item
+        waitForThenAssertIsDisplayed(name)
+        waitForThenPerformClickOn(name)
+
+        // Name is in title bar
+        waitForThenAssertIsDisplayed(name)
+    }
+
+    // We're currently able to skirt around the need to fake auth state but inserting data ourselves
+    // since the app saves remote collection's data
+    @Test
+    fun onlyRemoteCollections() = runTest {
+        composeTestRule
+            .onNodeWithText(collections)
+            .performClick()
+
+        val name = "remote $entity collection"
+
+        collectionDao.insert(
+            CollectionRoomModel(
+                id = entity.name,
+                name = name,
+                entity = entity,
+                isRemote = true
+            )
+        )
+
+        // Name is in list item
+        waitForThenAssertIsDisplayed(name)
+        waitForThenPerformClickOn(name)
+
+        // Name is in title bar
+        waitForThenAssertIsDisplayed(name)
     }
 }

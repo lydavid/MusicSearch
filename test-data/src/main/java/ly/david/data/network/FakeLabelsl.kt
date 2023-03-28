@@ -1,5 +1,6 @@
 package ly.david.data.network
 
+import ly.david.data.network.api.BrowseLabelsResponse
 import ly.david.data.network.api.SearchLabelsResponse
 
 val fakeLabel = LabelMusicBrainzModel(
@@ -33,6 +34,12 @@ val fakeLabelInfo = LabelInfo(
 val fakeLabels = listOf(
     fakeLabel,
     fakeLabel2,
+)
+
+val browseLabelsResponse = BrowseLabelsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeLabel)
 )
 
 val searchLabelsResponse = SearchLabelsResponse(

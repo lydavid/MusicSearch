@@ -2,12 +2,21 @@ package ly.david.data.network
 
 import ly.david.data.network.api.BrowseCollectionsResponse
 
+val fakeAreaCollection = CollectionMusicBrainzModel(
+    id = "fakeAreaCollection",
+    name = "My areas",
+    entity = MusicBrainzResource.AREA
+)
+
+val fakeArtistCollection = CollectionMusicBrainzModel(
+    id = "fakeArtistCollection",
+    name = "My artists",
+    entity = MusicBrainzResource.ARTIST
+)
+
 val fakeCollections = listOf(
-    CollectionMusicBrainzModel(
-        id = "a",
-        name = "My areas",
-        entity = MusicBrainzResource.AREA
-    )
+    fakeAreaCollection,
+    fakeArtistCollection
 )
 
 val browseCollectionsResponse = BrowseCollectionsResponse(

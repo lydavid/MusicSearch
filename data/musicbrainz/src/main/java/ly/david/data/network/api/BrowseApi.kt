@@ -3,6 +3,7 @@ package ly.david.data.network.api
 import com.squareup.moshi.Json
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
+import ly.david.data.network.CollectionMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.network.LabelMusicBrainzModel
@@ -40,6 +41,14 @@ interface BrowseApi {
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
     ): BrowseArtistsResponse
+
+    @GET("collection")
+    suspend fun browseCollectionsByUser(
+        @Query("editor") username: String,
+        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
+        @Query("offset") offset: Int = 0,
+        @Query("inc") include: String? = null
+    ): BrowseCollectionsResponse
 
     @GET("event")
     suspend fun browseEventsByCollection(
@@ -195,6 +204,12 @@ data class BrowseArtistsResponse(
     @Json(name = "artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>
 ) : Browsable<ArtistMusicBrainzModel>
 
+data class BrowseCollectionsResponse(
+    @Json(name = "collection-count") override val count: Int,
+    @Json(name = "collection-offset") override val offset: Int,
+    @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>
+) : Browsable<CollectionMusicBrainzModel>
+
 data class BrowseEventsResponse(
     @Json(name = "event-count") override val count: Int,
     @Json(name = "event-offset") override val offset: Int,
@@ -212,7 +227,6 @@ data class BrowseLabelsResponse(
     @Json(name = "label-offset") override val offset: Int,
     @Json(name = "labels") override val musicBrainzModels: List<LabelMusicBrainzModel>
 ) : Browsable<LabelMusicBrainzModel>
-
 
 data class BrowsePlacesResponse(
     @Json(name = "place-count") override val count: Int,

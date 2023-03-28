@@ -1,6 +1,7 @@
 package ly.david.data.network
 
 import ly.david.data.LifeSpan
+import ly.david.data.network.api.BrowseArtistsResponse
 import ly.david.data.network.api.SearchArtistsResponse
 
 val fakeArtistGroup = ArtistMusicBrainzModel(
@@ -47,6 +48,12 @@ val fakeArtistCredit2 = ArtistCreditMusicBrainzModel(
 val fakeArtists = listOf(
     fakeArtist,
     fakeArtist2
+)
+
+val browseArtistsResponse = BrowseArtistsResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeArtist)
 )
 
 val searchArtistsResponse = SearchArtistsResponse(
