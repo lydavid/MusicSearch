@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ConstructorParameterNaming:AreaMusicBrainzModel.kt$AreaMusicBrainzModel$@Json(name = "iso-3166-1-codes") val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
     <ID>MaxLineLength:BrowseApi.kt$BrowseApi$// todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here</ID>
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
@@ -114,7 +113,5 @@
     <ID>MaxLineLength:RelationshipHeaders.kt$// "f30c29d3-a3f1-420d-9b6c-a750fd6bc2aa" to ("{additional:additionally} {assistant} {associate} {co:co-}edited" to "{additional} {assistant} {associate} {co:co-}editor"),</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$// "f845a95e-b2b5-4a94-9645-fc8b031ab0bd" to ("{additional} engineering location for" to "{additional:additionally} engineered at"),</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$// "fc206200-021c-4b28-97ea-36e4c1391068" to ("{additional} arranging location for" to "{additional:additionally} arranged at"),</ID>
-    <ID>MaxLineLength:ReleaseGroupMusicBrainzModel.kt$ReleaseGroupMusicBrainzModel$// audio drama, audiobook, broadcast, compilation, dj-mix, interview, live, mixtape/street, remix, soundtrack, spokenword</ID>
-    <ID>MaxLineLength:ReleaseMusicBrainzModel.kt$ReleaseMusicBrainzModel$// lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels</ID>
   </CurrentIssues>
 </SmellBaseline>
