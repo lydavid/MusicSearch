@@ -20,7 +20,7 @@ jobs:
       name: android/android-machine
       resource-class: large
       # https://circleci.com/developer/images/image/cimg/android#image-tags
-      tag: 2023.03.1
+      tag: 2022.12.1
     steps:
       - checkout
 
