@@ -12,27 +12,14 @@ import ly.david.data.persistence.RoomModel
 
 @Entity(tableName = "place")
 data class PlaceRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-
-    @ColumnInfo(name = "name")
-    override val name: String,
-
-    @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String?,
-
-    @ColumnInfo(name = "address")
-    override val address: String,
-
-    @ColumnInfo(name = "type")
-    override val type: String?,
-
-    @Embedded
-    override val coordinates: Coordinates?,
-
-    @Embedded
-    override val lifeSpan: LifeSpan?,
+    @PrimaryKey @ColumnInfo(name = "id") override val id: String,
+    @ColumnInfo(name = "name") override val name: String,
+    @ColumnInfo(name = "disambiguation") override val disambiguation: String?,
+    @ColumnInfo(name = "address") override val address: String,
+    @ColumnInfo(name = "type") override val type: String?,
+    @ColumnInfo(name = "type_id") val typeId: String? = null,
+    @Embedded override val coordinates: Coordinates?,
+    @Embedded override val lifeSpan: LifeSpan?,
 ) : RoomModel, Place
 
 fun PlaceMusicBrainzModel.toPlaceRoomModel() =
@@ -42,6 +29,7 @@ fun PlaceMusicBrainzModel.toPlaceRoomModel() =
         disambiguation = disambiguation,
         address = address,
         type = type,
+        typeId = typeId,
         coordinates = coordinates,
         lifeSpan = lifeSpan
     )

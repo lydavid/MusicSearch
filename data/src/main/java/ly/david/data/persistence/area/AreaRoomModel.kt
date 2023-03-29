@@ -11,28 +11,22 @@ import ly.david.data.persistence.RoomModel
 
 @Entity(tableName = "area")
 data class AreaRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-
-    @ColumnInfo(name = "name")
-    override val name: String,
-
-    @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String?,
-
-    @ColumnInfo(name = "type")
-    override val type: String?,
-
-    @Embedded
-    override val lifeSpan: LifeSpan?,
+    @PrimaryKey @ColumnInfo(name = "id") override val id: String,
+    @ColumnInfo(name = "name") override val name: String,
+    @ColumnInfo(name = "sort_name") override val sortName: String = "",
+    @ColumnInfo(name = "disambiguation") override val disambiguation: String? = null,
+    @ColumnInfo(name = "type") override val type: String? = null,
+    @ColumnInfo(name = "type_id") val typeId: String? = null,
+    @Embedded override val lifeSpan: LifeSpan? = null,
 ) : RoomModel, Area
 
 fun AreaMusicBrainzModel.toAreaRoomModel() =
     AreaRoomModel(
         id = id,
         name = name,
+        sortName = sortName,
         disambiguation = disambiguation,
         type = type,
-        lifeSpan = lifeSpan
+        typeId = typeId,
+        lifeSpan = lifeSpan,
     )

@@ -30,7 +30,7 @@ import ly.david.data.network.AreaMusicBrainzModel
         )
     ]
 )
-data class Iso3166_1(
+data class CountryCode(
     @ColumnInfo(name = "area_id")
     val areaId: String,
 
@@ -38,7 +38,7 @@ data class Iso3166_1(
     val code: String,
 )
 
-fun AreaMusicBrainzModel.getAreaCountryCodes(): List<Iso3166_1> =
-    iso_3166_1_codes?.map { code ->
-        Iso3166_1(id, code)
+fun AreaMusicBrainzModel.getAreaCountryCodes(): List<CountryCode> =
+    countryCodes?.map { code ->
+        CountryCode(id, code)
     }.orEmpty()

@@ -32,7 +32,7 @@ interface AreasByCollectionDao {
         private const val FILTERED = """
             AND (
                 a.name LIKE :query OR a.disambiguation LIKE :query
-                OR a.type LIKE :query
+                OR a.sort_name LIKE :query OR a.type LIKE :query
             )
         """
     }
