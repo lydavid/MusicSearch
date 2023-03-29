@@ -53,6 +53,7 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
     )
     abstract suspend fun getCollection(id: String): CollectionRoomModel
 
+    @Transaction
     @Query(
         """
         SELECT * 

@@ -50,7 +50,7 @@ internal fun SeriesByCollectionScreen(
                     series = listItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onSeriesClick(MusicBrainzResource.LABEL, id, getNameWithDisambiguation())
+                    onSeriesClick(MusicBrainzResource.SERIES, id, getNameWithDisambiguation())
                 }
             }
             else -> {

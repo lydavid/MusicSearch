@@ -17,14 +17,14 @@ import ly.david.data.network.fakeArtistCredit2
 import ly.david.data.network.fakeRelease
 import ly.david.data.network.fakeReleaseGroup
 import ly.david.data.repository.ReleaseGroupRepository
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
-internal class ReleaseGroupScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var releaseGroupRepository: ReleaseGroupRepository
