@@ -27,7 +27,7 @@ internal class SeriesByCollectionViewModel @Inject constructor(
     pagedList: PagedList<SeriesRoomModel, SeriesListItemModel>,
 ) : BrowseEntitiesByEntityViewModel
 <SeriesRoomModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
-    byEntity = MusicBrainzResource.LABEL,
+    byEntity = MusicBrainzResource.SERIES,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
