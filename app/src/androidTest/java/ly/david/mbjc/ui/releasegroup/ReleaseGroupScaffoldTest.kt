@@ -20,6 +20,7 @@ import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -28,6 +29,11 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var releaseGroupRepository: ReleaseGroupRepository
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+    }
 
     private fun setReleaseGroup(releaseGroupMusicBrainzModel: ReleaseGroupMusicBrainzModel) {
         composeTestRule.activity.setContent {
