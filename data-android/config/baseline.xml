@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>EmptyClassBlock:Migrations.kt$Migrations${ }</ID>
     <ID>LongMethod:ArtistReleaseGroupDaoTest.kt$ArtistReleaseGroupDaoTest$@Test fun `delete release groups by artist`()</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$1024L</ID>
     <ID>MagicNumber:NetworkModule.kt$NetworkModule$50L</ID>
