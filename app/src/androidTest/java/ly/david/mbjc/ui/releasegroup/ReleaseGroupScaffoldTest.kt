@@ -94,10 +94,7 @@ internal class ReleaseGroupScaffoldTest : MainActivityTestWithMockServer(), Stri
 
         waitForThenAssertAtLeastOneIsDisplayed(retry)
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
+        waitForThenPerformClickOn(relationships)
         waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 }

@@ -136,10 +136,10 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
 
         waitForThenAssertAtLeastOneIsDisplayed(retry)
 
-        composeTestRule
-            .onNodeWithText(tracks)
-            .performClick()
+        waitForThenPerformClickOn(tracks)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
 
+        waitForThenPerformClickOn(relationships)
         waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 }
