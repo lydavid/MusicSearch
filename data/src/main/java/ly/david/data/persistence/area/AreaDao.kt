@@ -12,9 +12,9 @@ abstract class AreaDao : BaseDao<AreaRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM area WHERE id = :areaId")
-    abstract suspend fun getArea(areaId: String): AreaWithIso?
+    abstract suspend fun getArea(areaId: String): AreaWithCountryCodes?
 
     // We don't expect these to change.
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertAllCountryCodes(iso31661s: List<Iso3166_1>)
+    abstract suspend fun insertAllCountryCodes(iso31661s: List<CountryCode>)
 }

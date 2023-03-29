@@ -56,7 +56,7 @@ data class ReleaseRoomModel(
      *
      * Also see [ReleaseGroupRoomModel.coverArtPath].
      */
-    @ColumnInfo(name = "cover_art_path", defaultValue = "null") val coverArtPath: String? = null,
+    @ColumnInfo(name = "cover_art_path") val coverArtPath: String? = null,
 ) : RoomModel, Release
 
 fun ReleaseMusicBrainzModel.toRoomModel() =

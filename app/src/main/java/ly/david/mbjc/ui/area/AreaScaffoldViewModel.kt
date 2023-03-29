@@ -70,7 +70,8 @@ internal class AreaScaffoldViewModel @Inject constructor(
                         recordLookupHistory(
                             resourceId = areaId,
                             resource = resource,
-                            summary = title.value
+                            summary = title.value,
+                            searchHint = area.value?.sortName ?: ""
                         )
                         recordedLookup = true
                     }

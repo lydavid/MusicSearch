@@ -42,7 +42,7 @@ internal fun AreaListItem(
             Column {
                 // Misnomer here, but it's the same condition to show this tab and to show flags
                 val areaName = if (area.showReleases()) {
-                    val flags = area.iso_3166_1_codes?.joinToString { it.toFlagEmoji() }
+                    val flags = area.countryCodes?.joinToString { it.toFlagEmoji() }
                     flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
                 } else {
                     area.name
@@ -106,13 +106,13 @@ internal class AreaListItemPreviewParameterProvider : PreviewParameterProvider<A
             name = "Area Name with a very long name",
             disambiguation = "That one",
             type = COUNTRY,
-            iso_3166_1_codes = listOf("GB")
+            countryCodes = listOf("GB")
         ),
         AreaListItemModel(
             id = "4",
             name = "Area Name with a very long name",
             type = WORLDWIDE,
-            iso_3166_1_codes = listOf("XW")
+            countryCodes = listOf("XW")
         )
     )
 }
@@ -141,7 +141,7 @@ private fun ReleaseEventPreview() {
                     id = "4",
                     name = "Area Name with a very long name",
                     disambiguation = "That one",
-                    iso_3166_1_codes = listOf("KR"),
+                    countryCodes = listOf("KR"),
                     date = "2022-10-29",
                     type = "Country",
                 ),

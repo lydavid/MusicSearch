@@ -19,5 +19,5 @@ data class LookupHistoryRoomModel(
     @ColumnInfo(name = "resource") val resource: MusicBrainzResource,
     @ColumnInfo(name = "number_of_visits") val numberOfVisits: Int = 1,
     @ColumnInfo(name = "last_accessed") val lastAccessed: Date = Date(),
-    @ColumnInfo(name = "search_hint", defaultValue = "") val searchHint: String = ""
+    @ColumnInfo(name = "search_hint") val searchHint: String = ""
 ) : Identifiable

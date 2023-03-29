@@ -9,7 +9,7 @@ data class CoverArtArchive(
 //    @Json(name = "back") val back: Boolean = false,
 //    @Json(name = "front") val front: Boolean = false,
 
-    @ColumnInfo(name = "cover_art_count", defaultValue = "0")
+    @ColumnInfo(name = "cover_art_count")
     @Json(name = "count")
     val count: Int = 0
 )

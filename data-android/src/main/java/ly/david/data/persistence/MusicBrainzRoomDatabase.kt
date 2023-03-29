@@ -1,12 +1,11 @@
 package ly.david.data.persistence
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ly.david.data.persistence.area.AreaPlace
 import ly.david.data.persistence.area.AreaRoomModel
-import ly.david.data.persistence.area.Iso3166_1
+import ly.david.data.persistence.area.CountryCode
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistRoomModel
@@ -42,7 +41,7 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
-const val DATABASE_VERSION = 104
+const val DATABASE_VERSION = 1
 
 @Database(
     version = DATABASE_VERSION,
@@ -58,7 +57,7 @@ const val DATABASE_VERSION = 104
         // Other tables
         ArtistCredit::class, ArtistCreditNameRoomModel::class, ArtistCreditResource::class,
         MediumRoomModel::class, TrackRoomModel::class,
-        Iso3166_1::class,
+        CountryCode::class,
         WorkAttributeRoomModel::class,
 
         // Relationship tables
@@ -88,92 +87,7 @@ const val DATABASE_VERSION = 104
         AreaWithReleaseDate::class,
         ReleaseFormatTrackCount::class,
     ],
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3),
-        AutoMigration(from = 3, to = 4),
-        AutoMigration(from = 4, to = 5, spec = Migrations.RenameCountry::class),
-        AutoMigration(from = 5, to = 6, spec = Migrations.RenameReleasesCountryToCountryCode::class),
-        AutoMigration(from = 6, to = 7),
-        AutoMigration(from = 7, to = 8),
-        AutoMigration(from = 8, to = 9),
-        AutoMigration(from = 9, to = 10),
-        AutoMigration(from = 11, to = 12),
-        AutoMigration(from = 12, to = 13, spec = Migrations.GeneralizeRecordingRelation::class),
-        AutoMigration(from = 13, to = 14, spec = Migrations.RenameResourceId::class),
-        AutoMigration(from = 14, to = 15, spec = Migrations.DeleteResource::class),
-        AutoMigration(from = 15, to = 16),
-        AutoMigration(from = 16, to = 17),
-        AutoMigration(from = 17, to = 18),
-        AutoMigration(from = 18, to = 19),
-        AutoMigration(from = 19, to = 20),
-        AutoMigration(from = 20, to = 21),
-        AutoMigration(from = 21, to = 22),
-        AutoMigration(from = 22, to = 23),
-        AutoMigration(from = 23, to = 24),
-        AutoMigration(from = 24, to = 25),
-        AutoMigration(from = 25, to = 26),
-        AutoMigration(from = 26, to = 27),
-        AutoMigration(from = 27, to = 28, spec = Migrations.RenameHistorySummaryToTitle::class),
-        AutoMigration(from = 28, to = 29),
-        AutoMigration(from = 30, to = 31),
-        AutoMigration(from = 31, to = 32, spec = Migrations.DeleteHasRelationsFromLabel::class),
-        AutoMigration(from = 33, to = 34, spec = Migrations.DeleteHasRelationsFromReleaseGroup::class),
-        AutoMigration(from = 35, to = 36, spec = Migrations.DeleteHasRelationsFromArea::class),
-        AutoMigration(from = 37, to = 38, spec = Migrations.DeleteHasRelationsFromArtist::class),
-        AutoMigration(from = 38, to = 39),
-        AutoMigration(from = 39, to = 40),
-        AutoMigration(from = 41, to = 43),
-        AutoMigration(from = 44, to = 45),
-        AutoMigration(from = 45, to = 46),
-        AutoMigration(from = 46, to = 47),
-        AutoMigration(from = 47, to = 48, spec = Migrations.DeleteReleaseCount::class),
-        AutoMigration(from = 48, to = 49, spec = Migrations.DeleteReleasesReleaseGroups::class),
-        AutoMigration(from = 49, to = 50),
-        AutoMigration(from = 50, to = 51),
-        AutoMigration(from = 51, to = 52),
-        AutoMigration(from = 52, to = 53),
-        AutoMigration(from = 53, to = 54),
-        AutoMigration(from = 54, to = 55),
-        AutoMigration(from = 55, to = 56),
-        AutoMigration(from = 56, to = 57, spec = Migrations.RenameSortName::class),
-        AutoMigration(from = 57, to = 58),
-        AutoMigration(from = 58, to = 59),
-        AutoMigration(from = 59, to = 60),
-        AutoMigration(from = 60, to = 61),
-        AutoMigration(from = 61, to = 62),
-        AutoMigration(from = 62, to = 63, spec = Migrations.DropReleaseGroupsArtists::class),
-        AutoMigration(from = 63, to = 64),
-        AutoMigration(from = 64, to = 65),
-        AutoMigration(from = 65, to = 66, spec = Migrations.DropReleasesArtists::class),
-        AutoMigration(from = 66, to = 67, spec = Migrations.DropRecordingsArtists::class),
-        AutoMigration(from = 67, to = 68),
-        AutoMigration(from = 68, to = 69),
-        AutoMigration(from = 69, to = 70),
-        AutoMigration(from = 70, to = 71, spec = Migrations.DeleteReleaseGroupCount::class),
-        AutoMigration(from = 71, to = 72),
-        AutoMigration(from = 72, to = 73),
-        AutoMigration(from = 73, to = 74),
-        AutoMigration(from = 74, to = 75, spec = Migrations.RenameTablesToSingular::class),
-        AutoMigration(from = 75, to = 76),
-        AutoMigration(from = 76, to = 77),
-        AutoMigration(from = 76, to = 78),
-        AutoMigration(from = 78, to = 79), // Add new table
-        AutoMigration(from = 80, to = 81, spec = Migrations.DeleteReleaseGroupIdFromRelease::class),
-        AutoMigration(from = 81, to = 82),
-        AutoMigration(from = 82, to = 83, spec = Migrations.DeleteFormatsAndTracksFromRelease::class),
-        AutoMigration(from = 83, to = 84),
-        AutoMigration(from = 84, to = 85),
-        AutoMigration(from = 85, to = 86, spec = Migrations.RenameToCoverArtPath::class),
-        AutoMigration(from = 87, to = 88, spec = Migrations.RenameToCoverArtPathForReleaseGroup::class),
-        AutoMigration(from = 89, to = 90),
-        AutoMigration(from = 94, to = 95),
-        AutoMigration(from = 95, to = 96, spec = Migrations.DeleteHasCoverArtFromReleaseGroup::class),
-        AutoMigration(from = 96, to = 97),
-        AutoMigration(from = 97, to = 98),
-        AutoMigration(from = 98, to = 99),
-        AutoMigration(from = 99, to = 100),
-    ]
+    autoMigrations = []
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase(), MusicBrainzDatabase

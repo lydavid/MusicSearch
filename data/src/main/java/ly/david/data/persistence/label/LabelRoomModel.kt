@@ -1,30 +1,24 @@
 package ly.david.data.persistence.label
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.Label
+import ly.david.data.LifeSpan
 import ly.david.data.network.LabelInfo
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.persistence.RoomModel
 
 @Entity(tableName = "label")
 data class LabelRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-
-    @ColumnInfo(name = "name")
-    override val name: String,
-
-    @ColumnInfo(name = "disambiguation")
-    override val disambiguation: String? = null,
-
-    @ColumnInfo(name = "type")
-    override val type: String? = null,
-
-    @ColumnInfo(name = "label_code")
-    override val labelCode: Int? = null,
+    @PrimaryKey @ColumnInfo(name = "id") override val id: String,
+    @ColumnInfo(name = "name") override val name: String,
+    @ColumnInfo(name = "disambiguation") override val disambiguation: String? = null,
+    @ColumnInfo(name = "type") override val type: String? = null,
+    @ColumnInfo(name = "type_id") val typeId: String? = null,
+    @ColumnInfo(name = "label_code") override val labelCode: Int? = null,
+    @Embedded val lifeSpan: LifeSpan? = null,
 ) : RoomModel, Label
 
 fun LabelMusicBrainzModel.toLabelRoomModel() =
@@ -33,7 +27,9 @@ fun LabelMusicBrainzModel.toLabelRoomModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
-        labelCode = labelCode
+        typeId = typeId,
+        labelCode = labelCode,
+        lifeSpan = lifeSpan
     )
 
 fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
@@ -47,7 +43,9 @@ fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
                 name = label.name,
                 disambiguation = label.disambiguation,
                 type = label.type,
-                labelCode = label.labelCode
+                typeId = label.typeId,
+                labelCode = label.labelCode,
+                lifeSpan = label.lifeSpan
             )
         }
     }

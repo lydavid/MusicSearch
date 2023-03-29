@@ -4,27 +4,19 @@ import com.squareup.moshi.Json
 import ly.david.data.NameWithDisambiguation
 import ly.david.data.Release
 
-// browse inc: artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
-// lookup inc: artist-credits, releases, isrcs, url-rels, labels, recordings, recording-level-rels, work-rels, work-level-rels, artist-rels
 data class ReleaseMusicBrainzModel(
     @Json(name = "id") override val id: String,
     @Json(name = "title") override val name: String,
     @Json(name = "disambiguation") override val disambiguation: String = "",
     @Json(name = "date") override val date: String? = null,
     @Json(name = "status") override val status: String? = null,
-    @Json(name = "barcode") override val barcode: String? = null,
     @Json(name = "status-id") override val statusId: String? = null,
-
-    // TODO: rather than using this field, use the first release-event
-    //  or make a query to avoid storing redundant info
+    @Json(name = "barcode") override val barcode: String? = null,
     @Json(name = "country") override val countryCode: String? = null,
-
     @Json(name = "packaging") override val packaging: String? = null,
     @Json(name = "packaging-id") override val packagingId: String? = null,
     @Json(name = "asin") override val asin: String? = null,
     @Json(name = "quality") override val quality: String? = null,
-
-    // If there exists at least one `count`, then we should request CAA for its cover art.
     @Json(name = "cover-art-archive") override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
     @Json(name = "text-representation") override val textRepresentation: TextRepresentation? = null,
 

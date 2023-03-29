@@ -78,7 +78,7 @@ class ReleaseRepositoryTest {
                         disambiguation = null,
                         type = "Country",
                         lifeSpan = null,
-                        iso_3166_1_codes = listOf(),
+                        countryCodes = listOf(),
                         date = "2022-10-29"
                     )
                 ),
