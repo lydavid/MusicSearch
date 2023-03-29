@@ -18,6 +18,7 @@ import ly.david.data.repository.PlaceRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -26,6 +27,11 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var placeRepository: PlaceRepository
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+    }
 
     private fun setPlace(placeMusicBrainzModel: PlaceMusicBrainzModel) {
         composeTestRule.activity.setContent {
