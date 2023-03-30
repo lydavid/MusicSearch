@@ -40,6 +40,7 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
+import retrofit2.HttpException
 import timber.log.Timber
 
 class MusicBrainzLoginContract(
@@ -104,39 +105,44 @@ internal class TopLevelViewModel @Inject constructor(
         this.entity.value = entity
     }
 
-    fun addToCollection(collectionId: String, entityId: String) {
-        viewModelScope.launch {
-            collectionEntityDao.withTransaction {
-                val insertedOneEntry = collectionEntityDao.insert(
-                    CollectionEntityRoomModel(
-                        id = collectionId,
-                        entityId = entityId
-                    )
-                )
+    suspend fun addToCollectionAndGetResult(collectionId: String, entityId: String): String {
+        var message = ""
 
-                // TODO: if we insert into remote collection, then refresh collection, we lose our collection_entity
-                //  which increments the collection despite it not adding to MB
-                //  MB returns 200 even if entity already exists in collection
-                //  Possible workaround: do not manually increment for remote collection -> but would need to GET its new count
-                //      or we can fetch all of the collection's content before inserting -> could take a long time if its large
-                //  For remote collections, we could not show its count until we fetch its content? strange ux
-                //  Could be confusing ux to have such a big difference between local and remote collections
-                //      Could have a "Remote" and "Local" filter pills at the top
-                if (insertedOneEntry != INSERTION_FAILED_DUE_TO_CONFLICT) {
-                    val collection = collectionDao.getCollection(collectionId)
-                    if (collection.isRemote) {
-                        musicBrainzApiService.uploadToCollection(
-                            collectionId = collectionId,
-                            resourceUriPlural = entity.value.resourceUriPlural,
-                            mbids = entityId
-                        )
-                    }
-                    collectionDao.update(
-                        collection.copy(entityCount = collection.entityCount + 1)
-                    )
-                }
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection.isRemote) {
+            try {
+                musicBrainzApiService.uploadToCollection(
+                    collectionId = collectionId,
+                    resourceUriPlural = entity.value.resourceUriPlural,
+                    mbids = entityId
+                )
+            } catch (ex: HttpException) {
+                // TODO: improve message
+                //  if 401, mention they should login
+                //  maybe provide button on snackbar to do so
+                return "$ex\nFailed to add to ${collection.name}"
             }
         }
+
+        collectionEntityDao.withTransaction {
+            val insertedOneEntry = collectionEntityDao.insert(
+                CollectionEntityRoomModel(
+                    id = collectionId,
+                    entityId = entityId
+                )
+            )
+
+            message = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
+                "Already in collection"
+            } else {
+                collectionDao.update(
+                    collection.copy(entityCount = collection.entityCount + 1)
+                )
+                "Success"
+            }
+        }
+
+        return message
     }
 
     fun createNewCollection(name: String, entity: MusicBrainzResource) {
@@ -150,7 +156,6 @@ internal class TopLevelViewModel @Inject constructor(
             )
         }
     }
-
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
 

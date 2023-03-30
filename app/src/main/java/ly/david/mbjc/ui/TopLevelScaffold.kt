@@ -4,11 +4,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -19,6 +22,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.launch
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.getTopLevelDestination
@@ -35,6 +39,8 @@ internal fun TopLevelScaffold(
     navController: NavHostController,
     viewModel: TopLevelViewModel = hiltViewModel()
 ) {
+
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val sortReleaseGroupListItems by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
     val showMoreInfoInReleaseListItem
@@ -96,8 +102,14 @@ internal fun TopLevelScaffold(
             onDismiss = { openBottomSheet = false },
             onCreateCollectionClick = { showCreateCollectionDialog = true },
             onAddToCollection = { collectionId ->
-                if (selectedEntityId.isNotEmpty()) {
-                    viewModel.addToCollection(collectionId, selectedEntityId)
+                scope.launch {
+                    if (selectedEntityId.isNotEmpty()) {
+                        val resultMessage = viewModel.addToCollectionAndGetResult(collectionId, selectedEntityId)
+                        snackbarHostState.showSnackbar(
+                            message = resultMessage,
+                            withDismissAction = true
+                        )
+                    }
                 }
             }
         )
@@ -109,7 +121,8 @@ internal fun TopLevelScaffold(
                 currentTopLevelDestination = currentTopLevelDestination,
                 navigateToTopLevelDestination = { it.onTopLevelDestinationClick() }
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
 
         NavigationGraph(

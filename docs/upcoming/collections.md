@@ -12,7 +12,7 @@ Search `collectableResources` to find all the entities that can be collected.
 
 ## Prerequisites
 
-- [x] [OAuth with MusicBrainz](oauth_musicbrainz.md)
+- [x] [OAuth with MusicBrainz](../implemented/oauth_musicbrainz.md)
 
 ## Implementation
 
@@ -54,9 +54,6 @@ Search `collectableResources` to find all the entities that can be collected.
   - Otherwise would need to try https://github.com/Tickaroo/tikxml
 - [x] Add to collection
   - PUT /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;c410a773-c6eb-4bc0-9df8-042fe6645c63?client=example.app-0.4.7
-  - [ ] Do not crash on 401 or other exceptions
-    - [ ] fail snackbar
-    - [ ] show a snackbar saying whether it succeeded or it was already part of it
   - [ ] show an indicator that an entity is already in the collection
     - this won't be accurate for remote collections before we get its content by clicking into it
     - nothing reasonable we can do about it, just open an issue to track this
