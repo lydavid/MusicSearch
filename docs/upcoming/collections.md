@@ -54,12 +54,12 @@ Search `collectableResources` to find all the entities that can be collected.
   - Otherwise would need to try https://github.com/Tickaroo/tikxml
 - [x] Add to collection
   - PUT /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;c410a773-c6eb-4bc0-9df8-042fe6645c63?client=example.app-0.4.7
-  - [ ] show an indicator that an entity is already in the collection
+  - [x] show an indicator that an entity is already in the collection
     - this won't be accurate for remote collections before we get its content by clicking into it
-    - nothing reasonable we can do about it, just open an issue to track this
 - [ ] Delete from collection
   - DELETE /ws/2/collection/f4784850-3844-11e0-9e42-0800200c9a66/releases/455641ea-fff4-49f6-8fb4-49f961d8f1ad;?client=example.app-0.4.7
   - You may submit up to ~400 entities in a single request, separated by a semicolon (;)
+  - Use SwipeToDismiss with background
 - [x] Unidirectional sync where MB is source of truth
   - local additions/deletions will be overwritten
   - This will be supported the moment we copy/paste our paging code
