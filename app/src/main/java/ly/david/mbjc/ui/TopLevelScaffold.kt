@@ -4,8 +4,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.rememberSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -104,11 +106,28 @@ internal fun TopLevelScaffold(
             onAddToCollection = { collectionId ->
                 scope.launch {
                     if (selectedEntityId.isNotEmpty()) {
-                        val resultMessage = viewModel.addToCollectionAndGetResult(collectionId, selectedEntityId)
-                        snackbarHostState.showSnackbar(
-                            message = resultMessage,
-                            withDismissAction = true
+                        val addToCollectionResult = viewModel.addToCollectionAndGetResult(
+                            collectionId = collectionId,
+                            entityId = selectedEntityId
                         )
+
+                        if (addToCollectionResult.message.isEmpty()) return@launch
+
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = addToCollectionResult.message,
+                            withDismissAction = addToCollectionResult.actionLabel == null,
+                            actionLabel = addToCollectionResult.actionLabel,
+                            duration = SnackbarDuration.Short
+                        )
+                        when (snackbarResult) {
+                            SnackbarResult.ActionPerformed -> {
+                                // TODO:
+                                Timber.d("login")
+                            }
+                            SnackbarResult.Dismissed -> {
+                                // Do nothing.
+                            }
+                        }
                     }
                 }
             }

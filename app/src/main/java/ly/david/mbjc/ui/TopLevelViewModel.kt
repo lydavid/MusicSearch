@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -82,6 +83,11 @@ internal class TopLevelViewModel @Inject constructor(
     private val clientAuth: ClientAuthentication
 ) : ViewModel() {
 
+    data class AddToCollectionResult(
+        val message: String = "",
+        val actionLabel: String? = null
+    )
+
     val entity: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -105,8 +111,8 @@ internal class TopLevelViewModel @Inject constructor(
         this.entity.value = entity
     }
 
-    suspend fun addToCollectionAndGetResult(collectionId: String, entityId: String): String {
-        var message = ""
+    suspend fun addToCollectionAndGetResult(collectionId: String, entityId: String): AddToCollectionResult {
+        var result = AddToCollectionResult()
 
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
@@ -117,10 +123,13 @@ internal class TopLevelViewModel @Inject constructor(
                     mbids = entityId
                 )
             } catch (ex: HttpException) {
-                // TODO: improve message
-                //  if 401, mention they should login
-                //  maybe provide button on snackbar to do so
-                return "$ex\nFailed to add to ${collection.name}"
+                return when (ex.code()) {
+                    HTTP_UNAUTHORIZED -> AddToCollectionResult(
+                        message = "Failed to add to ${collection.name}. Login has expired.",
+                        actionLabel = "Login"
+                    )
+                    else -> AddToCollectionResult("Failed to add to ${collection.name}.")
+                }
             }
         }
 
@@ -132,17 +141,17 @@ internal class TopLevelViewModel @Inject constructor(
                 )
             )
 
-            message = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                "Already in collection"
+            result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
+                AddToCollectionResult("Already in ${collection.name}.")
             } else {
                 collectionDao.update(
                     collection.copy(entityCount = collection.entityCount + 1)
                 )
-                "Success"
+                AddToCollectionResult("Added to ${collection.name}.")
             }
         }
 
-        return message
+        return result
     }
 
     fun createNewCollection(name: String, entity: MusicBrainzResource) {
