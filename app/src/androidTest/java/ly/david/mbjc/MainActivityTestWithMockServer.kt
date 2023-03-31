@@ -1,6 +1,7 @@
 package ly.david.mbjc
 
 import java.io.IOException
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import javax.inject.Inject
 import ly.david.mbjc.di.TEST_PORT
 import okhttp3.mockwebserver.Dispatcher
@@ -31,7 +32,7 @@ internal open class MainActivityTestWithMockServer : MainActivityTest() {
         mockWebServer.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 return MockResponse()
-                    .setResponseCode(404)
+                    .setResponseCode(HTTP_NOT_FOUND)
             }
         }
     }
