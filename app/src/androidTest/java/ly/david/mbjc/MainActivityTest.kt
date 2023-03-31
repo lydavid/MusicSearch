@@ -23,11 +23,11 @@ internal abstract class MainActivityTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @OptIn(ExperimentalTestApi::class)
-    private fun waitForNodeToShow(matcher: SemanticsMatcher) {
+    fun waitForNodeToShow(matcher: SemanticsMatcher) {
         composeTestRule.waitUntilAtLeastOneExists(matcher, 10_000L)
     }
 
-    fun waitForTextToShow(text: String) {
+    private fun waitForTextToShow(text: String) {
         waitForNodeToShow(hasText(text))
     }
 

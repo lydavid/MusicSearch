@@ -1,11 +1,10 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -62,15 +61,13 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
 
         // Confirm that up navigation items exists
+        waitForNodeToShow(hasTestTag("TopBarSubtitle"))
         composeTestRule
             .onNodeWithTag("TopBarSubtitle")
             .performClick()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit2.name)
-            .assertIsDisplayed()
+
+        waitForThenAssertIsDisplayed(fakeArtistCredit.name)
+        waitForThenAssertIsDisplayed(fakeArtistCredit2.name)
 
         waitForThenPerformClickOn(releases)
         waitForThenAssertIsDisplayed(fakeRelease.name)
