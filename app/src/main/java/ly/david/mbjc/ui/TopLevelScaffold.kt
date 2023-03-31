@@ -121,8 +121,7 @@ internal fun TopLevelScaffold(
                         )
                         when (snackbarResult) {
                             SnackbarResult.ActionPerformed -> {
-                                // TODO:
-                                Timber.d("login")
+                                loginLauncher.launch(Unit)
                             }
                             SnackbarResult.Dismissed -> {
                                 // Do nothing.
