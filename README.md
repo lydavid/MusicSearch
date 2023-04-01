@@ -3,6 +3,11 @@
 An Android app for browsing songs, artists, and anything related to them
 using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
+<a href="https://play.google.com/store/apps/details?id=io.github.lydavid.musicsearch">
+    <img alt="Get it on Google Play" height="80"
+        src="https://play.google.com/intl/en_ca/badges/static/images/badges/en_badge_web_generic.png" />
+</a>
+
 ## Features
 
 - Search MusicBrainz's massive database for any information related to your favorite artist or song
