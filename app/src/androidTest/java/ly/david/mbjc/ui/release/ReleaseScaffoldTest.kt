@@ -1,12 +1,10 @@
 package ly.david.mbjc.ui.release
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import coil.Coil
 import coil.ImageLoaderFactory
@@ -73,24 +71,12 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
 
         waitForThenAssertIsDisplayed(fakeRelease.name)
         waitForThenAssertIsDisplayed(fakeLabelInfo.label!!.name)
-        composeTestRule
-            .onNodeWithText(fakeLabelInfo.catalogNumber!!)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeLabel2.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeReleaseEvent.area!!.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeReleaseEvent.date!!)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeLabelInfo.catalogNumber!!)
+        waitForThenAssertIsDisplayed(fakeLabel2.name)
+        waitForThenAssertIsDisplayed(fakeReleaseEvent.area!!.name)
+        waitForThenAssertIsDisplayed(fakeReleaseEvent.date!!)
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodes(hasTestTag("coverArtImage"))
-                .fetchSemanticsNodes().isNotEmpty()
-        }
+        waitForNodeToShow(hasTestTag("coverArtImage"))
         composeTestRule
             .onNodeWithTag("coverArtImage")
             .assertExists() // assertIsDisplayed fails but it does exist
@@ -110,18 +96,13 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
 
         // Confirm that up navigation items exists
+        waitForNodeToShow(hasTestTag("TopBarSubtitle"))
         composeTestRule
             .onNodeWithTag("TopBarSubtitle")
             .performClick()
-        composeTestRule
-            .onNodeWithText(fakeReleaseGroup.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakeArtistCredit2.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        waitForThenAssertIsDisplayed(fakeArtistCredit.name)
+        waitForThenAssertIsDisplayed(fakeArtistCredit2.name)
     }
 
     @Test
