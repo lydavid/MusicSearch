@@ -32,6 +32,7 @@ import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.getTopLevelDestination
 import ly.david.data.navigation.getTopLevelRoute
+import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.dialog.CreateCollectionDialog
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
@@ -155,6 +156,49 @@ internal fun TopLevelScaffold(
 
         NavigationGraph(
             navController = navController,
+            deleteHistoryDelegate = object : DeleteHistoryDelegate {
+                override fun delete(history: LookupHistoryRoomModel) {
+                    scope.launch {
+                        viewModel.markAsDeleted(mbid = history.id)
+
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = "Removed ${history.title}",
+                            actionLabel = "Undo",
+                            duration = SnackbarDuration.Short
+                        )
+
+                        when (snackbarResult) {
+                            SnackbarResult.ActionPerformed -> {
+                                viewModel.undoDelete(history.id)
+                            }
+                            SnackbarResult.Dismissed -> {
+                                viewModel.delete(history.id)
+                            }
+                        }
+                    }
+                }
+
+                override fun deleteAll() {
+                    scope.launch {
+                        viewModel.markAllAsDeleted()
+
+                        val snackbarResult = snackbarHostState.showSnackbar(
+                            message = "Cleared history",
+                            actionLabel = "Undo",
+                            duration = SnackbarDuration.Short
+                        )
+
+                        when (snackbarResult) {
+                            SnackbarResult.ActionPerformed -> {
+                                viewModel.undoDeleteAll()
+                            }
+                            SnackbarResult.Dismissed -> {
+                                viewModel.deleteAll()
+                            }
+                        }
+                    }
+                }
+            },
             modifier = Modifier.padding(innerPadding),
             onLoginClick = {
                 loginLauncher.launch(Unit)

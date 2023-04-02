@@ -34,6 +34,7 @@ import ly.david.data.persistence.collection.CollectionEntityDao
 import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.data.persistence.collection.CollectionWithEntities
+import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
@@ -80,7 +81,9 @@ internal class TopLevelViewModel @Inject constructor(
     private val musicBrainzAuthApi: MusicBrainzAuthApi,
     private val authRequest: AuthorizationRequest,
     private val authService: AuthorizationService,
-    private val clientAuth: ClientAuthentication
+    private val clientAuth: ClientAuthentication,
+
+    private val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel() {
 
     data class AddToCollectionResult(
@@ -204,5 +207,29 @@ internal class TopLevelViewModel @Inject constructor(
                 musicBrainzAuthState.setUsername("")
             }
         }
+    }
+
+    suspend fun markAsDeleted(mbid: String) {
+        lookupHistoryDao.markAsDeleted(mbid, true)
+    }
+
+    suspend fun undoDelete(mbid: String) {
+        lookupHistoryDao.markAsDeleted(mbid, false)
+    }
+
+    suspend fun markAllAsDeleted() {
+        lookupHistoryDao.markAllAsDeleted(true)
+    }
+
+    suspend fun undoDeleteAll() {
+        lookupHistoryDao.markAllAsDeleted(false)
+    }
+
+    suspend fun delete(mbid: String) {
+        lookupHistoryDao.delete(mbid)
+    }
+
+    suspend fun deleteAll() {
+        lookupHistoryDao.deleteAll()
     }
 }

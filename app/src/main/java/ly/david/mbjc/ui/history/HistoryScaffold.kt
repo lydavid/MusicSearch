@@ -6,10 +6,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -27,10 +24,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import kotlinx.coroutines.launch
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.R
+import ly.david.mbjc.ui.DeleteHistoryDelegate
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
@@ -38,12 +35,12 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryScaffold(
+    deleteHistoryDelegate: DeleteHistoryDelegate,
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -66,25 +63,8 @@ internal fun HistoryScaffold(
                     DropdownMenuItem(
                         text = { Text("Clear history") },
                         onClick = {
-                            scope.launch {
-                                viewModel.markAllAsDeleted()
-                                closeMenu()
-
-                                val snackbarResult = snackbarHostState.showSnackbar(
-                                    message = "Cleared history",
-                                    actionLabel = "Undo",
-                                    duration = SnackbarDuration.Short
-                                )
-
-                                when (snackbarResult) {
-                                    SnackbarResult.ActionPerformed -> {
-                                        viewModel.undoDeleteAll()
-                                    }
-                                    SnackbarResult.Dismissed -> {
-                                        viewModel.deleteAll()
-                                    }
-                                }
-                            }
+                            deleteHistoryDelegate.deleteAll()
+                            closeMenu()
                         }
                     )
                 },
@@ -106,30 +86,7 @@ internal fun HistoryScaffold(
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyPagingItems = lazyPagingItems,
             onItemClick = onItemClick,
-            onDeleteItem = { history ->
-                scope.launch {
-                    viewModel.markAsDeleted(mbid = history.id)
-
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = "Removed ${history.title}",
-                        actionLabel = "Undo",
-                        duration = SnackbarDuration.Short
-                    )
-
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            viewModel.undoDelete(history.id)
-                        }
-                        SnackbarResult.Dismissed -> {
-                            // TODO: if user moves to another screen, we won't actually delete
-                            //  If we handle the deletion in the top level viewmodel, then no matter what screen
-                            //  the user goes to, or even if they put the app in the background, it will still execute
-                            //  only killing the app or crashing will prevent the deletion
-                            viewModel.delete(history.id)
-                        }
-                    }
-                }
-            }
+            onDeleteItem = deleteHistoryDelegate::delete
         )
     }
 }
