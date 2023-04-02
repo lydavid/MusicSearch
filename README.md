@@ -37,3 +37,35 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 ## Privacy Policy
 
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
+
+## Dependency Diagram
+```mermaid
+%%{
+  init: {
+    'theme': 'neutral'
+  }
+}%%
+
+graph LR
+
+  subgraph data
+    base
+    coverart
+    musicbrainz
+  end
+  musicbrainz --> base
+  data --> base
+  data --> coverart
+  data --> musicbrainz
+  data-android --> data
+  data-android --> test-data
+  app --> test-data
+  app --> data-android
+  app --> data-android
+  app --> data-android
+  app --> data-android
+  app --> test-data
+  coverart --> base
+  test-data --> data
+
+```

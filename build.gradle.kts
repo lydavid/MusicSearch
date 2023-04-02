@@ -13,6 +13,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.22.0" apply true
     id("com.google.gms.google-services") version "4.3.15" apply false
     id("com.google.firebase.crashlytics") version "2.9.4" apply false
+    id("dev.iurysouza.modulegraph") version "0.2.2"
 }
 
 allprojects {
@@ -90,4 +91,9 @@ allprojects {
             txt.required.set(true)
         }
     }
+}
+
+moduleGraphConfig {
+    readmePath.set(file("$projectDir/README.md").absolutePath)
+    heading.set("## Dependency Diagram")
 }
