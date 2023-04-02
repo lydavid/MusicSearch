@@ -29,7 +29,7 @@ internal fun EventListItem(
     onEventClick: EventListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 event.run {
 

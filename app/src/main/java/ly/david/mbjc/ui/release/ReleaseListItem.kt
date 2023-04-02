@@ -51,14 +51,14 @@ internal fun ReleaseListItem(
     }
 
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = release.name,
                 style = TextStyles.getCardBodyTextStyle()
             )
         },
         modifier = modifier.clickable { onClick(release) },
-        supportingText = {
+        supportingContent = {
             Column {
                 release.disambiguation.ifNotNullOrEmpty {
                     Text(

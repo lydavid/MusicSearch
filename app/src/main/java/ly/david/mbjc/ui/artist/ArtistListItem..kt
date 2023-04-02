@@ -30,7 +30,7 @@ internal fun ArtistListItem(
     onArtistClick: ArtistListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = artist.name,
                 style = TextStyles.getCardTitleTextStyle()
@@ -39,7 +39,7 @@ internal fun ArtistListItem(
         modifier = modifier.clickable {
             onArtistClick(artist)
         },
-        supportingText = {
+        supportingContent = {
             Column {
                 DisambiguationText(disambiguation = artist.disambiguation)
 

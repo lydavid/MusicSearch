@@ -29,7 +29,7 @@ internal fun PlaceListItem(
     onPlaceClick: PlaceListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 place.run {
                     Text(

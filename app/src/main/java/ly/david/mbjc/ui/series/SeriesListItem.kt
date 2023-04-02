@@ -26,7 +26,7 @@ internal fun SeriesListItem(
     onSeriesClick: SeriesListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 series.run {
                     Text(

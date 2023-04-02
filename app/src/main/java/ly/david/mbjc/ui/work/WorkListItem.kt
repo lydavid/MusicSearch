@@ -23,7 +23,7 @@ internal fun WorkListItem(
     onWorkClick: WorkListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 work.run {
                     Text(

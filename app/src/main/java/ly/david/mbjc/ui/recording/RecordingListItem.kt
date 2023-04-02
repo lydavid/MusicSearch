@@ -33,7 +33,7 @@ internal fun RecordingListItem(
     onRecordingClick: RecordingListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = recording.name,
                 style = TextStyles.getCardTitleTextStyle(),
@@ -42,7 +42,7 @@ internal fun RecordingListItem(
         modifier = modifier.clickable {
             onRecordingClick(recording)
         },
-        supportingText = {
+        supportingContent = {
             Column {
                 DisambiguationText(disambiguation = recording.disambiguation)
 

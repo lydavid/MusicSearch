@@ -38,7 +38,7 @@ internal fun AreaListItem(
     onAreaClick: AreaListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 // Misnomer here, but it's the same condition to show this tab and to show flags
                 val areaName = if (area.showReleases()) {
