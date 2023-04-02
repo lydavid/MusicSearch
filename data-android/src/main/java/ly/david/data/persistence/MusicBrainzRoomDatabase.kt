@@ -1,5 +1,6 @@
 package ly.david.data.persistence
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -41,7 +42,7 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
-const val DATABASE_VERSION = 1
+const val DATABASE_VERSION = 2
 
 @Database(
     version = DATABASE_VERSION,
@@ -87,7 +88,9 @@ const val DATABASE_VERSION = 1
         AreaWithReleaseDate::class,
         ReleaseFormatTrackCount::class,
     ],
-    autoMigrations = []
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
 abstract class MusicBrainzRoomDatabase : RoomDatabase(), MusicBrainzDatabase

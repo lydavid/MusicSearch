@@ -1,6 +1,5 @@
 package ly.david.data.persistence
 
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
@@ -28,9 +27,6 @@ abstract class BaseDao<in T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAllReplace(entities: List<T>)
-
-    @Delete
-    abstract suspend fun delete(entity: T)
 
     @Update
     abstract suspend fun update(entity: T)

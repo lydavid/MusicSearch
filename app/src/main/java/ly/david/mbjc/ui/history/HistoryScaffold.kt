@@ -80,7 +80,7 @@ internal fun HistoryScaffold(
             onItemClick = onItemClick,
             onDeleteItem = { history ->
                 scope.launch {
-                    viewModel.deleteHistory(mbid = history.id)
+                    viewModel.markAsDeleted(mbid = history.id)
 
                     val snackbarResult = snackbarHostState.showSnackbar(
                         message = "Removed ${history.title}",
@@ -88,14 +88,15 @@ internal fun HistoryScaffold(
                         duration = SnackbarDuration.Short
                     )
 
-                    // TODO: how about marking item as deleted,
-                    //  then undo just unmarks it, while dismiss actually deletes it
                     when (snackbarResult) {
                         SnackbarResult.ActionPerformed -> {
-                            viewModel.undoDeleteHistory(history)
+                            viewModel.undoDelete(history.id)
                         }
                         SnackbarResult.Dismissed -> {
-                            // Do nothing.
+                            // TODO: if user moves to another screen, we won't actually delete
+                            //  what if we schedule deletion of items marked as deleted all at once
+                            //  on app launch? this could slow it down though which makes a bad first impression
+                            viewModel.delete(history.id)
                         }
                     }
                 }

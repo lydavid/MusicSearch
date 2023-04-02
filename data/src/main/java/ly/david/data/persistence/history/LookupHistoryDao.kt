@@ -11,7 +11,13 @@ import ly.david.data.persistence.BaseDao
 abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
     @Transaction
-    @Query("SELECT * FROM lookup_history ORDER BY last_accessed DESC")
+    @Query(
+        """
+        SELECT * FROM lookup_history
+        WHERE NOT deleted
+        ORDER BY last_accessed DESC
+        """
+    )
     abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistoryRoomModel>
 
     // TODO: can't search "release group", need to use "release_group" or "release-group"
@@ -22,7 +28,8 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
         """
         SELECT * 
         FROM lookup_history
-        WHERE title LIKE :query OR resource LIKE :query OR search_hint LIKE :query
+        WHERE NOT deleted AND
+        (title LIKE :query OR resource LIKE :query OR search_hint LIKE :query)
         ORDER BY last_accessed DESC
         """
     )
@@ -39,18 +46,20 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
     @Query(
         """
-            DELETE FROM lookup_history
+            UPDATE lookup_history
+            SET deleted = :deleted
             WHERE mbid = :mbid
         """
     )
-    abstract suspend fun deleteLookupHistory(mbid: String)
+    abstract suspend fun markAsDeleted(mbid: String, deleted: Boolean)
 
     @Query(
         """
             DELETE FROM lookup_history
+            WHERE mbid = :mbid
         """
     )
-    abstract suspend fun deleteAllHistory()
+    abstract suspend fun delete(mbid: String)
 
     /**
      * Insert new [LookupHistoryRoomModel] if it doesn't exist, otherwise increment its visited count

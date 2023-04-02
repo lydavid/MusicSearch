@@ -46,11 +46,15 @@ internal class HistoryViewModel @Inject constructor(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    suspend fun deleteHistory(mbid: String) {
-        lookupHistoryDao.deleteLookupHistory(mbid)
+    suspend fun markAsDeleted(mbid: String) {
+        lookupHistoryDao.markAsDeleted(mbid, true)
     }
 
-    suspend fun undoDeleteHistory(lookupHistory: LookupHistoryRoomModel) {
-        lookupHistoryDao.insert(lookupHistory)
+    suspend fun undoDelete(mbid: String) {
+        lookupHistoryDao.markAsDeleted(mbid, false)
+    }
+
+    suspend fun delete(mbid: String) {
+        lookupHistoryDao.delete(mbid)
     }
 }
