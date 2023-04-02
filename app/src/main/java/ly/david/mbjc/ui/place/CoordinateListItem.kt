@@ -36,7 +36,7 @@ internal fun CoordinateListItem(
     val text = coordinates.formatForDisplay() ?: return
 
     ListItem(
-        headlineText = {
+        headlineContent = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {

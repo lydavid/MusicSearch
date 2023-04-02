@@ -44,14 +44,14 @@ internal fun ReleaseGroupListItem(
     }
 
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = releaseGroup.name,
                 style = TextStyles.getCardBodyTextStyle()
             )
         },
         modifier = modifier.clickable { onClick(releaseGroup) },
-        supportingText = {
+        supportingContent = {
             Column {
                 releaseGroup.disambiguation.ifNotNullOrEmpty {
                     Text(

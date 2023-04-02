@@ -28,14 +28,14 @@ internal fun CollectionListItem(
     onClick: CollectionListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = collection.name,
                 style = TextStyles.getCardBodyTextStyle()
             )
         },
         modifier = modifier.clickable { onClick(collection) },
-        supportingText = {
+        supportingContent = {
             // TODO: if we add more content to this column, it messes up any BottomModalSheet
             //  problem seems to appear when list is of certain length (eg. 4 items) regardless of this
             Text(

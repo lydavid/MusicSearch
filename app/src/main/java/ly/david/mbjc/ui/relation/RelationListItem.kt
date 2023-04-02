@@ -33,7 +33,7 @@ internal fun RelationListItem(
     val context = LocalContext.current
 
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 Text(
                     text = "${relation.label}:",

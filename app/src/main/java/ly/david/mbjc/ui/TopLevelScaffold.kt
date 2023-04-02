@@ -11,7 +11,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.rememberDismissState
-import androidx.compose.material3.rememberSheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -53,7 +53,7 @@ internal fun TopLevelScaffold(
 
     val scope = rememberCoroutineScope()
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
-    val bottomSheetState = rememberSheetState()
+    val bottomSheetState = rememberModalBottomSheetState()
     var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
     var selectedEntityId by rememberSaveable { mutableStateOf("") }
     val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)

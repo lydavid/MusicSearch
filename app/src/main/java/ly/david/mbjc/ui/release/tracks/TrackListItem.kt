@@ -27,7 +27,7 @@ internal fun TrackListItem(
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = track.title,
                 style = TextStyles.getCardTitleTextStyle(),

@@ -32,7 +32,7 @@ internal fun HistoryListItem(
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = lookupHistory.title,
                 style = TextStyles.getCardBodyTextStyle(),
@@ -42,7 +42,7 @@ internal fun HistoryListItem(
         modifier = modifier.clickable {
             onItemClick(lookupHistory.resource, lookupHistory.id, lookupHistory.title)
         },
-        supportingText = {
+        supportingContent = {
             Column {
                 val resource = stringResource(id = lookupHistory.resource.getDisplayTextRes())
                 Text(

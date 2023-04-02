@@ -26,7 +26,7 @@ internal fun InstrumentListItem(
     onInstrumentClick: InstrumentListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 instrument.run {
                     Text(

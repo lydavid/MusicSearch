@@ -30,7 +30,7 @@ internal fun LabelListItem(
     onLabelClick: LabelListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Column {
                 Text(
                     text = label.getNameWithDisambiguation(),
