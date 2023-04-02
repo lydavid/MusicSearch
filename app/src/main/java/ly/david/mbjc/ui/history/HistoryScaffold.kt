@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.history
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -10,6 +11,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismiss
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
@@ -60,6 +62,32 @@ internal fun HistoryScaffold(
                     filterText = it
                     viewModel.updateQuery(query = filterText)
                 },
+                overflowDropdownMenuItems = {
+                    DropdownMenuItem(
+                        text = { Text("Clear history") },
+                        onClick = {
+                            scope.launch {
+                                viewModel.markAllAsDeleted()
+                                closeMenu()
+
+                                val snackbarResult = snackbarHostState.showSnackbar(
+                                    message = "Cleared history",
+                                    actionLabel = "Undo",
+                                    duration = SnackbarDuration.Short
+                                )
+
+                                when (snackbarResult) {
+                                    SnackbarResult.ActionPerformed -> {
+                                        viewModel.undoDeleteAll()
+                                    }
+                                    SnackbarResult.Dismissed -> {
+                                        viewModel.deleteAll()
+                                    }
+                                }
+                            }
+                        }
+                    )
+                },
             )
         },
         snackbarHost = {
@@ -94,8 +122,9 @@ internal fun HistoryScaffold(
                         }
                         SnackbarResult.Dismissed -> {
                             // TODO: if user moves to another screen, we won't actually delete
-                            //  what if we schedule deletion of items marked as deleted all at once
-                            //  on app launch? this could slow it down though which makes a bad first impression
+                            //  If we handle the deletion in the top level viewmodel, then no matter what screen
+                            //  the user goes to, or even if they put the app in the background, it will still execute
+                            //  only killing the app or crashing will prevent the deletion
                             viewModel.delete(history.id)
                         }
                     }

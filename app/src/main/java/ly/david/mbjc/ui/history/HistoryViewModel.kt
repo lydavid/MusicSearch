@@ -54,7 +54,19 @@ internal class HistoryViewModel @Inject constructor(
         lookupHistoryDao.markAsDeleted(mbid, false)
     }
 
+    suspend fun markAllAsDeleted() {
+        lookupHistoryDao.markAllAsDeleted(true)
+    }
+
+    suspend fun undoDeleteAll() {
+        lookupHistoryDao.markAllAsDeleted(false)
+    }
+
     suspend fun delete(mbid: String) {
         lookupHistoryDao.delete(mbid)
+    }
+
+    suspend fun deleteAll() {
+        lookupHistoryDao.deleteAll()
     }
 }

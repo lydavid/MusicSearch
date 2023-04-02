@@ -55,11 +55,26 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
     @Query(
         """
+            UPDATE lookup_history
+            SET deleted = :deleted
+        """
+    )
+    abstract suspend fun markAllAsDeleted(deleted: Boolean)
+
+    @Query(
+        """
             DELETE FROM lookup_history
             WHERE mbid = :mbid
         """
     )
     abstract suspend fun delete(mbid: String)
+
+    @Query(
+        """
+            DELETE FROM lookup_history
+        """
+    )
+    abstract suspend fun deleteAll()
 
     /**
      * Insert new [LookupHistoryRoomModel] if it doesn't exist, otherwise increment its visited count
