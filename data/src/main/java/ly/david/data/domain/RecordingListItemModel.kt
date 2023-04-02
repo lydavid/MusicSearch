@@ -23,7 +23,7 @@ fun RecordingMusicBrainzModel.toRecordingListItemModel() = RecordingListItemMode
     firstReleaseDate = firstReleaseDate,
     disambiguation = disambiguation,
     length = length,
-    video = video ?: false,
+    video = video,
     formattedArtistCredits = artistCredits.getDisplayNames()
 )
 

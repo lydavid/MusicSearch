@@ -33,7 +33,7 @@ fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldMode
     firstReleaseDate = firstReleaseDate,
     disambiguation = disambiguation,
     length = length,
-    video = video ?: false,
+    video = video,
     isrcs = isrcs,
     artistCredits = artistCredits.toArtistCreditUiModels()
 )

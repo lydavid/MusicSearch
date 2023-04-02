@@ -100,11 +100,11 @@
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
 
-    <string name="cached_events">Cached %1d of %2d events</string>
-    <string name="cached_places">Cached %1d of %2d places</string>
-    <string name="cached_recordings">Cached %1d of %2d recordings</string>
-    <string name="cached_releases">Cached %1d of %2d releases</string>
-    <string name="cached_release_groups">Cached %1d of %2d release groups</string>
+    <string name="cached_events">Cached %1$d of %2$d events</string>
+    <string name="cached_places">Cached %1$d of %2$d places</string>
+    <string name="cached_recordings">Cached %1$d of %2$d recordings</string>
+    <string name="cached_releases">Cached %1$d of %2$d releases</string>
+    <string name="cached_release_groups">Cached %1$d of %2$d release groups</string>
 
     <string name="more_actions">More actions</string>
     <string name="open_google_maps">Open in Google maps</string>
