@@ -1,14 +1,15 @@
 package ly.david.mbjc.ui.artist
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,29 +27,27 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun ArtistScaffold(
     artistId: String,
@@ -57,25 +56,25 @@ internal fun ArtistScaffold(
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit = {},
     onAddToCollectionMenuClick: () -> Unit = {},
-    // This can be hoisted up which would normally let us preview this,
-    // but because it relies on compose paging, we can't preview.
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     viewModel: ArtistScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.ARTIST
+    val scope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    val pagerState = rememberPagerState()
+
     var filterText by rememberSaveable { mutableStateOf("") }
-    var isSorted by rememberSaveable { mutableStateOf(false) }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
     var selectedTab by rememberSaveable { mutableStateOf(ArtistTab.DETAILS) }
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
 
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
     val showError by viewModel.isError.collectAsState()
-    val showMoreInfoInReleaseListItem
-        by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
     LaunchedEffect(key1 = artistId) {
         viewModel.setTitle(titleWithDisambiguation)
@@ -94,7 +93,6 @@ internal fun ArtistScaffold(
 
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
                 onBack = onBack,
@@ -105,31 +103,22 @@ internal fun ArtistScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
                     CopyToClipboardMenuItem(artistId)
-
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(if (isSorted) "Un-sort" else "Sort")
-                            },
-                            onClick = {
-                                closeMenu()
-                                // TODO: disclaimer when turning on sort if we have not gotten all release groups
-                                isSorted = !isSorted
-                            }
+                        ToggleMenuItem(
+                            toggleOnText = R.string.sort,
+                            toggleOffText = R.string.unsort,
+                            toggled = sortReleaseGroupListItems,
+                            onToggle = onSortReleaseGroupListItemsChange
                         )
                     }
-                    // TODO: generalize switch menu item
                     if (selectedTab == ArtistTab.RELEASES) {
-                        DropdownMenuItem(
-                            text = { Text(if (showMoreInfoInReleaseListItem) "Show less info" else "Show more info") },
-                            onClick = {
-                                viewModel.appPreferences
-                                    .setShowMoreInfoInReleaseListItem(!showMoreInfoInReleaseListItem)
-                                closeMenu()
-                            }
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange
                         )
                     }
-
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 filterText = filterText,
@@ -138,9 +127,10 @@ internal fun ArtistScaffold(
                 },
                 tabsTitles = ArtistTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
             )
         },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
@@ -163,7 +153,7 @@ internal fun ArtistScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            count = ArtistTab.values().size,
+            pageCount = ArtistTab.values().size,
             state = pagerState
         ) { page ->
             when (ArtistTab.values()[page]) {
@@ -192,7 +182,7 @@ internal fun ArtistScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         searchText = filterText,
-                        isSorted = isSorted,
+                        isSorted = sortReleaseGroupListItems,
                         snackbarHostState = snackbarHostState,
                         onReleaseGroupClick = onItemClick,
                         lazyListState = releaseGroupsLazyListState,
@@ -205,22 +195,20 @@ internal fun ArtistScaffold(
                 ArtistTab.RELEASES -> {
                     ReleasesByArtistScreen(
                         artistId = artistId,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        releasesLazyListState = releasesLazyListState,
-                        releasesLazyPagingItems = releasesLazyPagingItems,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                         onReleaseClick = onItemClick,
-                        filterText = filterText,
-                        showMoreInfo = showMoreInfoInReleaseListItem
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
                 ArtistTab.RELATIONSHIPS -> {
-                    viewModel.loadRelations(artistId)
-
                     RelationsScreen(
                         modifier = Modifier
                             .padding(innerPadding)

@@ -1,10 +1,8 @@
 package ly.david.mbjc.ui.place
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.onNodeWithText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -60,24 +58,14 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.getNameWithDisambiguation())
 
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.area!!.name)
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.address)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.coordinates?.formatForDisplay()!!)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.type!!)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.lifeSpan?.begin!!)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(fakePlaceWithAllData.lifeSpan?.end!!)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.address)
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.coordinates?.formatForDisplay()!!)
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.type!!)
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.lifeSpan?.begin!!)
+        waitForThenAssertIsDisplayed(fakePlaceWithAllData.lifeSpan?.end!!)
 
         waitForThenPerformClickOn(events)
-        waitForThenAssertIsDisplayed(fakeEvent.name)
+        waitForThenAssertAtLeastOneIsDisplayed(fakeEvent.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(events).and(hasNoClickAction()))
@@ -89,6 +77,6 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         setPlace(fakePlaceWithAllData)
 
         waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
+        waitForThenAssertAtLeastOneIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
     }
 }

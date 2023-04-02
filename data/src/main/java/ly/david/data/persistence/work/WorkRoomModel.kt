@@ -15,16 +15,18 @@ data class WorkRoomModel(
     @ColumnInfo(name = "name") override val name: String,
     @ColumnInfo(name = "disambiguation") override val disambiguation: String?,
     @ColumnInfo(name = "type") override val type: String?,
+    @ColumnInfo(name = "type_id") val typeId: String? = null,
     @ColumnInfo(name = "language") override val language: String?,
-    @ColumnInfo(name = "iswcs", defaultValue = "null") override val iswcs: List<String>? = null,
+    @ColumnInfo(name = "iswcs") override val iswcs: List<String>? = null,
 ) : RoomModel, Work
 
-internal fun WorkMusicBrainzModel.toWorkRoomModel() =
+fun WorkMusicBrainzModel.toWorkRoomModel() =
     WorkRoomModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         type = type,
+        typeId = typeId,
         language = language,
         iswcs = iswcs
     )

@@ -34,7 +34,7 @@ internal fun AreaDetailsScreen(
                     TextWithHeadingRes(headingRes = R.string.type, text = it)
                 }
                 LifeSpanText(lifeSpan = lifeSpan)
-                iso_3166_1_codes?.ifNotNullOrEmpty {
+                countryCodes?.ifNotNullOrEmpty {
                     TextWithHeadingRes(headingRes = R.string.iso_3166_1, text = it.joinToString(", "))
                 }
 
@@ -62,7 +62,7 @@ private fun Preview() {
                         end = "1992-12-31",
                         ended = true
                     ),
-                    iso_3166_1_codes = listOf("XC")
+                    countryCodes = listOf("XC")
                 )
             )
         }

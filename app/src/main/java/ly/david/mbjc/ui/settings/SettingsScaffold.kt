@@ -31,6 +31,10 @@ fun SettingsScaffold(
     onDestinationClick: (Destination) -> Unit = {},
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
 
@@ -48,9 +52,6 @@ fun SettingsScaffold(
         val authState by viewModel.musicBrainzAuthState.authStateFlow.collectAsState(initial = null)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
-        val showMoreInfoInReleaseListItem by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(
-            initial = true
-        )
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
@@ -64,7 +65,9 @@ fun SettingsScaffold(
             useMaterialYou = useMaterialYou,
             onUseMaterialYouChange = { viewModel.appPreferences.setUseMaterialYou(it) },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) }
+            onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+            sortReleaseGroupListItems = sortReleaseGroupListItems,
+            onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
         )
     }
 }
@@ -77,12 +80,14 @@ fun SettingsScreen(
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     onDestinationClick: (Destination) -> Unit = {},
-    theme: AppPreferences.Theme,
+    theme: AppPreferences.Theme = AppPreferences.Theme.SYSTEM,
     onThemeChange: (AppPreferences.Theme) -> Unit = {},
-    useMaterialYou: Boolean,
+    useMaterialYou: Boolean = true,
     onUseMaterialYouChange: (Boolean) -> Unit = {},
-    showMoreInfoInReleaseListItem: Boolean,
-    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {}
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {}
 ) {
 
     Column(modifier = modifier) {
@@ -116,6 +121,12 @@ fun SettingsScreen(
             onCheckedChange = onShowMoreInfoInReleaseListItemChange
         )
 
+        SettingSwitch(
+            header = "Sort release groups by type",
+            checked = sortReleaseGroupListItems,
+            onCheckedChange = onSortReleaseGroupListItemsChange
+        )
+
         val versionKey = stringResource(id = R.string.app_version)
         val versionValue = BuildConfig.VERSION_NAME
         TextWithHeading(heading = versionKey, text = versionValue)
@@ -139,11 +150,7 @@ fun SettingsScreen(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            SettingsScreen(
-                theme = AppPreferences.Theme.SYSTEM,
-                useMaterialYou = true,
-                showMoreInfoInReleaseListItem = true
-            )
+            SettingsScreen()
         }
     }
 }

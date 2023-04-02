@@ -6,7 +6,7 @@ import androidx.room.Junction
 import androidx.room.Relation
 import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.area.AreaRoomModel
-import ly.david.data.persistence.area.Iso3166_1
+import ly.david.data.persistence.area.CountryCode
 import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
 import ly.david.data.persistence.label.LabelRoomModel
@@ -60,7 +60,7 @@ data class AreaWithReleaseDate(
         parentColumn = "id",
         entityColumn = "area_id"
     )
-    val countryCodes: List<Iso3166_1>
+    val countryCodes: List<CountryCode>
 ) : RoomModel
 
 /**

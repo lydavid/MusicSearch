@@ -41,7 +41,7 @@ internal class AreaScaffoldViewModel @Inject constructor(
         relationsList.repository = repository
     }
 
-    fun onSelectedTabChange(
+    fun loadDataForTab(
         areaId: String,
         selectedTab: AreaTab
     ) {
@@ -70,7 +70,8 @@ internal class AreaScaffoldViewModel @Inject constructor(
                         recordLookupHistory(
                             resourceId = areaId,
                             resource = resource,
-                            summary = title.value
+                            summary = title.value,
+                            searchHint = area.value?.sortName ?: ""
                         )
                         recordedLookup = true
                     }

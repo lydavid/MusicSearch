@@ -2,24 +2,15 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ClassNaming:Iso3166_1.kt$Iso3166_1</ID>
-    <ID>ConstructorParameterNaming:AreaListItemModel.kt$AreaListItemModel$val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
-    <ID>ConstructorParameterNaming:AreaScaffoldModel.kt$AreaScaffoldModel$val iso_3166_1_codes: List&lt;String&gt;? = null</ID>
     <ID>CyclomaticComplexMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
     <ID>LongMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
     <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, resource: MusicBrainzResource, queryString: String, currentOffset: Int, limit: Int ): QueryResults</ID>
     <ID>LongParameterList:ReleaseRepository.kt$ReleaseRepository$( private val musicBrainzApiService: MusicBrainzApiService, private val releaseDao: ReleaseDao, private val releaseReleaseGroupDao: ReleaseReleaseGroupDao, private val releaseGroupDao: ReleaseGroupDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, private val releaseCountryDao: ReleaseCountryDao, private val areaDao: AreaDao, private val labelDao: LabelDao, private val releaseLabelDao: ReleaseLabelDao )</ID>
     <ID>MatchingDeclarationName:FetchedRelations.kt$HasRelationsRoomModel</ID>
     <ID>MaxLineLength:ArtistRelease.kt$// TODO: we actually don't want to cascade delete in any scenario where another resource screen can delete the same resource</ID>
-    <ID>MaxLineLength:MediumRoomModel.kt$MediumRoomModel$// TODO: release_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.MediumRoomModel</ID>
     <ID>MaxLineLength:RoutesTest.kt$RoutesTest$assertEquals(Destination.LOOKUP, "${Destination.LOOKUP_RELEASE_GROUP.route}/123".getTopLevelRoute().getTopLevelDestination())</ID>
     <ID>MaxLineLength:TrackRoomModel.kt$TrackRoomModel$// TODO: medium_id column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - ly.david.mbjc.data.persistence.release.TrackRoomModel</ID>
     <ID>ReturnCount:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, RM&gt; ): MediatorResult</ID>
     <ID>ReturnCount:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
-    <ID>SwallowedException:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
-    <ID>SwallowedException:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:BrowseResourceRemoteMediator.kt$BrowseResourceRemoteMediator$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:LookupResourceRemoteMediator.kt$LookupResourceRemoteMediator$ex: Exception</ID>
-    <ID>UnusedPrivateMember:CollectionEntityDao.kt$CollectionEntityDao.Companion$private const val SELECT_RELEASES_ID_BY_COLLECTION = """ SELECT r.id $RELEASES_BY_COLLECTION """</ID>
   </CurrentIssues>
 </SmellBaseline>

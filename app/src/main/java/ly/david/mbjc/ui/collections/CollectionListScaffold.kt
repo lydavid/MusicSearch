@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.collections
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -10,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -35,10 +36,11 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun CollectionListScaffold(
     modifier: Modifier = Modifier,
-    onCollectionClick: (id: String) -> Unit = {},
+    onCollectionClick: (id: String, isRemote: Boolean) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {},
     viewModel: CollectionListViewModel = hiltViewModel()
 ) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedResources)
@@ -54,6 +56,7 @@ internal fun CollectionListScaffold(
             TopAppBarWithFilter(
                 showBackButton = false,
                 title = stringResource(id = R.string.collections),
+                scrollBehavior = scrollBehavior,
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -74,7 +77,7 @@ internal fun CollectionListScaffold(
         PagingLoadingAndErrorHandler(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize(),
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyPagingItems = lazyPagingItems,
         ) { collectionListItemModel: CollectionListItemModel? ->
             when (collectionListItemModel) {
@@ -82,7 +85,7 @@ internal fun CollectionListScaffold(
                     CollectionListItem(
                         collection = collectionListItemModel,
                         modifier = Modifier.animateItemPlacement(),
-                        onClick = { onCollectionClick(id) }
+                        onClick = { onCollectionClick(id, isRemote) }
                     )
                 }
                 else -> {
@@ -90,8 +93,6 @@ internal fun CollectionListScaffold(
                 }
             }
         }
-
-
     }
 }
 

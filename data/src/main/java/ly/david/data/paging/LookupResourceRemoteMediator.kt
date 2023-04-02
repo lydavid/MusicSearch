@@ -4,7 +4,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import java.io.IOException
 import ly.david.data.persistence.RoomModel
+import retrofit2.HttpException
 
 /**
  * When using [LoadType.REFRESH], [hasResourceBeenStored] does not need to be checked.
@@ -18,13 +20,9 @@ class LookupResourceRemoteMediator<RM : RoomModel>(
 ) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
-        return try {
-            if (hasResourceBeenStored()) {
-                InitializeAction.SKIP_INITIAL_REFRESH
-            } else {
-                InitializeAction.LAUNCH_INITIAL_REFRESH
-            }
-        } catch (ex: Exception) {
+        return if (hasResourceBeenStored()) {
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
@@ -45,7 +43,9 @@ class LookupResourceRemoteMediator<RM : RoomModel>(
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
-        } catch (ex: Exception) {
+        } catch (ex: HttpException) {
+            MediatorResult.Error(ex)
+        } catch (ex: IOException) {
             MediatorResult.Error(ex)
         }
     }

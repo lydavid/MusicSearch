@@ -1,6 +1,7 @@
 package ly.david.mbjc
 
 import java.io.IOException
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import javax.inject.Inject
 import ly.david.mbjc.di.TEST_PORT
 import okhttp3.mockwebserver.Dispatcher
@@ -31,10 +32,7 @@ internal open class MainActivityTestWithMockServer : MainActivityTest() {
         mockWebServer.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 return MockResponse()
-                    .setResponseCode(404)
-                // TODO: this does work, but then we need to fake the imageloader's network call, which is not working
-                //  also try to move these assets into test-data
-//                    .setBody(readFileWithNewLineFromResources("release_cover_arts_response.json"))
+                    .setResponseCode(HTTP_NOT_FOUND)
             }
         }
     }

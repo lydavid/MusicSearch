@@ -65,5 +65,8 @@ fun MusicBrainzModel.toListItemModel(): ListItemModel {
         is EventMusicBrainzModel -> this.toEventListItemModel()
         is SeriesMusicBrainzModel -> this.toSeriesListItemModel()
         is GenreMusicBrainzModel -> this.toGenreListItemModel()
+        else -> error(
+            "Converting collection MusicBrainz models directly to list item models not supported."
+        )
     }
 }

@@ -52,4 +52,14 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
     """
     )
     abstract suspend fun getCollection(id: String): CollectionRoomModel
+
+    @Transaction
+    @Query(
+        """
+        SELECT * 
+        FROM collection
+        WHERE id = :id
+    """
+    )
+    abstract suspend fun getCollectionWithEntities(id: String): CollectionWithEntities
 }

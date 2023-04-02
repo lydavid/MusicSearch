@@ -1,22 +1,29 @@
 package ly.david.mbjc.ui.releasegroup
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
@@ -24,16 +31,19 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
@@ -44,7 +54,7 @@ import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
  *
  * Starts on a screen that displays all of its releases.
  */
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun ReleaseGroupScaffold(
     releaseGroupId: String,
@@ -53,10 +63,16 @@ internal fun ReleaseGroupScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE_GROUP
+    val scope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    val pagerState = rememberPagerState()
+
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
@@ -64,15 +80,19 @@ internal fun ReleaseGroupScaffold(
     val title by viewModel.title.collectAsState()
     val subtitle by viewModel.subtitle.collectAsState()
     val releaseGroup by viewModel.releaseGroup.collectAsState()
-    val showError by viewModel.isFullScreenError.collectAsState()
+    val showError by viewModel.isError.collectAsState()
     val url by viewModel.url.collectAsState()
 
     LaunchedEffect(key1 = releaseGroupId) {
         viewModel.setTitle(titleWithDisambiguation)
     }
 
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        selectedTab = ReleaseGroupTab.values()[pagerState.currentPage]
+    }
+
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-        viewModel.onSelectedTabChange(
+        viewModel.loadDataForTab(
             releaseGroupId = releaseGroupId,
             selectedTab = selectedTab
         )
@@ -80,16 +100,24 @@ internal fun ReleaseGroupScaffold(
 
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBarWithFilter(
                 resource = resource,
                 title = title,
                 subtitle = subtitle,
+                scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE_GROUP, resourceId = releaseGroupId)
                     CopyToClipboardMenuItem(releaseGroupId)
+                    if (selectedTab == ReleaseGroupTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange
+                        )
+                    }
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 subtitleDropdownMenuItems = {
@@ -107,7 +135,7 @@ internal fun ReleaseGroupScaffold(
                 },
                 tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { selectedTab = ReleaseGroupTab.values()[it] },
+                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab == ReleaseGroupTab.RELEASES,
                 filterText = filterText,
                 onFilterTextChange = {
@@ -115,6 +143,7 @@ internal fun ReleaseGroupScaffold(
                 },
             )
         },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
 
         val detailsLazyListState = rememberLazyListState()
@@ -130,51 +159,67 @@ internal fun ReleaseGroupScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
-        when (selectedTab) {
-            ReleaseGroupTab.DETAILS -> {
-                DetailsWithErrorHandling(
-                    modifier = Modifier.padding(innerPadding),
-                    showError = showError,
-                    onRetryClick = { forceRefresh = true },
-                    scaffoldModel = releaseGroup
-                ) {
-                    ReleaseGroupDetailsScreen(
-                        releaseGroup = it,
+        HorizontalPager(
+            pageCount = ReleaseGroupTab.values().size,
+            state = pagerState
+        ) { page ->
+            when (ReleaseGroupTab.values()[page]) {
+                ReleaseGroupTab.DETAILS -> {
+                    DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
-                        coverArtUrl = url,
-                        lazyListState = detailsLazyListState,
+                        showError = showError,
+                        onRetryClick = { forceRefresh = true },
+                        scaffoldModel = releaseGroup
+                    ) {
+                        ReleaseGroupDetailsScreen(
+                            releaseGroup = it,
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize()
+                                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            coverArtUrl = url,
+                            lazyListState = detailsLazyListState,
+                        )
+                    }
+                }
+                ReleaseGroupTab.RELEASES -> {
+                    ReleasesByReleaseGroupScreen(
+                        releaseGroupId = releaseGroupId,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onReleaseClick = onItemClick,
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
-            }
-            ReleaseGroupTab.RELEASES -> {
-                ReleasesByReleaseGroupScreen(
-                    releaseGroupId = releaseGroupId,
-                    modifier = Modifier.padding(innerPadding),
-                    snackbarHostState = snackbarHostState,
-                    releasesLazyListState = releasesLazyListState,
-                    releasesLazyPagingItems = releasesLazyPagingItems,
-                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-                    onReleaseClick = onItemClick,
-                    filterText = filterText
-                )
-            }
-            ReleaseGroupTab.RELATIONSHIPS -> {
-                viewModel.loadRelations(releaseGroupId)
-
-                RelationsScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    onItemClick = onItemClick,
-                    snackbarHostState = snackbarHostState,
-                    lazyListState = relationsLazyListState,
-                    lazyPagingItems = relationsLazyPagingItems,
-                )
-            }
-            ReleaseGroupTab.STATS -> {
-                ReleaseGroupStatsScreen(
-                    releaseGroupId = releaseGroupId,
-                    modifier = Modifier.padding(innerPadding),
-                    tabs = ReleaseGroupTab.values().map { it.tab }
-                )
+                ReleaseGroupTab.RELATIONSHIPS -> {
+                    RelationsScreen(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onItemClick = onItemClick,
+                        snackbarHostState = snackbarHostState,
+                        lazyListState = relationsLazyListState,
+                        lazyPagingItems = relationsLazyPagingItems,
+                    )
+                }
+                ReleaseGroupTab.STATS -> {
+                    ReleaseGroupStatsScreen(
+                        releaseGroupId = releaseGroupId,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        tabs = ReleaseGroupTab.values().map { it.tab }
+                    )
+                }
             }
         }
     }

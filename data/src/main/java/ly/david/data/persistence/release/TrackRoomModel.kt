@@ -23,27 +23,13 @@ import ly.david.data.persistence.RoomModel
     ]
 )
 data class TrackRoomModel(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    override val id: String,
-
-    @ColumnInfo(name = "medium_id", index = true)
-    val mediumId: Long,
-
-    @ColumnInfo(name = "position")
-    override val position: Int,
-    @ColumnInfo(name = "number")
-    override val number: String,
-    @ColumnInfo(name = "title")
-    override val title: String,
-    @ColumnInfo(name = "length")
-    override val length: Int?,
-
-    // TODO: when adding a new required field, need to specify defaultValue for migration
-    //  but now we would have to empty check this everywhere.
-    //  since we haven't released yet, let's just destructive migrate and get rid of this.
-    @ColumnInfo(name = "recording_id", defaultValue = "")
-    val recordingId: String,
+    @PrimaryKey @ColumnInfo(name = "id") override val id: String,
+    @ColumnInfo(name = "medium_id", index = true) val mediumId: Long,
+    @ColumnInfo(name = "position") override val position: Int,
+    @ColumnInfo(name = "number") override val number: String,
+    @ColumnInfo(name = "title") override val title: String,
+    @ColumnInfo(name = "length") override val length: Int?,
+    @ColumnInfo(name = "recording_id") val recordingId: String,
 ) : Track, RoomModel
 
 internal fun TrackMusicBrainzModel.toTrackRoomModel(mediumId: Long) =

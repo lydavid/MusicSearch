@@ -12,6 +12,6 @@ data class HasRelationsRoomModel(
     @ColumnInfo(name = "resource_id")
     val resourceId: String,
 
-    @ColumnInfo(name = "has_relations", defaultValue = "false")
+    @ColumnInfo(name = "has_relations")
     val hasRelations: Boolean = false,
 )

@@ -1,7 +1,9 @@
 package ly.david.mbjc.ui.place
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +17,6 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -27,36 +28,34 @@ internal fun PlaceListItem(
     modifier: Modifier = Modifier,
     onPlaceClick: PlaceListItemModel.() -> Unit = {}
 ) {
-    ClickableListItem(
-        onClick = { onPlaceClick(place) },
-        modifier = modifier
-    ) {
-        Column(modifier = Modifier.padding(vertical = 16.dp)) {
-            place.run {
-                Text(
-                    text = name,
-                    style = TextStyles.getCardTitleTextStyle()
-                )
-
-                DisambiguationText(disambiguation = disambiguation)
-
-                type.ifNotNullOrEmpty {
+    ListItem(
+        headlineText = {
+            Column {
+                place.run {
                     Text(
-                        text = it,
-                        modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodyTextStyle(),
+                        text = name,
+                        style = TextStyles.getCardTitleTextStyle()
                     )
-                }
 
-                address.ifNotNullOrEmpty {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
-                    )
-                }
+                    DisambiguationText(disambiguation = disambiguation)
 
-                // TODO: too much information on list item?
+                    type.ifNotNullOrEmpty {
+                        Text(
+                            text = it,
+                            modifier = Modifier.padding(top = 4.dp),
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
+
+                    address.ifNotNullOrEmpty {
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = it,
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
+
+                    // TODO: too much information on list item?
 //                area.ifNotNull {
 //                    Text(
 //                        modifier = Modifier.padding(top = 4.dp),
@@ -65,16 +64,18 @@ internal fun PlaceListItem(
 //                    )
 //                }
 
-                lifeSpan.ifNotNull {
-                    Text(
-                        modifier = Modifier.padding(top = 4.dp),
-                        text = it.getLifeSpanForDisplay(),
-                        style = TextStyles.getCardBodySubTextStyle(),
-                    )
+                    lifeSpan.ifNotNull {
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = it.getLifeSpanForDisplay(),
+                            style = TextStyles.getCardBodySubTextStyle(),
+                        )
+                    }
                 }
             }
-        }
-    }
+        },
+        modifier = modifier.clickable { onPlaceClick(place) }
+    )
 }
 
 // Cannot be private.

@@ -1,9 +1,6 @@
 package ly.david.mbjc
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -59,15 +56,7 @@ internal class LookupEachResourceErrorTest(
             navController.goToResource(entity = resource, id = resourceId)
         }
 
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodesWithText(retry)
-                .fetchSemanticsNodes().size == 1
-        }
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
 
         // TODO: in order to make retry actually work, we need to be able to fake out error
         //  rather than pass an id that results in error

@@ -1,79 +1,55 @@
 package ly.david.mbjc.ui.place.events
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.toEventListItemModel
+import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.api.BrowseEventsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.event.EventDao
 import ly.david.data.persistence.event.EventPlace
 import ly.david.data.persistence.event.EventPlaceDao
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.event.toEventRoomModel
-import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
-import ly.david.mbjc.ui.common.paging.IPagedList
+import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.mbjc.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class EventsByPlaceViewModel @Inject constructor(
-    private val pagedList: PagedList<EventRoomModel, EventListItemModel>,
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val relationDao: RelationDao,
     private val eventPlaceDao: EventPlaceDao,
     private val eventDao: EventDao,
-) : ViewModel(),
-    IPagedList<EventListItemModel> by pagedList,
-    BrowseResourceUseCase<EventRoomModel, EventListItemModel> {
+    private val relationDao: RelationDao,
+    pagedList: PagedList<EventRoomModel, EventListItemModel>,
+) : BrowseEntitiesByEntityViewModel
+<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
+    byEntity = MusicBrainzResource.EVENT,
+    relationDao = relationDao,
+    pagedList = pagedList
+) {
 
-    init {
-        pagedList.scope = viewModelScope
-        pagedList.useCase = this
+    override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
+        return musicBrainzApiService.browseEventsByPlace(
+            placeId = entityId,
+            offset = offset
+        )
     }
 
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseEventsByPlace(
-            placeId = resourceId,
-            offset = nextOffset
-        )
-
-        if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.EVENT,
-                    localCount = response.events.size,
-                    remoteCount = response.count
-                )
-            )
-        } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.EVENT, response.events.size)
-        }
-
-        val eventMusicBrainzModels = response.events
-        eventDao.insertAll(eventMusicBrainzModels.map { it.toEventRoomModel() })
+    override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<EventMusicBrainzModel>) {
+        eventDao.insertAll(musicBrainzModels.map { it.toEventRoomModel() })
         eventPlaceDao.insertAll(
-            eventMusicBrainzModels.map { event ->
+            musicBrainzModels.map { event ->
                 EventPlace(
                     eventId = event.id,
-                    placeId = resourceId
+                    placeId = entityId
                 )
             }
         )
-
-        return eventMusicBrainzModels.size
     }
-
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.EVENT)?.remoteCount
-
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.EVENT)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         eventPlaceDao.deleteEventsByPlace(resourceId)
@@ -88,7 +64,7 @@ internal class EventsByPlaceViewModel @Inject constructor(
             eventPlaceDao.getEventsByPlace(resourceId)
         }
         else -> {
-            eventPlaceDao.getEventsByPlace(
+            eventPlaceDao.getEventsByPlaceFiltered(
                 placeId = resourceId,
                 query = "%$query%"
             )

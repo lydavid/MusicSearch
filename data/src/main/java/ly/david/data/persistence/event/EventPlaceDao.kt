@@ -77,7 +77,7 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
         $ORDER_BY_DATE_NAME
     """
     )
-    abstract fun getEventsByPlace(
+    abstract fun getEventsByPlaceFiltered(
         placeId: String,
         query: String
     ): PagingSource<Int, EventRoomModel>

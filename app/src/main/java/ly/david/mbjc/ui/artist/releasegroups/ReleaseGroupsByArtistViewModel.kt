@@ -1,80 +1,51 @@
 package ly.david.mbjc.ui.artist.releasegroups
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
-import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
-import ly.david.mbjc.ui.common.paging.BrowseSortableResourceUseCase
-import ly.david.mbjc.ui.common.paging.SortablePagedList
+import ly.david.mbjc.ui.common.ReleaseGroupsByEntityViewModel
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupsPagedList
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
-    private val releaseGroupsPagedList: ReleaseGroupsPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
-    private val releaseGroupDao: ReleaseGroupDao,
     private val relationDao: RelationDao,
-) : ViewModel(),
-    SortablePagedList<ListItemModel> by releaseGroupsPagedList,
-    BrowseSortableResourceUseCase<ReleaseGroupForListItem> {
+    releaseGroupDao: ReleaseGroupDao,
+    releaseGroupsPagedList: ReleaseGroupsPagedList,
+) : ReleaseGroupsByEntityViewModel(
+    relationDao = relationDao,
+    releaseGroupDao = releaseGroupDao,
+    releaseGroupsPagedList = releaseGroupsPagedList
+) {
 
-    init {
-        releaseGroupsPagedList.scope = viewModelScope
-        releaseGroupsPagedList.useCase = this
+    override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
+        return musicBrainzApiService.browseReleaseGroupsByArtist(
+            artistId = entityId,
+            offset = offset
+        )
     }
 
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = musicBrainzApiService.browseReleaseGroupsByArtist(
-            artistId = resourceId,
-            offset = nextOffset
-        )
-
-        if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.RELEASE_GROUP,
-                    localCount = response.releaseGroups.size,
-                    remoteCount = response.count
-                )
-            )
-        } else {
-            relationDao.incrementLocalCountForResource(
-                resourceId,
-                MusicBrainzResource.RELEASE_GROUP,
-                response.releaseGroups.size
-            )
-        }
-
-        val musicBrainzReleaseGroups = response.releaseGroups
-        releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(musicBrainzReleaseGroups)
+    override suspend fun insertAllLinkingModels(
+        entityId: String,
+        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>
+    ) {
         artistReleaseGroupDao.insertAll(
-            musicBrainzReleaseGroups.map { releaseGroup ->
+            releaseGroupMusicBrainzModels.map { releaseGroup ->
                 ArtistReleaseGroup(
-                    artistId = resourceId,
+                    artistId = entityId,
                     releaseGroupId = releaseGroup.id
                 )
             }
         )
-
-        return musicBrainzReleaseGroups.size
     }
-
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE_GROUP)?.remoteCount
-
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE_GROUP)?.localCount ?: 0
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         artistReleaseGroupDao.deleteReleaseGroupsByArtist(resourceId)

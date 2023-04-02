@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.artist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -15,14 +16,14 @@ import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
-import ly.david.mbjc.ui.settings.AppPreferences
+import retrofit2.HttpException
+import timber.log.Timber
 
 @HiltViewModel
 internal class ArtistScaffoldViewModel @Inject constructor(
     private val repository: ArtistRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-    val appPreferences: AppPreferences
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
@@ -52,7 +53,11 @@ internal class ArtistScaffoldViewModel @Inject constructor(
                         }
                         artist.value = artistListItemModel
                         isError.value = false
-                    } catch (ex: Exception) {
+                    } catch (ex: HttpException) {
+                        Timber.e(ex)
+                        isError.value = true
+                    } catch (ex: IOException) {
+                        Timber.e(ex)
                         isError.value = true
                     }
 

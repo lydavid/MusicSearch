@@ -1,21 +1,28 @@
 package ly.david.mbjc.ui.recording
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
@@ -23,22 +30,25 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun RecordingScaffold(
     recordingId: String,
@@ -47,10 +57,16 @@ internal fun RecordingScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: RecordingScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RECORDING
+    val scope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    val pagerState = rememberPagerState()
+
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
@@ -64,8 +80,12 @@ internal fun RecordingScaffold(
         viewModel.setTitle(titleWithDisambiguation)
     }
 
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        selectedTab = RecordingTab.values()[pagerState.currentPage]
+    }
+
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-        viewModel.onSelectedTabChange(
+        viewModel.loadDataForTab(
             recordingId = recordingId,
             selectedTab = selectedTab
         )
@@ -78,10 +98,19 @@ internal fun RecordingScaffold(
                 resource = resource,
                 title = title,
                 subtitle = subtitle,
+                scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = recordingId)
                     CopyToClipboardMenuItem(recordingId)
+                    if (selectedTab == RecordingTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange
+                        )
+                    }
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 subtitleDropdownMenuItems = {
@@ -97,7 +126,7 @@ internal fun RecordingScaffold(
                 },
                 tabsTitles = RecordingTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { selectedTab = RecordingTab.values()[it] },
+                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab == RecordingTab.RELEASES,
                 filterText = filterText,
                 onFilterTextChange = {
@@ -120,50 +149,66 @@ internal fun RecordingScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
-        when (selectedTab) {
-            RecordingTab.DETAILS -> {
-                DetailsWithErrorHandling(
-                    modifier = Modifier.padding(innerPadding),
-                    showError = showError,
-                    onRetryClick = { forceRefresh = true },
-                    scaffoldModel = recording
-                ) {
-                    RecordingDetailsScreen(
+        HorizontalPager(
+            pageCount = RecordingTab.values().size,
+            state = pagerState
+        ) { page ->
+            when (RecordingTab.values()[page]) {
+                RecordingTab.DETAILS -> {
+                    DetailsWithErrorHandling(
                         modifier = Modifier.padding(innerPadding),
-                        recording = it,
-                        lazyListState = detailsLazyListState
+                        showError = showError,
+                        onRetryClick = { forceRefresh = true },
+                        scaffoldModel = recording
+                    ) {
+                        RecordingDetailsScreen(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize()
+                                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            recording = it,
+                            lazyListState = detailsLazyListState
+                        )
+                    }
+                }
+                RecordingTab.RELEASES -> {
+                    ReleasesByRecordingScreen(
+                        recordingId = recordingId,
+                        filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
+                        releasesLazyPagingItems = releasesLazyPagingItems,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onReleaseClick = onItemClick,
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
-            }
-            RecordingTab.RELEASES -> {
-                ReleasesByRecordingScreen(
-                    recordingId = recordingId,
-                    modifier = Modifier.padding(innerPadding),
-                    snackbarHostState = snackbarHostState,
-                    releasesLazyListState = releasesLazyListState,
-                    releasesLazyPagingItems = releasesLazyPagingItems,
-                    onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-                    onReleaseClick = onItemClick,
-                    filterText = filterText
-                )
-            }
-            RecordingTab.RELATIONSHIPS -> {
-                viewModel.loadRelations(recordingId)
-
-                RelationsScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    onItemClick = onItemClick,
-                    snackbarHostState = snackbarHostState,
-                    lazyListState = relationsLazyListState,
-                    lazyPagingItems = relationsLazyPagingItems,
-                )
-            }
-            RecordingTab.STATS -> {
-                RecordingStatsScreen(
-                    recordingId = recordingId,
-                    modifier = Modifier.padding(innerPadding),
-                    tabs = RecordingTab.values().map { it.tab }
-                )
+                RecordingTab.RELATIONSHIPS -> {
+                    RelationsScreen(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        onItemClick = onItemClick,
+                        snackbarHostState = snackbarHostState,
+                        lazyListState = relationsLazyListState,
+                        lazyPagingItems = relationsLazyPagingItems,
+                    )
+                }
+                RecordingTab.STATS -> {
+                    RecordingStatsScreen(
+                        recordingId = recordingId,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        tabs = RecordingTab.values().map { it.tab }
+                    )
+                }
             }
         }
     }

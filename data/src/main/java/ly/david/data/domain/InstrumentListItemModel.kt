@@ -21,7 +21,7 @@ internal fun InstrumentMusicBrainzModel.toInstrumentListItemModel() =
         type = type,
     )
 
-internal fun InstrumentRoomModel.toInstrumentListItemModel() =
+fun InstrumentRoomModel.toInstrumentListItemModel() =
     InstrumentListItemModel(
         id = id,
         name = name,

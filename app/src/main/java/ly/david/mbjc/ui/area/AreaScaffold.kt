@@ -1,8 +1,11 @@
 package ly.david.mbjc.ui.area
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -24,33 +27,31 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.mbjc.ui.common.paging.RelationsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
 /**
  * The top-level screen for an area.
  */
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun AreaScaffold(
     areaId: String,
@@ -59,6 +60,8 @@ internal fun AreaScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: AreaScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzResource.AREA
@@ -84,7 +87,7 @@ internal fun AreaScaffold(
     }
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
-        viewModel.onSelectedTabChange(
+        viewModel.loadDataForTab(
             areaId = areaId,
             selectedTab = selectedTab
         )
@@ -102,6 +105,14 @@ internal fun AreaScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
                     CopyToClipboardMenuItem(areaId)
+                    if (selectedTab == AreaTab.RELEASES) {
+                        ToggleMenuItem(
+                            toggleOnText = R.string.show_more_info,
+                            toggleOffText = R.string.show_less_info,
+                            toggled = showMoreInfoInReleaseListItem,
+                            onToggle = onShowMoreInfoInReleaseListItemChange
+                        )
+                    }
                     AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
                 },
                 tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
@@ -136,7 +147,7 @@ internal fun AreaScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            count = areaTabs.size,
+            pageCount = areaTabs.size,
             state = pagerState
         ) { page ->
             when (areaTabs[page]) {
@@ -172,15 +183,16 @@ internal fun AreaScaffold(
                     ReleasesByAreaScreen(
                         areaId = areaId,
                         filterText = filterText,
+                        showMoreInfo = showMoreInfoInReleaseListItem,
+                        snackbarHostState = snackbarHostState,
+                        releasesLazyListState = releasesLazyListState,
                         releasesLazyPagingItems = releasesLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        snackbarHostState = snackbarHostState,
-                        releasesLazyListState = releasesLazyListState,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
-                        onReleaseClick = onItemClick
+                        onReleaseClick = onItemClick,
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
                 AreaTab.PLACES -> {

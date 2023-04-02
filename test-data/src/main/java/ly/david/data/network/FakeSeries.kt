@@ -1,5 +1,6 @@
 package ly.david.data.network
 
+import ly.david.data.network.api.BrowseSeriesResponse
 import ly.david.data.network.api.SearchSeriesResponse
 
 val fakeSeries = SeriesMusicBrainzModel(
@@ -18,6 +19,12 @@ val fakeSeries = SeriesMusicBrainzModel(
 
 val fakeSeriesList = listOf(
     fakeSeries
+)
+
+val browseSeriesResponse = BrowseSeriesResponse(
+    count = 1,
+    offset = 0,
+    listOf(element = fakeSeries)
 )
 
 val searchSeriesResponse = SearchSeriesResponse(

@@ -20,6 +20,8 @@ style:
     active: false
   MagicNumber:
     ignorePropertyDeclaration: true
+  ReturnCount:
+    excludeGuardClauses: true
   UnusedPrivateMember:
     ignoreAnnotated:
       - "DefaultPreviews"

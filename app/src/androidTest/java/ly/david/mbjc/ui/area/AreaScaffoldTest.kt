@@ -1,11 +1,8 @@
 package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -101,24 +98,14 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             }
         }
 
-        waitForThenAssertIsDisplayed(retry)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
-
-        composeTestRule
-            .onNodeWithText(retry)
-            .assertIsDisplayed()
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertAtLeastOneIsDisplayed(retry)
 
         // TODO: showing "no results"
-//        composeTestRule
-//            .onNodeWithText(places)
-//            .performClick()
-//
-//        composeTestRule
-//            .onNodeWithText(retry)
-//            .assertIsDisplayed()
+//        waitForThenPerformClickOn(places)
+//        waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 
     // TODO: visit, check history count is 1, visit again, go to release, return, return, check history count is 2

@@ -25,24 +25,20 @@
     <ID>ComposableParamOrder:ReleaseGroupStatsScreen.kt$ReleaseGroupStatsScreen</ID>
     <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByArtistScreen.kt$ReleasesByArtistScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByCollectionScreen.kt$ReleasesByCollectionScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByLabelScreen.kt$ReleasesByLabelScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByRecordingScreen.kt$ReleasesByRecordingScreen</ID>
-    <ID>ComposableParamOrder:ReleasesByReleaseGroupScreen.kt$ReleasesByReleaseGroupScreen</ID>
     <ID>ComposableParamOrder:ReleasesListScreen.kt$ReleasesListScreen</ID>
     <ID>ComposableParamOrder:ScrollableTopAppBar.kt$ScrollableTopAppBar</ID>
     <ID>ComposableParamOrder:ScrollableTopAppBar.kt$TitleBar</ID>
     <ID>ComposableParamOrder:SearchMusicBrainzScreen.kt$SearchMusicBrainzScreen</ID>
     <ID>ComposableParamOrder:SeriesDetailsScreen.kt$SeriesDetailsScreen</ID>
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
-    <ID>ComposableParamOrder:SettingsScaffold.kt$SettingsScreen</ID>
     <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilter</ID>
     <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilterInternal</ID>
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
+    <ID>CyclomaticComplexMethod:MusicBrainzCollectionScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun MusicBrainzCollectionScaffold( collectionId: String, isRemote: Boolean, modifier: Modifier = Modifier, onBack: () -&gt; Unit = {}, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, showMoreInfoInReleaseListItem: Boolean = true, onShowMoreInfoInReleaseListItemChange: (Boolean) -&gt; Unit = {}, sortReleaseGroupListItems: Boolean = false, onSortReleaseGroupListItemsChange: (Boolean) -&gt; Unit = {}, viewModel: MusicBrainzCollectionViewModel = hiltViewModel() )</ID>
     <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$(resourceId, query, isRemote, sorted)</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$3</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$4</ID>
     <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
@@ -52,13 +48,9 @@
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
-    <ID>MatchingDeclarationName:PreviewAnnotations.kt$DefaultPreviews</ID>
-    <ID>MatchingDeclarationName:ReleaseGroupsListScreen.kt$ReleaseGroupsListViewModel : ViewModelGetReleaseGroupCoverArtPath</ID>
-    <ID>MatchingDeclarationName:ReleasesListScreen.kt$ReleasesListViewModel : ViewModelGetReleaseCoverArtPath</ID>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
     <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
-    <ID>MaxLineLength:LabelListItem.kt$LabelCardPreviewParameterProvider$disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
     <ID>MaxLineLength:TopLevelViewModel.kt$TopLevelViewModel$// Possible workaround: do not manually increment for remote collection -&gt; but would need to GET its new count</ID>
@@ -67,31 +59,9 @@
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
-    <ID>SwallowedException:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:LabelScaffoldViewModel.kt$LabelScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:PlaceScaffoldViewModel.kt$PlaceScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:RecordingScaffoldViewModel.kt$RecordingScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:ReleaseGroupScaffoldViewModel.kt$ReleaseGroupScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
-    <ID>SwallowedException:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ArtistScaffoldViewModel.kt$ArtistScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:EventScaffoldViewModel.kt$EventScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:GenreScaffoldViewModel.kt$GenreScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:InstrumentScaffoldViewModel.kt$InstrumentScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:LabelScaffoldViewModel.kt$LabelScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:PlaceScaffoldViewModel.kt$PlaceScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:RecordingScaffoldViewModel.kt$RecordingScaffoldViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ReleaseGroupScaffoldViewModel.kt$ReleaseGroupScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:ReleaseScaffoldViewModel.kt$ReleaseScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:SeriesScaffoldViewModel.kt$SeriesScaffoldViewModel$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:TopLevelViewModel.kt$TopLevelViewModel$ex: Exception</ID>
-    <ID>TooGenericExceptionCaught:WorkScaffoldViewModel.kt$WorkScaffoldViewModel$ex: Exception</ID>
     <ID>UnnecessaryAbstractClass:PreferencesModuleBinds.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
     <ID>UnstableCollections:AreaStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:ArtistStatsScreen.kt$List&lt;Tab&gt;</ID>

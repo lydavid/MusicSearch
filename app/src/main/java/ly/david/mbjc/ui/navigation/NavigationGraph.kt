@@ -61,7 +61,11 @@ internal fun NavigationGraph(
     onLogoutClick: () -> Unit = {},
     onAddToCollectionMenuClick: () -> Unit = {},
     onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
-    onCreateCollectionClick: () -> Unit = {}
+    onCreateCollectionClick: () -> Unit = {},
+    showMoreInfoInReleaseListItem: Boolean = true,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
+    sortReleaseGroupListItems: Boolean = false,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
     val uriPrefix = "$deeplinkSchema://app/"
@@ -76,12 +80,12 @@ internal fun NavigationGraph(
             navController.goToResource(entity, id, title)
         }
 
-        val onCollectionClick: (String) -> Unit = { collectionId ->
-            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
+        val onCollectionClick: (String, Boolean) -> Unit = { collectionId, isRemote ->
+            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId?is_remote=$isRemote")
         }
 
         val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
-            val route = Destination.LOOKUP.route + "?query=${query}&type=${type.resourceUri}"
+            val route = Destination.LOOKUP.route + "?query=$query&type=${type.resourceUri}"
             navController.navigate(route)
         }
 
@@ -129,7 +133,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -143,7 +149,11 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onItemClick = onLookupEntityClick,
                 onBack = navController::navigateUp,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
         }
 
@@ -197,7 +207,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -225,7 +237,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -252,7 +266,9 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             )
         }
 
@@ -305,19 +321,31 @@ internal fun NavigationGraph(
         }
 
         composable(
-            route = "${Destination.COLLECTIONS.route}/{$ID}",
+            route = "${Destination.COLLECTIONS.route}/{$ID}?is_remote={is_remote}",
+            arguments = listOf(
+                navArgument("is_remote") {
+                    type = NavType.BoolType
+                }
+            ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}"
+                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}?is_remote={is_remote}"
                 }
             )
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
+            val isRemote = entry.arguments?.getBoolean("is_remote") ?: true
 
             MusicBrainzCollectionScaffold(
                 collectionId = collectionId,
+                isRemote = isRemote,
                 modifier = modifier,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
+                onBack = navController::navigateUp,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
         }
 
@@ -342,7 +370,11 @@ internal fun NavigationGraph(
                     onSettingsClick(destination)
                 },
                 onLoginClick = onLoginClick,
-                onLogoutClick = onLogoutClick
+                onLogoutClick = onLogoutClick,
+                showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
+                onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
+                sortReleaseGroupListItems = sortReleaseGroupListItems,
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
         }
 

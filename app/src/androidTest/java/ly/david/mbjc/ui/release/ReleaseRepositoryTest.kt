@@ -40,7 +40,7 @@ class ReleaseRepositoryTest {
                 id = "fakeRelease1",
                 name = "Release Name",
                 disambiguation = "",
-                date = null,
+                date = "2023-03-22",
                 barcode = null,
                 status = null,
                 statusId = null,
@@ -66,7 +66,7 @@ class ReleaseRepositoryTest {
                     name = "Release Group Name",
                     firstReleaseDate = "",
                     disambiguation = "",
-                    primaryType = null,
+                    primaryType = "Album",
                     secondaryTypes = listOf(),
                     formattedArtistCredits = null,
                     coverArtPath = null
@@ -78,7 +78,7 @@ class ReleaseRepositoryTest {
                         disambiguation = null,
                         type = "Country",
                         lifeSpan = null,
-                        iso_3166_1_codes = listOf(),
+                        countryCodes = listOf(),
                         date = "2022-10-29"
                     )
                 ),

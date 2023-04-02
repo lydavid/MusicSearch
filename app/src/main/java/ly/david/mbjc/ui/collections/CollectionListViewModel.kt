@@ -68,7 +68,7 @@ internal class CollectionListViewModel @Inject constructor(
                 browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.COLLECTION,
-                    localCount = response.collections.size,
+                    localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
@@ -76,11 +76,11 @@ internal class CollectionListViewModel @Inject constructor(
             relationDao.incrementLocalCountForResource(
                 resourceId = resourceId,
                 browseResource = MusicBrainzResource.COLLECTION,
-                additionalOffset = response.collections.size
+                additionalOffset = response.musicBrainzModels.size
             )
         }
 
-        val collectionMusicBrainzModels = response.collections
+        val collectionMusicBrainzModels = response.musicBrainzModels
         collectionDao.insertAll(collectionMusicBrainzModels.map { it.toCollectionRoomModel() })
 
         return collectionMusicBrainzModels.size

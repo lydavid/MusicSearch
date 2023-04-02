@@ -1,9 +1,11 @@
 package ly.david.mbjc.ui.relation
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +19,6 @@ import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -25,70 +26,74 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun RelationListItem(
     relation: RelationListItemModel,
+    modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     val context = LocalContext.current
 
-    ClickableListItem(onClick = {
-        val entity = relation.linkedResource
-        if (entity == MusicBrainzResource.URL) {
-            context.openUrl(relation.name)
-        } else {
-            onItemClick(entity, relation.linkedResourceId, relation.getNameWithDisambiguation())
+    ListItem(
+        headlineText = {
+            Column {
+                Text(
+                    text = "${relation.label}:",
+                    style = TextStyles.getCardBodyTextStyle()
+                )
+
+                Row(
+                    modifier = Modifier.padding(top = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    ResourceIcon(
+                        resource = relation.linkedResource,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+
+                    Text(
+                        text = relation.name,
+                        style = TextStyles.getCardTitleTextStyle()
+                    )
+                }
+
+                val disambiguation = relation.disambiguation
+                if (!disambiguation.isNullOrEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = "($disambiguation)",
+                        style = TextStyles.getCardBodyTextStyle(),
+                        color = getSubTextColor()
+                    )
+                }
+
+                val attributes = relation.attributes
+                if (!attributes.isNullOrEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = "($attributes)",
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                val additionalInfo = relation.additionalInfo
+                if (!additionalInfo.isNullOrEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = additionalInfo,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+            }
+        },
+        modifier = modifier.clickable {
+            val entity = relation.linkedResource
+            if (entity == MusicBrainzResource.URL) {
+                context.openUrl(relation.name)
+            } else {
+                onItemClick(entity, relation.linkedResourceId, relation.getNameWithDisambiguation())
+            }
         }
-    }) {
-        Column(modifier = Modifier.padding(vertical = 16.dp)) {
-            Text(
-                text = "${relation.label}:",
-                style = TextStyles.getCardBodyTextStyle()
-            )
-
-            Row(
-                modifier = Modifier.padding(top = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                ResourceIcon(
-                    resource = relation.linkedResource,
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-
-                Text(
-                    text = relation.name,
-                    style = TextStyles.getCardTitleTextStyle()
-                )
-            }
-
-            val disambiguation = relation.disambiguation
-            if (!disambiguation.isNullOrEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = "($disambiguation)",
-                    style = TextStyles.getCardBodyTextStyle(),
-                    color = getSubTextColor()
-                )
-            }
-
-            val attributes = relation.attributes
-            if (!attributes.isNullOrEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = "($attributes)",
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
-
-            val additionalInfo = relation.additionalInfo
-            if (!additionalInfo.isNullOrEmpty()) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = additionalInfo,
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
-        }
-    }
+    )
 }
 
 @Preview

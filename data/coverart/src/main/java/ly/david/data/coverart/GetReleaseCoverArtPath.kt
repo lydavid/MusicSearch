@@ -1,5 +1,6 @@
 package ly.david.data.coverart
 
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.api.getFrontCoverArtUrl
 import retrofit2.HttpException
@@ -27,7 +28,7 @@ interface GetReleaseCoverArtPath {
             updateReleaseCoverArtDao.setReleaseCoverArtPath(releaseId, coverArtPath)
             return coverArtPath
         } catch (ex: HttpException) {
-            if (ex.code() == 404) {
+            if (ex.code() == HTTP_NOT_FOUND) {
                 updateReleaseCoverArtDao.setReleaseCoverArtPath(releaseId, "")
             }
             ""

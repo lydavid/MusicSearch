@@ -11,10 +11,7 @@ data class PlaceMusicBrainzModel(
     @Json(name = "disambiguation") override val disambiguation: String? = null,
     @Json(name = "address") override val address: String = "",
     @Json(name = "type") override val type: String? = null,
-
-//    @Json(name = "type_id")
-//    override val typeId: String? = null,
-
+    @Json(name = "type-id") val typeId: String? = null,
     @Json(name = "coordinates") override val coordinates: Coordinates? = null,
     @Json(name = "life-span") override val lifeSpan: LifeSpan? = null,
 

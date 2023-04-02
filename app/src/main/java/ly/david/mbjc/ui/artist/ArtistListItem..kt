@@ -1,8 +1,9 @@
 package ly.david.mbjc.ui.artist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
@@ -19,7 +18,6 @@ import ly.david.data.common.toFlagEmoji
 import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.common.listitem.DisambiguationText
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
@@ -28,50 +26,21 @@ import ly.david.mbjc.ui.theme.TextStyles
 @Composable
 internal fun ArtistListItem(
     artist: ArtistListItemModel,
+    modifier: Modifier = Modifier,
     onArtistClick: ArtistListItemModel.() -> Unit = {}
 ) {
-    ClickableListItem(
-        onClick = { onArtistClick(artist) },
-    ) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        ) {
-            val (mainSection, endSection, bottomSection) = createRefs()
-
+    ListItem(
+        headlineText = {
             Text(
                 text = artist.name,
-                style = TextStyles.getCardTitleTextStyle(),
-                modifier = Modifier
-                    .constrainAs(mainSection) {
-                        width = Dimension.fillToConstraints
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        end.linkTo(endSection.start)
-                    }
+                style = TextStyles.getCardTitleTextStyle()
             )
-
-            artist.countryCode?.ifNotNullOrEmpty { countryCode ->
-                Text(
-                    text = "${countryCode.toFlagEmoji()} $countryCode",
-                    style = TextStyles.getCardTitleTextStyle(),
-                    modifier = Modifier
-                        .constrainAs(endSection) {
-                            width = Dimension.wrapContent
-                            start.linkTo(mainSection.end, margin = 4.dp)
-                            top.linkTo(parent.top)
-                            end.linkTo(parent.end)
-                        }
-                )
-            }
-
-            Column(
-                modifier = Modifier.constrainAs(bottomSection) {
-                    width = Dimension.matchParent
-                    top.linkTo(mainSection.bottom)
-                }
-            ) {
+        },
+        modifier = modifier.clickable {
+            onArtistClick(artist)
+        },
+        supportingText = {
+            Column {
                 DisambiguationText(disambiguation = artist.disambiguation)
 
                 artist.type.ifNotNullOrEmpty {
@@ -90,8 +59,16 @@ internal fun ArtistListItem(
                     )
                 }
             }
+        },
+        trailingContent = {
+            artist.countryCode?.ifNotNullOrEmpty { countryCode ->
+                Text(
+                    text = "${countryCode.toFlagEmoji()} $countryCode",
+                    style = TextStyles.getCardTitleTextStyle()
+                )
+            }
         }
-    }
+    )
 }
 
 @ExcludeFromJacocoGeneratedReport

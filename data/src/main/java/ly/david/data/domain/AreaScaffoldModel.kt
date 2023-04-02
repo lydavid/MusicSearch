@@ -3,15 +3,16 @@ package ly.david.data.domain
 import ly.david.data.Area
 import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.persistence.area.AreaWithIso
+import ly.david.data.persistence.area.AreaWithCountryCodes
 
 data class AreaScaffoldModel(
     override val id: String,
     override val name: String,
+    override val sortName: String = "",
     override val disambiguation: String? = "",
     override val type: String? = "",
     override val lifeSpan: LifeSpan? = null,
-    val iso_3166_1_codes: List<String>? = null
+    val countryCodes: List<String>? = null
 ) : Area
 
 internal fun AreaMusicBrainzModel.toAreaScaffoldModel() = AreaScaffoldModel(
@@ -20,14 +21,14 @@ internal fun AreaMusicBrainzModel.toAreaScaffoldModel() = AreaScaffoldModel(
     disambiguation = disambiguation,
     type = type,
     lifeSpan = lifeSpan,
-    iso_3166_1_codes = iso_3166_1_codes,
+    countryCodes = countryCodes,
 )
 
-internal fun AreaWithIso.toAreaScaffoldModel() = AreaScaffoldModel(
+internal fun AreaWithCountryCodes.toAreaScaffoldModel() = AreaScaffoldModel(
     id = area.id,
     name = area.name,
     disambiguation = area.disambiguation,
     type = area.type,
     lifeSpan = area.lifeSpan,
-    iso_3166_1_codes = countryCodes.map { it.code }
+    countryCodes = countryCodes.map { it.code }
 )

@@ -33,8 +33,8 @@ android {
 
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
-        versionCode = 24
-        versionName = "0.3.6"
+        versionCode = 36
+        versionName = "0.4.3"
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
@@ -67,7 +67,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     packagingOptions {
         resources {
@@ -96,7 +96,7 @@ dependencies {
     testImplementation(project(":test-data"))
     androidTestImplementation(project(":test-data"))
 
-    implementation(platform("com.google.firebase:firebase-bom:31.2.3"))
+    implementation(platform("com.google.firebase:firebase-bom:31.4.0"))
 
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
@@ -112,10 +112,10 @@ dependencies {
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.material3)
 
-    implementation("androidx.activity:activity-compose:1.6.1")
+    implementation("androidx.activity:activity-compose:1.7.0")
     implementation("androidx.navigation:navigation-compose:2.5.3")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     implementation(libs.accompanist.swiperefresh)
     implementation(libs.accompanist.pager)
@@ -142,9 +142,9 @@ dependencies {
     kaptAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
 
-    // Coil
-    implementation("io.coil-kt:coil-base:2.2.2")
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation(libs.coil.base)
+    implementation(libs.coil.compose)
+    androidTestImplementation(libs.coil.test)
 
     // Tried this for UScript.getName(UScript.getCodeFromName(it))
 //    implementation "com.ibm.icu:icu4j:72.1"

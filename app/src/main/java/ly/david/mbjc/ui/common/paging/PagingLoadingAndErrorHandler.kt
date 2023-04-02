@@ -3,6 +3,7 @@ package ly.david.mbjc.ui.common.paging
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -74,6 +75,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = { lazyPagingItems.refresh() },
+        modifier = modifier,
         indicator = { state: SwipeRefreshState, refreshTrigger: Dp ->
             SwipeRefreshIndicator(
                 state = state,
@@ -107,8 +109,8 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
             }
             else -> {
                 LazyColumn(
-                    modifier = modifier,
-                    state = lazyListState,
+                    modifier = Modifier.fillMaxSize(),
+                    state = lazyListState
                 ) {
                     itemsIndexed(
                         items = lazyPagingItems,

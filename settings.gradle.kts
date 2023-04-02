@@ -11,8 +11,9 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
 
-            version("accompanist", "0.28.0")
-            version("compose-foundation", "1.3.1")
+            version("accompanist", "0.30.0")
+            version("coil", "2.3.0")
+            version("compose-foundation", "1.4.0")
             version("compose-material", "1.4.0")
             version("compose-material3", "1.1.0-beta01")
             version("compose-ui", "1.4.0")
@@ -22,10 +23,14 @@ dependencyResolutionManagement {
             version("mockk", "1.13.4")
             version("moshi", "1.14.0")
             version("retrofit", "2.9.0")
-            version("room", "2.5.0")
+            version("room", "2.5.1")
 
             library("accompanist-swiperefresh", "com.google.accompanist", "accompanist-swiperefresh").versionRef("accompanist")
             library("accompanist-pager", "com.google.accompanist", "accompanist-pager").versionRef("accompanist")
+
+            library("coil-base", "io.coil-kt", "coil-base").versionRef("coil")
+            library("coil-compose", "io.coil-kt", "coil-compose").versionRef("coil")
+            library("coil-test", "io.coil-kt", "coil-test").versionRef("coil")
 
             // https://developer.android.com/jetpack/androidx/releases/compose
             library("compose-foundation", "androidx.compose.foundation", "foundation").versionRef("compose-foundation")

@@ -18,7 +18,7 @@ data class RecordingRoomModel(
     @ColumnInfo(name = "disambiguation") override val disambiguation: String = "",
     @ColumnInfo(name = "length") override val length: Int? = null,
     @ColumnInfo(name = "video") override val video: Boolean = false,
-    @ColumnInfo(name = "isrcs", defaultValue = "null") val isrcs: List<String>? = null,
+    @ColumnInfo(name = "isrcs") val isrcs: List<String>? = null,
 ) : RoomModel, Recording
 
 fun RecordingMusicBrainzModel.toRoomModel() =
@@ -28,7 +28,7 @@ fun RecordingMusicBrainzModel.toRoomModel() =
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
         length = length,
-        video = video ?: false,
+        video = video,
         isrcs = isrcs
     )
 

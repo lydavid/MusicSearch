@@ -78,7 +78,7 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
         $ORDER_BY_ADDRESS
     """
     )
-    abstract fun getPlacesByArea(
+    abstract fun getPlacesByAreaFiltered(
         areaId: String,
         query: String
     ): PagingSource<Int, PlaceRoomModel>

@@ -17,7 +17,9 @@ data class ReleaseGroupRoomModel(
     @ColumnInfo(name = "first_release_date") override val firstReleaseDate: String = "",
     @ColumnInfo(name = "disambiguation") override val disambiguation: String = "",
     @ColumnInfo(name = "primary_type") override val primaryType: String? = null,
+    @ColumnInfo(name = "primary_type_id") val primaryTypeId: String? = null,
     @ColumnInfo(name = "secondary_types") override val secondaryTypes: List<String>? = null,
+    @ColumnInfo(name = "secondary_type_ids") val secondaryTypeIds: List<String>? = null,
 
     /**
      * Release group cover art actually comes from a release.
@@ -30,7 +32,7 @@ data class ReleaseGroupRoomModel(
      *
      * Also see [ReleaseRoomModel.coverArtPath].
      */
-    @ColumnInfo(name = "cover_art_path", defaultValue = "null") val coverArtPath: String? = null,
+    @ColumnInfo(name = "cover_art_path") val coverArtPath: String? = null,
 ) : RoomModel, ReleaseGroup
 
 fun ReleaseGroupMusicBrainzModel.toRoomModel(): ReleaseGroupRoomModel =
@@ -40,5 +42,7 @@ fun ReleaseGroupMusicBrainzModel.toRoomModel(): ReleaseGroupRoomModel =
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
         primaryType = primaryType,
+        primaryTypeId = primaryTypeId,
         secondaryTypes = secondaryTypes,
+        secondaryTypeIds = secondaryTypeIds
     )

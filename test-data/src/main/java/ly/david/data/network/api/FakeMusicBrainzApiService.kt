@@ -13,11 +13,18 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.network.browseAreasResponse
+import ly.david.data.network.browseArtistsResponse
+import ly.david.data.network.browseCollectionsResponse
 import ly.david.data.network.browseEventsResponse
+import ly.david.data.network.browseInstrumentsResponse
+import ly.david.data.network.browseLabelsResponse
 import ly.david.data.network.browsePlacesResponse
 import ly.david.data.network.browseRecordingsResponse
 import ly.david.data.network.browseReleaseGroupsResponse
 import ly.david.data.network.browseReleasesResponse
+import ly.david.data.network.browseSeriesResponse
+import ly.david.data.network.browseWorksResponse
 import ly.david.data.network.fakeAreas
 import ly.david.data.network.fakeArtists
 import ly.david.data.network.fakeEvents
@@ -90,29 +97,81 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     // endregion
 
     // region Browse
+    override suspend fun browseAreasByCollection(collectionId: String, limit: Int, offset: Int): BrowseAreasResponse {
+        return browseAreasResponse
+    }
+
+    override suspend fun browseArtistsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseArtistsResponse {
+        return browseArtistsResponse
+    }
+
+    override suspend fun browseCollectionsByUser(
+        username: String,
+        limit: Int,
+        offset: Int,
+        include: String?
+    ): BrowseCollectionsResponse {
+        return browseCollectionsResponse
+    }
+
+    override suspend fun browseEventsByCollection(collectionId: String, limit: Int, offset: Int): BrowseEventsResponse {
+        return browseEventsResponse
+    }
+
     override suspend fun browseEventsByPlace(placeId: String, limit: Int, offset: Int): BrowseEventsResponse {
         return browseEventsResponse
+    }
+
+    override suspend fun browseInstrumentsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseInstrumentsResponse {
+        return browseInstrumentsResponse
+    }
+
+    override suspend fun browseLabelsByCollection(collectionId: String, limit: Int, offset: Int): BrowseLabelsResponse {
+        return browseLabelsResponse
     }
 
     override suspend fun browsePlacesByArea(areaId: String, limit: Int, offset: Int): BrowsePlacesResponse {
         return browsePlacesResponse
     }
 
+    override suspend fun browsePlacesByCollection(collectionId: String, limit: Int, offset: Int): BrowsePlacesResponse {
+        return browsePlacesResponse
+    }
+
+    override suspend fun browseRecordingsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseRecordingsResponse {
+        return browseRecordingsResponse
+    }
+
     override suspend fun browseRecordingsByWork(workId: String, limit: Int, offset: Int): BrowseRecordingsResponse {
         return browseRecordingsResponse
     }
 
-    override suspend fun browseReleaseGroupsByArtist(
-        artistId: String,
+    override suspend fun browseReleasesByArea(
+        areaId: String,
         limit: Int,
-        offset: Int,
-        include: String
-    ): BrowseReleaseGroupsResponse {
-        return browseReleaseGroupsResponse
+        offset: Int
+    ): BrowseReleasesResponse {
+        return browseReleasesResponse
     }
 
-    override suspend fun browseReleasesByReleaseGroup(
-        releaseGroupId: String,
+    override suspend fun browseReleasesByArtist(artistId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+        return browseReleasesResponse
+    }
+
+    override suspend fun browseReleasesByCollection(
+        collectionId: String,
         limit: Int,
         offset: Int
     ): BrowseReleasesResponse {
@@ -128,14 +187,6 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browseReleasesResponse
     }
 
-    override suspend fun browseReleasesByArea(
-        areaId: String,
-        limit: Int,
-        offset: Int
-    ): BrowseReleasesResponse {
-        return browseReleasesResponse
-    }
-
     override suspend fun browseReleasesByRecording(
         recordingId: String,
         limit: Int,
@@ -144,8 +195,38 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browseReleasesResponse
     }
 
-    override suspend fun browseReleasesByArtist(artistId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+    override suspend fun browseReleasesByReleaseGroup(
+        releaseGroupId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseReleasesResponse {
         return browseReleasesResponse
+    }
+
+    override suspend fun browseReleaseGroupsByArtist(
+        artistId: String,
+        limit: Int,
+        offset: Int,
+        include: String
+    ): BrowseReleaseGroupsResponse {
+        return browseReleaseGroupsResponse
+    }
+
+    override suspend fun browseReleaseGroupsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+        include: String
+    ): BrowseReleaseGroupsResponse {
+        return browseReleaseGroupsResponse
+    }
+
+    override suspend fun browseSeriesByCollection(collectionId: String, limit: Int, offset: Int): BrowseSeriesResponse {
+        return browseSeriesResponse
+    }
+
+    override suspend fun browseWorksByCollection(collectionId: String, limit: Int, offset: Int): BrowseWorksResponse {
+        return browseWorksResponse
     }
     // endregion
 
@@ -199,15 +280,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
     // endregion
 
-    override suspend fun browseCollectionsByUser(
-        username: String,
-        limit: Int,
-        offset: Int,
-        include: String?
-    ): BrowseCollectionResponse {
-        TODO("Not yet implemented")
-    }
-
+    // region Collection
     override suspend fun uploadToCollection(
         collectionId: String,
         resourceUriPlural: String,
@@ -216,12 +289,5 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     ) {
         TODO("Not yet implemented")
     }
-
-    override suspend fun browseReleasesByCollection(
-        collectionId: String,
-        limit: Int,
-        offset: Int
-    ): BrowseReleasesResponse {
-        TODO("Not yet implemented")
-    }
+    // endregion
 }

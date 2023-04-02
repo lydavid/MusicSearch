@@ -39,9 +39,10 @@ internal class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
+    override val isRemote: MutableStateFlow<Boolean> = MutableStateFlow(true)
     override val sorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val paramState = combine(resourceId, query, sorted) { resourceId, query, sorted ->
-        SortablePagedList.ViewModelState(resourceId, query, sorted)
+    private val paramState = combine(resourceId, query, isRemote, sorted) { resourceId, query, isRemote, sorted ->
+        SortablePagedList.ViewModelState(resourceId, query, isRemote, sorted)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
@@ -50,17 +51,20 @@ internal class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<ListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
-            .flatMapLatest { (resourceId, query, sorted) ->
+            .flatMapLatest { (resourceId, query, isRemote, sorted) ->
+
+                val remoteMediator = BrowseResourceRemoteMediator<ReleaseGroupForListItem>(
+                    getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
+                    getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
+                    deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
+                    browseResource = { offset ->
+                        useCase.browseLinkedResourcesAndStore(resourceId, offset)
+                    }
+                ).takeIf { isRemote }
+
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = BrowseResourceRemoteMediator(
-                        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
-                        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
-                        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
-                        browseResource = { offset ->
-                            useCase.browseLinkedResourcesAndStore(resourceId, offset)
-                        }
-                    ),
+                    remoteMediator = remoteMediator,
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query, sorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {

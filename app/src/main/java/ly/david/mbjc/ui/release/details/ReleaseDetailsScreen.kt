@@ -158,13 +158,13 @@ private fun Preview() {
                             id = "a1",
                             name = "Canada",
                             type = COUNTRY,
-                            iso_3166_1_codes = listOf("CA"),
+                            countryCodes = listOf("CA"),
                             date = "2022-11-29"
                         ),
                         AreaListItemModel(
                             id = "a2",
                             name = WORLDWIDE,
-                            iso_3166_1_codes = listOf("XW"),
+                            countryCodes = listOf("XW"),
                             date = "2022-11-30"
                         )
                     ),

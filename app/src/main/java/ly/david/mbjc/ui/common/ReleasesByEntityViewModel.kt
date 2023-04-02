@@ -16,7 +16,7 @@ import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
 import ly.david.mbjc.ui.common.paging.IPagedList
 import ly.david.mbjc.ui.common.paging.PagedList
 
-internal abstract class ReleasesByEntityViewModel constructor(
+internal abstract class ReleasesByEntityViewModel(
     private val relationDao: RelationDao,
     private val releaseDao: ReleaseDao,
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>
@@ -26,7 +26,7 @@ internal abstract class ReleasesByEntityViewModel constructor(
 
     init {
         pagedList.scope = viewModelScope
-        pagedList.useCase = this
+        this.also { pagedList.useCase = it }
     }
 
     abstract suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse
@@ -37,22 +37,26 @@ internal abstract class ReleasesByEntityViewModel constructor(
     )
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response: BrowseReleasesResponse = browseReleasesByEntity(resourceId, nextOffset)
+        val response = browseReleasesByEntity(resourceId, nextOffset)
 
         if (response.offset == 0) {
             relationDao.insertBrowseResourceCount(
                 browseResourceCount = BrowseResourceCount(
                     resourceId = resourceId,
                     browseResource = MusicBrainzResource.RELEASE,
-                    localCount = response.releases.size,
+                    localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForResource(resourceId, MusicBrainzResource.RELEASE, response.releases.size)
+            relationDao.incrementLocalCountForResource(
+                resourceId = resourceId,
+                browseResource = MusicBrainzResource.RELEASE,
+                additionalOffset = response.musicBrainzModels.size
+            )
         }
 
-        val releaseMusicBrainzModels = response.releases
+        val releaseMusicBrainzModels = response.musicBrainzModels
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
         insertAllLinkingModels(resourceId, releaseMusicBrainzModels)
 

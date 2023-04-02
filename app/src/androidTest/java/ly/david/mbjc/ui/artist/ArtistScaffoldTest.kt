@@ -1,8 +1,13 @@
 package ly.david.mbjc.ui.artist
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -56,9 +61,22 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
 
         waitForThenPerformClickOn(releaseGroups)
         waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        composeTestRule
+            .onNodeWithContentDescription(moreActions)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(sort) // Doesn't do anything because it's not hooked up, just checking the text exists
+            .performClick()
 
         waitForThenPerformClickOn(releases)
         waitForThenAssertIsDisplayed(fakeRelease.name)
+        waitForThenAssertIsDisplayed(fakeRelease.date!!)
+        composeTestRule
+            .onNodeWithContentDescription(moreActions)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(showLessInfo)
+            .performClick()
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(releaseGroups).and(hasNoClickAction()))
@@ -73,5 +91,51 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
 
         waitForThenPerformClickOn(relationships)
         waitForThenAssertIsDisplayed(fakeArtist.relations?.first()?.artist?.name!!)
+    }
+
+    @Test
+    fun releaseGroupsSortedAndGrouped() = runTest {
+        composeTestRule.activity.setContent {
+            PreviewTheme {
+                ArtistScaffold(
+                    artistId = fakeArtist.id,
+                    sortReleaseGroupListItems = true
+                )
+            }
+        }
+
+        waitForThenPerformClickOn(releaseGroups)
+        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        waitForThenAssertIsDisplayed(fakeReleaseGroup.primaryType!!)
+        composeTestRule
+            .onNodeWithContentDescription(moreActions)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(unsort)
+            .performClick()
+    }
+
+    @Test
+    fun showLessInfoInReleaseListItem() = runTest {
+        composeTestRule.activity.setContent {
+            PreviewTheme {
+                ArtistScaffold(
+                    artistId = fakeArtist.id,
+                    showMoreInfoInReleaseListItem = false
+                )
+            }
+        }
+
+        waitForThenPerformClickOn(releases)
+        waitForThenAssertIsDisplayed(fakeRelease.name)
+        composeTestRule
+            .onAllNodesWithText(fakeRelease.date!!)
+            .assertCountEquals(0)
+        composeTestRule
+            .onNodeWithContentDescription(moreActions)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(showMoreInfo)
+            .performClick()
     }
 }

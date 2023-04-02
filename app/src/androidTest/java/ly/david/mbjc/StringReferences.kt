@@ -7,64 +7,77 @@ import ly.david.mbjc.ui.MainActivity
 internal interface StringReferences {
     val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
 
+    private val activity
+        get() = composeTestRule.activity
+
     val deeplinkSchema
-        get() = composeTestRule.activity.resources.getString(R.string.deeplink_schema)
+        get() = activity.getString(R.string.deeplink_schema)
     val searchDrawerLabel
-        get() = composeTestRule.activity.resources.getString(R.string.search_musicbrainz)
+        get() = activity.getString(R.string.search_musicbrainz)
     val searchLabel
-        get() = composeTestRule.activity.resources.getString(R.string.search)
+        get() = activity.getString(R.string.search)
     val clearSearchContentDescription
-        get() = composeTestRule.activity.resources.getString(R.string.clear_search)
+        get() = activity.getString(R.string.clear_search)
     val emptySearchWarning
-        get() = composeTestRule.activity.resources.getString(R.string.search_cannot_be_empty)
+        get() = activity.getString(R.string.search_cannot_be_empty)
     val appName
-        get() = composeTestRule.activity.resources.getString(R.string.app_name)
+        get() = activity.getString(R.string.app_name)
     val history
-        get() = composeTestRule.activity.resources.getString(R.string.history)
+        get() = activity.getString(R.string.history)
     val collections
-        get() = composeTestRule.activity.resources.getString(R.string.collections)
+        get() = activity.getString(R.string.collections)
     val settings
-        get() = composeTestRule.activity.resources.getString(R.string.settings)
+        get() = activity.getString(R.string.settings)
     val historyScreenTitle
-        get() = composeTestRule.activity.resources.getString(R.string.recent_history)
+        get() = activity.getString(R.string.recent_history)
     val noResultsFound
-        get() = composeTestRule.activity.resources.getString(R.string.no_results_found)
+        get() = activity.getString(R.string.no_results_found)
     val events
-        get() = composeTestRule.activity.resources.getString(R.string.events)
+        get() = activity.getString(R.string.events)
     val places
-        get() = composeTestRule.activity.resources.getString(R.string.places)
+        get() = activity.getString(R.string.places)
     val recordings
-        get() = composeTestRule.activity.resources.getString(R.string.recordings)
+        get() = activity.getString(R.string.recordings)
     val releases
-        get() = composeTestRule.activity.resources.getString(R.string.releases)
+        get() = activity.getString(R.string.releases)
     val releaseGroups
-        get() = composeTestRule.activity.resources.getString(R.string.release_groups)
+        get() = activity.getString(R.string.release_groups)
     val stats
-        get() = composeTestRule.activity.resources.getString(R.string.stats)
+        get() = activity.getString(R.string.stats)
     val tracks
-        get() = composeTestRule.activity.resources.getString(R.string.tracks)
+        get() = activity.getString(R.string.tracks)
     val filter
-        get() = composeTestRule.activity.resources.getString(R.string.filter)
+        get() = activity.getString(R.string.filter)
     val relationships
-        get() = composeTestRule.activity.resources.getString(R.string.relationships)
+        get() = activity.getString(R.string.relationships)
     val resourceLabel
-        get() = composeTestRule.activity.resources.getString(R.string.resource)
+        get() = activity.getString(R.string.resource)
     val ok
-        get() = composeTestRule.activity.resources.getString(R.string.ok)
+        get() = activity.getString(R.string.ok)
     val back
-        get() = composeTestRule.activity.resources.getString(R.string.back)
+        get() = activity.getString(R.string.back)
     val details
-        get() = composeTestRule.activity.resources.getString(R.string.details)
+        get() = activity.getString(R.string.details)
     val retry
-        get() = composeTestRule.activity.resources.getString(R.string.retry)
+        get() = activity.getString(R.string.retry)
     val cancel
-        get() = composeTestRule.activity.resources.getString(R.string.cancel)
+        get() = activity.getString(R.string.cancel)
     val theme
-        get() = composeTestRule.activity.resources.getString(R.string.theme)
+        get() = activity.getString(R.string.theme)
     val light
-        get() = composeTestRule.activity.resources.getString(R.string.light)
+        get() = activity.getString(R.string.light)
     val dark
-        get() = composeTestRule.activity.resources.getString(R.string.dark)
+        get() = activity.getString(R.string.dark)
     val system
-        get() = composeTestRule.activity.resources.getString(R.string.system)
+        get() = activity.getString(R.string.system)
+    val moreActions
+        get() = activity.getString(R.string.more_actions)
+    val sort
+        get() = activity.getString(R.string.sort)
+    val unsort
+        get() = activity.getString(R.string.unsort)
+    val showMoreInfo
+        get() = activity.getString(R.string.show_more_info)
+    val showLessInfo
+        get() = activity.getString(R.string.show_less_info)
 }

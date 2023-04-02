@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
@@ -12,8 +13,9 @@ import ly.david.mbjc.ui.theme.PreviewTheme
 @Composable
 internal fun FullScreenText(
     text: String,
+    modifier: Modifier = Modifier
 ) {
-    FullScreenContent {
+    FullScreenContent(modifier = modifier) {
         Text(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,

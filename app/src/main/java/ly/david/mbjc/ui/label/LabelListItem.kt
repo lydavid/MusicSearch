@@ -1,9 +1,10 @@
 package ly.david.mbjc.ui.label
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +19,6 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.listitem.ClickableListItem
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 import ly.david.mbjc.ui.theme.getSubTextColor
@@ -26,51 +26,49 @@ import ly.david.mbjc.ui.theme.getSubTextColor
 @Composable
 internal fun LabelListItem(
     label: LabelListItemModel,
+    modifier: Modifier = Modifier,
     onLabelClick: LabelListItemModel.() -> Unit = {}
 ) {
-    ClickableListItem(
-        onClick = { onLabelClick(label) },
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        ) {
-            Text(
-                text = label.getNameWithDisambiguation(),
-                style = TextStyles.getCardTitleTextStyle()
-            )
-
-            label.type?.ifNotNullOrEmpty {
+    ListItem(
+        headlineText = {
+            Column {
                 Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = it,
-                    color = getSubTextColor(),
-                    style = TextStyles.getCardBodyTextStyle(),
+                    text = label.getNameWithDisambiguation(),
+                    style = TextStyles.getCardTitleTextStyle()
                 )
+
+                label.type?.ifNotNullOrEmpty {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = it,
+                        color = getSubTextColor(),
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                label.labelCode?.ifNotNull {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = stringResource(id = R.string.lc, it),
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
+
+                // TODO: area
+
+                // TODO: lifespan
+
+                label.catalogNumber.ifNotNullOrEmpty {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = it,
+                        style = TextStyles.getCardBodyTextStyle(),
+                    )
+                }
             }
-
-            label.labelCode?.ifNotNull {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = stringResource(id = R.string.lc, it),
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
-
-            // TODO: area
-
-            // TODO: lifespan
-
-            label.catalogNumber.ifNotNullOrEmpty {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp),
-                    text = it,
-                    style = TextStyles.getCardBodyTextStyle(),
-                )
-            }
-        }
-    }
+        },
+        modifier = modifier.clickable { onLabelClick(label) },
+    )
 }
 
 // Cannot be private.
@@ -83,7 +81,8 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
         LabelListItemModel(
             id = "2",
             name = "Sony Records",
-            disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - used to organize imprints; not a release label"
+            disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - " +
+                "used to organize imprints; not a release label"
         ),
         LabelListItemModel(
             id = "3",

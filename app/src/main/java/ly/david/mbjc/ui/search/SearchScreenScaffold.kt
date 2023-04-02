@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar

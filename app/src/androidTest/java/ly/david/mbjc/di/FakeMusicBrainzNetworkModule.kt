@@ -7,6 +7,7 @@ import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.di.MusicBrainzNetworkModule
+import ly.david.data.network.api.FakeCoverArtArchiveApiService
 import ly.david.data.network.api.FakeMusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
@@ -24,15 +25,7 @@ internal object FakeMusicBrainzNetworkModule {
 
     @Singleton
     @Provides
-    fun provideCoverArtArchiveApi(
-        builder: Retrofit.Builder
-    ): CoverArtArchiveApiService {
-        val retrofit = builder
-            .baseUrl(TEST_BASE_URL)
-            .build()
-
-        return retrofit.create(CoverArtArchiveApiService::class.java)
-    }
+    fun provideCoverArtArchiveApi(): CoverArtArchiveApiService = FakeCoverArtArchiveApiService()
 
     @Singleton
     @Provides

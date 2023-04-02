@@ -1,6 +1,5 @@
 package ly.david.mbjc.ui.place.events
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
@@ -12,19 +11,16 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.EventListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.event.EventListItem
+import ly.david.mbjc.ui.common.screen.EventsListScreen
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun EventsByPlaceScreen(
     placeId: String,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    eventsLazyListState: LazyListState = rememberLazyListState(),
-    eventsLazyPagingItems: LazyPagingItems<EventListItemModel>,
+    lazyListState: LazyListState = rememberLazyListState(),
+    lazyPagingItems: LazyPagingItems<EventListItemModel>,
     onEventClick: (entity: MusicBrainzResource, String, String) -> Unit,
     onPagedEventsFlowChange: (Flow<PagingData<EventListItemModel>>) -> Unit,
     filterText: String,
@@ -34,26 +30,14 @@ internal fun EventsByPlaceScreen(
         viewModel.loadPagedResources(placeId)
         onPagedEventsFlowChange(viewModel.pagedResources)
     }
+
     viewModel.updateQuery(filterText)
 
-    PagingLoadingAndErrorHandler(
+    EventsListScreen(
+        snackbarHostState = snackbarHostState,
+        lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
-        lazyListState = eventsLazyListState,
-        lazyPagingItems = eventsLazyPagingItems,
-        snackbarHostState = snackbarHostState
-    ) { eventListItemModel: EventListItemModel? ->
-        when (eventListItemModel) {
-            is EventListItemModel -> {
-                EventListItem(
-                    event = eventListItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onEventClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
-                }
-            }
-            else -> {
-                // Do nothing.
-            }
-        }
-    }
+        onEventClick = onEventClick
+    )
 }

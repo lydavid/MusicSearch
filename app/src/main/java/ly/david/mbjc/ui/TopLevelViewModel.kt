@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,12 +34,14 @@ import ly.david.data.persistence.collection.CollectionEntityDao
 import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.data.persistence.collection.CollectionWithEntities
+import ly.david.mbjc.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
+import retrofit2.HttpException
 import timber.log.Timber
 
 class MusicBrainzLoginContract(
@@ -67,6 +70,8 @@ class MusicBrainzLoginContract(
 
 @HiltViewModel
 internal class TopLevelViewModel @Inject constructor(
+    val appPreferences: AppPreferences,
+
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
     private val musicBrainzApiService: MusicBrainzApiService,
@@ -77,6 +82,11 @@ internal class TopLevelViewModel @Inject constructor(
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication
 ) : ViewModel() {
+
+    data class AddToCollectionResult(
+        val message: String = "",
+        val actionLabel: String? = null
+    )
 
     val entity: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
 
@@ -101,39 +111,47 @@ internal class TopLevelViewModel @Inject constructor(
         this.entity.value = entity
     }
 
-    fun addToCollection(collectionId: String, entityId: String) {
-        viewModelScope.launch {
-            collectionEntityDao.withTransaction {
-                val insertedOneEntry = collectionEntityDao.insert(
-                    CollectionEntityRoomModel(
-                        id = collectionId,
-                        entityId = entityId
-                    )
-                )
+    suspend fun addToCollectionAndGetResult(collectionId: String, entityId: String): AddToCollectionResult {
+        var result = AddToCollectionResult()
 
-                // TODO: if we insert into remote collection, then refresh collection, we lose our collection_entity
-                //  which increments the collection despite it not adding to MB
-                //  MB returns 200 even if entity already exists in collection
-                //  Possible workaround: do not manually increment for remote collection -> but would need to GET its new count
-                //      or we can fetch all of the collection's content before inserting -> could take a long time if its large
-                //  For remote collections, we could not show its count until we fetch its content? strange ux
-                //  Could be confusing ux to have such a big difference between local and remote collections
-                //      Could have a "Remote" and "Local" filter pills at the top
-                if (insertedOneEntry != INSERTION_FAILED_DUE_TO_CONFLICT) {
-                    val collection = collectionDao.getCollection(collectionId)
-                    if (collection.isRemote) {
-                        musicBrainzApiService.uploadToCollection(
-                            collectionId = collectionId,
-                            resourceUriPlural = entity.value.resourceUriPlural,
-                            mbids = entityId
-                        )
-                    }
-                    collectionDao.update(
-                        collection.copy(entityCount = collection.entityCount + 1)
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection.isRemote) {
+            try {
+                musicBrainzApiService.uploadToCollection(
+                    collectionId = collectionId,
+                    resourceUriPlural = entity.value.resourceUriPlural,
+                    mbids = entityId
+                )
+            } catch (ex: HttpException) {
+                return when (ex.code()) {
+                    HTTP_UNAUTHORIZED -> AddToCollectionResult(
+                        message = "Failed to add to ${collection.name}. Login has expired.",
+                        actionLabel = "Login"
                     )
+                    else -> AddToCollectionResult("Failed to add to ${collection.name}.")
                 }
             }
         }
+
+        collectionEntityDao.withTransaction {
+            val insertedOneEntry = collectionEntityDao.insert(
+                CollectionEntityRoomModel(
+                    id = collectionId,
+                    entityId = entityId
+                )
+            )
+
+            result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
+                AddToCollectionResult("Already in ${collection.name}.")
+            } else {
+                collectionDao.update(
+                    collection.copy(entityCount = collection.entityCount + 1)
+                )
+                AddToCollectionResult("Added to ${collection.name}.")
+            }
+        }
+
+        return result
     }
 
     fun createNewCollection(name: String, entity: MusicBrainzResource) {
@@ -147,7 +165,6 @@ internal class TopLevelViewModel @Inject constructor(
             )
         }
     }
-
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
 

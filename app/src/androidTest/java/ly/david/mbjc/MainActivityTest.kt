@@ -1,9 +1,13 @@
 package ly.david.mbjc
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -14,17 +18,17 @@ internal abstract class MainActivityTest {
     @get:Rule(order = 0)
     val hiltRule: HiltAndroidRule by lazy { HiltAndroidRule(this) }
 
+    @get:Rule(order = 1)
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces
-    @get:Rule(order = 1)
+    @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
-    private fun waitForNodeToShow(matcher: SemanticsMatcher) {
-        composeTestRule.waitUntil(10_000L) {
-            composeTestRule
-                .onAllNodes(matcher)
-                .fetchSemanticsNodes().size == 1
-        }
+    @OptIn(ExperimentalTestApi::class)
+    fun waitForNodeToShow(matcher: SemanticsMatcher) {
+        composeTestRule.waitUntilAtLeastOneExists(matcher, 10_000L)
     }
 
     private fun waitForTextToShow(text: String) {
@@ -44,6 +48,15 @@ internal abstract class MainActivityTest {
 
         composeTestRule
             .onNodeWithText(text)
+            .assertIsDisplayed()
+    }
+
+    fun waitForThenAssertAtLeastOneIsDisplayed(text: String) {
+        waitForTextToShow(text)
+
+        composeTestRule
+            .onAllNodesWithText(text)
+            .onFirst()
             .assertIsDisplayed()
     }
 

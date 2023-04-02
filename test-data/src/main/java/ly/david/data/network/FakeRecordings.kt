@@ -27,7 +27,7 @@ val fakeRecordings = listOf(
 val browseRecordingsResponse = BrowseRecordingsResponse(
     count = 1,
     offset = 0,
-    recordings = listOf(fakeRecording)
+    musicBrainzModels = listOf(fakeRecording)
 )
 
 val searchRecordingsResponse = SearchRecordingsResponse(
