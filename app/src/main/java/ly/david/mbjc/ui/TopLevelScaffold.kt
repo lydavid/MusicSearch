@@ -108,26 +108,26 @@ internal fun TopLevelScaffold(
             onCreateCollectionClick = { showCreateCollectionDialog = true },
             onAddToCollection = { collectionId ->
                 scope.launch {
-                    if (selectedEntityId.isNotEmpty()) {
-                        val addToCollectionResult = viewModel.addToCollectionAndGetResult(
-                            collectionId = collectionId,
-                            entityId = selectedEntityId
-                        )
+                    if (selectedEntityId.isEmpty()) return@launch
 
-                        if (addToCollectionResult.message.isEmpty()) return@launch
+                    val addToCollectionResult = viewModel.addToCollectionAndGetResult(
+                        collectionId = collectionId,
+                        entityId = selectedEntityId
+                    )
 
-                        val snackbarResult = snackbarHostState.showSnackbar(
-                            message = addToCollectionResult.message,
-                            actionLabel = addToCollectionResult.actionLabel,
-                            duration = SnackbarDuration.Short
-                        )
-                        when (snackbarResult) {
-                            SnackbarResult.ActionPerformed -> {
-                                loginLauncher.launch(Unit)
-                            }
-                            SnackbarResult.Dismissed -> {
-                                // Do nothing.
-                            }
+                    if (addToCollectionResult.message.isEmpty()) return@launch
+
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = addToCollectionResult.message,
+                        actionLabel = addToCollectionResult.actionLabel,
+                        duration = SnackbarDuration.Short
+                    )
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            loginLauncher.launch(Unit)
+                        }
+                        SnackbarResult.Dismissed -> {
+                            // Do nothing.
                         }
                     }
                 }

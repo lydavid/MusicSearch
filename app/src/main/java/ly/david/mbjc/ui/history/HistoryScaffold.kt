@@ -4,10 +4,19 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -16,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.launch
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.R
@@ -31,6 +41,8 @@ internal fun HistoryScaffold(
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.lookUpHistory)
@@ -50,13 +62,44 @@ internal fun HistoryScaffold(
                 },
             )
         },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+                SwipeToDismiss(
+                    state = rememberDismissState(),
+                    background = {},
+                    dismissContent = { Snackbar(snackbarData) }
+                )
+            }
+        },
     ) { innerPadding ->
         HistoryScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             lazyPagingItems = lazyPagingItems,
-            onItemClick = onItemClick
+            onItemClick = onItemClick,
+            onDeleteItem = { history ->
+                scope.launch {
+                    viewModel.deleteHistory(mbid = history.id)
+
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = "Removed ${history.title}",
+                        actionLabel = "Undo",
+                        duration = SnackbarDuration.Short
+                    )
+
+                    // TODO: how about marking item as deleted,
+                    //  then undo just unmarks it, while dismiss actually deletes it
+                    when (snackbarResult) {
+                        SnackbarResult.ActionPerformed -> {
+                            viewModel.undoDeleteHistory(history)
+                        }
+                        SnackbarResult.Dismissed -> {
+                            // Do nothing.
+                        }
+                    }
+                }
+            }
         )
     }
 }
@@ -67,6 +110,7 @@ internal fun HistoryScreen(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
 ) {
 
     PagingLoadingAndErrorHandler(
@@ -78,7 +122,8 @@ internal fun HistoryScreen(
                 HistoryListItem(
                     lookupHistory = lookupHistory,
                     modifier = Modifier.animateItemPlacement(),
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
+                    onDeleteItem = onDeleteItem
                 )
             }
             else -> {

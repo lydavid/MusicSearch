@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.data.persistence.history.LookupHistoryDao
+import ly.david.data.persistence.history.LookupHistoryRoomModel
 
 @HiltViewModel
 internal class HistoryViewModel @Inject constructor(
@@ -45,4 +45,12 @@ internal class HistoryViewModel @Inject constructor(
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
+
+    suspend fun deleteHistory(mbid: String) {
+        lookupHistoryDao.deleteLookupHistory(mbid)
+    }
+
+    suspend fun undoDeleteHistory(lookupHistory: LookupHistoryRoomModel) {
+        lookupHistoryDao.insert(lookupHistory)
+    }
 }

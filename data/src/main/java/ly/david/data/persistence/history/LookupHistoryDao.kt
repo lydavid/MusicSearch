@@ -40,6 +40,14 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
     @Query(
         """
             DELETE FROM lookup_history
+            WHERE mbid = :mbid
+        """
+    )
+    abstract suspend fun deleteLookupHistory(mbid: String)
+
+    @Query(
+        """
+            DELETE FROM lookup_history
         """
     )
     abstract suspend fun deleteAllHistory()
