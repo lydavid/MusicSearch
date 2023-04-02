@@ -40,7 +40,7 @@ internal fun LazyListScope.addRelationshipsSection(
             modifier = Modifier.padding(horizontal = 16.dp),
             style = TextStyles.getCardBodyTextStyle(),
             text = if (totalRelations == null) {
-                "No relationship stats available. Tap Relationships tab to download this resource's relationships."
+                "No relationship stats available. Tap Relationships tab to fetch this entity's relationships."
             } else {
                 "Total relationships: $totalRelations"
             }
@@ -101,19 +101,19 @@ private fun Default() {
                 addRelationshipsSection(
                     totalRelations = 49,
                     relationTypeCounts = listOf(
-                        RelationTypeCount(linkedResource = MusicBrainzResource.AREA, 1),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, 2),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.EVENT, 3),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.GENRE, 4),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.INSTRUMENT, 5),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.LABEL, 6),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.PLACE, 7),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, 6),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RELEASE, 5),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RELEASE_GROUP, 4),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.SERIES, 3),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.URL, 2),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.WORK, 1),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.AREA, count = 1),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, count = 2),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.EVENT, count = 3),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.GENRE, count = 4),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.INSTRUMENT, count = 5),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.LABEL, count = 6),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.PLACE, count = 7),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, count = 6),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.RELEASE, count = 5),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.RELEASE_GROUP, count = 4),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.SERIES, count = 3),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.URL, count = 2),
+                        RelationTypeCount(linkedResource = MusicBrainzResource.WORK, count = 1),
                     )
                 )
             }

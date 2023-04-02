@@ -39,11 +39,6 @@
     <ID>CyclomaticComplexMethod:MusicBrainzCollectionScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun MusicBrainzCollectionScaffold( collectionId: String, isRemote: Boolean, modifier: Modifier = Modifier, onBack: () -&gt; Unit = {}, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, showMoreInfoInReleaseListItem: Boolean = true, onShowMoreInfoInReleaseListItemChange: (Boolean) -&gt; Unit = {}, sortReleaseGroupListItems: Boolean = false, onSortReleaseGroupListItemsChange: (Boolean) -&gt; Unit = {}, viewModel: MusicBrainzCollectionViewModel = hiltViewModel() )</ID>
     <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
     <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$(resourceId, query, isRemote, sorted)</ID>
-    <ID>MagicNumber:AddRelationshipsSection.kt$3</ID>
-    <ID>MagicNumber:AddRelationshipsSection.kt$4</ID>
-    <ID>MagicNumber:AddRelationshipsSection.kt$5</ID>
-    <ID>MagicNumber:AddRelationshipsSection.kt$6</ID>
-    <ID>MagicNumber:AddRelationshipsSection.kt$7</ID>
     <ID>MagicNumber:DotsFlashing.kt$0.2f</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
@@ -53,8 +48,6 @@
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" }</ID>
-    <ID>MaxLineLength:TopLevelViewModel.kt$TopLevelViewModel$// Possible workaround: do not manually increment for remote collection -&gt; but would need to GET its new count</ID>
-    <ID>MaxLineLength:TopLevelViewModel.kt$TopLevelViewModel$// or we can fetch all of the collection's content before inserting -&gt; could take a long time if its large</ID>
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
     <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
