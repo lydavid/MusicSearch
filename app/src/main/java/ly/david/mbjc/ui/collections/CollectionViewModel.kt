@@ -8,7 +8,7 @@ import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.persistence.collection.CollectionDao
 
 @HiltViewModel
-internal class MusicBrainzCollectionViewModel @Inject constructor(
+internal class CollectionViewModel @Inject constructor(
     private val collectionDao: CollectionDao
 ) : ViewModel() {
 

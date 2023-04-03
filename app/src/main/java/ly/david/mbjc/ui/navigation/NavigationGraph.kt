@@ -23,7 +23,7 @@ import ly.david.mbjc.ui.DeleteHistoryDelegate
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
-import ly.david.mbjc.ui.collections.MusicBrainzCollectionScaffold
+import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
@@ -338,7 +338,7 @@ internal fun NavigationGraph(
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
             val isRemote = entry.arguments?.getBoolean("is_remote") ?: true
 
-            MusicBrainzCollectionScaffold(
+            CollectionScaffold(
                 collectionId = collectionId,
                 isRemote = isRemote,
                 modifier = modifier,

@@ -17,7 +17,7 @@ import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
-import ly.david.mbjc.ui.collections.MusicBrainzCollectionScaffold
+import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -25,7 +25,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 /**
- * Tests interacting with [CollectionListScaffold] and [MusicBrainzCollectionScaffold].
+ * Tests interacting with [CollectionListScaffold] and [CollectionScaffold].
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest

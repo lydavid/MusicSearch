@@ -51,6 +51,7 @@ import ly.david.mbjc.ui.collections.works.WorksByCollectionScreen
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 
@@ -62,7 +63,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MusicBrainzCollectionScaffold(
+internal fun CollectionScaffold(
     collectionId: String,
     isRemote: Boolean,
     modifier: Modifier = Modifier,
@@ -72,7 +73,7 @@ internal fun MusicBrainzCollectionScaffold(
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
-    viewModel: MusicBrainzCollectionViewModel = hiltViewModel()
+    viewModel: CollectionViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -160,6 +161,9 @@ internal fun MusicBrainzCollectionScaffold(
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = true,
                 overflowDropdownMenuItems = {
+                    if (collection?.isRemote == true) {
+                        OpenInBrowserMenuItem(resource = MusicBrainzResource.COLLECTION, resourceId = collectionId)
+                    }
                     CopyToClipboardMenuItem(collectionId)
                     if (entity == MusicBrainzResource.RELEASE_GROUP) {
                         ToggleMenuItem(
