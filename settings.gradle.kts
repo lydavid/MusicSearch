@@ -11,7 +11,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
 
-            version("accompanist", "0.30.0")
+            version("accompanist", "0.30.1")
             version("coil", "2.3.0")
             version("compose-foundation", "1.4.0")
             version("compose-material", "1.4.0")
