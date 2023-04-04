@@ -82,8 +82,8 @@ internal fun NavigationGraph(
             navController.goToResource(entity, id, title)
         }
 
-        val onCollectionClick: (String, Boolean) -> Unit = { collectionId, isRemote ->
-            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId?is_remote=$isRemote")
+        val onCollectionClick: (String, Boolean) -> Unit = { collectionId, _ ->
+            navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
         }
 
         val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
@@ -323,24 +323,17 @@ internal fun NavigationGraph(
         }
 
         composable(
-            route = "${Destination.COLLECTIONS.route}/{$ID}?is_remote={is_remote}",
-            arguments = listOf(
-                navArgument("is_remote") {
-                    type = NavType.BoolType
-                }
-            ),
+            route = "${Destination.COLLECTIONS.route}/{$ID}",
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}?is_remote={is_remote}"
+                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}"
                 }
             )
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
-            val isRemote = entry.arguments?.getBoolean("is_remote") ?: true
 
             CollectionScaffold(
                 collectionId = collectionId,
-                isRemote = isRemote,
                 modifier = modifier,
                 onItemClick = onLookupEntityClick,
                 onBack = navController::navigateUp,

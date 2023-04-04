@@ -17,7 +17,7 @@ adb shell am start -d '"io.github.lydavid.musicsearch://app/lookup?query=tsukuyo
 ## Collection
 
 ```shell
-adb shell am start -d '"io.github.lydavid.musicsearch://app/collections/1ca78505-90ed-43a6-b85c-a138033a6c86?is_remote=true"' -a android.intent.action.VIEW
+adb shell am start -d '"io.github.lydavid.musicsearch://app/collections/1ca78505-90ed-43a6-b85c-a138033a6c86"' -a android.intent.action.VIEW
 ```
 
 ## Artist

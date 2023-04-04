@@ -65,7 +65,6 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 @Composable
 internal fun CollectionScaffold(
     collectionId: String,
-    isRemote: Boolean,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -80,6 +79,7 @@ internal fun CollectionScaffold(
 
     var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
     var entity: MusicBrainzResource? by rememberSaveable { mutableStateOf(null) }
+    var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
     var filterText by rememberSaveable { mutableStateOf("") }
 
     val areasLazyListState = rememberLazyListState()
@@ -150,6 +150,7 @@ internal fun CollectionScaffold(
     LaunchedEffect(key1 = collectionId) {
         collection = viewModel.getCollection(collectionId)
         entity = collection?.entity
+        isRemote = collection?.isRemote ?: false
     }
 
     Scaffold(

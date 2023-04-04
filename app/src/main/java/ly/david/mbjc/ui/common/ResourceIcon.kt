@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
+import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.CorporateFare
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Folder
@@ -31,6 +32,7 @@ internal fun ResourceIcon(
         imageVector = when (resource) {
             MusicBrainzResource.AREA -> Icons.Default.Public
             MusicBrainzResource.ARTIST -> Icons.Default.Person
+            MusicBrainzResource.COLLECTION -> Icons.Default.CollectionsBookmark
             MusicBrainzResource.EVENT -> Icons.Default.Event
             MusicBrainzResource.GENRE -> Icons.Default.TheaterComedy
             MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
