@@ -3,10 +3,12 @@ package ly.david.mbjc.ui.collection
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -15,6 +17,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.resourceUri
 import ly.david.data.persistence.collection.CollectionDao
 import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
@@ -50,7 +53,63 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
     }
 
     @Test
-    fun onlyLocalCollections() = runTest {
+    fun createCollections() = runTest {
+        composeTestRule
+            .onNodeWithText(collections)
+            .performClick()
+
+        composeTestRule
+            .onNodeWithContentDescription(createCollection)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(cancel)
+            .performClick()
+
+        val name1 = "My test collection"
+        composeTestRule
+            .onNodeWithContentDescription(createCollection)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(name)
+            .performClick()
+            .performTextInput(name1)
+        composeTestRule
+            .onNodeWithText(ok)
+            .performClick()
+        composeTestRule
+            .onNodeWithText("My test collection")
+            .assertIsDisplayed()
+
+        val name2 = "My other test collection"
+        composeTestRule
+            .onNodeWithContentDescription(createCollection)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(name)
+            .performClick()
+            .performTextInput(name2)
+        composeTestRule
+            .onNodeWithText(resourceLabel)
+            .performClick()
+        composeTestRule
+            .onNodeWithTag("ExposedDropdownMenu")
+            .performScrollToNode(hasTestTag(MusicBrainzResource.WORK.resourceUri))
+        composeTestRule
+            .onNodeWithTag(MusicBrainzResource.WORK.resourceUri)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(ok)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(name1)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(name2)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun filterCollections() = runTest {
         composeTestRule
             .onNodeWithText(collections)
             .performClick()

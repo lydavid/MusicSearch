@@ -80,4 +80,8 @@ internal interface StringReferences {
         get() = activity.getString(R.string.show_more_info)
     val showLessInfo
         get() = activity.getString(R.string.show_less_info)
+    val createCollection
+        get() = activity.getString(R.string.create_collection)
+    val name
+        get() = activity.getString(R.string.name)
 }

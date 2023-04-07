@@ -64,7 +64,9 @@ internal fun ExposedDropdownMenuBox(
 
         // Focusing on this "consumes" a back press, and is independent of onDismissRequest.
         ExposedDropdownMenu(
-            modifier = Modifier,
+            modifier = Modifier.semantics {
+                testTag = "ExposedDropdownMenu"
+            },
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
