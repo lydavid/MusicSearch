@@ -56,7 +56,6 @@ internal fun TopLevelScaffold(
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
     var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
-    var selectedEntityId by rememberSaveable { mutableStateOf("") }
     val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
         .collectAsLazyPagingItems()
 
@@ -109,11 +108,8 @@ internal fun TopLevelScaffold(
             onCreateCollectionClick = { showCreateCollectionDialog = true },
             onAddToCollection = { collectionId ->
                 scope.launch {
-                    if (selectedEntityId.isEmpty()) return@launch
-
                     val addToCollectionResult = viewModel.addToCollectionAndGetResult(
-                        collectionId = collectionId,
-                        entityId = selectedEntityId
+                        collectionId = collectionId
                     )
 
                     if (addToCollectionResult.message.isEmpty()) return@launch
@@ -208,7 +204,7 @@ internal fun TopLevelScaffold(
             },
             onAddToCollectionMenuClick = { entity, id ->
                 viewModel.setEntity(entity)
-                selectedEntityId = id
+                viewModel.setEntityId(id)
                 openBottomSheet = true
             },
             onCreateCollectionClick = {

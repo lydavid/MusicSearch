@@ -91,7 +91,8 @@ internal class TopLevelViewModel @Inject constructor(
         val actionLabel: String? = null
     )
 
-    val entity: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
+    private val entity: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
+    private val entityId: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val collections: Flow<PagingData<CollectionListItemModel>> =
@@ -114,7 +115,11 @@ internal class TopLevelViewModel @Inject constructor(
         this.entity.value = entity
     }
 
-    suspend fun addToCollectionAndGetResult(collectionId: String, entityId: String): AddToCollectionResult {
+    fun setEntityId(entityId: String) {
+        this.entityId.value = entityId
+    }
+
+    suspend fun addToCollectionAndGetResult(collectionId: String): AddToCollectionResult {
         var result = AddToCollectionResult()
 
         val collection = collectionDao.getCollection(collectionId)
@@ -123,7 +128,7 @@ internal class TopLevelViewModel @Inject constructor(
                 musicBrainzApiService.uploadToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.value.resourceUriPlural,
-                    mbids = entityId
+                    mbids = entityId.value
                 )
             } catch (ex: HttpException) {
                 return when (ex.code()) {
@@ -140,7 +145,7 @@ internal class TopLevelViewModel @Inject constructor(
             val insertedOneEntry = collectionEntityDao.insert(
                 CollectionEntityRoomModel(
                     id = collectionId,
-                    entityId = entityId
+                    entityId = entityId.value
                 )
             )
 
