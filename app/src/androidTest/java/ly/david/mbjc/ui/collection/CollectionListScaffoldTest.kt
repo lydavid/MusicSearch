@@ -1,8 +1,13 @@
 package ly.david.mbjc.ui.collection
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -10,37 +15,22 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.collectableResources
 import ly.david.data.persistence.collection.CollectionDao
 import ly.david.data.persistence.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
-import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 
 /**
- * Tests interacting with [CollectionListScaffold] and [CollectionScaffold].
+ * Tests [CollectionListScaffold]-specific features.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
-@RunWith(Parameterized::class)
-internal class CollectionTest(
-    private val entity: MusicBrainzResource
-) : MainActivityTest(), StringReferences {
-
-    companion object {
-        @JvmStatic
-        @Parameterized.Parameters(name = "{0}")
-        fun data(): Collection<MusicBrainzResource> {
-            return collectableResources
-        }
-    }
+internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 
@@ -65,49 +55,45 @@ internal class CollectionTest(
             .onNodeWithText(collections)
             .performClick()
 
-        val name = "local $entity collection"
-
+        val name1 = "should find me"
         collectionDao.insert(
             CollectionRoomModel(
-                id = entity.name,
-                name = name,
-                entity = entity,
+                id = "1",
+                name = name1,
+                entity = MusicBrainzResource.AREA,
                 isRemote = false
             )
         )
 
-        // Name is in list item
-        waitForThenAssertIsDisplayed(name)
-        waitForThenPerformClickOn(name)
-
-        // Name is in title bar
-        waitForThenAssertIsDisplayed(name)
-    }
-
-    // We're currently able to skirt around the need to fake auth state but inserting data ourselves
-    // since the app saves remote collection's data
-    @Test
-    fun onlyRemoteCollections() = runTest {
-        composeTestRule
-            .onNodeWithText(collections)
-            .performClick()
-
-        val name = "remote $entity collection"
-
+        val name2 = "but not me"
         collectionDao.insert(
             CollectionRoomModel(
-                id = entity.name,
-                name = name,
-                entity = entity,
-                isRemote = true
+                id = "2",
+                name = name2,
+                entity = MusicBrainzResource.RECORDING,
+                isRemote = false
             )
         )
 
-        // Name is in list item
-        waitForThenAssertIsDisplayed(name)
-        waitForThenPerformClickOn(name)
+        composeTestRule
+            .onNodeWithText(name1)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(name2)
+            .assertIsDisplayed()
 
-        // Name is in title bar
-        waitForThenAssertIsDisplayed(name)
+        composeTestRule
+            .onNodeWithContentDescription(filter)
+            .performClick()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextInput("should")
+
+        composeTestRule
+            .onNodeWithText(name1)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(name2)
+            .assertIsNotDisplayed()
     }
 }

@@ -35,6 +35,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.zIndex
 import ly.david.data.network.MusicBrainzResource
@@ -138,6 +140,7 @@ private fun TopAppBarWithFilterInternal(
                 Column {
                     TextField(
                         modifier = Modifier
+                            .semantics { testTag = "filterTextField" }
                             .focusRequester(focusRequester)
                             .fillMaxWidth(),
                         maxLines = 1,
