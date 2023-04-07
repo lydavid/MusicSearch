@@ -49,7 +49,7 @@ internal fun SettingWithDialogChoices(
             .clickable {
                 showThemeDialog = true
             }
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(16.dp),
     ) {
         Text(
             text = stringResource(id = titleRes),
@@ -68,6 +68,7 @@ internal fun SettingWithDialogChoices(
 @Composable
 private fun Preview() {
     PreviewTheme {
+        // Preview is intentionally max sized so that we can see the dialog pop up in the middle of the screen
         Surface(modifier = Modifier.fillMaxSize()) {
             var theme by remember { mutableStateOf(AppPreferences.Theme.SYSTEM) }
 
