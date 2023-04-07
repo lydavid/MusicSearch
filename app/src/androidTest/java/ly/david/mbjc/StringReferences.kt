@@ -18,6 +18,8 @@ internal interface StringReferences {
         get() = activity.getString(R.string.search)
     val clearSearchContentDescription
         get() = activity.getString(R.string.clear_search)
+    val clearFilterText
+        get() = activity.getString(R.string.clear_filter)
     val emptySearchWarning
         get() = activity.getString(R.string.search_cannot_be_empty)
     val appName
@@ -84,4 +86,6 @@ internal interface StringReferences {
         get() = activity.getString(R.string.create_collection)
     val name
         get() = activity.getString(R.string.name)
+    val addToCollection
+        get() = activity.getString(R.string.add_to_collection)
 }

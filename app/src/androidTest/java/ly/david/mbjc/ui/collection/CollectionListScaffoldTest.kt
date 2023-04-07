@@ -147,12 +147,24 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
         composeTestRule
             .onNodeWithTag("filterTextField")
             .performTextInput("should")
-
         composeTestRule
             .onNodeWithText(name1)
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(name2)
             .assertIsNotDisplayed()
+
+        composeTestRule
+            .onNodeWithContentDescription(filter)
+            .performClick()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextInput("something such that we show no results")
+        composeTestRule
+            .onNodeWithText(name1)
+            .assertDoesNotExist()
+        composeTestRule
+            .onNodeWithText(name2)
+            .assertDoesNotExist()
     }
 }
