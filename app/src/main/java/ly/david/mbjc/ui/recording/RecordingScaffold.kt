@@ -56,7 +56,7 @@ internal fun RecordingScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: RecordingScaffoldViewModel = hiltViewModel()
@@ -111,7 +111,9 @@ internal fun RecordingScaffold(
                             onToggle = onShowMoreInfoInReleaseListItemChange
                         )
                     }
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, recordingId)
+                    }
                 },
                 subtitleDropdownMenuItems = {
                     recording?.artistCredits?.forEach { artistCredit ->

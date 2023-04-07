@@ -55,7 +55,7 @@ internal fun ArtistScaffold(
     titleWithDisambiguation: String? = null,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit = {},
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
@@ -119,7 +119,9 @@ internal fun ArtistScaffold(
                             onToggle = onShowMoreInfoInReleaseListItemChange
                         )
                     }
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, artistId)
+                    }
                 },
                 filterText = filterText,
                 onFilterTextChange = {

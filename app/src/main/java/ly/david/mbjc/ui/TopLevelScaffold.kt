@@ -206,12 +206,10 @@ internal fun TopLevelScaffold(
             onLogoutClick = {
                 viewModel.logout()
             },
-            onAddToCollectionMenuClick = {
-                openBottomSheet = true
-            },
-            onSelectedEntityChange = { entity, id ->
+            onAddToCollectionMenuClick = { entity, id ->
                 viewModel.setEntity(entity)
                 selectedEntityId = id
+                openBottomSheet = true
             },
             onCreateCollectionClick = {
                 showCreateCollectionDialog = true

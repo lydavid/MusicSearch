@@ -52,7 +52,7 @@ internal fun EventScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     viewModel: EventScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.EVENT
@@ -94,7 +94,9 @@ internal fun EventScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource, eventId)
                     CopyToClipboardMenuItem(eventId)
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, eventId)
+                    }
                 },
                 tabsTitles = EventTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

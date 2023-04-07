@@ -52,7 +52,7 @@ internal fun SeriesScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     viewModel: SeriesScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.SERIES
@@ -94,7 +94,9 @@ internal fun SeriesScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource, seriesId)
                     CopyToClipboardMenuItem(seriesId)
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, seriesId)
+                    }
                 },
                 tabsTitles = SeriesTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

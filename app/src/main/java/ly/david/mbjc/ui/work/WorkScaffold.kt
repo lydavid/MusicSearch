@@ -52,7 +52,7 @@ internal fun WorkScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     viewModel: WorkScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.WORK
@@ -95,7 +95,9 @@ internal fun WorkScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = workId)
                     CopyToClipboardMenuItem(workId)
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, workId)
+                    }
                 },
                 tabsTitles = WorkTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

@@ -61,8 +61,7 @@ internal fun NavigationGraph(
     modifier: Modifier = Modifier,
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
-    onAddToCollectionMenuClick: () -> Unit = {},
-    onSelectedEntityChange: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {},
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
@@ -78,7 +77,6 @@ internal fun NavigationGraph(
     ) {
 
         val onLookupEntityClick: (MusicBrainzResource, String, String?) -> Unit = { entity, id, title ->
-            onSelectedEntityChange(entity, id)
             navController.goToResource(entity, id, title)
         }
 

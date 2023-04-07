@@ -52,7 +52,7 @@ internal fun InstrumentScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     viewModel: InstrumentScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.INSTRUMENT
@@ -94,7 +94,9 @@ internal fun InstrumentScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = instrumentId)
                     CopyToClipboardMenuItem(instrumentId)
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, instrumentId)
+                    }
                 },
                 tabsTitles = InstrumentTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,

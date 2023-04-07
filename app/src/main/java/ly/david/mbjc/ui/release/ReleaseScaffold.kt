@@ -54,7 +54,7 @@ internal fun ReleaseScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     viewModel: ReleaseScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.RELEASE
@@ -99,7 +99,9 @@ internal fun ReleaseScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE, resourceId = releaseId)
                     CopyToClipboardMenuItem(resourceId = releaseId)
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, releaseId)
+                    }
                 },
                 subtitleDropdownMenuItems = {
                     release?.artistCredits?.forEach { artistCredit ->

@@ -53,7 +53,7 @@ internal fun PlaceScaffold(
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     viewModel: PlaceScaffoldViewModel = hiltViewModel()
 ) {
     val resource = MusicBrainzResource.PLACE
@@ -97,7 +97,9 @@ internal fun PlaceScaffold(
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = resource, resourceId = placeId)
                     CopyToClipboardMenuItem(placeId)
-                    AddToCollectionMenuItem(onClick = onAddToCollectionMenuClick)
+                    AddToCollectionMenuItem {
+                        onAddToCollectionMenuClick(resource, placeId)
+                    }
                 },
                 tabsTitles = PlaceTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
