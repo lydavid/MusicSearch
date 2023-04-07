@@ -95,5 +95,19 @@ internal class SearchEachResourceTest(
         composeTestRule
             .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
+
+        // Shows up in history
+        composeTestRule
+            .onNodeWithText(history)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
+            .assertIsDisplayed()
+            .performClick()
+
+        // In title bar
+        composeTestRule
+            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
+            .assertIsDisplayed()
     }
 }

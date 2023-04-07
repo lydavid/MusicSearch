@@ -12,7 +12,7 @@ internal interface StringReferences {
 
     val deeplinkSchema
         get() = activity.getString(R.string.deeplink_schema)
-    val searchDrawerLabel
+    val searchTitle
         get() = activity.getString(R.string.search_musicbrainz)
     val searchLabel
         get() = activity.getString(R.string.search)

@@ -44,7 +44,7 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
 
         // Main title
         composeTestRule
-            .onNodeWithText(searchDrawerLabel)
+            .onNodeWithText(searchTitle)
             .assertIsDisplayed()
 
         composeTestRule
@@ -52,7 +52,7 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
             .performClick()
 
         composeTestRule
-            .onNode(hasText(searchDrawerLabel))
+            .onNode(hasText(searchTitle))
             .assertDoesNotExist()
 
         composeTestRule
@@ -64,7 +64,7 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
             .performClick()
 
         composeTestRule
-            .onNodeWithText(searchDrawerLabel)
+            .onNodeWithText(searchTitle)
             .assertIsDisplayed()
     }
 
@@ -96,54 +96,44 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
         composeTestRule
             .onNodeWithText(history)
             .performClick()
-
         composeTestRule
             .onNodeWithText(historyScreenTitle)
             .assertIsDisplayed()
-
         composeTestRule.activityRule.scenario.onActivity {
             it.onBackPressedDispatcher.onBackPressed()
         }
-
         composeTestRule
-            .onAllNodesWithText(searchDrawerLabel)
+            .onAllNodesWithText(searchTitle)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
 
-        // TODO: come back once we have its scaffold set up
-//        composeTestRule
-//            .onNodeWithText(collections)
-//            .performClick()
-//
-//        composeTestRule
-//            .onAllNodesWithText(collections)
-//            .filterToOne(hasNoClickAction())
-//            .assertIsDisplayed()
-//
-//        composeTestRule.activityRule.scenario.onActivity {
-//            it.onBackPressedDispatcher.onBackPressed()
-//        }
-//
-//        composeTestRule
-//            .onAllNodesWithText(searchDrawerLabel)
-//            .filterToOne(matcher = hasNoClickAction())
-//            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(collections)
+            .performClick()
+        composeTestRule
+            .onAllNodesWithText(collections)
+            .filterToOne(hasNoClickAction())
+            .assertIsDisplayed()
+        composeTestRule.activityRule.scenario.onActivity {
+            it.onBackPressedDispatcher.onBackPressed()
+        }
+        composeTestRule
+            .onAllNodesWithText(searchTitle)
+            .filterToOne(matcher = hasNoClickAction())
+            .assertIsDisplayed()
 
         composeTestRule
             .onNodeWithText(settings)
             .performClick()
-
         composeTestRule
             .onAllNodesWithText(settings)
             .filterToOne(hasNoClickAction())
             .assertIsDisplayed()
-
         composeTestRule.activityRule.scenario.onActivity {
             it.onBackPressedDispatcher.onBackPressed()
         }
-
         composeTestRule
-            .onAllNodesWithText(searchDrawerLabel)
+            .onAllNodesWithText(searchTitle)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
     }
