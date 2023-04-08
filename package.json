@@ -7,22 +7,22 @@
     "release": {
         "tagFormat": "v${version}",
         "branches": [
-        {
-            "name": "master"
-        }
+            {
+                "name": "master"
+            }
         ],
         "plugins": [
-        "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        "gradle-semantic-release-plugin",
-        [
-            "@semantic-release/github",
-            {
-            "assets": [
-                "build/libs/*.jar"
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "gradle-semantic-release-plugin",
+            [
+                "@semantic-release/github",
+                {
+                    "assets": [
+                        "build/libs/*.jar"
+                    ]
+                }
             ]
-            }
-        ]
         ]
     }
 }
