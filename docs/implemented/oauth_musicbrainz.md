@@ -48,15 +48,11 @@ MusicBrainz has OAuth 2 but not OpenID.
 
 ## Refresh experience
 
-Right now, after token expiration, the user must go to Settings, click logout, click login,
-then login to MusicBrainz. That's a lot of user friction.
+It does not seem like we can automatically refresh the user token.
 
-- Can we automatically refresh token?
-  - Doesn't seem like it
-  - But we can offer a way for them to refresh their credentials instead of logging out then in
-- [ ] Otherwise show a prompt to tell them to login again
-  - check authState?.needsTokenRefresh
-  - lift login logic to top level
-    - delegate to collections
-    - delegate to each screen that can add to remote collections
-      - when user tries to add to remote collection, show prompt
+We currently support two ways to re-authenticate:
+1. Log out from Settings, then log back in
+2. When trying to add to a collection and it fails due with a 401 code, we show a snackbar with
+a button to login again
+
+Both of these will just bring the user to MusicBrainz's OAuth page in a browser.
