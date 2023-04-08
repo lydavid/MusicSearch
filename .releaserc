@@ -1,0 +1,18 @@
+{
+  "branches": "master",
+  "repositoryUrl": "https://github.com/lydavid/MusicSearch",
+  "debug": "false",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "gradle-semantic-release-plugin",
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+            "app/build/outputs/apk/release/*.apk"
+        ]
+      }
+    ]
+  ]
+}
