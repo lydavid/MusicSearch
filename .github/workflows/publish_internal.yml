@@ -50,9 +50,9 @@ jobs:
 
       - name: Bump version name
         run: |
-          VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
+          VN=$(grep 'version' gradle.properties | sed 's/[^0-9.]//g')
           newVN=$(echo ${VN} | awk -F. -v OFS=. '{$NF += 1 ; print}')
-          sed -bi "s/versionName = \"$VN\"/versionName = \"$newVN\"/" app/build.gradle.kts
+          sed -bi "s/version = \"$VN\"/version = $newVN/" gradle.properties
         shell: bash
 
       # After this step, the workspace contains credentials file.

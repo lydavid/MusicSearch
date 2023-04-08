@@ -19,7 +19,7 @@
                 "@semantic-release/github",
                 {
                     "assets": [
-                        "build/libs/*.jar"
+                        "app/build/outputs/apk/release/*.apk"
                     ]
                 }
             ]
