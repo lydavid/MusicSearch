@@ -1,0 +1,6 @@
+{
+    "devDependencies": {
+        "gradle-semantic-release-plugin": "^1.7.6",
+        "semantic-release": "^20.1.3"
+    }
+}

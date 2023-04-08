@@ -24,9 +24,8 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      # Need to specify dependencies to install if we don't have a package.json and package-lock.json
       - name: Setup semantic-release
-        run: npm install -g semantic-release @semantic-release/git gradle-semantic-release-plugin
+        run: npm install
 
       - name: Release
         env:
