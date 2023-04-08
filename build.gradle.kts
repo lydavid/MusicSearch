@@ -93,6 +93,11 @@ allprojects {
     }
 }
 
+tasks.register<DefaultTask>("publish") {
+    group = "publish"
+    description = "Dummy task so that we pass gradle-semantic-release-plugin's verifyConditions. Otherwise we would need to publish to an artifact repository."
+}
+
 moduleGraphConfig {
     readmePath.set(file("$projectDir/README.md").absolutePath)
     heading.set("## Dependency Diagram")
