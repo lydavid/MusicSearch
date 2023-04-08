@@ -27,9 +27,6 @@ jobs:
       - name: Setup semantic-release
         run: npm install
 
-      # Make sure this file doesn't show up in the packaged release
-      - run: touch findme.txt
-
       - name: Release to GitHub
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
