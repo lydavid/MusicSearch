@@ -70,6 +70,7 @@ jobs:
         shell: bash
 
       - name: Bump version name
+        if: steps.get-next-version.outputs.new-release-published == 'true'
         run: |
           VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
           newVN=${{ steps.get-next-version.outputs.new-release-version }}
@@ -96,11 +97,11 @@ jobs:
           echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks
         shell: bash
 
-      - name: Assemble and bundle app
+      - name: Assemble apk, bundle aab
         run: ./gradlew assemble bundle
 
-      - id: auth
-        name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
+        id: auth
         uses: google-github-actions/auth@v1.0.0
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
