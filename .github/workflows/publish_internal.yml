@@ -65,12 +65,19 @@ jobs:
 
       - name: Bump version name
         run: |
-          VN=$(grep 'version' gradle.properties | sed 's/[^0-9.]//g')
+          VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
           newVN=${{ steps.get-next-version.outputs.new-release-version }}
-          grep 'version' gradle.properties | sed 's/[^0-9.]//g'
-          sed -bi "s/version = \"$VN\"/version = $newVN/" gradle.properties
-          grep 'version' gradle.properties | sed 's/[^0-9.]//g'
+          echo "The new release version is ${{ steps.get-next-version.outputs.new-release-version }}"
+          grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
+          sed -bi "s/versionName = \"$VN\"/versionName = \"$newVN\"/" app/build.gradle.kts
+          grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
         shell: bash
+
+      - name: Commit version code bump
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: 'chore: bump version [skip ci]'
+          file_pattern: 'app/build.gradle.kts'
 
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
@@ -89,7 +96,7 @@ jobs:
       - name: Assemble and bundle app
         run: ./gradlew assemble bundle
 
-      - run: grep 'version' gradle.properties | sed 's/[^0-9.]//g'
+      - run: grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
 
       - id: auth
         name: Authenticate to Google Cloud
@@ -114,13 +121,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
-      - run: grep 'version' gradle.properties | sed 's/[^0-9.]//g'
-
-      - name: Commit version code bump
-        if: |
-          steps.publish_play_store.outcome == 'success' &&
-          steps.publish_github.outcome == 'success'
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: 'chore: bump version [skip ci]'
-          file_pattern: 'app/build.gradle.kts gradle.properties'
+      # TODO: right now, only this one would output the new version...
+      - run: grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'

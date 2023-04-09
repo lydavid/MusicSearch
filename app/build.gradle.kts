@@ -31,11 +31,10 @@ android {
         }
     }
 
-    val version: String by project
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
         versionCode = 42
-        versionName = version
+        versionName = "0.5.2"
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
