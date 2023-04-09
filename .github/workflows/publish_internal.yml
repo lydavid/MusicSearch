@@ -1,5 +1,11 @@
 name: Publish internal build
 
+# This runs every night,
+# so we can expect a new internal release in Google Play if we made any commits during the day.
+# However, we may not always get a new GitHub release. That is decided by semantic release.
+# eg. If only chores were committed, then there would be no new GitHub release.
+# Google Play allows us to reuse versionName, so it currently isn't a problem for
+# our releases to be out of sync.
 on:
   schedule:
     - cron: '0 7 * * *'
