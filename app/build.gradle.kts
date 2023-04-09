@@ -34,7 +34,7 @@ android {
     val version: String by project
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
-        versionCode = 40
+        versionCode = 41
         versionName = version
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
