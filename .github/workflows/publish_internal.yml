@@ -20,7 +20,7 @@ jobs:
         id: early_exit
         run: |
           status='skip'
-          if ! (git log --oneline -n 1 | grep -c "Bump version"); then status='deploy'; fi
+          if ! (git log --oneline -n 1 | grep -c 'chore: bump version'); then status='deploy'; fi
           echo "status=$status" >> $GITHUB_OUTPUT
         shell: bash
 
@@ -41,6 +41,19 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup semantic-release
+        run: npm install
+
+      - name: Get next release version
+        id: get-next-version
+        run: npx semantic-release --dry-run
+
       # -b preserves our line separator preference
       - name: Bump version code
         run: |
@@ -51,7 +64,7 @@ jobs:
       - name: Bump version name
         run: |
           VN=$(grep 'version' gradle.properties | sed 's/[^0-9.]//g')
-          newVN=$(echo ${VN} | awk -F. -v OFS=. '{$NF += 1 ; print}')
+          newVN=${{ steps.get-next-version.outputs.new-release-version }}
           sed -bi "s/version = \"$VN\"/version = $newVN/" gradle.properties
         shell: bash
 
@@ -69,8 +82,13 @@ jobs:
           echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks
         shell: bash
 
-      - name: Bundle app
-        run: ./gradlew bundle
+      - name: Assemble and bundle app
+        run: ./gradlew assemble bundle
+
+      - name: Release to GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        run: npx semantic-release
 
       - id: auth
         name: Authenticate to Google Cloud
@@ -79,7 +97,7 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
-      - name: Publish build to internal track
+      - name: Publish build to Google Play's internal track
         id: publish_internal
         uses: r0adkll/upload-google-play@v1.1.1
         with:
@@ -93,5 +111,5 @@ jobs:
         if: steps.publish_internal.outcome == 'success'
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
-          commit_message: Bump version
+          commit_message: 'chore: bump version'
           file_pattern: 'app/build.gradle.kts'
