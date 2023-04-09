@@ -20,7 +20,7 @@ jobs:
         id: early_exit
         run: |
           status='skip'
-          if ! (git log --oneline -n 1 | grep -c 'chore: bump version'); then status='deploy'; fi
+          if ! (git log --oneline -n 1 | grep -c 'chore: bump version [skip ci]'); then status='deploy'; fi
           echo "status=$status" >> $GITHUB_OUTPUT
         shell: bash
 
@@ -67,7 +67,9 @@ jobs:
         run: |
           VN=$(grep 'version' gradle.properties | sed 's/[^0-9.]//g')
           newVN=${{ steps.get-next-version.outputs.new-release-version }}
+          grep 'version' gradle.properties | sed 's/[^0-9.]//g'
           sed -bi "s/version = \"$VN\"/version = $newVN/" gradle.properties
+          grep 'version' gradle.properties | sed 's/[^0-9.]//g'
         shell: bash
 
       # After this step, the workspace contains credentials file.
@@ -87,11 +89,7 @@ jobs:
       - name: Assemble and bundle app
         run: ./gradlew assemble bundle
 
-      - name: Release to GitHub
-        id: publish_github
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+      - run: grep 'version' gradle.properties | sed 's/[^0-9.]//g'
 
       - id: auth
         name: Authenticate to Google Cloud
@@ -110,11 +108,19 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
 
+      - name: Publish to GitHub
+        id: publish_github
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - run: grep 'version' gradle.properties | sed 's/[^0-9.]//g'
+
       - name: Commit version code bump
         if: |
-          steps.publish_github.outcome == 'success' &&
-          steps.publish_play_store.outcome == 'success'
+          steps.publish_play_store.outcome == 'success' &&
+          steps.publish_github.outcome == 'success'
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
-          commit_message: 'chore: bump version'
+          commit_message: 'chore: bump version [skip ci]'
           file_pattern: 'app/build.gradle.kts gradle.properties'
