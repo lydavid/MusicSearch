@@ -67,10 +67,7 @@ jobs:
         run: |
           VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
           newVN=${{ steps.get-next-version.outputs.new-release-version }}
-          echo "The new release version is ${{ steps.get-next-version.outputs.new-release-version }}"
-          grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
           sed -bi "s/versionName = \"$VN\"/versionName = \"$newVN\"/" app/build.gradle.kts
-          grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
         shell: bash
 
       - name: Commit version code bump
@@ -96,8 +93,6 @@ jobs:
       - name: Assemble and bundle app
         run: ./gradlew assemble bundle
 
-      - run: grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
-
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1.0.0
@@ -120,6 +115,3 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-
-      # TODO: right now, only this one would output the new version...
-      - run: grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g'
