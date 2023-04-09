@@ -53,8 +53,8 @@ jobs:
       - name: Get next release version
         id: get-next-version
         run: npx semantic-release --dry-run
-        with:
-          token: ${{ secrets.PAT }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       # -b preserves our line separator preference
       - name: Bump version code
@@ -90,8 +90,8 @@ jobs:
       - name: Release to GitHub
         id: publish_github
         run: npx semantic-release
-        with:
-          token: ${{ secrets.PAT }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - id: auth
         name: Authenticate to Google Cloud
