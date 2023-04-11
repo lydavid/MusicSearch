@@ -73,7 +73,7 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation("androidx.test.ext:junit-ktx:1.1.5")
-    testImplementation("org.robolectric:robolectric:4.9.2")
+    testImplementation("org.robolectric:robolectric:4.10")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 }
