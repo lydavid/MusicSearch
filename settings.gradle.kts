@@ -20,7 +20,7 @@ dependencyResolutionManagement {
             version("hilt", "2.45")
             version("hilt-navigation", "1.0.0")
             version("junit", "4.13.2")
-            version("mockk", "1.13.4")
+            version("mockk", "1.13.5")
             version("moshi", "1.14.0")
             version("retrofit", "2.9.0")
             version("room", "2.5.1")
