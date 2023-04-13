@@ -6,7 +6,6 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "semantic-release-export-data",
-    "gradle-semantic-release-plugin",
     [
       "@semantic-release/github",
       {
