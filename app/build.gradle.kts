@@ -96,7 +96,7 @@ dependencies {
     testImplementation(project(":test-data"))
     androidTestImplementation(project(":test-data"))
 
-    implementation(platform("com.google.firebase:firebase-bom:31.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
 
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
