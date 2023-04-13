@@ -17,13 +17,8 @@
     },
     {
       "matchPackagePatterns": [
-        "androidx.compose.compiler:compiler"
-      ],
-      "groupName": "kotlin"
-    },
-    {
-      "matchPackagePatterns": [
-        "org.jetbrains.kotlin.*"
+        "androidx.compose.compiler",
+        "org.jetbrains.kotlin"
       ],
       "groupName": "kotlin"
     },
