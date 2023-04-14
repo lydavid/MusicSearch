@@ -1,14 +1,16 @@
-
 import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
-    id("com.android.application") version "7.4.2" apply false
-    id("com.android.library") version "7.4.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
-    id("org.jetbrains.kotlin.jvm") version "1.8.10" apply false
+    val android = "7.4.2"
+    val kotlin = "1.8.10"
+
+    id("com.android.application") version android apply false
+    id("com.android.library") version android apply false
+    id("org.jetbrains.kotlin.android") version kotlin apply false
+    id("org.jetbrains.kotlin.jvm") version kotlin apply false
     id("com.google.dagger.hilt.android") version "2.45" apply false
     id("io.gitlab.arturbosch.detekt") version "1.22.0" apply true
     id("com.google.gms.google-services") version "4.3.15" apply false
@@ -95,7 +97,8 @@ allprojects {
 
 tasks.register<DefaultTask>("publish") {
     group = "publish"
-    description = "Dummy task so that we pass gradle-semantic-release-plugin's verifyConditions. Otherwise we would need to publish to an artifact repository."
+    description =
+        "Dummy task so that we pass gradle-semantic-release-plugin's verifyConditions. Otherwise we would need to publish to an artifact repository."
 }
 
 moduleGraphConfig {
