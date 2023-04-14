@@ -28,8 +28,7 @@ jobs:
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - name: Install OpenJDK 17
-        command: |
+      - run: |
           sudo apt-get update && sudo apt-get install openjdk-17-jdk
           sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
           sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
