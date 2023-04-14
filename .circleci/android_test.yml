@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.1.2
+  android: circleci/android@2.2.0
   codecov: codecov/codecov@3.2.4
 
 # TODO: Running into https://issuetracker.google.com/issues/235259765 sometimes
@@ -27,6 +27,9 @@ jobs:
       - run: chmod +x gradlew
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - android/change-java-version:
+          java-version: 17
 
       - android/create-avd:
           avd-name: test
