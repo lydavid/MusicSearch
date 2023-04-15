@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.1.2
+  android: circleci/android@2.2.0
   codecov: codecov/codecov@3.2.4
 
 # TODO: Running into https://issuetracker.google.com/issues/235259765 sometimes
@@ -20,13 +20,19 @@ jobs:
       name: android/android-machine
       resource-class: large
       # https://circleci.com/developer/images/image/cimg/android#image-tags
-      tag: 2022.12.1
+      tag: 2023.04.1
     steps:
       - checkout
 
       - run: chmod +x gradlew
 
       - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - run: |
+          sudo apt-get update && sudo apt-get install openjdk-17-jdk
+          sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+          sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
+          java -version
 
       - android/create-avd:
           avd-name: test

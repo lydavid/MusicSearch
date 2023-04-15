@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     val android = "7.4.2"
-    val kotlin = "1.8.10"
+    val kotlin = "1.8.20"
 
     id("com.android.application") version android apply false
     id("com.android.library") version android apply false
@@ -29,7 +29,7 @@ allprojects {
     plugins.withType<JavaBasePlugin>().configureEach {
         extensions.configure<JavaPluginExtension> {
             toolchain {
-                languageVersion.set(JavaLanguageVersion.of(11))
+                languageVersion.set(JavaLanguageVersion.of(17))
             }
         }
     }
@@ -43,8 +43,8 @@ allprojects {
             }
 
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
         }
         dependencies {
@@ -93,12 +93,6 @@ allprojects {
             txt.required.set(true)
         }
     }
-}
-
-tasks.register<DefaultTask>("publish") {
-    group = "publish"
-    description =
-        "Dummy task so that we pass gradle-semantic-release-plugin's verifyConditions. Otherwise we would need to publish to an artifact repository."
 }
 
 moduleGraphConfig {
