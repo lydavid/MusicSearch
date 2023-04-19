@@ -72,6 +72,7 @@ internal fun CollectionScaffold(
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
+    onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
     viewModel: CollectionViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -221,6 +222,7 @@ internal fun CollectionScaffold(
                         .fillMaxSize()
                         .nestedScroll(scrollBehavior.nestedScrollConnection),
                     onPagedArtistsFlowChange = { pagedArtistsFlow = it },
+                    onDeleteFromCollection = onDeleteFromCollection,
                     onArtistClick = onItemClick
                 )
             }

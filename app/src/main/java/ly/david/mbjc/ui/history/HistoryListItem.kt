@@ -4,15 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.DismissDirection
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
-import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -25,13 +20,12 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
-import ly.david.mbjc.ui.common.SwipeToDeleteBackground
 import ly.david.mbjc.ui.common.getDisplayTextRes
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.theme.PreviewTheme
 import ly.david.mbjc.ui.theme.TextStyles
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryRoomModel,
@@ -39,20 +33,7 @@ internal fun HistoryListItem(
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
 ) {
-    val dismissState = rememberDismissState()
-    SwipeToDismiss(
-        state = dismissState,
-        background = {
-            when (dismissState.dismissDirection) {
-                DismissDirection.StartToEnd -> {
-                    SwipeToDeleteBackground(alignment = Alignment.CenterStart)
-                }
-                DismissDirection.EndToStart -> {
-                    SwipeToDeleteBackground(alignment = Alignment.CenterEnd)
-                }
-                null -> Unit
-            }
-        },
+    SwipeToDeleteListItem(
         dismissContent = {
             ListItem(
                 headlineContent = {
@@ -93,15 +74,11 @@ internal fun HistoryListItem(
                     )
                 }
             )
-        }
-    )
-
-    when {
-        dismissState.isDismissed(DismissDirection.StartToEnd) ||
-        dismissState.isDismissed(DismissDirection.EndToStart) -> {
+        },
+        onDelete = {
             onDeleteItem(lookupHistory)
         }
-    }
+    )
 }
 
 private fun Date.toDisplayDate(): String {

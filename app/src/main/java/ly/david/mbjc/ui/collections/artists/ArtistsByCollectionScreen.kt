@@ -14,6 +14,7 @@ import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.ArtistListItem
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -28,6 +29,7 @@ internal fun ArtistsByCollectionScreen(
     modifier: Modifier = Modifier,
     onArtistClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedArtistsFlowChange: (Flow<PagingData<ArtistListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
     viewModel: ArtistsByCollectionViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = collectionId) {
@@ -36,7 +38,9 @@ internal fun ArtistsByCollectionScreen(
         onPagedArtistsFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(filterText)
+    LaunchedEffect(key1 = filterText) {
+        viewModel.updateQuery(filterText)
+    }
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -44,15 +48,24 @@ internal fun ArtistsByCollectionScreen(
         lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
     ) { listItemModel: ArtistListItemModel? ->
+
         when (listItemModel) {
             is ArtistListItemModel -> {
-                ArtistListItem(
-                    artist = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onArtistClick(MusicBrainzResource.ARTIST, id, getNameWithDisambiguation())
-                }
+                SwipeToDeleteListItem(
+                    dismissContent = {
+                        ArtistListItem(
+                            artist = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onArtistClick(MusicBrainzResource.ARTIST, id, getNameWithDisambiguation())
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(listItemModel.id, listItemModel.name)
+                    }
+                )
             }
+
             else -> {
                 // Do nothing.
             }

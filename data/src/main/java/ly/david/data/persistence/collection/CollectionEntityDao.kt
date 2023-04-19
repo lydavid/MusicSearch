@@ -20,4 +20,13 @@ abstract class CollectionEntityDao : BaseDao<CollectionEntityRoomModel>(),
 
     @Query("DELETE FROM collection_entity WHERE id = :collectionId")
     abstract suspend fun deleteCollectionEntityLinks(collectionId: String)
+
+    @Query(
+        """
+            UPDATE collection_entity
+            SET deleted = :deleted
+            WHERE id = :collectionId AND entity_id = :collectableId
+        """
+    )
+    abstract suspend fun markAsDeletedFromCollection(collectionId: String, collectableId: String, deleted: Boolean)
 }

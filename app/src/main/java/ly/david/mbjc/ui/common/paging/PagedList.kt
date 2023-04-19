@@ -55,13 +55,16 @@ internal class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = remoteMediator,
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
-                ).flow.map { pagingData ->
-                    pagingData.map {
-                        useCase.transformRoomToListItemModel(it)
-                    }.filter {
-                        useCase.postFilter(it)
+                )
+                    .flow
+                    .distinctUntilChanged()
+                    .map { pagingData ->
+                        pagingData.map {
+                            useCase.transformRoomToListItemModel(it)
+                        }.filter {
+                            useCase.postFilter(it)
+                        }
                     }
-                }
             }
             .distinctUntilChanged()
             .cachedIn(scope)

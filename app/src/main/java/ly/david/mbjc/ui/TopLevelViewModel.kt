@@ -119,6 +119,18 @@ internal class TopLevelViewModel @Inject constructor(
         this.entityId.value = entityId
     }
 
+    fun createNewCollection(name: String, entity: MusicBrainzResource) {
+        viewModelScope.launch {
+            collectionDao.insert(
+                CollectionRoomModel(
+                    id = UUID.randomUUID().toString(),
+                    name = name,
+                    entity = entity
+                )
+            )
+        }
+    }
+
     suspend fun addToCollectionAndGetResult(collectionId: String): AddToCollectionResult {
         var result = AddToCollectionResult()
 
@@ -162,16 +174,55 @@ internal class TopLevelViewModel @Inject constructor(
         return result
     }
 
-    fun createNewCollection(name: String, entity: MusicBrainzResource) {
-        viewModelScope.launch {
-            collectionDao.insert(
-                CollectionRoomModel(
-                    id = UUID.randomUUID().toString(),
-                    name = name,
-                    entity = entity
+    suspend fun markAsDeletedFromCollection(collectionId: String, collectableId: String) {
+        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, true)
+    }
+
+    suspend fun undoMarkAsDeletedFromCollection(collectionId: String, collectableId: String) {
+        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, false)
+    }
+
+    suspend fun deleteFromCollectionAndGetResult(collectionId: String, collectableId: String): AddToCollectionResult {
+        var result = AddToCollectionResult()
+
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection.isRemote) {
+            try {
+                musicBrainzApiService.uploadToCollection(
+                    collectionId = collectionId,
+                    resourceUriPlural = entity.value.resourceUriPlural,
+                    mbids = entityId.value
+                )
+            } catch (ex: HttpException) {
+                return when (ex.code()) {
+                    HTTP_UNAUTHORIZED -> AddToCollectionResult(
+                        message = "Failed to add to ${collection.name}. Login has expired.",
+                        actionLabel = "Login"
+                    )
+                    else -> AddToCollectionResult("Failed to add to ${collection.name}.")
+                }
+            }
+        }
+
+        collectionEntityDao.withTransaction {
+            val insertedOneEntry = collectionEntityDao.insert(
+                CollectionEntityRoomModel(
+                    id = collectionId,
+                    entityId = entityId.value
                 )
             )
+
+            result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
+                AddToCollectionResult("Already in ${collection.name}.")
+            } else {
+                collectionDao.update(
+                    collection.copy(entityCount = collection.entityCount + 1)
+                )
+                AddToCollectionResult("Added to ${collection.name}.")
+            }
         }
+
+        return result
     }
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
@@ -214,27 +265,27 @@ internal class TopLevelViewModel @Inject constructor(
         }
     }
 
-    suspend fun markAsDeleted(mbid: String) {
+    suspend fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, true)
     }
 
-    suspend fun undoDelete(mbid: String) {
+    suspend fun undoDeleteHistory(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, false)
     }
 
-    suspend fun markAllAsDeleted() {
+    suspend fun markAllHistoryAsDeleted() {
         lookupHistoryDao.markAllAsDeleted(true)
     }
 
-    suspend fun undoDeleteAll() {
+    suspend fun undoDeleteAllHistory() {
         lookupHistoryDao.markAllAsDeleted(false)
     }
 
-    suspend fun delete(mbid: String) {
+    suspend fun deleteHistory(mbid: String) {
         lookupHistoryDao.delete(mbid)
     }
 
-    suspend fun deleteAll() {
+    suspend fun deleteAllHistory() {
         lookupHistoryDao.deleteAll()
     }
 }
