@@ -161,7 +161,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.10.0")
-    androidTestImplementation("com.squareup.okhttp3:okhttp-tls:4.10.0")
+    androidTestImplementation("com.squareup.okhttp3:okhttp-tls:4.11.0")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
