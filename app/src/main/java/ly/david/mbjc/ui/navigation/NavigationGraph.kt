@@ -63,7 +63,7 @@ internal fun NavigationGraph(
     onLogoutClick: () -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
     onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
-    onDeleteFromCollection: (collectionId: String, collectableId: String, name: String) -> Unit = { _, _, _ -> },
+    onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit = { _, _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,

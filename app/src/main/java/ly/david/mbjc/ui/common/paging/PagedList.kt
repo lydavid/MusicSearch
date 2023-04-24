@@ -42,6 +42,7 @@ internal class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<LI>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
+            .distinctUntilChanged()
             .flatMapLatest { (resourceId, query, isRemote) ->
 
                 val remoteMediator = BrowseResourceRemoteMediator<RM>(
@@ -57,7 +58,6 @@ internal class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
                 )
                     .flow
-                    .distinctUntilChanged()
                     .map { pagingData ->
                         pagingData.map {
                             useCase.transformRoomToListItemModel(it)

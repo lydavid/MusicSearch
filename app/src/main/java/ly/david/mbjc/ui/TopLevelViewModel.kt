@@ -86,7 +86,7 @@ internal class TopLevelViewModel @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel() {
 
-    data class AddToCollectionResult(
+    data class RemoteResult(
         val message: String = "",
         val actionLabel: String? = null
     )
@@ -131,8 +131,8 @@ internal class TopLevelViewModel @Inject constructor(
         }
     }
 
-    suspend fun addToCollectionAndGetResult(collectionId: String): AddToCollectionResult {
-        var result = AddToCollectionResult()
+    suspend fun addToCollectionAndGetResult(collectionId: String): RemoteResult {
+        var result = RemoteResult()
 
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
@@ -144,11 +144,12 @@ internal class TopLevelViewModel @Inject constructor(
                 )
             } catch (ex: HttpException) {
                 return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> AddToCollectionResult(
+                    HTTP_UNAUTHORIZED -> RemoteResult(
                         message = "Failed to add to ${collection.name}. Login has expired.",
                         actionLabel = "Login"
                     )
-                    else -> AddToCollectionResult("Failed to add to ${collection.name}.")
+
+                    else -> RemoteResult("Failed to add to ${collection.name}.")
                 }
             }
         }
@@ -162,67 +163,50 @@ internal class TopLevelViewModel @Inject constructor(
             )
 
             result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                AddToCollectionResult("Already in ${collection.name}.")
+                RemoteResult("Already in ${collection.name}.")
             } else {
                 collectionDao.update(
                     collection.copy(entityCount = collection.entityCount + 1)
                 )
-                AddToCollectionResult("Added to ${collection.name}.")
+                RemoteResult("Added to ${collection.name}.")
             }
         }
 
         return result
     }
 
-    suspend fun markAsDeletedFromCollection(collectionId: String, collectableId: String) {
-        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, true)
-    }
-
-    suspend fun undoMarkAsDeletedFromCollection(collectionId: String, collectableId: String) {
-        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, false)
-    }
-
-    suspend fun deleteFromCollectionAndGetResult(collectionId: String, collectableId: String): AddToCollectionResult {
-        var result = AddToCollectionResult()
-
+    suspend fun deleteFromCollectionAndGetResult(
+        collectionId: String,
+        entityId: String,
+        entityName: String
+    ): RemoteResult {
         val collection = collectionDao.getCollection(collectionId)
+        // TODO: we're still getting double calls for remote
+        //  it's technically quadruple since both times first fail with 401, then 200
+        //  so it seems unrelated to our retro auth
         if (collection.isRemote) {
             try {
-                musicBrainzApiService.uploadToCollection(
+                musicBrainzApiService.deleteFromCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.value.resourceUriPlural,
-                    mbids = entityId.value
+                    mbids = entityId
                 )
             } catch (ex: HttpException) {
                 return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> AddToCollectionResult(
-                        message = "Failed to add to ${collection.name}. Login has expired.",
+                    HTTP_UNAUTHORIZED -> RemoteResult(
+                        message = "Failed to delete from remote collection ${collection.name}. Login has expired.",
                         actionLabel = "Login"
                     )
-                    else -> AddToCollectionResult("Failed to add to ${collection.name}.")
+
+                    else -> RemoteResult("Failed to delete from ${collection.name}.")
                 }
             }
         }
 
         collectionEntityDao.withTransaction {
-            val insertedOneEntry = collectionEntityDao.insert(
-                CollectionEntityRoomModel(
-                    id = collectionId,
-                    entityId = entityId.value
-                )
-            )
-
-            result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                AddToCollectionResult("Already in ${collection.name}.")
-            } else {
-                collectionDao.update(
-                    collection.copy(entityCount = collection.entityCount + 1)
-                )
-                AddToCollectionResult("Added to ${collection.name}.")
-            }
+            collectionEntityDao.deleteFromCollection(collectionId, entityId)
         }
-
-        return result
+        return RemoteResult("Deleted $entityName from ${collection.name}.")
     }
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)

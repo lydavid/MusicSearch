@@ -81,9 +81,11 @@ internal fun TopLevelScaffold(
             result.exception != null -> {
                 Timber.e(result.exception)
             }
+
             result.response != null -> {
                 viewModel.performTokenRequest(result.response)
             }
+
             else -> {
                 Timber.e("login's result intent is null")
             }
@@ -97,6 +99,24 @@ internal fun TopLevelScaffold(
                 viewModel.createNewCollection(name, entity)
             }
         )
+    }
+
+    suspend fun showSnackbarAndHandleResult(remoteResult: TopLevelViewModel.RemoteResult) {
+        val snackbarResult = snackbarHostState.showSnackbar(
+            message = remoteResult.message,
+            actionLabel = remoteResult.actionLabel,
+            duration = SnackbarDuration.Short
+        )
+
+        when (snackbarResult) {
+            SnackbarResult.ActionPerformed -> {
+                loginLauncher.launch(Unit)
+            }
+
+            SnackbarResult.Dismissed -> {
+                // Do nothing.
+            }
+        }
     }
 
     if (openBottomSheet) {
@@ -114,19 +134,7 @@ internal fun TopLevelScaffold(
 
                     if (addToCollectionResult.message.isEmpty()) return@launch
 
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = addToCollectionResult.message,
-                        actionLabel = addToCollectionResult.actionLabel,
-                        duration = SnackbarDuration.Short
-                    )
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            loginLauncher.launch(Unit)
-                        }
-                        SnackbarResult.Dismissed -> {
-                            // Do nothing.
-                        }
-                    }
+                    showSnackbarAndHandleResult(addToCollectionResult)
                 }
             }
         )
@@ -167,6 +175,7 @@ internal fun TopLevelScaffold(
                             SnackbarResult.ActionPerformed -> {
                                 viewModel.undoDeleteHistory(history.id)
                             }
+
                             SnackbarResult.Dismissed -> {
                                 viewModel.deleteHistory(history.id)
                             }
@@ -188,6 +197,7 @@ internal fun TopLevelScaffold(
                             SnackbarResult.ActionPerformed -> {
                                 viewModel.undoDeleteAllHistory()
                             }
+
                             SnackbarResult.Dismissed -> {
                                 viewModel.deleteAllHistory()
                             }
@@ -210,25 +220,14 @@ internal fun TopLevelScaffold(
                 viewModel.setEntityId(id)
                 openBottomSheet = true
             },
-            onDeleteFromCollection = { collectionId, collectableId, name ->
+            onDeleteFromCollection = { collectionId, entityId, name ->
                 scope.launch {
-                    viewModel.markAsDeletedFromCollection(collectionId, collectableId)
+                    val deleteFromCollectionResult =
+                        viewModel.deleteFromCollectionAndGetResult(collectionId, entityId, name)
 
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = "Removed $name",
-                        actionLabel = "Undo",
-                        duration = SnackbarDuration.Short
-                    )
+                    if (deleteFromCollectionResult.message.isEmpty()) return@launch
 
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            viewModel.undoMarkAsDeletedFromCollection(collectionId, collectableId)
-                        }
-                        SnackbarResult.Dismissed -> {
-//                            viewModel.deleteFromCollectionAndGetResult(collectionId, collectableId)
-                            Timber.d("delete for real")
-                        }
-                    }
+                    showSnackbarAndHandleResult(deleteFromCollectionResult)
                 }
             },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,

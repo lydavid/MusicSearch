@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import ly.david.mbjc.ui.common.SwipeToDeleteBackground
 
+// TODO: if we fail to delete item, would be nice to show it again until of a red background
+//  this may suggest we shouldn't use swipe to delete for remote items, as the ux will be strange no matter what we do
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SwipeToDeleteListItem(

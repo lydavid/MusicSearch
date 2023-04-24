@@ -289,5 +289,14 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     ) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteFromCollection(
+        collectionId: String,
+        resourceUriPlural: String,
+        mbids: String,
+        client: String
+    ) {
+        TODO("Not yet implemented")
+    }
     // endregion
 }

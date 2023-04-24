@@ -89,11 +89,7 @@ internal fun CollectionScaffold(
         rememberFlowWithLifecycleStarted(pagedAreasFlow)
             .collectAsLazyPagingItems()
 
-    val artistsLazyListState = rememberLazyListState()
-    var pagedArtistsFlow: Flow<PagingData<ArtistListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-    val artistsLazyPagingItems: LazyPagingItems<ArtistListItemModel> =
-        rememberFlowWithLifecycleStarted(pagedArtistsFlow)
-            .collectAsLazyPagingItems()
+
 
     val eventsLazyListState = rememberLazyListState()
     var pagedEventsFlow: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -215,13 +211,13 @@ internal fun CollectionScaffold(
                     isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
-                    lazyListState = artistsLazyListState,
-                    lazyPagingItems = artistsLazyPagingItems,
+//                    lazyListState = artistsLazyListState,
+//                    lazyPagingItems = artistsLazyPagingItems,
                     modifier = Modifier
                         .padding(innerPadding)
                         .fillMaxSize()
                         .nestedScroll(scrollBehavior.nestedScrollConnection),
-                    onPagedArtistsFlowChange = { pagedArtistsFlow = it },
+//                    onPagedArtistsFlowChange = { pagedArtistsFlow = it },
                     onDeleteFromCollection = onDeleteFromCollection,
                     onArtistClick = onItemClick
                 )
