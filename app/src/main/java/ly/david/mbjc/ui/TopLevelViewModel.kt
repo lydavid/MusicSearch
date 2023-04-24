@@ -175,20 +175,25 @@ internal class TopLevelViewModel @Inject constructor(
         return result
     }
 
+    suspend fun markAsDeletedFromCollection(collectionId: String, collectableId: String) {
+        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, true)
+    }
+
+    suspend fun undoMarkAsDeletedFromCollection(collectionId: String, collectableId: String) {
+        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, false)
+    }
+
     suspend fun deleteFromCollectionAndGetResult(
         collectionId: String,
         entityId: String,
         entityName: String
     ): RemoteResult {
         val collection = collectionDao.getCollection(collectionId)
-        // TODO: we're still getting double calls for remote
-        //  it's technically quadruple since both times first fail with 401, then 200
-        //  so it seems unrelated to our retro auth
         if (collection.isRemote) {
             try {
                 musicBrainzApiService.deleteFromCollection(
                     collectionId = collectionId,
-                    resourceUriPlural = entity.value.resourceUriPlural,
+                    resourceUriPlural = collection.entity.resourceUriPlural,
                     mbids = entityId
                 )
             } catch (ex: HttpException) {

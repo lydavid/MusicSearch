@@ -14,6 +14,7 @@ import ly.david.data.domain.AreaListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.area.AreaListItem
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -28,8 +29,12 @@ internal fun AreasByCollectionScreen(
     modifier: Modifier = Modifier,
     onAreaClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onPagedAreasFlowChange: (Flow<PagingData<AreaListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: AreasByCollectionViewModel = hiltViewModel(),
 ) {
+
+    val entity = MusicBrainzResource.AREA
+
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
@@ -46,13 +51,21 @@ internal fun AreasByCollectionScreen(
     ) { listItemModel: AreaListItemModel? ->
         when (listItemModel) {
             is AreaListItemModel -> {
-                AreaListItem(
-                    area = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onAreaClick(MusicBrainzResource.AREA, id, getNameWithDisambiguation())
-                }
+                SwipeToDeleteListItem(
+                    dismissContent = {
+                        AreaListItem(
+                            area = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onAreaClick(entity, id, getNameWithDisambiguation())
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(listItemModel.id, listItemModel.name)
+                    }
+                )
             }
+
             else -> {
                 // Do nothing.
             }

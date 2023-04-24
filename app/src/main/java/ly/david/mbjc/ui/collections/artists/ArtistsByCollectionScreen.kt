@@ -24,25 +24,21 @@ internal fun ArtistsByCollectionScreen(
     isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
-//    lazyListState: LazyListState,
-//    lazyPagingItems: LazyPagingItems<ArtistListItemModel>,
     modifier: Modifier = Modifier,
     onArtistClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-//    onPagedArtistsFlowChange: (Flow<PagingData<ArtistListItemModel>>) -> Unit = {},
-    onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: ArtistsByCollectionViewModel = hiltViewModel(),
 ) {
 
-    val artistsLazyListState = rememberLazyListState()
-//    var pagedArtistsFlow: Flow<PagingData<ArtistListItemModel>> by remember { mutableStateOf(emptyFlow()) }
-    val artistsLazyPagingItems: LazyPagingItems<ArtistListItemModel> =
+    val entity = MusicBrainzResource.ARTIST
+    val lazyListState = rememberLazyListState()
+    val lazyPagingItems: LazyPagingItems<ArtistListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedResources)
             .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
-//        onPagedArtistsFlowChange(viewModel.pagedResources)
     }
 
     LaunchedEffect(key1 = filterText) {
@@ -51,8 +47,8 @@ internal fun ArtistsByCollectionScreen(
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
-        lazyListState = artistsLazyListState,
-        lazyPagingItems = artistsLazyPagingItems,
+        lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
     ) { listItemModel: ArtistListItemModel? ->
 
@@ -64,7 +60,7 @@ internal fun ArtistsByCollectionScreen(
                             artist = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
                         ) {
-                            onArtistClick(MusicBrainzResource.ARTIST, id, getNameWithDisambiguation())
+                            onArtistClick(entity, id, getNameWithDisambiguation())
                         }
                     },
                     onDelete = {

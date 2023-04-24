@@ -24,7 +24,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import ly.david.data.domain.AreaListItemModel
-import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.InstrumentListItemModel
@@ -83,13 +82,14 @@ internal fun CollectionScaffold(
     var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
     var filterText by rememberSaveable { mutableStateOf("") }
 
+    // TODO: seems like whether these are up here or inside each screen doesn't affect double snackbar
+    //  that was caused by marking deleted items recomposing
+    //  may as well move these down, since we don't have tabs for this screen
     val areasLazyListState = rememberLazyListState()
     var pagedAreasFlow: Flow<PagingData<AreaListItemModel>> by remember { mutableStateOf(emptyFlow()) }
     val areasLazyPagingItems: LazyPagingItems<AreaListItemModel> =
         rememberFlowWithLifecycleStarted(pagedAreasFlow)
             .collectAsLazyPagingItems()
-
-
 
     val eventsLazyListState = rememberLazyListState()
     var pagedEventsFlow: Flow<PagingData<EventListItemModel>> by remember { mutableStateOf(emptyFlow()) }
@@ -202,6 +202,7 @@ internal fun CollectionScaffold(
                         .fillMaxSize()
                         .nestedScroll(scrollBehavior.nestedScrollConnection),
                     onPagedAreasFlowChange = { pagedAreasFlow = it },
+                    onDeleteFromCollection = onDeleteFromCollection,
                     onAreaClick = onItemClick
                 )
             }
@@ -211,13 +212,10 @@ internal fun CollectionScaffold(
                     isRemote = isRemote,
                     filterText = filterText,
                     snackbarHostState = snackbarHostState,
-//                    lazyListState = artistsLazyListState,
-//                    lazyPagingItems = artistsLazyPagingItems,
                     modifier = Modifier
                         .padding(innerPadding)
                         .fillMaxSize()
                         .nestedScroll(scrollBehavior.nestedScrollConnection),
-//                    onPagedArtistsFlowChange = { pagedArtistsFlow = it },
                     onDeleteFromCollection = onDeleteFromCollection,
                     onArtistClick = onItemClick
                 )
