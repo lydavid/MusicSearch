@@ -1,5 +1,8 @@
 package ly.david.data.network.api
 
+const val AUTHORIZATION = "Authorization"
+const val BEARER = "Bearer"
+
 /**
  * MusicBrainz base url for API and web.
  */

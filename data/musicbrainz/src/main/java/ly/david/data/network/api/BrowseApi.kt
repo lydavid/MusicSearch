@@ -15,6 +15,7 @@ import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Query
 
 internal const val RELEASE_GROUPS = "release-groups"
@@ -30,6 +31,7 @@ interface BrowseApi {
 
     @GET("area")
     suspend fun browseAreasByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,

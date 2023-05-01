@@ -183,7 +183,6 @@ internal class TopLevelViewModel @Inject constructor(
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
-                // TODO: despite deleting, if we pull to refresh, we might hit 304, and get cached results back
                 musicBrainzApiService.deleteFromCollection(
                     collectionId = collectionId,
                     resourceUriPlural = collection.entity.resourceUriPlural,

@@ -97,7 +97,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     // endregion
 
     // region Browse
-    override suspend fun browseAreasByCollection(collectionId: String, limit: Int, offset: Int): BrowseAreasResponse {
+    override suspend fun browseAreasByCollection(
+        bearerToken: String?,
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseAreasResponse {
         return browseAreasResponse
     }
 
