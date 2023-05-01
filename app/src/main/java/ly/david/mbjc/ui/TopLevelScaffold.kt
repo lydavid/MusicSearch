@@ -222,36 +222,12 @@ internal fun TopLevelScaffold(
             },
             onDeleteFromCollection = { collectionId, entityId, name ->
                 scope.launch {
-                    // TODO: marking as deleted will force recompose, so we really shouldn't support undo for remote deletes
-//                    viewModel.markAsDeletedFromCollection(collectionId, entityId)
-
                     val deleteFromCollectionResult =
                         viewModel.deleteFromCollectionAndGetResult(collectionId, entityId, name)
 
                     if (deleteFromCollectionResult.message.isEmpty()) return@launch
 
                     showSnackbarAndHandleResult(deleteFromCollectionResult)
-
-//                    val snackbarResult = snackbarHostState.showSnackbar(
-//                        message = "Deleting $name...",
-//                        actionLabel = "Undo",
-//                        duration = SnackbarDuration.Short
-//                    )
-
-//                    when (snackbarResult) {
-//                        SnackbarResult.ActionPerformed -> {
-//                            viewModel.undoMarkAsDeletedFromCollection(collectionId, entityId)
-//                        }
-//
-//                        SnackbarResult.Dismissed -> {
-//                            val deleteFromCollectionResult =
-//                                viewModel.deleteFromCollectionAndGetResult(collectionId, entityId, name)
-//
-//                            if (deleteFromCollectionResult.message.isEmpty()) return@launch
-//
-//                            showSnackbarAndHandleResult(deleteFromCollectionResult)
-//                        }
-//                    }
                 }
             },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,

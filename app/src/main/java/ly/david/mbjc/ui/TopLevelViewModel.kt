@@ -175,14 +175,6 @@ internal class TopLevelViewModel @Inject constructor(
         return result
     }
 
-    suspend fun markAsDeletedFromCollection(collectionId: String, collectableId: String) {
-        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, true)
-    }
-
-    suspend fun undoMarkAsDeletedFromCollection(collectionId: String, collectableId: String) {
-        collectionEntityDao.markAsDeletedFromCollection(collectionId, collectableId, false)
-    }
-
     suspend fun deleteFromCollectionAndGetResult(
         collectionId: String,
         entityId: String,
@@ -191,6 +183,7 @@ internal class TopLevelViewModel @Inject constructor(
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
+                // TODO: despite deleting, if we pull to refresh, we might hit 304, and get cached results back
                 musicBrainzApiService.deleteFromCollection(
                     collectionId = collectionId,
                     resourceUriPlural = collection.entity.resourceUriPlural,

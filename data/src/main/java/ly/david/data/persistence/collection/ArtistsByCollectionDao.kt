@@ -13,7 +13,6 @@ interface ArtistsByCollectionDao {
             INNER JOIN collection_entity ce ON a.id = ce.entity_id
             INNER JOIN collection c ON c.id = ce.id
             WHERE c.id = :collectionId
-            AND NOT ce.deleted
         """
 
         private const val SELECT_ARTIST_BY_COLLECTION = """

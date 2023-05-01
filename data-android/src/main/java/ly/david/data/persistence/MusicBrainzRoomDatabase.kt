@@ -42,7 +42,7 @@ import ly.david.data.persistence.work.RecordingWork
 import ly.david.data.persistence.work.WorkAttributeRoomModel
 import ly.david.data.persistence.work.WorkRoomModel
 
-const val DATABASE_VERSION = 3
+const val DATABASE_VERSION = 2
 
 @Database(
     version = DATABASE_VERSION,
@@ -90,7 +90,6 @@ const val DATABASE_VERSION = 3
     ],
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

@@ -19,6 +19,5 @@ import androidx.room.ForeignKey
 )
 data class CollectionEntityRoomModel(
     @ColumnInfo(name = "id") val id: String,
-    @ColumnInfo(name = "entity_id") val entityId: String,
-    @ColumnInfo(name = "deleted", defaultValue = "false") val deleted: Boolean = false
+    @ColumnInfo(name = "entity_id") val entityId: String
 )
