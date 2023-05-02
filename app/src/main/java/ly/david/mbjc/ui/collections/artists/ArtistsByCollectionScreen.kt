@@ -55,7 +55,7 @@ internal fun ArtistsByCollectionScreen(
         when (listItemModel) {
             is ArtistListItemModel -> {
                 SwipeToDeleteListItem(
-                    dismissContent = {
+                    content = {
                         ArtistListItem(
                             artist = listItemModel,
                             modifier = Modifier.animateItemPlacement(),

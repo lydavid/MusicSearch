@@ -3,6 +3,8 @@ package ly.david.mbjc.ui.collections.works
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.auth.MusicBrainzAuthState
+import ly.david.data.auth.getBearerToken
 import ly.david.data.domain.WorkListItemModel
 import ly.david.data.domain.toWorkListItemModel
 import ly.david.data.network.MusicBrainzResource
@@ -25,6 +27,7 @@ internal class WorksByCollectionViewModel @Inject constructor(
     private val workDao: WorkDao,
     private val relationDao: RelationDao,
     pagedList: PagedList<WorkRoomModel, WorkListItemModel>,
+    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel
 <WorkRoomModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
     byEntity = MusicBrainzResource.WORK,
@@ -34,6 +37,7 @@ internal class WorksByCollectionViewModel @Inject constructor(
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseWorksResponse {
         return musicBrainzApiService.browseWorksByCollection(
+            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )

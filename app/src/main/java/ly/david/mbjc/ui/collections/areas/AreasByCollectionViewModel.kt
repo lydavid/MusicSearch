@@ -4,13 +4,11 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.auth.MusicBrainzAuthState
-import ly.david.data.common.emptyToNull
-import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.auth.getBearerToken
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.toAreaListItemModel
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.api.BEARER
 import ly.david.data.network.api.BrowseAreasResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.area.AreaDao
@@ -38,11 +36,8 @@ internal class AreasByCollectionViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseAreasResponse {
-        // TODO: lift up
-        val authState = musicBrainzAuthState.getAuthState()
-        val bearerToken = authState?.accessToken?.transformThisIfNotNullOrEmpty { "$BEARER $it" }.emptyToNull()
         return musicBrainzApiService.browseAreasByCollection(
-            bearerToken = bearerToken,
+            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )
@@ -74,6 +69,7 @@ internal class AreasByCollectionViewModel @Inject constructor(
         query.isEmpty() -> {
             collectionEntityDao.getAreasByCollection(resourceId)
         }
+
         else -> {
             collectionEntityDao.getAreasByCollectionFiltered(
                 collectionId = resourceId,

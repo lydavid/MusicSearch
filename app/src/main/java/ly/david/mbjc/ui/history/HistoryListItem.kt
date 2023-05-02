@@ -34,7 +34,7 @@ internal fun HistoryListItem(
     onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
 ) {
     SwipeToDeleteListItem(
-        dismissContent = {
+        content = {
             ListItem(
                 headlineContent = {
                     Text(

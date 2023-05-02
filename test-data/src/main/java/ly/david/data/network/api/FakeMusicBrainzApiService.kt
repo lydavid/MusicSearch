@@ -107,6 +107,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun browseArtistsByCollection(
+        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int
@@ -123,7 +124,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browseCollectionsResponse
     }
 
-    override suspend fun browseEventsByCollection(collectionId: String, limit: Int, offset: Int): BrowseEventsResponse {
+    override suspend fun browseEventsByCollection(
+        bearerToken: String?,
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseEventsResponse {
         return browseEventsResponse
     }
 
@@ -132,6 +138,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun browseInstrumentsByCollection(
+        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int
@@ -139,7 +146,12 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browseInstrumentsResponse
     }
 
-    override suspend fun browseLabelsByCollection(collectionId: String, limit: Int, offset: Int): BrowseLabelsResponse {
+    override suspend fun browseLabelsByCollection(
+        bearerToken: String?,
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseLabelsResponse {
         return browseLabelsResponse
     }
 
@@ -147,11 +159,17 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browsePlacesResponse
     }
 
-    override suspend fun browsePlacesByCollection(collectionId: String, limit: Int, offset: Int): BrowsePlacesResponse {
+    override suspend fun browsePlacesByCollection(
+        bearerToken: String?,
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowsePlacesResponse {
         return browsePlacesResponse
     }
 
     override suspend fun browseRecordingsByCollection(
+        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int
@@ -176,6 +194,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun browseReleasesByCollection(
+        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int
@@ -218,6 +237,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     }
 
     override suspend fun browseReleaseGroupsByCollection(
+        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -226,11 +246,21 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         return browseReleaseGroupsResponse
     }
 
-    override suspend fun browseSeriesByCollection(collectionId: String, limit: Int, offset: Int): BrowseSeriesResponse {
+    override suspend fun browseSeriesByCollection(
+        bearerToken: String?,
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseSeriesResponse {
         return browseSeriesResponse
     }
 
-    override suspend fun browseWorksByCollection(collectionId: String, limit: Int, offset: Int): BrowseWorksResponse {
+    override suspend fun browseWorksByCollection(
+        bearerToken: String?,
+        collectionId: String,
+        limit: Int,
+        offset: Int
+    ): BrowseWorksResponse {
         return browseWorksResponse
     }
     // endregion

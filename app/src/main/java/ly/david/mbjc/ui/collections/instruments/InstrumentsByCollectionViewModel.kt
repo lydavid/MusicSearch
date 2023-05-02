@@ -3,6 +3,8 @@ package ly.david.mbjc.ui.collections.instruments
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.auth.MusicBrainzAuthState
+import ly.david.data.auth.getBearerToken
 import ly.david.data.domain.InstrumentListItemModel
 import ly.david.data.domain.toInstrumentListItemModel
 import ly.david.data.network.InstrumentMusicBrainzModel
@@ -25,6 +27,7 @@ internal class InstrumentsByCollectionViewModel @Inject constructor(
     private val instrumentDao: InstrumentDao,
     private val relationDao: RelationDao,
     pagedList: PagedList<InstrumentRoomModel, InstrumentListItemModel>,
+    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel
 <InstrumentRoomModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
     byEntity = MusicBrainzResource.INSTRUMENT,
@@ -34,6 +37,7 @@ internal class InstrumentsByCollectionViewModel @Inject constructor(
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseInstrumentsResponse {
         return musicBrainzApiService.browseInstrumentsByCollection(
+            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )

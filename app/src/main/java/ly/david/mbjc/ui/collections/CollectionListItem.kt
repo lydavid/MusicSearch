@@ -44,8 +44,7 @@ internal fun CollectionListItem(
             )
         },
         leadingContent = {
-            // TODO: consider a different way to indicate what collection this is
-            //  and don't need it when viewed from within an entity's page
+            // TODO: don't need it when viewed from within an entity's page
 
             ResourceIcon(
                 resource = collection.entity,
@@ -61,10 +60,11 @@ internal fun CollectionListItem(
                         contentDescription = null
                     )
                 }
-                Text(
-                    text = collection.entityCount.toString(),
-                    style = TextStyles.getCardBodyTextStyle()
-                )
+                // TODO: count isn't accurate right now
+//                Text(
+//                    text = collection.entityCount.toString(),
+//                    style = TextStyles.getCardBodyTextStyle()
+//                )
             }
         }
     )

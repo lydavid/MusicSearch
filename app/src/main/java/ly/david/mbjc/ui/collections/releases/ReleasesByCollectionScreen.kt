@@ -1,16 +1,16 @@
 package ly.david.mbjc.ui.collections.releases
 
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import kotlinx.coroutines.flow.Flow
+import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.screen.ReleasesListScreen
 
 @Composable
@@ -20,20 +20,25 @@ internal fun ReleasesByCollectionScreen(
     filterText: String,
     showMoreInfo: Boolean,
     snackbarHostState: SnackbarHostState,
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-    onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: ReleasesByCollectionViewModel = hiltViewModel(),
 ) {
+
+    val lazyListState = rememberLazyListState()
+    val lazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            .collectAsLazyPagingItems()
+
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
-        onPagedReleasesFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(filterText)
+    LaunchedEffect(key1 = filterText) {
+        viewModel.updateQuery(filterText)
+    }
 
     ReleasesListScreen(
         modifier = modifier,
@@ -41,6 +46,7 @@ internal fun ReleasesByCollectionScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         showMoreInfo = showMoreInfo,
-        onReleaseClick = onReleaseClick
+        onReleaseClick = onReleaseClick,
+        onDeleteFromCollection = onDeleteFromCollection
     )
 }

@@ -1,19 +1,20 @@
 package ly.david.mbjc.ui.collections.works
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import kotlinx.coroutines.flow.Flow
+import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.work.WorkListItem
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -23,20 +24,26 @@ internal fun WorksByCollectionScreen(
     isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<WorkListItemModel>,
     modifier: Modifier = Modifier,
     onWorkClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-    onPagedWorksFlowChange: (Flow<PagingData<WorkListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: WorksByCollectionViewModel = hiltViewModel(),
 ) {
+
+    val entity = MusicBrainzResource.WORK
+    val lazyListState = rememberLazyListState()
+    val lazyPagingItems: LazyPagingItems<WorkListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            .collectAsLazyPagingItems()
+
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
-        onPagedWorksFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(filterText)
+    LaunchedEffect(key1 = filterText) {
+        viewModel.updateQuery(filterText)
+    }
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -46,13 +53,21 @@ internal fun WorksByCollectionScreen(
     ) { listItemModel: WorkListItemModel? ->
         when (listItemModel) {
             is WorkListItemModel -> {
-                WorkListItem(
-                    work = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onWorkClick(MusicBrainzResource.WORK, id, getNameWithDisambiguation())
-                }
+                SwipeToDeleteListItem(
+                    content = {
+                        WorkListItem(
+                            work = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onWorkClick(entity, id, getNameWithDisambiguation())
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(listItemModel.id, listItemModel.name)
+                    }
+                )
             }
+
             else -> {
                 // Do nothing.
             }

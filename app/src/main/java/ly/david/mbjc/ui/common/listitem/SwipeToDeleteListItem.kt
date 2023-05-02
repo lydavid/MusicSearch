@@ -1,5 +1,6 @@
 package ly.david.mbjc.ui.common.listitem
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.DismissDirection
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,9 +12,27 @@ import ly.david.mbjc.ui.common.SwipeToDeleteBackground
 
 // TODO: if we fail to delete item, would be nice to show it again until of a red background
 //  this may suggest we shouldn't use swipe to delete for remote items, as the ux will be strange no matter what we do
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SwipeToDeleteListItem(
+    content: @Composable RowScope.() -> Unit,
+    disable: Boolean = false,
+    onDelete: () -> Unit
+) {
+    if (disable) {
+        Row {
+            content()
+        }
+    } else {
+        SwipeToDeleteListItem(
+            dismissContent = content,
+            onDelete = onDelete
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SwipeToDeleteListItem(
     dismissContent: @Composable RowScope.() -> Unit,
     onDelete: () -> Unit
 ) {

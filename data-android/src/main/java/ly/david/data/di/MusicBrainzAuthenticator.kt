@@ -3,8 +3,8 @@ package ly.david.data.di
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import ly.david.data.auth.MusicBrainzAuthState
+import ly.david.data.auth.getBearerToken
 import ly.david.data.network.api.AUTHORIZATION
-import ly.david.data.network.api.BEARER
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -18,13 +18,12 @@ class MusicBrainzAuthenticator @Inject constructor(
         if (response.request.header(AUTHORIZATION) != null) return null
 
         return runBlocking {
-            val authState = musicBrainzAuthState.getAuthState()
+            val bearerToken = musicBrainzAuthState.getBearerToken()
 
             val builder = response.request.newBuilder()
-
-            val accessToken = authState?.accessToken
-            builder.addHeader(AUTHORIZATION, "$BEARER $accessToken")
-
+            bearerToken?.let {
+                builder.addHeader(AUTHORIZATION, it)
+            }
             builder.build()
         }
     }

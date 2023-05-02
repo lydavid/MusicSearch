@@ -18,7 +18,6 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
-internal const val RELEASE_GROUPS = "release-groups"
 internal const val LABELS = "labels"
 
 /**
@@ -39,6 +38,7 @@ interface BrowseApi {
 
     @GET("artist")
     suspend fun browseArtistsByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -54,6 +54,7 @@ interface BrowseApi {
 
     @GET("event")
     suspend fun browseEventsByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -68,6 +69,7 @@ interface BrowseApi {
 
     @GET("instrument")
     suspend fun browseInstrumentsByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -75,6 +77,7 @@ interface BrowseApi {
 
     @GET("label")
     suspend fun browseLabelsByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -89,6 +92,7 @@ interface BrowseApi {
 
     @GET("place")
     suspend fun browsePlacesByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -96,6 +100,7 @@ interface BrowseApi {
 
     @GET("recording")
     suspend fun browseRecordingsByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -124,6 +129,7 @@ interface BrowseApi {
 
     @GET("release")
     suspend fun browseReleasesByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
@@ -164,6 +170,7 @@ interface BrowseApi {
 
     @GET("release-group")
     suspend fun browseReleaseGroupsByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
@@ -172,6 +179,7 @@ interface BrowseApi {
 
     @GET("series")
     suspend fun browseSeriesByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
@@ -179,6 +187,7 @@ interface BrowseApi {
 
     @GET("work")
     suspend fun browseWorksByCollection(
+        @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0
