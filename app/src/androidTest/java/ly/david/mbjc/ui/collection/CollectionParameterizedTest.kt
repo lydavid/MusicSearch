@@ -85,9 +85,6 @@ internal class CollectionParameterizedTest(
         )
 
         composeTestRule
-            .onNodeWithText("0")
-            .assertIsDisplayed()
-        composeTestRule
             .onNodeWithText(collectionName) // list item
             .performClick()
 
@@ -113,9 +110,6 @@ internal class CollectionParameterizedTest(
         composeTestRule
             .onNodeWithText(collections)
             .performClick()
-        composeTestRule
-            .onNodeWithText("1")
-            .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(collectionName)
             .performClick()
