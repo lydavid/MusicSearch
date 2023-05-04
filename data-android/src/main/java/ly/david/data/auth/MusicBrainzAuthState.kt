@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.common.emptyToNull
+import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.network.api.BEARER
 import net.openid.appauth.AuthState
 
 private const val MB_AUTH_KEY = "musicBrainzAuth"
@@ -24,6 +27,11 @@ interface MusicBrainzAuthState {
     fun setAuthState(authState: AuthState?)
     val username: Flow<String>
     fun setUsername(username: String)
+}
+
+suspend fun MusicBrainzAuthState.getBearerToken(): String? {
+    val authState = getAuthState()
+    return authState?.accessToken?.transformThisIfNotNullOrEmpty { "$BEARER $it" }.emptyToNull()
 }
 
 class MusicBrainzAuthStateImpl @Inject constructor(

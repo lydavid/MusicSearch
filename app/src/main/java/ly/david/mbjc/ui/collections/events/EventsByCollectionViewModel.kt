@@ -3,6 +3,8 @@ package ly.david.mbjc.ui.collections.events
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.auth.MusicBrainzAuthState
+import ly.david.data.auth.getBearerToken
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.toEventListItemModel
 import ly.david.data.network.EventMusicBrainzModel
@@ -25,6 +27,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
     private val eventDao: EventDao,
     private val relationDao: RelationDao,
     pagedList: PagedList<EventRoomModel, EventListItemModel>,
+    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel
 <EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzResource.EVENT,
@@ -34,6 +37,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
         return musicBrainzApiService.browseEventsByCollection(
+            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )
@@ -53,7 +57,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            collectionEntityDao.deleteAllFromCollection(resourceId)
             relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.EVENT)
         }
     }

@@ -1,44 +1,76 @@
 package ly.david.mbjc.ui.collections.events
 
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import kotlinx.coroutines.flow.Flow
+import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.EventListItemModel
+import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.screen.EventsListScreen
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.event.EventListItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun EventsByCollectionScreen(
     collectionId: String,
     isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<EventListItemModel>,
     modifier: Modifier = Modifier,
     onEventClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-    onPagedEventsFlowChange: (Flow<PagingData<EventListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: EventsByCollectionViewModel = hiltViewModel(),
 ) {
+
+    val entity = MusicBrainzResource.EVENT
+    val lazyListState = rememberLazyListState()
+    val lazyPagingItems: LazyPagingItems<EventListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            .collectAsLazyPagingItems()
+
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
-        onPagedEventsFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(filterText)
+    LaunchedEffect(key1 = filterText) {
+        viewModel.updateQuery(filterText)
+    }
 
-    EventsListScreen(
-        snackbarHostState = snackbarHostState,
+    PagingLoadingAndErrorHandler(
+        modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        modifier = modifier,
-        onEventClick = onEventClick
-    )
+        snackbarHostState = snackbarHostState
+    ) { listItemModel: EventListItemModel? ->
+        when (listItemModel) {
+            is EventListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        EventListItem(
+                            event = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onEventClick(entity, id, getNameWithDisambiguation())
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(listItemModel.id, listItemModel.name)
+                    }
+                )
+            }
+
+            else -> {
+                // Do nothing.
+            }
+        }
+    }
 }

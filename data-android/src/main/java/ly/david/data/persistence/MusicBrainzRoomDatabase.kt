@@ -89,7 +89,7 @@ const val DATABASE_VERSION = 2
         ReleaseFormatTrackCount::class,
     ],
     autoMigrations = [
-        AutoMigration(from = 1, to = 2)
+        AutoMigration(from = 1, to = 2),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

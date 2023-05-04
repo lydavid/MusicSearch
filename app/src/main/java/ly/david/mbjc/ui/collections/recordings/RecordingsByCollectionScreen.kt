@@ -1,44 +1,76 @@
 package ly.david.mbjc.ui.collections.recordings
 
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import kotlinx.coroutines.flow.Flow
+import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.RecordingListItemModel
+import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.screen.RecordingsListScreen
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.mbjc.ui.recording.RecordingListItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun RecordingsByCollectionScreen(
     collectionId: String,
     isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<RecordingListItemModel>,
     modifier: Modifier = Modifier,
     onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-    onPagedRecordingsFlowChange: (Flow<PagingData<RecordingListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: RecordingsByCollectionViewModel = hiltViewModel(),
 ) {
+
+    val entity = MusicBrainzResource.RECORDING
+    val lazyListState = rememberLazyListState()
+    val lazyPagingItems: LazyPagingItems<RecordingListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            .collectAsLazyPagingItems()
+
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
-        onPagedRecordingsFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(filterText)
+    LaunchedEffect(key1 = filterText) {
+        viewModel.updateQuery(filterText)
+    }
 
-    RecordingsListScreen(
+    PagingLoadingAndErrorHandler(
         modifier = modifier,
-        snackbarHostState = snackbarHostState,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        onRecordingClick = onRecordingClick
-    )
+        snackbarHostState = snackbarHostState
+    ) { listItemModel: RecordingListItemModel? ->
+        when (listItemModel) {
+            is RecordingListItemModel -> {
+                SwipeToDeleteListItem(
+                    content = {
+                        RecordingListItem(
+                            recording = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onRecordingClick(entity, id, getNameWithDisambiguation())
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(listItemModel.id, listItemModel.name)
+                    }
+                )
+            }
+
+            else -> {
+                // Do nothing.
+            }
+        }
+    }
 }

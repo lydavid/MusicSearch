@@ -7,6 +7,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -85,9 +87,6 @@ internal class CollectionParameterizedTest(
         )
 
         composeTestRule
-            .onNodeWithText("0")
-            .assertIsDisplayed()
-        composeTestRule
             .onNodeWithText(collectionName) // list item
             .performClick()
 
@@ -113,9 +112,6 @@ internal class CollectionParameterizedTest(
         composeTestRule
             .onNodeWithText(collections)
             .performClick()
-        composeTestRule
-            .onNodeWithText("1")
-            .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(collectionName)
             .performClick()
@@ -143,6 +139,16 @@ internal class CollectionParameterizedTest(
         composeTestRule
             .onNodeWithText(entityName) // title
             .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithContentDescription(back)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(entityName)
+            .performTouchInput { swipeRight() }
+        composeTestRule
+            .onNodeWithText(entityName)
+            .assertDoesNotExist()
     }
 
     // We're currently able to skirt around the need to fake auth state but inserting data ourselves

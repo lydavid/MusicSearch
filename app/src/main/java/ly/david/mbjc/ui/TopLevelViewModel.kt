@@ -86,7 +86,7 @@ internal class TopLevelViewModel @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel() {
 
-    data class AddToCollectionResult(
+    data class RemoteResult(
         val message: String = "",
         val actionLabel: String? = null
     )
@@ -119,8 +119,20 @@ internal class TopLevelViewModel @Inject constructor(
         this.entityId.value = entityId
     }
 
-    suspend fun addToCollectionAndGetResult(collectionId: String): AddToCollectionResult {
-        var result = AddToCollectionResult()
+    fun createNewCollection(name: String, entity: MusicBrainzResource) {
+        viewModelScope.launch {
+            collectionDao.insert(
+                CollectionRoomModel(
+                    id = UUID.randomUUID().toString(),
+                    name = name,
+                    entity = entity
+                )
+            )
+        }
+    }
+
+    suspend fun addToCollectionAndGetResult(collectionId: String): RemoteResult {
+        var result = RemoteResult()
 
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
@@ -132,11 +144,12 @@ internal class TopLevelViewModel @Inject constructor(
                 )
             } catch (ex: HttpException) {
                 return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> AddToCollectionResult(
+                    HTTP_UNAUTHORIZED -> RemoteResult(
                         message = "Failed to add to ${collection.name}. Login has expired.",
                         actionLabel = "Login"
                     )
-                    else -> AddToCollectionResult("Failed to add to ${collection.name}.")
+
+                    else -> RemoteResult("Failed to add to ${collection.name}.")
                 }
             }
         }
@@ -150,28 +163,47 @@ internal class TopLevelViewModel @Inject constructor(
             )
 
             result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                AddToCollectionResult("Already in ${collection.name}.")
+                RemoteResult("Already in ${collection.name}.")
             } else {
                 collectionDao.update(
                     collection.copy(entityCount = collection.entityCount + 1)
                 )
-                AddToCollectionResult("Added to ${collection.name}.")
+                RemoteResult("Added to ${collection.name}.")
             }
         }
 
         return result
     }
 
-    fun createNewCollection(name: String, entity: MusicBrainzResource) {
-        viewModelScope.launch {
-            collectionDao.insert(
-                CollectionRoomModel(
-                    id = UUID.randomUUID().toString(),
-                    name = name,
-                    entity = entity
+    suspend fun deleteFromCollectionAndGetResult(
+        collectionId: String,
+        entityId: String,
+        entityName: String
+    ): RemoteResult {
+        val collection = collectionDao.getCollection(collectionId)
+        if (collection.isRemote) {
+            try {
+                musicBrainzApiService.deleteFromCollection(
+                    collectionId = collectionId,
+                    resourceUriPlural = collection.entity.resourceUriPlural,
+                    mbids = entityId
                 )
-            )
+            } catch (ex: HttpException) {
+                return when (ex.code()) {
+                    HTTP_UNAUTHORIZED -> RemoteResult(
+                        message = "Failed to delete from remote collection ${collection.name}. Login has expired.",
+                        actionLabel = "Login"
+                    )
+
+                    else -> RemoteResult("Failed to delete from ${collection.name}.")
+                }
+            }
         }
+
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteFromCollection(collectionId, entityId)
+        }
+        return RemoteResult("Deleted $entityName from ${collection.name}.")
     }
 
     fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
@@ -214,27 +246,27 @@ internal class TopLevelViewModel @Inject constructor(
         }
     }
 
-    suspend fun markAsDeleted(mbid: String) {
+    suspend fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, true)
     }
 
-    suspend fun undoDelete(mbid: String) {
+    suspend fun undoDeleteHistory(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, false)
     }
 
-    suspend fun markAllAsDeleted() {
+    suspend fun markAllHistoryAsDeleted() {
         lookupHistoryDao.markAllAsDeleted(true)
     }
 
-    suspend fun undoDeleteAll() {
+    suspend fun undoDeleteAllHistory() {
         lookupHistoryDao.markAllAsDeleted(false)
     }
 
-    suspend fun delete(mbid: String) {
+    suspend fun deleteHistory(mbid: String) {
         lookupHistoryDao.delete(mbid)
     }
 
-    suspend fun deleteAll() {
+    suspend fun deleteAllHistory() {
         lookupHistoryDao.deleteAll()
     }
 }

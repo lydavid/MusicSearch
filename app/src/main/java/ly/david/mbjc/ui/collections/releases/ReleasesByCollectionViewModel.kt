@@ -3,6 +3,8 @@ package ly.david.mbjc.ui.collections.releases
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.auth.MusicBrainzAuthState
+import ly.david.data.auth.getBearerToken
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseMusicBrainzModel
@@ -23,15 +25,16 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     releaseDao: ReleaseDao,
     pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
+    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,
     releaseDao = releaseDao,
     pagedList = pagedList
 ) {
 
-    // TODO: this assumes our collection will always query from MB...
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
         return musicBrainzApiService.browseReleasesByCollection(
+            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )
@@ -53,7 +56,7 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            collectionEntityDao.deleteAllFromCollection(resourceId)
             relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
         }
     }

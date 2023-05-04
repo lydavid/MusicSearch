@@ -81,9 +81,11 @@ internal fun TopLevelScaffold(
             result.exception != null -> {
                 Timber.e(result.exception)
             }
+
             result.response != null -> {
                 viewModel.performTokenRequest(result.response)
             }
+
             else -> {
                 Timber.e("login's result intent is null")
             }
@@ -97,6 +99,24 @@ internal fun TopLevelScaffold(
                 viewModel.createNewCollection(name, entity)
             }
         )
+    }
+
+    suspend fun showSnackbarAndHandleResult(remoteResult: TopLevelViewModel.RemoteResult) {
+        val snackbarResult = snackbarHostState.showSnackbar(
+            message = remoteResult.message,
+            actionLabel = remoteResult.actionLabel,
+            duration = SnackbarDuration.Short
+        )
+
+        when (snackbarResult) {
+            SnackbarResult.ActionPerformed -> {
+                loginLauncher.launch(Unit)
+            }
+
+            SnackbarResult.Dismissed -> {
+                // Do nothing.
+            }
+        }
     }
 
     if (openBottomSheet) {
@@ -114,19 +134,7 @@ internal fun TopLevelScaffold(
 
                     if (addToCollectionResult.message.isEmpty()) return@launch
 
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = addToCollectionResult.message,
-                        actionLabel = addToCollectionResult.actionLabel,
-                        duration = SnackbarDuration.Short
-                    )
-                    when (snackbarResult) {
-                        SnackbarResult.ActionPerformed -> {
-                            loginLauncher.launch(Unit)
-                        }
-                        SnackbarResult.Dismissed -> {
-                            // Do nothing.
-                        }
-                    }
+                    showSnackbarAndHandleResult(addToCollectionResult)
                 }
             }
         )
@@ -155,7 +163,7 @@ internal fun TopLevelScaffold(
             deleteHistoryDelegate = object : DeleteHistoryDelegate {
                 override fun delete(history: LookupHistoryRoomModel) {
                     scope.launch {
-                        viewModel.markAsDeleted(mbid = history.id)
+                        viewModel.markHistoryAsDeleted(mbid = history.id)
 
                         val snackbarResult = snackbarHostState.showSnackbar(
                             message = "Removed ${history.title}",
@@ -165,10 +173,11 @@ internal fun TopLevelScaffold(
 
                         when (snackbarResult) {
                             SnackbarResult.ActionPerformed -> {
-                                viewModel.undoDelete(history.id)
+                                viewModel.undoDeleteHistory(history.id)
                             }
+
                             SnackbarResult.Dismissed -> {
-                                viewModel.delete(history.id)
+                                viewModel.deleteHistory(history.id)
                             }
                         }
                     }
@@ -176,7 +185,7 @@ internal fun TopLevelScaffold(
 
                 override fun deleteAll() {
                     scope.launch {
-                        viewModel.markAllAsDeleted()
+                        viewModel.markAllHistoryAsDeleted()
 
                         val snackbarResult = snackbarHostState.showSnackbar(
                             message = "Cleared history",
@@ -186,10 +195,11 @@ internal fun TopLevelScaffold(
 
                         when (snackbarResult) {
                             SnackbarResult.ActionPerformed -> {
-                                viewModel.undoDeleteAll()
+                                viewModel.undoDeleteAllHistory()
                             }
+
                             SnackbarResult.Dismissed -> {
-                                viewModel.deleteAll()
+                                viewModel.deleteAllHistory()
                             }
                         }
                     }
@@ -202,13 +212,23 @@ internal fun TopLevelScaffold(
             onLogoutClick = {
                 viewModel.logout()
             },
+            onCreateCollectionClick = {
+                showCreateCollectionDialog = true
+            },
             onAddToCollectionMenuClick = { entity, id ->
                 viewModel.setEntity(entity)
                 viewModel.setEntityId(id)
                 openBottomSheet = true
             },
-            onCreateCollectionClick = {
-                showCreateCollectionDialog = true
+            onDeleteFromCollection = { collectionId, entityId, name ->
+                scope.launch {
+                    val deleteFromCollectionResult =
+                        viewModel.deleteFromCollectionAndGetResult(collectionId, entityId, name)
+
+                    if (deleteFromCollectionResult.message.isEmpty()) return@launch
+
+                    showSnackbarAndHandleResult(deleteFromCollectionResult)
+                }
             },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) },

@@ -61,8 +61,9 @@ internal fun NavigationGraph(
     modifier: Modifier = Modifier,
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {},
+    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit = { _, _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
@@ -338,7 +339,10 @@ internal fun NavigationGraph(
                 showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
                 onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
+                onDeleteFromCollection = { collectableId, name ->
+                    onDeleteFromCollection(collectionId, collectableId, name)
+                }
             )
         }
 

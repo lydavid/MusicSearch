@@ -11,6 +11,7 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.release.ReleaseListItem
 import timber.log.Timber
@@ -24,6 +25,7 @@ internal fun ReleasesListScreen(
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     showMoreInfo: Boolean = true,
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     viewModel: ReleasesListViewModel = hiltViewModel()
 ) {
     PagingLoadingAndErrorHandler(
@@ -34,21 +36,30 @@ internal fun ReleasesListScreen(
     ) { releaseListItemModel: ReleaseListItemModel? ->
         when (releaseListItemModel) {
             is ReleaseListItemModel -> {
-                ReleaseListItem(
-                    release = releaseListItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                    showMoreInfo = showMoreInfo,
-                    requestForMissingCoverArtPath = {
-                        try {
-                            viewModel.getReleaseCoverArtPathFromNetwork(releaseId = releaseListItemModel.id)
-                        } catch (ex: Exception) {
-                            Timber.e(ex)
+                SwipeToDeleteListItem(
+                    content = {
+                        ReleaseListItem(
+                            release = releaseListItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                            showMoreInfo = showMoreInfo,
+                            requestForMissingCoverArtPath = {
+                                try {
+                                    viewModel.getReleaseCoverArtPathFromNetwork(releaseId = releaseListItemModel.id)
+                                } catch (ex: Exception) {
+                                    Timber.e(ex)
+                                }
+                            }
+                        ) {
+                            onReleaseClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
                         }
+                    },
+                    disable = onDeleteFromCollection == null,
+                    onDelete = {
+                        onDeleteFromCollection?.invoke(releaseListItemModel.id, releaseListItemModel.name)
                     }
-                ) {
-                    onReleaseClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
-                }
+                )
             }
+
             else -> {
                 // Do nothing.
             }

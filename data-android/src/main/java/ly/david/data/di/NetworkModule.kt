@@ -49,13 +49,9 @@ object NetworkModule {
             // TODO: make sure when doing swipe to refresh, we actually fetch from network not this cache
             //  right now, it seems to work like that sometimes, switching between 200 and 304
             .cache(
-                // TODO: how come we were able to use named parameters before?
-                //  seems like we're only able to access "java" classes here whereas in app, we could access kotlin
-                //  notice how we need to use url() vs url
                 Cache(
-                    File(context.cacheDir, "http_cache"),
-                    // $0.05 worth of phone storage in 2020
-                    50L * 1024L * 1024L // 50 MiB
+                    directory = File(context.cacheDir, "http_cache"),
+                    maxSize = 50L * 1024L * 1024L // 50 MiB
                 )
             )
 

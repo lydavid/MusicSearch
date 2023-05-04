@@ -1,19 +1,20 @@
 package ly.david.mbjc.ui.collections.instruments
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import kotlinx.coroutines.flow.Flow
+import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.InstrumentListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.instrument.InstrumentListItem
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -23,20 +24,26 @@ internal fun InstrumentsByCollectionScreen(
     isRemote: Boolean,
     filterText: String,
     snackbarHostState: SnackbarHostState,
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<InstrumentListItemModel>,
     modifier: Modifier = Modifier,
     onInstrumentClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
-    onPagedInstrumentsFlowChange: (Flow<PagingData<InstrumentListItemModel>>) -> Unit = {},
+    onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: InstrumentsByCollectionViewModel = hiltViewModel(),
 ) {
+
+    val entity = MusicBrainzResource.INSTRUMENT
+    val lazyListState = rememberLazyListState()
+    val lazyPagingItems: LazyPagingItems<InstrumentListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+            .collectAsLazyPagingItems()
+
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
         viewModel.loadPagedResources(collectionId)
-        onPagedInstrumentsFlowChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(filterText)
+    LaunchedEffect(key1 = filterText) {
+        viewModel.updateQuery(filterText)
+    }
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -46,13 +53,21 @@ internal fun InstrumentsByCollectionScreen(
     ) { listItemModel: InstrumentListItemModel? ->
         when (listItemModel) {
             is InstrumentListItemModel -> {
-                InstrumentListItem(
-                    instrument = listItemModel,
-                    modifier = Modifier.animateItemPlacement(),
-                ) {
-                    onInstrumentClick(MusicBrainzResource.INSTRUMENT, id, getNameWithDisambiguation())
-                }
+                SwipeToDeleteListItem(
+                    content = {
+                        InstrumentListItem(
+                            instrument = listItemModel,
+                            modifier = Modifier.animateItemPlacement(),
+                        ) {
+                            onInstrumentClick(entity, id, getNameWithDisambiguation())
+                        }
+                    },
+                    onDelete = {
+                        onDeleteFromCollection(listItemModel.id, listItemModel.name)
+                    }
+                )
             }
+
             else -> {
                 // Do nothing.
             }

@@ -3,6 +3,8 @@ package ly.david.mbjc.ui.collections.artists
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.auth.MusicBrainzAuthState
+import ly.david.data.auth.getBearerToken
 import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.domain.toArtistListItemModel
 import ly.david.data.network.ArtistMusicBrainzModel
@@ -25,6 +27,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
     private val artistDao: ArtistDao,
     private val relationDao: RelationDao,
     pagedList: PagedList<ArtistRoomModel, ArtistListItemModel>,
+    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel
 <ArtistRoomModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
     byEntity = MusicBrainzResource.ARTIST,
@@ -34,6 +37,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseArtistsResponse {
         return musicBrainzApiService.browseArtistsByCollection(
+            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )
@@ -53,7 +57,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
 
     override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteCollectionEntityLinks(resourceId)
+            collectionEntityDao.deleteAllFromCollection(resourceId)
             relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.ARTIST)
         }
     }
@@ -65,6 +69,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
         query.isEmpty() -> {
             collectionEntityDao.getArtistsByCollection(resourceId)
         }
+
         else -> {
             collectionEntityDao.getArtistsByCollectionFiltered(
                 collectionId = resourceId,

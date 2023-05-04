@@ -42,6 +42,7 @@ internal class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<LI>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
+            .distinctUntilChanged()
             .flatMapLatest { (resourceId, query, isRemote) ->
 
                 val remoteMediator = BrowseResourceRemoteMediator<RM>(
@@ -55,13 +56,15 @@ internal class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = remoteMediator,
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
-                ).flow.map { pagingData ->
-                    pagingData.map {
-                        useCase.transformRoomToListItemModel(it)
-                    }.filter {
-                        useCase.postFilter(it)
+                )
+                    .flow
+                    .map { pagingData ->
+                        pagingData.map {
+                            useCase.transformRoomToListItemModel(it)
+                        }.filter {
+                            useCase.postFilter(it)
+                        }
                     }
-                }
             }
             .distinctUntilChanged()
             .cachedIn(scope)
