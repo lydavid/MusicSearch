@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     val android = "8.0.1"
-    val kotlin = "1.8.20"
+    val kotlin = "1.8.21"
 
     id("com.android.application") version android apply false
     id("com.android.library") version android apply false
