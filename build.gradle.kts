@@ -15,7 +15,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.22.0" apply true
     id("com.google.gms.google-services") version "4.3.15" apply false
     id("com.google.firebase.crashlytics") version "2.9.5" apply false
-    id("dev.iurysouza.modulegraph") version "0.3.0"
+    id("dev.iurysouza.modulegraph") version "0.4.0"
 }
 
 allprojects {
