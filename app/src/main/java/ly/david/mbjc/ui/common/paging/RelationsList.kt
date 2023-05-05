@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
@@ -33,6 +34,9 @@ import ly.david.data.repository.RelationsListRepository
  */
 internal interface IRelationsList {
 
+    val resourceId: MutableStateFlow<String>
+    val query: MutableStateFlow<String>
+
     /**
      * Paginated [RelationListItemModel] with [Header].
      */
@@ -41,7 +45,13 @@ internal interface IRelationsList {
     /**
      * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
      */
-    fun loadRelations(resourceId: String)
+    fun loadRelations(resourceId: String) {
+        this.resourceId.value = resourceId
+    }
+
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
 
     suspend fun hasRelationsBeenStored(): Boolean
 
@@ -59,15 +69,24 @@ internal class RelationsList @Inject constructor(
     private val relationDao: RelationDao
 ) : IRelationsList {
 
-    private val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    data class State(
+        val resourceId: String = "",
+        val query: String = "",
+    )
+
+    override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    override val query: MutableStateFlow<String> = MutableStateFlow("")
+    private val paramState = combine(resourceId, query) { resourceId, query ->
+        State(resourceId, query)
+    }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
     lateinit var repository: RelationsListRepository
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     override val pagedRelations: Flow<PagingData<ListItemModel>> by lazy {
-        resourceId.filterNot { it.isEmpty() }
-            .flatMapLatest { resourceId ->
+        paramState.filterNot { it.resourceId.isEmpty() }
+            .flatMapLatest { (resourceId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = LookupResourceRemoteMediator(
@@ -80,7 +99,11 @@ internal class RelationsList @Inject constructor(
                         }
                     ),
                     pagingSourceFactory = {
-                        relationDao.getRelationsForResource(resourceId)
+                        if (query.isEmpty()) {
+                            relationDao.getRelationsForResource(resourceId)
+                        } else {
+                            relationDao.getRelationsForResourceFiltered(resourceId, "%$query%")
+                        }
                     }
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
@@ -96,10 +119,6 @@ internal class RelationsList @Inject constructor(
             }
             .distinctUntilChanged()
             .cachedIn(scope)
-    }
-
-    override fun loadRelations(resourceId: String) {
-        this.resourceId.value = resourceId
     }
 
     /**

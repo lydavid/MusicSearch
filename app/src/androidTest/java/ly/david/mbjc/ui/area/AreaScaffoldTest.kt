@@ -1,8 +1,14 @@
 package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -72,8 +78,23 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun hasRelations() = runTest {
         setArea(fakeAreaWithRelation)
 
-        waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakeAreaWithRelation.relations?.first()?.area?.name!!)
+        val relationName = fakeAreaWithRelation.relations?.first()?.area?.name!!
+        composeTestRule
+            .onNodeWithText(relationships)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(relationName)
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithContentDescription(filter)
+            .performClick()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextInput("something such that we show no results")
+        composeTestRule
+            .onNodeWithText(relationName)
+            .assertDoesNotExist()
     }
 
     @Test

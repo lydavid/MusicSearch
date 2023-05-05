@@ -120,7 +120,7 @@ internal fun AreaScaffold(
                 tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = areaTabs.indexOf(selectedTab),
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab in listOf(AreaTab.RELEASES, AreaTab.PLACES),
+                showFilterIcon = selectedTab in listOf(AreaTab.RELATIONSHIPS, AreaTab.RELEASES, AreaTab.PLACES),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -170,15 +170,16 @@ internal fun AreaScaffold(
                     }
                 }
                 AreaTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = onItemClick,
-                        lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
                     )
                 }
                 AreaTab.RELEASES -> {
