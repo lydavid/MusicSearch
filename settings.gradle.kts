@@ -13,6 +13,7 @@ dependencyResolutionManagement {
 
             version("accompanist", "0.30.1")
             version("coil", "2.3.0")
+            version("compose-compiler", "1.4.6")
             version("compose-foundation", "1.4.3")
             version("compose-material", "1.4.3")
             version("compose-material3", "1.1.0-rc01")
@@ -33,6 +34,7 @@ dependencyResolutionManagement {
             library("coil-test", "io.coil-kt", "coil-test").versionRef("coil")
 
             // https://developer.android.com/jetpack/androidx/releases/compose
+            library("compose-compiler", "androidx.compose.compiler", "compiler").versionRef("compose-compiler")
             library("compose-foundation", "androidx.compose.foundation", "foundation").versionRef("compose-foundation")
             library("compose-material-icons-extended", "androidx.compose.material", "material-icons-extended").versionRef("compose-material")
             library("compose-material3", "androidx.compose.material3", "material3").versionRef("compose-material3")
