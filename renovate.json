@@ -16,11 +16,14 @@
       "platformAutomerge": true
     },
     {
-      "matchPackagePatterns": [
-        "androidx.compose.compiler",
-        "org.jetbrains.kotlin.*"
+      "groupName": "Kotlin and Compose Compiler",
+      "groupSlug": "kotlin",
+      "matchPackagePrefixes": [
+        "androidx.compose.compiler"
       ],
-      "groupName": "kotlin"
+      "matchPackagePatterns": [
+        "org.jetbrains.kotlin.*"
+      ]
     },
     {
       "matchPackagePatterns": [
