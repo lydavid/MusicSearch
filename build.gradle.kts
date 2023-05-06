@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     val android = "8.0.1"
-    val kotlin = "1.8.20"
+    val kotlin = "1.8.21"
 
     id("com.android.application") version android apply false
     id("com.android.library") version android apply false
@@ -15,7 +15,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.22.0" apply true
     id("com.google.gms.google-services") version "4.3.15" apply false
     id("com.google.firebase.crashlytics") version "2.9.5" apply false
-    id("dev.iurysouza.modulegraph") version "0.3.0"
+    id("dev.iurysouza.modulegraph") version "0.4.0"
 }
 
 allprojects {

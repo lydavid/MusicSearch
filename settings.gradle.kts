@@ -13,7 +13,7 @@ dependencyResolutionManagement {
 
             version("accompanist", "0.30.1")
             version("coil", "2.3.0")
-            version("compose-compiler", "1.4.6")
+            version("compose-compiler", "1.4.7")
             version("compose-foundation", "1.4.3")
             version("compose-material", "1.4.3")
             version("compose-material3", "1.1.0-rc01")
