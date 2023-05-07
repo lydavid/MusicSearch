@@ -120,7 +120,11 @@ internal fun AreaScaffold(
                 tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = areaTabs.indexOf(selectedTab),
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab in listOf(AreaTab.RELATIONSHIPS, AreaTab.RELEASES, AreaTab.PLACES),
+                showFilterIcon = selectedTab in listOf(
+                    AreaTab.RELATIONSHIPS,
+                    AreaTab.RELEASES,
+                    AreaTab.PLACES
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -169,6 +173,7 @@ internal fun AreaScaffold(
                         )
                     }
                 }
+
                 AreaTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsScreen(
@@ -182,6 +187,7 @@ internal fun AreaScaffold(
                         onItemClick = onItemClick,
                     )
                 }
+
                 AreaTab.RELEASES -> {
                     ReleasesByAreaScreen(
                         areaId = areaId,
@@ -198,6 +204,7 @@ internal fun AreaScaffold(
                         onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
+
                 AreaTab.PLACES -> {
                     PlacesByAreaScreen(
                         areaId = areaId,
@@ -213,6 +220,7 @@ internal fun AreaScaffold(
                         onPlaceClick = onItemClick
                     )
                 }
+
                 AreaTab.STATS -> {
                     AreaStatsScreen(
                         areaId = areaId,

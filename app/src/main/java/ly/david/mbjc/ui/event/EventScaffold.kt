@@ -35,7 +35,7 @@ import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.event.details.EventDetailsScreen
 import ly.david.mbjc.ui.event.stats.EventStatsScreen
 
@@ -62,6 +62,7 @@ internal fun EventScaffold(
     val pagerState = rememberPagerState()
 
     var selectedTab by rememberSaveable { mutableStateOf(EventTab.DETAILS) }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
@@ -86,7 +87,7 @@ internal fun EventScaffold(
     Scaffold(
         modifier = modifier,
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 resource = resource,
                 onBack = onBack,
                 title = title,
@@ -101,6 +102,11 @@ internal fun EventScaffold(
                 tabsTitles = EventTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
+                showFilterIcon = selectedTab in listOf(EventTab.RELATIONSHIPS),
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -135,18 +141,21 @@ internal fun EventScaffold(
                         )
                     }
                 }
+
                 EventTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = onItemClick,
-                        lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
                     )
                 }
+
                 EventTab.STATS -> {
                     EventStatsScreen(
                         eventId = eventId,

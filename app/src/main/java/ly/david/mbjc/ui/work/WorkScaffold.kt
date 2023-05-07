@@ -102,7 +102,10 @@ internal fun WorkScaffold(
                 tabsTitles = WorkTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab == WorkTab.RECORDINGS,
+                showFilterIcon = selectedTab in listOf(
+                    WorkTab.RECORDINGS,
+                    WorkTab.RELATIONSHIPS,
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -147,18 +150,21 @@ internal fun WorkScaffold(
                         )
                     }
                 }
+
                 WorkTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = onItemClick,
-                        lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
                     )
                 }
+
                 WorkTab.RECORDINGS -> {
                     // TODO: browsing rather than lookup recording-rels doesn't include attributes
                     //  Compare:
@@ -179,6 +185,7 @@ internal fun WorkScaffold(
                         filterText = filterText
                     )
                 }
+
                 WorkTab.STATS -> {
                     WorkGroupStatsScreen(
                         workId = workId,

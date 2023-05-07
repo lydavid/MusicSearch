@@ -63,9 +63,9 @@ internal fun PlaceScaffold(
     val snackbarHostState = remember { SnackbarHostState() }
     val pagerState = rememberPagerState()
 
+    var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
-    var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
 
     val title by viewModel.title.collectAsState()
     val place by viewModel.place.collectAsState()
@@ -104,7 +104,10 @@ internal fun PlaceScaffold(
                 tabsTitles = PlaceTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab == PlaceTab.EVENTS,
+                showFilterIcon = selectedTab in listOf(
+                    PlaceTab.EVENTS,
+                    PlaceTab.RELATIONSHIPS
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -151,18 +154,21 @@ internal fun PlaceScaffold(
                         )
                     }
                 }
+
                 PlaceTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = onItemClick,
-                        lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
                     )
                 }
+
                 PlaceTab.EVENTS -> {
                     EventsByPlaceScreen(
                         placeId = placeId,
@@ -178,6 +184,7 @@ internal fun PlaceScaffold(
                         filterText = filterText
                     )
                 }
+
                 PlaceTab.STATS -> {
                     PlaceStatsScreen(
                         placeId = placeId,

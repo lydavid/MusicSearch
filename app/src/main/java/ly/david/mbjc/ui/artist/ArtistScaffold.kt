@@ -99,7 +99,11 @@ internal fun ArtistScaffold(
                 resource = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = selectedTab in listOf(ArtistTab.RELEASE_GROUPS, ArtistTab.RELEASES),
+                showFilterIcon = selectedTab in listOf(
+                    ArtistTab.RELEASE_GROUPS,
+                    ArtistTab.RELEASES,
+                    ArtistTab.RELATIONSHIPS
+                ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
                     CopyToClipboardMenuItem(artistId)
@@ -176,6 +180,7 @@ internal fun ArtistScaffold(
                         )
                     }
                 }
+
                 ArtistTab.RELEASE_GROUPS -> {
                     ReleaseGroupsByArtistScreen(
                         artistId = artistId,
@@ -194,6 +199,7 @@ internal fun ArtistScaffold(
                         }
                     )
                 }
+
                 ArtistTab.RELEASES -> {
                     ReleasesByArtistScreen(
                         artistId = artistId,
@@ -210,18 +216,21 @@ internal fun ArtistScaffold(
                         onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
+
                 ArtistTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onItemClick = onItemClick,
-                        snackbarHostState = snackbarHostState,
                         lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
+                        snackbarHostState = snackbarHostState,
+                        onItemClick = onItemClick,
                     )
                 }
+
                 ArtistTab.STATS -> {
                     ArtistStatsScreen(
                         artistId = artistId,

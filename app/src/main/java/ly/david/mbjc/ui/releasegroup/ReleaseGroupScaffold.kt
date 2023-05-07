@@ -138,7 +138,10 @@ internal fun ReleaseGroupScaffold(
                 tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab == ReleaseGroupTab.RELEASES,
+                showFilterIcon = selectedTab in listOf(
+                    ReleaseGroupTab.RELEASES,
+                    ReleaseGroupTab.RELATIONSHIPS,
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -184,6 +187,7 @@ internal fun ReleaseGroupScaffold(
                         )
                     }
                 }
+
                 ReleaseGroupTab.RELEASES -> {
                     ReleasesByReleaseGroupScreen(
                         releaseGroupId = releaseGroupId,
@@ -200,18 +204,21 @@ internal fun ReleaseGroupScaffold(
                         onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
+
                 ReleaseGroupTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onItemClick = onItemClick,
-                        snackbarHostState = snackbarHostState,
                         lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
+                        snackbarHostState = snackbarHostState,
+                        onItemClick = onItemClick,
                     )
                 }
+
                 ReleaseGroupTab.STATS -> {
                     ReleaseGroupStatsScreen(
                         releaseGroupId = releaseGroupId,
