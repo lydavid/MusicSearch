@@ -2,23 +2,25 @@ package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.network.fakeArea
-import ly.david.data.network.fakeAreaWithRelation
-import ly.david.data.network.fakeCountry
+import ly.david.data.network.canada
 import ly.david.data.network.fakePlace
 import ly.david.data.network.fakeRelease
+import ly.david.data.network.ontario
+import ly.david.data.network.toronto
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
@@ -54,36 +56,37 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     // region General
     @Test
     fun firstTimeVisit() = runTest {
-        setArea(fakeArea)
+        setArea(ontario)
 
         assertFieldsDisplayed()
     }
 
     @Test
     fun repeatVisit() = runTest {
-        setArea(fakeArea)
-        areaDao.insert(fakeArea.toAreaRoomModel())
+        setArea(ontario)
+        areaDao.insert(ontario.toAreaRoomModel())
 
         assertFieldsDisplayed()
     }
 
-    // TODO: flake
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(fakeArea.name)
+        waitForThenAssertIsDisplayed(ontario.name)
         waitForThenPerformClickOn(places)
         waitForThenAssertIsDisplayed(fakePlace.name)
     }
 
     @Test
     fun hasRelations() = runTest {
-        setArea(fakeAreaWithRelation)
+        setArea(ontario)
 
-        val relationName = fakeAreaWithRelation.relations?.first()?.area?.name!!
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
         composeTestRule
-            .onNodeWithText(relationName)
+            .onNodeWithText(canada.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(toronto.name)
             .assertIsDisplayed()
 
         composeTestRule
@@ -93,13 +96,28 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .onNodeWithTag("filterTextField")
             .performTextInput("something such that we show no results")
         composeTestRule
-            .onNodeWithText(relationName)
+            .onNodeWithText(canada.name)
             .assertDoesNotExist()
+        composeTestRule
+            .onNodeWithText(toronto.name)
+            .assertDoesNotExist()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextClearance()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextInput("tor")
+        composeTestRule
+            .onNodeWithText(canada.name)
+            .assertIsNotDisplayed()
+        composeTestRule
+            .onNodeWithText(toronto.name)
+            .assertIsDisplayed()
     }
 
     @Test
     fun nonCountryStatsExcludesReleases() = runTest {
-        setArea(fakeArea)
+        setArea(ontario)
 
         waitForThenPerformClickOn(stats)
 
@@ -136,7 +154,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     // region Country
     @Test
     fun countryHasReleasesTab() = runTest {
-        setArea(fakeCountry)
+        setArea(canada)
 
         waitForThenPerformClickOn(releases)
         waitForThenAssertIsDisplayed(fakeRelease.name)
@@ -144,7 +162,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     @Test
     fun countryStatsIncludesReleases() = runTest {
-        setArea(fakeCountry)
+        setArea(canada)
 
         waitForThenPerformClickOn(releases)
         waitForThenPerformClickOn(stats)

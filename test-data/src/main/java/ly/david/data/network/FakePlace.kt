@@ -30,7 +30,7 @@ val fakePlaceWithAllData = PlaceMusicBrainzModel(
         end = "2022-12-10",
         ended = true
     ),
-    area = fakeArea,
+    area = ontario,
     coordinates = Coordinates(
         longitude = 123.123,
         latitude = 123.123
