@@ -79,9 +79,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
     fun hasRelations() = runTest {
         setArea(ontario)
 
-        composeTestRule
-            .onNodeWithText(relationships)
-            .performClick()
+        waitForThenPerformClickOn(relationships)
         waitForThenAssertIsDisplayed(canada.name)
         waitForThenAssertIsDisplayed(toronto.name)
 
