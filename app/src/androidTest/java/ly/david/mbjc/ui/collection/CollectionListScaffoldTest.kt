@@ -1,9 +1,11 @@
 package ly.david.mbjc.ui.collection
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -157,10 +159,10 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .onNodeWithTag("filterTextField")
             .performTextInput("something such that we show no results")
         composeTestRule
-            .onNodeWithText(name1)
-            .assertDoesNotExist()
+            .onAllNodesWithText(name1)
+            .assertCountEquals(0)
         composeTestRule
-            .onNodeWithText(name2)
-            .assertDoesNotExist()
+            .onAllNodesWithText(name2)
+            .assertCountEquals(0)
     }
 }

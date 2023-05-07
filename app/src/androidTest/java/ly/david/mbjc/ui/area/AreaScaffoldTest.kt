@@ -1,10 +1,12 @@
 package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -90,11 +92,11 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .onNodeWithTag("filterTextField")
             .performTextInput("something such that we show no results")
         composeTestRule
-            .onNodeWithText(canada.name)
-            .assertDoesNotExist()
+            .onAllNodesWithText(canada.name)
+            .assertCountEquals(0)
         composeTestRule
-            .onNodeWithText(toronto.name)
-            .assertDoesNotExist()
+            .onAllNodesWithText(toronto.name)
+            .assertCountEquals(0)
         composeTestRule
             .onNodeWithTag("filterTextField")
             .performTextClearance()
