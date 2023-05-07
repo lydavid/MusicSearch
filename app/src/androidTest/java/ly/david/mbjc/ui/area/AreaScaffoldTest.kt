@@ -82,12 +82,8 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         composeTestRule
             .onNodeWithText(relationships)
             .performClick()
-        composeTestRule
-            .onNodeWithText(canada.name)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(toronto.name)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(canada.name)
+        waitForThenAssertIsDisplayed(toronto.name)
 
         composeTestRule
             .onNodeWithContentDescription(filter)

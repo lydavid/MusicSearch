@@ -134,12 +134,8 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             )
         )
 
-        composeTestRule
-            .onNodeWithText(name1)
-            .assertIsDisplayed()
-        composeTestRule
-            .onNodeWithText(name2)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(name1)
+        waitForThenAssertIsDisplayed(name2)
 
         composeTestRule
             .onNodeWithContentDescription(filter)
