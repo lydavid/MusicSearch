@@ -129,7 +129,10 @@ internal fun RecordingScaffold(
                 tabsTitles = RecordingTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab == RecordingTab.RELEASES,
+                showFilterIcon = selectedTab in listOf(
+                    RecordingTab.RELEASES,
+                    RecordingTab.RELATIONSHIPS
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -173,6 +176,7 @@ internal fun RecordingScaffold(
                         )
                     }
                 }
+
                 RecordingTab.RELEASES -> {
                     ReleasesByRecordingScreen(
                         recordingId = recordingId,
@@ -189,18 +193,21 @@ internal fun RecordingScaffold(
                         onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
+
                 RecordingTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onItemClick = onItemClick,
-                        snackbarHostState = snackbarHostState,
                         lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
+                        snackbarHostState = snackbarHostState,
+                        onItemClick = onItemClick,
                     )
                 }
+
                 RecordingTab.STATS -> {
                     RecordingStatsScreen(
                         recordingId = recordingId,

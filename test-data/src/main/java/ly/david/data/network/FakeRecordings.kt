@@ -15,7 +15,7 @@ val fakeRecording = RecordingMusicBrainzModel(
             typeId = "4f4aa317-c3c4-4001-ac23-fb8cf0bc543c",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzResource.AREA,
-            area = fakeArea
+            area = ontario
         )
     )
 )

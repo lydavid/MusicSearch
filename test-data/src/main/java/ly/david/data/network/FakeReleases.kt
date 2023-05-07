@@ -19,7 +19,7 @@ val remasterOf = RelationMusicBrainzModel(
 )
 
 val fakeReleaseEvent = ReleaseEvent(
-    area = fakeCountry,
+    area = canada,
     date = "2022-10-29"
 )
 

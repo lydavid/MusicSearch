@@ -65,9 +65,9 @@ internal fun LabelScaffold(
     val snackbarHostState = remember { SnackbarHostState() }
     val pagerState = rememberPagerState()
 
+    var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
-    var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
 
     val title by viewModel.title.collectAsState()
     val label by viewModel.label.collectAsState()
@@ -114,7 +114,10 @@ internal fun LabelScaffold(
                 tabsTitles = LabelTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab == LabelTab.RELEASES,
+                showFilterIcon = selectedTab in listOf(
+                    LabelTab.RELEASES,
+                    LabelTab.RELATIONSHIPS
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -159,6 +162,7 @@ internal fun LabelScaffold(
                         )
                     }
                 }
+
                 LabelTab.RELEASES -> {
                     ReleasesByLabelScreen(
                         labelId = labelId,
@@ -175,18 +179,21 @@ internal fun LabelScaffold(
                         onPagedReleasesFlowChange = { pagedReleasesFlow = it }
                     )
                 }
+
                 LabelTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onItemClick = onItemClick,
-                        snackbarHostState = snackbarHostState,
                         lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
+                        snackbarHostState = snackbarHostState,
+                        onItemClick = onItemClick,
                     )
                 }
+
                 LabelTab.STATS -> {
                     LabelStatsScreen(
                         labelId = labelId,

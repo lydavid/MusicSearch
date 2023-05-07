@@ -73,8 +73,8 @@ class ReleaseRepositoryTest {
                 ),
                 areas = listOf(
                     AreaListItemModel(
-                        id = "area2",
-                        name = "Country Name",
+                        id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+                        name = "Canada",
                         disambiguation = null,
                         type = "Country",
                         lifeSpan = null,

@@ -35,7 +35,7 @@ import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
 import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
 
@@ -62,6 +62,7 @@ internal fun SeriesScaffold(
     val pagerState = rememberPagerState()
 
     var selectedTab by rememberSaveable { mutableStateOf(SeriesTab.DETAILS) }
+    var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
     val title by viewModel.title.collectAsState()
@@ -86,7 +87,7 @@ internal fun SeriesScaffold(
     Scaffold(
         modifier = modifier,
         topBar = {
-            ScrollableTopAppBar(
+            TopAppBarWithFilter(
                 resource = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
@@ -101,6 +102,11 @@ internal fun SeriesScaffold(
                 tabsTitles = SeriesTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
+                showFilterIcon = selectedTab in listOf(SeriesTab.RELATIONSHIPS),
+                filterText = filterText,
+                onFilterTextChange = {
+                    filterText = it
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -135,18 +141,21 @@ internal fun SeriesScaffold(
                         )
                     }
                 }
+
                 SeriesTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        lazyListState = relationsLazyListState,
                         snackbarHostState = snackbarHostState,
                         onItemClick = onItemClick,
-                        lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
                     )
                 }
+
                 SeriesTab.STATS -> {
                     SeriesStatsScreen(
                         seriesId = seriesId,

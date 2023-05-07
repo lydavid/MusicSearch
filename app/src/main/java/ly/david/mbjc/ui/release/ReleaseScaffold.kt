@@ -124,7 +124,10 @@ internal fun ReleaseScaffold(
                 tabsTitles = ReleaseTab.values().map { stringResource(id = it.tab.titleRes) },
                 selectedTabIndex = selectedTab.ordinal,
                 onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
-                showFilterIcon = selectedTab == ReleaseTab.TRACKS,
+                showFilterIcon = selectedTab in listOf(
+                    ReleaseTab.TRACKS,
+                    ReleaseTab.RELATIONSHIPS
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -177,6 +180,7 @@ internal fun ReleaseScaffold(
                         )
                     }
                 }
+
                 ReleaseTab.TRACKS -> {
                     TracksInReleaseScreen(
                         modifier = Modifier
@@ -191,18 +195,21 @@ internal fun ReleaseScaffold(
                         }
                     )
                 }
+
                 ReleaseTab.RELATIONSHIPS -> {
+                    viewModel.updateQuery(filterText)
                     RelationsScreen(
+                        lazyPagingItems = relationsLazyPagingItems,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        onItemClick = onItemClick,
-                        snackbarHostState = snackbarHostState,
                         lazyListState = relationsLazyListState,
-                        lazyPagingItems = relationsLazyPagingItems,
+                        snackbarHostState = snackbarHostState,
+                        onItemClick = onItemClick,
                     )
                 }
+
                 ReleaseTab.STATS -> {
                     ReleaseStatsScreen(releaseId = releaseId,
                         modifier = Modifier

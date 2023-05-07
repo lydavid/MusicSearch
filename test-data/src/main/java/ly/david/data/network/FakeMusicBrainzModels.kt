@@ -2,7 +2,7 @@ package ly.david.data.network
 
 fun MusicBrainzResource.toFakeMusicBrainzModel(): MusicBrainzModel =
     when (this) {
-        MusicBrainzResource.AREA -> fakeArea
+        MusicBrainzResource.AREA -> ontario
         MusicBrainzResource.ARTIST -> fakeArtist
         MusicBrainzResource.EVENT -> fakeEvent
         MusicBrainzResource.GENRE -> fakeGenre

@@ -4,50 +4,56 @@ import ly.david.data.AreaType
 import ly.david.data.network.api.BrowseAreasResponse
 import ly.david.data.network.api.SearchAreasResponse
 
-/**
- * All fake models should start as MusicBrainzModel, since we can convert them to RoomModel and UiModel.
- */
-val fakeArea = AreaMusicBrainzModel(
-    id = "area1", // Note that MB id is unique between all resources (ie. area and artist cannot have the same id)
-    name = "Area Name"
-)
-
-val fakeCountry = AreaMusicBrainzModel(
-    id = "area2",
-    name = "Country Name",
+val canada = AreaMusicBrainzModel(
+    id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
+    name = "Canada",
     type = AreaType.COUNTRY
 )
 
-val areaPartOfArea = RelationMusicBrainzModel(
-    type = "doesn't matter",
-    typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
-    direction = Direction.BACKWARD,
-    targetType = MusicBrainzResource.AREA,
-    area = fakeCountry
+val toronto = AreaMusicBrainzModel(
+    id = "74b24e62-d2fe-42d2-9d96-31f2da756c77",
+    name = "Toronto",
+    type = "City"
 )
 
-val fakeAreaWithRelation = AreaMusicBrainzModel(
-    id = "area3",
-    name = "Area With Relation",
+/**
+ * All fake models should start as MusicBrainzModel, since we can convert them to RoomModel and UiModel.
+ */
+val ontario = AreaMusicBrainzModel(
+    id = "fd3d44c5-80a1-3842-9745-2c4972d35afa",
+    name = "Ontario",
+    type = "Subdivision",
     relations = listOf(
-        areaPartOfArea
+        RelationMusicBrainzModel(
+            type = "part of",
+            typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
+            direction = Direction.BACKWARD,
+            targetType = MusicBrainzResource.AREA,
+            area = canada
+        ),
+        RelationMusicBrainzModel(
+            type = "part of",
+            typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
+            direction = Direction.FORWARD,
+            targetType = MusicBrainzResource.AREA,
+            area = toronto
+        ),
     )
 )
 
 val fakeAreas = listOf(
-    fakeArea,
-    fakeCountry,
-    fakeAreaWithRelation
+    ontario,
+    canada
 )
 
 val browseAreasResponse = BrowseAreasResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(fakeArea)
+    musicBrainzModels = listOf(ontario)
 )
 
 val searchAreasResponse = SearchAreasResponse(
     count = 1,
     offset = 0,
-    areas = listOf(element = fakeArea)
+    areas = listOf(element = ontario)
 )

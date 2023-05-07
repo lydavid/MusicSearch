@@ -31,6 +31,22 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         resourceId: String
     ): PagingSource<Int, RelationRoomModel>
 
+    @Transaction
+    @Query(
+        """
+            SELECT *
+            FROM relation
+            WHERE resource_id = :resourceId AND
+            (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+            attributes LIKE :query OR additional_info LIKE :query)
+            ORDER BY linked_resource, label, `order`
+        """
+    )
+    abstract fun getRelationsForResourceFiltered(
+        resourceId: String,
+        query: String
+    ): PagingSource<Int, RelationRoomModel>
+
     @Query(
         """
         DELETE FROM relation WHERE resource_id = :resourceId

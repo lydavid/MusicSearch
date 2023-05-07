@@ -30,18 +30,3 @@ internal interface IPagedList<LI : ListItemModel> {
 
     val pagedResources: Flow<PagingData<LI>>
 }
-
-internal interface SortablePagedList<LI : ListItemModel> : IPagedList<LI> {
-    data class ViewModelState(
-        val resourceId: String = "",
-        val query: String = "",
-        val isRemote: Boolean = true,
-        val sorted: Boolean = false
-    )
-
-    val sorted: MutableStateFlow<Boolean>
-
-    fun updateSorted(sorted: Boolean) {
-        this.sorted.value = sorted
-    }
-}

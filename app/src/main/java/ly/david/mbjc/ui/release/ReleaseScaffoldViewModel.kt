@@ -72,7 +72,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     )
 
     private val releaseId: MutableStateFlow<String> = MutableStateFlow("")
-    private val query: MutableStateFlow<String> = MutableStateFlow("")
+    override val query: MutableStateFlow<String> = MutableStateFlow("")
     private val tracksParamState = combine(releaseId, query) { releaseId, query ->
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
@@ -93,10 +93,6 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 
     private fun loadTracks(releaseId: String) {
         this.releaseId.value = releaseId
-    }
-
-    fun updateQuery(query: String) {
-        this.query.value = query
     }
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
