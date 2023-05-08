@@ -7,9 +7,9 @@ fun MusicBrainzResource.toFakeMusicBrainzModel(): MusicBrainzModel =
         MusicBrainzResource.EVENT -> fakeEvent
         MusicBrainzResource.GENRE -> fakeGenre
         MusicBrainzResource.INSTRUMENT -> fakeInstrument
-        MusicBrainzResource.LABEL -> fakeLabel
+        MusicBrainzResource.LABEL -> elektra
         MusicBrainzResource.PLACE -> fakePlace
-        MusicBrainzResource.RECORDING -> fakeRecording
+        MusicBrainzResource.RECORDING -> underPressureRecording
         MusicBrainzResource.RELEASE -> underPressure
         MusicBrainzResource.RELEASE_GROUP -> underPressureReleaseGroup
         MusicBrainzResource.SERIES -> fakeSeries

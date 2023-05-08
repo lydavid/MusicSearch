@@ -32,11 +32,11 @@ val underPressure = ReleaseMusicBrainzModel(
     releaseEvents = listOf(
         fakeReleaseEvent
     ),
-    media = listOf(fakeMedia),
+    media = listOf(underPressureMedia),
     labelInfoList = listOf(
-        fakeLabelInfo,
+        underPressureLabelInfo,
         LabelInfo(
-            label = fakeLabel2
+            label = elektraMusicGroup
         )
     ),
     relations = listOf(underPressureRemasterOf)

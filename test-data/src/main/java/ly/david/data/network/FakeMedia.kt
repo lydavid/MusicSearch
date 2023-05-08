@@ -1,27 +1,25 @@
 package ly.david.data.network
 
-val fakeTrack = TrackMusicBrainzModel(
-    id = "track1",
-    position = 0,
-    number = "A1",
-    title = "Fake Track",
-    length = 25300000,
-    recording = fakeRecording
+val underPressureTrack = TrackMusicBrainzModel(
+    id = "ae3a221e-b7db-3234-b9c7-a3de487389ef",
+    position = 1,
+    number = "1",
+    title = "Under Pressure",
+    recording = underPressureRecording
 )
 
-val fakeTrack2 = TrackMusicBrainzModel(
+val soulBrotherTrack = TrackMusicBrainzModel(
     id = "track2",
-    position = 1,
-    number = "A2",
-    title = "Fake Track 2 (find me)",
-    length = 1000,
-    recording = fakeRecording
+    position = 2,
+    number = "2",
+    title = "Soul Brother",
+    recording = underPressureRecording
 )
 
-val fakeMedia = MediumMusicBrainzModel(
+val underPressureMedia = MediumMusicBrainzModel(
     position = 1,
-    title = null,
-    trackCount = 1,
-    format = "CD",
-    tracks = listOf(fakeTrack, fakeTrack2)
+    title = "",
+    trackCount = 2,
+    format = "Vinyl",
+    tracks = listOf(underPressureTrack, soulBrotherTrack)
 )

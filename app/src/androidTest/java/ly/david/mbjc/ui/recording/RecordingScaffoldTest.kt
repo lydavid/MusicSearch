@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.recording
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
@@ -12,10 +13,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.RecordingMusicBrainzModel
+import ly.david.data.network.davidBowie
 import ly.david.data.network.davidBowieArtistCredit
-import ly.david.data.network.fakeRecording
 import ly.david.data.network.queenArtistCredit
 import ly.david.data.network.underPressure
+import ly.david.data.network.underPressureRecording
 import ly.david.data.repository.RecordingRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -39,22 +41,21 @@ internal class RecordingScaffoldTest : MainActivityTestWithMockServer(), StringR
 
     @Test
     fun firstVisit_noLocalData() = runTest {
-        setRecording(fakeRecording)
+        setRecording(underPressureRecording)
 
         assertFieldsDisplayed()
-
     }
 
     @Test
     fun repeatVisit_localData() = runTest {
-        recordingRepository.lookupRecording(fakeRecording.id)
-        setRecording(fakeRecording)
+        recordingRepository.lookupRecording(underPressureRecording.id)
+        setRecording(underPressureRecording)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(fakeRecording.name)
+        waitForThenAssertIsDisplayed(underPressureRecording.name)
 
         // Confirm that up navigation items exists
         composeTestRule
@@ -68,18 +69,18 @@ internal class RecordingScaffoldTest : MainActivityTestWithMockServer(), StringR
             .assertIsDisplayed()
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(underPressure.name)
+        composeTestRule
+            .onNode(
+                matcher = hasText(underPressure.name).and(hasAnySibling(hasText(underPressure.date!!))),
+                useUnmergedTree = true
+            )
+            .assertIsDisplayed()
+
+        waitForThenPerformClickOn(relationships)
+        waitForThenAssertIsDisplayed(davidBowie.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
         waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
-    }
-
-    @Test
-    fun hasRelations() = runTest {
-        setRecording(fakeRecording)
-
-        waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakeRecording.relations?.first()?.area?.name!!)
     }
 }
