@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.fakeLabel
-import ly.david.data.network.fakeRelease
+import ly.david.data.network.underPressure
 import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -51,7 +51,7 @@ internal class LabelScaffoldTest : MainActivityTestWithMockServer(), StringRefer
         waitForThenAssertIsDisplayed(fakeLabel.getNameWithDisambiguation())
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
+        waitForThenAssertIsDisplayed(underPressure.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))

@@ -20,9 +20,9 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.canada
 import ly.david.data.network.fakePlace
-import ly.david.data.network.fakeRelease
 import ly.david.data.network.ontario
 import ly.david.data.network.toronto
+import ly.david.data.network.underPressure
 import ly.david.data.persistence.area.AreaDao
 import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
@@ -82,6 +82,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         setArea(ontario)
 
         waitForThenPerformClickOn(relationships)
+        // TODO: passes locally but not in CI
 //        waitForThenAssertIsDisplayed(canada.name)
 //        waitForThenAssertIsDisplayed(toronto.name)
 
@@ -153,7 +154,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         setArea(canada)
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
+        waitForThenAssertIsDisplayed(underPressure.name)
     }
 
     @Test

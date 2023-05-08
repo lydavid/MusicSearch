@@ -3,18 +3,24 @@ package ly.david.data.network
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.network.api.SearchReleaseGroupsResponse
 
-val fakeReleaseGroup = ReleaseGroupMusicBrainzModel(
-    id = "fakeReleaseGroup1",
-    name = "Release Group Name",
-    artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
-    primaryType = "Album",
+val hotSpaceReleaseGroup = ReleaseGroupMusicBrainzModel(
+    id = "3918b90b-340e-3779-9d7e-ba1593653498",
+    name = "Hot Space",
+    firstReleaseDate = "1982-05-21"
+)
+
+val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
+    id = "bdaeec2d-94f1-46b5-91f3-340ec6939c66",
+    name = "Under Pressure",
+    artistCredits = listOf(davidBowieArtistCredit, queenArtistCredit),
+    primaryType = "Single",
     relations = listOf(
         RelationMusicBrainzModel(
-            type = "",
-            typeId = "5e2907db-49ec-4a48-9f11-dfb99d2603ff",
-            direction = Direction.BACKWARD,
-            targetType = MusicBrainzResource.ARTIST,
-            artist = fakeArtist
+            type = "single from",
+            typeId = "fcf680a9-6871-4519-8c4b-8c6549575b35",
+            direction = Direction.FORWARD,
+            targetType = MusicBrainzResource.RELEASE_GROUP,
+            releaseGroup = hotSpaceReleaseGroup
         )
     )
 )
@@ -22,21 +28,21 @@ val fakeReleaseGroup = ReleaseGroupMusicBrainzModel(
 val fakeReleaseGroupWithArtistCredits = ReleaseGroupMusicBrainzModel(
     id = "fakeReleaseGroup2",
     name = "Release Group With Artist Credits",
-    artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2)
+    artistCredits = listOf(davidBowieArtistCredit, queenArtistCredit)
 )
 
 val browseReleaseGroupsResponse = BrowseReleaseGroupsResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(fakeReleaseGroup)
+    musicBrainzModels = listOf(underPressureReleaseGroup)
 )
 
 val fakeReleaseGroups = listOf(
-    fakeReleaseGroup
+    underPressureReleaseGroup
 )
 
 val searchReleaseGroupsResponse = SearchReleaseGroupsResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeReleaseGroup)
+    listOf(element = underPressureReleaseGroup)
 )

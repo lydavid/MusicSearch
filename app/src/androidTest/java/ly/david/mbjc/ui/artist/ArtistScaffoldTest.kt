@@ -2,21 +2,30 @@ package ly.david.mbjc.ui.artist
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextClearance
+import androidx.compose.ui.test.performTextInput
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.ArtistMusicBrainzModel
-import ly.david.data.network.fakeArtist
-import ly.david.data.network.fakeRelease
-import ly.david.data.network.fakeReleaseGroup
+import ly.david.data.network.bandAid
+import ly.david.data.network.carlosAlomar
+import ly.david.data.network.davidBowie
+import ly.david.data.network.underPressure
+import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.repository.ArtistRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -40,27 +49,34 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
 
     @Test
     fun firstVisit_noLocalData() = runTest {
-        setArtist(fakeArtist)
+        setArtist(davidBowie)
 
         assertFieldsDisplayed()
     }
 
     @Test
     fun repeatVisit_localData() = runTest {
-        artistRepository.lookupArtist(fakeArtist.id)
-        setArtist(fakeArtist)
+        artistRepository.lookupArtist(davidBowie.id)
+        setArtist(davidBowie)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(fakeArtist.getNameWithDisambiguation())
+        waitForThenAssertIsDisplayed(davidBowie.getNameWithDisambiguation())
 
-        waitForThenAssertIsDisplayed(fakeArtist.type!!)
-        waitForThenAssertIsDisplayed(fakeArtist.gender!!)
+        waitForThenAssertIsDisplayed(davidBowie.type!!)
+        waitForThenAssertIsDisplayed(davidBowie.gender!!)
 
         waitForThenPerformClickOn(releaseGroups)
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        composeTestRule
+            .onNode(
+                matcher = hasText(underPressureReleaseGroup.name).and(
+                    hasAnySibling(hasText(underPressureReleaseGroup.artistCredits.getDisplayNames()))
+                ),
+                useUnmergedTree = true
+            )
+            .assertIsDisplayed()
         composeTestRule
             .onNodeWithContentDescription(moreActions)
             .performClick()
@@ -69,8 +85,14 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
             .performClick()
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
-        waitForThenAssertIsDisplayed(fakeRelease.date!!)
+        composeTestRule
+            .onNode(
+                matcher = hasText(underPressure.name).and(
+                    hasAnySibling(hasText(underPressure.date!!))
+                ),
+                useUnmergedTree = true
+            )
+            .assertIsDisplayed()
         composeTestRule
             .onNodeWithContentDescription(moreActions)
             .performClick()
@@ -87,10 +109,35 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
     // TODO: For some reason, there's a problem with waiting for this if we put it in above function
     @Test
     fun hasRelations() = runTest {
-        setArtist(fakeArtist)
+        setArtist(davidBowie)
 
         waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakeArtist.relations?.first()?.artist?.name!!)
+        waitForThenAssertIsDisplayed(davidBowie.name)
+
+        composeTestRule
+            .onNodeWithContentDescription(filter)
+            .performClick()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextInput("something such that we show no results")
+        composeTestRule
+            .onAllNodesWithText(bandAid.name)
+            .assertCountEquals(0)
+        composeTestRule
+            .onAllNodesWithText(carlosAlomar.name)
+            .assertCountEquals(0)
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextClearance()
+        composeTestRule
+            .onNodeWithTag("filterTextField")
+            .performTextInput("band")
+        composeTestRule
+            .onNodeWithText(bandAid.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(carlosAlomar.name)
+            .assertIsNotDisplayed()
     }
 
     @Test
@@ -98,15 +145,22 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
         composeTestRule.activity.setContent {
             PreviewTheme {
                 ArtistScaffold(
-                    artistId = fakeArtist.id,
+                    artistId = davidBowie.id,
                     sortReleaseGroupListItems = true
                 )
             }
         }
 
         waitForThenPerformClickOn(releaseGroups)
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.primaryType!!)
+        waitForThenAssertIsDisplayed(underPressureReleaseGroup.primaryType!!) // Separator
+        composeTestRule
+            .onNode(
+                matcher = hasText(underPressureReleaseGroup.name).and(
+                    hasAnySibling(hasText(underPressureReleaseGroup.artistCredits.getDisplayNames()))
+                ),
+                useUnmergedTree = true
+            )
+            .assertIsDisplayed()
         composeTestRule
             .onNodeWithContentDescription(moreActions)
             .performClick()
@@ -120,16 +174,20 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
         composeTestRule.activity.setContent {
             PreviewTheme {
                 ArtistScaffold(
-                    artistId = fakeArtist.id,
+                    artistId = davidBowie.id,
                     showMoreInfoInReleaseListItem = false
                 )
             }
         }
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
         composeTestRule
-            .onAllNodesWithText(fakeRelease.date!!)
+            .onNode(
+                matcher = hasText(underPressure.name).and(hasAnySibling(hasText(underPressure.date!!))),
+                useUnmergedTree = true
+            )
+        composeTestRule
+            .onAllNodesWithText(underPressure.date!!)
             .assertCountEquals(0)
         composeTestRule
             .onNodeWithContentDescription(moreActions)

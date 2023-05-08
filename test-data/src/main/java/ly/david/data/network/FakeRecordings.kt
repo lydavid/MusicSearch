@@ -8,7 +8,7 @@ val fakeRecording = RecordingMusicBrainzModel(
     name = "Fake Recording",
     firstReleaseDate = "2022-11-06",
     length = 25300000,
-    artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
+    artistCredits = listOf(davidBowieArtistCredit, queenArtistCredit),
     relations = listOf(
         RelationMusicBrainzModel(
             type = "",

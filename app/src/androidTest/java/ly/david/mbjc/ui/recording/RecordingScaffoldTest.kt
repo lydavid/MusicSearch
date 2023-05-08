@@ -12,10 +12,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.network.fakeArtistCredit
-import ly.david.data.network.fakeArtistCredit2
+import ly.david.data.network.davidBowieArtistCredit
 import ly.david.data.network.fakeRecording
-import ly.david.data.network.fakeRelease
+import ly.david.data.network.queenArtistCredit
+import ly.david.data.network.underPressure
 import ly.david.data.repository.RecordingRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -61,14 +61,14 @@ internal class RecordingScaffoldTest : MainActivityTestWithMockServer(), StringR
             .onNodeWithTag("TopBarSubtitle")
             .performClick()
         composeTestRule
-            .onNodeWithText(fakeArtistCredit.name)
+            .onNodeWithText(davidBowieArtistCredit.name)
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(fakeArtistCredit2.name)
+            .onNodeWithText(queenArtistCredit.name)
             .assertIsDisplayed()
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
+        waitForThenAssertIsDisplayed(underPressure.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))

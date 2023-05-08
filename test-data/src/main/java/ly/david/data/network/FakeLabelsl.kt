@@ -14,7 +14,7 @@ val fakeLabel = LabelMusicBrainzModel(
             typeId = "fe16f2bd-d324-435a-8076-bcf43b805bd9",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzResource.ARTIST,
-            artist = fakeArtist
+            artist = davidBowie
         )
     )
 )
