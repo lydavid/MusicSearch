@@ -2,8 +2,6 @@ package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertCountEquals
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
@@ -104,12 +102,10 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         composeTestRule
             .onNodeWithTag("filterTextField")
             .performTextInput("tor")
+        waitForThenAssertIsDisplayed(toronto.name)
         composeTestRule
             .onNodeWithText(canada.name)
-            .assertIsNotDisplayed()
-        composeTestRule
-            .onNodeWithText(toronto.name)
-            .assertIsDisplayed()
+            .assertIsNotDisplayedOrDoesNotExist()
     }
 
     @Test
