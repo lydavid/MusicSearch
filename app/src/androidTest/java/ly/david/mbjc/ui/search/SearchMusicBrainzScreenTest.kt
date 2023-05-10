@@ -25,7 +25,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.fakeReleaseGroup
+import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.network.resourceUri
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -147,6 +147,6 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             it.startActivity(intent)
         }
 
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        waitForThenAssertIsDisplayed(underPressureReleaseGroup.name)
     }
 }

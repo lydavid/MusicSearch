@@ -3,19 +3,19 @@ package ly.david.data.network
 import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.SearchReleasesResponse
 
-val fakeRelease2 = ReleaseMusicBrainzModel(
-    id = "fakeRelease2",
-    name = "Fake Release Relationship",
-    artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
-    releaseGroup = fakeReleaseGroup
+val underPressureRemastered = ReleaseMusicBrainzModel(
+    id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
+    name = "Under Pressure",
+    artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
+    releaseGroup = underPressureReleaseGroup
 )
 
-val remasterOf = RelationMusicBrainzModel(
-    type = "blah",
+val underPressureRemasterOf = RelationMusicBrainzModel(
+    type = "remaster",
     typeId = "48e327b5-2d04-4518-93f1-fed5f0f0fa3c",
-    direction = Direction.FORWARD,
+    direction = Direction.BACKWARD,
     targetType = MusicBrainzResource.RELEASE,
-    release = fakeRelease2
+    release = underPressureRemastered
 )
 
 val fakeReleaseEvent = ReleaseEvent(
@@ -23,38 +23,38 @@ val fakeReleaseEvent = ReleaseEvent(
     date = "2022-10-29"
 )
 
-val fakeRelease = ReleaseMusicBrainzModel(
-    id = "fakeRelease1",
-    name = "Release Name",
-    date = "2023-03-22",
-    artistCredits = listOf(fakeArtistCredit, fakeArtistCredit2),
-    releaseGroup = fakeReleaseGroup,
+val underPressure = ReleaseMusicBrainzModel(
+    id = "61735bf8-219e-3164-a94c-b74b1482fd01",
+    name = "Under Pressure",
+    date = "1981-10",
+    artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
+    releaseGroup = underPressureReleaseGroup,
     releaseEvents = listOf(
         fakeReleaseEvent
     ),
-    media = listOf(fakeMedia),
+    media = listOf(underPressureMedia),
     labelInfoList = listOf(
-        fakeLabelInfo,
+        underPressureLabelInfo,
         LabelInfo(
-            label = fakeLabel2
+            label = elektraMusicGroup
         )
     ),
-    relations = listOf(remasterOf)
+    relations = listOf(underPressureRemasterOf)
 )
 
 val fakeReleases = listOf(
-    fakeRelease,
-    fakeRelease2
+    underPressure,
+    underPressureRemastered
 )
 
 val browseReleasesResponse = BrowseReleasesResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(fakeRelease)
+    musicBrainzModels = listOf(underPressure)
 )
 
 val searchReleasesResponse = SearchReleasesResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeRelease)
+    listOf(element = underPressure)
 )

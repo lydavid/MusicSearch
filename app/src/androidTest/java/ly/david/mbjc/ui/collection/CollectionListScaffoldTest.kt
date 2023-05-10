@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.collection
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -145,12 +144,10 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
         composeTestRule
             .onNodeWithTag("filterTextField")
             .performTextInput("should")
-        composeTestRule
-            .onNodeWithText(name1)
-            .assertIsDisplayed()
+        waitForThenAssertIsDisplayed(name1)
         composeTestRule
             .onNodeWithText(name2)
-            .assertIsNotDisplayed()
+            .assertIsNotDisplayedOrDoesNotExist()
 
         composeTestRule
             .onNodeWithContentDescription(filter)

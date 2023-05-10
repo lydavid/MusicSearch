@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.fakeRecording
+import ly.david.data.network.underPressureRecording
 import ly.david.data.network.fakeWorkWithAllData
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.MainActivityTest
@@ -64,7 +64,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .assertIsDisplayed()
 
         waitForThenPerformClickOn(recordings)
-        waitForThenAssertIsDisplayed(fakeRecording.name)
+        waitForThenAssertIsDisplayed(underPressureRecording.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(recordings).and(hasNoClickAction()))

@@ -3,7 +3,9 @@ package ly.david.mbjc
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -66,5 +68,13 @@ internal abstract class MainActivityTest {
         composeTestRule
             .onNode(matcher)
             .assertIsDisplayed()
+    }
+
+    fun SemanticsNodeInteraction.assertIsNotDisplayedOrDoesNotExist() {
+        try {
+            assertIsNotDisplayed()
+        } catch (e: AssertionError) {
+            assertDoesNotExist()
+        }
     }
 }

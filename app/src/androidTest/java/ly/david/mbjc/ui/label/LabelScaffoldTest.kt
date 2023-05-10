@@ -9,8 +9,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.LabelMusicBrainzModel
-import ly.david.data.network.fakeLabel
-import ly.david.data.network.fakeRelease
+import ly.david.data.network.elektra
+import ly.david.data.network.elektraMusicGroup
+import ly.david.data.network.underPressure
 import ly.david.data.repository.LabelRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -34,24 +35,24 @@ internal class LabelScaffoldTest : MainActivityTestWithMockServer(), StringRefer
 
     @Test
     fun firstVisit_noLocalData() = runTest {
-        setLabel(fakeLabel)
+        setLabel(elektra)
 
         assertFieldsDisplayed()
     }
 
     @Test
     fun repeatVisit_localData() = runTest {
-        labelRepository.lookupLabel(fakeLabel.id)
-        setLabel(fakeLabel)
+        labelRepository.lookupLabel(elektra.id)
+        setLabel(elektra)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(fakeLabel.getNameWithDisambiguation())
+        waitForThenAssertIsDisplayed(elektra.getNameWithDisambiguation())
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
+        waitForThenAssertIsDisplayed(underPressure.name)
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
@@ -60,9 +61,9 @@ internal class LabelScaffoldTest : MainActivityTestWithMockServer(), StringRefer
 
     @Test
     fun hasRelations() = runTest {
-        setLabel(fakeLabel)
+        setLabel(elektra)
 
         waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakeLabel.relations?.first()?.artist?.name!!)
+        waitForThenAssertIsDisplayed(elektraMusicGroup.name)
     }
 }

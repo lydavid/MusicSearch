@@ -1,6 +1,8 @@
 package ly.david.mbjc.ui.releasegroup
 
 import androidx.activity.compose.setContent
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
@@ -11,10 +13,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.network.fakeArtistCredit
-import ly.david.data.network.fakeArtistCredit2
-import ly.david.data.network.fakeRelease
-import ly.david.data.network.fakeReleaseGroup
+import ly.david.data.network.davidBowieArtistCredit
+import ly.david.data.network.hotSpaceReleaseGroup
+import ly.david.data.network.queenArtistCredit
+import ly.david.data.network.underPressure
+import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -44,21 +47,21 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
     @Test
     fun firstVisit_noLocalData() = runTest {
-        setReleaseGroup(fakeReleaseGroup)
+        setReleaseGroup(underPressureReleaseGroup)
 
         assertFieldsDisplayed()
     }
 
     @Test
     fun repeatVisit_localData() = runTest {
-        releaseGroupRepository.lookupReleaseGroup(fakeReleaseGroup.id)
-        setReleaseGroup(fakeReleaseGroup)
+        releaseGroupRepository.lookupReleaseGroup(underPressureReleaseGroup.id)
+        setReleaseGroup(underPressureReleaseGroup)
 
         assertFieldsDisplayed()
     }
 
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.name)
+        waitForThenAssertIsDisplayed(underPressureReleaseGroup.name)
 
         // Confirm that up navigation items exists
         waitForNodeToShow(hasTestTag("TopBarSubtitle"))
@@ -66,11 +69,16 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithTag("TopBarSubtitle")
             .performClick()
 
-        waitForThenAssertIsDisplayed(fakeArtistCredit.name)
-        waitForThenAssertIsDisplayed(fakeArtistCredit2.name)
+        waitForThenAssertIsDisplayed(davidBowieArtistCredit.name)
+        waitForThenAssertIsDisplayed(queenArtistCredit.name)
 
         waitForThenPerformClickOn(releases)
-        waitForThenAssertIsDisplayed(fakeRelease.name)
+        composeTestRule
+            .onNode(
+                matcher = hasText(underPressure.name).and(hasAnySibling(hasText(underPressure.date!!))),
+                useUnmergedTree = true
+            )
+            .assertIsDisplayed()
 
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
@@ -79,10 +87,10 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
     @Test
     fun hasRelations() = runTest {
-        setReleaseGroup(fakeReleaseGroup)
+        setReleaseGroup(underPressureReleaseGroup)
 
         waitForThenPerformClickOn(relationships)
-        waitForThenAssertIsDisplayed(fakeReleaseGroup.relations?.first()?.artist?.name!!)
+        waitForThenAssertIsDisplayed(hotSpaceReleaseGroup.name)
     }
 
     @Test
