@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.artist
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasAnySibling
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
@@ -137,7 +136,7 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithText(carlosAlomar.name)
-            .assertIsNotDisplayed()
+            .assertIsNotDisplayedOrDoesNotExist()
     }
 
     @Test
