@@ -18,7 +18,7 @@ dependencyResolutionManagement {
             version("compose-material", "1.4.3")
             version("compose-material3", "1.1.0-rc01")
             version("compose-ui", "1.4.3")
-            version("hilt", "2.45")
+            version("hilt", "2.46.1")
             version("hilt-navigation", "1.0.0")
             version("junit", "4.13.2")
             version("mockk", "1.13.5")
