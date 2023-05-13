@@ -65,9 +65,9 @@ internal class ReleaseGroupDaoTest : HiltTest() {
                     artistCreditNameRoomModel = ArtistCreditNameRoomModel(
                         artistCreditId = 1,
                         position = 0,
-                        artistId = "artist1",
+                        artistId = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
                         name = "Different Artist Name",
-                        joinPhrase = " feat. "
+                        joinPhrase = " & "
                     )
                 )
             )
@@ -80,7 +80,7 @@ internal class ReleaseGroupDaoTest : HiltTest() {
                     artistCreditNameRoomModel = ArtistCreditNameRoomModel(
                         artistCreditId = 1,
                         position = 1,
-                        artistId = "artist2",
+                        artistId = "0383dadf-2a4e-4d10-a46a-e9e041da8eb3",
                         name = "Other Artist",
                         joinPhrase = null
                     )
