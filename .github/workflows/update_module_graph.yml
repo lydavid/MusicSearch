@@ -1,0 +1,29 @@
+name: Update module graph
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Regenerate module graph
+        run: ./gradlew createModuleGraph
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: 'chore: update module graph [skip ci]'
+          file_pattern: 'README.md'

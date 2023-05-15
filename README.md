@@ -39,6 +39,7 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 
 ## Dependency Diagram
+
 ```mermaid
 %%{
   init: {
