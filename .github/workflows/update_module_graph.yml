@@ -6,7 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  check:
+  regen:
+    name: Regenerate graph
     runs-on: ubuntu-latest
     permissions:
       contents: write

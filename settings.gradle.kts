@@ -25,6 +25,7 @@ dependencyResolutionManagement {
             version("mockk", "1.13.5")
             version("moshi", "1.15.0")
             version("okhttp", "4.11.0")
+            version("paging", "3.1.1")
             version("retrofit", "2.9.0")
             version("room", "2.5.1")
 
@@ -38,8 +39,9 @@ dependencyResolutionManagement {
             library("androidx-datastore-preferences", "androidx.datastore", "datastore-preferences").version("1.0.0")
             library("androidx-lifecycle-viewmodel-compose", "androidx.lifecycle", "lifecycle-viewmodel-compose").version("2.6.1")
             library("androidx-navigation-compose", "androidx.navigation", "navigation-compose").version("2.5.3")
+            library("androidx-paging-common", "androidx.paging", "paging-common-ktx").versionRef("paging")
             library("androidx-paging-compose", "androidx.paging", "paging-compose").version("1.0.0-alpha14")
-            library("androidx-paging-runtime", "androidx.paging", "paging-runtime-ktx").version("3.1.1")
+            library("androidx-paging-runtime", "androidx.paging", "paging-runtime-ktx").versionRef("paging")
             library("androidx-test-junit", "androidx.test.ext", "junit").version("1.1.5")
             library("androidx-test-espresso-core", "androidx.test.espresso", "espresso-core").version("3.5.1")
 
@@ -82,10 +84,13 @@ dependencyResolutionManagement {
 
             library("okhttp-mockwebserver", "com.squareup.okhttp3", "mockwebserver").versionRef("okhttp")
             library("okhttp-tls", "com.squareup.okhttp3", "okhttp-tls").versionRef("okhttp")
+            library("okhttp-logging-interceptor", "com.squareup.okhttp3", "logging-interceptor").versionRef("okhttp")
 
             library("retrofit", "com.squareup.retrofit2", "retrofit").versionRef("retrofit")
             library("retrofit-converter-moshi", "com.squareup.retrofit2", "converter-moshi").versionRef("retrofit")
             bundle("retrofit", listOf("retrofit", "retrofit-converter-moshi"))
+
+            library("robolectric", "org.robolectric", "robolectric").version("4.10.3")
 
             library("room-common", "androidx.room", "room-common").versionRef("room")
             library("room-compiler", "androidx.room", "room-compiler").versionRef("room")

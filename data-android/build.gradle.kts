@@ -41,36 +41,30 @@ dependencies {
     api(project(":data"))
     testImplementation(project(":test-data"))
 
-    implementation(libs.moshi.kotlin)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.paging.runtime)
 
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("net.openid:appauth:0.11.1")
+    implementation(libs.appauth)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-
-    // Room
-    implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
-    implementation(libs.room.ktx)
-    implementation(libs.room.paging)
-
-    // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
-
-    // Hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
     kaptTest(libs.hilt.android.compiler)
     testImplementation(libs.hilt.android.testing)
 
+    implementation(libs.moshi.kotlin)
+
+    implementation(libs.okhttp.logging.interceptor)
+
+    implementation(libs.bundles.retrofit)
+
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+    implementation(libs.room.paging)
+
+    testImplementation(libs.androidx.test.junit)
     testImplementation(libs.junit)
-    testImplementation("androidx.test.ext:junit-ktx:1.1.5")
-    testImplementation("org.robolectric:robolectric:4.10.3")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    testImplementation(libs.bundles.kotlinx.coroutines)
+    testImplementation(libs.robolectric)
 }

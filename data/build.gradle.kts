@@ -7,22 +7,16 @@ dependencies {
     api(project(":data:coverart"))
     api(project(":data:musicbrainz"))
 
-    implementation(libs.moshi.kotlin)
+    implementation(libs.androidx.paging.common)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-
-    // Room
-    implementation(libs.room.common)
-
-    // Paging
-    implementation("androidx.paging:paging-common-ktx:3.1.1")
-
-    // Hilt
     implementation(libs.dagger)
 
-    // Test
+    implementation(libs.moshi.kotlin)
+
+    implementation(libs.bundles.retrofit)
+
+    implementation(libs.room.common)
+
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
 }

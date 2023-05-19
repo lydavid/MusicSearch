@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.moshi.kotlin)
+
     implementation(libs.room.common)
 
     testImplementation(libs.junit)
