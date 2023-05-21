@@ -35,20 +35,13 @@ fun SimpleAlertDialog(
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
-    PreviewTheme {
-        Surface {
-            SimpleAlertDialog(title = "Title", confirmText = "OK") {}
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
 private fun Long() {
     PreviewTheme {
         Surface {
-            SimpleAlertDialog(title = "Title text that is long enough to wrap", confirmText = "OK") {}
+            SimpleAlertDialog(
+                title = "Title text that is long enough to wrap",
+                confirmText = "OK"
+            ) {}
         }
     }
 }

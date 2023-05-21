@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("app.cash.paparazzi")
 }
 
 android {
@@ -11,9 +12,11 @@ android {
     }
 
     buildTypes {
-        debug {
-            isShrinkResources = false
-        }
+        // Can't seem to run paparazzi screenshot tests with code coverage
+//        debug {
+//            enableUnitTestCoverage = true
+//        }
+
         release {
             isMinifyEnabled = true
             consumerProguardFiles("consumer-rules.pro")
