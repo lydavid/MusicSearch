@@ -61,5 +61,5 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
         WHERE id = :id
     """
     )
-    abstract suspend fun getCollectionWithEntities(id: String): CollectionWithEntities
+    abstract suspend fun getCollectionWithEntities(id: String): CollectionWithEntities?
 }

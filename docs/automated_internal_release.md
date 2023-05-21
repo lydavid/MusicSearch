@@ -5,7 +5,7 @@ This workflow actually has two jobs. The first runs a check to determine whether
 
 ## `check`
 
-Because GitHub Actions (GHA) does not support early exit at the time of writing, I use this workaround to exit early: https://github.com/actions/runner/issues/662#issuecomment-1372855726.
+Because GitHub Actions (GHA) does not support early exit at the time of writing, we use this workaround to exit early: https://github.com/actions/runner/issues/662#issuecomment-1372855726.
 
 ```yml
       - name: Determine whether to exit early based on previous commit

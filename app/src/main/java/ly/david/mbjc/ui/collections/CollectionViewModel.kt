@@ -18,12 +18,10 @@ internal class CollectionViewModel @Inject constructor(
 
     private var recordedLookup = false
 
-    suspend fun getCollection(collectionId: String): CollectionListItemModel {
-        // TODO: crashes when coming from history if we've refreshed list of collections but failed
-        //  the history entry will still exist but the collection it's trying to go to has been deleted
-        val collection = collectionDao.getCollectionWithEntities(collectionId).toCollectionListItemModel()
+    suspend fun getCollection(collectionId: String): CollectionListItemModel? {
+        val collection = collectionDao.getCollectionWithEntities(collectionId)?.toCollectionListItemModel()
 
-        if (!recordedLookup) {
+        if (!recordedLookup && collection != null) {
             recordLookupHistory(
                 resourceId = collectionId,
                 resource = MusicBrainzResource.COLLECTION,
