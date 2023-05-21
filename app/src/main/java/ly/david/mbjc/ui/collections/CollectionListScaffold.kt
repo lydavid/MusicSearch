@@ -24,7 +24,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.theme.PreviewTheme

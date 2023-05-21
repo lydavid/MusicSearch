@@ -18,7 +18,7 @@ import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.mbjc.ui.settings.DevSettingsSection

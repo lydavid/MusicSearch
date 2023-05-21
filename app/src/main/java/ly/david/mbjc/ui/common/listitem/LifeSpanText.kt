@@ -10,7 +10,7 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeadingRes
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 /**

@@ -18,7 +18,7 @@ import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 import ly.david.ui.common.theme.getSubTextColor

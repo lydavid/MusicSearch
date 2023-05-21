@@ -18,7 +18,7 @@ import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.listitem.DisambiguationText
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.release.tracks.TrackListItem
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles

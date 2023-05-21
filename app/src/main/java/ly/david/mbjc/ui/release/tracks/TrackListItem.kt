@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.TrackListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.recording.RecordingListItem
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
