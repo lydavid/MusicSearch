@@ -39,7 +39,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we

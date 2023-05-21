@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
 
 @Composable
 fun SettingSwitch(

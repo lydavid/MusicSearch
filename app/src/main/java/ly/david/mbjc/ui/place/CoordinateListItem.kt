@@ -22,8 +22,8 @@ import ly.david.data.Coordinates
 import ly.david.data.common.showMap
 import ly.david.data.formatForDisplay
 import ly.david.mbjc.R
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
 
 @Composable
 internal fun CoordinateListItem(

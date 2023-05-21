@@ -5,8 +5,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.preview.DefaultPreviews
 
 @Composable
 internal fun FullScreenLoadingIndicator(

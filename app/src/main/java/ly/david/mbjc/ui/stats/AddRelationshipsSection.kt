@@ -26,8 +26,8 @@ import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
 
 internal fun LazyListScope.addRelationshipsSection(
     totalRelations: Int?,

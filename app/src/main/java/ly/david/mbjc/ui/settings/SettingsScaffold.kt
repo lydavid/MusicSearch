@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.settings.components.ProfileCard
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

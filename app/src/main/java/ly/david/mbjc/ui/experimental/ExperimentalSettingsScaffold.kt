@@ -23,7 +23,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.mbjc.ui.settings.DevSettingsSection
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

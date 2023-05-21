@@ -16,7 +16,6 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.navigation.Destination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
@@ -26,7 +25,7 @@ import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.place.CoordinateListItem
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 internal fun PlaceDetailsScreen(

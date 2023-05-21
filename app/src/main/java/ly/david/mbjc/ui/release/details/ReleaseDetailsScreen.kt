@@ -29,7 +29,7 @@ import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.label.LabelListItem
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 internal fun ReleaseDetailsScreen(

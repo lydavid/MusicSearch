@@ -26,9 +26,9 @@ import ly.david.data.persistence.area.ReleaseCountry
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.ui.common.coverart.SmallCoverArt
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.common.theme.getSubTextColor
 
 // TODO: we probably need preferences to show/hide some of the content in this item
 // TODO: rethink showing release country -> could be misleading, and expensive joins

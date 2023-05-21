@@ -56,7 +56,6 @@ import ly.david.data.network.searchableResources
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.artist.ArtistListItem
-import ly.david.mbjc.ui.common.dialog.SimpleAlertDialog
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.event.EventListItem
@@ -68,6 +67,7 @@ import ly.david.mbjc.ui.release.ReleaseListItem
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import ly.david.mbjc.ui.series.SeriesListItem
 import ly.david.mbjc.ui.work.WorkListItem
+import ly.david.ui.common.dialog.SimpleAlertDialog
 
 @Composable
 internal fun SearchMusicBrainzScreen(

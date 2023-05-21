@@ -20,8 +20,8 @@ import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
 
 @Composable
 internal fun InstrumentDetailsScreen(

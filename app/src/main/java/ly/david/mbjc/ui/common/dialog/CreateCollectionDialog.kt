@@ -37,8 +37,8 @@ import ly.david.data.network.collectableResources
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.search.ExposedDropdownMenuBox
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
 
 @Composable
 internal fun CreateCollectionDialog(

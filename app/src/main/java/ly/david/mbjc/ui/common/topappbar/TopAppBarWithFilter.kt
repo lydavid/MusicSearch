@@ -42,7 +42,7 @@ import androidx.compose.ui.zIndex
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 /**
  * [ScrollableTopAppBar] with filtering.

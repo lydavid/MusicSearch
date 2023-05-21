@@ -36,14 +36,12 @@
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
-    <ID>CyclomaticComplexMethod:CollectionScaffold.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable internal fun CollectionScaffold( collectionId: String, modifier: Modifier = Modifier, onBack: () -&gt; Unit = {}, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, showMoreInfoInReleaseListItem: Boolean = true, onShowMoreInfoInReleaseListItemChange: (Boolean) -&gt; Unit = {}, sortReleaseGroupListItems: Boolean = false, onSortReleaseGroupListItemsChange: (Boolean) -&gt; Unit = {}, onDeleteFromCollection: (collectableId: String, name: String) -&gt; Unit = { _, _ -&gt; }, viewModel: CollectionViewModel = hiltViewModel() )</ID>
     <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
     <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$(resourceId, query, isRemote, sorted)</ID>
     <ID>MagicNumber:DotsFlashing.kt$0.2f</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
-    <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
     <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
     <ID>MaxLineLength:ReleaseListItem.kt$// Since we don't store release events when browsing releases, releaseEvents will be empty until</ID>

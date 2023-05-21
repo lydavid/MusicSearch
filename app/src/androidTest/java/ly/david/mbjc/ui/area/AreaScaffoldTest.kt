@@ -26,7 +26,7 @@ import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Test
 
 /**

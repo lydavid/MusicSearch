@@ -1,9 +1,9 @@
-package ly.david.mbjc.ui.theme
+package ly.david.ui.common.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 
-internal object TextStyles {
+object TextStyles {
 
     @Composable
     fun getCardTitleTextStyle() = MaterialTheme.typography.titleLarge

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.theme
+package ly.david.ui.common.theme
 
 import android.content.Context
 import android.os.Build
@@ -9,8 +9,6 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryDark,
@@ -39,7 +37,7 @@ private val LightColorScheme = lightColorScheme(
  * Fallback to default color scheme for devices before Android 12.
  */
 @Composable
-internal fun BaseTheme(
+fun BaseTheme(
     context: Context,
     darkTheme: Boolean = isSystemInDarkTheme(),
     materialYou: Boolean = true,
@@ -65,9 +63,8 @@ internal fun BaseTheme(
 /**
  * Theme for previews/tests and devices below Android 12.
  */
-@ExcludeFromJacocoGeneratedReport
 @Composable
-internal fun PreviewTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun PreviewTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colorSchemes = if (darkTheme) {
         DarkColorScheme
     } else {

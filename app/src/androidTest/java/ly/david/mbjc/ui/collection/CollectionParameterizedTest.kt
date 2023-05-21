@@ -28,7 +28,7 @@ import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.navigation.goToResource
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

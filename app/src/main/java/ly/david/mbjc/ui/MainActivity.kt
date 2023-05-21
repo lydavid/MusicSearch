@@ -9,7 +9,7 @@ import javax.inject.Inject
 import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.mbjc.ui.settings.useDarkTheme
 import ly.david.mbjc.ui.settings.useMaterialYou
-import ly.david.mbjc.ui.theme.BaseTheme
+import ly.david.ui.common.theme.BaseTheme
 
 @AndroidEntryPoint
 internal class MainActivity : ComponentActivity() {
@@ -26,10 +26,11 @@ internal class MainActivity : ComponentActivity() {
             BaseTheme(
                 context = this,
                 darkTheme = appPreferences.useDarkTheme(),
-                materialYou = appPreferences.useMaterialYou()
-            ) {
-                TopLevelScaffold(navController)
-            }
+                materialYou = appPreferences.useMaterialYou(),
+                content = {
+                    TopLevelScaffold(navController)
+                }
+            )
         }
     }
 }

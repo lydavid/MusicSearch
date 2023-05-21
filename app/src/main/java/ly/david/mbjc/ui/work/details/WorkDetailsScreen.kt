@@ -17,7 +17,7 @@ import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.AttributesListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 internal fun WorkDetailsScreen(

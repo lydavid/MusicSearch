@@ -27,7 +27,7 @@ import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 /**
  * Displays a list of all of your collections.

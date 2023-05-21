@@ -1,8 +1,8 @@
-package ly.david.mbjc.ui.theme
+package ly.david.ui.common.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 @Composable
-internal fun getSubTextColor(): Color = MaterialTheme.colorScheme.outline
+fun getSubTextColor(): Color = MaterialTheme.colorScheme.outline

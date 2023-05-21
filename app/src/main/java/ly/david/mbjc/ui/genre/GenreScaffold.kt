@@ -25,8 +25,8 @@ import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.fullscreen.FullScreenContent
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
 
 // TODO: genre browsing isn't supported by API
 //  lookup only returns its name so there's not much for us to display ATM

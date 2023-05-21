@@ -15,7 +15,7 @@ import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 internal fun RecordingDetailsScreen(

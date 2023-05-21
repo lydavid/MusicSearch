@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         getByName("debug") {
-            isTestCoverageEnabled = true
+            enableUnitTestCoverage = true
         }
         getByName("release") {
             isMinifyEnabled = true

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 internal fun RetryButton(onClick: () -> Unit = {}) {
