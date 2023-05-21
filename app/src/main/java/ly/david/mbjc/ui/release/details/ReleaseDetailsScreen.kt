@@ -24,7 +24,7 @@ import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.common.TextWithHeadingRes
-import ly.david.mbjc.ui.common.coverart.BigCoverArt
+import ly.david.ui.common.coverart.BigCoverArt
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.preview.DefaultPreviews

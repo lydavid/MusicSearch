@@ -63,7 +63,7 @@ import ly.david.mbjc.ui.instrument.InstrumentListItem
 import ly.david.mbjc.ui.label.LabelListItem
 import ly.david.mbjc.ui.place.PlaceListItem
 import ly.david.mbjc.ui.recording.RecordingListItem
-import ly.david.mbjc.ui.release.ReleaseListItem
+import ly.david.ui.common.release.ReleaseListItem
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import ly.david.mbjc.ui.series.SeriesListItem
 import ly.david.mbjc.ui.work.WorkListItem

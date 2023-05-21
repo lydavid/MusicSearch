@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.coverart
+package ly.david.ui.common.coverart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -28,9 +28,9 @@ import ly.david.data.coverart.trimCoverArtSuffix
  * A big cover art that fills the screen's width.
  */
 @Composable
-internal fun BigCoverArt(
+fun BigCoverArt(
+    coverArtUrl: String,
     modifier: Modifier = Modifier,
-    coverArtUrl: String = "",
 ) {
     if (coverArtUrl.isNotEmpty()) {
 
@@ -83,9 +83,9 @@ internal fun BigCoverArt(
 }
 
 @Composable
-internal fun PainterImage(
-    modifier: Modifier = Modifier,
-    painter: Painter
+private fun PainterImage(
+    painter: Painter,
+    modifier: Modifier = Modifier
 ) {
     Image(
         modifier = modifier

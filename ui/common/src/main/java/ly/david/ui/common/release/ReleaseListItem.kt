@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.release
+package ly.david.ui.common.release
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -23,20 +23,16 @@ import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.coverart.SmallCoverArt
+import ly.david.ui.common.coverart.SmallCoverArt
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 import ly.david.ui.common.theme.getSubTextColor
 
-// TODO: we probably need preferences to show/hide some of the content in this item
 // TODO: rethink showing release country -> could be misleading, and expensive joins
 //  with cover art loaded by default, we can prob hide the other info by default
-// TODO: we'll likely run into 429 when loading many images at once, not much we can do about that right now
-//  see: https://tickets.metabrainz.org/browse/LB-1139 and https://tickets.metabrainz.org/browse/CAA-141
 @Composable
-internal fun ReleaseListItem(
+fun ReleaseListItem(
     release: ReleaseListItemModel,
     modifier: Modifier = Modifier,
     showMoreInfo: Boolean = true,
@@ -81,15 +77,16 @@ internal fun ReleaseListItem(
                         }
 
                         release.countryCode.ifNotNullOrEmpty { countryCode ->
-                            // Since we don't store release events when browsing releases, releaseEvents will be empty until
-                            // after we've clicked into it
+                            // Since we don't store release events when browsing releases,
+                            // releaseEvents will be empty until after we've clicked into it
                             val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
                                 "+ ${release.releaseCountries.size - 1}"
                             } else {
                                 ""
                             }
                             Text(
-                                text = "${countryCode.toFlagEmoji()} $countryCode" + additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" },
+                                text = "${countryCode.toFlagEmoji()} $countryCode" +
+                                    additionalReleaseEvents.transformThisIfNotNullOrEmpty { " $it" },
                                 modifier = Modifier
                                     .padding(top = 4.dp)
                                     .weight(1f),
@@ -208,7 +205,6 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview(

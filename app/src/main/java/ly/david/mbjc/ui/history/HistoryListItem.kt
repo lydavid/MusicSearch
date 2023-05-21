@@ -19,7 +19,7 @@ import java.util.Locale
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
+import ly.david.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.mbjc.ui.common.getDisplayTextRes
 import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.preview.DefaultPreviews

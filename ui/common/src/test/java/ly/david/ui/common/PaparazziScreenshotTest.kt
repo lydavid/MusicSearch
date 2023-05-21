@@ -15,7 +15,7 @@ import org.junit.runners.Parameterized
  * @RunWith(Parameterized::class)
  * ```
  *
- * and declare the parameters:
+ * and declare this parameter:
  * ```
  * config: DeviceConfig
  * ```

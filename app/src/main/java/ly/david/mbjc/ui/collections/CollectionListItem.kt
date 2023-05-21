@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
+import ly.david.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles

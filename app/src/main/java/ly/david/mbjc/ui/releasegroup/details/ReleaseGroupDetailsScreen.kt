@@ -9,7 +9,7 @@ import ly.david.data.domain.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeadingRes
-import ly.david.mbjc.ui.common.coverart.BigCoverArt
+import ly.david.ui.common.coverart.BigCoverArt
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 
 @Composable

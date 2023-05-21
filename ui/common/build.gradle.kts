@@ -31,6 +31,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":data"))
 
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)
@@ -39,4 +40,10 @@ dependencies {
     implementation(libs.compose.ui.preview)
     androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.coil.base)
+    implementation(libs.coil.compose)
+    testImplementation(libs.coil.test)
+
+    testImplementation(libs.bundles.kotlinx.coroutines)
 }

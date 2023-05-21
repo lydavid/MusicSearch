@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.coverart
+package ly.david.ui.common.coverart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
@@ -19,12 +19,12 @@ import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
 import ly.david.data.coverart.trimCoverArtSuffix
-import ly.david.mbjc.ui.common.SMALL_COVER_ART_SIZE
+import ly.david.ui.common.SMALL_COVER_ART_SIZE
 
 @Composable
-internal fun SmallCoverArt(
+fun SmallCoverArt(
+    coverArtUrl: String,
     modifier: Modifier = Modifier,
-    coverArtUrl: String = "",
     placeholderIcon: ImageVector = Icons.Default.Album,
 ) {
     if (coverArtUrl.isNotEmpty()) {
