@@ -30,6 +30,7 @@ fun MultipleChoiceDialog(
     title: String,
     choices: List<String>,
     selectedChoiceIndex: Int,
+    modifier: Modifier = Modifier,
     onSelectChoiceIndex: (Int) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
@@ -42,7 +43,7 @@ fun MultipleChoiceDialog(
             shape = RoundedCornerShape(28.dp)
         ) {
             Column(
-                modifier = Modifier.padding(24.dp),
+                modifier = modifier.padding(24.dp),
             ) {
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),

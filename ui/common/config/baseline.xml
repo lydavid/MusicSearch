@@ -4,5 +4,6 @@
   <CurrentIssues>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
     <ID>UnnecessaryAbstractClass:PaparazziScreenshotTest.kt$PaparazziScreenshotTest$PaparazziScreenshotTest</ID>
+    <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
   </CurrentIssues>
 </SmellBaseline>
