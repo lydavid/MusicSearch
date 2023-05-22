@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.fullscreen
+package ly.david.ui.common.fullscreen
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -6,12 +6,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
-internal fun FullScreenText(
+fun FullScreenText(
     text: String,
     modifier: Modifier = Modifier
 ) {
@@ -24,7 +23,6 @@ internal fun FullScreenText(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

@@ -11,8 +11,8 @@ import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.WorkListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.TextWithHeading
-import ly.david.mbjc.ui.common.TextWithHeadingRes
+import ly.david.ui.common.text.TextWithHeading
+import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.AttributesListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.R

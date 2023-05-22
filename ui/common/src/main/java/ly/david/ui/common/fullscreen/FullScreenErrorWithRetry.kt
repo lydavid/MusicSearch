@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.fullscreen
+package ly.david.ui.common.fullscreen
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.RetryButton
+import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
-internal fun FullScreenErrorWithRetry(
+fun FullScreenErrorWithRetry(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
@@ -29,7 +28,6 @@ internal fun FullScreenErrorWithRetry(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

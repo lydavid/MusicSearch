@@ -33,8 +33,8 @@ import ly.david.mbjc.ui.collections.releasegroups.ReleaseGroupsByCollectionScree
 import ly.david.mbjc.ui.collections.releases.ReleasesByCollectionScreen
 import ly.david.mbjc.ui.collections.series.SeriesByCollectionScreen
 import ly.david.mbjc.ui.collections.works.WorksByCollectionScreen
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
-import ly.david.mbjc.ui.common.fullscreen.FullScreenText
+import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.ui.common.fullscreen.FullScreenText
 import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.fullscreen
+package ly.david.ui.common.fullscreen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,11 +8,11 @@ import androidx.compose.ui.Modifier
  * handling errors when [showError], and delegating retry with [onRetryClick].
  */
 @Composable
-internal fun <T> DetailsWithErrorHandling(
-    modifier: Modifier = Modifier,
+fun <T> DetailsWithErrorHandling(
     showError: Boolean,
     onRetryClick: () -> Unit,
     scaffoldModel: T?,
+    modifier: Modifier = Modifier,
     detailsScreen: @Composable ((T) -> Unit)
 ) {
     when {

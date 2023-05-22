@@ -7,6 +7,8 @@ import org.junit.Rule
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
+const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
+
 /**
  * Common setup for running screenshot tests on light and dark mode.
  *
@@ -37,8 +39,8 @@ abstract class PaparazziScreenshotTest( // Must be abstract. Ignore Detekt.
     }
 
     @get:Rule
-    val paparazzi = Paparazzi(
+    open val paparazzi = Paparazzi(
         deviceConfig = config,
-        theme = "android:Theme.Material.Light.NoActionBar"
+        theme = PAPARAZZI_THEME
     )
 }

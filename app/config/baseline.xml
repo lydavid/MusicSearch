@@ -4,7 +4,6 @@
   <CurrentIssues>
     <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
     <ID>ComposableParamOrder:ArtistDetailsScreen.kt$ArtistDetailsScreen</ID>
-    <ID>ComposableParamOrder:DetailsWithErrorHandling.kt$DetailsWithErrorHandling</ID>
     <ID>ComposableParamOrder:EventDetailsScreen.kt$EventDetailsScreen</ID>
     <ID>ComposableParamOrder:EventStatsScreen.kt$EventStatsScreen</ID>
     <ID>ComposableParamOrder:EventsByPlaceScreen.kt$EventsByPlaceScreen</ID>

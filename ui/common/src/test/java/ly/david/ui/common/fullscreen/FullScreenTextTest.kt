@@ -1,4 +1,4 @@
-package ly.david.ui.common.dialog
+package ly.david.ui.common.fullscreen
 
 import androidx.compose.material3.Surface
 import app.cash.paparazzi.DeviceConfig
@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-class MultipleChoiceDialogTest(
+class FullScreenTextTest(
     config: DeviceConfig
 ) : PaparazziScreenshotTest(config) {
 
@@ -18,16 +18,7 @@ class MultipleChoiceDialogTest(
         paparazzi.snapshot {
             PreviewTheme {
                 Surface {
-                    MultipleChoiceDialog(
-                        title = "Theme",
-                        choices = listOf(
-                            "Light",
-                            "Dark",
-                            "System"
-                        ),
-                        selectedChoiceIndex = 0,
-                        onSelectChoiceIndex = {}
-                    )
+                    FullScreenText("Hello world")
                 }
             }
         }

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.fullscreen
+package ly.david.ui.common.fullscreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
  * For content that should fill the whole screen (max size given to it).
  */
 @Composable
-internal fun FullScreenContent(
+fun FullScreenContent(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {

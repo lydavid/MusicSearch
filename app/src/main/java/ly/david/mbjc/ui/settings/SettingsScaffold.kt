@@ -16,7 +16,7 @@ import ly.david.data.navigation.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
-import ly.david.mbjc.ui.common.TextWithHeading
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.settings.components.ProfileCard

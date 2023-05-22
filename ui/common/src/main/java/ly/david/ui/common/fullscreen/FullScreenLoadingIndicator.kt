@@ -1,15 +1,14 @@
-package ly.david.mbjc.ui.common.fullscreen
+package ly.david.ui.common.fullscreen
 
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
-internal fun FullScreenLoadingIndicator(
+fun FullScreenLoadingIndicator(
     modifier: Modifier = Modifier,
 ) {
     FullScreenContent(modifier = modifier) {
@@ -17,7 +16,6 @@ internal fun FullScreenLoadingIndicator(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

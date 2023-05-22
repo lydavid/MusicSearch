@@ -26,10 +26,10 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ly.david.data.Identifiable
-import ly.david.mbjc.ui.common.RetryButton
-import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
-import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
-import ly.david.mbjc.ui.common.fullscreen.FullScreenText
+import ly.david.ui.common.button.RetryButton
+import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
+import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
+import ly.david.ui.common.fullscreen.FullScreenText
 import ly.david.ui.common.R
 
 /**
