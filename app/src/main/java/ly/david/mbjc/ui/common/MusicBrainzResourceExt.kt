@@ -2,7 +2,7 @@ package ly.david.mbjc.ui.common
 
 import androidx.annotation.StringRes
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 
 /**
  * Returns an appropriate string resource for this [MusicBrainzResource].

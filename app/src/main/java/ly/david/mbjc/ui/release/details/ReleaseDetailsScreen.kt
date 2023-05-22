@@ -21,14 +21,14 @@ import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.common.TextWithHeadingRes
-import ly.david.ui.common.coverart.BigCoverArt
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.label.LabelListItem
+import ly.david.ui.common.R
+import ly.david.ui.common.coverart.BigCoverArt
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable

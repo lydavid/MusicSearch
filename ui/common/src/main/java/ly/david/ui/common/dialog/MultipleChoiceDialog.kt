@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.dialog
+package ly.david.ui.common.dialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,15 +19,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
+import ly.david.ui.common.R
+
 import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
 @Composable
-internal fun MultipleChoiceDialog(
+fun MultipleChoiceDialog(
     title: String,
     choices: List<String>,
     selectedChoiceIndex: Int,
@@ -95,7 +94,6 @@ internal fun MultipleChoiceDialog(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {
@@ -103,7 +101,11 @@ private fun Preview() {
         Surface {
             MultipleChoiceDialog(
                 title = "Theme",
-                choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
+                choices = listOf(
+                    "Light",
+                    "Dark",
+                    "System"
+                ),
                 selectedChoiceIndex = 0,
                 onSelectChoiceIndex = {}
             )

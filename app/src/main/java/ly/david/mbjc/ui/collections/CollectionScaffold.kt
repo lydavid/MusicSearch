@@ -21,7 +21,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 import ly.david.mbjc.ui.collections.areas.AreasByCollectionScreen
 import ly.david.mbjc.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.mbjc.ui.collections.events.EventsByCollectionScreen

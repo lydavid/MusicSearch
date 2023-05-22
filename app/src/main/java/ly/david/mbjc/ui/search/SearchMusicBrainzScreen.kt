@@ -53,7 +53,6 @@ import ly.david.data.domain.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.artist.ArtistListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
@@ -63,11 +62,12 @@ import ly.david.mbjc.ui.instrument.InstrumentListItem
 import ly.david.mbjc.ui.label.LabelListItem
 import ly.david.mbjc.ui.place.PlaceListItem
 import ly.david.mbjc.ui.recording.RecordingListItem
-import ly.david.ui.common.release.ReleaseListItem
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import ly.david.mbjc.ui.series.SeriesListItem
 import ly.david.mbjc.ui.work.WorkListItem
+import ly.david.ui.common.R
 import ly.david.ui.common.dialog.SimpleAlertDialog
+import ly.david.ui.common.release.ReleaseListItem
 
 @Composable
 internal fun SearchMusicBrainzScreen(
@@ -174,57 +174,68 @@ internal fun SearchMusicBrainzScreen(
                         onItemClick(MusicBrainzResource.ARTIST, id, null)
                     }
                 }
+
                 is ReleaseGroupListItemModel -> {
                     // TODO: should see album type rather than year
                     ReleaseGroupListItem(releaseGroup = listItemModel) {
                         onItemClick(MusicBrainzResource.RELEASE_GROUP, id, getNameWithDisambiguation())
                     }
                 }
+
                 is ReleaseListItemModel -> {
                     ReleaseListItem(release = listItemModel) {
                         onItemClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
                     }
                 }
+
                 is RecordingListItemModel -> {
                     RecordingListItem(recording = listItemModel) {
                         onItemClick(MusicBrainzResource.RECORDING, id, getNameWithDisambiguation())
                     }
                 }
+
                 is WorkListItemModel -> {
                     WorkListItem(work = listItemModel) {
                         onItemClick(MusicBrainzResource.WORK, id, getNameWithDisambiguation())
                     }
                 }
+
                 is AreaListItemModel -> {
                     AreaListItem(area = listItemModel) {
                         onItemClick(MusicBrainzResource.AREA, id, getNameWithDisambiguation())
                     }
                 }
+
                 is PlaceListItemModel -> {
                     PlaceListItem(place = listItemModel) {
                         onItemClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
                     }
                 }
+
                 is InstrumentListItemModel -> {
                     InstrumentListItem(instrument = listItemModel) {
                         onItemClick(MusicBrainzResource.INSTRUMENT, id, getNameWithDisambiguation())
                     }
                 }
+
                 is LabelListItemModel -> {
                     LabelListItem(label = listItemModel) {
                         onItemClick(MusicBrainzResource.LABEL, id, getNameWithDisambiguation())
                     }
                 }
+
                 is EventListItemModel -> {
                     EventListItem(event = listItemModel) {
                         onItemClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
                     }
                 }
+
                 is SeriesListItemModel -> {
                     SeriesListItem(series = listItemModel) {
                         onItemClick(MusicBrainzResource.SERIES, id, getNameWithDisambiguation())
                     }
                 }
+
                 is EndOfList -> {
                     Text(
                         modifier = Modifier
@@ -235,6 +246,7 @@ internal fun SearchMusicBrainzScreen(
                         text = "End of search results."
                     )
                 }
+
                 else -> {
                     // Null. Do nothing.
                 }

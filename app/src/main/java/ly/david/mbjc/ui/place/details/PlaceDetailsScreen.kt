@@ -18,13 +18,13 @@ import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.place.CoordinateListItem
+import ly.david.ui.common.R
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable

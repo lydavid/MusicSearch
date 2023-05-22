@@ -11,11 +11,11 @@ import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.WorkListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.mbjc.ui.common.TextWithHeadingRes
 import ly.david.mbjc.ui.common.listitem.AttributesListSeparatorHeader
 import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 

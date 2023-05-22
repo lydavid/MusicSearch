@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.common.lookupInBrowser
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.fullscreen.FullScreenContent
 import ly.david.ui.common.preview.DefaultPreviews

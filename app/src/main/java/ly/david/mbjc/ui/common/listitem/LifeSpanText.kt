@@ -8,8 +8,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.TextWithHeadingRes
+import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 

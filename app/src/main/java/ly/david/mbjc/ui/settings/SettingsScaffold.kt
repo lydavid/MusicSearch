@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 import ly.david.mbjc.ui.common.TextWithHeading
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar

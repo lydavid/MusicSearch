@@ -26,11 +26,11 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ly.david.data.Identifiable
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.RetryButton
 import ly.david.mbjc.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.mbjc.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.mbjc.ui.common.fullscreen.FullScreenText
+import ly.david.ui.common.R
 
 /**
  * Handles loading and errors for paging screens.
@@ -90,6 +90,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
             lazyPagingItems.loadState.refresh is LoadState.Loading -> {
                 FullScreenLoadingIndicator()
             }
+
             lazyPagingItems.loadState.refresh is LoadState.Error -> {
                 // TODO: going to another tab, and coming back will show same error message (doesn't make another call)
                 LaunchedEffect(Unit) {
@@ -100,6 +101,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
 
                 FullScreenErrorWithRetry(onClick = { lazyPagingItems.refresh() })
             }
+
             lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
                 // TODO: cannot refresh
                 //  also there should be a difference between 0 out of 0, and 0 out of 1 found
@@ -107,6 +109,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
 
                 FullScreenText(noResultsText)
             }
+
             else -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -124,6 +127,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
                                 is LoadState.Loading -> {
                                     FooterLoadingIndicator()
                                 }
+
                                 is LoadState.Error -> {
                                     Row(
                                         modifier = Modifier
@@ -134,6 +138,7 @@ internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
                                         RetryButton(onClick = { lazyPagingItems.refresh() })
                                     }
                                 }
+
                                 else -> {
                                     Spacer(
                                         modifier = Modifier
