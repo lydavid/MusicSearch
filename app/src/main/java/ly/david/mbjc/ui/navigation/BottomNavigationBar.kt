@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import ly.david.data.navigation.Destination
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 
 private enum class BottomNavigationItem(val stringRes: Int, val icon: ImageVector, val destination: Destination) {
     Search(R.string.search, Icons.Default.Search, Destination.LOOKUP),

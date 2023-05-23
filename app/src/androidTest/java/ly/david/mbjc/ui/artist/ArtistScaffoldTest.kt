@@ -28,7 +28,7 @@ import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.repository.ArtistRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -64,8 +64,8 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(davidBowie.getNameWithDisambiguation())
 
-        waitForThenAssertIsDisplayed(davidBowie.type!!)
-        waitForThenAssertIsDisplayed(davidBowie.gender!!)
+        waitForThenAssertIsDisplayed("Type: ${davidBowie.type!!}")
+        waitForThenAssertIsDisplayed("Gender: ${davidBowie.gender!!}")
 
         waitForThenPerformClickOn(releaseGroups)
         composeTestRule

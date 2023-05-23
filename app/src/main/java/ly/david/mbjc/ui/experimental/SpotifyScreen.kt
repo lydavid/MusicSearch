@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.theme.TextStyles.getCardTitleTextStyle
+import ly.david.ui.common.theme.TextStyles.getCardTitleTextStyle
 
 object BroadcastTypes {
     private const val SPOTIFY_PACKAGE = "com.spotify.music"

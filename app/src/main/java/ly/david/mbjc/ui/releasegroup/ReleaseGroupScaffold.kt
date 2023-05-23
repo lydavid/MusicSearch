@@ -35,9 +35,8 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
@@ -48,6 +47,7 @@ import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
+import ly.david.ui.common.R
 
 /**
  * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756

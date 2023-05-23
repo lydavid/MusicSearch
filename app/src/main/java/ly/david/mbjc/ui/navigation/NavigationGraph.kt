@@ -18,7 +18,6 @@ import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toMusicBrainzResource
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.DeleteHistoryDelegate
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -39,6 +38,7 @@ import ly.david.mbjc.ui.search.SearchScreenScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.settings.SettingsScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
+import ly.david.ui.common.R
 
 private const val ID = "id"
 private const val TITLE = "title"
@@ -352,6 +352,7 @@ internal fun NavigationGraph(
                 Destination.EXPERIMENTAL_SPOTIFY -> {
                     navController.goTo(destination)
                 }
+
                 else -> {
                     // Nothing.
                 }

@@ -4,7 +4,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 
 @Composable
 internal fun OverflowMenuScope.AddToCollectionMenuItem(onClick: () -> Unit) {

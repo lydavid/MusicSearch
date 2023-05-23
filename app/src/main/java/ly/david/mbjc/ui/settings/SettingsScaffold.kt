@@ -15,14 +15,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.R
-import ly.david.mbjc.ui.common.TextWithHeading
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.R
+import ly.david.ui.common.text.TextWithHeading
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.settings.components.ProfileCard
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -113,5 +113,6 @@ include(
     ":data:base",
     ":data:coverart",
     ":data:musicbrainz",
-    ":test-data"
+    ":test-data",
+    ":ui:common"
 )

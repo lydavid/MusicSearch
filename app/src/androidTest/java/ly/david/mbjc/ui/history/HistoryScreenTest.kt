@@ -17,7 +17,7 @@ import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 

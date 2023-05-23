@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
+import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.common.theme.getSubTextColor
 
 /**
  * Displays [disambiguation] if it exists.

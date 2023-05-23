@@ -22,12 +22,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.CollectionListItemModel
-import ly.david.mbjc.R
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.R
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
 
 /**
  * Displays a list of all of your collections.
@@ -88,6 +88,7 @@ internal fun CollectionListScaffold(
                         onClick = { onCollectionClick(id, isRemote) }
                     )
                 }
+
                 else -> {
                     // Do nothing.
                 }

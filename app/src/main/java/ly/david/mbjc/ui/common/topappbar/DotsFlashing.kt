@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
 
 private val DEFAULT_DOT_SIZE = 12.dp
 private const val ANIMATION_DELAY_MS = 300

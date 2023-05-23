@@ -7,10 +7,10 @@ import androidx.compose.ui.Modifier
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 import ly.david.mbjc.ui.common.Tab
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
 
 /**
  * Display all [stats] ordered/shown based on [tabs].

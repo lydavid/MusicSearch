@@ -20,10 +20,10 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
-            isTestCoverageEnabled = true
+        debug {
+            enableUnitTestCoverage = true
         }
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             consumerProguardFiles("consumer-rules.pro")
         }

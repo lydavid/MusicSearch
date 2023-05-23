@@ -17,11 +17,11 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.coverart.SmallCoverArt
-import ly.david.mbjc.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
+import ly.david.ui.common.coverart.SmallCoverArt
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.common.theme.getSubTextColor
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**

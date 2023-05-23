@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import ly.david.data.common.lookupInBrowser
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 
 @Composable
 internal fun OverflowMenuScope.OpenInBrowserMenuItem(resource: MusicBrainzResource, resourceId: String) {

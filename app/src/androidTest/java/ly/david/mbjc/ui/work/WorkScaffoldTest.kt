@@ -11,12 +11,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.underPressureRecording
 import ly.david.data.network.fakeWorkWithAllData
+import ly.david.data.network.underPressureRecording
 import ly.david.data.repository.WorkRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
@@ -57,10 +57,12 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
 
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(fakeWorkWithAllData.getNameWithDisambiguation())
-        waitForThenAssertIsDisplayed(fakeWorkWithAllData.type!!)
+        waitForThenAssertIsDisplayed("Type: ${fakeWorkWithAllData.type!!}")
 
+        val attributeType = fakeWorkWithAllData.attributes!!.first().type
+        val attributeValue = fakeWorkWithAllData.attributes!!.first().value
         composeTestRule
-            .onNodeWithText(fakeWorkWithAllData.attributes!!.first().value)
+            .onNodeWithText("$attributeType: $attributeValue")
             .assertIsDisplayed()
 
         waitForThenPerformClickOn(recordings)

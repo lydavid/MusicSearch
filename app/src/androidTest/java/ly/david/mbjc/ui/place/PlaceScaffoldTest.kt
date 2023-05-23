@@ -15,7 +15,7 @@ import ly.david.data.network.fakePlaceWithAllData
 import ly.david.data.repository.PlaceRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
@@ -58,11 +58,11 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.getNameWithDisambiguation())
 
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.area!!.name)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.address)
+        waitForThenAssertIsDisplayed("Address: ${fakePlaceWithAllData.address}")
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.coordinates?.formatForDisplay()!!)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.type!!)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.lifeSpan?.begin!!)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.lifeSpan?.end!!)
+        waitForThenAssertIsDisplayed("Type: ${fakePlaceWithAllData.type!!}")
+        waitForThenAssertIsDisplayed("Opened: ${fakePlaceWithAllData.lifeSpan?.begin!!}")
+        waitForThenAssertIsDisplayed("Closed: ${fakePlaceWithAllData.lifeSpan?.end!!}")
 
         waitForThenPerformClickOn(events)
         waitForThenAssertAtLeastOneIsDisplayed(fakeEvent.name)

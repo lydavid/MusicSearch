@@ -3,6 +3,7 @@ package ly.david.mbjc
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ly.david.mbjc.ui.MainActivity
+import ly.david.ui.common.R
 
 internal interface StringReferences {
     val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>

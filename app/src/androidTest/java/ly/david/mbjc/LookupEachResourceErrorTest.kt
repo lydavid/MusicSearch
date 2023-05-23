@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToResource
-import ly.david.mbjc.ui.theme.PreviewTheme
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.common
 
 import androidx.annotation.StringRes
-import ly.david.mbjc.R
+import ly.david.ui.common.R
 
 /**
  * All possible tabs in MusicBrainz resource pages.

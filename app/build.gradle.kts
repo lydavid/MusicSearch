@@ -93,6 +93,7 @@ android {
 
 dependencies {
     implementation(project(":data-android"))
+    implementation(project(":ui:common"))
     testImplementation(project(":test-data"))
     androidTestImplementation(project(":test-data"))
 

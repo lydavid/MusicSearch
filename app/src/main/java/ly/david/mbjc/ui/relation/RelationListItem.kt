@@ -19,9 +19,9 @@ import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.theme.PreviewTheme
-import ly.david.mbjc.ui.theme.TextStyles
-import ly.david.mbjc.ui.theme.getSubTextColor
+import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.common.theme.getSubTextColor
 
 @Composable
 internal fun RelationListItem(
