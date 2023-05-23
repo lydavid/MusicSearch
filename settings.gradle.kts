@@ -21,7 +21,7 @@ dependencyResolutionManagement {
             version("hilt", "2.46.1")
             version("hilt-navigation", "1.0.0")
             version("junit", "4.13.2")
-            version("kotlinx-coroutines", "1.6.4")
+            version("kotlinx-coroutines", "1.7.1")
             version("mockk", "1.13.5")
             version("moshi", "1.15.0")
             version("okhttp", "4.11.0")
