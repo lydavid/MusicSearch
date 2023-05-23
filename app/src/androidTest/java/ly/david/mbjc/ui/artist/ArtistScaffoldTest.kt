@@ -64,8 +64,8 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(davidBowie.getNameWithDisambiguation())
 
-        waitForThenAssertIsDisplayed(davidBowie.type!!)
-        waitForThenAssertIsDisplayed(davidBowie.gender!!)
+        waitForThenAssertIsDisplayed("Type: ${davidBowie.type!!}")
+        waitForThenAssertIsDisplayed("Gender: ${davidBowie.gender!!}")
 
         waitForThenPerformClickOn(releaseGroups)
         composeTestRule

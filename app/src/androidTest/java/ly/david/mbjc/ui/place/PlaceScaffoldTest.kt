@@ -58,11 +58,11 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.getNameWithDisambiguation())
 
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.area!!.name)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.address)
+        waitForThenAssertIsDisplayed("Address: ${fakePlaceWithAllData.address}")
         waitForThenAssertIsDisplayed(fakePlaceWithAllData.coordinates?.formatForDisplay()!!)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.type!!)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.lifeSpan?.begin!!)
-        waitForThenAssertIsDisplayed(fakePlaceWithAllData.lifeSpan?.end!!)
+        waitForThenAssertIsDisplayed("Type: ${fakePlaceWithAllData.type!!}")
+        waitForThenAssertIsDisplayed("Opened: ${fakePlaceWithAllData.lifeSpan?.begin!!}")
+        waitForThenAssertIsDisplayed("Closed: ${fakePlaceWithAllData.lifeSpan?.end!!}")
 
         waitForThenPerformClickOn(events)
         waitForThenAssertAtLeastOneIsDisplayed(fakeEvent.name)
