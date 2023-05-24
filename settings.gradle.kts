@@ -32,7 +32,7 @@ dependencyResolutionManagement {
             library("accompanist-swiperefresh", "com.google.accompanist", "accompanist-swiperefresh").versionRef("accompanist")
             library("accompanist-pager", "com.google.accompanist", "accompanist-pager").versionRef("accompanist")
 
-            library("androidx-activity-compose", "androidx.activity", "activity-compose").version("1.7.1")
+            library("androidx-activity-compose", "androidx.activity", "activity-compose").version("1.7.2")
             library("androidx-arch-core-testing", "androidx.arch.core", "core-testing").version("2.2.0")
             library("androidx-constraintlayout-compose", "androidx.constraintlayout", "constraintlayout-compose").version("1.0.1")
             library("androidx-core", "androidx.core", "core-ktx").version("1.10.1")
