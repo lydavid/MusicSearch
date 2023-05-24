@@ -13,8 +13,8 @@ import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
-import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import timber.log.Timber

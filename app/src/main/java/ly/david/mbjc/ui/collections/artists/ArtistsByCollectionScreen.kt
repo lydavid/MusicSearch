@@ -13,7 +13,7 @@ import ly.david.data.domain.ArtistListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.artist.ArtistListItem
-import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 

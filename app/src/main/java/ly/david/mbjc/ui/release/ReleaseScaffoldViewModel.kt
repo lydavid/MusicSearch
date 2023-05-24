@@ -37,6 +37,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.history.LookupHistoryDao
+import ly.david.data.persistence.history.RecordLookupHistory
 import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseDao
@@ -44,7 +45,6 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.repository.ReleaseRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
-import ly.david.mbjc.ui.common.history.RecordLookupHistory
 import ly.david.mbjc.ui.common.paging.IRelationsList
 import ly.david.mbjc.ui.common.paging.RelationsList
 import retrofit2.HttpException

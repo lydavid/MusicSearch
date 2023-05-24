@@ -21,7 +21,7 @@ import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.mbjc.ui.common.getDisplayTextRes
-import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles

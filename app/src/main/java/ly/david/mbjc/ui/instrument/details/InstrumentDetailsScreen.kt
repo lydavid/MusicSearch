@@ -16,8 +16,8 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.InstrumentListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.text.TextWithHeadingRes
-import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
-import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme

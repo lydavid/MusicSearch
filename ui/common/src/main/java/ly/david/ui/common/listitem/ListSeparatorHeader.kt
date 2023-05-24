@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.listitem
+package ly.david.ui.common.listitem
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,16 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
 @Composable
-internal fun ListSeparatorHeader(text: String) {
+fun ListSeparatorHeader(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
     val surfaceColor = MaterialTheme.colorScheme.surfaceVariant
-    Surface(color = surfaceColor) {
+    Surface(
+        modifier = modifier,
+        color = surfaceColor
+    ) {
         SelectionContainer {
             Text(
                 text = text,
@@ -36,22 +41,41 @@ internal fun ListSeparatorHeader(text: String) {
 }
 
 @Composable
-internal fun InformationListSeparatorHeader(@StringRes resourceStringRes: Int) {
-    ListSeparatorHeader(text = stringResource(id = R.string.information_header, stringResource(id = resourceStringRes)))
-}
-
-@Composable
-internal fun AttributesListSeparatorHeader(@StringRes resourceStringRes: Int) {
+fun AttributesListSeparatorHeader(@StringRes resourceStringRes: Int) {
     ListSeparatorHeader(text = stringResource(id = R.string.attributes_header, stringResource(id = resourceStringRes)))
 }
 
-@ExcludeFromJacocoGeneratedReport
+@Composable
+fun InformationListSeparatorHeader(@StringRes resourceStringRes: Int) {
+    ListSeparatorHeader(text = stringResource(id = R.string.information_header, stringResource(id = resourceStringRes)))
+}
+
 @DefaultPreviews
 @Composable
 private fun ListSeparatorHeaderPreview() {
     PreviewTheme {
         Surface {
             ListSeparatorHeader("Album + Compilation")
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun AttributesListSeparatorHeaderPreview() {
+    PreviewTheme {
+        Surface {
+            AttributesListSeparatorHeader(R.string.work)
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+private fun InformationListSeparatorHeaderPreview() {
+    PreviewTheme {
+        Surface {
+            InformationListSeparatorHeader(R.string.area)
         }
     }
 }

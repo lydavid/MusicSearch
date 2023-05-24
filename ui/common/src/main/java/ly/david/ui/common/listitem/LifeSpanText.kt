@@ -1,13 +1,13 @@
-package ly.david.mbjc.ui.common.listitem
+package ly.david.ui.common.listitem
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeadingRes
@@ -17,21 +17,26 @@ import ly.david.ui.common.theme.PreviewTheme
  * Should be used inside a [ColumnScope].
  */
 @Composable
-internal fun LifeSpanText(
+fun LifeSpanText(
     lifeSpan: LifeSpan?,
+    modifier: Modifier = Modifier,
     beginHeadingRes: Int = R.string.start_date,
     endHeadingRes: Int = R.string.end_date
 ) {
     lifeSpan?.run {
-        val beginDate = begin
-        if (beginDate == end && beginDate != null) {
-            TextWithHeadingRes(headingRes = R.string.date, text = beginDate)
-        } else {
-            begin?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = beginHeadingRes, text = it)
-            }
-            end?.ifNotNullOrEmpty {
-                TextWithHeadingRes(headingRes = endHeadingRes, text = it)
+        Column(
+            modifier = modifier
+        ) {
+            val beginDate = begin
+            if (beginDate == end && beginDate != null) {
+                TextWithHeadingRes(headingRes = R.string.date, text = beginDate)
+            } else {
+                begin?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = beginHeadingRes, text = it)
+                }
+                end?.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = endHeadingRes, text = it)
+                }
             }
         }
     }
@@ -62,7 +67,6 @@ internal class LifeSpanPreviewParameterProvider : PreviewParameterProvider<LifeS
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview(
@@ -70,9 +74,7 @@ private fun Preview(
 ) {
     PreviewTheme {
         Surface {
-            Column {
-                LifeSpanText(lifeSpan = lifeSpan)
-            }
+            LifeSpanText(lifeSpan = lifeSpan)
         }
     }
 }

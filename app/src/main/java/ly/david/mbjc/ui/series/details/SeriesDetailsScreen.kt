@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.SeriesListItemModel
 import ly.david.ui.common.text.TextWithHeadingRes
-import ly.david.mbjc.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.R
 
 @Composable

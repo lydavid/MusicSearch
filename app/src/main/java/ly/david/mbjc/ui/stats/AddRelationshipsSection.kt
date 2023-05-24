@@ -23,7 +23,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.relation.RelationTypeCount
 import ly.david.mbjc.ui.common.ResourceIcon
 import ly.david.mbjc.ui.common.getDisplayTextRes
-import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme

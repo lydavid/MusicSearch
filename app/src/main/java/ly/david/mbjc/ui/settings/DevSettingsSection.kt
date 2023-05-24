@@ -10,7 +10,7 @@ import ly.david.data.navigation.Destination
 import ly.david.data.persistence.DATABASE_VERSION
 import ly.david.mbjc.BuildConfig
 import ly.david.ui.common.text.TextWithHeading
-import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.listitem.ListSeparatorHeader
 
 @Composable
 fun DevSettingsSection(

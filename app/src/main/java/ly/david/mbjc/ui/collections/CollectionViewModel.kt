@@ -8,7 +8,7 @@ import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.collection.CollectionDao
 import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import ly.david.data.persistence.history.RecordLookupHistory
 
 @HiltViewModel
 internal class CollectionViewModel @Inject constructor(

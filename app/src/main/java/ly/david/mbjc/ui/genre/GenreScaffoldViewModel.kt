@@ -13,7 +13,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
-import ly.david.mbjc.ui.common.history.RecordLookupHistory
+import ly.david.data.persistence.history.RecordLookupHistory
 import retrofit2.HttpException
 import timber.log.Timber
 

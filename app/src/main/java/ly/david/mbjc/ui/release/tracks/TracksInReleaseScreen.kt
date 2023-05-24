@@ -10,7 +10,7 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.TrackListItemModel
-import ly.david.mbjc.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 
 /**

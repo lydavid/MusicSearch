@@ -11,7 +11,7 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.listitem.SwipeToDeleteListItem
+import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.release.ReleaseListItem
 import timber.log.Timber
