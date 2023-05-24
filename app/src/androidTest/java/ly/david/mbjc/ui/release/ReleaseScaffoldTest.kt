@@ -8,11 +8,13 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeDown
+import androidx.compose.ui.test.swipeUp
 import coil.Coil
 import coil.ImageLoaderFactory
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.davidBowieArtistCredit
@@ -33,7 +35,6 @@ import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
 
@@ -75,16 +76,27 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     private fun assertFieldsDisplayed() {
 
         waitForThenAssertIsDisplayed(underPressure.name)
+
+        waitForNodeToShow(hasTestTag("coverArtImage"))
+        composeTestRule
+            .onNodeWithTag("coverArtImage")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithTag("coverArtImage")
+            .performTouchInput {
+                swipeUp(startY = 500f, endY = 0f)
+            }
         waitForThenAssertIsDisplayed(underPressureLabelInfo.label!!.name)
         waitForThenAssertIsDisplayed(underPressureLabelInfo.catalogNumber!!)
         waitForThenAssertIsDisplayed(elektraMusicGroup.name)
         waitForThenAssertIsDisplayed(fakeReleaseEvent.area!!.name)
         waitForThenAssertIsDisplayed(fakeReleaseEvent.date!!)
-
-        waitForNodeToShow(hasTestTag("coverArtImage"))
         composeTestRule
             .onNodeWithTag("coverArtImage")
-            .assertExists() // assertIsDisplayed fails but it does exist
+            .performTouchInput {
+                swipeDown(startY = 0f, endY = 500f)
+            }
 
         waitForThenPerformClickOn(tracks)
         composeTestRule
