@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
-    val android = "8.0.1"
+    val android = "8.0.2"
     val kotlin = "1.8.21"
 
     id("com.android.application") version android apply false
