@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui
+package ly.david.ui.collections
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Row
@@ -26,12 +26,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.ui.common.R
-import ly.david.mbjc.ui.collections.CollectionListItem
 import ly.david.ui.common.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-internal fun CollectionBottomSheet(
+fun CollectionBottomSheet(
     bottomSheetState: SheetState,
     scope: CoroutineScope,
     collections: LazyPagingItems<CollectionListItemModel>,

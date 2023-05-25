@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.collections
+package ly.david.ui.collections
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
 @Composable
-internal fun CollectionListItem(
+fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
     onClick: CollectionListItemModel.() -> Unit = {}

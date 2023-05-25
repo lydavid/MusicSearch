@@ -18,7 +18,7 @@ import ly.david.data.common.openUrl
 import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.ResourceIcon
+import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 import ly.david.ui.common.theme.getSubTextColor

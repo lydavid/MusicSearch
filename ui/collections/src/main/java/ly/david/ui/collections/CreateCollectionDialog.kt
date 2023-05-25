@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.dialog
+package ly.david.ui.collections
 
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Column
@@ -34,14 +34,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.collectableResources
-import ly.david.mbjc.ui.search.ExposedDropdownMenuBox
+import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
 @Composable
-internal fun CreateCollectionDialog(
+fun CreateCollectionDialog(
     onDismiss: () -> Unit = {},
     onSubmit: (name: String, entity: MusicBrainzResource) -> Unit = { _, _ -> }
 ) {

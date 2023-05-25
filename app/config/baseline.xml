@@ -8,7 +8,6 @@
     <ID>ComposableParamOrder:EventStatsScreen.kt$EventStatsScreen</ID>
     <ID>ComposableParamOrder:EventsByPlaceScreen.kt$EventsByPlaceScreen</ID>
     <ID>ComposableParamOrder:ExperimentalSettingsScaffold.kt$SettingsScreen</ID>
-    <ID>ComposableParamOrder:ExposedDropdownMenuBox.kt$ExposedDropdownMenuBox</ID>
     <ID>ComposableParamOrder:HistoryScaffold.kt$HistoryScreen</ID>
     <ID>ComposableParamOrder:InstrumentDetailsScreen.kt$InstrumentDetailsScreen</ID>
     <ID>ComposableParamOrder:InstrumentStatsScreen.kt$InstrumentStatsScreen</ID>
@@ -49,11 +48,9 @@
     <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:TopLevelViewModel.kt$TopLevelViewModel$ex: Exception</ID>
-    <ID>UnnecessaryAbstractClass:PreferencesModuleBinds.kt$PreferencesModuleBinds$PreferencesModuleBinds</ID>
     <ID>UnstableCollections:AreaStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:ArtistStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:EventStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzResource&gt;</ID>
     <ID>UnstableCollections:InstrumentStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:LabelStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:PlaceStatsScreen.kt$List&lt;Tab&gt;</ID>

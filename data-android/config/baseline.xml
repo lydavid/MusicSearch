@@ -4,10 +4,5 @@
   <CurrentIssues>
     <ID>EmptyClassBlock:Migrations.kt$Migrations${ }</ID>
     <ID>LongMethod:ArtistReleaseGroupDaoTest.kt$ArtistReleaseGroupDaoTest$@Test fun `delete release groups by artist`()</ID>
-    <ID>MagicNumber:NetworkModule.kt$NetworkModule$1024L</ID>
-    <ID>MagicNumber:NetworkModule.kt$NetworkModule$50L</ID>
-    <ID>UnnecessaryAbstractClass:HiltTest.kt$HiltTest$HiltTest</ID>
-    <ID>UnnecessaryAbstractClass:MusicBrainzAuthStateBinds.kt$MusicBrainzAuthStateBinds$MusicBrainzAuthStateBinds</ID>
-    <ID>UnnecessaryAbstractClass:MusicBrainzRoomDatabase.kt$MusicBrainzRoomDatabase$MusicBrainzRoomDatabase</ID>
   </CurrentIssues>
 </SmellBaseline>

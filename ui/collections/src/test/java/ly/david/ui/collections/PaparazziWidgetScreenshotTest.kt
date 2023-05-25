@@ -1,4 +1,4 @@
-package ly.david.ui.common
+package ly.david.ui.collections
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.ui.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
@@ -23,7 +23,7 @@ import ly.david.data.network.MusicBrainzResource
  * An appropriate icon for a given [resource].
  */
 @Composable
-internal fun ResourceIcon(
+fun ResourceIcon(
     resource: MusicBrainzResource,
     modifier: Modifier = Modifier
 ) {

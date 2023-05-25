@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.ui.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,16 +25,13 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
-import ly.david.mbjc.ui.common.ResourceIcon
-import ly.david.mbjc.ui.common.getDisplayTextRes
-import ly.david.ui.common.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ExposedDropdownMenuBox(
-    modifier: Modifier = Modifier,
+fun ExposedDropdownMenuBox(
     options: List<MusicBrainzResource>,
     selectedOption: MusicBrainzResource,
+    modifier: Modifier = Modifier,
     onSelectOption: (MusicBrainzResource) -> Unit
 ) {
 
