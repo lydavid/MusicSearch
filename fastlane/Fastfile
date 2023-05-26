@@ -35,7 +35,8 @@ platform :android do
     gradle(task: "clean assembleRelease")
     upload_to_play_store(
       json_key: options[:json_key_path],
-      track: "internal"
+      track: "internal",
+      aab: options[:aab_path]
     )
   end
 end

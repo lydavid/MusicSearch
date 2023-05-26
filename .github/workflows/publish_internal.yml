@@ -12,27 +12,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.early_exit.outputs.status }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  # check:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     status: ${{ steps.early_exit.outputs.status }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      # Cannot early exit jobs with GHA yet
-      # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
-      - name: Determine whether to exit early based on previous commit
-        id: early_exit
-        run: |
-          status='skip'
-          if ! (git log --oneline -n 1 | grep -c 'chore\: bump version \[skip ci\]'); then status='deploy'; fi
-          echo "status=$status" >> $GITHUB_OUTPUT
-        shell: bash
+  #     # Cannot early exit jobs with GHA yet
+  #     # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
+  #     - name: Determine whether to exit early based on previous commit
+  #       id: early_exit
+  #       run: |
+  #         status='skip'
+  #         if ! (git log --oneline -n 1 | grep -c 'chore\: bump version \[skip ci\]'); then status='deploy'; fi
+  #         echo "status=$status" >> $GITHUB_OUTPUT
+  #       shell: bash
 
   publish-internal:
-    needs: check
-    if: needs.check.outputs.status == 'deploy'
+    # needs: check
+    # if: needs.check.outputs.status == 'deploy'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
@@ -63,25 +63,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
       # -b preserves our line separator preference
-      - name: Bump version code
-        run: |
-          VC=$(grep 'versionCode' app/build.gradle.kts | sed 's/[^0-9]//g')
-          sed -bi "s/versionCode = $VC/versionCode = $(($VC + 1))/" app/build.gradle.kts
-        shell: bash
+      # - name: Bump version code
+      #   run: |
+      #     VC=$(grep 'versionCode' app/build.gradle.kts | sed 's/[^0-9]//g')
+      #     sed -bi "s/versionCode = $VC/versionCode = $(($VC + 1))/" app/build.gradle.kts
+      #   shell: bash
 
-      - name: Bump version name
-        if: steps.get-next-version.outputs.new-release-published == 'true'
-        run: |
-          VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
-          newVN=${{ steps.get-next-version.outputs.new-release-version }}
-          sed -bi "s/versionName = \"$VN\"/versionName = \"$newVN\"/" app/build.gradle.kts
-        shell: bash
+      # - name: Bump version name
+      #   if: steps.get-next-version.outputs.new-release-published == 'true'
+      #   run: |
+      #     VN=$(grep 'versionName' app/build.gradle.kts | sed 's/[^0-9.]//g')
+      #     newVN=${{ steps.get-next-version.outputs.new-release-version }}
+      #     sed -bi "s/versionName = \"$VN\"/versionName = \"$newVN\"/" app/build.gradle.kts
+      #   shell: bash
 
-      - name: Commit version code bump
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: 'chore: bump version [skip ci]'
-          file_pattern: 'app/build.gradle.kts'
+      # - name: Commit version code bump
+      #   uses: stefanzweifel/git-auto-commit-action@v4.16.0
+      #   with:
+      #     commit_message: 'chore: bump version [skip ci]'
+      #     file_pattern: 'app/build.gradle.kts'
 
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
@@ -109,7 +109,7 @@ jobs:
 
       - name: Publish build to Google Play's internal track
         id: publish_play_store
-        run: fastlane publish_internal json_key_path:${{ steps.auth.outputs.credentials_file_path }}
+        run: fastlane publish_internal json_key_path:${{ steps.auth.outputs.credentials_file_path }} aab_path:app/build/outputs/bundle/release/app-release.aab
         # uses: r0adkll/upload-google-play@v1.1.1
         # with:
         #   serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
