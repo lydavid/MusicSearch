@@ -30,9 +30,12 @@ platform :android do
     # You can also use other beta testing services here
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
+  desc "Publish an internal release to Google Play"
+  lane :publish_internal do |options|
     gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    upload_to_play_store(
+      json_key: options[:json_key_path],
+      track: "internal"
+    )
   end
 end
