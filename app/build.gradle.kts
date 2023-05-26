@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
-        versionCode = 78
+        versionCode = 79
         versionName = "0.7.6"
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
