@@ -107,9 +107,12 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT }}
 
+      # TODO: remove
+      - run: fastlane validate_play_store_json_key json_key_path:${{ steps.auth.outputs.credentials_file_path }}
+
       - name: Publish build to Google Play's internal track
         id: publish_play_store
-        run: fastlane publish_internal json_key_path:${{ steps.auth.outputs.credentials_file_path }} aab_path:app/build/outputs/bundle/release/app-release.aab
+        run: fastlane publish_internal json_key_path:${{ steps.auth.outputs.credentials_file_path }} aab_path:app/build/outputs/bundle/release
         # uses: r0adkll/upload-google-play@v1.1.1
         # with:
         #   serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
