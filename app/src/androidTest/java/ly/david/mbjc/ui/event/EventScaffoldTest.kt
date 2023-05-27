@@ -5,7 +5,6 @@ import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.EventMusicBrainzModel
@@ -16,7 +15,6 @@ import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class EventScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 

@@ -7,7 +7,6 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
@@ -20,7 +19,6 @@ import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
 

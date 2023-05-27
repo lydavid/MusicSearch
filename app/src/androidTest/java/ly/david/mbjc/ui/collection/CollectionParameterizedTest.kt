@@ -14,7 +14,6 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 import ly.david.data.network.MusicBrainzResource
@@ -37,7 +36,6 @@ import org.junit.runners.Parameterized
 /**
  * Tests interacting with [CollectionListScaffold] and [CollectionScaffold].
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class CollectionParameterizedTest(

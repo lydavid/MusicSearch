@@ -13,7 +13,6 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.canada
@@ -35,7 +34,6 @@ import org.junit.Test
  * However, try to refrain from testing the details of constituent composables such as its cards.
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 

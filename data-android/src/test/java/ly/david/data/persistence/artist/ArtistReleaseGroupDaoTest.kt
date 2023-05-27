@@ -3,8 +3,6 @@ package ly.david.data.persistence.artist
 import androidx.paging.PagingSource
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
@@ -12,10 +10,10 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ArtistReleaseGroupDaoTest : HiltTest() {
 

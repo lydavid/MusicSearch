@@ -22,11 +22,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.network.resourceUri
+import ly.david.data.network.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -38,7 +37,6 @@ import org.junit.runner.RunWith
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachResourceTest].
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {

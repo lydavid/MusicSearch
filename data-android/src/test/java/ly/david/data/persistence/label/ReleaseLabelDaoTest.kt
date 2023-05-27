@@ -2,7 +2,6 @@ package ly.david.data.persistence.label
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.persistence.release.ReleaseDao
@@ -12,7 +11,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseLabelDaoTest : HiltTest() {
 

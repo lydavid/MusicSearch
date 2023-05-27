@@ -15,7 +15,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
@@ -32,7 +31,6 @@ import org.junit.Test
 /**
  * Tests [CollectionListScaffold]-specific features.
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences {
 

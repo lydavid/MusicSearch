@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.davidBowieArtistCredit
@@ -25,7 +24,6 @@ import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 

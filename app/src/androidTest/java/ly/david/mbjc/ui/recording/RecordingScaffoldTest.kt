@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.davidBowie
@@ -24,7 +23,6 @@ import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 internal class RecordingScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
 

@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.search
 
 import androidx.paging.PagingSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.toListItemModel
 import ly.david.data.network.MusicBrainzResource
@@ -25,7 +24,6 @@ internal class SearchMusicBrainzPagingSourceTest(private val resource: MusicBrai
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun loadEachResource() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
