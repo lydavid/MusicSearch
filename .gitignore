@@ -1,19 +1,7 @@
 *.iml
 .gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-/.idea/compiler.xml
-/.idea/deploymentTargetDropDown.xml
-/.idea/gradle.xml
-/.idea/misc.xml
-/.idea/androidTestResultsUserPreferences.xml
-/.idea/jarRepositories.xml
-/.idea/render.experimental.xml
+/.idea/*
 
 .DS_Store
 /build
@@ -21,7 +9,7 @@
 .cxx
 local.properties
 
-# Includes example screenshots, example json responses, and app release keystore
+# Includes example screenshots, example json responses
 /ignore_folder
 
 # Ignore app release keystore
