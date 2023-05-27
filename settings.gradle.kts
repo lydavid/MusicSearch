@@ -63,7 +63,7 @@ dependencyResolutionManagement {
 
             library("dagger", "com.google.dagger", "dagger").versionRef("hilt")
 
-            library("firebase-bom", "com.google.firebase", "firebase-bom").version("32.0.0")
+            library("firebase-bom", "com.google.firebase", "firebase-bom").version("32.1.0")
             library("firebase-analytics", "com.google.firebase", "firebase-analytics-ktx").version("21.3.0")
             library("firebase-crashlytics", "com.google.firebase", "firebase-crashlytics-ktx").version("18.3.7")
 
