@@ -1,8 +1,8 @@
 package ly.david.mbjc.ui.settings
 
 import android.os.Build
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -90,57 +90,58 @@ fun SettingsScreen(
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {}
 ) {
 
-    Column(modifier = modifier) {
+    LazyColumn(modifier = modifier) {
+        item {
+            ProfileCard(
+                username = username,
+                showLogin = showLogin,
+                onLoginClick = onLoginClick,
+                onLogoutClick = onLogoutClick
+            )
 
-        ProfileCard(
-            username = username,
-            showLogin = showLogin,
-            onLoginClick = onLoginClick,
-            onLogoutClick = onLogoutClick
-        )
+            SettingWithDialogChoices(
+                titleRes = R.string.theme,
+                choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
+                selectedChoiceIndex = theme.ordinal,
+                onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
+            )
 
-        SettingWithDialogChoices(
-            titleRes = R.string.theme,
-            choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
-            selectedChoiceIndex = theme.ordinal,
-            onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
-        )
+            val isAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+            if (isAndroid12) {
+                SettingSwitch(
+                    header = "Use Material You",
+                    checked = useMaterialYou,
+                    onCheckedChange = onUseMaterialYouChange
+                )
+            }
 
-        val isAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-        if (isAndroid12) {
             SettingSwitch(
-                header = "Use Material You",
-                checked = useMaterialYou,
-                onCheckedChange = onUseMaterialYouChange
+                header = "Show more info in release list items",
+                checked = showMoreInfoInReleaseListItem,
+                onCheckedChange = onShowMoreInfoInReleaseListItemChange
             )
-        }
 
-        SettingSwitch(
-            header = "Show more info in release list items",
-            checked = showMoreInfoInReleaseListItem,
-            onCheckedChange = onShowMoreInfoInReleaseListItemChange
-        )
-
-        SettingSwitch(
-            header = "Sort release groups by type",
-            checked = sortReleaseGroupListItems,
-            onCheckedChange = onSortReleaseGroupListItemsChange
-        )
-
-        val versionKey = stringResource(id = R.string.app_version)
-        val versionName = BuildConfig.VERSION_NAME
-        val versionCode = BuildConfig.VERSION_CODE.toString()
-        TextWithHeading(heading = versionKey, text = "$versionName ($versionCode)")
-
-        // TODO: sharedpreference to use artist sort name throughout app
-        //  helpful for non-Latin names
-        //  other entities have a sort_name field in backend
-        //  but doesn't seem to be exposed for editing/displaying
-
-        if (BuildConfig.DEBUG) {
-            DevSettingsSection(
-                onDestinationClick = onDestinationClick
+            SettingSwitch(
+                header = "Sort release groups by type",
+                checked = sortReleaseGroupListItems,
+                onCheckedChange = onSortReleaseGroupListItemsChange
             )
+
+            val versionKey = stringResource(id = R.string.app_version)
+            val versionName = BuildConfig.VERSION_NAME
+            val versionCode = BuildConfig.VERSION_CODE.toString()
+            TextWithHeading(heading = versionKey, text = "$versionName ($versionCode)")
+
+            // TODO: sharedpreference to use artist sort name throughout app
+            //  helpful for non-Latin names
+            //  other entities have a sort_name field in backend
+            //  but doesn't seem to be exposed for editing/displaying
+
+            if (BuildConfig.DEBUG) {
+                DevSettingsSection(
+                    onDestinationClick = onDestinationClick
+                )
+            }
         }
     }
 }
