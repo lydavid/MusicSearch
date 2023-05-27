@@ -19,8 +19,9 @@ internal class MusicSearchApplication : Application() {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+        } else {
+            Timber.plant(CrashlyticsTree(FirebaseCrashlytics.getInstance()))
         }
-        Timber.plant(CrashlyticsTree(FirebaseCrashlytics.getInstance()))
 
         Coil.setImageLoader(imageLoaderFactory)
     }
