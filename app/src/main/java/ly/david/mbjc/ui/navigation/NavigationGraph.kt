@@ -24,7 +24,6 @@ import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
-import ly.david.mbjc.ui.experimental.ExperimentalSettingsScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.history.HistoryScaffold
@@ -348,7 +347,6 @@ internal fun NavigationGraph(
 
         val onSettingsClick: (Destination) -> Unit = { destination ->
             when (destination) {
-                Destination.EXPERIMENTAL_SETTINGS,
                 Destination.EXPERIMENTAL_SPOTIFY -> {
                     navController.goTo(destination)
                 }
@@ -374,12 +372,6 @@ internal fun NavigationGraph(
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
                 onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
             )
-        }
-
-        composable(
-            Destination.EXPERIMENTAL_SETTINGS.route
-        ) {
-            ExperimentalSettingsScaffold()
         }
 
         composable(

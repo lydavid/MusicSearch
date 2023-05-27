@@ -7,7 +7,6 @@
     <ID>ComposableParamOrder:EventDetailsScreen.kt$EventDetailsScreen</ID>
     <ID>ComposableParamOrder:EventStatsScreen.kt$EventStatsScreen</ID>
     <ID>ComposableParamOrder:EventsByPlaceScreen.kt$EventsByPlaceScreen</ID>
-    <ID>ComposableParamOrder:ExperimentalSettingsScaffold.kt$SettingsScreen</ID>
     <ID>ComposableParamOrder:HistoryScaffold.kt$HistoryScreen</ID>
     <ID>ComposableParamOrder:InstrumentDetailsScreen.kt$InstrumentDetailsScreen</ID>
     <ID>ComposableParamOrder:InstrumentStatsScreen.kt$InstrumentStatsScreen</ID>
@@ -39,10 +38,8 @@
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
-    <ID>MaxLineLength:ExperimentalSettingsViewModel.kt$ExperimentalSettingsViewModel$emit(regex.matches("Theme") || regex.matches("Light") || regex.matches("Dark") || regex.matches("System"))</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
     <ID>ModifierMissing:DevSettingsSection.kt$DevSettingsSection</ID>
-    <ID>ModifierMissing:ExperimentalSettingsScaffold.kt$ExperimentalSettingsScaffold</ID>
     <ID>ModifierMissing:SettingSwitch.kt$SettingSwitch</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
     <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>

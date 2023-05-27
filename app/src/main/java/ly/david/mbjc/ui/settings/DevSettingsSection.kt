@@ -8,9 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.navigation.Destination
 import ly.david.data.persistence.DATABASE_VERSION
-import ly.david.mbjc.BuildConfig
-import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.text.TextWithHeading
 
 @Composable
 fun DevSettingsSection(
@@ -19,18 +18,7 @@ fun DevSettingsSection(
     Column {
         ListSeparatorHeader(text = "Dev Settings")
 
-        // Bump this by searching for `versionCode`
-        TextWithHeading(heading = "Internal version", text = BuildConfig.VERSION_CODE.toString())
         TextWithHeading(heading = "Database version", text = "$DATABASE_VERSION")
-
-        Text(
-            modifier = Modifier
-                .clickable {
-                    onDestinationClick(Destination.EXPERIMENTAL_SETTINGS)
-                }
-                .fillMaxWidth(),
-            text = "Settings"
-        )
 
         Text(
             modifier = Modifier

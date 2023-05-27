@@ -15,13 +15,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.ui.common.R
-import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.settings.components.ProfileCard
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
+import ly.david.ui.common.R
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.theme.PreviewTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -128,8 +128,9 @@ fun SettingsScreen(
         )
 
         val versionKey = stringResource(id = R.string.app_version)
-        val versionValue = BuildConfig.VERSION_NAME
-        TextWithHeading(heading = versionKey, text = versionValue)
+        val versionName = BuildConfig.VERSION_NAME
+        val versionCode = BuildConfig.VERSION_CODE.toString()
+        TextWithHeading(heading = versionKey, text = "$versionName ($versionCode)")
 
         // TODO: sharedpreference to use artist sort name throughout app
         //  helpful for non-Latin names
