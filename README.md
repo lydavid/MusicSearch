@@ -54,17 +54,29 @@ graph LR
     coverart
     musicbrainz
   end
+
   musicbrainz --> base
   data --> base
   data --> coverart
   data --> musicbrainz
   data-android --> data
   data-android --> test-data
+  collections --> data
+  collections --> common
+  common --> data
   app --> test-data
   app --> data-android
+  app --> collections
+  app --> common
   app --> data-android
+  app --> collections
+  app --> common
   app --> data-android
+  app --> collections
+  app --> common
   app --> data-android
+  app --> collections
+  app --> common
   app --> test-data
   coverart --> base
   test-data --> data
