@@ -28,7 +28,7 @@ fun RecordingMusicBrainzModel.toRoomModel() =
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
         length = length,
-        video = video,
+        video = video ?: false,
         isrcs = isrcs
     )
 
