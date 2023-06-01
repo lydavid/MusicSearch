@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.common.R
 
 @OptIn(ExperimentalMaterial3Api::class)

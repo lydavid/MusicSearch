@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.topappbar
+package ly.david.ui.common.topappbar
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -19,19 +19,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 private val DEFAULT_DOT_SIZE = 12.dp
 private const val ANIMATION_DELAY_MS = 300
+private const val MIN_ALPHA = 0.2f
 
 /**
  * Based off of: [https://gist.github.com/EugeneTheDev/a27664cb7e7899f964348b05883cbccd]
  */
 @Composable
-internal fun DotsFlashing() {
-    val minAlpha = 0.2f
+fun DotsFlashing(
+    modifier: Modifier = Modifier,
+) {
+    val minAlpha = MIN_ALPHA
 
     @Composable
     fun Dot(alpha: Float) = Spacer(
@@ -66,7 +68,8 @@ internal fun DotsFlashing() {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
+        modifier = modifier
     ) {
         val spaceSize = 4.dp
 
@@ -78,7 +81,6 @@ internal fun DotsFlashing() {
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

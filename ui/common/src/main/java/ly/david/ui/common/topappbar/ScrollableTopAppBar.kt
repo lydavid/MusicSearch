@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.topappbar
+package ly.david.ui.common.topappbar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -36,8 +36,8 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.R
+import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
@@ -59,11 +59,12 @@ private const val DELAY_LOADING_MS = 300L
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ScrollableTopAppBar(
+fun ScrollableTopAppBar(
+    modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     resource: MusicBrainzResource? = null,
-    title: String,
+    title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
 
@@ -75,15 +76,15 @@ internal fun ScrollableTopAppBar(
     // TODO: Can we split these concerns somehow?
     tabsTitles: List<String> = listOf(),
     selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {}
+    onSelectTabIndex: (Int) -> Unit = {},
 ) {
 
-    Column {
+    Column(modifier = modifier) {
         TopAppBar(
             title = {
                 TitleBar(
-                    resource = resource,
                     title = title,
+                    resource = resource,
                     subtitle = subtitle,
                     subtitleDropdownMenuItems = subtitleDropdownMenuItems
                 )
@@ -112,8 +113,8 @@ internal fun ScrollableTopAppBar(
 
 @Composable
 private fun TitleBar(
-    resource: MusicBrainzResource? = null,
     title: String,
+    resource: MusicBrainzResource? = null,
     subtitle: String = "",
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {
@@ -264,7 +265,7 @@ private fun TabsBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
-private fun ScrollableTopAppBarPreview() {
+private fun Default() {
     PreviewTheme {
         ScrollableTopAppBar(
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
@@ -276,7 +277,7 @@ private fun ScrollableTopAppBarPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
-private fun ScrollableTopAppBarIconPreview() {
+private fun WithIcon() {
     PreviewTheme {
         ScrollableTopAppBar(
             resource = MusicBrainzResource.ARTIST,

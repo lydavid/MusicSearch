@@ -22,20 +22,14 @@
     <ID>ComposableParamOrder:ReleaseGroupsListScreen.kt$ReleaseGroupsListScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
     <ID>ComposableParamOrder:ReleasesListScreen.kt$ReleasesListScreen</ID>
-    <ID>ComposableParamOrder:ScrollableTopAppBar.kt$ScrollableTopAppBar</ID>
-    <ID>ComposableParamOrder:ScrollableTopAppBar.kt$TitleBar</ID>
     <ID>ComposableParamOrder:SearchMusicBrainzScreen.kt$SearchMusicBrainzScreen</ID>
     <ID>ComposableParamOrder:SeriesDetailsScreen.kt$SeriesDetailsScreen</ID>
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
-    <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilter</ID>
-    <ID>ComposableParamOrder:TopAppBarWithFilter.kt$TopAppBarWithFilterInternal</ID>
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
     <ID>CyclomaticComplexMethod:SearchMusicBrainzScreen.kt$@Composable internal fun SearchMusicBrainzScreen( modifier: Modifier = Modifier, lazyListState: LazyListState = rememberLazyListState(), snackbarHostState: SnackbarHostState, onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -&gt; Unit = { _, _, _ -&gt; }, searchQuery: String? = null, searchOption: MusicBrainzResource? = null, viewModel: SearchMusicBrainzViewModel = hiltViewModel() )</ID>
     <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$(resourceId, query, isRemote, sorted)</ID>
-    <ID>MagicNumber:DotsFlashing.kt$0.2f</ID>
-    <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MagicNumber:PlaceDetailsScreen.kt$123.4567</ID>
     <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
@@ -54,11 +48,9 @@
     <ID>UnstableCollections:RecordingStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:ReleaseGroupStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:ReleaseStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:ScrollableTopAppBar.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:SeriesStatsScreen.kt$List&lt;Tab&gt;</ID>
     <ID>UnstableCollections:SettingWithDialogChoices.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:StatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
   </CurrentIssues>
 </SmellBaseline>

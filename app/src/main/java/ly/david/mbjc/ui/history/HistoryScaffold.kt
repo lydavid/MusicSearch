@@ -29,7 +29,7 @@ import ly.david.data.persistence.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.DeleteHistoryDelegate
 import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.R
 
 @OptIn(ExperimentalMaterial3Api::class)

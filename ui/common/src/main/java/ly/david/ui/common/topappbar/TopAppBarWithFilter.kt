@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.topappbar
+package ly.david.ui.common.topappbar
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -49,11 +49,12 @@ import ly.david.ui.common.theme.PreviewTheme
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TopAppBarWithFilter(
+fun TopAppBarWithFilter(
+    modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     resource: MusicBrainzResource? = null,
-    title: String,
+    title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
 
@@ -79,6 +80,7 @@ internal fun TopAppBarWithFilter(
     }
 
     TopAppBarWithFilterInternal(
+        modifier = modifier,
         onBack = onBack,
         showBackButton = showBackButton,
         resource = resource,
@@ -101,11 +103,12 @@ internal fun TopAppBarWithFilter(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopAppBarWithFilterInternal(
+internal fun TopAppBarWithFilterInternal(
+    modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
     resource: MusicBrainzResource? = null,
-    title: String,
+    title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
@@ -191,6 +194,7 @@ private fun TopAppBarWithFilterInternal(
         }
 
         ScrollableTopAppBar(
+            modifier = modifier,
             onBack = onBack,
             showBackButton = showBackButton,
             resource = resource,
@@ -223,7 +227,7 @@ private fun TopAppBarWithFilterInternal(
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
-private fun Preview() {
+private fun Default() {
     PreviewTheme {
         Surface {
             TopAppBarWithFilterInternal(title = "Title")
@@ -234,7 +238,7 @@ private fun Preview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
-private fun PreviewFilterMode() {
+private fun FilterMode() {
     PreviewTheme {
         Surface {
             TopAppBarWithFilterInternal(
@@ -248,7 +252,7 @@ private fun PreviewFilterMode() {
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
-private fun PreviewNoSearch() {
+private fun NoFilter() {
     PreviewTheme {
         Surface {
             TopAppBarWithFilterInternal(
@@ -262,7 +266,7 @@ private fun PreviewNoSearch() {
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
 @Composable
-private fun PreviewWithTabs() {
+private fun WithTabs() {
     PreviewTheme {
         Surface {
             TopAppBarWithFilterInternal(

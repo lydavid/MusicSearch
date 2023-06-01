@@ -40,13 +40,13 @@ import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.screen.RelationsScreen
-import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
-import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.ToggleMenuItem
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 /**
  * The top-level screen for an area.

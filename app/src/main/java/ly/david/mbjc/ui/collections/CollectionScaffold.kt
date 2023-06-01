@@ -35,10 +35,10 @@ import ly.david.mbjc.ui.collections.series.SeriesByCollectionScreen
 import ly.david.mbjc.ui.collections.works.WorksByCollectionScreen
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.ui.common.fullscreen.FullScreenText
-import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.ToggleMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.ToggleMenuItem
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 /**
  * A single MusicBrainz collection.

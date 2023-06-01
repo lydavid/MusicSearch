@@ -1,17 +1,19 @@
-package ly.david.mbjc.ui.common.topappbar
+package ly.david.ui.common.topappbar
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 
 @Composable
-internal fun OverflowMenuScope.ToggleMenuItem(
+fun OverflowMenuScope.ToggleMenuItem(
     @StringRes toggleOnText: Int,
     @StringRes toggleOffText: Int,
     toggled: Boolean,
-    onToggle: (Boolean) -> Unit
+    onToggle: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     DropdownMenuItem(
         text = {
@@ -20,6 +22,7 @@ internal fun OverflowMenuScope.ToggleMenuItem(
         onClick = {
             closeMenu()
             onToggle(!toggled)
-        }
+        },
+        modifier = modifier
     )
 }

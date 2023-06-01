@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.navigation.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.mbjc.ui.settings.components.ProfileCard
 import ly.david.mbjc.ui.settings.components.SettingSwitch
 import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices

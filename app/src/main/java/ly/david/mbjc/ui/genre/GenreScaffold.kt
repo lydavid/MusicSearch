@@ -24,7 +24,7 @@ import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
 import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 

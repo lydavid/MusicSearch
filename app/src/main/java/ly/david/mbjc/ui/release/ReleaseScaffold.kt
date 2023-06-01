@@ -35,10 +35,10 @@ import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.screen.RelationsScreen
-import ly.david.mbjc.ui.common.topappbar.AddToCollectionMenuItem
-import ly.david.mbjc.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.mbjc.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.mbjc.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen

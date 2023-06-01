@@ -2,8 +2,11 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
     <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzResource&gt;</ID>
     <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:ScrollableTopAppBar.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
   </CurrentIssues>
 </SmellBaseline>
