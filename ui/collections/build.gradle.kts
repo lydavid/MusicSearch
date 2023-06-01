@@ -41,4 +41,6 @@ dependencies {
     debugImplementation(libs.compose.ui.tooling)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
+
+    testImplementation(libs.test.parameter.injector)
 }

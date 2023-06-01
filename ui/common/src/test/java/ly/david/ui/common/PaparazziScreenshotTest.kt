@@ -18,8 +18,8 @@ private const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
  * Common setup for running screenshot tests on light and dark mode.
  */
 @RunWith(TestParameterInjector::class)
-open class PaparazziScreenshotTest(
-    val isFullScreen: Boolean = false
+abstract class PaparazziScreenshotTest(
+    private val isFullScreen: Boolean = false
 ) {
 
     @TestParameter

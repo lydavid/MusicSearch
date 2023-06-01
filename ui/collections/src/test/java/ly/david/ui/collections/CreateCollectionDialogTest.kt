@@ -1,25 +1,16 @@
 package ly.david.ui.collections
 
-import androidx.compose.material3.Surface
-import app.cash.paparazzi.DeviceConfig
-import ly.david.ui.common.theme.PreviewTheme
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 
-@RunWith(Parameterized::class)
-class CreateCollectionDialogTest(
-    config: DeviceConfig
-) : PaparazziScreenshotTest(config) {
+@RunWith(TestParameterInjector::class)
+class CreateCollectionDialogTest : PaparazziScreenshotTest(isFullScreen = true) {
 
     @Test
     fun default() {
-        paparazzi.snapshot {
-            PreviewTheme {
-                Surface {
-                    CreateCollectionDialog()
-                }
-            }
+        snapshot {
+            CreateCollectionDialog()
         }
     }
 }

@@ -1,48 +1,52 @@
 package ly.david.ui.collections
 
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.NightMode
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import ly.david.ui.common.theme.PreviewTheme
 import org.junit.Rule
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 
-const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
+private const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
 
-// TODO: any way to not have to duplicate this across modules?
-//  Cannot use a test module like test-data because Paparazzi isn't applied in main src set
 /**
  * Common setup for running screenshot tests on light and dark mode.
- *
- * Unfortunately, implementing class must also be annotated with:
- * ```
- * @RunWith(Parameterized::class)
- * ```
- *
- * and declare this parameter:
- * ```
- * config: DeviceConfig
- * ```
  */
-@RunWith(Parameterized::class)
-abstract class PaparazziScreenshotTest( // Must be abstract. Ignore Detekt.
-    config: DeviceConfig
+@RunWith(TestParameterInjector::class)
+abstract class PaparazziScreenshotTest(
+    private val isFullScreen: Boolean = false
 ) {
 
-    companion object {
-        @JvmStatic
-        @Parameterized.Parameters
-        fun data(): Collection<DeviceConfig> {
-            return listOf(
-                DeviceConfig.PIXEL_5,
-                DeviceConfig.PIXEL_5.copy(nightMode = NightMode.NIGHT)
-            )
-        }
+    @TestParameter
+    private lateinit var nightMode: NightMode
+
+    // Note we cannot override junit Rule
+    @get:Rule
+    val paparazzi: Paparazzi by lazy {
+        Paparazzi(
+            deviceConfig = DeviceConfig.PIXEL_5.copy(nightMode = nightMode),
+            theme = PAPARAZZI_THEME,
+            renderingMode = if (isFullScreen) {
+                SessionParams.RenderingMode.NORMAL
+            } else {
+                SessionParams.RenderingMode.SHRINK
+            },
+            showSystemUi = false
+        )
     }
 
-    @get:Rule
-    open val paparazzi = Paparazzi(
-        deviceConfig = config,
-        theme = PAPARAZZI_THEME
-    )
+    protected fun snapshot(content: @Composable () -> Unit) {
+        paparazzi.snapshot {
+            PreviewTheme {
+                Surface {
+                    content()
+                }
+            }
+        }
+    }
 }
