@@ -99,6 +99,8 @@ dependencyResolutionManagement {
             library("room-runtime", "androidx.room", "room-runtime").versionRef("room")
             library("room-testing", "androidx.room", "room-testing").versionRef("room")
 
+            library("test-parameter-injector", "com.google.testparameterinjector", "test-parameter-injector").version("1.12")
+
             library("timber", "com.jakewharton.timber", "timber").version("5.0.1")
         }
     }

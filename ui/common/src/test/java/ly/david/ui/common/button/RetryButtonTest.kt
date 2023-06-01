@@ -1,26 +1,17 @@
 package ly.david.ui.common.button
 
-import androidx.compose.material3.Surface
-import app.cash.paparazzi.DeviceConfig
-import ly.david.ui.common.PaparazziWidgetScreenshotTest
-import ly.david.ui.common.theme.PreviewTheme
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 
-@RunWith(Parameterized::class)
-class RetryButtonTest(
-    config: DeviceConfig
-) : PaparazziWidgetScreenshotTest(config) {
+@RunWith(TestParameterInjector::class)
+class RetryButtonTest : PaparazziScreenshotTest() {
 
     @Test
     fun default() {
-        paparazzi.snapshot {
-            PreviewTheme {
-                Surface {
-                    RetryButton()
-                }
-            }
+        snapshot {
+            RetryButton()
         }
     }
 }
