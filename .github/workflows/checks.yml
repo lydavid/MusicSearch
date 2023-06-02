@@ -1,0 +1,49 @@
+name: Checks
+
+on:
+  push:
+    paths-ignore:
+      - "*.md"
+      - ".circleci/config.yml"
+
+jobs:
+  # When we change the name of this job, make sure to update GitHub's branch protection to the new name
+  checks:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      - name: Detekt code smells
+        run: ./gradlew detekt
+
+      - name: Unit test :data
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:test
+
+      - name: Unit test :data:base
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:base:test
+
+      - name: Unit test :data:coverart
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:coverart:test
+
+      - name: Unit test data:musicbrainz
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:musicbrainz:test
+
+      - name: Verify screenshot tests
+        run: ./gradlew verifyPaparazziDebug
+
+      # TODO: Neither of these actually test code from their own module, so we're getting 0%
+      - name: Unit test Android modules with coverage
+        run: ./gradlew app:createDebugUnitTestCoverageReport data-android:createDebugUnitTestCoverageReport
