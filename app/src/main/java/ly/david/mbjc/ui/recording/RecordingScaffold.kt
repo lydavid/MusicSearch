@@ -34,19 +34,19 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.ResourceIcon
-import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.screen.RelationsScreen
+import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
+import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
+import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
+import ly.david.ui.common.R
+import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
-import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
-import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
-import ly.david.ui.common.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -123,7 +123,8 @@ internal fun RecordingScaffold(
                             onClick = {
                                 closeMenu()
                                 onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
-                            })
+                            }
+                        )
                     }
                 },
                 tabsTitles = RecordingTab.values().map { stringResource(id = it.tab.titleRes) },

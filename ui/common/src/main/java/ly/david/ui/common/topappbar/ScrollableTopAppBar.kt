@@ -82,7 +82,7 @@ fun ScrollableTopAppBar(
     Column(modifier = modifier) {
         TopAppBar(
             title = {
-                TitleBar(
+                TitleAndSubtitle(
                     title = title,
                     resource = resource,
                     subtitle = subtitle,
@@ -112,25 +112,12 @@ fun ScrollableTopAppBar(
 }
 
 @Composable
-private fun TitleBar(
+private fun TitleAndSubtitle(
     title: String,
     resource: MusicBrainzResource? = null,
     subtitle: String = "",
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {
-
-    // TODO: can we generalize adding a dropdown menu to a clickable composable?
-    //  this was copy/pasted from OverflowMenu
-    var showMenu by rememberSaveable { mutableStateOf(false) }
-
-    val scope = remember {
-        object : OverflowMenuScope {
-            override fun closeMenu() {
-                showMenu = false
-            }
-        }
-    }
-
     var showLoading by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = title) {
@@ -140,20 +127,6 @@ private fun TitleBar(
         } else {
             false
         }
-    }
-
-    if (subtitleDropdownMenuItems != null) {
-        DropdownMenu(
-            expanded = showMenu,
-            onDismissRequest = { showMenu = false },
-            content = {
-                // We lose out on the ability to control these items within a Column,
-                // but now each item can close itself.
-                Column {
-                    subtitleDropdownMenuItems.invoke(scope)
-                }
-            }
-        )
     }
 
     if (showLoading) {
@@ -175,30 +148,63 @@ private fun TitleBar(
                 }
             }
             if (subtitle.isNotEmpty()) {
-                SelectionContainer {
-                    Text(
-                        text = subtitle,
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier
-                            .horizontalScroll(rememberScrollState())
-                            // As long as tap and scroll does not trigger a click, we can use this
-                            // as a way to "navigate up".
-                            // When a user searches for a release group, they can't return to the artist by
-                            // pressing back.
-                            // This will allow them to click the subtitle to go to the artist's page.
-                            // From release screen, the subtitle is usually "Release by [Artist]".
-                            // MB website has "(see all versions of this release, 6 available)" to allow up navigation
-                            // to release group screen.
-                            .clickable {
-                                showMenu = !showMenu
-                            }
-                            .semantics {
-                                testTag = "TopBarSubtitle"
-                            }
-                    )
-                }
+                SubtitleWithOverflow(
+                    subtitle = subtitle,
+                    subtitleDropdownMenuItems = subtitleDropdownMenuItems
+                )
             }
         }
+    }
+}
+
+@Composable
+private fun SubtitleWithOverflow(
+    subtitle: String = "",
+    subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
+) {
+    var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    val scope = remember {
+        object : OverflowMenuScope {
+            override fun closeMenu() {
+                showMenu = false
+            }
+        }
+    }
+
+    if (subtitleDropdownMenuItems != null) {
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = { showMenu = false },
+            content = {
+                Column {
+                    subtitleDropdownMenuItems.invoke(scope)
+                }
+            }
+        )
+    }
+
+    SelectionContainer {
+        Text(
+            text = subtitle,
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                // As long as tap and scroll does not trigger a click, we can use this
+                // as a way to "navigate up".
+                // When a user searches for a release group, they can't return to the artist by
+                // pressing back.
+                // This will allow them to click the subtitle to go to the artist's page.
+                // From release screen, the subtitle is usually "Release by [Artist]".
+                // MB website has "(see all versions of this release, 6 available)" to allow up navigation
+                // to release group screen.
+                .clickable {
+                    showMenu = !showMenu
+                }
+                .semantics {
+                    testTag = "TopBarSubtitle"
+                }
+        )
     }
 }
 
@@ -245,7 +251,6 @@ private fun TabsBar(
 ) {
     if (tabsTitle.isNotEmpty()) {
         ScrollableTabRow(
-//            backgroundColor = MaterialTheme.colors.background,
             selectedTabIndex = selectedTabIndex
         ) {
             tabsTitle.forEachIndexed { index, title ->
