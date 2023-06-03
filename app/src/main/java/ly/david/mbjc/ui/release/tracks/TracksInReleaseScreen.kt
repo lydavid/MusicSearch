@@ -40,7 +40,6 @@ internal fun TracksInReleaseScreen(
                 TrackListItem(
                     track = listItemModel,
                     modifier = Modifier.animateItemPlacement(),
-//                            showTrackArtists = shouldShowTrackArtists,
                     onRecordingClick = onRecordingClick
                 )
             }

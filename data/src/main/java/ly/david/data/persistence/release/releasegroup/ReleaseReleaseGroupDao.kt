@@ -47,7 +47,7 @@ abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
 
     @Query(
         """
-        DELETE FROM release WHERE id IN (
+        DELETE FROM `release` WHERE id IN (
         $SELECT_RELEASES_ID_BY_RELEASE_GROUP
         )
         """
@@ -61,7 +61,7 @@ abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
         """
         SELECT IFNULL(
             (SELECT COUNT(*)
-            FROM release r
+            FROM `release` r
             INNER JOIN release_release_group rrg ON rrg.release_id = r.id
             INNER JOIN release_group rg ON rg.id = rrg.release_group_id
             WHERE rg.id = :releaseGroupId

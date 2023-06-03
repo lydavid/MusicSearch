@@ -26,7 +26,7 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao, Update
 
     // Lookup
     @Transaction
-    @Query("SELECT * FROM release WHERE id = :releaseId")
+    @Query("SELECT * FROM `release` WHERE id = :releaseId")
     abstract suspend fun getReleaseWithFormatTrackCounts(releaseId: String): ReleaseWithFormatTrackCounts?
 
     // TODO: simplify
@@ -60,14 +60,14 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao, Update
      */
     @Query(
         """
-        DELETE FROM release WHERE id = :releaseId
+        DELETE FROM `release` WHERE id = :releaseId
         """
     )
     abstract suspend fun deleteReleaseById(releaseId: String)
 
     @Query(
         """
-            UPDATE release
+            UPDATE `release`
             SET cover_art_path = :coverArtPath
             WHERE id = :releaseId
         """

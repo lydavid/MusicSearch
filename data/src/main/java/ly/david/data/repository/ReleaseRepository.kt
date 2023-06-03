@@ -24,7 +24,6 @@ import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
 import ly.david.data.persistence.release.toMediumRoomModel
-import ly.david.data.persistence.release.toTrackRoomModel
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
 // TODO: move back to ui folder
@@ -90,7 +89,9 @@ class ReleaseRepository @Inject constructor(
 
             release.media?.forEach { medium ->
                 val mediumId = mediumDao.insert(medium.toMediumRoomModel(release.id))
-                trackDao.insertAll(medium.tracks?.map { it.toTrackRoomModel(mediumId) } ?: emptyList())
+                medium.tracks?.forEach { track ->
+                    trackDao.insertTrackWithArtistCredits(track, mediumId)
+                }
             }
 
             areaDao.insertAll(

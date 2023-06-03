@@ -36,7 +36,8 @@ class TrackListItemTest : PaparazziScreenshotTest() {
                     number = "123",
                     length = 25300000,
                     mediumId = 2L,
-                    recordingId = "r2"
+                    recordingId = "r2",
+                    formattedArtistCredits = "Some artist feat. Other artist"
                 )
             )
         }

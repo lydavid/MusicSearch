@@ -42,7 +42,7 @@ import ly.david.data.persistence.release.MediumDao
 import ly.david.data.persistence.release.MediumRoomModel
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
-import ly.david.data.persistence.release.TrackRoomModel
+import ly.david.data.persistence.release.TrackForListItem
 import ly.david.data.repository.ReleaseRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
@@ -110,7 +110,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                         getPagingSource(releaseId, query)
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map { track: TrackRoomModel ->
+                    pagingData.map { track: TrackForListItem ->
                         track.toTrackListItemModel()
                     }.insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
                         if (before?.mediumId != after?.mediumId && after != null) {
@@ -137,7 +137,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         return !roomRelease?.formatTrackCounts.isNullOrEmpty()
     }
 
-    private fun getPagingSource(releaseId: String, query: String): PagingSource<Int, TrackRoomModel> = when {
+    private fun getPagingSource(releaseId: String, query: String): PagingSource<Int, TrackForListItem> = when {
         query.isEmpty() -> {
             trackDao.getTracksInRelease(releaseId)
         }

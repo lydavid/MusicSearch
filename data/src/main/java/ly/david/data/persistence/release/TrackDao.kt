@@ -4,29 +4,40 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import ly.david.data.network.TrackMusicBrainzModel
 import ly.david.data.persistence.BaseDao
+import ly.david.data.persistence.artist.credit.ArtistCreditDao
 
 @Dao
-abstract class TrackDao : BaseDao<TrackRoomModel>() {
+abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
 
     companion object {
         private const val TRACKS_IN_RELEASE = """
             FROM track t
             INNER JOIN medium m ON t.medium_id = m.id
             INNER JOIN release r ON m.release_id = r.id
+            LEFT JOIN artist_credit_resource acr ON acr.resource_id = t.id
+            LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE r.id = :releaseId
         """
 
         private const val SELECT_TRACKS_IN_RELEASE = """
-            SELECT t.*
+            SELECT t.*, ac.name AS artist_credit_names
             $TRACKS_IN_RELEASE
         """
 
         private const val FILTERED = """
             AND (
                 t.title LIKE :query OR t.number LIKE :query
+                OR ac.name LIKE :query
             )
         """
+    }
+
+    @Transaction
+    open suspend fun insertTrackWithArtistCredits(track: TrackMusicBrainzModel, mediumId: Long) {
+        insertArtistCredits(artistCredits = track.artistCredits, resourceId = track.id)
+        insertReplace(track.toTrackRoomModel(mediumId))
     }
 
     @Transaction
@@ -35,7 +46,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel>() {
         $SELECT_TRACKS_IN_RELEASE
     """
     )
-    abstract fun getTracksInRelease(releaseId: String): PagingSource<Int, TrackRoomModel>
+    abstract fun getTracksInRelease(releaseId: String): PagingSource<Int, TrackForListItem>
 
     @Transaction
     @Query(
@@ -47,5 +58,5 @@ abstract class TrackDao : BaseDao<TrackRoomModel>() {
     abstract fun getTracksInReleaseFiltered(
         releaseId: String,
         query: String
-    ): PagingSource<Int, TrackRoomModel>
+    ): PagingSource<Int, TrackForListItem>
 }

@@ -1,6 +1,8 @@
 package ly.david.ui.common.release
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -8,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
+import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.TrackListItemModel
 import ly.david.ui.common.preview.DefaultPreviews
@@ -22,7 +26,6 @@ import ly.david.ui.common.theme.TextStyles
 fun TrackListItem(
     track: TrackListItemModel,
     modifier: Modifier = Modifier,
-//    showTrackArtists: Boolean = false,
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
 ) {
     ListItem(
@@ -46,6 +49,17 @@ fun TrackListItem(
                 text = track.length.toDisplayTime(),
                 style = TextStyles.getCardBodyTextStyle()
             )
+        },
+        supportingContent = {
+            track.formattedArtistCredits.ifNotNullOrEmpty {
+                Text(
+                    text = it,
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .fillMaxWidth(),
+                    style = TextStyles.getCardBodySubTextStyle()
+                )
+            }
         }
     )
 }
@@ -67,7 +81,8 @@ internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<Trac
             number = "123",
             length = 25300000,
             mediumId = 2L,
-            recordingId = "r2"
+            recordingId = "r2",
+            formattedArtistCredits = "Some artist feat. Other artist"
         )
     )
 }
@@ -81,7 +96,6 @@ private fun Preview(
         Surface {
             TrackListItem(
                 track = track,
-//                showTrackArtists = true
             )
         }
     }
