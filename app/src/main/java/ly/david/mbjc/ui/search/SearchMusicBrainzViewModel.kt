@@ -20,7 +20,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.paging.SearchMusicBrainzPagingSource
-import ly.david.mbjc.ui.common.paging.insertFooterItemForNonEmpty
+import ly.david.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel
 internal class SearchMusicBrainzViewModel @Inject constructor(

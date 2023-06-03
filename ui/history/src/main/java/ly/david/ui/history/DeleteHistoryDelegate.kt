@@ -1,8 +1,8 @@
-package ly.david.mbjc.ui
+package ly.david.ui.history
 
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 
-internal interface DeleteHistoryDelegate {
+interface DeleteHistoryDelegate {
     fun delete(history: LookupHistoryRoomModel)
     fun deleteAll()
 }

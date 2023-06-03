@@ -117,5 +117,6 @@ include(
     ":data:musicbrainz",
     ":test-data",
     ":ui:collections",
-    ":ui:common"
+    ":ui:common",
+    ":ui:history"
 )

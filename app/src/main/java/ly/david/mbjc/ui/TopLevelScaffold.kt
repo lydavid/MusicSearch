@@ -33,11 +33,11 @@ import ly.david.data.navigation.Destination
 import ly.david.data.navigation.getTopLevelDestination
 import ly.david.data.navigation.getTopLevelRoute
 import ly.david.data.persistence.history.LookupHistoryRoomModel
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
 import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -161,7 +161,7 @@ internal fun TopLevelScaffold(
 
         NavigationGraph(
             navController = navController,
-            deleteHistoryDelegate = object : DeleteHistoryDelegate {
+            deleteHistoryDelegate = object : ly.david.ui.history.DeleteHistoryDelegate {
                 override fun delete(history: LookupHistoryRoomModel) {
                     scope.launch {
                         viewModel.markHistoryAsDeleted(mbid = history.id)

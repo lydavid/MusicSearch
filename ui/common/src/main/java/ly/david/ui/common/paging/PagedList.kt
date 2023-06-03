@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.ui.common.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -27,7 +27,7 @@ import ly.david.data.persistence.RoomModel
  * Meant to be implemented by a ViewModel through delegation.
  * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
-internal class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor() : IPagedList<LI> {
+class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor() : IPagedList<LI> {
 
     override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")

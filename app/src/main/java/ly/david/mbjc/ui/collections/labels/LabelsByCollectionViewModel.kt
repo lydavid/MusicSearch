@@ -17,8 +17,8 @@ import ly.david.data.persistence.label.LabelDao
 import ly.david.data.persistence.label.LabelRoomModel
 import ly.david.data.persistence.label.toLabelRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class LabelsByCollectionViewModel @Inject constructor(
@@ -28,8 +28,7 @@ internal class LabelsByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     pagedList: PagedList<LabelRoomModel, LabelListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
-) : BrowseEntitiesByEntityViewModel
-<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
+) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzResource.LABEL,
     relationDao = relationDao,
     pagedList = pagedList

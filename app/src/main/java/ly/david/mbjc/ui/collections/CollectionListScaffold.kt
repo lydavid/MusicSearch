@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.CollectionListItemModel
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.collections.CollectionListItem
 import ly.david.ui.common.R

@@ -6,18 +6,13 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.common"
+    namespace = "ly.david.ui.history"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        // Can't seem to run paparazzi screenshot tests with code coverage
-//        debug {
-//            enableUnitTestCoverage = true
-//        }
-
         release {
             isMinifyEnabled = true
             consumerProguardFiles("consumer-rules.pro")
@@ -32,11 +27,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":data-android"))
+    implementation(project(":data"))
+    implementation(project(":ui:common"))
 
-    implementation(libs.accompanist.swiperefresh)
-
-    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
 
@@ -47,10 +40,6 @@ dependencies {
     implementation(libs.compose.ui.preview)
     androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
-
-    implementation(libs.coil.base)
-    implementation(libs.coil.compose)
-    testImplementation(libs.coil.test)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

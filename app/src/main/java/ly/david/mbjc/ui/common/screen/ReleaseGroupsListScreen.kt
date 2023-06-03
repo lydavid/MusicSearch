@@ -15,7 +15,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import timber.log.Timber
 

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.ui.common.paging
 
 import androidx.paging.PagingSource
 import ly.david.data.domain.ListItemModel

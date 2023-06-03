@@ -11,7 +11,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.TrackListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.

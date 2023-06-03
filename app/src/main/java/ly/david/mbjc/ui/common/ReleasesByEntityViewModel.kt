@@ -12,9 +12,9 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.toRoomModel
-import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
-import ly.david.mbjc.ui.common.paging.IPagedList
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseResourceUseCase
+import ly.david.ui.common.paging.IPagedList
+import ly.david.ui.common.paging.PagedList
 
 internal abstract class ReleasesByEntityViewModel(
     private val relationDao: RelationDao,

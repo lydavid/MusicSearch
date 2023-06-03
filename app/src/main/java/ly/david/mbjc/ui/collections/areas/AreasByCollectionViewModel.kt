@@ -17,8 +17,8 @@ import ly.david.data.persistence.area.toAreaRoomModel
 import ly.david.data.persistence.collection.CollectionEntityDao
 import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class AreasByCollectionViewModel @Inject constructor(
@@ -28,8 +28,7 @@ internal class AreasByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     pagedList: PagedList<AreaRoomModel, AreaListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
-) : BrowseEntitiesByEntityViewModel
-<AreaRoomModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
+) : BrowseEntitiesByEntityViewModel<AreaRoomModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
     byEntity = MusicBrainzResource.AREA,
     relationDao = relationDao,
     pagedList = pagedList

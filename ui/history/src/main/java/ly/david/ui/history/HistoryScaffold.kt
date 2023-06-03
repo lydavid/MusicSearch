@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.history
+package ly.david.ui.history
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
@@ -26,15 +26,14 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryRoomModel
-import ly.david.mbjc.ui.DeleteHistoryDelegate
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.common.R
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun HistoryScaffold(
+fun HistoryScaffold(
     deleteHistoryDelegate: DeleteHistoryDelegate,
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -93,7 +92,7 @@ internal fun HistoryScaffold(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun HistoryScreen(
+private fun HistoryScreen(
     modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },

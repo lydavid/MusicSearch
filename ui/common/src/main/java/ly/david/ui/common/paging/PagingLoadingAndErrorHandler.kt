@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.ui.common.paging
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -26,11 +26,11 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ly.david.data.Identifiable
+import ly.david.ui.common.R
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.ui.common.fullscreen.FullScreenText
-import ly.david.ui.common.R
 
 /**
  * Handles loading and errors for paging screens.
@@ -45,7 +45,7 @@ import ly.david.ui.common.R
  *  @param itemContent Composable UI for each [lazyPagingItems].
  */
 @Composable
-internal fun <T : Identifiable> PagingLoadingAndErrorHandler(
+fun <T : Identifiable> PagingLoadingAndErrorHandler(
     lazyPagingItems: LazyPagingItems<T>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),

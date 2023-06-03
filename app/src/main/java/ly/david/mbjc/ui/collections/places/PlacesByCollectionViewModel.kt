@@ -17,8 +17,8 @@ import ly.david.data.persistence.place.PlaceDao
 import ly.david.data.persistence.place.PlaceRoomModel
 import ly.david.data.persistence.place.toPlaceRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class PlacesByCollectionViewModel @Inject constructor(
@@ -28,8 +28,7 @@ internal class PlacesByCollectionViewModel @Inject constructor(
     private val placeDao: PlaceDao,
     pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
-) : BrowseEntitiesByEntityViewModel
-<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
+) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzResource.PLACE,
     relationDao = relationDao,
     pagedList = pagedList

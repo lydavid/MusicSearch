@@ -14,7 +14,7 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.mbjc.ui.common.ReleasesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class ReleasesByAreaViewModel @Inject constructor(

@@ -17,8 +17,8 @@ import ly.david.data.persistence.recording.RecordingDao
 import ly.david.data.persistence.recording.RecordingForListItem
 import ly.david.data.persistence.recording.toRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class RecordingsByCollectionViewModel @Inject constructor(
@@ -28,8 +28,7 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
     private val recordingDao: RecordingDao,
     pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
-) : BrowseEntitiesByEntityViewModel
-<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
+) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzResource.RECORDING,
     relationDao = relationDao,
     pagedList = pagedList

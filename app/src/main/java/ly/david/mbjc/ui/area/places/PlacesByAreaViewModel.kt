@@ -15,8 +15,8 @@ import ly.david.data.persistence.place.PlaceDao
 import ly.david.data.persistence.place.PlaceRoomModel
 import ly.david.data.persistence.place.toPlaceRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class PlacesByAreaViewModel @Inject constructor(

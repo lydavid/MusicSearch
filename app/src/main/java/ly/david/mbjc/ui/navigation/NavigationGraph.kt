@@ -18,7 +18,6 @@ import ly.david.data.navigation.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toMusicBrainzResource
-import ly.david.mbjc.ui.DeleteHistoryDelegate
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
@@ -26,7 +25,7 @@ import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
-import ly.david.mbjc.ui.history.HistoryScaffold
+import ly.david.ui.history.HistoryScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
@@ -56,7 +55,7 @@ internal fun NavHostController.goTo(destination: Destination) {
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    deleteHistoryDelegate: DeleteHistoryDelegate,
+    deleteHistoryDelegate: ly.david.ui.history.DeleteHistoryDelegate,
     modifier: Modifier = Modifier,
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},

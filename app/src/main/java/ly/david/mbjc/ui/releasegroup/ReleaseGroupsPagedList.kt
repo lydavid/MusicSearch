@@ -24,8 +24,8 @@ import ly.david.data.getDisplayTypes
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
 import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
-import ly.david.mbjc.ui.common.paging.BrowseSortableResourceUseCase
-import ly.david.mbjc.ui.common.paging.SortablePagedList
+import ly.david.ui.common.paging.BrowseSortableResourceUseCase
+import ly.david.ui.common.paging.SortablePagedList
 
 // This is currently 1-to-1 with ReleaseGroupsByArtistViewModel, but we expect to reuse for release groups by release
 /**

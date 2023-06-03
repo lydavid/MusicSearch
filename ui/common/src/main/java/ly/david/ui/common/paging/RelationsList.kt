@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.ui.common.paging
 
 import androidx.lifecycle.ViewModel
 import androidx.paging.ExperimentalPagingApi
@@ -32,7 +32,7 @@ import ly.david.data.repository.RelationsListRepository
 /**
  * A [ViewModel] implements this for [pagedRelations].
  */
-internal interface IRelationsList {
+interface IRelationsList {
 
     val resourceId: MutableStateFlow<String>
     val query: MutableStateFlow<String>
@@ -65,7 +65,7 @@ internal interface IRelationsList {
  *
  * The ViewModel should should assign [scope] and [repository] in its init block.
  */
-internal class RelationsList @Inject constructor(
+class RelationsList @Inject constructor(
     private val relationDao: RelationDao
 ) : IRelationsList {
 

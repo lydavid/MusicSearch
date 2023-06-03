@@ -10,9 +10,9 @@ import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
-import ly.david.mbjc.ui.common.paging.BrowseSortableResourceUseCase
-import ly.david.mbjc.ui.common.paging.SortablePagedList
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupsPagedList
+import ly.david.ui.common.paging.BrowseSortableResourceUseCase
+import ly.david.ui.common.paging.SortablePagedList
 
 internal abstract class ReleaseGroupsByEntityViewModel(
     private val relationDao: RelationDao,

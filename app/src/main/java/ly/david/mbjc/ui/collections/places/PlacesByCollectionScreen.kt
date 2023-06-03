@@ -13,8 +13,8 @@ import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.place.PlaceListItem
 
 @OptIn(ExperimentalFoundationApi::class)

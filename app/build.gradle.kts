@@ -95,10 +95,10 @@ dependencies {
     implementation(project(":data-android"))
     implementation(project(":ui:collections"))
     implementation(project(":ui:common"))
+    implementation(project(":ui:history"))
     testImplementation(project(":test-data"))
     androidTestImplementation(project(":test-data"))
 
-    implementation(libs.accompanist.swiperefresh)
     implementation(libs.accompanist.pager)
 
     implementation(libs.androidx.activity.compose)

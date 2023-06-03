@@ -20,8 +20,8 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
 import ly.david.data.persistence.history.RecordLookupHistory
-import ly.david.mbjc.ui.common.paging.IRelationsList
-import ly.david.mbjc.ui.common.paging.RelationsList
+import ly.david.ui.common.paging.IRelationsList
+import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
 import timber.log.Timber
 

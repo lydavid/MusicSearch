@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common
+package ly.david.ui.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

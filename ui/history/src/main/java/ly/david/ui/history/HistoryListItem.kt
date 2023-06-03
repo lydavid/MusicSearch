@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.history
+package ly.david.ui.history
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

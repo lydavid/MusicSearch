@@ -17,8 +17,8 @@ import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.series.SeriesDao
 import ly.david.data.persistence.series.SeriesRoomModel
 import ly.david.data.persistence.series.toSeriesRoomModel
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class SeriesByCollectionViewModel @Inject constructor(
@@ -28,8 +28,7 @@ internal class SeriesByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     pagedList: PagedList<SeriesRoomModel, SeriesListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
-) : BrowseEntitiesByEntityViewModel
-<SeriesRoomModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
+) : BrowseEntitiesByEntityViewModel<SeriesRoomModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
     byEntity = MusicBrainzResource.SERIES,
     relationDao = relationDao,
     pagedList = pagedList

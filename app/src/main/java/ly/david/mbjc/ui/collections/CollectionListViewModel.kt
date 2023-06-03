@@ -18,9 +18,9 @@ import ly.david.data.persistence.collection.CollectionWithEntities
 import ly.david.data.persistence.collection.toCollectionRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseResourceUseCase
-import ly.david.mbjc.ui.common.paging.IPagedList
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseResourceUseCase
+import ly.david.ui.common.paging.IPagedList
+import ly.david.ui.common.paging.PagedList
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
 

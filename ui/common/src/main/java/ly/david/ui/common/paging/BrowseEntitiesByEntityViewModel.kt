@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.paging
+package ly.david.ui.common.paging
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import ly.david.data.persistence.RoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
 
-internal abstract class BrowseEntitiesByEntityViewModel
+abstract class BrowseEntitiesByEntityViewModel
 <RM : RoomModel, LI : ListItemModel, MB : MusicBrainzModel, B : Browsable<MB>>(
     private val byEntity: MusicBrainzResource,
     private val relationDao: RelationDao,

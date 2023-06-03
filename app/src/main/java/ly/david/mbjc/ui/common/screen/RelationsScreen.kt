@@ -9,7 +9,7 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RelationListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.mbjc.ui.relation.RelationListItem
 
 @Composable

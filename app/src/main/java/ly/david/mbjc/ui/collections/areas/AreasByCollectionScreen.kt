@@ -13,8 +13,8 @@ import ly.david.data.domain.AreaListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.area.AreaListItem
-import ly.david.mbjc.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 
 @OptIn(ExperimentalFoundationApi::class)

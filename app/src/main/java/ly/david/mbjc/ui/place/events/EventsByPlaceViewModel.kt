@@ -15,8 +15,8 @@ import ly.david.data.persistence.event.EventPlaceDao
 import ly.david.data.persistence.event.EventRoomModel
 import ly.david.data.persistence.event.toEventRoomModel
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.mbjc.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.mbjc.ui.common.paging.PagedList
+import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class EventsByPlaceViewModel @Inject constructor(
@@ -25,8 +25,7 @@ internal class EventsByPlaceViewModel @Inject constructor(
     private val eventDao: EventDao,
     private val relationDao: RelationDao,
     pagedList: PagedList<EventRoomModel, EventListItemModel>,
-) : BrowseEntitiesByEntityViewModel
-<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
+) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzResource.EVENT,
     relationDao = relationDao,
     pagedList = pagedList

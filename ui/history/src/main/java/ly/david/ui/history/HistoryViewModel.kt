@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.history
+package ly.david.ui.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,7 @@ import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.history.LookupHistoryRoomModel
 
 @HiltViewModel
-internal class HistoryViewModel @Inject constructor(
+class HistoryViewModel @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao
 ) : ViewModel() {
 

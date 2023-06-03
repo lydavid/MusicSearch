@@ -10,7 +10,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.mbjc.ui.common.screen.ReleaseGroupsListScreen
 
 @Composable
