@@ -12,7 +12,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.AreaListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.area.AreaListItem
+import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.listitem.SwipeToDeleteListItem

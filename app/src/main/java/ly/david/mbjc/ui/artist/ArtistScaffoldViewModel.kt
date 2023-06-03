@@ -13,7 +13,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.history.RecordLookupHistory
 import ly.david.data.repository.ArtistRepository
-import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException

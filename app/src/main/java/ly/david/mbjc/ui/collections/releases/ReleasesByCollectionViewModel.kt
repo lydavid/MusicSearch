@@ -15,7 +15,7 @@ import ly.david.data.persistence.collection.CollectionEntityRoomModel
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
-import ly.david.mbjc.ui.common.ReleasesByEntityViewModel
+import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel

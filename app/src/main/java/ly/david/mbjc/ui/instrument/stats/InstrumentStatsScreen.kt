@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.persistence.relation.RelationTypeCount
-import ly.david.mbjc.ui.common.Tab
+import ly.david.ui.common.topappbar.Tab
 import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen
 

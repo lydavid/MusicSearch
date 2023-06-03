@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.series
 
-import ly.david.mbjc.ui.common.Tab
+import ly.david.ui.common.topappbar.Tab
 
 internal enum class SeriesTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),

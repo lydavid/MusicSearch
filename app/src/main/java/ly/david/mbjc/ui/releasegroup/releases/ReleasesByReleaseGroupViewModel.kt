@@ -13,7 +13,7 @@ import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.ReleaseForListItem
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
 import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
-import ly.david.mbjc.ui.common.ReleasesByEntityViewModel
+import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel

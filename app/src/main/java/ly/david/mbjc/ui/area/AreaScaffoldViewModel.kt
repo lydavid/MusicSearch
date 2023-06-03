@@ -14,7 +14,7 @@ import ly.david.data.persistence.history.LookupHistoryDao
 import ly.david.data.persistence.history.RecordLookupHistory
 import ly.david.data.repository.AreaRepository
 import ly.david.data.showReleases
-import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException

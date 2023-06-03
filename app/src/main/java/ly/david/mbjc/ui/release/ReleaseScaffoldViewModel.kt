@@ -44,7 +44,7 @@ import ly.david.data.persistence.release.ReleaseDao
 import ly.david.data.persistence.release.TrackDao
 import ly.david.data.persistence.release.TrackRoomModel
 import ly.david.data.repository.ReleaseRepository
-import ly.david.mbjc.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException

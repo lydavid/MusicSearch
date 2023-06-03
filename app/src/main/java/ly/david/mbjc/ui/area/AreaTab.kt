@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.area
 
-import ly.david.mbjc.ui.common.Tab
+import ly.david.ui.common.topappbar.Tab
 
 internal enum class AreaTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),

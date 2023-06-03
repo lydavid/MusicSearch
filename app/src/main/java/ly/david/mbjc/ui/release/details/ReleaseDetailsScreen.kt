@@ -21,11 +21,11 @@ import ly.david.data.domain.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.area.AreaListItem
+import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.mbjc.ui.label.LabelListItem
+import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.R
 import ly.david.ui.common.coverart.BigCoverArt
 import ly.david.ui.common.preview.DefaultPreviews

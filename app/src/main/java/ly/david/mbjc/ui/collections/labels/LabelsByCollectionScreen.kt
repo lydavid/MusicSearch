@@ -15,7 +15,7 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.label.LabelListItem
+import ly.david.ui.common.label.LabelListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

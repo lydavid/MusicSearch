@@ -10,8 +10,8 @@ import ly.david.data.persistence.artist.ArtistReleaseGroup
 import ly.david.data.persistence.artist.ArtistReleaseGroupDao
 import ly.david.data.persistence.relation.RelationDao
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.mbjc.ui.common.ReleaseGroupsByEntityViewModel
-import ly.david.mbjc.ui.releasegroup.ReleaseGroupsPagedList
+import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
+import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(

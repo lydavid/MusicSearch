@@ -61,4 +61,6 @@ dependencies {
     testImplementation(libs.bundles.kotlinx.coroutines)
 
     testImplementation(libs.test.parameter.injector)
+
+    implementation(libs.timber)
 }
