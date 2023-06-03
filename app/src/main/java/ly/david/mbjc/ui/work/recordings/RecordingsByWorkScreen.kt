@@ -34,9 +34,9 @@ internal fun RecordingsByWorkScreen(
     viewModel.updateQuery(filterText)
 
     RecordingsListScreen(
+        lazyListState = recordingsLazyListState,
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        lazyListState = recordingsLazyListState,
         lazyPagingItems = recordingsLazyPagingItems,
         onRecordingClick = onRecordingClick
     )

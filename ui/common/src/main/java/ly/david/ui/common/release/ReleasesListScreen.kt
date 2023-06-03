@@ -18,10 +18,10 @@ import timber.log.Timber
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReleasesListScreen(
+    lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     showMoreInfo: Boolean = true,
     onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,

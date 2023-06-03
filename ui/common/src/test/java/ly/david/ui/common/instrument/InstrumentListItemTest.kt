@@ -30,8 +30,8 @@ class InstrumentListItemTest : PaparazziScreenshotTest() {
                     name = "baroque guitar",
                     disambiguation = "Baroque gut string guitar",
                     type = "String instrument",
-                    description = "Predecessor of the modern classical guitar, it had gut strings and even gut frets. " +
-                        "First described in 1555, it surpassed the Renaissance lute's popularity."
+                    description = "Predecessor of the modern classical guitar, it had gut strings and even gut frets." +
+                        " First described in 1555, it surpassed the Renaissance lute's popularity."
                 )
             )
         }

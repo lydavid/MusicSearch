@@ -10,8 +10,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.release.ReleasesListScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 
 @Composable
 internal fun ReleasesByCollectionScreen(
@@ -41,9 +41,9 @@ internal fun ReleasesByCollectionScreen(
     }
 
     ReleasesListScreen(
+        lazyListState = lazyListState,
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         showMoreInfo = showMoreInfo,
         onReleaseClick = onReleaseClick,

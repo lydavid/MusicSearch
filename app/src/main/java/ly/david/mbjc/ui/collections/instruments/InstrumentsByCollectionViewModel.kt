@@ -68,6 +68,7 @@ internal class InstrumentsByCollectionViewModel @Inject constructor(
         query.isEmpty() -> {
             collectionEntityDao.getInstrumentsByCollection(resourceId)
         }
+
         else -> {
             collectionEntityDao.getInstrumentsByCollectionFiltered(
                 collectionId = resourceId,

@@ -15,10 +15,10 @@ import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RecordingsListScreen(
+    lazyPagingItems: LazyPagingItems<RecordingListItemModel>,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    lazyPagingItems: LazyPagingItems<RecordingListItemModel>,
     onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit,
 ) {
     PagingLoadingAndErrorHandler(

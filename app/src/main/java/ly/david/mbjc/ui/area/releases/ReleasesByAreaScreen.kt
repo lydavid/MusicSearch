@@ -34,9 +34,9 @@ internal fun ReleasesByAreaScreen(
     viewModel.updateQuery(filterText)
 
     ReleasesListScreen(
+        lazyListState = releasesLazyListState,
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        lazyListState = releasesLazyListState,
         lazyPagingItems = releasesLazyPagingItems,
         showMoreInfo = showMoreInfo,
         onReleaseClick = onReleaseClick

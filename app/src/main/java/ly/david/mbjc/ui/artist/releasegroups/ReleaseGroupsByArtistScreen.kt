@@ -35,9 +35,9 @@ internal fun ReleaseGroupsByArtistScreen(
     viewModel.updateSorted(sorted = isSorted)
 
     ReleaseGroupsListScreen(
+        lazyListState = lazyListState,
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         onReleaseGroupClick = onReleaseGroupClick
     )

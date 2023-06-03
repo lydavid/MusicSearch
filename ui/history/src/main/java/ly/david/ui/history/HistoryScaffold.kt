@@ -80,10 +80,10 @@ fun HistoryScaffold(
         },
     ) { innerPadding ->
         HistoryScreen(
+            lazyPagingItems = lazyPagingItems,
             modifier = Modifier
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-            lazyPagingItems = lazyPagingItems,
             onItemClick = onItemClick,
             onDeleteItem = deleteHistoryDelegate::delete
         )
@@ -93,8 +93,8 @@ fun HistoryScaffold(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HistoryScreen(
-    modifier: Modifier = Modifier,
     lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
+    modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
 ) {

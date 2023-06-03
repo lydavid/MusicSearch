@@ -2,8 +2,12 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$(resourceId, query, isRemote, sorted)</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>MatchingDeclarationName:Type.kt$TextStyles</ID>
+    <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
+    <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzResource&gt;</ID>
     <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:ScrollableTopAppBar.kt$List&lt;String&gt;</ID>
