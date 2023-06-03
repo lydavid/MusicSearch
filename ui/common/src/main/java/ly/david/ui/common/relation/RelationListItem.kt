@@ -1,6 +1,5 @@
-package ly.david.mbjc.ui.relation
+package ly.david.ui.common.relation
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,19 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
 import ly.david.data.domain.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 import ly.david.ui.common.theme.getSubTextColor
 
 @Composable
-internal fun RelationListItem(
+fun RelationListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -96,8 +95,8 @@ internal fun RelationListItem(
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+// region Previews
+@DefaultPreviews
 @Composable
 private fun Artist() {
     PreviewTheme {
@@ -117,8 +116,7 @@ private fun Artist() {
     }
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
 private fun Recording() {
     PreviewTheme {
@@ -136,3 +134,4 @@ private fun Recording() {
         }
     }
 }
+// endregion

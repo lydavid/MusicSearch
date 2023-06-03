@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.release.tracks
+package ly.david.ui.common.release
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ListItem
@@ -10,9 +10,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.TrackListItemModel
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.recording.RecordingListItem
+import ly.david.ui.common.recording.RecordingListItem
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
@@ -20,7 +19,7 @@ import ly.david.ui.common.theme.TextStyles
  * Also see [RecordingListItem].
  */
 @Composable
-internal fun TrackListItem(
+fun TrackListItem(
     track: TrackListItemModel,
     modifier: Modifier = Modifier,
 //    showTrackArtists: Boolean = false,
@@ -51,7 +50,6 @@ internal fun TrackListItem(
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
 internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<TrackListItemModel> {
     override val values = sequenceOf(
         TrackListItemModel(
@@ -74,7 +72,6 @@ internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<Trac
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview(

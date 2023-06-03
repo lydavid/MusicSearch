@@ -1,7 +1,6 @@
-package ly.david.mbjc.ui.place
+package ly.david.ui.common.place
 
 import android.content.Context
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -16,17 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ly.david.data.Coordinates
 import ly.david.data.common.showMap
 import ly.david.data.formatForDisplay
 import ly.david.ui.common.R
+import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
 @Composable
-internal fun CoordinateListItem(
+fun CoordinateListItem(
     context: Context,
     coordinates: Coordinates,
     modifier: Modifier = Modifier,
@@ -57,8 +56,7 @@ internal fun CoordinateListItem(
     )
 }
 
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@DefaultPreviews
 @Composable
 private fun CoordinateCardPreview() {
     PreviewTheme {

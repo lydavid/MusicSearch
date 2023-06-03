@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.screen
+package ly.david.ui.common.event
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
@@ -10,11 +10,10 @@ import ly.david.data.domain.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.event.EventListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun EventsListScreen(
+fun EventsListScreen(
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<EventListItemModel>,

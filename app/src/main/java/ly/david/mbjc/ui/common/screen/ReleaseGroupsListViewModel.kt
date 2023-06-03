@@ -9,7 +9,7 @@ import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.persistence.releasegroup.ReleaseGroupDao
 
 @HiltViewModel
-internal class ReleaseGroupsListViewModel @Inject constructor(
+class ReleaseGroupsListViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val releaseGroupDao: ReleaseGroupDao
 ) : ViewModel(), GetReleaseGroupCoverArtPath {

@@ -57,11 +57,11 @@ import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.mbjc.ui.artist.ArtistListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.event.EventListItem
+import ly.david.ui.common.event.EventListItem
 import ly.david.mbjc.ui.instrument.InstrumentListItem
 import ly.david.mbjc.ui.label.LabelListItem
-import ly.david.mbjc.ui.place.PlaceListItem
-import ly.david.mbjc.ui.recording.RecordingListItem
+import ly.david.ui.common.place.PlaceListItem
+import ly.david.ui.common.recording.RecordingListItem
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import ly.david.mbjc.ui.series.SeriesListItem
 import ly.david.mbjc.ui.work.WorkListItem

@@ -18,7 +18,7 @@ import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ReleasesListScreen(
+fun ReleasesListScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),

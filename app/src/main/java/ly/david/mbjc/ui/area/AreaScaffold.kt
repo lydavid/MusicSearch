@@ -39,7 +39,7 @@ import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.common.screen.RelationsScreen
+import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem

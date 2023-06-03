@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.recording
+package ly.david.ui.common.recording
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,10 +16,9 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.RecordingListItemModel
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.mbjc.ui.release.tracks.TrackListItem
+import ly.david.ui.common.release.TrackListItem
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
@@ -27,7 +26,7 @@ import ly.david.ui.common.theme.TextStyles
  * Also see [TrackListItem].
  */
 @Composable
-internal fun RecordingListItem(
+fun RecordingListItem(
     recording: RecordingListItemModel,
     modifier: Modifier = Modifier,
     onRecordingClick: RecordingListItemModel.() -> Unit = {}
@@ -76,7 +75,6 @@ internal fun RecordingListItem(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 internal class RecordingPreviewParameterProvider : PreviewParameterProvider<RecordingListItemModel> {
     override val values = sequenceOf(
         RecordingListItemModel(
@@ -95,7 +93,6 @@ internal class RecordingPreviewParameterProvider : PreviewParameterProvider<Reco
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview(

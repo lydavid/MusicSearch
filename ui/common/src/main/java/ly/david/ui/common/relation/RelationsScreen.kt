@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.common.screen
+package ly.david.ui.common.relation
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -10,10 +10,9 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.RelationListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.relation.RelationListItem
 
 @Composable
-internal fun RelationsScreen(
+fun RelationsScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),

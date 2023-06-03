@@ -1,39 +1,39 @@
-package ly.david.mbjc.ui.common.screen
+package ly.david.ui.common.recording
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.place.PlaceListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun PlacesListScreen(
-    snackbarHostState: SnackbarHostState,
-    lazyListState: LazyListState,
-    lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
+fun RecordingsListScreen(
     modifier: Modifier = Modifier,
-    onPlaceClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    lazyListState: LazyListState = rememberLazyListState(),
+    lazyPagingItems: LazyPagingItems<RecordingListItemModel>,
+    onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit,
 ) {
     PagingLoadingAndErrorHandler(
-        lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
+        lazyPagingItems = lazyPagingItems,
         snackbarHostState = snackbarHostState
-    ) { placeListItemModel: PlaceListItemModel? ->
-        when (placeListItemModel) {
-            is PlaceListItemModel -> {
-                PlaceListItem(
-                    place = placeListItemModel,
+    ) { recordingListItemModel: RecordingListItemModel? ->
+        when (recordingListItemModel) {
+            is RecordingListItemModel -> {
+                RecordingListItem(
+                    recording = recordingListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onPlaceClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
+                    onRecordingClick(MusicBrainzResource.RECORDING, id, getNameWithDisambiguation())
                 }
             }
             else -> {

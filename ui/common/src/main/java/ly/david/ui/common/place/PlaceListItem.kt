@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.event
+package ly.david.ui.common.place
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -14,25 +14,23 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.PlaceListItemModel
 import ly.david.data.getLifeSpanForDisplay
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
 @Composable
-internal fun EventListItem(
-    event: EventListItemModel,
+fun PlaceListItem(
+    place: PlaceListItemModel,
     modifier: Modifier = Modifier,
-    onEventClick: EventListItemModel.() -> Unit = {}
+    onPlaceClick: PlaceListItemModel.() -> Unit = {}
 ) {
     ListItem(
         headlineContent = {
             Column {
-                event.run {
-
+                place.run {
                     Text(
                         text = name,
                         style = TextStyles.getCardTitleTextStyle()
@@ -48,6 +46,23 @@ internal fun EventListItem(
                         )
                     }
 
+                    address.ifNotNullOrEmpty {
+                        Text(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = it,
+                            style = TextStyles.getCardBodyTextStyle(),
+                        )
+                    }
+
+                    // TODO: too much information on list item?
+//                area.ifNotNull {
+//                    Text(
+//                        modifier = Modifier.padding(top = 4.dp),
+//                        text = it.name,
+//                        style = TextStyles.getCardBodyTextStyle(),
+//                    )
+//                }
+
                     lifeSpan.ifNotNull {
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
@@ -58,45 +73,43 @@ internal fun EventListItem(
                 }
             }
         },
-        modifier = modifier.clickable {
-            onEventClick(event)
-        },
+        modifier = modifier.clickable { onPlaceClick(place) }
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
-internal class EventPreviewParameterProvider : PreviewParameterProvider<EventListItemModel> {
+internal class PlacePreviewParameterProvider : PreviewParameterProvider<PlaceListItemModel> {
     override val values = sequenceOf(
-        EventListItemModel(
-            id = "e1",
-            name = "event name",
-            disambiguation = "that one",
-            type = "Concert",
+        PlaceListItemModel(
+            id = "2",
+            name = "Place Name",
+            address = "123 Fake St"
         ),
-        EventListItemModel(
-            id = "05174e82-7716-444e-86a0-d0d1e1474662",
-            name = "1998-01-22: Sony Music Studios, New York City, NY, USA",
-            disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, " +
-                "a Rolling Stone Magazine 30th anniversary special",
-            type = null,
-            lifeSpan = LifeSpan(
-                begin = "1998-01-22",
-                end = "1998-01-22",
-                ended = true
-            )
+        PlaceListItemModel(
+            id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
+            name = "Sony Music Studios",
+            disambiguation = "NYC, closed 2007",
+            type = "Studio",
+            address = "460 W. 54th St., at 10th Avenue, Manhatten, NY",
+            lifeSpan = LifeSpan(begin = "1993", end = "2007-08", ended = true)
+        ),
+        PlaceListItemModel(
+            id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
+            name = "日本武道館",
+            type = "Indoor arena",
+            address = "〒102-8321 東京都千代田区北の丸公園2-3",
+            lifeSpan = LifeSpan(begin = "1964-10-03")
         ),
     )
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(EventPreviewParameterProvider::class) event: EventListItemModel
+    @PreviewParameter(PlacePreviewParameterProvider::class) place: PlaceListItemModel
 ) {
     PreviewTheme {
         Surface {
-            EventListItem(event)
+            PlaceListItem(place)
         }
     }
 }

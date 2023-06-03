@@ -31,17 +31,17 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
+import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
+import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.common.screen.RelationsScreen
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
-import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
-import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
 
 /**
  * The top-level screen for a release.

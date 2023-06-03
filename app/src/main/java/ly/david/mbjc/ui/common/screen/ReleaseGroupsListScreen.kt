@@ -13,15 +13,15 @@ import ly.david.data.domain.ListSeparator
 import ly.david.data.domain.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.mbjc.ui.releasegroup.ReleaseGroupListItem
 import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ReleaseGroupsListScreen(
+fun ReleaseGroupsListScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),

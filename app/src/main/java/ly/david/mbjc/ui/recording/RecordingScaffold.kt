@@ -35,7 +35,7 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.mbjc.ui.common.screen.RelationsScreen
+import ly.david.ui.common.relation.RelationsScreen
 import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen

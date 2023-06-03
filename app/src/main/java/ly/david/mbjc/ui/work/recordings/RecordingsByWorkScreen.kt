@@ -12,7 +12,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.RecordingListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ui.common.screen.RecordingsListScreen
+import ly.david.ui.common.recording.RecordingsListScreen
 
 @Composable
 internal fun RecordingsByWorkScreen(

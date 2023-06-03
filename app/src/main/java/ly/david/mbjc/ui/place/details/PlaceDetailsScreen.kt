@@ -22,7 +22,7 @@ import ly.david.mbjc.ui.area.AreaListItem
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.mbjc.ui.place.CoordinateListItem
+import ly.david.ui.common.place.CoordinateListItem
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
