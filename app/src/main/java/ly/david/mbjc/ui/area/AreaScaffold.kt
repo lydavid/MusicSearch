@@ -38,13 +38,14 @@ import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
@@ -117,9 +118,6 @@ internal fun AreaScaffold(
                         onAddToCollectionMenuClick(resource, areaId)
                     }
                 },
-                tabsTitles = areaTabs.map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = areaTabs.indexOf(selectedTab),
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(
                     AreaTab.RELATIONSHIPS,
                     AreaTab.RELEASES,
@@ -129,6 +127,13 @@ internal fun AreaScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = areaTabs.map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = areaTabs.indexOf(selectedTab),
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
     ) { innerPadding ->

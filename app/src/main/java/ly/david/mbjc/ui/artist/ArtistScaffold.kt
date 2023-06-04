@@ -37,15 +37,16 @@ import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
+import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.ui.common.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -131,9 +132,13 @@ internal fun ArtistScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
-                tabsTitles = ArtistTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = ArtistTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

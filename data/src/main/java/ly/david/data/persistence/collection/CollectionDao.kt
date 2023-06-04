@@ -11,19 +11,23 @@ import ly.david.data.persistence.BaseDao
 abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
 
     @Transaction
-    @Query("SELECT * FROM collection")
-    abstract fun getAllCollections(): PagingSource<Int, CollectionWithEntities>
-
-    @Transaction
     @Query(
         """
-        SELECT * 
-        FROM collection
-        WHERE name LIKE :query
+        SELECT * FROM collection
+        WHERE id IN
+          (SELECT id FROM collection
+          WHERE NOT is_remote AND :showLocal
+          UNION
+          SELECT id FROM collection
+          WHERE is_remote AND :showRemote)
+        AND name LIKE :query
         """
     )
-    abstract fun getAllCollectionsFiltered(query: String): PagingSource<Int, CollectionWithEntities>
-
+    abstract fun getAllCollectionsFiltered(
+        showLocal: Boolean = true,
+        showRemote: Boolean = true,
+        query: String
+    ): PagingSource<Int, CollectionWithEntities>
 
     @Transaction
     @Query(

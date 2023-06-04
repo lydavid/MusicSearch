@@ -1,17 +1,23 @@
 package ly.david.mbjc.ui.collections
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -19,16 +25,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.CollectionListItemModel
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.collections.CollectionListItem
 import ly.david.ui.common.R
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 /**
  * Displays a list of all of your collections.
@@ -46,8 +53,12 @@ internal fun CollectionListScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedResources)
         .collectAsLazyPagingItems()
+    val showLocal by viewModel.appPreferences.showLocalCollections.collectAsState(initial = true)
+    val showRemote by viewModel.appPreferences.showRemoteCollections.collectAsState(initial = true)
 
     LaunchedEffect(Unit) {
+        viewModel.setShowLocal(showLocal)
+        viewModel.setShowRemote(showRemote)
         viewModel.getUsernameThenLoadCollections()
     }
 
@@ -70,6 +81,14 @@ internal fun CollectionListScaffold(
                             contentDescription = stringResource(id = R.string.create_collection)
                         )
                     }
+                },
+                additionalBar = {
+                    CollectionsFilterChipsBar(
+                        showLocal = showLocal,
+                        onShowLocalToggle = viewModel::setShowLocal,
+                        showRemote = showRemote,
+                        onShowRemoteToggle = viewModel::setShowRemote
+                    )
                 }
             )
         },
@@ -98,12 +117,56 @@ internal fun CollectionListScaffold(
     }
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun CollectionsFilterChipsBar(
+    modifier: Modifier = Modifier,
+    showLocal: Boolean = true,
+    onShowLocalToggle: (Boolean) -> Unit = {},
+    showRemote: Boolean = true,
+    onShowRemoteToggle: (Boolean) -> Unit = {},
+) {
+    Row(modifier = modifier.padding(horizontal = 16.dp)) {
+        FilterChip(
+            selected = showLocal,
+            onClick = { onShowLocalToggle(!showLocal) },
+            label = { Text(text = "Local") },
+            leadingIcon = {
+                if (showLocal) {
+                    Icon(imageVector = Icons.Default.Done, contentDescription = null)
+                }
+            }
+        )
+        Spacer(modifier = Modifier.padding(start = 8.dp))
+        FilterChip(
+            selected = showRemote,
+            onClick = { onShowRemoteToggle(!showRemote) },
+            label = { Text(text = "Remote") },
+            leadingIcon = {
+                if (showRemote) {
+                    Icon(imageVector = Icons.Default.Done, contentDescription = null)
+                }
+            }
+        )
+    }
+}
+
 @DefaultPreviews
 @Composable
 private fun Preview() {
     PreviewTheme {
+
+        var showLocal by rememberSaveable { mutableStateOf(true) }
+        var showRemote by rememberSaveable { mutableStateOf(true) }
+
         Surface {
-            CollectionListScaffold()
+            CollectionsFilterChipsBar(
+                showLocal = showLocal,
+                onShowLocalToggle = { showLocal = it },
+                showRemote = showRemote,
+                onShowRemoteToggle = { showRemote = it },
+            )
         }
     }
 }

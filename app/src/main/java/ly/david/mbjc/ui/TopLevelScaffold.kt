@@ -232,9 +232,9 @@ internal fun TopLevelScaffold(
                 }
             },
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
-            onShowMoreInfoInReleaseListItemChange = { viewModel.appPreferences.setShowMoreInfoInReleaseListItem(it) },
+            onShowMoreInfoInReleaseListItemChange = viewModel.appPreferences::setShowMoreInfoInReleaseListItem,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = { viewModel.appPreferences.setSortReleaseGroupListItems(it) }
+            onSortReleaseGroupListItemsChange = viewModel.appPreferences::setSortReleaseGroupListItems
         )
     }
 }

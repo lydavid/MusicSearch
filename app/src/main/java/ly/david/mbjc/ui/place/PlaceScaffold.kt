@@ -34,16 +34,17 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.EventListItemModel
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.relation.RelationsScreen
-import ly.david.ui.common.topappbar.AddToCollectionMenuItem
-import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 import ly.david.mbjc.ui.place.stats.PlaceStatsScreen
+import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -101,9 +102,6 @@ internal fun PlaceScaffold(
                         onAddToCollectionMenuClick(resource, placeId)
                     }
                 },
-                tabsTitles = PlaceTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(
                     PlaceTab.EVENTS,
                     PlaceTab.RELATIONSHIPS
@@ -112,6 +110,13 @@ internal fun PlaceScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = PlaceTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

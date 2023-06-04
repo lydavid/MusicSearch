@@ -29,15 +29,16 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
+import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
+import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
-import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
-import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
 
 /**
  * The top-level screen for an series.
@@ -99,14 +100,18 @@ internal fun SeriesScaffold(
                         onAddToCollectionMenuClick(resource, seriesId)
                     }
                 },
-                tabsTitles = SeriesTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(SeriesTab.RELATIONSHIPS),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = SeriesTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

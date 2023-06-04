@@ -35,19 +35,20 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.ResourceIcon
-import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.relation.RelationsScreen
-import ly.david.ui.common.topappbar.AddToCollectionMenuItem
-import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.ui.common.topappbar.ToggleMenuItem
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 import ly.david.ui.common.R
+import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
+import ly.david.ui.common.topappbar.ToggleMenuItem
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 /**
  * Equivalent to a screen like: https://musicbrainz.org/release-group/81d75493-78b6-4a37-b5ae-2a3918ee3756
@@ -135,9 +136,6 @@ internal fun ReleaseGroupScaffold(
                             })
                     }
                 },
-                tabsTitles = ReleaseGroupTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(
                     ReleaseGroupTab.RELEASES,
                     ReleaseGroupTab.RELATIONSHIPS,
@@ -146,6 +144,13 @@ internal fun ReleaseGroupScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = ReleaseGroupTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

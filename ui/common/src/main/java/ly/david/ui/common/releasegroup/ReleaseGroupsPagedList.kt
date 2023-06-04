@@ -27,7 +27,6 @@ import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
 import ly.david.ui.common.paging.BrowseSortableResourceUseCase
 import ly.david.ui.common.paging.SortablePagedList
 
-// This is currently 1-to-1 with ReleaseGroupsByArtistViewModel, but we expect to reuse for release groups by release
 /**
  * Generic implementation for handling paged release groups.
  *
@@ -48,23 +47,22 @@ class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<ListItemM
     lateinit var scope: CoroutineScope
     lateinit var useCase: BrowseSortableResourceUseCase<ReleaseGroupForListItem>
 
+    private fun getRemoteMediator(resourceId: String) = BrowseResourceRemoteMediator<ReleaseGroupForListItem>(
+        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
+        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
+        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
+        browseResource = { offset ->
+            useCase.browseLinkedResourcesAndStore(resourceId, offset)
+        }
+    )
+
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<ListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query, isRemote, sorted) ->
-
-                val remoteMediator = BrowseResourceRemoteMediator<ReleaseGroupForListItem>(
-                    getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
-                    getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
-                    deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
-                    browseResource = { offset ->
-                        useCase.browseLinkedResourcesAndStore(resourceId, offset)
-                    }
-                ).takeIf { isRemote }
-
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = remoteMediator,
+                    remoteMediator = getRemoteMediator(resourceId).takeIf { isRemote },
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query, sorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {

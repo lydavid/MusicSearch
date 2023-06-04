@@ -16,8 +16,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -49,13 +47,14 @@ private const val DELAY_LOADING_MS = 300L
 
 /**
  * [TopAppBar] with icon for [resource], scrollable [title]/[subtitle];
- * back button if [showBackButton], invoking [onBack];
- * and [Tab]s for each [tabsTitles].
+ * back button if [showBackButton], invoking [onBack].
  *
  * @param resource What [MusicBrainzResource]'s icon to display.
  * @param actions Actions displayed in a [RowScope].
  * @param overflowDropdownMenuItems If set, displays three-ellipses action button at the end of the bar.
  *  When clicked, the items in this composable will be displayed in a dropdown menu.
+ * @param additionalBar Additional control bar under the title/subtitle.
+ *  This is where we can slot in tabs/chips.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,10 +72,7 @@ fun ScrollableTopAppBar(
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
-    // TODO: Can we split these concerns somehow?
-    tabsTitles: List<String> = listOf(),
-    selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {},
+    additionalBar: @Composable () -> Unit = {},
 ) {
 
     Column(modifier = modifier) {
@@ -103,11 +99,7 @@ fun ScrollableTopAppBar(
             }
         )
 
-        TabsBar(
-            tabsTitle = tabsTitles,
-            selectedTabIndex = selectedTabIndex,
-            onSelectTabIndex = onSelectTabIndex
-        )
+        additionalBar()
     }
 }
 
@@ -243,29 +235,6 @@ private fun OverflowMenu(
     }
 }
 
-@Composable
-private fun TabsBar(
-    tabsTitle: List<String> = listOf(),
-    selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {}
-) {
-    if (tabsTitle.isNotEmpty()) {
-        ScrollableTabRow(
-            selectedTabIndex = selectedTabIndex
-        ) {
-            tabsTitle.forEachIndexed { index, title ->
-                Tab(
-                    text = { Text(title) },
-                    selected = selectedTabIndex == index,
-                    onClick = {
-                        onSelectTabIndex(index)
-                    }
-                )
-            }
-        }
-    }
-}
-
 // region Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @DefaultPreviews
@@ -303,9 +272,13 @@ private fun WithTabs() {
             resource = MusicBrainzResource.RELEASE_GROUP,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen.",
-            tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
-            selectedTabIndex = selectedTabIndex,
-            onSelectTabIndex = { selectedTabIndex = it }
+            additionalBar = {
+                TabsBar(
+                    tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
+                    selectedTabIndex = selectedTabIndex,
+                    onSelectTabIndex = { selectedTabIndex = it }
+                )
+            }
         )
     }
 }

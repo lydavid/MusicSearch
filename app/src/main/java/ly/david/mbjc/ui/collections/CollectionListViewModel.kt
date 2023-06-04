@@ -8,8 +8,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ly.david.data.auth.MusicBrainzAuthState
-import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.network.api.MusicBrainzApiService
@@ -18,22 +16,21 @@ import ly.david.data.persistence.collection.CollectionWithEntities
 import ly.david.data.persistence.collection.toCollectionRoomModel
 import ly.david.data.persistence.relation.BrowseResourceCount
 import ly.david.data.persistence.relation.RelationDao
-import ly.david.ui.common.paging.BrowseResourceUseCase
-import ly.david.ui.common.paging.IPagedList
-import ly.david.ui.common.paging.PagedList
+import ly.david.mbjc.ui.settings.AppPreferences
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
 
 @HiltViewModel
 internal class CollectionListViewModel @Inject constructor(
-    private val pagedList: PagedList<CollectionWithEntities, CollectionListItemModel>,
+    val appPreferences: AppPreferences,
+    private val pagedList: CollectionPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val musicBrainzAuthState: MusicBrainzAuthState,
     private val collectionDao: CollectionDao,
     private val relationDao: RelationDao,
 ) : ViewModel(),
-    IPagedList<CollectionListItemModel> by pagedList,
-    BrowseResourceUseCase<CollectionWithEntities, CollectionListItemModel> {
+    ICollectionPagedList by pagedList,
+    BrowseCollectionUseCase<CollectionWithEntities> {
 
     init {
         pagedList.scope = viewModelScope
@@ -52,6 +49,16 @@ internal class CollectionListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setShowLocal(show: Boolean) {
+        appPreferences.setShowLocalCollections(show)
+        updateShowLocal(show)
+    }
+
+    fun setShowRemote(show: Boolean) {
+        appPreferences.setShowRemoteCollections(show)
+        updateShowRemote(show)
     }
 
     override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
@@ -86,10 +93,6 @@ internal class CollectionListViewModel @Inject constructor(
         return collectionMusicBrainzModels.size
     }
 
-    override fun transformRoomToListItemModel(roomModel: CollectionWithEntities): CollectionListItemModel {
-        return roomModel.toCollectionListItemModel()
-    }
-
     override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? {
         if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
@@ -112,14 +115,11 @@ internal class CollectionListViewModel @Inject constructor(
     }
 
     override fun getLinkedResourcesPagingSource(
-        resourceId: String,
-        query: String
-    ): PagingSource<Int, CollectionWithEntities> = when {
-        query.isEmpty() -> {
-            collectionDao.getAllCollections()
-        }
-        else -> {
-            collectionDao.getAllCollectionsFiltered("%$query%")
-        }
-    }
+        viewState: ICollectionPagedList.ViewModelState
+    ): PagingSource<Int, CollectionWithEntities> =
+        collectionDao.getAllCollectionsFiltered(
+            showLocal = viewState.showLocal,
+            showRemote = viewState.showRemote,
+            query = "%${viewState.query}%"
+        )
 }

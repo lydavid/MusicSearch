@@ -39,22 +39,21 @@ class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor() : IPag
     lateinit var scope: CoroutineScope
     lateinit var useCase: BrowseResourceUseCase<RM, LI>
 
+    private fun getRemoteMediator(resourceId: String) = BrowseResourceRemoteMediator<RM>(
+        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
+        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
+        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
+        browseResource = { offset -> useCase.browseLinkedResourcesAndStore(resourceId, offset) }
+    )
+
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
     override val pagedResources: Flow<PagingData<LI>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .distinctUntilChanged()
             .flatMapLatest { (resourceId, query, isRemote) ->
-
-                val remoteMediator = BrowseResourceRemoteMediator<RM>(
-                    getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
-                    getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
-                    deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
-                    browseResource = { offset -> useCase.browseLinkedResourcesAndStore(resourceId, offset) }
-                ).takeIf { isRemote }
-
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = remoteMediator,
+                    remoteMediator = getRemoteMediator(resourceId).takeIf { isRemote },
                     pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
                 )
                     .flow

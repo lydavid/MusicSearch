@@ -45,9 +45,13 @@ class ScrollableTopAppBarTest : PaparazziScreenshotTest() {
                 resource = MusicBrainzResource.RELEASE_GROUP,
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
                 subtitle = "A subtitle that is also very long that will also go off the screen.",
-                tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
-                selectedTabIndex = selectedTabIndex,
-                onSelectTabIndex = { selectedTabIndex = it }
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
+                        selectedTabIndex = selectedTabIndex,
+                        onSelectTabIndex = { selectedTabIndex = it }
+                    )
+                }
             )
         }
     }

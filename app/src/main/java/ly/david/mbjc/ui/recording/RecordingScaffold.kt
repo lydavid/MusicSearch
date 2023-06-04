@@ -34,17 +34,18 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.relation.RelationsScreen
 import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 import ly.david.ui.common.R
 import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
@@ -127,9 +128,6 @@ internal fun RecordingScaffold(
                         )
                     }
                 },
-                tabsTitles = RecordingTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(
                     RecordingTab.RELEASES,
                     RecordingTab.RELATIONSHIPS
@@ -138,6 +136,13 @@ internal fun RecordingScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = RecordingTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
     ) { innerPadding ->

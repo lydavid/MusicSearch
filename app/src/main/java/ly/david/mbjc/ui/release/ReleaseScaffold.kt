@@ -41,6 +41,7 @@ import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 /**
@@ -121,9 +122,6 @@ internal fun ReleaseScaffold(
                             })
                     }
                 },
-                tabsTitles = ReleaseTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(
                     ReleaseTab.TRACKS,
                     ReleaseTab.RELATIONSHIPS
@@ -133,6 +131,13 @@ internal fun ReleaseScaffold(
                     filterText = it
                     viewModel.updateQuery(query = filterText)
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = ReleaseTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

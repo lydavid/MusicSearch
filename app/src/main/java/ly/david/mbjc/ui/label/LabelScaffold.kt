@@ -33,18 +33,19 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.ListItemModel
 import ly.david.data.domain.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.relation.RelationsScreen
-import ly.david.ui.common.topappbar.AddToCollectionMenuItem
-import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
-import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
-import ly.david.ui.common.topappbar.ToggleMenuItem
-import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
 import ly.david.ui.common.R
+import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
+import ly.david.ui.common.relation.RelationsScreen
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.topappbar.AddToCollectionMenuItem
+import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
+import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
+import ly.david.ui.common.topappbar.TabsBar
+import ly.david.ui.common.topappbar.ToggleMenuItem
+import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -111,9 +112,6 @@ internal fun LabelScaffold(
                         onAddToCollectionMenuClick(resource, labelId)
                     }
                 },
-                tabsTitles = LabelTab.values().map { stringResource(id = it.tab.titleRes) },
-                selectedTabIndex = selectedTab.ordinal,
-                onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                 showFilterIcon = selectedTab in listOf(
                     LabelTab.RELEASES,
                     LabelTab.RELATIONSHIPS
@@ -122,6 +120,13 @@ internal fun LabelScaffold(
                 onFilterTextChange = {
                     filterText = it
                 },
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = LabelTab.values().map { stringResource(id = it.tab.titleRes) },
+                        selectedTabIndex = selectedTab.ordinal,
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                    )
+                }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },

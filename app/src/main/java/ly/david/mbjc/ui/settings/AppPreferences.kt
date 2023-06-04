@@ -33,6 +33,12 @@ interface AppPreferences {
 
     val sortReleaseGroupListItems: Flow<Boolean>
     fun setSortReleaseGroupListItems(show: Boolean)
+
+    val showLocalCollections: Flow<Boolean>
+    fun setShowLocalCollections(show: Boolean)
+
+    val showRemoteCollections: Flow<Boolean>
+    fun setShowRemoteCollections(show: Boolean)
 }
 
 private const val THEME_KEY = "theme"
@@ -48,6 +54,14 @@ private val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE =
 private const val SORT_RELEASE_GROUP_LIST_ITEMS = "sortReleaseGroupListItems"
 private val SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE =
     booleanPreferencesKey(SORT_RELEASE_GROUP_LIST_ITEMS)
+
+private const val SHOW_LOCAL_COLLECTIONS = "showLocalCollections"
+private val SHOW_LOCAL_COLLECTIONS_PREFERENCE =
+    booleanPreferencesKey(SHOW_LOCAL_COLLECTIONS)
+
+private const val SHOW_REMOTE_COLLECTIONS = "showRemoteCollections"
+private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
+    booleanPreferencesKey(SHOW_REMOTE_COLLECTIONS)
 
 class AppPreferencesImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
@@ -111,6 +125,36 @@ class AppPreferencesImpl @Inject constructor(
         coroutineScope.launch {
             preferencesDataStore.edit {
                 it[SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE] = show
+            }
+        }
+    }
+
+    override val showLocalCollections: Flow<Boolean>
+        get() = preferencesDataStore.data
+            .map {
+                it[SHOW_LOCAL_COLLECTIONS_PREFERENCE] ?: true
+            }
+            .distinctUntilChanged()
+
+    override fun setShowLocalCollections(show: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[SHOW_LOCAL_COLLECTIONS_PREFERENCE] = show
+            }
+        }
+    }
+
+    override val showRemoteCollections: Flow<Boolean>
+        get() = preferencesDataStore.data
+            .map {
+                it[SHOW_REMOTE_COLLECTIONS_PREFERENCE] ?: true
+            }
+            .distinctUntilChanged()
+
+    override fun setShowRemoteCollections(show: Boolean) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[SHOW_REMOTE_COLLECTIONS_PREFERENCE] = show
             }
         }
     }

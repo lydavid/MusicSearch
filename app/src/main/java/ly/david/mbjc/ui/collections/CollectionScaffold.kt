@@ -21,7 +21,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.R
 import ly.david.mbjc.ui.collections.areas.AreasByCollectionScreen
 import ly.david.mbjc.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.mbjc.ui.collections.events.EventsByCollectionScreen
@@ -33,6 +32,7 @@ import ly.david.mbjc.ui.collections.releasegroups.ReleaseGroupsByCollectionScree
 import ly.david.mbjc.ui.collections.releases.ReleasesByCollectionScreen
 import ly.david.mbjc.ui.collections.series.SeriesByCollectionScreen
 import ly.david.mbjc.ui.collections.works.WorksByCollectionScreen
+import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.ui.common.fullscreen.FullScreenText
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem

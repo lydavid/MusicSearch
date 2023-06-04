@@ -10,7 +10,6 @@
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
     <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzResource&gt;</ID>
     <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
-    <ID>UnstableCollections:ScrollableTopAppBar.kt$List&lt;String&gt;</ID>
-    <ID>UnstableCollections:TopAppBarWithFilter.kt$List&lt;String&gt;</ID>
+    <ID>UnstableCollections:TabsBar.kt$List&lt;String&gt;</ID>
   </CurrentIssues>
 </SmellBaseline>

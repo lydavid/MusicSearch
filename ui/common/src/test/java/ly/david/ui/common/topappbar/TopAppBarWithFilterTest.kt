@@ -1,6 +1,10 @@
 package ly.david.ui.common.topappbar
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
@@ -40,10 +44,17 @@ class TopAppBarWithFilterTest : PaparazziScreenshotTest() {
     @Test
     fun withTabs() {
         snapshot {
+            var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+
             TopAppBarWithFilterInternal(
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
-                tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
-                selectedTabIndex = 1
+                additionalBar = {
+                    TabsBar(
+                        tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
+                        selectedTabIndex = selectedTabIndex,
+                        onSelectTabIndex = { selectedTabIndex = it }
+                    )
+                }
             )
         }
     }

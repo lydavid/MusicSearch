@@ -61,14 +61,12 @@ fun TopAppBarWithFilter(
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 
-    tabsTitles: List<String> = listOf(),
-    selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {},
-
     showFilterIcon: Boolean = true,
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
     additionalActions: @Composable () -> Unit = {},
+
+    additionalBar: @Composable () -> Unit = {},
 ) {
     var isFilterMode by rememberSaveable { mutableStateOf(false) }
 
@@ -89,15 +87,13 @@ fun TopAppBarWithFilter(
         scrollBehavior = scrollBehavior,
         overflowDropdownMenuItems = overflowDropdownMenuItems,
         subtitleDropdownMenuItems = subtitleDropdownMenuItems,
-        tabsTitles = tabsTitles,
-        selectedTabIndex = selectedTabIndex,
-        onSelectTabIndex = onSelectTabIndex,
         showFilterIcon = showFilterIcon,
         filterText = filterText,
         onFilterTextChange = onFilterTextChange,
         isFilterMode = isFilterMode,
         onFilterModeChange = { isFilterMode = it },
-        additionalActions = additionalActions
+        additionalActions = additionalActions,
+        additionalBar = additionalBar
     )
 }
 
@@ -113,15 +109,13 @@ internal fun TopAppBarWithFilterInternal(
     scrollBehavior: TopAppBarScrollBehavior? = null,
     overflowDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
-    tabsTitles: List<String> = listOf(),
-    selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {},
     showFilterIcon: Boolean = true,
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = {},
     isFilterMode: Boolean = false,
     onFilterModeChange: (Boolean) -> Unit = {},
     additionalActions: @Composable () -> Unit = {},
+    additionalBar: @Composable () -> Unit = {},
 ) {
 
     val focusRequester = remember { FocusRequester() }
@@ -216,9 +210,7 @@ internal fun TopAppBarWithFilterInternal(
             },
             overflowDropdownMenuItems = overflowDropdownMenuItems,
             subtitleDropdownMenuItems = subtitleDropdownMenuItems,
-            tabsTitles = tabsTitles,
-            selectedTabIndex = selectedTabIndex,
-            onSelectTabIndex = onSelectTabIndex
+            additionalBar = additionalBar
         )
     }
 }
@@ -229,9 +221,7 @@ internal fun TopAppBarWithFilterInternal(
 @Composable
 private fun Default() {
     PreviewTheme {
-        Surface {
-            TopAppBarWithFilterInternal(title = "Title")
-        }
+        TopAppBarWithFilterInternal(title = "Title")
     }
 }
 
@@ -240,12 +230,10 @@ private fun Default() {
 @Composable
 private fun FilterMode() {
     PreviewTheme {
-        Surface {
-            TopAppBarWithFilterInternal(
-                title = "Title",
-                isFilterMode = true
-            )
-        }
+        TopAppBarWithFilterInternal(
+            title = "Title",
+            isFilterMode = true
+        )
     }
 }
 
@@ -254,12 +242,10 @@ private fun FilterMode() {
 @Composable
 private fun NoFilter() {
     PreviewTheme {
-        Surface {
-            TopAppBarWithFilterInternal(
-                title = "Title",
-                showFilterIcon = false
-            )
-        }
+        TopAppBarWithFilterInternal(
+            title = "Title",
+            showFilterIcon = false
+        )
     }
 }
 
@@ -268,13 +254,18 @@ private fun NoFilter() {
 @Composable
 private fun WithTabs() {
     PreviewTheme {
-        Surface {
-            TopAppBarWithFilterInternal(
-                title = "A title that is very long so that it will go off the screen and allow us to scroll.",
-                tabsTitles = listOf("Tab 1", "Tab 2", "Tab 3"),
-                selectedTabIndex = 1
-            )
-        }
+        var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+
+        TopAppBarWithFilterInternal(
+            title = "A title that is very long so that it will go off the screen and allow us to scroll.",
+            additionalBar = {
+                TabsBar(
+                    tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
+                    selectedTabIndex = selectedTabIndex,
+                    onSelectTabIndex = { selectedTabIndex = it }
+                )
+            }
+        )
     }
 }
 // endregion
