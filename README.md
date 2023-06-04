@@ -63,22 +63,28 @@ graph LR
   data-android --> test-data
   collections --> data
   collections --> common
-  common --> data
+  common --> data-android
   app --> test-data
   app --> data-android
   app --> collections
   app --> common
+  app --> history
   app --> data-android
   app --> collections
   app --> common
+  app --> history
   app --> data-android
   app --> collections
   app --> common
+  app --> history
   app --> data-android
   app --> collections
   app --> common
+  app --> history
   app --> test-data
   coverart --> base
+  history --> data
+  history --> common
   test-data --> data
 
 ```
