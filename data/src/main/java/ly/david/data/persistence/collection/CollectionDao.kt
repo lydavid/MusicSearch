@@ -23,7 +23,7 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
         AND name LIKE :query
         """
     )
-    abstract fun getAllCollectionsFiltered(
+    abstract fun getAllCollections(
         showLocal: Boolean = true,
         showRemote: Boolean = true,
         query: String

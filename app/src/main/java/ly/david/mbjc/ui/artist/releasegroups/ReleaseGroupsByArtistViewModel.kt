@@ -52,26 +52,10 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
         relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE_GROUP)
     }
 
-    // TODO: should be able to write one query instead of multiplying them like this
-    //  see collectionDao
-    override fun getLinkedResourcesPagingSource(resourceId: String, query: String, sorted: Boolean) = when {
-        sorted && query.isEmpty() -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtistSorted(resourceId)
-        }
-        sorted -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtistFilteredSorted(
-                artistId = resourceId,
-                query = "%$query%"
-            )
-        }
-        query.isEmpty() -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtist(resourceId)
-        }
-        else -> {
-            artistReleaseGroupDao.getReleaseGroupsByArtistFiltered(
-                artistId = resourceId,
-                query = "%$query%"
-            )
-        }
-    }
+    override fun getLinkedResourcesPagingSource(resourceId: String, query: String, sorted: Boolean) =
+        artistReleaseGroupDao.getReleaseGroupsByArtist(
+            artistId = resourceId,
+            query = "%$query%",
+            sorted = sorted
+        )
 }

@@ -122,7 +122,7 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
         )
 
         val releaseGroupWithArtistCredits = getReleaseGroupsFromPagingSource(
-            artistReleaseGroupDao.getReleaseGroupsByArtistSorted("a1")
+            artistReleaseGroupDao.getReleaseGroupsByArtist(artistId = "a1", sorted = true)
         )
 
         assertEquals(3, releaseGroupWithArtistCredits.size)
@@ -173,7 +173,7 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
         )
 
         val releaseGroupWithArtistCredits = getReleaseGroupsFromPagingSource(
-            artistReleaseGroupDao.getReleaseGroupsByArtistFiltered("a1", "%f%")
+            artistReleaseGroupDao.getReleaseGroupsByArtist("a1", "%f%")
         )
 
         assertEquals(1, releaseGroupWithArtistCredits.size)
@@ -225,7 +225,7 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
         )
 
         val releaseGroupWithArtistCredits = getReleaseGroupsFromPagingSource(
-            artistReleaseGroupDao.getReleaseGroupsByArtistFilteredSorted("a1", "%me%")
+            artistReleaseGroupDao.getReleaseGroupsByArtist(artistId = "a1", query = "%me%", sorted = true)
         )
 
         assertEquals(2, releaseGroupWithArtistCredits.size)
@@ -278,7 +278,7 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
         )
 
         val releaseGroupWithArtistCredits = getReleaseGroupsFromPagingSource(
-            artistReleaseGroupDao.getReleaseGroupsByArtistFiltered("a1", "%Album%")
+            artistReleaseGroupDao.getReleaseGroupsByArtist("a1", "%Album%")
         )
 
         assertEquals(2, releaseGroupWithArtistCredits.size)

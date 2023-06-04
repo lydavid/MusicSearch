@@ -58,24 +58,10 @@ internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
         }
     }
 
-    override fun getLinkedResourcesPagingSource(resourceId: String, query: String, sorted: Boolean) = when {
-        sorted && query.isEmpty() -> {
-            collectionEntityDao.getReleaseGroupsByCollectionSorted(resourceId)
-        }
-        sorted -> {
-            collectionEntityDao.getReleaseGroupsByCollectionFilteredSorted(
-                collectionId = resourceId,
-                query = "%$query%"
-            )
-        }
-        query.isEmpty() -> {
-            collectionEntityDao.getReleaseGroupsByCollection(resourceId)
-        }
-        else -> {
-            collectionEntityDao.getReleaseGroupsByCollectionFiltered(
-                collectionId = resourceId,
-                query = "%$query%"
-            )
-        }
-    }
+    override fun getLinkedResourcesPagingSource(resourceId: String, query: String, sorted: Boolean) =
+        collectionEntityDao.getReleaseGroupsByCollection(
+            collectionId = resourceId,
+            query = "%$query%",
+            sorted = sorted
+        )
 }

@@ -117,7 +117,7 @@ internal class CollectionListViewModel @Inject constructor(
     override fun getLinkedResourcesPagingSource(
         viewState: ICollectionPagedList.ViewModelState
     ): PagingSource<Int, CollectionWithEntities> =
-        collectionDao.getAllCollectionsFiltered(
+        collectionDao.getAllCollections(
             showLocal = viewState.showLocal,
             showRemote = viewState.showRemote,
             query = "%${viewState.query}%"

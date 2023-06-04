@@ -28,15 +28,6 @@ interface ReleaseGroupsByCollectionDao {
             $RELEASE_GROUPS_BY_COLLECTION
         """
 
-        private const val ORDER_BY_COLLECTION_LINKING_TABLE = """
-            ORDER BY ce.rowid
-        """
-
-        // The date format YYYY-MM-DD can be correctly sorted by SQLite.
-        private const val ORDER_BY_TYPES_AND_DATE = """
-            ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date
-        """
-
         private const val FILTERED = """
             AND (
                 rg.title LIKE :query OR rg.disambiguation LIKE :query
@@ -60,45 +51,17 @@ interface ReleaseGroupsByCollectionDao {
     @Query(
         """
         $SELECT_RELEASE_GROUPS_BY_COLLECTION
-        $ORDER_BY_COLLECTION_LINKING_TABLE
-        """
-    )
-    fun getReleaseGroupsByCollection(collectionId: String): PagingSource<Int, ReleaseGroupForListItem>
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASE_GROUPS_BY_COLLECTION
-        $ORDER_BY_TYPES_AND_DATE
-    """
-    )
-    fun getReleaseGroupsByCollectionSorted(collectionId: String): PagingSource<Int, ReleaseGroupForListItem>
-
-    // Not as fast as FTS but allows searching characters within words
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASE_GROUPS_BY_COLLECTION
         $FILTERED
-        $ORDER_BY_COLLECTION_LINKING_TABLE
-    """
-    )
-    fun getReleaseGroupsByCollectionFiltered(
-        collectionId: String,
-        query: String
-    ): PagingSource<Int, ReleaseGroupForListItem>
-
-    @Transaction
-    @Query(
+        ORDER BY
+          CASE WHEN :sorted THEN rg.primary_type ELSE ce.rowid END,
+          CASE WHEN :sorted THEN rg.secondary_types END,
+          CASE WHEN :sorted THEN rg.first_release_date END
         """
-        $SELECT_RELEASE_GROUPS_BY_COLLECTION
-        $FILTERED
-        $ORDER_BY_TYPES_AND_DATE
-    """
     )
-    fun getReleaseGroupsByCollectionFilteredSorted(
+    fun getReleaseGroupsByCollection(
         collectionId: String,
-        query: String
+        query: String = "%%",
+        sorted: Boolean = false
     ): PagingSource<Int, ReleaseGroupForListItem>
 
     @Query(

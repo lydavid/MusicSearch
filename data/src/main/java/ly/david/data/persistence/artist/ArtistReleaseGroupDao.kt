@@ -31,15 +31,6 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
             $RELEASE_GROUPS_BY_ARTIST
         """
 
-        private const val ORDER_BY_ARTIST_LINKING_TABLE = """
-            ORDER BY arg.rowid
-        """
-
-        // The date format YYYY-MM-DD can be correctly sorted by SQLite.
-        private const val ORDER_BY_TYPES_AND_DATE = """
-            ORDER BY rg.primary_type, rg.secondary_types, rg.first_release_date
-        """
-
         // TODO: we're able to filter on date's month/day even though we don't display it. Could be confusing
         private const val FILTERED = """
             AND (
@@ -60,51 +51,21 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
     )
     abstract suspend fun deleteReleaseGroupsByArtist(artistId: String)
 
-    // Make sure to select from release_groups first, rather than artists.
-    // That way, when there are no entries, we return empty rather than 1 entry with null values.
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASE_GROUPS_BY_ARTIST
-        $ORDER_BY_ARTIST_LINKING_TABLE
-        """
-    )
-    abstract fun getReleaseGroupsByArtist(artistId: String): PagingSource<Int, ReleaseGroupForListItem>
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASE_GROUPS_BY_ARTIST
-        $ORDER_BY_TYPES_AND_DATE
-    """
-    )
-    abstract fun getReleaseGroupsByArtistSorted(artistId: String): PagingSource<Int, ReleaseGroupForListItem>
-
-    // Not as fast as FTS but allows searching characters within words
     @Transaction
     @Query(
         """
         $SELECT_RELEASE_GROUPS_BY_ARTIST
         $FILTERED
-        $ORDER_BY_ARTIST_LINKING_TABLE
+        ORDER BY
+          CASE WHEN :sorted THEN rg.primary_type ELSE arg.rowid END,
+          CASE WHEN :sorted THEN rg.secondary_types END,
+          CASE WHEN :sorted THEN rg.first_release_date END
     """
     )
-    abstract fun getReleaseGroupsByArtistFiltered(
+    abstract fun getReleaseGroupsByArtist(
         artistId: String,
-        query: String
-    ): PagingSource<Int, ReleaseGroupForListItem>
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASE_GROUPS_BY_ARTIST
-        $FILTERED
-        $ORDER_BY_TYPES_AND_DATE
-    """
-    )
-    abstract fun getReleaseGroupsByArtistFilteredSorted(
-        artistId: String,
-        query: String
+        query: String = "%%",
+        sorted: Boolean = false
     ): PagingSource<Int, ReleaseGroupForListItem>
 
     @Query(
