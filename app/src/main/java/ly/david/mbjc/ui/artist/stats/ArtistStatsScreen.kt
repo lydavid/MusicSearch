@@ -8,8 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.data.persistence.relation.RelationTypeCount
-import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.topappbar.Tab
 import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen

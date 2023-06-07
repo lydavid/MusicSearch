@@ -9,22 +9,22 @@ import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.ReleaseCountryDao
-import ly.david.data.persistence.area.getAreaCountryCodes
-import ly.david.data.persistence.area.getReleaseCountries
-import ly.david.data.persistence.area.toAreaRoomModel
-import ly.david.data.persistence.label.LabelDao
-import ly.david.data.persistence.label.ReleaseLabelDao
-import ly.david.data.persistence.label.toReleaseLabels
-import ly.david.data.persistence.label.toRoomModels
-import ly.david.data.persistence.release.MediumDao
-import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.TrackDao
-import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroup
-import ly.david.data.persistence.release.releasegroup.ReleaseReleaseGroupDao
-import ly.david.data.persistence.release.toMediumRoomModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.room.area.AreaDao
+import ly.david.data.room.area.releases.ReleaseCountryDao
+import ly.david.data.room.area.getAreaCountryCodes
+import ly.david.data.room.area.releases.getReleaseCountries
+import ly.david.data.room.area.toAreaRoomModel
+import ly.david.data.room.label.LabelDao
+import ly.david.data.room.label.releases.ReleaseLabelDao
+import ly.david.data.room.label.releases.toReleaseLabels
+import ly.david.data.room.label.toRoomModels
+import ly.david.data.room.release.tracks.MediumDao
+import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.release.tracks.TrackDao
+import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
+import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
+import ly.david.data.room.release.tracks.toMediumRoomModel
+import ly.david.data.room.releasegroup.ReleaseGroupDao
 
 // TODO: move back to ui folder
 @Singleton

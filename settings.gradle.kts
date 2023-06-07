@@ -108,12 +108,15 @@ dependencyResolutionManagement {
 
 rootProject.name = "MusicSearch"
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(
     ":app",
     ":data-android",
     ":data",
     ":data:base",
     ":data:coverart",
+    ":data:room",
     ":data:musicbrainz",
     ":test-data",
     ":ui:collections",

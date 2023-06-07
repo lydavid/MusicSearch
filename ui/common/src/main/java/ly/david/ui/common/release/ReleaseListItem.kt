@@ -22,7 +22,7 @@ import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.persistence.area.ReleaseCountry
+import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.ui.common.coverart.SmallCoverArt
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme

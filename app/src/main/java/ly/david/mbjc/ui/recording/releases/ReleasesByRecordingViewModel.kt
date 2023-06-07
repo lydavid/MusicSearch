@@ -8,11 +8,11 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.recording.RecordingRelease
-import ly.david.data.persistence.recording.RecordingReleaseDao
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseForListItem
+import ly.david.data.room.recording.releases.RecordingRelease
+import ly.david.data.room.recording.releases.RecordingReleaseDao
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.release.ReleaseForListItem
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
 

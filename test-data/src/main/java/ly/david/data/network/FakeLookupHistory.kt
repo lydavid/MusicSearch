@@ -1,6 +1,6 @@
 package ly.david.data.network
 
-import ly.david.data.persistence.history.LookupHistoryRoomModel
+import ly.david.data.room.history.LookupHistoryRoomModel
 
 val lookupHistory = LookupHistoryRoomModel(
     title = "欠けた心象、世のよすが",

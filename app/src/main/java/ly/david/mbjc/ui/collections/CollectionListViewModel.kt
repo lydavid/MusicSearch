@@ -11,11 +11,11 @@ import ly.david.data.auth.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.collection.CollectionDao
-import ly.david.data.persistence.collection.CollectionWithEntities
-import ly.david.data.persistence.collection.toCollectionRoomModel
-import ly.david.data.persistence.relation.BrowseResourceCount
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.collection.CollectionWithEntities
+import ly.david.data.room.collection.toCollectionRoomModel
+import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.ui.settings.AppPreferences
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"

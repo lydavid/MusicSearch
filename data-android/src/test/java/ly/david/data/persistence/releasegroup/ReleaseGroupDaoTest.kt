@@ -5,8 +5,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.network.fakeReleaseGroupWithArtistCredits
-import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
-import ly.david.data.persistence.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before

@@ -6,9 +6,9 @@ import javax.inject.Inject
 import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.collection.CollectionDao
-import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.persistence.history.RecordLookupHistory
+import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.room.history.RecordLookupHistory
 
 @HiltViewModel
 internal class CollectionViewModel @Inject constructor(

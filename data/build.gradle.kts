@@ -3,9 +3,10 @@ plugins {
 }
 
 dependencies {
-    api(project(":data:base"))
-    api(project(":data:coverart"))
-    api(project(":data:musicbrainz"))
+    api(projects.data.base)
+    api(projects.data.coverart)
+    api(projects.data.room)
+    api(projects.data.musicbrainz)
 
     implementation(libs.androidx.paging.common)
 

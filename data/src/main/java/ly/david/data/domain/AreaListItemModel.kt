@@ -3,8 +3,8 @@ package ly.david.data.domain
 import ly.david.data.Area
 import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.persistence.area.AreaRoomModel
-import ly.david.data.persistence.release.AreaWithReleaseDate
+import ly.david.data.room.area.AreaRoomModel
+import ly.david.data.room.release.AreaWithReleaseDate
 
 data class AreaListItemModel(
     override val id: String,

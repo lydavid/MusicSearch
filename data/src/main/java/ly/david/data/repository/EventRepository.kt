@@ -7,8 +7,8 @@ import ly.david.data.domain.toEventListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.event.EventDao
-import ly.david.data.persistence.event.toEventRoomModel
+import ly.david.data.room.event.EventDao
+import ly.david.data.room.event.toEventRoomModel
 
 @Singleton
 class EventRepository @Inject constructor(

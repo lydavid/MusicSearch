@@ -19,8 +19,8 @@ import kotlinx.coroutines.withContext
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.collectableResources
 import ly.david.data.network.toFakeMusicBrainzModel
-import ly.david.data.persistence.collection.CollectionDao
-import ly.david.data.persistence.collection.CollectionRoomModel
+import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold

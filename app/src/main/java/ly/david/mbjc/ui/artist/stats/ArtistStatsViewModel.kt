@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.artist.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.persistence.artist.ArtistReleaseGroupDao
-import ly.david.data.persistence.artist.release.ArtistReleaseDao
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
+import ly.david.data.room.artist.releases.ArtistReleaseDao
+import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.ui.stats.RelationsStats
 import ly.david.mbjc.ui.stats.ReleaseGroupsStats
 import ly.david.mbjc.ui.stats.ReleasesStats

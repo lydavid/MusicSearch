@@ -7,8 +7,8 @@ import ly.david.data.domain.toLabelListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.label.LabelDao
-import ly.david.data.persistence.label.toLabelRoomModel
+import ly.david.data.room.label.LabelDao
+import ly.david.data.room.label.toLabelRoomModel
 
 @Singleton
 class LabelRepository @Inject constructor(

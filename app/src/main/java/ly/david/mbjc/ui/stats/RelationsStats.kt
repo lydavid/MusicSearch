@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.stats
 
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.relation.RelationDao
 
 /**
  * Stats about relations.

@@ -11,12 +11,12 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.api.BrowseSeriesResponse
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.collection.CollectionEntityDao
-import ly.david.data.persistence.collection.CollectionEntityRoomModel
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.series.SeriesDao
-import ly.david.data.persistence.series.SeriesRoomModel
-import ly.david.data.persistence.series.toSeriesRoomModel
+import ly.david.data.room.collection.CollectionEntityDao
+import ly.david.data.room.collection.CollectionEntityRoomModel
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.series.SeriesDao
+import ly.david.data.room.series.SeriesRoomModel
+import ly.david.data.room.series.toSeriesRoomModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
 

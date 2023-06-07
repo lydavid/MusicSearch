@@ -7,8 +7,8 @@ import ly.david.data.domain.toArtistListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.artist.ArtistDao
-import ly.david.data.persistence.artist.toArtistRoomModel
+import ly.david.data.room.artist.ArtistDao
+import ly.david.data.room.artist.toArtistRoomModel
 
 @Singleton
 class ArtistRepository @Inject constructor(

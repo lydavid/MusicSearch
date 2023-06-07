@@ -1,7 +1,7 @@
 package ly.david.data.domain
 
 import ly.david.data.Track
-import ly.david.data.persistence.release.TrackForListItem
+import ly.david.data.room.release.tracks.TrackForListItem
 
 data class TrackListItemModel(
     override val id: String,

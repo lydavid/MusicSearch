@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.WorkAttribute
 import ly.david.data.network.WorkAttributeMusicBrainzModel
-import ly.david.data.persistence.work.WorkAttributeRoomModel
+import ly.david.data.room.work.WorkAttributeRoomModel
 
 data class WorkAttributeUiModel(
     override val type: String,

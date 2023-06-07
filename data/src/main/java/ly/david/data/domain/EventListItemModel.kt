@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Event
 import ly.david.data.LifeSpan
 import ly.david.data.network.EventMusicBrainzModel
-import ly.david.data.persistence.event.EventRoomModel
+import ly.david.data.room.event.EventRoomModel
 
 data class EventListItemModel(
     override val id: String,

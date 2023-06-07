@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":data-android"))
+    implementation(projects.dataAndroid)
 
     implementation(libs.accompanist.swiperefresh)
 

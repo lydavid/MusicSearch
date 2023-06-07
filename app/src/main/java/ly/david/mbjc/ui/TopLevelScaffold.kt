@@ -32,7 +32,7 @@ import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.navigation.Destination
 import ly.david.data.navigation.getTopLevelDestination
 import ly.david.data.navigation.getTopLevelRoute
-import ly.david.data.persistence.history.LookupHistoryRoomModel
+import ly.david.data.room.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
 import ly.david.ui.collections.CollectionBottomSheet

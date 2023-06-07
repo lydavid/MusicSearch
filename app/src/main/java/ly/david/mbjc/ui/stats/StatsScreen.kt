@@ -5,8 +5,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.relation.RelationTypeCount
-import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.common.preview.DefaultPreviews

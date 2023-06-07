@@ -6,9 +6,9 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.Browsable
-import ly.david.data.persistence.RoomModel
-import ly.david.data.persistence.relation.BrowseResourceCount
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.RoomModel
+import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.RelationDao
 
 abstract class BrowseEntitiesByEntityViewModel
 <RM : RoomModel, LI : ListItemModel, MB : MusicBrainzModel, B : Browsable<MB>>(

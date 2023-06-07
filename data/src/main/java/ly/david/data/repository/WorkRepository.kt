@@ -7,9 +7,9 @@ import ly.david.data.domain.toWorkListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.WORK_INC_DEFAULT
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.work.WorkDao
-import ly.david.data.persistence.work.toWorkAttributeRoomModel
-import ly.david.data.persistence.work.toWorkRoomModel
+import ly.david.data.room.work.WorkDao
+import ly.david.data.room.work.toWorkAttributeRoomModel
+import ly.david.data.room.work.toWorkRoomModel
 
 @Singleton
 class WorkRepository @Inject constructor(

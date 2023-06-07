@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.area.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.persistence.area.AreaPlaceDao
-import ly.david.data.persistence.area.ReleaseCountryDao
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.area.places.AreaPlaceDao
+import ly.david.data.room.area.releases.ReleaseCountryDao
+import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.ui.stats.PlacesStats
 import ly.david.mbjc.ui.stats.RelationsStats
 import ly.david.mbjc.ui.stats.ReleasesStats

@@ -7,8 +7,8 @@ import ly.david.data.getTracksForDisplay
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
-import ly.david.data.persistence.area.ReleaseCountry
-import ly.david.data.persistence.release.ReleaseForListItem
+import ly.david.data.room.area.releases.ReleaseCountry
+import ly.david.data.room.release.ReleaseForListItem
 
 data class ReleaseListItemModel(
     override val id: String,

@@ -12,8 +12,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import ly.david.data.navigation.Destination
 import ly.david.data.network.lookupHistory
-import ly.david.data.persistence.MusicBrainzDatabase
-import ly.david.data.persistence.history.LookupHistoryDao
+import ly.david.data.room.MusicBrainzDatabase
+import ly.david.data.room.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold

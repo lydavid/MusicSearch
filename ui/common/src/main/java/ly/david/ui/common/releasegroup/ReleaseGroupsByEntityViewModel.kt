@@ -6,10 +6,10 @@ import ly.david.data.domain.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
-import ly.david.data.persistence.relation.BrowseResourceCount
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
+import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.ui.common.paging.BrowseSortableResourceUseCase
 import ly.david.ui.common.paging.SortablePagedList
 

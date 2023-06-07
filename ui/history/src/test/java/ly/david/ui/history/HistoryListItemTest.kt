@@ -3,7 +3,7 @@ package ly.david.ui.history
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import java.util.Date
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.history.LookupHistoryRoomModel
+import ly.david.data.room.history.LookupHistoryRoomModel
 import org.junit.Test
 import org.junit.runner.RunWith
 

@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
-import ly.david.data.persistence.MusicBrainzDatabase
+import ly.david.data.room.MusicBrainzDatabase
 import ly.david.data.persistence.MusicBrainzRoomDatabase
 
 // Duplicated here and in app but it's okay because trying to inject this upstream just makes a mess of AS modules

@@ -6,7 +6,7 @@ import javax.inject.Inject
 import ly.david.data.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.ReleaseGroupDao
 
 @HiltViewModel
 class ReleaseGroupsListViewModel @Inject constructor(

@@ -7,12 +7,12 @@ import ly.david.data.domain.toPlaceListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.AreaPlace
-import ly.david.data.persistence.area.AreaPlaceDao
-import ly.david.data.persistence.area.toAreaRoomModel
-import ly.david.data.persistence.place.PlaceDao
-import ly.david.data.persistence.place.toPlaceRoomModel
+import ly.david.data.room.area.AreaDao
+import ly.david.data.room.area.places.AreaPlace
+import ly.david.data.room.area.places.AreaPlaceDao
+import ly.david.data.room.area.toAreaRoomModel
+import ly.david.data.room.place.PlaceDao
+import ly.david.data.room.place.toPlaceRoomModel
 
 @Singleton
 class PlaceRepository @Inject constructor(

@@ -3,8 +3,8 @@ package ly.david.data.domain
 import ly.david.data.ReleaseGroup
 import ly.david.data.getDisplayNames
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.persistence.releasegroup.ReleaseGroupForListItem
-import ly.david.data.persistence.releasegroup.ReleaseGroupRoomModel
+import ly.david.data.room.releasegroup.ReleaseGroupForListItem
+import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 
 // TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable
 //  We could extract uimodel to data-android or app

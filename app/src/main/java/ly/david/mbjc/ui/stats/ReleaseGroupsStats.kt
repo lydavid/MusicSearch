@@ -1,8 +1,8 @@
 package ly.david.mbjc.ui.stats
 
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 
 /**
  * Stats about release groups.

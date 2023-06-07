@@ -4,8 +4,8 @@ import ly.david.data.Coordinates
 import ly.david.data.LifeSpan
 import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
-import ly.david.data.persistence.place.PlaceRoomModel
-import ly.david.data.persistence.place.PlaceWithArea
+import ly.david.data.room.place.PlaceRoomModel
+import ly.david.data.room.place.PlaceWithArea
 
 data class PlaceListItemModel(
     override val id: String,

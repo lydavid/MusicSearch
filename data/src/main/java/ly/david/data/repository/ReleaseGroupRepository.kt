@@ -7,7 +7,7 @@ import ly.david.data.domain.toReleaseGroupScaffoldModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.ReleaseGroupDao
 
 @Singleton
 class ReleaseGroupRepository @Inject constructor(

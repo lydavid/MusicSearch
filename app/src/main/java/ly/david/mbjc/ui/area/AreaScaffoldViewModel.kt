@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.AreaScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.persistence.history.RecordLookupHistory
+import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.room.history.RecordLookupHistory
 import ly.david.data.repository.AreaRepository
 import ly.david.data.showReleases
 import ly.david.ui.common.MusicBrainzResourceViewModel

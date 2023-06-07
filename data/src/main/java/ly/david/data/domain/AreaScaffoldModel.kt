@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Area
 import ly.david.data.LifeSpan
 import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.persistence.area.AreaWithCountryCodes
+import ly.david.data.room.area.AreaWithCountryCodes
 
 data class AreaScaffoldModel(
     override val id: String,

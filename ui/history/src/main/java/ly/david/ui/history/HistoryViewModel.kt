@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.persistence.history.LookupHistoryRoomModel
+import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.room.history.LookupHistoryRoomModel
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(

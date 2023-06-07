@@ -20,9 +20,9 @@ import ly.david.data.network.fakePlace
 import ly.david.data.network.ontario
 import ly.david.data.network.toronto
 import ly.david.data.network.underPressure
-import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.toAreaRoomModel
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.area.AreaDao
+import ly.david.data.room.area.toAreaRoomModel
+import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

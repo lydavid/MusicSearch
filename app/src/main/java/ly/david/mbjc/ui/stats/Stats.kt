@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.stats
 
-import ly.david.data.persistence.relation.RelationTypeCount
-import ly.david.data.persistence.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 
 data class Stats(
     val totalRelations: Int? = null,

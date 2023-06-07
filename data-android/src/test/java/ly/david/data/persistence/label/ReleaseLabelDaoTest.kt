@@ -4,8 +4,12 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
-import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseRoomModel
+import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.label.LabelDao
+import ly.david.data.room.label.LabelRoomModel
+import ly.david.data.room.label.releases.ReleaseLabel
+import ly.david.data.room.label.releases.ReleaseLabelDao
+import ly.david.data.room.release.ReleaseRoomModel
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before

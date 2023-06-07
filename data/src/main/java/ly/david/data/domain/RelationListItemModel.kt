@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.Relation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.relation.RelationRoomModel
+import ly.david.data.room.relation.RelationRoomModel
 
 /**
  * @param id For reordering animation in a lazy list.

@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.ArtistCreditName
 import ly.david.data.network.ArtistCreditMusicBrainzModel
-import ly.david.data.persistence.artist.credit.ArtistCreditNameRoomModel
+import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
 
 // This will continue to use the term UiModel because they don't appear separately as a ListItem
 data class ArtistCreditUiModel(

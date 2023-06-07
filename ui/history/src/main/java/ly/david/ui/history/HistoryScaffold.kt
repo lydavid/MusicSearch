@@ -25,7 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.history.LookupHistoryRoomModel
+import ly.david.data.room.history.LookupHistoryRoomModel
 import ly.david.ui.common.R
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted

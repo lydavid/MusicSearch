@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Recording
 import ly.david.data.getDisplayNames
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.persistence.recording.RecordingForListItem
+import ly.david.data.room.recording.RecordingForListItem
 
 data class RecordingListItemModel(
     override val id: String,

@@ -2,8 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.Recording
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.persistence.artist.credit.toArtistCreditUiModels
-import ly.david.data.persistence.recording.RecordingForScaffold
+import ly.david.data.room.recording.RecordingForScaffold
 
 data class RecordingScaffoldModel(
     override val id: String,
@@ -24,7 +23,9 @@ fun RecordingForScaffold.toRecordingScaffoldModel() = RecordingScaffoldModel(
     length = recording.length,
     video = recording.video,
     isrcs = recording.isrcs,
-    artistCredits = artistCreditNamesWithResources.toArtistCreditUiModels()
+    artistCredits = artistCreditNamesWithResources.map {
+        it.artistCreditNameRoomModel.toArtistCreditUiModel()
+    }
 )
 
 fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(

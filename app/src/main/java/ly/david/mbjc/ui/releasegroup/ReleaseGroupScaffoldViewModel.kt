@@ -15,11 +15,11 @@ import ly.david.data.domain.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.history.LookupHistoryDao
-import ly.david.data.persistence.releasegroup.ReleaseGroupDao
+import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.repository.ReleaseGroupRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
-import ly.david.data.persistence.history.RecordLookupHistory
+import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException

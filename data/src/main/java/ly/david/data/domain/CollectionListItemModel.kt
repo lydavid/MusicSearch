@@ -1,7 +1,7 @@
 package ly.david.data.domain
 
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.persistence.collection.CollectionWithEntities
+import ly.david.data.room.collection.CollectionWithEntities
 
 data class CollectionListItemModel(
     override val id: String,

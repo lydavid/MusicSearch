@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":data:base"))
+    implementation(projects.data.base)
 
     implementation(libs.moshi.kotlin)
 

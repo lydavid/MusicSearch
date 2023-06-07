@@ -2,7 +2,7 @@ package ly.david.ui.common.paging
 
 import androidx.paging.PagingSource
 import ly.david.data.domain.ListItemModel
-import ly.david.data.persistence.RoomModel
+import ly.david.data.room.RoomModel
 
 interface StoreResourceUseCase {
     suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int

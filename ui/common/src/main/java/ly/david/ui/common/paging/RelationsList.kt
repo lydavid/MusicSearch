@@ -23,10 +23,10 @@ import ly.david.data.domain.RelationListItemModel
 import ly.david.data.domain.toRelationListItemModel
 import ly.david.data.paging.LookupResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.relation.HasRelationsRoomModel
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.relation.RelationRoomModel
-import ly.david.data.persistence.relation.toRelationRoomModel
+import ly.david.data.room.relation.HasRelationsRoomModel
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RelationRoomModel
+import ly.david.data.room.relation.toRelationRoomModel
 import ly.david.data.repository.RelationsListRepository
 
 /**

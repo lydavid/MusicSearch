@@ -1,7 +1,7 @@
 package ly.david.data.domain
 
 import ly.david.data.ReleaseGroup
-import ly.david.data.persistence.releasegroup.ReleaseGroupWithAllData
+import ly.david.data.room.releasegroup.ReleaseGroupWithAllData
 
 data class ReleaseGroupScaffoldModel(
     override val id: String,

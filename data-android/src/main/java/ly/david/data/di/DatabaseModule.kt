@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import ly.david.data.persistence.MusicBrainzDatabase
+import ly.david.data.room.MusicBrainzDatabase
 import ly.david.data.persistence.MusicBrainzRoomDatabase
 
 private const val DATABASE_NAME = "mbjc.db"

@@ -9,12 +9,12 @@ import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.BrowseEventsResponse
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.event.EventDao
-import ly.david.data.persistence.event.EventPlace
-import ly.david.data.persistence.event.EventPlaceDao
-import ly.david.data.persistence.event.EventRoomModel
-import ly.david.data.persistence.event.toEventRoomModel
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.event.EventDao
+import ly.david.data.room.place.events.EventPlace
+import ly.david.data.room.place.events.EventPlaceDao
+import ly.david.data.room.event.EventRoomModel
+import ly.david.data.room.event.toEventRoomModel
+import ly.david.data.room.relation.RelationDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
 

@@ -20,8 +20,8 @@ import ly.david.data.domain.CollectionListItemModel
 import ly.david.data.domain.toCollectionListItemModel
 import ly.david.data.paging.BrowseResourceRemoteMediator
 import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.persistence.RoomModel
-import ly.david.data.persistence.collection.CollectionWithEntities
+import ly.david.data.room.RoomModel
+import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.common.paging.IPagedList
 import ly.david.ui.common.paging.StoreResourceUseCase
 

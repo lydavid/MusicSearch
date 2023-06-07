@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.di.DatabaseModule
-import ly.david.data.persistence.MusicBrainzDatabase
+import ly.david.data.room.MusicBrainzDatabase
 import ly.david.data.persistence.MusicBrainzRoomDatabase
 
 @Module

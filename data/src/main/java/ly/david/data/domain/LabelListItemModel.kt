@@ -3,8 +3,8 @@ package ly.david.data.domain
 import ly.david.data.Label
 import ly.david.data.network.LabelInfo
 import ly.david.data.network.LabelMusicBrainzModel
-import ly.david.data.persistence.label.LabelRoomModel
-import ly.david.data.persistence.release.LabelWithCatalog
+import ly.david.data.room.label.LabelRoomModel
+import ly.david.data.room.release.LabelWithCatalog
 
 data class LabelListItemModel(
     override val id: String,

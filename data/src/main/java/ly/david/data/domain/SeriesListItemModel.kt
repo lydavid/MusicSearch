@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.Series
 import ly.david.data.network.SeriesMusicBrainzModel
-import ly.david.data.persistence.series.SeriesRoomModel
+import ly.david.data.room.series.SeriesRoomModel
 
 data class SeriesListItemModel(
     override val id: String,

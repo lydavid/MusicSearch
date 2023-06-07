@@ -7,11 +7,11 @@ import ly.david.data.domain.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
-import ly.david.data.persistence.relation.BrowseResourceCount
-import ly.david.data.persistence.relation.RelationDao
-import ly.david.data.persistence.release.ReleaseDao
-import ly.david.data.persistence.release.ReleaseForListItem
-import ly.david.data.persistence.release.toRoomModel
+import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.release.ReleaseForListItem
+import ly.david.data.room.release.toRoomModel
 import ly.david.ui.common.paging.BrowseResourceUseCase
 import ly.david.ui.common.paging.IPagedList
 import ly.david.ui.common.paging.PagedList

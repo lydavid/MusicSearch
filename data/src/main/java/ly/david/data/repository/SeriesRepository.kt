@@ -7,8 +7,8 @@ import ly.david.data.domain.toSeriesListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.series.SeriesDao
-import ly.david.data.persistence.series.toSeriesRoomModel
+import ly.david.data.room.series.SeriesDao
+import ly.david.data.room.series.toSeriesRoomModel
 
 @Singleton
 class SeriesRepository @Inject constructor(

@@ -92,12 +92,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":data-android"))
-    implementation(project(":ui:collections"))
-    implementation(project(":ui:common"))
-    implementation(project(":ui:history"))
-    testImplementation(project(":test-data"))
-    androidTestImplementation(project(":test-data"))
+    implementation(projects.dataAndroid)
+    implementation(projects.ui.common)
+    implementation(projects.ui.collections)
+    implementation(projects.ui.history)
+    testImplementation(projects.testData)
+    androidTestImplementation(projects.testData)
 
     implementation(libs.accompanist.pager)
 

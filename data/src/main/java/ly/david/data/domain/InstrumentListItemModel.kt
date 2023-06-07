@@ -2,7 +2,7 @@ package ly.david.data.domain
 
 import ly.david.data.Instrument
 import ly.david.data.network.InstrumentMusicBrainzModel
-import ly.david.data.persistence.instrument.InstrumentRoomModel
+import ly.david.data.room.instrument.InstrumentRoomModel
 
 data class InstrumentListItemModel(
     override val id: String,

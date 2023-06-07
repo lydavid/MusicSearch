@@ -7,7 +7,7 @@ import ly.david.data.domain.toRecordingScaffoldModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.recording.RecordingDao
+import ly.david.data.room.recording.RecordingDao
 
 @Singleton
 class RecordingRepository @Inject constructor(

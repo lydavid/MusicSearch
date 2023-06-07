@@ -8,9 +8,9 @@ import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.area.AreaDao
-import ly.david.data.persistence.area.getAreaCountryCodes
-import ly.david.data.persistence.area.toAreaRoomModel
+import ly.david.data.room.area.AreaDao
+import ly.david.data.room.area.getAreaCountryCodes
+import ly.david.data.room.area.toAreaRoomModel
 
 @Singleton
 class AreaRepository @Inject constructor(

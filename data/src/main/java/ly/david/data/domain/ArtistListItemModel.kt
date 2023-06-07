@@ -3,7 +3,7 @@ package ly.david.data.domain
 import ly.david.data.Artist
 import ly.david.data.LifeSpan
 import ly.david.data.network.ArtistMusicBrainzModel
-import ly.david.data.persistence.artist.ArtistRoomModel
+import ly.david.data.room.artist.ArtistRoomModel
 
 data class ArtistListItemModel(
     override val id: String,

@@ -2,8 +2,8 @@ package ly.david.data.domain
 
 import ly.david.data.Work
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.persistence.work.WorkRoomModel
-import ly.david.data.persistence.work.WorkWithAttributes
+import ly.david.data.room.work.WorkRoomModel
+import ly.david.data.room.work.WorkWithAttributes
 
 // TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name
 data class WorkListItemModel(

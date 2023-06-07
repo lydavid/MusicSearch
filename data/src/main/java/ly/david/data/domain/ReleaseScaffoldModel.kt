@@ -5,7 +5,7 @@ import ly.david.data.getFormatsForDisplay
 import ly.david.data.getTracksForDisplay
 import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.TextRepresentation
-import ly.david.data.persistence.release.ReleaseWithAllData
+import ly.david.data.room.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
     override val id: String,

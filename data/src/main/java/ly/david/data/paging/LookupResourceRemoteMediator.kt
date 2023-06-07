@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import java.io.IOException
-import ly.david.data.persistence.RoomModel
+import ly.david.data.room.RoomModel
 import retrofit2.HttpException
 
 /**

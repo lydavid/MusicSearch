@@ -7,8 +7,8 @@ import ly.david.data.domain.toInstrumentListItemModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.persistence.instrument.InstrumentDao
-import ly.david.data.persistence.instrument.toInstrumentRoomModel
+import ly.david.data.room.instrument.InstrumentDao
+import ly.david.data.room.instrument.toInstrumentRoomModel
 
 @Singleton
 class InstrumentRepository @Inject constructor(

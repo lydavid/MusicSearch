@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.recording.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.persistence.recording.RecordingReleaseDao
-import ly.david.data.persistence.relation.RelationDao
+import ly.david.data.room.recording.releases.RecordingReleaseDao
+import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.ui.stats.RelationsStats
 import ly.david.mbjc.ui.stats.ReleasesStats
 

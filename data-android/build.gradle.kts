@@ -38,8 +38,8 @@ android {
 }
 
 dependencies {
-    api(project(":data"))
-    testImplementation(project(":test-data"))
+    api(projects.data)
+    testImplementation(projects.testData)
 
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.paging.runtime)

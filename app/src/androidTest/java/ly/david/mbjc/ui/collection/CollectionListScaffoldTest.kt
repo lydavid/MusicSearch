@@ -18,8 +18,8 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
-import ly.david.data.persistence.collection.CollectionDao
-import ly.david.data.persistence.collection.CollectionRoomModel
+import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
