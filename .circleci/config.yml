@@ -3,7 +3,7 @@ version: 2.1
 setup: true
 
 orbs:
-  path-filtering: circleci/path-filtering@0.1.5
+  path-filtering: circleci/path-filtering@0.1.6
 
 workflows:
   determine-what-to-run:
