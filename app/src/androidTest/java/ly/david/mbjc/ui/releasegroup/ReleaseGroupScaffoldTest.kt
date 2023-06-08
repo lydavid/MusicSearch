@@ -17,7 +17,7 @@ import ly.david.data.network.hotSpaceReleaseGroup
 import ly.david.data.network.queenArtistCredit
 import ly.david.data.network.underPressure
 import ly.david.data.network.underPressureReleaseGroup
-import ly.david.data.repository.ReleaseGroupRepository
+import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

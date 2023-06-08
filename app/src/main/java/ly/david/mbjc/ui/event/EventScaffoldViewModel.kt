@@ -7,11 +7,11 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.repository.EventRepository
+import ly.david.data.domain.event.EventRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.paging.IRelationsList

@@ -10,7 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import ly.david.data.navigation.Destination
+import ly.david.data.domain.Destination
 import ly.david.data.network.lookupHistory
 import ly.david.data.room.MusicBrainzDatabase
 import ly.david.data.room.history.LookupHistoryDao

@@ -17,7 +17,7 @@ import ly.david.data.network.davidBowieArtistCredit
 import ly.david.data.network.queenArtistCredit
 import ly.david.data.network.underPressure
 import ly.david.data.network.underPressureRecording
-import ly.david.data.repository.RecordingRepository
+import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

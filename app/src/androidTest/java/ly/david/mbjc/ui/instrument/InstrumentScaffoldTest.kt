@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.network.fakeInstrument
-import ly.david.data.repository.InstrumentRepository
+import ly.david.data.domain.instrument.InstrumentRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

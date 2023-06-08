@@ -1,7 +1,7 @@
 package ly.david.ui.common.paging
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.ListItemModel
 
 interface SortablePagedList<LI : ListItemModel> : IPagedList<LI> {
     data class ViewModelState(

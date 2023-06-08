@@ -15,7 +15,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
-import ly.david.data.domain.ArtistListItemModel
+import ly.david.data.domain.listitem.ArtistListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.common.preview.DefaultPreviews

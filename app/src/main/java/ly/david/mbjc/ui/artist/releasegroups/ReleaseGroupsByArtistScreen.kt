@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 

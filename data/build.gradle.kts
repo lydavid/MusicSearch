@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api(projects.data.base)
     api(projects.data.coverart)
+    api(projects.data.domain)
     api(projects.data.room)
     api(projects.data.musicbrainz)
 

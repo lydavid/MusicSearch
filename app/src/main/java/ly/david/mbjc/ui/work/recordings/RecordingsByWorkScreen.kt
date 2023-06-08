@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.domain.RecordingListItemModel
+import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.recording.RecordingsListScreen
 

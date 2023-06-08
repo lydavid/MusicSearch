@@ -19,7 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.data.domain.CollectionListItemModel
+import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.collections.areas.AreasByCollectionScreen
 import ly.david.mbjc.ui.collections.artists.ArtistsByCollectionScreen

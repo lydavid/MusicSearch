@@ -12,7 +12,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.fakeWorkWithAllData
 import ly.david.data.network.underPressureRecording
-import ly.david.data.repository.WorkRepository
+import ly.david.data.domain.work.WorkRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

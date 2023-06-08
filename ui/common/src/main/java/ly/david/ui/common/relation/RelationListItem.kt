@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
-import ly.david.data.domain.RelationListItemModel
+import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.ResourceIcon

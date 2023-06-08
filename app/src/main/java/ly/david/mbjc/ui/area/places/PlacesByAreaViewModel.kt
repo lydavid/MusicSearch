@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.area.places
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.PlaceListItemModel
-import ly.david.data.domain.toPlaceListItemModel
+import ly.david.data.domain.listitem.PlaceListItemModel
+import ly.david.data.domain.listitem.toPlaceListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse

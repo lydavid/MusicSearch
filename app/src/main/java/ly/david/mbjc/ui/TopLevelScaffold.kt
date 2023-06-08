@@ -28,10 +28,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.navigation.Destination
-import ly.david.data.navigation.getTopLevelDestination
-import ly.david.data.navigation.getTopLevelRoute
+import ly.david.data.domain.Destination
+import ly.david.data.domain.getTopLevelDestination
+import ly.david.data.domain.getTopLevelRoute
+import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.room.history.LookupHistoryRoomModel
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph

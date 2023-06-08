@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.ReleaseGroupListItemModel
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.listitem.ListSeparator
+import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.listitem.ListSeparatorHeader

@@ -18,7 +18,7 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.AreaListItemModel
+import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.showReleases
 import ly.david.ui.common.listitem.DisambiguationText

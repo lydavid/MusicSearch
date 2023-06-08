@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.EndOfList
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.EndOfList
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
+import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
-import ly.david.data.paging.MusicBrainzPagingConfig
-import ly.david.data.paging.SearchMusicBrainzPagingSource
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel

@@ -32,8 +32,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.ReleaseListItemModel
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen

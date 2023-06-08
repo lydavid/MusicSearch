@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.work.recordings
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.RecordingListItemModel
-import ly.david.data.domain.toRecordingListItemModel
+import ly.david.data.domain.listitem.RecordingListItemModel
+import ly.david.data.domain.listitem.toRecordingListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse

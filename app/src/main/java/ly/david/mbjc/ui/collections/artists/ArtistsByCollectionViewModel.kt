@@ -5,8 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.auth.MusicBrainzAuthState
 import ly.david.data.auth.getBearerToken
-import ly.david.data.domain.ArtistListItemModel
-import ly.david.data.domain.toArtistListItemModel
+import ly.david.data.domain.listitem.ArtistListItemModel
+import ly.david.data.domain.listitem.toArtistListItemModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.BrowseArtistsResponse

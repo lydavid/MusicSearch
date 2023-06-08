@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.collections
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.domain.toCollectionListItemModel
+import ly.david.data.domain.listitem.CollectionListItemModel
+import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.history.LookupHistoryDao

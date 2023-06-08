@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.InstrumentListItemModel
+import ly.david.data.domain.listitem.InstrumentListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme

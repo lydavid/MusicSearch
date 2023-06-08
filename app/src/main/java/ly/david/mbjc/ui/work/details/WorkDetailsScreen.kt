@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import java.util.Locale
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.WorkListItemModel
+import ly.david.data.domain.listitem.WorkListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.AttributesListSeparatorHeader

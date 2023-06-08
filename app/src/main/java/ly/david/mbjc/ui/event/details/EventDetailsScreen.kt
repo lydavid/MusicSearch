@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.listitem.InformationListSeparatorHeader

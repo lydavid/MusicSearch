@@ -15,9 +15,9 @@ import ly.david.data.AreaType.WORLDWIDE
 import ly.david.data.common.UNKNOWN_TIME
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
-import ly.david.data.domain.AreaListItemModel
-import ly.david.data.domain.LabelListItemModel
-import ly.david.data.domain.ReleaseScaffoldModel
+import ly.david.data.domain.listitem.AreaListItemModel
+import ly.david.data.domain.listitem.LabelListItemModel
+import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport

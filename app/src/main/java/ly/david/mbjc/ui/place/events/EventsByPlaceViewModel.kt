@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.place.events
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.domain.EventListItemModel
-import ly.david.data.domain.toEventListItemModel
+import ly.david.data.domain.listitem.EventListItemModel
+import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.BrowseEventsResponse

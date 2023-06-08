@@ -7,12 +7,12 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.RecordingScaffoldModel
+import ly.david.data.domain.recordng.RecordingScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.repository.RecordingRepository
+import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.paging.IRelationsList

@@ -12,7 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import ly.david.data.navigation.Destination
+import ly.david.data.domain.Destination
 import ly.david.ui.common.R
 
 private enum class BottomNavigationItem(val stringRes: Int, val icon: ImageVector, val destination: Destination) {

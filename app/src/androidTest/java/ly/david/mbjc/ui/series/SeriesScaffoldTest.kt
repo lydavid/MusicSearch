@@ -10,7 +10,7 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.fakeInstrument
 import ly.david.data.network.fakeSeries
-import ly.david.data.repository.SeriesRepository
+import ly.david.data.domain.series.SeriesRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

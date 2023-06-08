@@ -116,6 +116,7 @@ include(
     ":data",
     ":data:base",
     ":data:coverart",
+    ":data:domain",
     ":data:room",
     ":data:musicbrainz",
     ":test-data",

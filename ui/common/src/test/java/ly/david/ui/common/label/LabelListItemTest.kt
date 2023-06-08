@@ -1,7 +1,7 @@
 package ly.david.ui.common.label
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.domain.LabelListItemModel
+import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

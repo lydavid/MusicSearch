@@ -2,7 +2,7 @@ package ly.david.ui.common.paging
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.network.MusicBrainzModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.Browsable

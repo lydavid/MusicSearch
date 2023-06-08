@@ -1,7 +1,7 @@
 package ly.david.ui.common.series
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.domain.SeriesListItemModel
+import ly.david.data.domain.listitem.SeriesListItemModel
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

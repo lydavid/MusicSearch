@@ -24,7 +24,7 @@ import ly.david.data.network.carlosAlomar
 import ly.david.data.network.davidBowie
 import ly.david.data.network.underPressure
 import ly.david.data.network.underPressureReleaseGroup
-import ly.david.data.repository.ArtistRepository
+import ly.david.data.domain.artist.ArtistRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

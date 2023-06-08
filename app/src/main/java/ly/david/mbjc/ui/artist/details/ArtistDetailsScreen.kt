@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.ArtistListItemModel
+import ly.david.data.domain.listitem.ArtistListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.listitem.InformationListSeparatorHeader

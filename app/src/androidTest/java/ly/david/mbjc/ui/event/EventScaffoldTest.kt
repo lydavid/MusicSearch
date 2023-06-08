@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.fakeEvent
-import ly.david.data.repository.EventRepository
+import ly.david.data.domain.event.EventRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

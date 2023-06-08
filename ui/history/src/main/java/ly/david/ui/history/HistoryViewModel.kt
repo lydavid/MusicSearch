@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.LookupHistoryRoomModel
 

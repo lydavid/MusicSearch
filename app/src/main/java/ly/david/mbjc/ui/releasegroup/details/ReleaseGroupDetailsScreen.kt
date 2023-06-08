@@ -5,7 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.domain.ReleaseGroupScaffoldModel
+import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.listitem.InformationListSeparatorHeader

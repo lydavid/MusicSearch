@@ -1,7 +1,7 @@
 package ly.david.ui.common.release
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.domain.TrackListItemModel
+import ly.david.data.domain.listitem.TrackListItemModel
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

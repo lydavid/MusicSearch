@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.data.navigation.Destination
+import ly.david.data.domain.Destination
 import ly.david.mbjc.BuildConfig
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.topappbar.ScrollableTopAppBar

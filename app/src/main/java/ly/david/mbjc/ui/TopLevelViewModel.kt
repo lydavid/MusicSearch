@@ -21,13 +21,13 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.auth.MusicBrainzAuthState
-import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.domain.toCollectionListItemModel
+import ly.david.data.domain.listitem.CollectionListItemModel
+import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.resourceUriPlural
-import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionEntityDao

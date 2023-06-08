@@ -2,7 +2,7 @@ package ly.david.ui.common.place
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.data.LifeSpan
-import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

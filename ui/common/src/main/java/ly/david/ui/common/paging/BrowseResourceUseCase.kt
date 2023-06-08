@@ -1,7 +1,7 @@
 package ly.david.ui.common.paging
 
 import androidx.paging.PagingSource
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.room.RoomModel
 
 interface StoreResourceUseCase {

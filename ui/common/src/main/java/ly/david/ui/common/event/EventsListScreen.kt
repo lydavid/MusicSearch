@@ -6,7 +6,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.EventListItemModel
+import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler

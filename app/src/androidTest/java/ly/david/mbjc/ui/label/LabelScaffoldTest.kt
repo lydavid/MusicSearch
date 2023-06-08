@@ -11,7 +11,7 @@ import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.elektra
 import ly.david.data.network.elektraMusicGroup
 import ly.david.data.network.underPressure
-import ly.david.data.repository.LabelRepository
+import ly.david.data.domain.label.LabelRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

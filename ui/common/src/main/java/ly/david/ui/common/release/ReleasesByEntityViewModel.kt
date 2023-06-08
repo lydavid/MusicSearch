@@ -2,8 +2,8 @@ package ly.david.ui.common.release
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.data.domain.ReleaseListItemModel
-import ly.david.data.domain.toReleaseListItemModel
+import ly.david.data.domain.listitem.ReleaseListItemModel
+import ly.david.data.domain.listitem.toReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse

@@ -3,7 +3,7 @@ package ly.david.ui.common.paging
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.ListItemModel
 
 interface IPagedList<LI : ListItemModel> {
     data class ViewModelState(

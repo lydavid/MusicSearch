@@ -28,7 +28,7 @@ import ly.david.data.network.underPressureLabelInfo
 import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.network.underPressureRemasterOf
 import ly.david.data.network.underPressureTrack
-import ly.david.data.repository.ReleaseRepository
+import ly.david.data.domain.release.ReleaseRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.theme.PreviewTheme

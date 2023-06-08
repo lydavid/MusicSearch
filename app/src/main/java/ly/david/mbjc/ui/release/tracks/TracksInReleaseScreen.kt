@@ -7,9 +7,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.ListSeparator
-import ly.david.data.domain.TrackListItemModel
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.listitem.ListSeparator
+import ly.david.data.domain.listitem.TrackListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.release.TrackListItem

@@ -13,7 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.data.domain.CollectionListItemModel
+import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.ResourceIcon
 import ly.david.ui.common.SMALL_COVER_ART_SIZE

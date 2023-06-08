@@ -13,8 +13,8 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import ly.david.data.navigation.Destination
-import ly.david.data.navigation.toLookupDestination
+import ly.david.data.domain.Destination
+import ly.david.data.domain.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toMusicBrainzResource

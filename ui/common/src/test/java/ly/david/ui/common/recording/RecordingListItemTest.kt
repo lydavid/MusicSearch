@@ -1,7 +1,7 @@
 package ly.david.ui.common.recording
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.domain.RecordingListItemModel
+import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

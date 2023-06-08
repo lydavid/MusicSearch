@@ -11,13 +11,13 @@ import ly.david.data.coverart.GetReleaseGroupCoverArtPath
 import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
-import ly.david.data.domain.ReleaseGroupScaffoldModel
+import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
-import ly.david.data.repository.ReleaseGroupRepository
+import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.paging.IRelationsList

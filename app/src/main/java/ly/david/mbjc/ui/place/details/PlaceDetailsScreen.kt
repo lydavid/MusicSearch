@@ -13,8 +13,8 @@ import ly.david.data.Coordinates
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.AreaListItemModel
-import ly.david.data.domain.PlaceListItemModel
+import ly.david.data.domain.listitem.AreaListItemModel
+import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport

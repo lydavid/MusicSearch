@@ -24,7 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ly.david.data.domain.CollectionListItemModel
+import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.ui.common.R
 import ly.david.ui.common.theme.TextStyles
 

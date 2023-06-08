@@ -16,10 +16,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.CollectionListItemModel
-import ly.david.data.domain.toCollectionListItemModel
-import ly.david.data.paging.BrowseResourceRemoteMediator
-import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.domain.listitem.CollectionListItemModel
+import ly.david.data.domain.listitem.toCollectionListItemModel
+import ly.david.data.domain.paging.BrowseResourceRemoteMediator
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.RoomModel
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.common.paging.IPagedList

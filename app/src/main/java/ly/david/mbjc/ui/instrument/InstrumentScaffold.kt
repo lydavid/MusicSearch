@@ -27,7 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.ListItemModel
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.instrument.details.InstrumentDetailsScreen
 import ly.david.mbjc.ui.instrument.stats.InstrumentStatsScreen

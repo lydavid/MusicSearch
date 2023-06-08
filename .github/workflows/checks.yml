@@ -36,6 +36,16 @@ jobs:
         with:
           arguments: data:coverart:test
 
+      - name: Unit test :data:domain
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:domain:test
+
+      - name: Unit test :data:room
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:room:test
+
       - name: Unit test data:musicbrainz
         uses: gradle/gradle-build-action@v2
         with:

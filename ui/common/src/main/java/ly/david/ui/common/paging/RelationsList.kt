@@ -17,17 +17,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.Header
-import ly.david.data.domain.ListItemModel
-import ly.david.data.domain.RelationListItemModel
-import ly.david.data.domain.toRelationListItemModel
-import ly.david.data.paging.LookupResourceRemoteMediator
-import ly.david.data.paging.MusicBrainzPagingConfig
+import ly.david.data.domain.listitem.Header
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.listitem.RelationListItemModel
+import ly.david.data.domain.listitem.toRelationListItemModel
+import ly.david.data.domain.paging.LookupResourceRemoteMediator
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.relation.HasRelationsRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.relation.RelationRoomModel
 import ly.david.data.room.relation.toRelationRoomModel
-import ly.david.data.repository.RelationsListRepository
+import ly.david.data.domain.RelationsListRepository
 
 /**
  * A [ViewModel] implements this for [pagedRelations].
