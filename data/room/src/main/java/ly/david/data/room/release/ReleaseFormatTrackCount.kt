@@ -7,7 +7,7 @@ import androidx.room.DatabaseView
     SELECT r.id as releaseId, m.format, COUNT(t.id) as trackCount
     FROM track t
     INNER JOIN medium m ON t.medium_id = m.id
-    INNER JOIN release r ON m.release_id = r.id
+    INNER JOIN `release` r ON m.release_id = r.id
     GROUP BY m.id
     """,
     viewName = "release_format_track_count"

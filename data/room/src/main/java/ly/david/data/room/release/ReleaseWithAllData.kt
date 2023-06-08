@@ -35,7 +35,6 @@ data class LabelWithCatalog(
     val releaseLabel: ReleaseLabel
 )
 
-// TODO: increment database version after escaping with `
 /**
  * An area together with its country codes.
  *
@@ -46,7 +45,7 @@ data class LabelWithCatalog(
         SELECT a.*, rc.*
         FROM area a
         INNER JOIN release_country rc ON rc.country_id = a.id
-        INNER JOIN release r ON r.id = rc.release_id
+        INNER JOIN `release` r ON r.id = rc.release_id
         ORDER BY a.name
     """
 )
