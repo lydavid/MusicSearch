@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings.components
+package ly.david.ui.settings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -22,10 +21,11 @@ import ly.david.ui.common.theme.TextStyles
 fun SettingSwitch(
     header: String,
     checked: Boolean,
+    modifier: Modifier = Modifier,
     onCheckedChange: (Boolean) -> Unit = {}
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable {
                 onCheckedChange(!checked)
@@ -47,7 +47,6 @@ fun SettingSwitch(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.ui.settings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

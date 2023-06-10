@@ -6,10 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import ly.david.mbjc.ui.settings.AppPreferences
-import ly.david.mbjc.ui.settings.useDarkTheme
-import ly.david.mbjc.ui.settings.useMaterialYou
 import ly.david.ui.common.theme.BaseTheme
+import ly.david.ui.settings.AppPreferences
+import ly.david.ui.settings.useDarkTheme
+import ly.david.ui.settings.useMaterialYou
 
 @AndroidEntryPoint
 internal class MainActivity : ComponentActivity() {

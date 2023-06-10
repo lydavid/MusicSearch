@@ -23,11 +23,11 @@ import kotlinx.coroutines.launch
 import ly.david.data.auth.MusicBrainzAuthState
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.resourceUriPlural
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionEntityDao
@@ -35,7 +35,7 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.mbjc.ui.settings.AppPreferences
+import ly.david.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest

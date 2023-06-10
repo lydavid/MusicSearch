@@ -33,27 +33,17 @@ android {
 
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
-        versionCode = 91
-        versionName = "0.9.0"
+        versionCode = (project.properties["VERSION_CODE"] as String?)?.toInt()
+        versionName = project.properties["VERSION_NAME"] as String?
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-
-//        kapt {
-//            arguments {
-//                arg("room.schemaLocation", "$projectDir/schemas")
-//            }
-//        }
     }
 
     buildTypes {
         getByName("debug") {
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-
             isTestCoverageEnabled = true
         }
         getByName("release") {
@@ -96,6 +86,7 @@ dependencies {
     implementation(projects.ui.common)
     implementation(projects.ui.collections)
     implementation(projects.ui.history)
+    implementation(projects.ui.settings)
     testImplementation(projects.testData)
     androidTestImplementation(projects.testData)
 

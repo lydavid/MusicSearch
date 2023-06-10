@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.ui.settings
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.ui.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -12,7 +12,7 @@ import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 
 @Composable
-fun DevSettingsSection(
+internal fun DevSettingsSection(
     onDestinationClick: (Destination) -> Unit = {},
 ) {
     Column {

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.ui.settings
 
 import androidx.annotation.StringRes
 import androidx.datastore.core.DataStore

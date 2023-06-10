@@ -122,5 +122,6 @@ include(
     ":test-data",
     ":ui:collections",
     ":ui:common",
-    ":ui:history"
+    ":ui:history",
+    ":ui:settings",
 )

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings.components
+package ly.david.ui.settings.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

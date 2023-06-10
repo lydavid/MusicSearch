@@ -16,13 +16,13 @@ import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.collection.toCollectionRoomModel
 import ly.david.data.room.relation.BrowseResourceCount
 import ly.david.data.room.relation.RelationDao
-import ly.david.mbjc.ui.settings.AppPreferences
+import ly.david.ui.settings.AppPreferences
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
 
 @HiltViewModel
 internal class CollectionListViewModel @Inject constructor(
-    val appPreferences: AppPreferences,
+    val appPreferences: ly.david.ui.settings.AppPreferences,
     private val pagedList: CollectionPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val musicBrainzAuthState: MusicBrainzAuthState,

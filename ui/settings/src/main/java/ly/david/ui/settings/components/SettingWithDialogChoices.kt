@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings.components
+package ly.david.ui.settings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,13 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.mbjc.ui.settings.AppPreferences
 import ly.david.ui.common.R
 import ly.david.ui.common.dialog.MultipleChoiceDialog
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.settings.AppPreferences
 
 @Composable
 internal fun SettingWithDialogChoices(
@@ -63,14 +62,13 @@ internal fun SettingWithDialogChoices(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {
     PreviewTheme {
         // Preview is intentionally max sized so that we can see the dialog pop up in the middle of the screen
         Surface(modifier = Modifier.fillMaxSize()) {
-            var theme by remember { mutableStateOf(AppPreferences.Theme.SYSTEM) }
+            var theme by remember { mutableStateOf(ly.david.ui.settings.AppPreferences.Theme.SYSTEM) }
 
             SettingWithDialogChoices(
                 titleRes = R.string.theme,

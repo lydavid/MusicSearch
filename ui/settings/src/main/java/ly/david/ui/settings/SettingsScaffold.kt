@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.settings
+package ly.david.ui.settings
 
 import android.os.Build
 import androidx.compose.foundation.layout.padding
@@ -13,16 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.Destination
-import ly.david.mbjc.BuildConfig
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.mbjc.ui.settings.components.ProfileCard
-import ly.david.mbjc.ui.settings.components.SettingSwitch
-import ly.david.mbjc.ui.settings.components.SettingWithDialogChoices
 import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.settings.components.ProfileCard
+import ly.david.ui.settings.components.SettingSwitch
+import ly.david.ui.settings.components.SettingWithDialogChoices
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -146,7 +144,6 @@ fun SettingsScreen(
     }
 }
 
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import ly.david.mbjc.ui.settings.AppPreferences
-import ly.david.mbjc.ui.settings.AppPreferencesImpl
+import ly.david.ui.settings.AppPreferences
+import ly.david.ui.settings.AppPreferencesImpl
 
 @InstallIn(SingletonComponent::class)
 @Module
