@@ -49,7 +49,7 @@ allprojects {
             }
         }
         dependencies {
-            detektPlugins("io.nlopez.compose.rules:detekt:0.1.9")
+            detektPlugins("io.nlopez.compose.rules:detekt:0.1.10")
         }
     }
 
