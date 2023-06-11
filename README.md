@@ -52,13 +52,26 @@ graph LR
   subgraph data
     base
     coverart
+    domain
     musicbrainz
+    room
   end
 
+  domain --> base
+  domain --> coverart
+  domain --> musicbrainz
+  domain --> room
+  room --> base
+  room --> coverart
+  room --> musicbrainz
   musicbrainz --> base
   data --> base
   data --> coverart
+  data --> domain
+  data --> room
   data --> musicbrainz
+  settings --> data-android
+  settings --> common
   data-android --> data
   data-android --> test-data
   collections --> data
@@ -66,21 +79,25 @@ graph LR
   common --> data-android
   app --> test-data
   app --> data-android
-  app --> collections
   app --> common
+  app --> collections
   app --> history
+  app --> settings
   app --> data-android
-  app --> collections
   app --> common
+  app --> collections
   app --> history
+  app --> settings
   app --> data-android
-  app --> collections
   app --> common
+  app --> collections
   app --> history
+  app --> settings
   app --> data-android
-  app --> collections
   app --> common
+  app --> collections
   app --> history
+  app --> settings
   app --> test-data
   coverart --> base
   history --> data
