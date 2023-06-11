@@ -25,18 +25,17 @@ import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
-import ly.david.ui.history.HistoryScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
 import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
-import ly.david.mbjc.ui.search.SearchScreenScaffold
+import ly.david.mbjc.ui.search.SearchScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
-import ly.david.ui.settings.SettingsScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 import ly.david.ui.common.R
+import ly.david.ui.history.HistoryScaffold
 
 private const val ID = "id"
 private const val TITLE = "title"
@@ -89,7 +88,7 @@ internal fun NavigationGraph(
         }
 
         composable(Destination.LOOKUP.route) {
-            SearchScreenScaffold(
+            SearchScaffold(
                 modifier = modifier,
                 onItemClick = onLookupEntityClick
             )
@@ -114,11 +113,11 @@ internal fun NavigationGraph(
             val query = entry.arguments?.getString("query")
             val type = entry.arguments?.getString("type")?.toMusicBrainzResource()
 
-            SearchScreenScaffold(
+            SearchScaffold(
                 modifier = modifier,
                 onItemClick = onLookupEntityClick,
-                searchQuery = query,
-                searchOption = type
+                initialQuery = query,
+                initialEntity = type
             )
         }
 

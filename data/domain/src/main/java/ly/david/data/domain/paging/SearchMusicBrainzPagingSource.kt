@@ -16,8 +16,9 @@ import retrofit2.HttpException
 
 /**
  * This is not a [RemoteMediator] compared to [BrowseResourceRemoteMediator] and [LookupResourceRemoteMediator].
- * This is because we are not storing search results locally.
- * We want all search results to be fresh.
+ *
+ * We are not storing search results locally.
+ * We want all search results to always be fresh.
  */
 class SearchMusicBrainzPagingSource(
     private val searchApi: SearchApi,
@@ -95,6 +96,7 @@ class SearchMusicBrainzPagingSource(
                     queryArtists.artists
                 )
             }
+
             MusicBrainzResource.RELEASE_GROUP -> {
                 val queryReleaseGroups = searchApi.queryReleaseGroups(
                     query = queryString,
@@ -106,6 +108,7 @@ class SearchMusicBrainzPagingSource(
                     queryReleaseGroups.releaseGroups
                 )
             }
+
             MusicBrainzResource.RELEASE -> {
                 val queryReleases = searchApi.queryReleases(
                     query = queryString,
@@ -117,6 +120,7 @@ class SearchMusicBrainzPagingSource(
                     queryReleases.releases
                 )
             }
+
             MusicBrainzResource.RECORDING -> {
                 val queryRecordings = searchApi.queryRecordings(
                     query = queryString,
@@ -128,6 +132,7 @@ class SearchMusicBrainzPagingSource(
                     queryRecordings.recordings
                 )
             }
+
             MusicBrainzResource.WORK -> {
                 val queryWorks = searchApi.queryWorks(
                     query = queryString,
@@ -139,6 +144,7 @@ class SearchMusicBrainzPagingSource(
                     queryWorks.works
                 )
             }
+
             MusicBrainzResource.AREA -> {
                 val queryAreas = searchApi.queryAreas(
                     query = queryString,
@@ -150,6 +156,7 @@ class SearchMusicBrainzPagingSource(
                     queryAreas.areas
                 )
             }
+
             MusicBrainzResource.PLACE -> {
                 val queryPlaces = searchApi.queryPlaces(
                     query = queryString,
@@ -161,6 +168,7 @@ class SearchMusicBrainzPagingSource(
                     queryPlaces.places
                 )
             }
+
             MusicBrainzResource.INSTRUMENT -> {
                 val queryInstruments = searchApi.queryInstruments(
                     query = queryString,
@@ -172,6 +180,7 @@ class SearchMusicBrainzPagingSource(
                     queryInstruments.instruments
                 )
             }
+
             MusicBrainzResource.LABEL -> {
                 val queryLabels = searchApi.queryLabels(
                     query = queryString,
@@ -183,6 +192,7 @@ class SearchMusicBrainzPagingSource(
                     queryLabels.labels
                 )
             }
+
             MusicBrainzResource.EVENT -> {
                 val queryEvents = searchApi.queryEvents(
                     query = queryString,
@@ -194,6 +204,7 @@ class SearchMusicBrainzPagingSource(
                     queryEvents.events
                 )
             }
+
             MusicBrainzResource.SERIES -> {
                 val queryEvents = searchApi.querySeries(
                     query = queryString,

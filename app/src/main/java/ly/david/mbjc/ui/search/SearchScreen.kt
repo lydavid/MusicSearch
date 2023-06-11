@@ -53,40 +53,40 @@ import ly.david.data.domain.listitem.WorkListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
+import ly.david.ui.common.ExposedDropdownMenuBox
+import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.instrument.InstrumentListItem
 import ly.david.ui.common.label.LabelListItem
+import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.place.PlaceListItem
 import ly.david.ui.common.recording.RecordingListItem
+import ly.david.ui.common.release.ReleaseListItem
 import ly.david.ui.common.releasegroup.ReleaseGroupListItem
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.series.SeriesListItem
 import ly.david.ui.common.work.WorkListItem
-import ly.david.ui.common.ExposedDropdownMenuBox
-import ly.david.ui.common.R
-import ly.david.ui.common.dialog.SimpleAlertDialog
-import ly.david.ui.common.release.ReleaseListItem
 
 @Composable
-internal fun SearchMusicBrainzScreen(
+internal fun SearchScreen(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    searchQuery: String? = null,
-    searchOption: MusicBrainzResource? = null,
-    viewModel: SearchMusicBrainzViewModel = hiltViewModel()
+    initialQuery: String? = null,
+    initialEntity: MusicBrainzResource? = null,
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
 
     val lazyPagingItems: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.searchResultsListItemModel)
             .collectAsLazyPagingItems()
 
-    var text by rememberSaveable { mutableStateOf("") }
-    var selectedOption by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
+    var query by rememberSaveable { mutableStateOf("") }
+    var entity by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
@@ -100,13 +100,11 @@ internal fun SearchMusicBrainzScreen(
         )
     }
 
-    // Allow deeplinking into search screen with a query and type.
-    // This will allow us to record searches in History.
-    LaunchedEffect(key1 = searchQuery, key2 = searchOption) {
-        if (searchQuery == null || searchOption == null) return@LaunchedEffect
-        text = searchQuery
-        selectedOption = searchOption
-        viewModel.updateViewModelState(selectedOption, text)
+    LaunchedEffect(key1 = initialQuery, key2 = initialEntity) {
+        if (initialQuery == null || initialEntity == null) return@LaunchedEffect
+        query = initialQuery
+        entity = initialEntity
+        viewModel.search(query, entity)
     }
 
     Column(modifier = modifier) {
@@ -118,19 +116,19 @@ internal fun SearchMusicBrainzScreen(
                     .weight(1f)
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
-                value = text,
+                value = query,
                 label = { Text(stringResource(id = R.string.search)) },
                 placeholder = { Text(stringResource(id = R.string.search)) },
-                maxLines = 1, // TODO: Seems like this is currently broken
+                maxLines = 1,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
                     onSearch = {
                         coroutineScope.launch {
-                            if (text.isEmpty()) {
+                            if (query.isEmpty()) {
                                 showAlertDialog = true
                             } else {
-                                viewModel.updateViewModelState(selectedOption, text)
+                                viewModel.search(query, entity)
                                 lazyListState.scrollToItem(0)
                                 focusManager.clearFocus()
                             }
@@ -138,9 +136,9 @@ internal fun SearchMusicBrainzScreen(
                     }
                 ),
                 trailingIcon = {
-                    if (text.isEmpty()) return@TextField
+                    if (query.isEmpty()) return@TextField
                     IconButton(onClick = {
-                        text = ""
+                        query = ""
                         focusRequester.requestFocus()
                     }) {
                         Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_search))
@@ -148,7 +146,7 @@ internal fun SearchMusicBrainzScreen(
                 },
                 onValueChange = { newText ->
                     if (!newText.contains("\n")) {
-                        text = newText
+                        query = newText
                     }
                 }
             )
@@ -156,9 +154,9 @@ internal fun SearchMusicBrainzScreen(
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
                 options = searchableResources,
-                selectedOption = selectedOption,
+                selectedOption = entity,
                 onSelectOption = {
-                    selectedOption = it
+                    entity = it
                 }
             )
         }

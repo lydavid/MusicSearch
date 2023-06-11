@@ -14,28 +14,41 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.EndOfList
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.room.history.search.SearchHistoryDao
+import ly.david.data.room.history.search.SearchHistoryRoomModel
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
 
 @HiltViewModel
-internal class SearchMusicBrainzViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService
+internal class SearchViewModel @Inject constructor(
+    private val musicBrainzApiService: MusicBrainzApiService,
+    private val searchHistoryDao: SearchHistoryDao
 ) : ViewModel() {
 
     private data class ViewModelState(
-        val resource: MusicBrainzResource = MusicBrainzResource.ARTIST,
         val query: String = "",
+        val entity: MusicBrainzResource = MusicBrainzResource.ARTIST,
     )
 
     private val viewModelState = MutableStateFlow(ViewModelState())
 
-    fun updateViewModelState(resource: MusicBrainzResource, query: String) {
-        viewModelState.value = ViewModelState(resource, query)
+    fun search(query: String, entity: MusicBrainzResource) {
+        viewModelState.value = ViewModelState(query, entity)
+        viewModelScope.launch {
+            searchHistoryDao.insertReplace(
+                SearchHistoryRoomModel(
+                    id = "${entity}_$query",
+                    query = query,
+                    entity = entity
+                )
+            )
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,7 +60,7 @@ internal class SearchMusicBrainzViewModel @Inject constructor(
                     pagingSourceFactory = {
                         SearchMusicBrainzPagingSource(
                             searchApi = musicBrainzApiService,
-                            resource = viewModelState.resource,
+                            resource = viewModelState.entity,
                             queryString = viewModelState.query,
                         )
                     }
