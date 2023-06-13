@@ -17,6 +17,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -25,6 +27,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
+import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.data.network.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -128,6 +131,61 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
 
         searchFieldNode
             .assert(hasText(""))
+    }
+
+    @Test
+    fun searchHistorySmokeTest() = runTest {
+        val searchFieldNode: SemanticsNodeInteraction = composeTestRule
+            .onAllNodesWithText(searchLabel)
+            .filterToOne(hasImeAction(ImeAction.Search))
+
+        searchFieldNode.performTextInput("Some search text")
+        waitForThenPerformClickOn(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+        composeTestRule
+            .onNodeWithText(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithContentDescription(back)
+            .performClick()
+        composeTestRule
+            .onNodeWithContentDescription(clearSearchContentDescription)
+            .performClick()
+
+        searchFieldNode.performTextInput("Some other search text")
+        waitForThenPerformClickOn(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+        composeTestRule
+            .onNodeWithText(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithContentDescription(back)
+            .performClick()
+        composeTestRule
+            .onNodeWithContentDescription(clearSearchContentDescription)
+            .performClick()
+
+        // Search query shows up in search history
+        composeTestRule
+            .onNodeWithText("Some search text")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Some other search text")
+            .assertIsDisplayed()
+
+        // Can delete single search history
+        composeTestRule
+            .onNodeWithText("Some search text")
+            .performTouchInput { swipeRight(startX = 0f, endX = 500f) }
+        composeTestRule
+            .onNodeWithText("Some search text")
+            .assertIsNotDisplayedOrDoesNotExist()
+
+        // Can delete all search history
+        composeTestRule
+            .onNodeWithContentDescription(clearSearchHistory)
+            .performClick()
+        composeTestRule
+            .onNodeWithText("Some other search text")
+            .assertIsNotDisplayedOrDoesNotExist()
     }
 
     // TODO: flaked

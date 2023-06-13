@@ -10,15 +10,15 @@ import ly.david.data.room.BaseDao
 @Dao
 abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
-    @Transaction
-    @Query(
-        """
-        SELECT * FROM lookup_history
-        WHERE NOT deleted
-        ORDER BY last_accessed DESC
-        """
-    )
-    abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistoryRoomModel>
+//    @Transaction
+//    @Query(
+//        """
+//        SELECT * FROM lookup_history
+//        WHERE NOT deleted
+//        ORDER BY last_accessed DESC
+//        """
+//    )
+//    abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistoryRoomModel>
 
     // TODO: can't search "release group", need to use "release_group" or "release-group"
     //  rather than having the user type "artist" to filter artist, use pills or something
@@ -33,7 +33,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
         ORDER BY last_accessed DESC
         """
     )
-    abstract fun getAllLookupHistoryFiltered(query: String): PagingSource<Int, LookupHistoryRoomModel>
+    abstract fun getAllLookupHistory(query: String): PagingSource<Int, LookupHistoryRoomModel>
 
     @Query(
         """

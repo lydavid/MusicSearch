@@ -20,6 +20,7 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.history.LookupHistoryRoomModel
+import ly.david.data.room.history.search.SearchHistoryRoomModel
 import ly.david.data.room.instrument.InstrumentRoomModel
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.releases.ReleaseLabel
@@ -43,7 +44,7 @@ import ly.david.data.room.work.WorkAttributeRoomModel
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.recordings.RecordingWork
 
-const val DATABASE_VERSION = 3
+const val DATABASE_VERSION = 4
 
 @Database(
     version = DATABASE_VERSION,
@@ -79,6 +80,7 @@ const val DATABASE_VERSION = 3
 
         // Additional features tables
         LookupHistoryRoomModel::class,
+        SearchHistoryRoomModel::class,
 
         CollectionRoomModel::class,
         CollectionEntityRoomModel::class
@@ -92,6 +94,7 @@ const val DATABASE_VERSION = 3
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

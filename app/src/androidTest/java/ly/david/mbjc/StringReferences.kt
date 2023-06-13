@@ -21,6 +21,8 @@ internal interface StringReferences {
         get() = activity.getString(R.string.clear_search)
     val clearFilterText
         get() = activity.getString(R.string.clear_filter)
+    val clearSearchHistory
+        get() = activity.getString(R.string.clear_search_history)
     val emptySearchWarning
         get() = activity.getString(R.string.search_cannot_be_empty)
     val appName

@@ -11,7 +11,6 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavHostController
@@ -32,7 +31,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 /**
- * Test interacting with each [searchableResources] from [SearchMusicBrainzScreen].
+ * Test interacting with each [searchableResources] from [SearchScreen].
  */
 @HiltAndroidTest
 @RunWith(Parameterized::class)
@@ -76,27 +75,18 @@ internal class SearchEachResourceTest(
             .onNodeWithText(composeTestRule.activity.getString(resource.getDisplayTextRes()))
             .assertIsDisplayed()
 
+        // Entity shows up in search result
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
             .onAllNodesWithText(searchLabel)
             .filterToOne(hasImeAction(ImeAction.Search))
-
         searchFieldNode.assert(hasText(""))
-            .performTextInput("Random search text")
-
-        searchFieldNode
-            .performImeAction()
-
-        composeTestRule
-            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
-            .assertIsDisplayed()
-            .performClick()
-
-        // In title bar
+            .performTextInput("Some search text")
+        waitForThenPerformClickOn(resource.toFakeMusicBrainzModel().name!!)
         composeTestRule
             .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
 
-        // Shows up in history
+        // Entity shows up in history
         composeTestRule
             .onNodeWithText(history)
             .performClick()
@@ -104,8 +94,6 @@ internal class SearchEachResourceTest(
             .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
             .performClick()
-
-        // In title bar
         composeTestRule
             .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()

@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.search
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -11,20 +10,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.common.R
+import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SearchScreenScaffold(
+internal fun SearchScaffold(
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    searchQuery: String? = null,
-    searchOption: MusicBrainzResource? = null,
+    initialQuery: String? = null,
+    initialEntity: MusicBrainzResource? = null,
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    val lazyListState = rememberLazyListState()
 
     Scaffold(
         modifier = modifier,
@@ -36,13 +34,12 @@ internal fun SearchScreenScaffold(
             )
         },
     ) { innerPadding ->
-        SearchMusicBrainzScreen(
+        SearchScreen(
             modifier = Modifier.padding(innerPadding),
             snackbarHostState = snackbarHostState,
-            lazyListState = lazyListState,
             onItemClick = onItemClick,
-            searchQuery = searchQuery,
-            searchOption = searchOption
+            initialQuery = initialQuery,
+            initialEntity = initialEntity
         )
     }
 }
