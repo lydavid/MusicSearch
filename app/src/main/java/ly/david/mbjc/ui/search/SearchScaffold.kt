@@ -1,7 +1,6 @@
 package ly.david.mbjc.ui.search
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -24,7 +23,6 @@ internal fun SearchScaffold(
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    val lazyListState = rememberLazyListState()
 
     Scaffold(
         modifier = modifier,
@@ -39,7 +37,6 @@ internal fun SearchScaffold(
         SearchScreen(
             modifier = Modifier.padding(innerPadding),
             snackbarHostState = snackbarHostState,
-            lazyListState = lazyListState,
             onItemClick = onItemClick,
             initialQuery = initialQuery,
             initialEntity = initialEntity

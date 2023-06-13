@@ -3,8 +3,6 @@ package ly.david.mbjc.ui.search
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,12 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,49 +29,21 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.AreaListItemModel
-import ly.david.data.domain.listitem.ArtistListItemModel
-import ly.david.data.domain.listitem.EndOfList
-import ly.david.data.domain.listitem.EventListItemModel
-import ly.david.data.domain.listitem.InstrumentListItemModel
-import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.PlaceListItemModel
-import ly.david.data.domain.listitem.RecordingListItemModel
-import ly.david.data.domain.listitem.ReleaseGroupListItemModel
-import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.domain.listitem.SeriesListItemModel
-import ly.david.data.domain.listitem.WorkListItemModel
-import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
-import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.artist.ArtistListItem
 import ly.david.ui.common.dialog.SimpleAlertDialog
-import ly.david.ui.common.event.EventListItem
-import ly.david.ui.common.instrument.InstrumentListItem
-import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.common.place.PlaceListItem
-import ly.david.ui.common.recording.RecordingListItem
-import ly.david.ui.common.release.ReleaseListItem
-import ly.david.ui.common.releasegroup.ReleaseGroupListItem
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.series.SeriesListItem
-import ly.david.ui.common.work.WorkListItem
 
 @Composable
 internal fun SearchScreen(
     modifier: Modifier = Modifier,
-    lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,
@@ -81,12 +51,18 @@ internal fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
 
-    val lazyPagingItems: LazyPagingItems<ListItemModel> =
-        rememberFlowWithLifecycleStarted(viewModel.searchResultsListItemModel)
+    val searchResults: LazyPagingItems<ListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.searchResults)
             .collectAsLazyPagingItems()
+    val searchResultsListState = rememberLazyListState()
 
-    var query by rememberSaveable { mutableStateOf("") }
-    var entity by rememberSaveable { mutableStateOf(MusicBrainzResource.ARTIST) }
+    val searchHistory: LazyPagingItems<ListItemModel> =
+        rememberFlowWithLifecycleStarted(viewModel.searchHistory)
+            .collectAsLazyPagingItems()
+    val searchHistoryListState = rememberLazyListState()
+
+    val queryText by viewModel.searchQuery.collectAsState()
+    val selectedEntity by viewModel.searchEntity.collectAsState()
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
@@ -100,23 +76,26 @@ internal fun SearchScreen(
         )
     }
 
+    fun search(query: String? = null, entity: MusicBrainzResource? = null) {
+        viewModel.search(query = query, entity = entity)
+        coroutineScope.launch {
+            searchResultsListState.scrollToItem(0)
+        }
+    }
+
     LaunchedEffect(key1 = initialQuery, key2 = initialEntity) {
         if (initialQuery == null || initialEntity == null) return@LaunchedEffect
-        query = initialQuery
-        entity = initialEntity
-        viewModel.search(query, entity)
+        viewModel.search(initialQuery, initialEntity)
     }
 
     Column(modifier = modifier) {
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Row(modifier = Modifier.fillMaxWidth()) {
             TextField(
                 modifier = Modifier
                     .weight(1f)
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
-                value = query,
+                value = queryText,
                 label = { Text(stringResource(id = R.string.search)) },
                 placeholder = { Text(stringResource(id = R.string.search)) },
                 maxLines = 1,
@@ -124,21 +103,21 @@ internal fun SearchScreen(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
                     onSearch = {
+                        // TODO: doesn't need to be a search ime action anymore
                         coroutineScope.launch {
-                            if (query.isEmpty()) {
+                            if (queryText.isEmpty()) {
                                 showAlertDialog = true
                             } else {
-                                viewModel.search(query, entity)
-                                lazyListState.scrollToItem(0)
+                                search(queryText, selectedEntity)
                                 focusManager.clearFocus()
                             }
                         }
                     }
                 ),
                 trailingIcon = {
-                    if (query.isEmpty()) return@TextField
+                    if (queryText.isEmpty()) return@TextField
                     IconButton(onClick = {
-                        query = ""
+                        viewModel.clearQuery()
                         focusRequester.requestFocus()
                     }) {
                         Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_search))
@@ -146,7 +125,7 @@ internal fun SearchScreen(
                 },
                 onValueChange = { newText ->
                     if (!newText.contains("\n")) {
-                        query = newText
+                        search(query = newText)
                     }
                 }
             )
@@ -154,102 +133,34 @@ internal fun SearchScreen(
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
                 options = searchableResources,
-                selectedOption = entity,
-                onSelectOption = {
-                    entity = it
+                selectedOption = selectedEntity,
+                onSelectOption = { entity ->
+                    search(entity = entity)
                 }
             )
         }
 
-        PagingLoadingAndErrorHandler(
-            lazyPagingItems = lazyPagingItems,
-            lazyListState = lazyListState,
-            snackbarHostState = snackbarHostState,
-            noResultsText = stringResource(id = R.string.no_results_found_search)
-        ) { listItemModel: ListItemModel? ->
-            when (listItemModel) {
-                is ArtistListItemModel -> {
-                    ArtistListItem(artist = listItemModel) {
-                        onItemClick(MusicBrainzResource.ARTIST, id, null)
-                    }
+        if (queryText.isEmpty()) {
+            SearchHistoryScreen(
+                lazyPagingItems = searchHistory,
+                lazyListState = searchHistoryListState,
+                onItemClick = { entity, query ->
+                    search(query = query, entity = entity)
+                },
+                onDeleteItem = {
+                    viewModel.deleteSearchHistoryItem(it)
                 }
-
-                is ReleaseGroupListItemModel -> {
-                    // TODO: should see album type rather than year
-                    ReleaseGroupListItem(releaseGroup = listItemModel) {
-                        onItemClick(MusicBrainzResource.RELEASE_GROUP, id, getNameWithDisambiguation())
-                    }
+            )
+        } else {
+            SearchResultsScreen(
+                lazyPagingItems = searchResults,
+                lazyListState = searchResultsListState,
+                snackbarHostState = snackbarHostState,
+                onItemClick = { entity, id, title ->
+                    viewModel.recordSearchHistory()
+                    onItemClick(entity, id, title)
                 }
-
-                is ReleaseListItemModel -> {
-                    ReleaseListItem(release = listItemModel) {
-                        onItemClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is RecordingListItemModel -> {
-                    RecordingListItem(recording = listItemModel) {
-                        onItemClick(MusicBrainzResource.RECORDING, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is WorkListItemModel -> {
-                    WorkListItem(work = listItemModel) {
-                        onItemClick(MusicBrainzResource.WORK, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is AreaListItemModel -> {
-                    AreaListItem(area = listItemModel) {
-                        onItemClick(MusicBrainzResource.AREA, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is PlaceListItemModel -> {
-                    PlaceListItem(place = listItemModel) {
-                        onItemClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is InstrumentListItemModel -> {
-                    InstrumentListItem(instrument = listItemModel) {
-                        onItemClick(MusicBrainzResource.INSTRUMENT, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is LabelListItemModel -> {
-                    LabelListItem(label = listItemModel) {
-                        onItemClick(MusicBrainzResource.LABEL, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is EventListItemModel -> {
-                    EventListItem(event = listItemModel) {
-                        onItemClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is SeriesListItemModel -> {
-                    SeriesListItem(series = listItemModel) {
-                        onItemClick(MusicBrainzResource.SERIES, id, getNameWithDisambiguation())
-                    }
-                }
-
-                is EndOfList -> {
-                    Text(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.bodyMedium,
-                        text = "End of search results."
-                    )
-                }
-
-                else -> {
-                    // Null. Do nothing.
-                }
-            }
+            )
         }
     }
 }
