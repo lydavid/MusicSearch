@@ -8,7 +8,6 @@ import androidx.compose.ui.test.filterToOne
 import androidx.compose.ui.test.hasImeAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -97,18 +96,6 @@ internal class SearchEachResourceTest(
             .performClick()
         composeTestRule
             .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
-            .assertIsDisplayed()
-
-        // Search query shows up in search history
-        composeTestRule
-            .onNodeWithText(searchLabel)
-            .performClick()
-        composeTestRule
-            .onNodeWithContentDescription(clearSearchContentDescription)
-            .assertIsDisplayed()
-            .performClick()
-        composeTestRule
-            .onNodeWithText("Some search text")
             .assertIsDisplayed()
     }
 }

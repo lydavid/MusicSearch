@@ -36,7 +36,8 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
     @Query(
         """
             DELETE FROM search_history
+            WHERE entity = :entity
         """
     )
-    abstract suspend fun deleteAll()
+    abstract suspend fun deleteAll(entity: MusicBrainzResource)
 }

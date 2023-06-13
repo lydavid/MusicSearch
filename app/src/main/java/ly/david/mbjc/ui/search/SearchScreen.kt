@@ -147,9 +147,8 @@ internal fun SearchScreen(
                 onItemClick = { entity, query ->
                     search(query = query, entity = entity)
                 },
-                onDeleteItem = {
-                    viewModel.deleteSearchHistoryItem(it)
-                }
+                onDeleteItem = viewModel::deleteSearchHistoryItem,
+                onDeleteAllHistory = viewModel::deleteAllSearchHistoryForEntity
             )
         } else {
             SearchResultsScreen(

@@ -90,6 +90,12 @@ internal class SearchViewModel @Inject constructor(
         }
     }
 
+    fun deleteAllSearchHistoryForEntity() {
+        viewModelScope.launch {
+            searchHistoryDao.deleteAll(searchEntity.value)
+        }
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val searchResults: Flow<PagingData<ListItemModel>> =
         viewModelState.filterNot { it.query.isEmpty() }
