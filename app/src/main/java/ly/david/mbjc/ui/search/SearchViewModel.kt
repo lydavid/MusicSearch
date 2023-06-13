@@ -119,7 +119,6 @@ internal class SearchViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     pagingSourceFactory = {
                         searchHistoryDao.getAllSearchHistory(
-                            query = "%${viewModelState.query}%",
                             entity = viewModelState.entity
                         )
                     }

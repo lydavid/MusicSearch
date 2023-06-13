@@ -14,12 +14,11 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
     @Query(
         """
         SELECT * FROM search_history
-        WHERE `query` LIKE :query AND entity = :entity
+        WHERE entity = :entity
         ORDER BY last_accessed DESC
         """
     )
     abstract fun getAllSearchHistory(
-        query: String = "%%",
         entity: MusicBrainzResource
     ): PagingSource<Int, SearchHistoryRoomModel>
 
