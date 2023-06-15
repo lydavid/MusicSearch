@@ -14,7 +14,7 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.46.1" apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.0" apply true
     id("com.google.gms.google-services") version "4.3.15" apply false
-    id("com.google.firebase.crashlytics") version "2.9.5" apply false
+    id("com.google.firebase.crashlytics") version "2.9.6" apply false
     id("dev.iurysouza.modulegraph") version "0.4.0"
     id("app.cash.paparazzi") version "1.2.0" apply false
 }
