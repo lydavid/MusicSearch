@@ -11,8 +11,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
+import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.Destination
 import ly.david.data.domain.toLookupDestination
 import ly.david.data.network.MusicBrainzResource
@@ -40,9 +42,17 @@ import ly.david.ui.history.HistoryScaffold
 private const val ID = "id"
 private const val TITLE = "title"
 
+private fun String.encodeUtf8(): String {
+    return URLEncoder.encode(this, StandardCharsets.UTF_8.toString())
+}
+
+private fun String.decodeUtf8(): String {
+    return URLDecoder.decode(this, StandardCharsets.UTF_8.toString())
+}
+
 internal fun NavHostController.goToResource(entity: MusicBrainzResource, id: String, title: String? = null) {
-    var route = "${entity.toLookupDestination().route}/$id"
-    if (!title.isNullOrEmpty()) route += "?$TITLE=${URLEncoder.encode(title, StandardCharsets.UTF_8.toString())}"
+    val route = "${entity.toLookupDestination().route}/$id" +
+        title?.encodeUtf8().transformThisIfNotNullOrEmpty { "?$TITLE=$it" }
     this.navigate(route)
 }
 
@@ -110,7 +120,7 @@ internal fun NavigationGraph(
                 }
             )
         ) { entry ->
-            val query = entry.arguments?.getString("query")
+            val query = entry.arguments?.getString("query")?.decodeUtf8()
             val type = entry.arguments?.getString("type")?.toMusicBrainzResource()
 
             SearchScaffold(
@@ -406,7 +416,7 @@ private fun NavGraphBuilder.addLookupResourceScreen(
         )
     ) { entry: NavBackStackEntry ->
         val resourceId = entry.arguments?.getString(ID) ?: return@composable
-        val title = entry.arguments?.getString(TITLE)
+        val title = entry.arguments?.getString(TITLE)?.decodeUtf8()
         scaffold(resourceId, title)
     }
 }
