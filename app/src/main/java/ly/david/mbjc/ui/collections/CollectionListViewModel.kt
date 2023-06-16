@@ -22,7 +22,7 @@ private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIO
 
 @HiltViewModel
 internal class CollectionListViewModel @Inject constructor(
-    val appPreferences: ly.david.ui.settings.AppPreferences,
+    val appPreferences: AppPreferences,
     private val pagedList: CollectionPagedList,
     private val musicBrainzApiService: MusicBrainzApiService,
     private val musicBrainzAuthState: MusicBrainzAuthState,

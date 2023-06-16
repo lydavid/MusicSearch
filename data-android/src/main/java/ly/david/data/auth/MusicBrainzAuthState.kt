@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.emptyToNull
 import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.di.ApplicationScope
 import ly.david.data.network.api.BEARER
 import net.openid.appauth.AuthState
 
@@ -36,7 +37,7 @@ suspend fun MusicBrainzAuthState.getBearerToken(): String? {
 
 class MusicBrainzAuthStateImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
-    private val coroutineScope: CoroutineScope
+    @ApplicationScope private val coroutineScope: CoroutineScope
 ) : MusicBrainzAuthState {
 
     override suspend fun getAuthState(): AuthState? {

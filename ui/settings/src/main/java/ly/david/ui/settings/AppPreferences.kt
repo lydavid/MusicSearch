@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.di.ApplicationScope
 import ly.david.ui.common.R
 
 interface AppPreferences {
@@ -65,7 +66,7 @@ private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
 
 class AppPreferencesImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
-    private val coroutineScope: CoroutineScope
+    @ApplicationScope private val coroutineScope: CoroutineScope
 ) : AppPreferences {
 
     override val theme: Flow<AppPreferences.Theme>
