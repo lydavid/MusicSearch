@@ -13,9 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.collectableResources
 import ly.david.data.network.toFakeMusicBrainzModel
@@ -92,11 +90,9 @@ internal class CollectionParameterizedTest(
             .onNodeWithText(collectionName) // title
             .assertIsDisplayed()
 
-        withContext(Dispatchers.Main) {
-            composeTestRule.awaitIdle()
-            val resourceId = entity.toFakeMusicBrainzModel().id
-            navController.goToResource(entity = entity, id = resourceId)
-        }
+        val resourceId = entity.toFakeMusicBrainzModel().id
+        navController.goToResource(entity = entity, id = resourceId)
+
         composeTestRule
             .onNodeWithContentDescription(moreActions)
             .performClick()

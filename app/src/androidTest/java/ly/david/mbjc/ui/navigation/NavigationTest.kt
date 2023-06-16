@@ -11,9 +11,7 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
@@ -69,19 +67,17 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
     }
 
     @Test
-    fun passTitleWithSpecialCharacters() {
+    fun passTitleWithSpecialCharacters() = runTest {
+        composeTestRule.awaitIdle()
+
         val title = "H&M <>#"
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                composeTestRule.awaitIdle()
-                val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
-                navController.goToResource(
-                    entity = MusicBrainzResource.ARTIST,
-                    id = resourceId,
-                    title = title
-                )
-            }
-        }
+        val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
+
+        navController.goToResource(
+            entity = MusicBrainzResource.ARTIST,
+            id = resourceId,
+            title = title
+        )
 
         composeTestRule
             .onNodeWithText(title)

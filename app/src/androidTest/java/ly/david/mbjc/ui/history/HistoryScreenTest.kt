@@ -7,9 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.Destination
 import ly.david.data.network.lookupHistory
 import ly.david.data.room.MusicBrainzDatabase
@@ -44,13 +42,9 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun emptyLookupHistory() {
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                composeTestRule.awaitIdle()
-                navController.navigate(Destination.HISTORY.route)
-            }
-        }
+    fun emptyLookupHistory() = runTest {
+        composeTestRule.awaitIdle()
+        navController.navigate(Destination.HISTORY.route)
 
         composeTestRule
             .onNodeWithText(historyScreenTitle)
@@ -62,14 +56,10 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
     }
 
     @Test
-    fun lookupHistoryWithAnItem() {
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                lookupHistoryDao.insert(lookupHistory)
-                composeTestRule.awaitIdle()
-                navController.navigate(Destination.HISTORY.route)
-            }
-        }
+    fun lookupHistoryWithAnItem() = runTest {
+        lookupHistoryDao.insert(lookupHistory)
+        composeTestRule.awaitIdle()
+        navController.navigate(Destination.HISTORY.route)
 
         composeTestRule
             .onNodeWithText(historyScreenTitle)

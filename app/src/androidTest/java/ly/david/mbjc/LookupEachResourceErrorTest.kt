@@ -4,9 +4,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToResource
@@ -48,11 +46,10 @@ internal class LookupEachResourceErrorTest(
 
     @Test
     fun lookupEachResourceError() = runTest {
-        withContext(Dispatchers.Main) {
-            composeTestRule.awaitIdle()
-            val resourceId = "error"
-            navController.goToResource(entity = resource, id = resourceId)
-        }
+        composeTestRule.awaitIdle()
+
+        val resourceId = "error"
+        navController.goToResource(entity = resource, id = resourceId)
 
         waitForThenAssertAtLeastOneIsDisplayed(retry)
 

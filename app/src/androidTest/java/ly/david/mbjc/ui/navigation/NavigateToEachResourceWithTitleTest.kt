@@ -6,12 +6,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.data.network.resourceUri
+import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.common.theme.PreviewTheme
@@ -50,15 +48,13 @@ internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBr
     }
 
     @Test
-    fun navigateToEachResourceScreenWithCustomTitle() {
+    fun navigateToEachResourceScreenWithCustomTitle() = runTest {
+        composeTestRule.awaitIdle()
+
         val title = resource.resourceUri
-        runBlocking {
-            withContext(Dispatchers.Main) {
-                composeTestRule.awaitIdle()
-                val resourceId = resource.toFakeMusicBrainzModel().id
-                navController.goToResource(entity = resource, id = resourceId, title = title)
-            }
-        }
+        val resourceId = resource.toFakeMusicBrainzModel().id
+
+        navController.goToResource(entity = resource, id = resourceId, title = title)
 
         composeTestRule
             .onNodeWithText(title)
