@@ -38,7 +38,7 @@ dependencyResolutionManagement {
             library("androidx-core", "androidx.core", "core-ktx").version("1.10.1")
             library("androidx-datastore-preferences", "androidx.datastore", "datastore-preferences").version("1.0.0")
             library("androidx-lifecycle-viewmodel-compose", "androidx.lifecycle", "lifecycle-viewmodel-compose").version("2.6.1")
-            library("androidx-navigation-compose", "androidx.navigation", "navigation-compose").version("2.5.3")
+            library("androidx-navigation-compose", "androidx.navigation", "navigation-compose").version("2.6.0")
             library("androidx-paging-common", "androidx.paging", "paging-common-ktx").versionRef("paging")
             library("androidx-paging-compose", "androidx.paging", "paging-compose").version("1.0.0-alpha14")
             library("androidx-paging-runtime", "androidx.paging", "paging-runtime-ktx").versionRef("paging")
