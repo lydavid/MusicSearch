@@ -8,5 +8,5 @@ import ly.david.data.room.BaseDao
 abstract class ArtistDao : BaseDao<ArtistRoomModel>() {
 
     @Query("SELECT * FROM artist WHERE id = :artistId")
-    abstract suspend fun getArtist(artistId: String): ArtistRoomModel?
+    abstract suspend fun getArtist(artistId: String): ArtistWithAllData?
 }

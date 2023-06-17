@@ -27,7 +27,7 @@ private const val RECORDING_REL = "recording-rels"
 private const val RELEASE_REL = "release-rels"
 private const val RELEASE_GROUP_REL = "release-group-rels"
 private const val SERIES_REL = "series-rels"
-private const val URL_REL = "url-rels"
+const val URL_REL = "url-rels"
 private const val WORK_REL = "work-rels"
 
 /**
@@ -41,6 +41,8 @@ interface LookupApi {
     companion object {
         const val INC_ALL_RELATIONS =
             "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+        const val INC_ALL_RELATIONS_EXCEPT_URLS =
+            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$WORK_REL"
 
         const val INC_ALL_RELATIONS_EXCLUDE_EVENTS =
             "$AREA_REL+$ARTIST_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
@@ -77,7 +79,7 @@ interface LookupApi {
     @GET("artist/{artistId}")
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = URL_REL
     ): ArtistMusicBrainzModel
 
     @GET("event/{eventId}")

@@ -1,13 +1,16 @@
 package ly.david.data.room.artist
 
 import androidx.room.ColumnInfo
+import androidx.room.DatabaseView
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 import ly.david.data.Artist
 import ly.david.data.LifeSpan
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.room.RoomModel
+import ly.david.data.room.relation.RelationRoomModel
 
 @Entity(
     tableName = "artist"
@@ -34,4 +37,30 @@ fun ArtistMusicBrainzModel.toArtistRoomModel() = ArtistRoomModel(
     gender = gender,
     countryCode = countryCode,
     lifeSpan = lifeSpan
+)
+
+data class ArtistWithAllData(
+
+    @Embedded
+    val artist: ArtistRoomModel,
+
+    // TODO: link only urls. use a view or change query
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "resource_id"
+    )
+    val urls: List<UrlRelation>
+)
+
+@DatabaseView(
+    value = """
+        SELECT *
+        FROM relation r
+        WHERE r.linked_resource = "url"
+    """,
+    viewName = "url_relation"
+)
+data class UrlRelation(
+    @Embedded
+    val relation: RelationRoomModel
 )

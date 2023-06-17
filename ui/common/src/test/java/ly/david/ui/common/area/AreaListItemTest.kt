@@ -40,17 +40,7 @@ class AreaListItemTest : PaparazziScreenshotTest() {
     @Test
     fun releaseEvent() {
         snapshot {
-            AreaListItem(
-                area = AreaListItemModel(
-                    id = "4",
-                    name = "Area Name with a very long name",
-                    disambiguation = "That one",
-                    countryCodes = listOf("KR"),
-                    date = "2022-10-29",
-                    type = "Country",
-                ),
-                showType = false
-            )
+            PreviewReleaseEvent()
         }
     }
 }

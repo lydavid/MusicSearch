@@ -7,12 +7,12 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.ArtistListItemModel
+import ly.david.data.domain.artist.ArtistRepository
+import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
-import ly.david.data.domain.artist.ArtistRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -32,7 +32,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val artist: MutableStateFlow<ArtistListItemModel?> = MutableStateFlow(null)
+    val artist: MutableStateFlow<ArtistScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope

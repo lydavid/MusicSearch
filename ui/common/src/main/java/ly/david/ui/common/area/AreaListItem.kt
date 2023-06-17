@@ -129,7 +129,7 @@ private fun Preview(
 
 @DefaultPreviews
 @Composable
-private fun ReleaseEventPreview() {
+internal fun PreviewReleaseEvent() {
     PreviewTheme {
         Surface {
             AreaListItem(

@@ -13,46 +13,64 @@ import ly.david.data.room.BaseDao
 abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun markResourceHasRelations(hasRelationsRoomModel: HasRelationsRoomModel): Long
+    abstract suspend fun markEntityHasRelations(hasRelations: HasRelations): Long
 
     @Query("SELECT * FROM has_relations WHERE resource_id = :resourceId")
-    abstract suspend fun getHasRelationsModel(resourceId: String): HasRelationsRoomModel?
+    abstract suspend fun hasRelations(resourceId: String): HasRelations?
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun markEntityHasUrls(hasUrls: HasUrls): Long
+
+    @Query("SELECT * FROM has_urls WHERE resource_id = :resourceId")
+    abstract suspend fun hasUrls(resourceId: String): HasUrls?
 
     @Transaction
     @Query(
         """
             SELECT *
             FROM relation
-            WHERE resource_id = :resourceId
-            ORDER BY linked_resource, label, `order`
-        """
-    )
-    abstract fun getRelationsForResource(
-        resourceId: String
-    ): PagingSource<Int, RelationRoomModel>
-
-    @Transaction
-    @Query(
-        """
-            SELECT *
-            FROM relation
-            WHERE resource_id = :resourceId AND
+            WHERE resource_id = :resourceId AND linked_resource != "url" AND
             (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
             attributes LIKE :query OR additional_info LIKE :query)
             ORDER BY linked_resource, label, `order`
         """
     )
-    abstract fun getRelationsForResourceFiltered(
+    abstract fun getEntityRelationships(
         resourceId: String,
-        query: String
+        query: String = "%%"
+    ): PagingSource<Int, RelationRoomModel>
+
+    @Transaction
+    @Query(
+        """
+            SELECT *
+            FROM relation
+            WHERE resource_id = :resourceId AND linked_resource = "url" AND
+            (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+            attributes LIKE :query OR additional_info LIKE :query)
+            ORDER BY linked_resource, label, `order`
+        """
+    )
+    abstract fun getEntityUrls(
+        resourceId: String,
+        query: String = "%%"
     ): PagingSource<Int, RelationRoomModel>
 
     @Query(
         """
-        DELETE FROM relation WHERE resource_id = :resourceId
+        DELETE FROM relation 
+        WHERE resource_id = :resourceId AND linked_resource != "url"
         """
     )
-    abstract suspend fun deleteRelationsByResource(resourceId: String)
+    abstract suspend fun deleteRelationshipsByEntity(resourceId: String)
+
+    @Query(
+        """
+        DELETE FROM relation 
+        WHERE resource_id = :resourceId AND linked_resource == "url"
+        """
+    )
+    abstract suspend fun deleteUrlsByEntity(resourceId: String)
 
     // region Relationship stats
     /**

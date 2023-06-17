@@ -5,13 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "has_relations",
+    tableName = "has_urls",
 )
-data class HasRelationsRoomModel(
+data class HasUrls(
     @PrimaryKey
     @ColumnInfo(name = "resource_id")
     val resourceId: String,
 
-    @ColumnInfo(name = "has_relations")
-    val hasRelations: Boolean = false,
+    @ColumnInfo(name = "has_urls")
+    val hasUrls: Boolean = false,
 )
