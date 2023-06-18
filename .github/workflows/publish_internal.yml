@@ -80,12 +80,6 @@ jobs:
           sed -bi "s/VERSION_NAME=$VN/VERSION_NAME=$newVN/" gradle.properties
         shell: bash
 
-      - name: Commit version code bump
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: 'chore: bump version [skip ci]'
-          file_pattern: 'gradle.properties'
-
       # After this step, the workspace contains credentials file.
       # Take care not to commit it or upload artifacts with it.
       - name: Write to keystore.properties
@@ -119,6 +113,12 @@ jobs:
           track: internal
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
+
+      - name: Commit version code bump
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: 'chore: bump version [skip ci]'
+          file_pattern: 'gradle.properties'
 
       - name: Publish to GitHub
         id: publish_github
