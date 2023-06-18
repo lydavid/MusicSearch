@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayTypes
-import ly.david.ui.common.text.TextWithHeadingRes
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.R
-import ly.david.ui.common.coverart.BigCoverArt
+import ly.david.ui.common.coverart.LargeImage
+import ly.david.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.ui.common.text.TextWithHeadingRes
 
 @Composable
 internal fun ReleaseGroupDetailsScreen(
@@ -24,7 +24,7 @@ internal fun ReleaseGroupDetailsScreen(
         state = lazyListState
     ) {
         item {
-            BigCoverArt(coverArtUrl = coverArtUrl)
+            LargeImage(url = coverArtUrl)
         }
 
         item {

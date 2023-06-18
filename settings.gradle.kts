@@ -117,6 +117,7 @@ include(
     ":data:base",
     ":data:coverart",
     ":data:domain",
+    ":data:spotify",
     ":data:room",
     ":data:musicbrainz",
     ":test-data",

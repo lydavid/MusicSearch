@@ -13,6 +13,8 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.data.spotify.SpotifyApi
+import ly.david.data.spotify.getLargeImageUrl
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -24,6 +26,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     private val repository: ArtistRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
+    private val spotifyApi: SpotifyApi
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
@@ -33,6 +36,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     override val isError = MutableStateFlow(false)
 
     val artist: MutableStateFlow<ArtistScaffoldModel?> = MutableStateFlow(null)
+    val url = MutableStateFlow("")
 
     init {
         relationsList.scope = viewModelScope
@@ -47,11 +51,12 @@ internal class ArtistScaffoldViewModel @Inject constructor(
             ArtistTab.DETAILS -> {
                 viewModelScope.launch {
                     try {
-                        val artistListItemModel = repository.lookupArtist(artistId)
+                        val artistScaffoldModel = repository.lookupArtist(artistId)
                         if (title.value.isEmpty()) {
-                            title.value = artistListItemModel.getNameWithDisambiguation()
+                            title.value = artistScaffoldModel.getNameWithDisambiguation()
                         }
-                        artist.value = artistListItemModel
+                        artist.value = artistScaffoldModel
+                        getCoverArtUrl(artistScaffoldModel)
                         isError.value = false
                     } catch (ex: HttpException) {
                         Timber.e(ex)
@@ -77,5 +82,16 @@ internal class ArtistScaffoldViewModel @Inject constructor(
                 // Not handled here.
             }
         }
+    }
+
+    private suspend fun getCoverArtUrl(
+        artist: ArtistScaffoldModel
+    ) {
+        val spotifyUrl = artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return
+        val spotifyArtistId = spotifyUrl.split("/").last()
+
+        url.value = spotifyApi.getArtist(
+            artistId = spotifyArtistId,
+        ).getLargeImageUrl()
     }
 }

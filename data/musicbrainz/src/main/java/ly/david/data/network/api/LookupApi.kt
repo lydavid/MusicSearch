@@ -40,12 +40,47 @@ interface LookupApi {
 
     companion object {
         const val INC_ALL_RELATIONS =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
-        const val INC_ALL_RELATIONS_EXCEPT_URLS =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$WORK_REL"
+            "$AREA_REL+" +
+                "$ARTIST_REL+" +
+                "$EVENT_REL+" +
+                "$GENRE_REL+" +
+                "$INSTRUMENT_REL+" +
+                "$LABEL_REL+" +
+                "$PLACE_REL+" +
+                "$RECORDING_REL+" +
+                "$RELEASE_REL+" +
+                "$RELEASE_GROUP_REL+" +
+                "$SERIES_REL+" +
+                "$URL_REL+" +
+                WORK_REL
 
-        const val INC_ALL_RELATIONS_EXCLUDE_EVENTS =
-            "$AREA_REL+$ARTIST_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
+        const val INC_ALL_RELATIONS_EXCEPT_URLS =
+            "$AREA_REL+" +
+                "$ARTIST_REL+" +
+                "$EVENT_REL+" +
+                "$GENRE_REL+" +
+                "$INSTRUMENT_REL+" +
+                "$LABEL_REL+" +
+                "$PLACE_REL+" +
+                "$RECORDING_REL+" +
+                "$RELEASE_REL+" +
+                "$RELEASE_GROUP_REL+" +
+                "$SERIES_REL+" +
+                WORK_REL
+
+        const val INC_ALL_RELATIONS_EXCEPT_EVENTS =
+            "$AREA_REL+" +
+                "$ARTIST_REL+" +
+                "$GENRE_REL+" +
+                "$INSTRUMENT_REL+" +
+                "$LABEL_REL+" +
+                "$PLACE_REL+" +
+                "$RECORDING_REL+" +
+                "$RELEASE_REL+" +
+                "$RELEASE_GROUP_REL+" +
+                "$SERIES_REL+" +
+                "$URL_REL+" +
+                WORK_REL
 
         // TODO: use this if we decide to split area relations lookup
         const val AREA_DEFAULT_RELS =

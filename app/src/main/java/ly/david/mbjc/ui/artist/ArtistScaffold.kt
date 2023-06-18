@@ -75,6 +75,7 @@ internal fun ArtistScaffold(
 
     val title by viewModel.title.collectAsState()
     val artist by viewModel.artist.collectAsState()
+    val url by viewModel.url.collectAsState()
     val showError by viewModel.isError.collectAsState()
 
     LaunchedEffect(key1 = artistId) {
@@ -176,12 +177,14 @@ internal fun ArtistScaffold(
                         scaffoldModel = artist
                     ) { artist ->
                         ArtistDetailsScreen(
+                            artist = artist,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            artist = artist,
-                            lazyListState = detailsLazyListState
+                            artistImageUrl = url,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

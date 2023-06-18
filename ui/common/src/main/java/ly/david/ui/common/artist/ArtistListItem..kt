@@ -17,15 +17,11 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.domain.listitem.ArtistListItemModel
 import ly.david.data.getLifeSpanForDisplay
-import ly.david.ui.common.coverart.ThumbnailImage
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
 
-// Don't worry about repeated calls to fetch artist images, cause coil handles caching for us.
-// I think our problem wasn't so much with image calls, but finding the url for the images.
-// Would this make unnecessary calls? As long as it's cached by okhttp, then it shouldn't be a big deal.
 @Composable
 fun ArtistListItem(
     artist: ArtistListItemModel,
@@ -33,12 +29,6 @@ fun ArtistListItem(
     onArtistClick: ArtistListItemModel.() -> Unit = {}
 ) {
     ListItem(
-        leadingContent = {
-            ThumbnailImage(
-                coverArtUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9",
-                clipCircle = true
-            )
-        },
         headlineContent = {
             Text(
                 text = artist.name,

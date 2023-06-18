@@ -6,7 +6,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.di.MusicBrainzNetworkModule
+import ly.david.data.musicbrainz.MusicBrainzApiModule
 import ly.david.data.network.api.FakeCoverArtArchiveApiService
 import ly.david.data.network.api.FakeMusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiService
@@ -19,9 +19,9 @@ private const val TEST_BASE_URL = "https://localhost:$TEST_PORT"
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [MusicBrainzNetworkModule::class]
+    replaces = [MusicBrainzApiModule::class]
 )
-internal object FakeMusicBrainzNetworkModule {
+internal object FakeMusicBrainzApiModule {
 
     @Singleton
     @Provides

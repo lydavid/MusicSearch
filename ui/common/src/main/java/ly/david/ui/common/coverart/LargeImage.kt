@@ -27,24 +27,21 @@ import ly.david.data.coverart.trimCoverArtSuffix
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
-/**
- * A big cover art that fills the screen's width.
- */
 @Composable
-fun BigCoverArt(
-    coverArtUrl: String,
+fun LargeImage(
+    url: String,
     modifier: Modifier = Modifier,
 ) {
-    if (coverArtUrl.isNotEmpty()) {
+    if (url.isNotEmpty()) {
 
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(coverArtUrl.useHttps())
+                .data(url.useHttps())
                 .size(Size.ORIGINAL)
                 .scale(Scale.FIT)
                 .crossfade(true)
-                .memoryCacheKey(coverArtUrl.trimCoverArtSuffix())
-                .placeholderMemoryCacheKey(coverArtUrl.trimCoverArtSuffix())
+                .memoryCacheKey(url.trimCoverArtSuffix())
+                .placeholderMemoryCacheKey(url.trimCoverArtSuffix())
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )
@@ -106,7 +103,7 @@ private fun PainterImage(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            BigCoverArt("https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489")
+            LargeImage("https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489")
         }
     }
 }

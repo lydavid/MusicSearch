@@ -7,10 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 const val MUSIC_BRAINZ_OAUTH_CLIENT_ID = "afBf7jhb_ms-Fjqm6VTWTvVAyuAUf_xT"
-
-/**
- * Mobile apps embed secrets in their code so we don't have to hide this.
- */
 const val MUSIC_BRAINZ_OAUTH_CLIENT_SECRET = "nnkNItEfufwKj0-yjgmgZVrnzrXRQBN7"
 
 interface MusicBrainzAuthApi {

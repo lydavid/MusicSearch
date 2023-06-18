@@ -36,7 +36,7 @@ fun RelationListItem(
             Column {
                 Text(
                     text = "${relation.label}:",
-                    style = TextStyles.getCardBodyTextStyle()
+                    style = TextStyles.getCardBodySubTextStyle()
                 )
 
                 Row(
@@ -51,7 +51,7 @@ fun RelationListItem(
 
                     Text(
                         text = relation.name,
-                        style = TextStyles.getCardTitleTextStyle()
+                        style = TextStyles.getCardBodyTextStyle()
                     )
                 }
 
@@ -60,7 +60,7 @@ fun RelationListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = "($disambiguation)",
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                         color = getSubTextColor()
                     )
                 }
@@ -70,7 +70,7 @@ fun RelationListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = "($attributes)",
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -79,7 +79,7 @@ fun RelationListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = additionalInfo,
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
             }
@@ -98,7 +98,7 @@ fun RelationListItem(
 // region Previews
 @DefaultPreviews
 @Composable
-private fun Artist() {
+internal fun PreviewArtistRelationListItem() {
     PreviewTheme {
         Surface {
             RelationListItem(
@@ -118,7 +118,7 @@ private fun Artist() {
 
 @DefaultPreviews
 @Composable
-private fun Recording() {
+internal fun PreviewRecordingRelationListItem() {
     PreviewTheme {
         Surface {
             RelationListItem(
@@ -129,6 +129,24 @@ private fun Recording() {
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
+                )
+            )
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+internal fun PreviewUrlRelationListItem() {
+    PreviewTheme {
+        Surface {
+            RelationListItem(
+                relation = RelationListItemModel(
+                    id = "2_1",
+                    linkedResourceId = "3",
+                    linkedResource = MusicBrainzResource.URL,
+                    label = "Stream for free",
+                    name = "https://www.example.com",
                 )
             )
         }

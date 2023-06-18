@@ -21,14 +21,14 @@ import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.coverart.LargeImage
+import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.common.R
-import ly.david.ui.common.coverart.BigCoverArt
 import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
@@ -45,7 +45,7 @@ internal fun ReleaseDetailsScreen(
         state = lazyListState
     ) {
         item {
-            BigCoverArt(coverArtUrl = coverArtUrl)
+            LargeImage(url = coverArtUrl)
 
             release.run {
                 InformationListSeparatorHeader(R.string.release)
@@ -183,7 +183,8 @@ private fun Preview() {
                     ),
                     releaseLength = 8000,
                     hasNullLength = true
-                )
+                ),
+                coverArtUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9"
             )
         }
     }

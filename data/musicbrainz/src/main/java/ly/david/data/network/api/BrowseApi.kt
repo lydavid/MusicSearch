@@ -1,6 +1,7 @@
 package ly.david.data.network.api
 
 import com.squareup.moshi.Json
+import ly.david.data.AUTHORIZATION
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.CollectionMusicBrainzModel

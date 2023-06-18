@@ -50,7 +50,7 @@ class PlaceRepository @Inject constructor(
     override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupPlace(
             placeId = resourceId,
-            include = LookupApi.INC_ALL_RELATIONS_EXCLUDE_EVENTS
+            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_EVENTS
         ).relations
     }
 }

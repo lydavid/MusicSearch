@@ -1,4 +1,4 @@
-package ly.david.data.di
+package ly.david.data.musicbrainz
 
 import dagger.Module
 import dagger.Provides
@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MusicBrainzNetworkModule {
+object MusicBrainzApiModule {
 
     @Singleton
     @Provides

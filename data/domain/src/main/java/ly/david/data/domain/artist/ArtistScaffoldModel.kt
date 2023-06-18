@@ -2,6 +2,8 @@ package ly.david.data.domain.artist
 
 import ly.david.data.Artist
 import ly.david.data.LifeSpan
+import ly.david.data.domain.listitem.RelationListItemModel
+import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.artist.ArtistWithAllData
 
 data class ArtistScaffoldModel(
@@ -13,7 +15,7 @@ data class ArtistScaffoldModel(
     override val gender: String? = null,
     override val countryCode: String? = null,
     override val lifeSpan: LifeSpan? = null,
-    val urls: List<String> = listOf()
+    val urls: List<RelationListItemModel> = listOf()
 ) : Artist
 
 fun ArtistWithAllData.toArtistScaffoldModel() =
@@ -26,5 +28,5 @@ fun ArtistWithAllData.toArtistScaffoldModel() =
         gender = artist.gender,
         countryCode = artist.countryCode,
         lifeSpan = artist.lifeSpan,
-        urls = urls.map { it.relation.name }
+        urls = urls.map { it.relation.toRelationListItemModel() }
     )

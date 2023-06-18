@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -19,6 +21,26 @@ android {
     }
 
     buildTypes {
+        all {
+
+            // TODO: will this work if CI reads uses ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID?
+            val secretsPropertiesFile = rootProject.file("secrets.properties")
+            if (secretsPropertiesFile.exists()) {
+                val secretsProperties = Properties().apply {
+                    load(secretsPropertiesFile.inputStream())
+                }
+                buildConfigField(
+                    type = "String",
+                    name = "SPOTIFY_CLIENT_ID",
+                    value = "\"${secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""}\""
+                )
+                buildConfigField(
+                    type = "String",
+                    name = "SPOTIFY_CLIENT_SECRET",
+                    value = "\"${secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""}\""
+                )
+            }
+        }
         debug {
             enableUnitTestCoverage = true
         }

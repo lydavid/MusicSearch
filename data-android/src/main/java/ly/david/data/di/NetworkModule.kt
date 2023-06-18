@@ -9,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import java.io.File
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
+import ly.david.data.musicbrainz.MusicBrainzAuthenticator
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
