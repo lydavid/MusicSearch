@@ -22,24 +22,26 @@ android {
 
     buildTypes {
         all {
-
             // TODO: will this work if CI reads uses ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID?
             val secretsPropertiesFile = rootProject.file("secrets.properties")
+            val secretsProperties: Properties
             if (secretsPropertiesFile.exists()) {
-                val secretsProperties = Properties().apply {
+                secretsProperties = Properties().apply {
                     load(secretsPropertiesFile.inputStream())
                 }
-                buildConfigField(
-                    type = "String",
-                    name = "SPOTIFY_CLIENT_ID",
-                    value = "\"${secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""}\""
-                )
-                buildConfigField(
-                    type = "String",
-                    name = "SPOTIFY_CLIENT_SECRET",
-                    value = "\"${secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""}\""
-                )
+            } else {
+                secretsProperties = Properties()
             }
+            buildConfigField(
+                type = "String",
+                name = "SPOTIFY_CLIENT_ID",
+                value = "\"${secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""}\""
+            )
+            buildConfigField(
+                type = "String",
+                name = "SPOTIFY_CLIENT_SECRET",
+                value = "\"${secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""}\""
+            )
         }
         debug {
             enableUnitTestCoverage = true
