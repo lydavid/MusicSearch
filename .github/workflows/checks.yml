@@ -21,11 +21,6 @@ jobs:
       - name: Detekt code smells
         run: ./gradlew detekt
 
-      - name: Unit test :data
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:test
-
       - name: Unit test :data:base
         uses: gradle/gradle-build-action@v2
         with:
@@ -41,15 +36,20 @@ jobs:
         with:
           arguments: data:domain:test
 
+      - name: Unit test data:musicbrainz
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: data:musicbrainz:test
+
       - name: Unit test :data:room
         uses: gradle/gradle-build-action@v2
         with:
           arguments: data:room:test
 
-      - name: Unit test data:musicbrainz
+      - name: Unit test data:spotify
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: data:musicbrainz:test
+          arguments: data:spotify:test
 
       - name: Verify screenshot tests
         run: ./gradlew verifyPaparazziDebug

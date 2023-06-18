@@ -10,7 +10,6 @@ android {
     namespace = "ly.david.data"
 
     defaultConfig {
-        // Need this or else we won't be able to compile androidTest for this module
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         kapt {
@@ -22,25 +21,32 @@ android {
 
     buildTypes {
         all {
-            // TODO: will this work if CI reads uses ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_ID?
-            val secretsPropertiesFile = rootProject.file("secrets.properties")
-            val secretsProperties: Properties
-            if (secretsPropertiesFile.exists()) {
-                secretsProperties = Properties().apply {
-                    load(secretsPropertiesFile.inputStream())
+            // These will only be set through GHA environment
+            var spotifyClientId = project.properties["SPOTIFY_CLIENT_ID"] as String?
+            var spotifyClientSecret = project.properties["SPOTIFY_CLIENT_SECRET"] as String?
+
+            if (spotifyClientId.isNullOrEmpty() || spotifyClientSecret.isNullOrEmpty()) {
+                val secretsPropertiesFile = rootProject.file("secrets.properties")
+                val secretsProperties = if (secretsPropertiesFile.exists()) {
+                    Properties().apply {
+                        load(secretsPropertiesFile.inputStream())
+                    }
+                } else {
+                    Properties()
                 }
-            } else {
-                secretsProperties = Properties()
+                spotifyClientId = secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""
+                spotifyClientSecret = secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""
             }
+
             buildConfigField(
                 type = "String",
                 name = "SPOTIFY_CLIENT_ID",
-                value = "\"${secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""}\""
+                value = "\"$spotifyClientId\""
             )
             buildConfigField(
                 type = "String",
                 name = "SPOTIFY_CLIENT_SECRET",
-                value = "\"${secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""}\""
+                value = "\"$spotifyClientSecret\""
             )
         }
         debug {
