@@ -2,11 +2,14 @@ package ly.david.ui.common.coverart
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -20,13 +23,20 @@ import coil.size.Size
 import ly.david.data.common.useHttps
 import ly.david.data.coverart.trimCoverArtSuffix
 import ly.david.ui.common.SMALL_COVER_ART_SIZE
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
-fun SmallCoverArt(
+fun ThumbnailImage(
     coverArtUrl: String,
     modifier: Modifier = Modifier,
+    clipCircle: Boolean = false,
     placeholderIcon: ImageVector = Icons.Default.Album,
 ) {
+
+    var _modifier = modifier.size(SMALL_COVER_ART_SIZE.dp)
+    if (clipCircle) _modifier = _modifier.clip(CircleShape)
+
     if (coverArtUrl.isNotEmpty()) {
 
         val painter = rememberAsyncImagePainter(
@@ -42,24 +52,25 @@ fun SmallCoverArt(
 
         when (painter.state) {
             is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
-                PlaceholderIcon(modifier, placeholderIcon)
+                PlaceholderIcon(_modifier, placeholderIcon)
             }
+
             is AsyncImagePainter.State.Success -> {
                 Image(
-                    modifier = modifier
-                        .size(SMALL_COVER_ART_SIZE.dp),
+                    modifier = _modifier,
                     painter = painter,
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
                 )
             }
+
             is AsyncImagePainter.State.Error -> {
                 // No need to show error. List items will auto-retry when next recomposed.
-                PlaceholderIcon(modifier, placeholderIcon)
+                PlaceholderIcon(_modifier, placeholderIcon)
             }
         }
     } else {
-        PlaceholderIcon(modifier, placeholderIcon)
+        PlaceholderIcon(_modifier, placeholderIcon)
     }
 }
 
@@ -74,4 +85,14 @@ private fun PlaceholderIcon(
         imageVector = placeholderIcon,
         contentDescription = null
     )
+}
+
+@DefaultPreviews
+@Composable
+private fun Preview() {
+    PreviewTheme {
+        Surface {
+            ThumbnailImage("https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489")
+        }
+    }
 }

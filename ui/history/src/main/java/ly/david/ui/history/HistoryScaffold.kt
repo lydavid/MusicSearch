@@ -1,6 +1,5 @@
 package ly.david.ui.history
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,12 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.room.history.LookupHistoryRoomModel
 import ly.david.ui.common.R
-import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
@@ -87,35 +83,5 @@ fun HistoryScaffold(
             onItemClick = onItemClick,
             onDeleteItem = deleteHistoryDelegate::delete
         )
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun HistoryScreen(
-    lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
-    modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
-) {
-
-    PagingLoadingAndErrorHandler(
-        modifier = modifier,
-        lazyPagingItems = lazyPagingItems,
-    ) { lookupHistory: LookupHistoryRoomModel? ->
-        when (lookupHistory) {
-            is LookupHistoryRoomModel -> {
-                HistoryListItem(
-                    lookupHistory = lookupHistory,
-                    modifier = Modifier.animateItemPlacement(),
-                    onItemClick = onItemClick,
-                    onDeleteItem = onDeleteItem
-                )
-            }
-
-            else -> {
-                // Do nothing.
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-package ly.david.data.auth
+package ly.david.data.musicbrainz
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.BEARER
 import ly.david.data.common.emptyToNull
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.di.ApplicationScope
-import ly.david.data.network.api.BEARER
 import net.openid.appauth.AuthState
 
 private const val MB_AUTH_KEY = "musicBrainzAuth"
@@ -26,6 +26,7 @@ interface MusicBrainzAuthState {
     suspend fun getAuthState(): AuthState?
     val authStateFlow: Flow<AuthState?>
     fun setAuthState(authState: AuthState?)
+
     val username: Flow<String>
     fun setUsername(username: String)
 }

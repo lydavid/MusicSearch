@@ -28,22 +28,22 @@ import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
-import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.domain.listitem.TrackListItemModel
 import ly.david.data.domain.listitem.toTrackListItemModel
+import ly.david.data.domain.paging.LookupResourceRemoteMediator
+import ly.david.data.domain.paging.MusicBrainzPagingConfig
+import ly.david.data.domain.release.ReleaseRepository
+import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.domain.paging.LookupResourceRemoteMediator
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.MediumRoomModel
-import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.release.tracks.TrackForListItem
-import ly.david.data.domain.release.ReleaseRepository
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -82,8 +82,8 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val subtitle = MutableStateFlow("")
     val release: MutableStateFlow<ReleaseScaffoldModel?> = MutableStateFlow(null)
+    val subtitle = MutableStateFlow("")
     val url = MutableStateFlow("")
 
     init {

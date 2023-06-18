@@ -1,10 +1,8 @@
-package ly.david.data.di
+package ly.david.data.musicbrainz
 
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
-import ly.david.data.auth.MusicBrainzAuthState
-import ly.david.data.auth.getBearerToken
-import ly.david.data.network.api.AUTHORIZATION
+import ly.david.data.AUTHORIZATION
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response

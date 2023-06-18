@@ -8,5 +8,6 @@ dependencies {
     api(projects.data.coverart)
     api(projects.data.domain)
     api(projects.data.room)
+    api(projects.data.spotify)
     api(projects.data.musicbrainz)
 }

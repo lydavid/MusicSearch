@@ -41,6 +41,8 @@ allprojects {
             defaultConfig {
                 minSdk = 23
                 targetSdk = 33
+
+                manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
             }
 
             compileOptions {

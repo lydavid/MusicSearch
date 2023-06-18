@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -8,8 +10,6 @@ android {
     namespace = "ly.david.data"
 
     defaultConfig {
-        // Need this or else we won't be able to compile androidTest for this module
-        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         kapt {
@@ -20,6 +20,35 @@ android {
     }
 
     buildTypes {
+        all {
+            // These will only be set through GHA environment
+            var spotifyClientId = project.properties["SPOTIFY_CLIENT_ID"] as String?
+            var spotifyClientSecret = project.properties["SPOTIFY_CLIENT_SECRET"] as String?
+
+            if (spotifyClientId.isNullOrEmpty() || spotifyClientSecret.isNullOrEmpty()) {
+                val secretsPropertiesFile = rootProject.file("secrets.properties")
+                val secretsProperties = if (secretsPropertiesFile.exists()) {
+                    Properties().apply {
+                        load(secretsPropertiesFile.inputStream())
+                    }
+                } else {
+                    Properties()
+                }
+                spotifyClientId = secretsProperties["SPOTIFY_CLIENT_ID"] as String? ?: ""
+                spotifyClientSecret = secretsProperties["SPOTIFY_CLIENT_SECRET"] as String? ?: ""
+            }
+
+            buildConfigField(
+                type = "String",
+                name = "SPOTIFY_CLIENT_ID",
+                value = "\"$spotifyClientId\""
+            )
+            buildConfigField(
+                type = "String",
+                name = "SPOTIFY_CLIENT_SECRET",
+                value = "\"$spotifyClientSecret\""
+            )
+        }
         debug {
             enableUnitTestCoverage = true
         }

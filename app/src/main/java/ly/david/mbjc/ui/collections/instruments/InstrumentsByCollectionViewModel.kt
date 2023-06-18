@@ -3,8 +3,8 @@ package ly.david.mbjc.ui.collections.instruments
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.auth.MusicBrainzAuthState
-import ly.david.data.auth.getBearerToken
+import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.InstrumentListItemModel
 import ly.david.data.domain.listitem.toInstrumentListItemModel
 import ly.david.data.network.InstrumentMusicBrainzModel

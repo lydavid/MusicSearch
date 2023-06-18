@@ -17,17 +17,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.listitem.Header
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.paging.LookupResourceRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.relation.HasRelationsRoomModel
+import ly.david.data.room.relation.HasRelations
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.relation.RelationRoomModel
 import ly.david.data.room.relation.toRelationRoomModel
-import ly.david.data.domain.RelationsListRepository
 
 /**
  * A [ViewModel] implements this for [pagedRelations].
@@ -55,7 +55,7 @@ interface IRelationsList {
 
     suspend fun hasRelationsBeenStored(): Boolean
 
-    suspend fun markResourceHasRelations()
+    suspend fun markEntityHasRelations()
 }
 
 /**
@@ -99,11 +99,7 @@ class RelationsList @Inject constructor(
                         }
                     ),
                     pagingSourceFactory = {
-                        if (query.isEmpty()) {
-                            relationDao.getRelationsForResource(resourceId)
-                        } else {
-                            relationDao.getRelationsForResourceFiltered(resourceId, "%$query%")
-                        }
+                        relationDao.getEntityRelationships(resourceId, "%$query%")
                     }
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
@@ -127,7 +123,7 @@ class RelationsList @Inject constructor(
      * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
      */
     override suspend fun hasRelationsBeenStored(): Boolean =
-        relationDao.getHasRelationsModel(resourceId.value)?.hasRelations == true
+        relationDao.hasRelations(resourceId.value)?.hasRelations == true
 
     /**
      * This is responsible for making a lookup request for this resource's relationships,
@@ -150,25 +146,19 @@ class RelationsList @Inject constructor(
         }
         relationDao.insertAll(relations)
 
-        markResourceHasRelations()
+        markEntityHasRelations()
     }
 
-    /**
-     * Indicate that we've stored a resource's relationships successfully.
-     */
-    override suspend fun markResourceHasRelations() {
-        relationDao.markResourceHasRelations(
-            hasRelationsRoomModel = HasRelationsRoomModel(
+    override suspend fun markEntityHasRelations() {
+        relationDao.markEntityHasRelations(
+            hasRelations = HasRelations(
                 resourceId = resourceId.value,
                 hasRelations = true
             )
         )
     }
 
-    /**
-     * Query to delete resource relationships in Room.
-     */
-    private suspend fun deleteLocalRelations(resourceId: String) {
-        relationDao.deleteRelationsByResource(resourceId)
+    private suspend fun deleteLocalRelations(entityId: String) {
+        relationDao.deleteRelationshipsByEntity(entityId)
     }
 }

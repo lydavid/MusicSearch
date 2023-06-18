@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,25 +24,24 @@ import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
 import ly.david.data.coverart.trimCoverArtSuffix
+import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.common.theme.PreviewTheme
 
-/**
- * A big cover art that fills the screen's width.
- */
 @Composable
-fun BigCoverArt(
-    coverArtUrl: String,
+fun LargeImage(
+    url: String,
     modifier: Modifier = Modifier,
 ) {
-    if (coverArtUrl.isNotEmpty()) {
+    if (url.isNotEmpty()) {
 
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(coverArtUrl.useHttps())
+                .data(url.useHttps())
                 .size(Size.ORIGINAL)
                 .scale(Scale.FIT)
                 .crossfade(true)
-                .memoryCacheKey(coverArtUrl.trimCoverArtSuffix())
-                .placeholderMemoryCacheKey(coverArtUrl.trimCoverArtSuffix())
+                .memoryCacheKey(url.trimCoverArtSuffix())
+                .placeholderMemoryCacheKey(url.trimCoverArtSuffix())
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )
@@ -95,4 +95,15 @@ private fun PainterImage(
         contentDescription = null,
         contentScale = ContentScale.FillWidth,
     )
+}
+
+// Only see loading spinner in IDE, but works if we run the preview.
+@DefaultPreviews
+@Composable
+private fun Preview() {
+    PreviewTheme {
+        Surface {
+            LargeImage("https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489")
+        }
+    }
 }

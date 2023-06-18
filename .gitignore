@@ -9,15 +9,18 @@
 .cxx
 local.properties
 
-# Includes example screenshots, example json responses
+# Example screenshots, example json responses
 /ignore_folder
 
-# Ignore app release keystore
+# App release keystore
 keystore.properties
 release-keystore.jks
 
-# Ignore Firebase key
+# Firebase key
 app/google-services.json
 
-# Ignore generated credentials from google-github-actions/auth
+# Generated credentials from google-github-actions/auth
 gha-creds-*.json
+
+# Spotify client id/secret
+secrets.properties

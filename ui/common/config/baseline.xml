@@ -11,5 +11,6 @@
     <ID>UnstableCollections:ExposedDropdownMenuBox.kt$List&lt;MusicBrainzResource&gt;</ID>
     <ID>UnstableCollections:MultipleChoiceDialog.kt$List&lt;String&gt;</ID>
     <ID>UnstableCollections:TabsBar.kt$List&lt;String&gt;</ID>
+    <ID>VariableNaming:ThumbnailImage.kt$var _modifier = modifier.size(SMALL_COVER_ART_SIZE.dp)</ID>
   </CurrentIssues>
 </SmellBaseline>

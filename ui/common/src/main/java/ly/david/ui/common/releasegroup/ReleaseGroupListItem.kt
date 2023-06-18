@@ -16,7 +16,7 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
-import ly.david.ui.common.coverart.SmallCoverArt
+import ly.david.ui.common.coverart.ThumbnailImage
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -78,7 +78,7 @@ fun ReleaseGroupListItem(
             }
         },
         leadingContent = {
-            SmallCoverArt(
+            ThumbnailImage(
                 coverArtUrl = buildCoverArtUrl(releaseGroup.coverArtPath.orEmpty()),
                 placeholderIcon = Icons.Default.Folder,
             )
