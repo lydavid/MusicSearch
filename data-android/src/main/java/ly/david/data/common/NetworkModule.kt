@@ -25,14 +25,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
-        return loggingInterceptor
-    }
-
-    @Singleton
-    @Provides
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
         httpLoggingInterceptor: HttpLoggingInterceptor,
