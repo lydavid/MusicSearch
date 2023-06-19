@@ -1,4 +1,4 @@
-package ly.david.data.persistence
+package ly.david.data.room
 
 import androidx.room.TypeConverter
 import java.util.Date
@@ -7,6 +7,7 @@ import ly.david.data.network.resourceUri
 
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
+
 internal class MusicBrainzRoomTypeConverters {
 
     // For things like "secondary-types" which does not need its own table.
@@ -21,12 +22,6 @@ internal class MusicBrainzRoomTypeConverters {
             string.split(DELIMITER)
         }
 
-//    @TypeConverter
-//    fun toCoordinates(string: String?): Destination? = Destination.values().firstOrNull { it.route == string }
-//
-//    @TypeConverter
-//    fun fromCoordinates(coordinates: Coordinates): String? = destination?.route
-
     @TypeConverter
     fun toResource(string: String?): MusicBrainzResource? =
         MusicBrainzResource.values().firstOrNull { it.resourceUri == string }
@@ -40,4 +35,3 @@ internal class MusicBrainzRoomTypeConverters {
     @TypeConverter
     fun fromDate(date: Date): Long = date.time
 }
-

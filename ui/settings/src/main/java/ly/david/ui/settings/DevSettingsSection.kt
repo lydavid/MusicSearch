@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.domain.Destination
-import ly.david.data.persistence.DATABASE_VERSION
+import ly.david.data.room.DATABASE_VERSION
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 

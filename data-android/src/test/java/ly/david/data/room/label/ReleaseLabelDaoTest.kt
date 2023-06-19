@@ -1,12 +1,10 @@
-package ly.david.data.persistence.label
+package ly.david.data.room.label
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.room.release.ReleaseDao
-import ly.david.data.room.label.LabelDao
-import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.releases.ReleaseLabel
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.release.ReleaseRoomModel

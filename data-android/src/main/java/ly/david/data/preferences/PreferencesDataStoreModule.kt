@@ -1,4 +1,4 @@
-package ly.david.data.di
+package ly.david.data.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore

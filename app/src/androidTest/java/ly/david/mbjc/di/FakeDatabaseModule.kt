@@ -8,9 +8,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
-import ly.david.data.di.DatabaseModule
+import ly.david.data.room.DatabaseModule
 import ly.david.data.room.MusicBrainzDatabase
-import ly.david.data.persistence.MusicBrainzRoomDatabase
+import ly.david.data.room.MusicBrainzRoomDatabase
 
 @Module
 @TestInstallIn(

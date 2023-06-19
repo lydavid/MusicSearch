@@ -1,17 +1,15 @@
-package ly.david.data.persistence.artist
+package ly.david.data.room.artist
 
 import androidx.paging.PagingSource
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
+import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
+import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
-import ly.david.data.room.artist.ArtistDao
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
-import ly.david.data.room.artist.ArtistRoomModel
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.assertEquals

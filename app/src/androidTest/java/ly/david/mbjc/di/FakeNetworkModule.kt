@@ -6,7 +6,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import java.net.InetAddress
 import javax.inject.Singleton
-import ly.david.data.di.NetworkModule
+import ly.david.data.common.NetworkModule
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.tls.HandshakeCertificates

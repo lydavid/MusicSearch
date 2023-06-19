@@ -1,4 +1,4 @@
-package ly.david.data.di
+package ly.david.data.common
 
 import android.content.Context
 import dagger.Module
@@ -25,16 +25,23 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        return loggingInterceptor
+    }
+
+    @Singleton
+    @Provides
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
+        httpLoggingInterceptor: HttpLoggingInterceptor,
         musicBrainzAuthenticator: MusicBrainzAuthenticator
     ): OkHttpClient {
         val clientBuilder = OkHttpClient().newBuilder()
 
         if (BuildConfig.DEBUG) {
-            val loggingInterceptor = HttpLoggingInterceptor()
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
-            clientBuilder.addInterceptor(loggingInterceptor)
+            clientBuilder.addInterceptor(httpLoggingInterceptor)
         }
 
         clientBuilder
@@ -47,8 +54,6 @@ object NetworkModule {
                 chain.proceed(requestBuilder.build())
             }
             .authenticator(musicBrainzAuthenticator)
-            // TODO: make sure when doing swipe to refresh, we actually fetch from network not this cache
-            //  right now, it seems to work like that sometimes, switching between 200 and 304
             .cache(
                 Cache(
                     directory = File(context.cacheDir, "http_cache"),

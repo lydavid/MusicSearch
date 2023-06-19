@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>EmptyClassBlock:Migrations.kt$Migrations${ }</ID>
     <ID>LongMethod:ArtistReleaseGroupDaoTest.kt$ArtistReleaseGroupDaoTest$@Test fun `delete release groups by artist`()</ID>
   </CurrentIssues>
 </SmellBaseline>

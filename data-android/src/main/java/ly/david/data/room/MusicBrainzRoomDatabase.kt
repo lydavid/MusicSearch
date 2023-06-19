@@ -1,10 +1,9 @@
-package ly.david.data.persistence
+package ly.david.data.room
 
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import ly.david.data.room.MusicBrainzDatabase
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.CountryCode
 import ly.david.data.room.area.places.AreaPlace

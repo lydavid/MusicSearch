@@ -3,7 +3,7 @@
 ## Firebase
 - Go to https://console.firebase.google.com/
 - Create project with analytics and crashlytics
-- Add google-services.json to `app` directory
+- Add `google-services.json` to `app` directory
 
 ## MusicBrainz
 - Go to https://musicbrainz.org/account/applications

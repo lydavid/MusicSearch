@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import ly.david.data.BEARER
 import ly.david.data.common.emptyToNull
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.di.ApplicationScope
+import ly.david.data.common.ApplicationScope
 import net.openid.appauth.AuthState
 
 private const val MB_AUTH_KEY = "musicBrainzAuth"

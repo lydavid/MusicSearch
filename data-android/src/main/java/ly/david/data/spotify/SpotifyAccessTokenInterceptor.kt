@@ -10,7 +10,7 @@ import ly.david.data.spotify.auth.SpotifyAuthApi
 import okhttp3.Interceptor
 import okhttp3.Response
 
-private const val MS_TO_S = 1000
+private const val MS_TO_S = 1000L
 
 class SpotifyAccessTokenInterceptor @Inject constructor(
     private val spotifyOAuth: SpotifyOAuth,

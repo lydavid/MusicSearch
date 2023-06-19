@@ -1,10 +1,9 @@
-package ly.david.data.di
+package ly.david.data.room
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ly.david.data.room.MusicBrainzDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)

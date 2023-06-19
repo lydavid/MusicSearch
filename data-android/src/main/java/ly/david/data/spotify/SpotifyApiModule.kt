@@ -27,15 +27,14 @@ object SpotifyApiModule {
     @Singleton
     @Provides
     fun provideSpotifyApi(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
         spotifyAccessTokenInterceptor: SpotifyAccessTokenInterceptor
     ): SpotifyApi {
 
         val clientBuilder = OkHttpClient().newBuilder()
 
         if (BuildConfig.DEBUG) {
-            val loggingInterceptor = HttpLoggingInterceptor()
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
-            clientBuilder.addInterceptor(loggingInterceptor)
+            clientBuilder.addInterceptor(httpLoggingInterceptor)
         }
 
         clientBuilder.addInterceptor(spotifyAccessTokenInterceptor)

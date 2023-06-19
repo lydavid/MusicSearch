@@ -9,7 +9,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import ly.david.data.di.ApplicationScope
+import ly.david.data.common.ApplicationScope
 
 private const val SPOTIFY_ACCESS_TOKEN_KEY = "SPOTIFY_ACCESS_TOKEN_KEY"
 private val ACCESS_TOKEN_PREFERENCE = stringPreferencesKey(SPOTIFY_ACCESS_TOKEN_KEY)

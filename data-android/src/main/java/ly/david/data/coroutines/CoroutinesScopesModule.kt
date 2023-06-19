@@ -1,4 +1,4 @@
-package ly.david.data.di
+package ly.david.data.coroutines
 
 import dagger.Module
 import dagger.Provides
@@ -8,6 +8,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import ly.david.data.common.ApplicationScope
 
 @InstallIn(SingletonComponent::class)
 @Module
