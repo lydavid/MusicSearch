@@ -27,7 +27,7 @@ dependencyResolutionManagement {
             version("okhttp", "4.11.0")
             version("paging", "3.1.1")
             version("retrofit", "2.9.0")
-            version("room", "2.5.1")
+            version("room", "2.5.2")
 
             library("accompanist-swiperefresh", "com.google.accompanist", "accompanist-swiperefresh").versionRef("accompanist")
             library("accompanist-pager", "com.google.accompanist", "accompanist-pager").versionRef("accompanist")
