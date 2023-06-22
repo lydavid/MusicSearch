@@ -12,4 +12,4 @@ A place to document my development, testing, and release processes.
 - [OAuth 2 with MusicBrainz](./implemented/oauth_musicbrainz.md)
 
 ## Release
-- [Automated Internal Release](./automated_internal_release.md)
+- [Automated Release](./automated_release.md)
