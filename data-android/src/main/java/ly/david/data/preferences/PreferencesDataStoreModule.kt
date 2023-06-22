@@ -14,9 +14,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import ly.david.data.coroutines.IoDispatcher
 
 private const val SETTINGS_KEY = "settings"
 
@@ -29,13 +30,14 @@ object PreferencesDataStoreModule {
     @Singleton
     fun providePreferenceDataStore(
         @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
                 produceNewData = { emptyPreferences() }
             ),
             migrations = listOf(SharedPreferencesMigration(context, SETTINGS_KEY)),
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+            scope = CoroutineScope(SupervisorJob() + ioDispatcher),
             produceFile = { context.preferencesDataStoreFile(SETTINGS_KEY) }
         )
     }
