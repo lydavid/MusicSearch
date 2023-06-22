@@ -38,19 +38,20 @@ fun AreaListItem(
 ) {
     ListItem(
         headlineContent = {
+            // Misnomer here, but it's the same condition to show this tab and to show flags
+            val areaName = if (area.showReleases()) {
+                val flags = area.countryCodes?.joinToString { it.toFlagEmoji() }
+                flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
+            } else {
+                area.name
+            }
+            Text(
+                text = areaName,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+        },
+        supportingContent = {
             Column {
-                // Misnomer here, but it's the same condition to show this tab and to show flags
-                val areaName = if (area.showReleases()) {
-                    val flags = area.countryCodes?.joinToString { it.toFlagEmoji() }
-                    flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
-                } else {
-                    area.name
-                }
-                Text(
-                    text = areaName,
-                    style = TextStyles.getCardTitleTextStyle(),
-                )
-
                 DisambiguationText(disambiguation = area.disambiguation)
 
                 val type = area.type
@@ -58,7 +59,7 @@ fun AreaListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = type,
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -79,7 +80,7 @@ fun AreaListItem(
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
                         text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
             }

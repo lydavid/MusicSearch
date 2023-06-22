@@ -32,7 +32,7 @@ fun TrackListItem(
         headlineContent = {
             Text(
                 text = track.title,
-                style = TextStyles.getCardTitleTextStyle(),
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         modifier = modifier.clickable {
@@ -41,13 +41,13 @@ fun TrackListItem(
         leadingContent = {
             Text(
                 text = track.number,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodySubTextStyle()
             )
         },
         trailingContent = {
             Text(
                 text = track.length.toDisplayTime(),
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodySubTextStyle()
             )
         },
         supportingContent = {

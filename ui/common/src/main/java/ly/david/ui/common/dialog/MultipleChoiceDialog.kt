@@ -48,7 +48,7 @@ fun MultipleChoiceDialog(
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
                     text = title,
-                    style = TextStyles.getCardTitleTextStyle(),
+                    style = TextStyles.getHeaderTextStyle(),
                 )
 
                 Column(modifier = Modifier.selectableGroup()) {

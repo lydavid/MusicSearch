@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 object TextStyles {
 
     @Composable
-    fun getCardTitleTextStyle() = MaterialTheme.typography.titleLarge
+    fun getHeaderTextStyle() = MaterialTheme.typography.titleLarge
 
     @Composable
     fun getCardBodyTextStyle() = MaterialTheme.typography.bodyLarge

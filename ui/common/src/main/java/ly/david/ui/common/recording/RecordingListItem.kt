@@ -35,7 +35,7 @@ fun RecordingListItem(
         headlineContent = {
             Text(
                 text = recording.name,
-                style = TextStyles.getCardTitleTextStyle(),
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         modifier = modifier.clickable {
@@ -51,7 +51,7 @@ fun RecordingListItem(
                         modifier = Modifier
                             .padding(top = 4.dp)
                             .fillMaxWidth(),
-                        style = TextStyles.getCardBodyTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle()
                     )
                 }
             }
@@ -61,13 +61,13 @@ fun RecordingListItem(
                 recording.firstReleaseDate.ifNotNullOrEmpty {
                     Text(
                         text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
                 Text(
                     text = recording.length.toDisplayTime(),
-                    style = TextStyles.getCardBodyTextStyle()
+                    style = TextStyles.getCardBodySubTextStyle()
                 )
             }
         }

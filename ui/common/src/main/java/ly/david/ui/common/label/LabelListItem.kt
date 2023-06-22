@@ -34,7 +34,7 @@ fun LabelListItem(
             Column {
                 Text(
                     text = label.getNameWithDisambiguation(),
-                    style = TextStyles.getCardTitleTextStyle()
+                    style = TextStyles.getCardBodyTextStyle()
                 )
 
                 label.type?.ifNotNullOrEmpty {
@@ -42,7 +42,7 @@ fun LabelListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
                         color = getSubTextColor(),
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -50,7 +50,7 @@ fun LabelListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = stringResource(id = R.string.lc, it),
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -62,7 +62,7 @@ fun LabelListItem(
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
                         text = it,
-                        style = TextStyles.getCardBodyTextStyle(),
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
             }

@@ -19,7 +19,7 @@ fun SimpleAlertDialog(
         title = {
             Text(
                 text = title,
-                style = TextStyles.getCardTitleTextStyle(),
+                style = TextStyles.getHeaderTextStyle(),
             )
         },
         onDismissRequest = {

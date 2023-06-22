@@ -23,12 +23,14 @@ fun WorkListItem(
 ) {
     ListItem(
         headlineContent = {
+            Text(
+                text = work.name,
+                style = TextStyles.getCardBodyTextStyle(),
+            )
+        },
+        supportingContent = {
             Column {
                 work.run {
-                    Text(
-                        text = name,
-                        style = TextStyles.getCardTitleTextStyle(),
-                    )
                     DisambiguationText(disambiguation = disambiguation)
                     iswcs?.ifNotNullOrEmpty {
                         Text(
@@ -36,16 +38,16 @@ fun WorkListItem(
                             style = TextStyles.getCardBodySubTextStyle()
                         )
                     }
-                    type?.let {
+                    type?.ifNotNullOrEmpty {
                         Text(
                             text = it,
-                            style = TextStyles.getCardBodyTextStyle()
+                            style = TextStyles.getCardBodySubTextStyle()
                         )
                     }
                     language?.ifNotNullOrEmpty {
                         Text(
                             text = Locale(it).displayLanguage,
-                            style = TextStyles.getCardBodyTextStyle()
+                            style = TextStyles.getCardBodySubTextStyle()
                         )
                     }
 
@@ -57,7 +59,7 @@ fun WorkListItem(
                 }
             }
         },
-        modifier = modifier.clickable{ onWorkClick(work) }
+        modifier = modifier.clickable { onWorkClick(work) }
     )
 }
 

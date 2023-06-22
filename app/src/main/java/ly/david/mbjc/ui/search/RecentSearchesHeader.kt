@@ -30,7 +30,7 @@ internal fun RecentSearchesHeader(
     ) {
         Text(
             text = stringResource(id = R.string.recent_searches),
-            style = TextStyles.getCardTitleTextStyle(),
+            style = TextStyles.getHeaderTextStyle(),
             fontWeight = FontWeight.SemiBold
         )
 

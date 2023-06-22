@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.theme.TextStyles.getCardTitleTextStyle
+import ly.david.ui.common.theme.TextStyles.getCardBodyTextStyle
 
 object BroadcastTypes {
     private const val SPOTIFY_PACKAGE = "com.spotify.music"
@@ -120,7 +120,7 @@ internal fun SpotifyScreen(
             metadata.trackId.ifNotNullOrEmpty {
                 Text(
                     text = it,
-                    style = getCardTitleTextStyle()
+                    style = getCardBodyTextStyle()
                 )
             }
 
@@ -130,7 +130,7 @@ internal fun SpotifyScreen(
                         searchMusicBrainz(artistName, MusicBrainzResource.ARTIST)
                     },
                     text = artistName,
-                    style = getCardTitleTextStyle()
+                    style = getCardBodyTextStyle()
                 )
 
                 metadata.albumName.ifNotNullOrEmpty { albumName ->
@@ -139,7 +139,7 @@ internal fun SpotifyScreen(
                             searchMusicBrainz("$albumName AND artist:$artistName", MusicBrainzResource.RELEASE_GROUP)
                         },
                         text = albumName,
-                        style = getCardTitleTextStyle()
+                        style = getCardBodyTextStyle()
                     )
                 }
 
@@ -149,7 +149,7 @@ internal fun SpotifyScreen(
                             searchMusicBrainz("$trackName AND artist:$artistName", MusicBrainzResource.RECORDING)
                         },
                         text = trackName,
-                        style = getCardTitleTextStyle()
+                        style = getCardBodyTextStyle()
                     )
                 }
             }
@@ -157,14 +157,14 @@ internal fun SpotifyScreen(
             metadata.trackLengthInSec.ifNotNull {
                 Text(
                     text = it.toString(),
-                    style = getCardTitleTextStyle()
+                    style = getCardBodyTextStyle()
 
                 )
             }
             metadata.timeSentInMs.ifNotNull {
                 Text(
                     text = it.toString(),
-                    style = getCardTitleTextStyle()
+                    style = getCardBodyTextStyle()
                 )
             }
         }

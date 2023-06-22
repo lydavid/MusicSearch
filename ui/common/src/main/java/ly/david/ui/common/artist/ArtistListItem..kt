@@ -32,7 +32,7 @@ fun ArtistListItem(
         headlineContent = {
             Text(
                 text = artist.name,
-                style = TextStyles.getCardTitleTextStyle()
+                style = TextStyles.getCardBodyTextStyle()
             )
         },
         modifier = modifier.clickable {
@@ -63,7 +63,7 @@ fun ArtistListItem(
             artist.countryCode?.ifNotNullOrEmpty { countryCode ->
                 Text(
                     text = "${countryCode.toFlagEmoji()} $countryCode",
-                    style = TextStyles.getCardTitleTextStyle()
+                    style = TextStyles.getCardBodyTextStyle()
                 )
             }
         }

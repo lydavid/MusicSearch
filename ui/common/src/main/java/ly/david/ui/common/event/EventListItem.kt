@@ -34,7 +34,7 @@ fun EventListItem(
 
                     Text(
                         text = name,
-                        style = TextStyles.getCardTitleTextStyle()
+                        style = TextStyles.getCardBodyTextStyle()
                     )
 
                     DisambiguationText(disambiguation = disambiguation)
@@ -43,7 +43,7 @@ fun EventListItem(
                         Text(
                             text = it,
                             modifier = Modifier.padding(top = 4.dp),
-                            style = TextStyles.getCardBodyTextStyle(),
+                            style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
 

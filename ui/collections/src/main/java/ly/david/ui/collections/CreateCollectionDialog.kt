@@ -71,7 +71,7 @@ fun CreateCollectionDialog(
                 Text(
                     modifier = Modifier,
                     text = stringResource(id = R.string.create_collection),
-                    style = TextStyles.getCardTitleTextStyle(),
+                    style = TextStyles.getHeaderTextStyle(),
                 )
 
                 TextField(
