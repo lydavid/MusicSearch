@@ -1,5 +1,8 @@
 {
-  "branches": "master",
+  "branches": [
+    "master",
+    "beta"
+  ],
   "repositoryUrl": "https://github.com/lydavid/MusicSearch",
   "debug": "false",
   "plugins": [
