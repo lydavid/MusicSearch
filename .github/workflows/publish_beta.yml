@@ -29,7 +29,7 @@ jobs:
           echo "status=$status" >> $GITHUB_OUTPUT
         shell: bash
 
-  publish:
+  publish-beta:
     needs: check
     if: needs.check.outputs.status == 'deploy'
     timeout-minutes: 60
