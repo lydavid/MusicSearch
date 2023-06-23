@@ -52,7 +52,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
           cache: 'npm'
 
       - name: Setup semantic-release
@@ -67,14 +67,14 @@ jobs:
       # -b preserves our line separator preference
       - name: Bump version code
         run: |
-          VC=$(grep 'VERSION_CODE' gradle.properties | sed 's/[^0-9]//g')
+          VC=$(grep 'VERSION_CODE' gradle.properties | cut -d = -f 2)
           sed -bi "s/VERSION_CODE=$VC/VERSION_CODE=$(($VC + 1))/" gradle.properties
         shell: bash
 
       - name: Bump version name
         if: steps.get-next-version.outputs.new-release-published == 'true'
         run: |
-          VN=$(grep 'VERSION_NAME' gradle.properties | sed 's/[^0-9.]//g')
+          VN=$(grep 'VERSION_NAME' gradle.properties | cut -d = -f 2)
           newVN=${{ steps.get-next-version.outputs.new-release-version }}
           sed -bi "s/VERSION_NAME=$VN/VERSION_NAME=$newVN/" gradle.properties
         shell: bash
