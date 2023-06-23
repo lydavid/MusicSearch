@@ -32,7 +32,7 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
 ## Development
 
-[See here](./docs/README.md) for notes on upcoming features and some development processes.
+[See here](./docs/README.md) for notes on setting up the project, and some development processes.
 
 ## Privacy Policy
 
