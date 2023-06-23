@@ -13,7 +13,6 @@ import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.coverart.LargeImage
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
@@ -41,6 +40,9 @@ internal fun ArtistDetailsScreen(
 
             artist.run {
                 InformationListSeparatorHeader(R.string.artist)
+                sortName.ifNotNullOrEmpty {
+                    TextWithHeadingRes(headingRes = R.string.sort_name, text = it)
+                }
                 type?.ifNotNullOrEmpty {
                     TextWithHeadingRes(headingRes = R.string.type, text = it)
                 }
@@ -60,10 +62,14 @@ internal fun ArtistDetailsScreen(
                         else -> R.string.dissolved
                     }
                 )
-                // TODO: begin area
-                // TODO: area
-                // TODO: end area
+
+                // TODO: begin area, area, end area
+//                countryCode?.ifNotNullOrEmpty {
+//                    TextWithHeadingRes(headingRes = R.string.area, text = it.toFlagEmoji())
+//                }
+
                 // TODO: isni code
+
                 // todo: ipis code
 
                 Spacer(modifier = Modifier.padding(bottom = 16.dp))
@@ -81,7 +87,6 @@ internal fun ArtistDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {
@@ -98,7 +103,8 @@ private fun Preview() {
                         ended = true
                     ),
                     sortName = "Beatles, The"
-                )
+                ),
+                artistImageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433"
             )
         }
     }
