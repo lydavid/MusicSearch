@@ -1,37 +1,12 @@
-name: Publish beta build
+name: Publish production build
 
-# This runs every night,
-# so we can expect a new beta release in Google Play if we made any commits during the day.
-# However, we may not always get a new GitHub release. That is decided by semantic release.
-# eg. If only chores were committed, then there would be no new GitHub release.
-# Google Play allows us to reuse versionName, so it isn't a problem for our releases to be out of sync.
 on:
-  schedule:
-    - cron: '0 7 * * *'
-  workflow_dispatch:
+  push:
+    branches:
+      - "master"
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.early_exit.outputs.status }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      # Cannot early exit jobs with GHA yet
-      # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
-      - name: Determine whether to exit early based on previous commit
-        id: early_exit
-        run: |
-          status='skip'
-          if ! (git log --oneline -n 1 | grep -c 'chore\: bump version \[skip ci\]'); then status='deploy'; fi
-          echo "status=$status" >> $GITHUB_OUTPUT
-        shell: bash
-
-  publish-beta:
-    needs: check
-    if: needs.check.outputs.status == 'deploy'
+  publish-production:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
@@ -109,7 +84,7 @@ jobs:
         with:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: io.github.lydavid.musicsearch
-          track: beta
+          track: production
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
 
