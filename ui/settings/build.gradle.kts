@@ -10,6 +10,7 @@ android {
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -33,6 +34,9 @@ android {
 dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.ui.common)
+
+    implementation(libs.aboutlibraries.compose)
+    implementation(libs.aboutlibraries.core)
 
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.datastore.preferences)

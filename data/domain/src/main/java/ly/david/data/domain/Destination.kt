@@ -21,6 +21,7 @@ private const val TOP_LEVEL_COLLECTIONS = "collections"
 private const val TOP_LEVEL_SETTINGS = "settings"
 
 private const val EXPERIMENTAL = "experimental"
+private const val LICENSES = "licenses"
 
 /**
  * This divider should be the same used for dividing parameters such as {artistId} passed to navigation.
@@ -54,7 +55,7 @@ enum class Destination(val route: String) {
     COLLECTIONS(TOP_LEVEL_COLLECTIONS),
 
     SETTINGS(TOP_LEVEL_SETTINGS),
-
+    SETTINGS_LICENSES("$TOP_LEVEL_SETTINGS$DIVIDER$LICENSES"),
     EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "SPOTIFY")
 }
 

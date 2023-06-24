@@ -16,11 +16,13 @@ plugins {
     id("com.google.gms.google-services") version "4.3.15" apply false
     id("com.google.firebase.crashlytics") version "2.9.6" apply false
     id("dev.iurysouza.modulegraph") version "0.4.0"
-    id("app.cash.paparazzi") version "1.2.0" apply false
+    id("app.cash.paparazzi") version "1.3.0" apply false
+    id("com.mikepenz.aboutlibraries.plugin") version "10.8.0" apply true
 }
 
 allprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
+    apply(plugin = "com.mikepenz.aboutlibraries.plugin")
 
     repositories {
         google()
