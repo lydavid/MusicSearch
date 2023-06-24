@@ -15,9 +15,10 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import java.util.Random
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import ly.david.data.coroutines.IoDispatcher
 import ly.david.data.preferences.PreferencesDataStoreModule
 
 private const val TEST_SETTINGS_KEY = "test_settings"
@@ -33,6 +34,7 @@ internal object FakePreferencesDataStoreModule {
     @Singleton
     fun providePreferenceDataStore(
         @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): DataStore<Preferences> {
         // TODO: can this cause collisions if we decide to instrument test datastore?
         val random = Random().nextInt() // https://stackoverflow.com/a/73682506
@@ -41,7 +43,7 @@ internal object FakePreferencesDataStoreModule {
                 produceNewData = { emptyPreferences() }
             ),
             migrations = listOf(SharedPreferencesMigration(context, TEST_SETTINGS_KEY)),
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+            scope = CoroutineScope(SupervisorJob() + ioDispatcher),
             produceFile = { context.preferencesDataStoreFile("${TEST_SETTINGS_KEY}_$random") }
         )
     }
