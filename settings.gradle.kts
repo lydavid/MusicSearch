@@ -11,6 +11,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
 
+            version("aboutlibraries", "10.8.0")
             version("accompanist", "0.30.1")
             version("coil", "2.4.0")
             version("compose-compiler", "1.4.7")
@@ -28,6 +29,9 @@ dependencyResolutionManagement {
             version("paging", "3.1.1")
             version("retrofit", "2.9.0")
             version("room", "2.5.2")
+
+            library("aboutlibraries-compose", "com.mikepenz", "aboutlibraries-compose").versionRef("aboutlibraries")
+            library("aboutlibraries-core", "com.mikepenz", "aboutlibraries-core").versionRef("aboutlibraries")
 
             library("accompanist-swiperefresh", "com.google.accompanist", "accompanist-swiperefresh").versionRef("accompanist")
             library("accompanist-pager", "com.google.accompanist", "accompanist-pager").versionRef("accompanist")

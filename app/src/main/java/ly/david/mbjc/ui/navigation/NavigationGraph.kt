@@ -38,6 +38,8 @@ import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 import ly.david.ui.common.R
 import ly.david.ui.history.HistoryScaffold
+import ly.david.ui.settings.SettingsScaffold
+import ly.david.ui.settings.licenses.LicensesScaffold
 
 private const val ID = "id"
 private const val TITLE = "title"
@@ -355,6 +357,7 @@ internal fun NavigationGraph(
 
         val onSettingsClick: (Destination) -> Unit = { destination ->
             when (destination) {
+                Destination.SETTINGS_LICENSES,
                 Destination.EXPERIMENTAL_SPOTIFY -> {
                     navController.goTo(destination)
                 }
@@ -368,7 +371,7 @@ internal fun NavigationGraph(
         composable(
             Destination.SETTINGS.route
         ) {
-            ly.david.ui.settings.SettingsScaffold(
+            SettingsScaffold(
                 modifier = modifier,
                 onDestinationClick = { destination ->
                     onSettingsClick(destination)
@@ -379,6 +382,15 @@ internal fun NavigationGraph(
                 onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
                 onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
+            )
+        }
+
+        composable(
+            Destination.SETTINGS_LICENSES.route
+        ) {
+            LicensesScaffold(
+                modifier = modifier,
+                onBack = navController::navigateUp
             )
         }
 

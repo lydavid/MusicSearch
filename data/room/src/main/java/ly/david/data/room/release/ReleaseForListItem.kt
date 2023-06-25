@@ -13,7 +13,6 @@ data class ReleaseForListItem(
     @ColumnInfo("artist_credit_names")
     val artistCreditNames: String?,
 
-    // TODO: we've lost the ability to filter on this field
     @Relation(
         entity = ReleaseFormatTrackCount::class,
         parentColumn = "id",

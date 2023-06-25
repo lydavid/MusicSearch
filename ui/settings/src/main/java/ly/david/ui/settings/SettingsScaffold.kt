@@ -18,6 +18,7 @@ import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.settings.components.ClickableItem
 import ly.david.ui.settings.components.ProfileCard
 import ly.david.ui.settings.components.SettingSwitch
 import ly.david.ui.settings.components.SettingWithDialogChoices
@@ -123,6 +124,13 @@ fun SettingsScreen(
                 header = "Sort release groups by type",
                 checked = sortReleaseGroupListItems,
                 onCheckedChange = onSortReleaseGroupListItemsChange
+            )
+
+            ClickableItem(
+                text = stringResource(id = R.string.open_source_licenses),
+                onClick = {
+                    onDestinationClick(Destination.SETTINGS_LICENSES)
+                }
             )
 
             val versionKey = stringResource(id = R.string.app_version)

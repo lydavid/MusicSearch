@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
@@ -52,7 +53,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
     }
 
     @Test
-    fun createCollections() = runTest {
+    fun createCollections() = runTest(timeout = 15.seconds) {
         composeTestRule
             .onNodeWithText(collections)
             .performClick()

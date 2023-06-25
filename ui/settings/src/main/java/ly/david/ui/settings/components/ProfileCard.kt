@@ -82,7 +82,7 @@ internal fun ProfileCard(
 
 @DefaultPreviews
 @Composable
-private fun LoggedOut() {
+internal fun PreviewProfileCardLoggedOut() {
     PreviewTheme {
         Surface {
             ProfileCard(
@@ -95,7 +95,7 @@ private fun LoggedOut() {
 
 @DefaultPreviews
 @Composable
-private fun LoggedIn() {
+internal fun PreviewProfileCardLoggedIn() {
     PreviewTheme {
         Surface {
             ProfileCard(
@@ -108,7 +108,7 @@ private fun LoggedIn() {
 
 @DefaultPreviews
 @Composable
-private fun LoggedInWaitingForUsername() {
+internal fun PreviewProfileCardLoggedInWaitingForUsername() {
     PreviewTheme {
         Surface {
             ProfileCard(
