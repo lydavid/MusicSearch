@@ -6,6 +6,27 @@ pluginManagement {
     }
 }
 
+plugins {
+    id("com.gradle.enterprise") version "3.13.4"
+}
+
+gradleEnterprise {
+    buildCache {
+        local {
+            isEnabled = true
+            removeUnusedEntriesAfterDays = 30
+        }
+        remote<HttpBuildCache> {
+            isEnabled = false
+        }
+    }
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+        publishAlways()
+    }
+}
+
 // https://docs.gradle.org/current/userguide/platforms.html
 dependencyResolutionManagement {
     versionCatalogs {
