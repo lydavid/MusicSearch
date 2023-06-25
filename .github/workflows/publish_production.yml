@@ -69,7 +69,7 @@ jobs:
         shell: bash
 
       - name: Assemble apk, bundle aab
-        run: ./gradlew assemble bundle
+        run: ./gradlew assembleRelease bundleRelease
 
       - name: Authenticate to Google Cloud
         id: auth
