@@ -55,6 +55,7 @@ graph LR
     domain
     musicbrainz
     room
+    spotify
   end
 
   domain --> base
@@ -64,16 +65,19 @@ graph LR
   room --> base
   room --> coverart
   room --> musicbrainz
-  musicbrainz --> base
   data --> base
   data --> coverart
   data --> domain
   data --> room
+  data --> spotify
   data --> musicbrainz
   settings --> data-android
   settings --> common
   data-android --> data
   data-android --> test-data
+  test-data --> data
+  musicbrainz --> base
+  spotify --> base
   collections --> data
   collections --> common
   common --> data-android
@@ -102,6 +106,5 @@ graph LR
   coverart --> base
   history --> data
   history --> common
-  test-data --> data
 
 ```
