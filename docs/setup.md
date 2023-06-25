@@ -2,11 +2,10 @@
 
 ## Firebase
 - Go to https://console.firebase.google.com/
-- Create project with analytics and crashlytics
-- The application id needs to be:
+- Create 2 projects with analytics and crashlytics with the following package ids:
   - `io.github.lydavid.musicsearch.debug` for debug
   - `io.github.lydavid.musicsearch` for release
-- Add `google-services.json` to `app` directory
+- Download and add `google-services.json` to `app/src/debug` and `app/src/release` directory
 
 ## MusicBrainz
 - Go to https://musicbrainz.org/account/applications

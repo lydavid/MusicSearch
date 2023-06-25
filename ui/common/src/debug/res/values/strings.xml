@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="deeplink_schema" translatable="false">io.github.lydavid.musicsearch.debug</string>
+</resources>
