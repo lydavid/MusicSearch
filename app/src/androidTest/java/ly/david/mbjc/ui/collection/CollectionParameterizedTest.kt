@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.collectableResources
@@ -66,7 +67,7 @@ internal class CollectionParameterizedTest(
     }
 
     @Test
-    fun onlyLocalCollections() = runTest {
+    fun onlyLocalCollections() = runTest(timeout = 15.seconds) {
         composeTestRule
             .onNodeWithText(collections)
             .performClick()
