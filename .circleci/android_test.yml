@@ -14,7 +14,6 @@ parameters:
 jobs:
   android-test:
     environment:
-      GRADLE_USER_HOME: "~/.gradle"
       JVM_OPTS: -Xmx8g
     executor:
       name: android/android-machine
@@ -25,8 +24,6 @@ jobs:
       - checkout
 
       - run: chmod +x gradlew
-
-      - run: mkdir -p ~/.gradle ; cp .ci/ci-gradle.properties ~/.gradle/gradle.properties
 
       - android/change-java-version:
           java-version: 17
