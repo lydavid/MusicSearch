@@ -35,7 +35,7 @@ dependencyResolutionManagement {
             version("aboutlibraries", "10.8.0")
             version("accompanist", "0.30.1")
             version("coil", "2.4.0")
-            version("compose-compiler", "1.4.7")
+            version("compose-compiler", "1.4.8")
             version("compose-foundation", "1.4.3")
             version("compose-material", "1.4.3")
             version("compose-material3", "1.1.1")
