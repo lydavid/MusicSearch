@@ -20,7 +20,7 @@ plugins {
     id("com.mikepenz.aboutlibraries.plugin") version "10.8.0" apply true
 }
 
-allprojects {
+subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "com.mikepenz.aboutlibraries.plugin")
 
