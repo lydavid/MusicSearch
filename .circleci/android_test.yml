@@ -28,29 +28,18 @@ jobs:
       - android/change-java-version:
           java-version: 17
 
-      - android/create-avd:
+      - android/start-emulator-and-run-tests:
           avd-name: test
-          install: true
+          install-system-image: true
           system-image: system-images;android-30;google_apis;x86
-
-      - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
-
-      - android/restore-build-cache:
-          cache-prefix: v3
-
-      - android/start-emulator:
-          avd-name: test
-          restore-gradle-cache-prefix: v3
+          restore-gradle-cache-prefix: v4
+          pre-emulator-wait-steps: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
-
-      - android/run-tests:
           max-tries: 2
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
 
       - android/save-gradle-cache:
-          cache-prefix: v3
-      - android/save-build-cache:
-          cache-prefix: v3
+          cache-prefix: v4
 
       - store_artifacts:
           path: app/build/reports/androidTests/connected
