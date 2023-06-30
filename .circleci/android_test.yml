@@ -36,12 +36,11 @@ jobs:
       - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
 
       - android/restore-build-cache:
-          cache-prefix: v2
-      - android/restore-gradle-cache:
-          cache-prefix: v2
+          cache-prefix: v3
 
       - android/start-emulator:
           avd-name: test
+          restore-gradle-cache-prefix: v3
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
 
       - android/run-tests:
@@ -49,9 +48,9 @@ jobs:
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
 
       - android/save-gradle-cache:
-          cache-prefix: v2
+          cache-prefix: v3
       - android/save-build-cache:
-          cache-prefix: v2
+          cache-prefix: v3
 
       - store_artifacts:
           path: app/build/reports/androidTests/connected
