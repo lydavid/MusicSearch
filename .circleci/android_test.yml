@@ -33,7 +33,8 @@ jobs:
           install-system-image: true
           system-image: system-images;android-30;google_apis;x86
           restore-gradle-cache-prefix: v4
-          pre-emulator-wait-steps: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
+          pre-emulator-wait-steps:
+            - run: cat .circleci/test_avd_config >> ~/.android/avd/test.avd/config.ini
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
           max-tries: 2
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
