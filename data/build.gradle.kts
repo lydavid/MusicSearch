@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin")
+    id("ly.david.kotlin")
 }
 
 // TODO: is this module needed? All it does is expose its submodules

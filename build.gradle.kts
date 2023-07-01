@@ -1,4 +1,3 @@
-import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.BasePlugin
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
@@ -29,29 +28,7 @@ subprojects {
         mavenCentral()
     }
 
-    plugins.withType<JavaBasePlugin>().configureEach {
-        extensions.configure<JavaPluginExtension> {
-            toolchain {
-                languageVersion.set(JavaLanguageVersion.of(17))
-            }
-        }
-    }
-
     plugins.withType<BasePlugin>().configureEach {
-        extensions.configure<BaseExtension> {
-            compileSdkVersion(33)
-            defaultConfig {
-                minSdk = 23
-                targetSdk = 33
-
-                manifestPlaceholders += mapOf("appAuthRedirectScheme" to "")
-            }
-
-            compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
-            }
-        }
         dependencies {
             detektPlugins("io.nlopez.compose.rules:detekt:0.1.10")
         }

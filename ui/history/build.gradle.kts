@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("ly.david.android.library")
+    id("ly.david.android.compose")
     id("kotlin-kapt")
     id("app.cash.paparazzi")
 }
@@ -17,12 +17,6 @@ android {
             isMinifyEnabled = true
             consumerProguardFiles("consumer-rules.pro")
         }
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 }
 

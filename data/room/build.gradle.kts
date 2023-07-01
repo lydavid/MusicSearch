@@ -1,5 +1,5 @@
 plugins {
-    id("kotlin")
+    id("ly.david.kotlin")
 }
 
 dependencies {
