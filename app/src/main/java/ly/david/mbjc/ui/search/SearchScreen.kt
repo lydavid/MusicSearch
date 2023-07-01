@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
@@ -74,6 +75,7 @@ internal fun SearchScreen(
         Row(modifier = Modifier.fillMaxWidth()) {
             TextField(
                 modifier = Modifier
+                    .testTag("searchTestField")
                     .weight(1f)
                     .focusRequester(focusRequester),
                 shape = RectangleShape,

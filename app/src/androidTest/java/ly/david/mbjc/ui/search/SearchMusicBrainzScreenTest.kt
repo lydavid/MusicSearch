@@ -7,23 +7,20 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.filterToOne
-import androidx.compose.ui.test.hasImeAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isDialog
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.resourceUri
@@ -88,12 +85,10 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
         composeTestRule.awaitIdle()
 
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onAllNodesWithText(searchLabel)
-            .filterToOne(hasImeAction(ImeAction.Search))
+            .onNodeWithTag("searchTestField")
 
         searchFieldNode
             .assert(hasText(""))
-            .performImeAction()
 
         composeTestRule
             .onNode(isDialog())
@@ -113,8 +108,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
         composeTestRule.awaitIdle()
 
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onAllNodesWithText(searchLabel)
-            .filterToOne(hasImeAction(ImeAction.Search))
+            .onNodeWithTag("searchTestField")
 
         searchFieldNode
             .assert(hasText(""))
@@ -134,10 +128,9 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
     }
 
     @Test
-    fun searchHistorySmokeTest() = runTest {
+    fun searchHistorySmokeTest() = runTest(timeout = 15.seconds) {
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onAllNodesWithText(searchLabel)
-            .filterToOne(hasImeAction(ImeAction.Search))
+            .onNodeWithTag("searchTestField")
 
         searchFieldNode.performTextInput("Some search text")
         waitForThenPerformClickOn(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
@@ -184,11 +177,24 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
             .onNodeWithContentDescription(clearSearchHistory)
             .performClick()
         composeTestRule
+            .onNodeWithText(no)
+            .performClick()
+        composeTestRule
+            .onNodeWithText("Some other search text")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithContentDescription(clearSearchHistory)
+            .performClick()
+        composeTestRule.awaitIdle()
+        composeTestRule
+            .onNodeWithText(yes)
+            .performClick()
+        composeTestRule
             .onNodeWithText("Some other search text")
             .assertIsNotDisplayedOrDoesNotExist()
     }
 
-    // TODO: flaked
+    // TODO: flaky
     //  No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
     @Test
     fun deeplinkToSearchWithQueryAndResource() = runTest {

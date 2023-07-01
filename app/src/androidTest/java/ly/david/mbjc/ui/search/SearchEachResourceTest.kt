@@ -4,15 +4,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.filterToOne
-import androidx.compose.ui.test.hasImeAction
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -76,9 +74,11 @@ internal class SearchEachResourceTest(
             .assertIsDisplayed()
 
         // Entity shows up in search result
+        composeTestRule.onRoot().printToLog("MY TAG")
+
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onAllNodesWithText(searchLabel)
-            .filterToOne(hasImeAction(ImeAction.Search))
+            .onNodeWithTag("searchTestField")
+
         searchFieldNode.assert(hasText(""))
             .performTextInput("Some search text")
         waitForThenPerformClickOn(resource.toFakeMusicBrainzModel().name!!)

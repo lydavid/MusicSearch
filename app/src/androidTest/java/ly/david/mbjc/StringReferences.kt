@@ -25,6 +25,10 @@ internal interface StringReferences {
         get() = activity.getString(R.string.clear_filter)
     val clearSearchHistory
         get() = activity.getString(R.string.clear_search_history)
+    val yes
+        get() = activity.getString(R.string.yes)
+    val no
+        get() = activity.getString(R.string.no)
     val appName
         get() = activity.getString(R.string.app_name)
     val history
