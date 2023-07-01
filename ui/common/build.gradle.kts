@@ -8,10 +8,6 @@ plugins {
 android {
     namespace = "ly.david.ui.common"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     buildTypes {
         // Can't seem to run paparazzi screenshot tests with code coverage
 //        debug {

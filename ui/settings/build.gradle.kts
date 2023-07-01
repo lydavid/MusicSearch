@@ -8,10 +8,6 @@ plugins {
 android {
     namespace = "ly.david.ui.settings"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     buildTypes {
         all {
             buildConfigField("int", "VERSION_CODE", project.properties["VERSION_CODE"] as String? ?: "")

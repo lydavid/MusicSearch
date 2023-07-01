@@ -12,6 +12,7 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 buildFeatures {
                     compose = true
                 }
+
                 composeOptions {
                     // TODO: get from toml
                     kotlinCompilerExtensionVersion = "1.4.8"
@@ -21,5 +22,5 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
     }
 }
 
-private fun Project.android(action: CommonExtension<*, *, *, *>.() -> Unit) =
-    extensions.configure(CommonExtension::class, action)
+private fun Project.android(configure: CommonExtension<*, *, *, *>.() -> Unit) =
+    extensions.configure(CommonExtension::class, configure)

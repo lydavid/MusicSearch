@@ -9,8 +9,6 @@ android {
     namespace = "ly.david.data"
 
     defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         kapt {
             arguments {
                 arg("room.schemaLocation", "$projectDir/schemas")

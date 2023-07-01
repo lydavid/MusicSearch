@@ -10,10 +10,12 @@ private const val MIN_SDK_VERSION = 23
 private const val TARGET_SDK_VERSION = 33
 
 fun Project.configureAndroid() {
-    extensions.configure<BaseExtension> {
+    android {
         compileSdkVersion(COMPILE_SDK_VERSION)
 
         defaultConfig {
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
             minSdk = MIN_SDK_VERSION
             targetSdk = TARGET_SDK_VERSION
 
@@ -26,3 +28,5 @@ fun Project.configureAndroid() {
         }
     }
 }
+
+private fun Project.android(configure: BaseExtension.() -> Unit) = extensions.configure(configure)

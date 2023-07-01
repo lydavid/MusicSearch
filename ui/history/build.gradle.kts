@@ -8,10 +8,6 @@ plugins {
 android {
     namespace = "ly.david.ui.history"
 
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = true
