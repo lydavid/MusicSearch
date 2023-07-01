@@ -1,20 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
-    val android = "8.0.2"
-    val kotlin = "1.8.22"
-
-    id("com.android.application") version android apply false
-    id("com.android.library") version android apply false
-    id("org.jetbrains.kotlin.android") version kotlin apply false
-    id("org.jetbrains.kotlin.jvm") version kotlin apply false
-    id("com.google.dagger.hilt.android") version "2.46.1" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.23.0" apply true
-    id("com.google.gms.google-services") version "4.3.15" apply false
-    id("com.google.firebase.crashlytics") version "2.9.6" apply false
-    id("dev.iurysouza.modulegraph") version "0.4.0"
-    id("app.cash.paparazzi") version "1.2.0" apply false
-    id("com.mikepenz.aboutlibraries.plugin") version "10.8.0" apply true
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.modulegraph)
+    alias(libs.plugins.paparazzi) apply false
+    alias(libs.plugins.aboutlibraries) apply true
 }
 
 subprojects {

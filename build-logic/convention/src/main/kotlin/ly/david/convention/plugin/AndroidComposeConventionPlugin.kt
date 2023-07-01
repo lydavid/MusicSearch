@@ -1,6 +1,7 @@
 package ly.david.convention.plugin
 
 import com.android.build.api.dsl.CommonExtension
+import ly.david.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -17,8 +18,7 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 }
 
                 composeOptions {
-                    // TODO: get from toml
-                    kotlinCompilerExtensionVersion = "1.4.8"
+                    kotlinCompilerExtensionVersion = libs.findVersion("compose-compiler").get().toString()
                 }
             }
         }
