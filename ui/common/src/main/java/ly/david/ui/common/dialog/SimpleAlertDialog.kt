@@ -49,7 +49,7 @@ fun SimpleAlertDialog(
 
 @DefaultPreviews
 @Composable
-private fun Long() {
+internal fun PreviewSimpleAlertDialog() {
     PreviewTheme {
         Surface {
             SimpleAlertDialog(
