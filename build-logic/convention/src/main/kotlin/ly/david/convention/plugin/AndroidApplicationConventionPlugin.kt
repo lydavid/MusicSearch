@@ -1,6 +1,7 @@
 package ly.david.convention.plugin
 
 import ly.david.convention.configureAndroid
+import ly.david.convention.configureDetekt
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -13,6 +14,7 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
             }
 
             configureAndroid()
+            configureDetekt()
         }
     }
 }

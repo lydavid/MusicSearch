@@ -6,6 +6,7 @@ dependencies {
     // TODO: toml. can we have both build-logic and app use the same toml?
     compileOnly("com.android.tools.build:gradle:8.0.2")
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22")
+    compileOnly("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.0")
 }
 
 gradlePlugin {

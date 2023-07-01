@@ -1,5 +1,3 @@
-import com.android.build.gradle.BasePlugin
-import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
@@ -20,18 +18,11 @@ plugins {
 }
 
 subprojects {
-    apply(plugin = "io.gitlab.arturbosch.detekt")
     apply(plugin = "com.mikepenz.aboutlibraries.plugin")
 
     repositories {
         google()
         mavenCentral()
-    }
-
-    plugins.withType<BasePlugin>().configureEach {
-        dependencies {
-            detektPlugins("io.nlopez.compose.rules:detekt:0.1.10")
-        }
     }
 
     // ./gradlew assembleRelease -Pmbjc.enableComposeCompilerReports=true --rerun-tasks
@@ -51,28 +42,6 @@ subprojects {
                         project.buildDir.absolutePath + "/compose_metrics"
                 )
             }
-        }
-    }
-
-    detekt {
-        buildUponDefaultConfig = true
-        allRules = false
-        parallel = true
-
-        // Use a single config file
-        config = files("${project.rootDir}/config/detekt.yml")
-
-        // Each module has its own baseline otherwise they overwrite each other
-        baseline = file("${projectDir}/config/baseline.xml")
-    }
-
-    tasks.withType<Detekt>().configureEach {
-        reports {
-            // observe findings in your browser with structure and code snippets
-            html.required.set(true)
-
-            // similar to the console output, contains issue signature to manually edit baseline files
-            txt.required.set(true)
         }
     }
 }
