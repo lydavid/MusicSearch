@@ -5,7 +5,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
 import androidx.paging.map
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -18,8 +17,6 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.domain.RelationsListRepository
-import ly.david.data.domain.listitem.Header
-import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.paging.LookupResourceRemoteMediator
@@ -37,10 +34,7 @@ interface IRelationsList {
     val resourceId: MutableStateFlow<String>
     val query: MutableStateFlow<String>
 
-    /**
-     * Paginated [RelationListItemModel] with [Header].
-     */
-    val pagedRelations: Flow<PagingData<ListItemModel>>
+    val pagedRelations: Flow<PagingData<RelationListItemModel>>
 
     /**
      * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
@@ -84,7 +78,7 @@ class RelationsList @Inject constructor(
     lateinit var repository: RelationsListRepository
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
-    override val pagedRelations: Flow<PagingData<ListItemModel>> by lazy {
+    override val pagedRelations: Flow<PagingData<RelationListItemModel>> by lazy {
         paramState.filterNot { it.resourceId.isEmpty() }
             .flatMapLatest { (resourceId, query) ->
                 Pager(
@@ -104,12 +98,6 @@ class RelationsList @Inject constructor(
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
                         relation.toRelationListItemModel()
-                    }.insertSeparators { before: RelationListItemModel?, after: RelationListItemModel? ->
-                        // We used to put details as a Header in a paged list
-                        // but it makes more sense to put it in its own tab where it won't interfere with things
-                        // like refreshing and counting lazyPagingItems for an empty state.
-                        // TODO: consider removing Header
-                        if (before == null && after != null) Header else null
                     }
                 }
             }

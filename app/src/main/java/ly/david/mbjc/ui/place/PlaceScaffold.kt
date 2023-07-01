@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.EventListItemModel
-import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
@@ -125,7 +124,7 @@ internal fun PlaceScaffold(
         val detailsLazyListState = rememberLazyListState()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
+        val relationsLazyPagingItems =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 

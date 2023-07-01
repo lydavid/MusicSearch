@@ -160,7 +160,7 @@ internal fun ArtistScaffold(
                 .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
+        val relationsLazyPagingItems =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 

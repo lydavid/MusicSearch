@@ -11,6 +11,8 @@ internal interface StringReferences {
     private val activity
         get() = composeTestRule.activity
 
+    // TODO: whenever we rename a string, we would have to update this name too
+    //  is there a better way to do this? Or have a script that continuously updates from strings.xml
     val deeplinkSchema
         get() = activity.getString(R.string.deeplink_schema)
     val searchTitle
@@ -23,8 +25,6 @@ internal interface StringReferences {
         get() = activity.getString(R.string.clear_filter)
     val clearSearchHistory
         get() = activity.getString(R.string.clear_search_history)
-    val emptySearchWarning
-        get() = activity.getString(R.string.search_cannot_be_empty)
     val appName
         get() = activity.getString(R.string.app_name)
     val history

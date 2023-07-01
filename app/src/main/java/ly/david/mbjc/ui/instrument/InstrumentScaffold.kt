@@ -24,10 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.mbjc.ui.instrument.details.InstrumentDetailsScreen
 import ly.david.mbjc.ui.instrument.stats.InstrumentStatsScreen
@@ -120,7 +118,7 @@ internal fun InstrumentScaffold(
         val detailsLazyListState = rememberLazyListState()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
+        val relationsLazyPagingItems =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations)
                 .collectAsLazyPagingItems()
 
@@ -146,6 +144,7 @@ internal fun InstrumentScaffold(
                         )
                     }
                 }
+
                 InstrumentTab.RELATIONSHIPS -> {
                     viewModel.updateQuery(filterText)
                     RelationsScreen(
@@ -159,6 +158,7 @@ internal fun InstrumentScaffold(
                         onItemClick = onItemClick,
                     )
                 }
+
                 InstrumentTab.STATS -> {
                     InstrumentStatsScreen(
                         instrumentId = instrumentId,

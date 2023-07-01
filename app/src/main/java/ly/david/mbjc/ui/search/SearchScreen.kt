@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
@@ -17,18 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -38,7 +31,6 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.searchableResources
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
-import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 
 @Composable
@@ -63,18 +55,8 @@ internal fun SearchScreen(
 
     val queryText by viewModel.searchQuery.collectAsState()
     val selectedEntity by viewModel.searchEntity.collectAsState()
-    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
-    var showAlertDialog by rememberSaveable { mutableStateOf(false) }
-
-    if (showAlertDialog) {
-        SimpleAlertDialog(
-            title = stringResource(id = R.string.search_cannot_be_empty),
-            confirmText = stringResource(id = R.string.ok),
-            onDismiss = { showAlertDialog = false }
-        )
-    }
 
     fun search(query: String? = null, entity: MusicBrainzResource? = null) {
         viewModel.search(query = query, entity = entity)
@@ -100,20 +82,6 @@ internal fun SearchScreen(
                 placeholder = { Text(stringResource(id = R.string.search)) },
                 maxLines = 1,
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(
-                    onSearch = {
-                        // TODO: doesn't need to be a search ime action anymore
-                        coroutineScope.launch {
-                            if (queryText.isEmpty()) {
-                                showAlertDialog = true
-                            } else {
-                                search(queryText, selectedEntity)
-                                focusManager.clearFocus()
-                            }
-                        }
-                    }
-                ),
                 trailingIcon = {
                     if (queryText.isEmpty()) return@TextField
                     IconButton(onClick = {

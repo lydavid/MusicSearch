@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.R
+import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
@@ -42,6 +43,18 @@ fun HistoryScaffold(
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.lookUpHistory)
         .collectAsLazyPagingItems()
 
+    var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showDeleteConfirmationDialog) {
+        SimpleAlertDialog(
+            title = stringResource(id = R.string.delete_lookup_history_confirmation),
+            confirmText = stringResource(id = R.string.yes),
+            dismissText = stringResource(id = R.string.no),
+            onDismiss = { showDeleteConfirmationDialog = false },
+            onConfirmClick = { deleteHistoryDelegate.deleteAll() }
+        )
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -56,9 +69,9 @@ fun HistoryScaffold(
                 },
                 overflowDropdownMenuItems = {
                     DropdownMenuItem(
-                        text = { Text("Clear history") },
+                        text = { Text(stringResource(id = R.string.clear_history)) },
                         onClick = {
-                            deleteHistoryDelegate.deleteAll()
+                            showDeleteConfirmationDialog = true
                             closeMenu()
                         }
                     )

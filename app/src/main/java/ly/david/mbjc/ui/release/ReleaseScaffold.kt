@@ -150,7 +150,7 @@ internal fun ReleaseScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedTracks).collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
-        val relationsLazyPagingItems: LazyPagingItems<ListItemModel> =
+        val relationsLazyPagingItems =
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations).collectAsLazyPagingItems()
 
         HorizontalPager(

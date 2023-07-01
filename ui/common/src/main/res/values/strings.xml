@@ -38,13 +38,17 @@
 
     <string name="resource">Resource</string>
     <string name="clear_search">Clear search field</string>
-    <string name="search_cannot_be_empty">Search cannot be empty</string>
     <string name="no_results_found">No results found.</string>
     <string name="no_results_found_search">No results found.\nTry refining your search query.</string>
     <string name="recent_searches">Recent searches</string>
     <string name="clear_search_history">Clear search history</string>
+    <string name="delete_search_history_confirmation">Clear your search history?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="recent_history">Recent History</string>
+    <string name="clear_history">Clear history</string>
+    <string name="delete_lookup_history_confirmation">Clear your history?</string>
 
     <string name="labels">Labels</string>
     <string name="details">Details</string>

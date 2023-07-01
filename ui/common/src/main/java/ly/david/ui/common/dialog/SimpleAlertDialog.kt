@@ -5,6 +5,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import ly.david.ui.common.R
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -13,7 +15,9 @@ import ly.david.ui.common.theme.TextStyles
 fun SimpleAlertDialog(
     title: String,
     confirmText: String,
-    onDismiss: () -> Unit,
+    dismissText: String,
+    onDismiss: () -> Unit = {},
+    onConfirmClick: () -> Unit = {},
 ) {
     AlertDialog(
         title = {
@@ -26,8 +30,18 @@ fun SimpleAlertDialog(
             onDismiss()
         },
         confirmButton = {
-            TextButton(onClick = { onDismiss() }) {
+            TextButton(onClick = {
+                onConfirmClick()
+                onDismiss()
+            }) {
                 Text(confirmText)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = {
+                onDismiss()
+            }) {
+                Text(dismissText)
             }
         }
     )
@@ -39,9 +53,10 @@ private fun Long() {
     PreviewTheme {
         Surface {
             SimpleAlertDialog(
-                title = "Title text that is long enough to wrap",
-                confirmText = "OK"
-            ) {}
+                title = stringResource(id = R.string.delete_search_history_confirmation),
+                confirmText = stringResource(id = R.string.yes),
+                dismissText = stringResource(id = R.string.no)
+            )
         }
     }
 }

@@ -13,7 +13,7 @@ import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @Composable
 fun RelationsScreen(
-    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    lazyPagingItems: LazyPagingItems<RelationListItemModel>,
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState = SnackbarHostState(),

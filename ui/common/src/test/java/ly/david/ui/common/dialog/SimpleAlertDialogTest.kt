@@ -1,7 +1,9 @@
 package ly.david.ui.common.dialog
 
+import androidx.compose.ui.res.stringResource
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.ui.common.PaparazziScreenshotTest
+import ly.david.ui.common.R
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -12,9 +14,10 @@ class SimpleAlertDialogTest : PaparazziScreenshotTest(isFullScreen = true) {
     fun long() {
         snapshot {
             SimpleAlertDialog(
-                title = "Title text that is long enough to wrap",
-                confirmText = "OK"
-            ) {}
+                title = stringResource(id = R.string.delete_search_history_confirmation),
+                confirmText = stringResource(id = R.string.yes),
+                dismissText = stringResource(id = R.string.no)
+            )
         }
     }
 }
