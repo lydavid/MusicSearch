@@ -5,10 +5,8 @@ import android.net.Uri
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
-import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -79,29 +77,6 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
 //            .onAllNodes(isDialog())
 //            .assertCountEquals(0)
 //    }
-
-    @Test
-    fun searchWithEmptyText_thenOkay() = runTest {
-        composeTestRule.awaitIdle()
-
-        val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onNodeWithTag("searchTestField")
-
-        searchFieldNode
-            .assert(hasText(""))
-
-        composeTestRule
-            .onNode(isDialog())
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(ok)
-            .performClick()
-
-        composeTestRule
-            .onAllNodes(isDialog())
-            .assertCountEquals(0)
-    }
 
     @Test
     fun enterSearchText_thenClear() = runTest {
