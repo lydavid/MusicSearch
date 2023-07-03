@@ -1,8 +1,8 @@
 package ly.david.ui.history
 
-import ly.david.data.room.history.LookupHistoryRoomModel
+import ly.david.data.domain.listitem.LookupHistoryListItemModel
 
 interface DeleteHistoryDelegate {
-    fun delete(history: LookupHistoryRoomModel)
+    fun delete(history: LookupHistoryListItemModel)
     fun deleteAll()
 }
