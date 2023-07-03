@@ -8,18 +8,17 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.coverart.GetReleaseGroupCoverArtPath
-import ly.david.data.coverart.UpdateReleaseGroupCoverArtDao
+import ly.david.data.coverart.ImageUrlSaver
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
+import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
-import ly.david.data.domain.releasegroup.ReleaseGroupRepository
-import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
@@ -31,13 +30,10 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
-    private val releaseGroupDao: ReleaseGroupDao,
+    override val imageUrlSaver: ImageUrlSaver,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
     GetReleaseGroupCoverArtPath {
-
-    override val updateReleaseGroupCoverArtDao: UpdateReleaseGroupCoverArtDao
-        get() = releaseGroupDao
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP
@@ -89,9 +85,11 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             ReleaseGroupTab.RELEASES -> {
                 // Not handled here.
             }
+
             ReleaseGroupTab.RELATIONSHIPS -> loadRelations(releaseGroupId)
             ReleaseGroupTab.STATS -> {
                 // Not handled here.

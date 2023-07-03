@@ -12,6 +12,6 @@ fun buildCoverArtUrl(
     return if (coverArtPath.isEmpty()) {
         ""
     } else {
-        "${COVER_ART_ARCHIVE_BASE_URL}release/$coverArtPath" + if (thumbnail) SMALL_SUFFIX else LARGE_SUFFIX
+        coverArtPath + if (thumbnail) SMALL_SUFFIX else LARGE_SUFFIX
     }
 }

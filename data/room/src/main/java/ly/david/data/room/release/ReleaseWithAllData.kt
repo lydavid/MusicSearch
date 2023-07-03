@@ -9,6 +9,7 @@ import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.CountryCode
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.image.MbidImage
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.releases.ReleaseLabel
 import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
@@ -60,7 +61,15 @@ data class ReleaseWithAllData(
             entityColumn = "release_group_id"
         )
     )
-    val releaseGroup: ReleaseGroupRoomModel?
+    val releaseGroup: ReleaseGroupRoomModel?,
+
+    @Relation(
+        entity = MbidImage::class,
+        parentColumn = "id",
+        entityColumn = "mbid",
+        projection = ["image_path"]
+    )
+    val coverArtPath: String?
 ) : RoomModel
 
 /**

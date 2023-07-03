@@ -63,7 +63,7 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     textRepresentation = release.textRepresentation,
     formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-    coverArtPath = release.coverArtPath,
+    coverArtPath = coverArtPath,
     areas = areas.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNamesWithResources.map {
         it.artistCreditNameRoomModel.toArtistCreditUiModel()

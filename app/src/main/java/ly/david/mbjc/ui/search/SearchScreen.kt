@@ -60,8 +60,8 @@ internal fun SearchScreen(
     val coroutineScope = rememberCoroutineScope()
 
     fun search(query: String? = null, entity: MusicBrainzResource? = null) {
-        viewModel.search(query = query, entity = entity)
         coroutineScope.launch {
+            viewModel.search(query = query, entity = entity)
             searchResultsListState.scrollToItem(0)
         }
     }

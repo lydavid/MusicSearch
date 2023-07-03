@@ -11,25 +11,24 @@ import retrofit2.HttpException
 interface GetReleaseGroupCoverArtPath {
 
     val coverArtArchiveApiService: CoverArtArchiveApiService
-    val updateReleaseGroupCoverArtDao: UpdateReleaseGroupCoverArtDao
+    val imageUrlSaver: ImageUrlSaver
 
     /**
      * Returns an appropriate cover art for the release group with [releaseGroupId].
      * Empty if none found.
      *
-     * Also set it in the release group.
+     * Also saves it to db.
      *
      * Make sure to handle non-404 errors at call site.
      */
     suspend fun getReleaseGroupCoverArtPathFromNetwork(releaseGroupId: String): String {
         return try {
             val url = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId).getFrontCoverArtUrl().orEmpty()
-            val coverArtPath = url.extractPathFromUrl()
-            updateReleaseGroupCoverArtDao.setReleaseGroupCoverArtPath(releaseGroupId, coverArtPath)
-            return coverArtPath
+            imageUrlSaver.saveUrl(releaseGroupId, url.removeFileExtension())
+            return url
         } catch (ex: HttpException) {
             if (ex.code() == HTTP_NOT_FOUND) {
-                updateReleaseGroupCoverArtDao.setReleaseGroupCoverArtPath(releaseGroupId, "")
+                imageUrlSaver.saveUrl(releaseGroupId, "")
             }
             ""
         }

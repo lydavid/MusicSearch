@@ -5,6 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import ly.david.data.room.RoomModel
 import ly.david.data.room.area.releases.ReleaseCountry
+import ly.david.data.room.image.MbidImage
 
 data class ReleaseForListItem(
     @Embedded
@@ -26,4 +27,12 @@ data class ReleaseForListItem(
         entityColumn = "release_id",
     )
     val releaseCountries: List<ReleaseCountry>,
+
+    @Relation(
+        entity = MbidImage::class,
+        parentColumn = "id",
+        entityColumn = "mbid",
+        projection = ["image_path"]
+    )
+    val coverArtPath: String?
 ) : RoomModel

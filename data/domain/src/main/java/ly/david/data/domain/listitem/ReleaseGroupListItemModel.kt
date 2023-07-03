@@ -61,6 +61,6 @@ fun ReleaseGroupForListItem.toReleaseGroupListItemModel(): ReleaseGroupListItemM
         primaryType = releaseGroup.primaryType,
         secondaryTypes = releaseGroup.secondaryTypes,
         formattedArtistCredits = artistCreditNames,
-        coverArtPath = releaseGroup.coverArtPath
+        coverArtPath = coverArtPath
     )
 }

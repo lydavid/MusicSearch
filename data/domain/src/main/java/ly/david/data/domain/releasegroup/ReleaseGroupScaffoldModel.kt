@@ -27,6 +27,6 @@ internal fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroup
         artistCredits = artistCreditNamesWithResources.map {
             it.artistCreditNameRoomModel.toArtistCreditUiModel()
         },
-        coverArtPath = releaseGroup.coverArtPath
+        coverArtPath = coverArtPath
     )
 }

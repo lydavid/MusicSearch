@@ -11,25 +11,24 @@ import retrofit2.HttpException
 interface GetReleaseCoverArtPath {
 
     val coverArtArchiveApiService: CoverArtArchiveApiService
-    val updateReleaseCoverArtDao: UpdateReleaseCoverArtDao
+    val imageUrlSaver: ImageUrlSaver
 
     /**
      * Returns a url to the cover art.
      * Empty if none found.
      *
-     * Also set it in the release.
+     * Also saves it to db.
      *
      * Make sure to handle non-404 errors at call site.
      */
     suspend fun getReleaseCoverArtPathFromNetwork(releaseId: String): String {
         return try {
             val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getFrontCoverArtUrl().orEmpty()
-            val coverArtPath = url.extractPathFromUrl()
-            updateReleaseCoverArtDao.setReleaseCoverArtPath(releaseId, coverArtPath)
-            return coverArtPath
+            imageUrlSaver.saveUrl(releaseId, url.removeFileExtension())
+            return url
         } catch (ex: HttpException) {
             if (ex.code() == HTTP_NOT_FOUND) {
-                updateReleaseCoverArtDao.setReleaseCoverArtPath(releaseId, "")
+                imageUrlSaver.saveUrl(releaseId, "")
             }
             ""
         }

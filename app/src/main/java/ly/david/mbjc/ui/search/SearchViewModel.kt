@@ -96,6 +96,7 @@ internal class SearchViewModel @Inject constructor(
         }
     }
 
+    // TODO: because of debounce, scrollToItem(0) does not work properly
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val searchResults: Flow<PagingData<ListItemModel>> =
         viewModelState.filterNot { it.query.isEmpty() }

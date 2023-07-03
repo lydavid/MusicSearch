@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import ly.david.data.room.Migrations.MIGRATION_7_8
 
 private const val DATABASE_NAME = "mbjc.db"
 
@@ -18,6 +19,7 @@ object DatabaseModule {
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): MusicBrainzDatabase {
         return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
+            .addMigrations(MIGRATION_7_8)
             .fallbackToDestructiveMigration()
             .build()
     }
