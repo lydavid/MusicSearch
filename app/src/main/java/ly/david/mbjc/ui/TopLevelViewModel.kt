@@ -20,13 +20,14 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
+import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
+import ly.david.data.network.api.MusicBrainzOAuthInfo
 import ly.david.data.network.resourceUriPlural
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.room.collection.CollectionDao
@@ -72,6 +73,7 @@ class MusicBrainzLoginContract(
 @HiltViewModel
 internal class TopLevelViewModel @Inject constructor(
     val appPreferences: AppPreferences,
+    val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
@@ -234,7 +236,9 @@ internal class TopLevelViewModel @Inject constructor(
             val authState = musicBrainzAuthState.getAuthState() ?: return@launch
             try {
                 musicBrainzAuthApi.logout(
-                    token = authState.refreshToken.orEmpty()
+                    token = authState.refreshToken.orEmpty(),
+                    clientId = musicBrainzOAuthInfo.clientId,
+                    clientSecret = musicBrainzOAuthInfo.clientSecret
                 )
             } catch (ex: Exception) {
                 // TODO: snackbar

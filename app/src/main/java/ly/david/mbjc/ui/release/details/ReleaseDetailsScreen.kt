@@ -23,7 +23,7 @@ import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.coverart.LargeImage
+import ly.david.ui.common.image.LargeImage
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
@@ -45,7 +45,10 @@ internal fun ReleaseDetailsScreen(
         state = lazyListState
     ) {
         item {
-            LargeImage(url = coverArtUrl)
+            LargeImage(
+                url = coverArtUrl,
+                mbid = release.id
+            )
 
             release.run {
                 InformationListSeparatorHeader(R.string.release)

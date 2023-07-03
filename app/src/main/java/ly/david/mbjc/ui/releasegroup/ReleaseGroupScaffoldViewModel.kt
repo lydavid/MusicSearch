@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.coverart.ReleaseGroupImageManager
 import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
@@ -102,8 +101,8 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
         val coverArtPath = releaseGroupScaffoldModel.coverArtPath
-        url.value = buildCoverArtUrl(
-            coverArtPath = coverArtPath ?: getReleaseGroupCoverArtPathFromNetwork(releaseGroupId),
+        url.value = coverArtPath ?: getReleaseGroupCoverArtPathFromNetwork(
+            releaseGroupId = releaseGroupId,
             thumbnail = false
         )
     }

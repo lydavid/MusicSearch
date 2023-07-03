@@ -2,7 +2,8 @@ package ly.david.data.coverart
 
 import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.coverart.api.getFrontCoverArtUrl
+import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
+import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.data.image.ImageUrlSaver
 import retrofit2.HttpException
 
@@ -22,14 +23,27 @@ interface ReleaseImageManager {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseCoverArtPathFromNetwork(releaseId: String): String {
+    suspend fun getReleaseCoverArtPathFromNetwork(
+        releaseId: String,
+        thumbnail: Boolean
+    ): String {
         return try {
-            val url = coverArtArchiveApiService.getReleaseCoverArts(releaseId).getFrontCoverArtUrl().orEmpty()
-            imageUrlSaver.saveUrl(releaseId, url.removeFileExtension())
-            return url
+            val coverArts = coverArtArchiveApiService.getReleaseCoverArts(releaseId)
+            val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
+            val largeUrl = coverArts.getFrontLargeCoverArtUrl().orEmpty()
+            imageUrlSaver.saveUrl(
+                mbid = releaseId,
+                thumbnailUrl = thumbnailUrl.removeFileExtension(),
+                largeUrl = largeUrl.removeFileExtension()
+            )
+            return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: HttpException) {
             if (ex.code() == HTTP_NOT_FOUND) {
-                imageUrlSaver.saveUrl(releaseId, "")
+                imageUrlSaver.saveUrl(
+                    mbid = releaseId,
+                    thumbnailUrl = "",
+                    largeUrl = ""
+                )
             }
             ""
         }

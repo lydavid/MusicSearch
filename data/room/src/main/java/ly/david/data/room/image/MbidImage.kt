@@ -14,5 +14,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "mbid_image")
 data class MbidImage(
     @PrimaryKey @ColumnInfo(name = "mbid") val mbid: String,
-    @ColumnInfo(name = "image_path") val imagePath: String
+    @ColumnInfo(name = "image_path") val thumbnailUrl: String, // TODO: rename
+    @ColumnInfo(name = "large_url", defaultValue = "") val largeUrl: String,
 )

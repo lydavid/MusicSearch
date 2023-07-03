@@ -24,12 +24,22 @@ interface ArtistImageManager {
         return try {
             val spotifyArtistId = spotifyUrl.split("/").last()
 
-            val url = spotifyApi.getArtist(spotifyArtistId = spotifyArtistId).getLargeImageUrl()
-            imageUrlSaver.saveUrl(artistMbid, url)
-            return url
+            val spotifyArtist = spotifyApi.getArtist(spotifyArtistId)
+            val thumbnailUrl = spotifyArtist.getThumbnailImageUrl()
+            val largeUrl = spotifyArtist.getLargeImageUrl()
+            imageUrlSaver.saveUrl(
+                mbid = artistMbid,
+                thumbnailUrl = thumbnailUrl,
+                largeUrl = largeUrl
+            )
+            return largeUrl
         } catch (ex: HttpException) {
             if (ex.code() == HTTP_NOT_FOUND) {
-                imageUrlSaver.saveUrl(artistMbid, "")
+                imageUrlSaver.saveUrl(
+                    mbid = artistMbid,
+                    thumbnailUrl = "",
+                    largeUrl = ""
+                )
             }
             ""
         }

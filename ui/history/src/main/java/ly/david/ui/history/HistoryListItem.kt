@@ -14,8 +14,8 @@ import java.util.Date
 import java.util.Locale
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.coverart.ThumbnailImage
 import ly.david.ui.common.getDisplayTextRes
+import ly.david.ui.common.image.ThumbnailImage
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
@@ -58,7 +58,8 @@ internal fun HistoryListItem(
                 },
                 leadingContent = {
                     ThumbnailImage(
-                        coverArtUrl = lookupHistory.coverArtPath.orEmpty(),
+                        url = lookupHistory.coverArtPath.orEmpty(),
+                        mbid = lookupHistory.id,
                         entity = lookupHistory.resource
                     )
                 },
@@ -95,7 +96,8 @@ internal fun PreviewLookupHistoryReleaseGroup(
                     resource = MusicBrainzResource.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 9999,
-                    coverArtPath = coverArtPath
+                    coverArtPath = coverArtPath,
+                    lastAccessed = Date(2023, 5, 2)
                 )
             )
         }
@@ -114,7 +116,8 @@ internal fun PreviewLookupHistoryRelease(
                     title = "欠けた心象、世のよすが",
                     resource = MusicBrainzResource.RELEASE,
                     id = "165f6643-2edb-4795-9abe-26bd0533e59d",
-                    coverArtPath = coverArtPath
+                    coverArtPath = coverArtPath,
+                    lastAccessed = Date(2023, 5, 2)
                 )
             )
         }
@@ -133,11 +136,11 @@ internal fun PreviewLookupHistoryArtist(
                     title = "月詠み",
                     resource = MusicBrainzResource.ARTIST,
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-                    coverArtPath = coverArtPath
+                    coverArtPath = coverArtPath,
+                    lastAccessed = Date(2023, 5, 2)
                 )
             )
         }
     }
 }
 // endregion
-

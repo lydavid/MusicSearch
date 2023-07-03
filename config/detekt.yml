@@ -20,6 +20,12 @@ style:
     active: false
   MagicNumber:
     ignorePropertyDeclaration: true
+    ignoreAnnotated:
+      - "DefaultPreviews"
+      - "Test"
+  MaxLineLength:
+    ignoreAnnotated:
+      - "Test"
   ReturnCount:
     excludeGuardClauses: true
   UnusedPrivateMember:

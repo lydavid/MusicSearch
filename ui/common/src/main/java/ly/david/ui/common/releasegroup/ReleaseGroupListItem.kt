@@ -12,10 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.coverart.ThumbnailImage
+import ly.david.ui.common.image.ThumbnailImage
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -78,7 +77,8 @@ fun ReleaseGroupListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                coverArtUrl = buildCoverArtUrl(releaseGroup.coverArtPath.orEmpty()),
+                url = releaseGroup.coverArtPath.orEmpty(),
+                mbid = releaseGroup.id,
                 entity = MusicBrainzResource.RELEASE_GROUP
             )
         }

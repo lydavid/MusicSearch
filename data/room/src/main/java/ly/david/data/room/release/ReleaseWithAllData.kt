@@ -67,7 +67,7 @@ data class ReleaseWithAllData(
         entity = MbidImage::class,
         parentColumn = "id",
         entityColumn = "mbid",
-        projection = ["image_path"]
+        projection = ["large_url"]
     )
     val coverArtPath: String?
 ) : RoomModel

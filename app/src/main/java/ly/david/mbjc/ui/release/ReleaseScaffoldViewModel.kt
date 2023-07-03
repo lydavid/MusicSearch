@@ -23,9 +23,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.coverart.ReleaseImageManager
-import ly.david.data.image.ImageUrlSaver
 import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.TrackListItemModel
@@ -36,6 +34,7 @@ import ly.david.data.domain.release.ReleaseRepository
 import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
+import ly.david.data.image.ImageUrlSaver
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
@@ -199,8 +198,8 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         releaseScaffoldModel: ReleaseScaffoldModel
     ) {
         val coverArtPath = releaseScaffoldModel.coverArtPath
-        url.value = buildCoverArtUrl(
-            coverArtPath = coverArtPath ?: getReleaseCoverArtPathFromNetwork(releaseId),
+        url.value = coverArtPath ?: getReleaseCoverArtPathFromNetwork(
+            releaseId = releaseId,
             thumbnail = false
         )
     }

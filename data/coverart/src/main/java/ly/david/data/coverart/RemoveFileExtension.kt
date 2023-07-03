@@ -15,5 +15,5 @@ internal fun String.removeFileExtension(): String {
             return this.replace(ext, "")
         }
     }
-    return ""
+    return this
 }

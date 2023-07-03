@@ -7,11 +7,12 @@ import ly.david.data.room.BaseDao
 @Dao
 abstract class MbidImageDao : BaseDao<MbidImage>(), ImageUrlSaver {
 
-    override suspend fun saveUrl(mbid: String, path: String) {
+    override suspend fun saveUrl(mbid: String, thumbnailUrl: String, largeUrl: String) {
         insert(
             MbidImage(
                 mbid = mbid,
-                imagePath = path
+                thumbnailUrl = thumbnailUrl,
+                largeUrl = largeUrl
             )
         )
     }

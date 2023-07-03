@@ -18,11 +18,10 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.area.releases.ReleaseCountry
-import ly.david.ui.common.coverart.ThumbnailImage
+import ly.david.ui.common.image.ThumbnailImage
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -134,7 +133,8 @@ fun ReleaseListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty()),
+                url = release.coverArtPath.orEmpty(),
+                mbid = release.id,
                 entity = MusicBrainzResource.RELEASE
             )
         }

@@ -7,9 +7,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ly.david.data.AppInfo
+import ly.david.data.BuildConfig
 import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
-import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_ID
-import ly.david.data.network.api.MUSIC_BRAINZ_OAUTH_CLIENT_SECRET
+import ly.david.data.network.api.MusicBrainzOAuthInfo
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
@@ -20,6 +21,14 @@ import net.openid.appauth.ResponseTypeValues
 @InstallIn(SingletonComponent::class)
 @Module
 object MusicBrainzAuthModule {
+
+    @Provides
+    fun provideOAuthInfo(): MusicBrainzOAuthInfo {
+        return MusicBrainzOAuthInfo(
+            clientId = BuildConfig.MUSICBRAINZ_CLIENT_ID,
+            clientSecret = BuildConfig.MUSICBRAINZ_CLIENT_SECRET
+        )
+    }
 
     @Provides
     fun provideAuthorizationService(
@@ -40,20 +49,24 @@ object MusicBrainzAuthModule {
 
     @Provides
     fun provideAuthorizationRequest(
-        serviceConfig: AuthorizationServiceConfiguration
+        serviceConfig: AuthorizationServiceConfiguration,
+        musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+        appInfo: AppInfo
     ): AuthorizationRequest {
         return AuthorizationRequest.Builder(
             serviceConfig,
-            MUSIC_BRAINZ_OAUTH_CLIENT_ID,
+            musicBrainzOAuthInfo.clientId,
             ResponseTypeValues.CODE,
-            Uri.parse("io.github.lydavid.musicsearch://oauth2/redirect")
+            Uri.parse("${appInfo.applicationId}://oauth2/redirect")
         )
             .setScope("collection profile")
             .build()
     }
 
     @Provides
-    fun provideClientAuthentication(): ClientAuthentication {
-        return ClientSecretBasic(MUSIC_BRAINZ_OAUTH_CLIENT_SECRET)
+    fun provideClientAuthentication(
+        musicBrainzOAuthInfo: MusicBrainzOAuthInfo
+    ): ClientAuthentication {
+        return ClientSecretBasic(musicBrainzOAuthInfo.clientSecret)
     }
 }

@@ -44,7 +44,10 @@ fun ReleaseGroupsListScreen(
                             modifier = Modifier.animateItemPlacement(),
                             requestForMissingCoverArtPath = {
                                 try {
-                                    viewModel.getReleaseGroupCoverArtPathFromNetwork(releaseGroupId = listItemModel.id)
+                                    viewModel.getReleaseGroupCoverArtPathFromNetwork(
+                                        releaseGroupId = listItemModel.id,
+                                        thumbnail = true
+                                    )
                                 } catch (ex: Exception) {
                                     Timber.e(ex)
                                 }

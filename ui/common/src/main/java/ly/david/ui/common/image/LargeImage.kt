@@ -1,4 +1,4 @@
-package ly.david.ui.common.coverart
+package ly.david.ui.common.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -23,13 +23,13 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
-import ly.david.data.coverart.trimCoverArtSuffix
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 fun LargeImage(
     url: String,
+    mbid: String,
     modifier: Modifier = Modifier,
 ) {
     if (url.isNotEmpty()) {
@@ -40,8 +40,8 @@ fun LargeImage(
                 .size(Size.ORIGINAL)
                 .scale(Scale.FIT)
                 .crossfade(true)
-                .memoryCacheKey(url.trimCoverArtSuffix())
-                .placeholderMemoryCacheKey(url.trimCoverArtSuffix())
+                .memoryCacheKey(mbid)
+                .placeholderMemoryCacheKey(mbid)
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )
@@ -67,12 +67,14 @@ fun LargeImage(
                     )
                 }
             }
+
             is AsyncImagePainter.State.Success -> {
                 PainterImage(
                     modifier = modifier,
                     painter = painter
                 )
             }
+
             is AsyncImagePainter.State.Error -> {
                 // TODO: handle error with retry
                 //  this case means there is an image but we failed to get it
@@ -100,10 +102,13 @@ private fun PainterImage(
 // Only see loading spinner in IDE, but works if we run the preview.
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewLargeImage() {
     PreviewTheme {
         Surface {
-            LargeImage("https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489")
+            LargeImage(
+                url = "https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489",
+                mbid = "afa0b2a6-8384-44d4-a907-76da213ca24f"
+            )
         }
     }
 }

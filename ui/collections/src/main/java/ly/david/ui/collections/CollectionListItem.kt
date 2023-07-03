@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.ResourceIcon
-import ly.david.ui.common.SMALL_COVER_ART_SIZE
+import ly.david.ui.common.SMALL_IMAGE_SIZE
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -48,7 +48,7 @@ fun CollectionListItem(
 
             ResourceIcon(
                 resource = collection.entity,
-                modifier = Modifier.size(SMALL_COVER_ART_SIZE.dp)
+                modifier = Modifier.size(SMALL_IMAGE_SIZE.dp)
             )
         },
         trailingContent = {
