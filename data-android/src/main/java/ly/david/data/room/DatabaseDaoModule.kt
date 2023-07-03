@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ly.david.data.coverart.ImageUrlSaver
+import ly.david.data.image.ImageUrlSaver
 
 @Module
 @InstallIn(SingletonComponent::class)

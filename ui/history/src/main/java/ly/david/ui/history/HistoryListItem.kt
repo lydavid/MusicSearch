@@ -14,12 +14,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.coverart.ThumbnailImage
 import ly.david.ui.common.getDisplayTextRes
-import ly.david.ui.common.getIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
@@ -62,10 +60,8 @@ internal fun HistoryListItem(
                 },
                 leadingContent = {
                     ThumbnailImage(
-                        placeholderIcon = lookupHistory.resource.getIcon(),
-                        coverArtUrl = buildCoverArtUrl(
-                            lookupHistory.coverArtPath.orEmpty()
-                        )
+                        coverArtUrl = lookupHistory.coverArtPath.orEmpty(),
+                        entity = lookupHistory.resource
                     )
                 },
                 trailingContent = {

@@ -10,11 +10,12 @@ import kotlinx.coroutines.launch
 import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.getNameWithDisambiguation
+import ly.david.data.image.ImageUrlSaver
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.data.spotify.ArtistImageManager
 import ly.david.data.spotify.SpotifyApi
-import ly.david.data.spotify.getLargeImageUrl
 import ly.david.ui.common.MusicBrainzResourceViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -26,9 +27,11 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     private val repository: ArtistRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-    private val spotifyApi: SpotifyApi
+    override val spotifyApi: SpotifyApi,
+    override val imageUrlSaver: ImageUrlSaver
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
-    IRelationsList by relationsList {
+    IRelationsList by relationsList,
+    ArtistImageManager {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.ARTIST
@@ -77,6 +80,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             ArtistTab.RELATIONSHIPS -> loadRelations(artistId)
             else -> {
                 // Not handled here.
@@ -87,11 +91,13 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     private suspend fun getCoverArtUrl(
         artist: ArtistScaffoldModel
     ) {
-        val spotifyUrl = artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return
-        val spotifyArtistId = spotifyUrl.split("/").last()
-
-        url.value = spotifyApi.getArtist(
-            artistId = spotifyArtistId,
-        ).getLargeImageUrl()
+        val coverArtPath = artist.coverArtPath
+        url.value = if (coverArtPath == null) {
+            val spotifyUrl =
+                artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return
+            getArtistImageFromNetwork(artist.id, spotifyUrl)
+        } else {
+            coverArtPath
+        }
     }
 }

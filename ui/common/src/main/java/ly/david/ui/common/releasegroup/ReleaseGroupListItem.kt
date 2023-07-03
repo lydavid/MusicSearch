@@ -3,8 +3,6 @@ package ly.david.ui.common.releasegroup
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -16,6 +14,7 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.coverart.ThumbnailImage
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
@@ -80,7 +79,7 @@ fun ReleaseGroupListItem(
         leadingContent = {
             ThumbnailImage(
                 coverArtUrl = buildCoverArtUrl(releaseGroup.coverArtPath.orEmpty()),
-                placeholderIcon = Icons.Default.Folder,
+                entity = MusicBrainzResource.RELEASE_GROUP
             )
         }
     )

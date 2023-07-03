@@ -15,7 +15,7 @@ fun ResourceIcon(
 ) {
     Icon(
         modifier = modifier,
-        imageVector = resource.getIcon(),
+        imageVector = resource.getIcon() ?: return,
         contentDescription = null
     )
 }

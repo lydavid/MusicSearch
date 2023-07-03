@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +20,7 @@ import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ReleaseListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.ui.common.coverart.ThumbnailImage
 import ly.david.ui.common.preview.DefaultPreviews
@@ -135,8 +134,8 @@ fun ReleaseListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                placeholderIcon = Icons.Default.Album,
-                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty())
+                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty()),
+                entity = MusicBrainzResource.RELEASE
             )
         }
     )

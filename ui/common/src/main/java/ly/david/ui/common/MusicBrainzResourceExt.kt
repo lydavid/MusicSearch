@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Piano
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.TheaterComedy
 import androidx.compose.ui.graphics.vector.ImageVector
 import ly.david.data.network.MusicBrainzResource
@@ -42,7 +41,7 @@ fun MusicBrainzResource.getDisplayTextRes(): Int {
     }
 }
 
-fun MusicBrainzResource.getIcon(): ImageVector {
+fun MusicBrainzResource.getIcon(): ImageVector? {
     return when (this) {
         MusicBrainzResource.AREA -> Icons.Default.Public
         MusicBrainzResource.ARTIST -> Icons.Default.Person
@@ -60,7 +59,7 @@ fun MusicBrainzResource.getIcon(): ImageVector {
         else -> {
             // Non-searchable resources like Genre, URL
             // No icons.
-            Icons.Default.QuestionMark
+            null
         }
     }
 }

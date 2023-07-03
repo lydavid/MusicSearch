@@ -22,8 +22,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.coverart.GetReleaseCoverArtPath
-import ly.david.data.coverart.ImageUrlSaver
+import ly.david.data.coverart.ReleaseImageManager
+import ly.david.data.image.ImageUrlSaver
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ListItemModel
@@ -62,7 +62,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     private val relationsList: RelationsList,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
-    GetReleaseCoverArtPath {
+    ReleaseImageManager {
 
     private data class ViewModelState(
         val releaseId: String = "",

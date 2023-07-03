@@ -7,14 +7,14 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.coverart.GetReleaseGroupCoverArtPath
-import ly.david.data.coverart.ImageUrlSaver
+import ly.david.data.coverart.ReleaseGroupImageManager
 import ly.david.data.coverart.api.CoverArtArchiveApiService
 import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
+import ly.david.data.image.ImageUrlSaver
 import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
@@ -33,7 +33,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     override val imageUrlSaver: ImageUrlSaver,
 ) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
-    GetReleaseGroupCoverArtPath {
+    ReleaseGroupImageManager {
 
     private var recordedLookup = false
     override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP

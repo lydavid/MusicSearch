@@ -13,7 +13,7 @@ interface SpotifyApi {
 
     @GET("artists/{artistId}")
     suspend fun getArtist(
-        @Path("artistId") artistId: String,
+        @Path("artistId") spotifyArtistId: String,
     ): SpotifyArtist
 }
 
