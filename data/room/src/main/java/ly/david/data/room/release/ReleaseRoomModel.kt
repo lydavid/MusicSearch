@@ -9,7 +9,6 @@ import ly.david.data.network.CoverArtArchive
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.TextRepresentation
 import ly.david.data.room.RoomModel
-import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 
 @Entity(
     tableName = "release",
@@ -45,18 +44,6 @@ data class ReleaseRoomModel(
     @Embedded override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
 
     @Embedded override val textRepresentation: TextRepresentation? = null,
-
-    /**
-     * We do not have to store the release id since we can build it based on [id].
-     *
-     * May be one of:
-     * - `null`: Have not requested cover art
-     * - Empty: Requested but did not find any
-     * - string path: partial url path to cover art (eg. 32187188956)
-     *
-     * Also see [ReleaseGroupRoomModel.coverArtPath].
-     */
-    @ColumnInfo(name = "cover_art_path") val coverArtPath: String? = null,
 ) : RoomModel, Release
 
 fun ReleaseMusicBrainzModel.toRoomModel() =

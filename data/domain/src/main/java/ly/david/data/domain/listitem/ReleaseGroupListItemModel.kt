@@ -47,8 +47,7 @@ fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemMod
         firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
         primaryType = primaryType,
-        secondaryTypes = secondaryTypes,
-        coverArtPath = coverArtPath
+        secondaryTypes = secondaryTypes
     )
 }
 

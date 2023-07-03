@@ -1,5 +1,7 @@
 package ly.david.data.room
 
+import androidx.room.DeleteColumn
+import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
@@ -26,4 +28,8 @@ internal object Migrations {
             )
         }
     }
+
+    @DeleteColumn(tableName = "release", columnName = "cover_art_path")
+    @DeleteColumn(tableName = "release_group", columnName = "cover_art_path")
+    class DeleteCoverArtPath : AutoMigrationSpec
 }
