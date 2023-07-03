@@ -9,8 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -83,35 +81,63 @@ private fun Date.toDisplayDate(): String {
     return dateFormat.format(this)
 }
 
-internal class LookupHistoryPreviewParameterProvider : PreviewParameterProvider<LookupHistoryListItemModel> {
-    override val values: Sequence<LookupHistoryListItemModel> = sequenceOf(
-        LookupHistoryListItemModel(
-            title = "欠けた心象、世のよすが",
-            resource = MusicBrainzResource.RELEASE_GROUP,
-            id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-            numberOfVisits = 9999
-        ),
-        LookupHistoryListItemModel(
-            title = "欠けた心象、世のよすが",
-            resource = MusicBrainzResource.RELEASE,
-            id = "165f6643-2edb-4795-9abe-26bd0533e59d"
-        ),
-        LookupHistoryListItemModel(
-            title = "月詠み",
-            resource = MusicBrainzResource.ARTIST,
-            id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
-        )
-    )
+// region Previews
+@DefaultPreviews
+@Composable
+internal fun PreviewLookupHistoryReleaseGroup(
+    coverArtPath: String = "https://www.example.com/image.jpg"
+) {
+    PreviewTheme {
+        Surface {
+            HistoryListItem(
+                LookupHistoryListItemModel(
+                    title = "欠けた心象、世のよすが",
+                    resource = MusicBrainzResource.RELEASE_GROUP,
+                    id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                    numberOfVisits = 9999,
+                    coverArtPath = coverArtPath
+                )
+            )
+        }
+    }
 }
 
 @DefaultPreviews
 @Composable
-private fun Preview(
-    @PreviewParameter(LookupHistoryPreviewParameterProvider::class) history: LookupHistoryListItemModel
+internal fun PreviewLookupHistoryRelease(
+    coverArtPath: String = "https://www.example.com/image.jpg"
 ) {
     PreviewTheme {
         Surface {
-            HistoryListItem(history)
+            HistoryListItem(
+                LookupHistoryListItemModel(
+                    title = "欠けた心象、世のよすが",
+                    resource = MusicBrainzResource.RELEASE,
+                    id = "165f6643-2edb-4795-9abe-26bd0533e59d",
+                    coverArtPath = coverArtPath
+                )
+            )
         }
     }
 }
+
+@DefaultPreviews
+@Composable
+internal fun PreviewLookupHistoryArtist(
+    coverArtPath: String = "https://www.example.com/image.jpg"
+) {
+    PreviewTheme {
+        Surface {
+            HistoryListItem(
+                LookupHistoryListItemModel(
+                    title = "月詠み",
+                    resource = MusicBrainzResource.ARTIST,
+                    id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
+                    coverArtPath = coverArtPath
+                )
+            )
+        }
+    }
+}
+// endregion
+

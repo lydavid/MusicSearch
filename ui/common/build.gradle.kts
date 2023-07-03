@@ -23,6 +23,7 @@ android {
 
 dependencies {
     implementation(projects.dataAndroid)
+    testImplementation(projects.testData)
 
     implementation(libs.accompanist.swiperefresh)
 

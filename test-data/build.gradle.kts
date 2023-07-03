@@ -28,6 +28,8 @@ android {
 dependencies {
     api(projects.data)
 
+    api(libs.coil.base)
+    api(libs.coil.compose)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     kaptTest(libs.hilt.android.compiler)

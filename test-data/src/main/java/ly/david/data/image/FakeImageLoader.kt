@@ -1,4 +1,4 @@
-package ly.david.ui.common
+package ly.david.data.image
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
