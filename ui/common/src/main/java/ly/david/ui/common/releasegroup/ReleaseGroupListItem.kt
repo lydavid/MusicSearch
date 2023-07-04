@@ -30,13 +30,13 @@ import ly.david.ui.common.theme.getSubTextColor
 fun ReleaseGroupListItem(
     releaseGroup: ReleaseGroupListItemModel,
     modifier: Modifier = Modifier,
-    requestForMissingCoverArtPath: suspend () -> Unit = {},
+    requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseGroupListItemModel.() -> Unit = {}
 ) {
 
     LaunchedEffect(key1 = releaseGroup.id) {
-        if (releaseGroup.coverArtPath == null) {
-            requestForMissingCoverArtPath()
+        if (releaseGroup.imageUrl == null) {
+            requestForMissingCoverArtUrl()
         }
     }
 
@@ -77,7 +77,7 @@ fun ReleaseGroupListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                url = releaseGroup.coverArtPath.orEmpty(),
+                url = releaseGroup.imageUrl.orEmpty(),
                 mbid = releaseGroup.id,
                 entity = MusicBrainzResource.RELEASE_GROUP
             )

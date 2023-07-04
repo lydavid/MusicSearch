@@ -34,13 +34,13 @@ fun ReleaseListItem(
     release: ReleaseListItemModel,
     modifier: Modifier = Modifier,
     showMoreInfo: Boolean = true,
-    requestForMissingCoverArtPath: suspend () -> Unit = {},
+    requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseListItemModel.() -> Unit = {}
 ) {
 
     LaunchedEffect(key1 = release.id) {
-        if (release.coverArtPath == null) {
-            requestForMissingCoverArtPath()
+        if (release.imageUrl == null) {
+            requestForMissingCoverArtUrl()
         }
     }
 
@@ -133,7 +133,7 @@ fun ReleaseListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                url = release.coverArtPath.orEmpty(),
+                url = release.imageUrl.orEmpty(),
                 mbid = release.id,
                 entity = MusicBrainzResource.RELEASE
             )

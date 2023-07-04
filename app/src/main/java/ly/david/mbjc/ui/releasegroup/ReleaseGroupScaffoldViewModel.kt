@@ -63,7 +63,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
                         subtitle.value = "Release Group by ${releaseGroupListItemModel.artistCredits.getDisplayNames()}"
                         releaseGroup.value = releaseGroupListItemModel
 
-                        getCoverArtUrl(releaseGroupId, releaseGroupListItemModel)
+                        fetchCoverArt(releaseGroupId, releaseGroupListItemModel)
 
                         isError.value = false
                     } catch (ex: HttpException) {
@@ -96,12 +96,12 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCoverArtUrl(
+    private suspend fun fetchCoverArt(
         releaseGroupId: String,
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
     ) {
-        val coverArtPath = releaseGroupScaffoldModel.coverArtPath
-        url.value = coverArtPath ?: getReleaseGroupCoverArtPathFromNetwork(
+        val imageUrl = releaseGroupScaffoldModel.imageUrl
+        url.value = imageUrl ?: getReleaseGroupCoverArtUrlFromNetwork(
             releaseGroupId = releaseGroupId,
             thumbnail = false
         )

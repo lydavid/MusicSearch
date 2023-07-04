@@ -16,7 +16,7 @@ data class ArtistScaffoldModel(
     override val countryCode: String? = null,
     override val lifeSpan: LifeSpan? = null,
     val urls: List<RelationListItemModel> = listOf(),
-    val coverArtPath: String? = null,
+    val imageUrl: String? = null,
 ) : Artist
 
 fun ArtistWithAllData.toArtistScaffoldModel() =
@@ -30,5 +30,5 @@ fun ArtistWithAllData.toArtistScaffoldModel() =
         countryCode = artist.countryCode,
         lifeSpan = artist.lifeSpan,
         urls = urls.map { it.relation.toRelationListItemModel() },
-        coverArtPath = coverArtPath
+        imageUrl = largeUrl
     )

@@ -23,7 +23,7 @@ interface ReleaseGroupImageManager {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseGroupCoverArtPathFromNetwork(
+    suspend fun getReleaseGroupCoverArtUrlFromNetwork(
         releaseGroupId: String,
         thumbnail: Boolean
     ): String {
@@ -36,7 +36,7 @@ interface ReleaseGroupImageManager {
                 thumbnailUrl = thumbnailUrl.removeFileExtension(),
                 largeUrl = largeUrl.removeFileExtension()
             )
-            return thumbnailUrl
+            return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: HttpException) {
             if (ex.code() == HTTP_NOT_FOUND) {
                 imageUrlSaver.saveUrl(

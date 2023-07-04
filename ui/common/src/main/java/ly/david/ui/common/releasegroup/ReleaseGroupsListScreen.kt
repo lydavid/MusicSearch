@@ -42,9 +42,9 @@ fun ReleaseGroupsListScreen(
                         ReleaseGroupListItem(
                             releaseGroup = listItemModel,
                             modifier = Modifier.animateItemPlacement(),
-                            requestForMissingCoverArtPath = {
+                            requestForMissingCoverArtUrl = {
                                 try {
-                                    viewModel.getReleaseGroupCoverArtPathFromNetwork(
+                                    viewModel.getReleaseGroupCoverArtUrlFromNetwork(
                                         releaseGroupId = listItemModel.id,
                                         thumbnail = true
                                     )

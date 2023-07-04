@@ -59,7 +59,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
                             title.value = artistScaffoldModel.getNameWithDisambiguation()
                         }
                         artist.value = artistScaffoldModel
-                        getCoverArtUrl(artistScaffoldModel)
+                        fetchArtistImage(artistScaffoldModel)
                         isError.value = false
                     } catch (ex: HttpException) {
                         Timber.e(ex)
@@ -88,16 +88,16 @@ internal class ArtistScaffoldViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCoverArtUrl(
+    private suspend fun fetchArtistImage(
         artist: ArtistScaffoldModel
     ) {
-        val coverArtPath = artist.coverArtPath
-        url.value = if (coverArtPath == null) {
+        val imageUrl = artist.imageUrl
+        url.value = if (imageUrl == null) {
             val spotifyUrl =
                 artist.urls.firstOrNull { it.name.contains("open.spotify.com/artist/") }?.name ?: return
             getArtistImageFromNetwork(artist.id, spotifyUrl)
         } else {
-            coverArtPath
+            imageUrl
         }
     }
 }

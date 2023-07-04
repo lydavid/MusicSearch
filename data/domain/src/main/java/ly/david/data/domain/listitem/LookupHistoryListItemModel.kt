@@ -10,7 +10,7 @@ data class LookupHistoryListItemModel(
     val resource: MusicBrainzResource,
     val numberOfVisits: Int = 1,
     val lastAccessed: Date = Date(),
-    val coverArtPath: String? = null
+    val imageUrl: String? = null
 ) : ListItemModel()
 
 fun LookupHistoryForListItem.toLookupHistoryListItemModel() =
@@ -20,5 +20,5 @@ fun LookupHistoryForListItem.toLookupHistoryListItemModel() =
         resource = lookupHistory.resource,
         numberOfVisits = lookupHistory.numberOfVisits,
         lastAccessed = lookupHistory.lastAccessed,
-        coverArtPath = coverArtPath
+        imageUrl = thumbnailUrl
     )

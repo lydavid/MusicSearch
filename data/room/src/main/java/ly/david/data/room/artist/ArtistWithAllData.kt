@@ -21,5 +21,5 @@ data class ArtistWithAllData(
         entityColumn = "mbid",
         projection = ["large_url"]
     )
-    val coverArtPath: String?
+    val largeUrl: String?
 )

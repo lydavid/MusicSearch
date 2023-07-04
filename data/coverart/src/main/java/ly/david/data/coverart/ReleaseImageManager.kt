@@ -23,7 +23,7 @@ interface ReleaseImageManager {
      *
      * Make sure to handle non-404 errors at call site.
      */
-    suspend fun getReleaseCoverArtPathFromNetwork(
+    suspend fun getReleaseCoverArtUrlFromNetwork(
         releaseId: String,
         thumbnail: Boolean
     ): String {

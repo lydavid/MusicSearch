@@ -121,7 +121,7 @@ class ReleaseListItemTest : PaparazziScreenshotTest() {
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
-                    coverArtPath = "https://www.example.com/image.jpg"
+                    imageUrl = "https://www.example.com/image.jpg"
                 ),
                 showMoreInfo = true
             )

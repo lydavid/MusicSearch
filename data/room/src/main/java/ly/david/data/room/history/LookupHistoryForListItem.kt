@@ -12,7 +12,7 @@ data class LookupHistoryForListItem(
         entity = MbidImage::class,
         parentColumn = "mbid",
         entityColumn = "mbid",
-        projection = ["image_path"]
+        projection = ["thumbnail_url"]
     )
-    val coverArtPath: String? = null
+    val thumbnailUrl: String? = null
 )

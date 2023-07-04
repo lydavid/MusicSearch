@@ -58,7 +58,7 @@ internal fun HistoryListItem(
                 },
                 leadingContent = {
                     ThumbnailImage(
-                        url = lookupHistory.coverArtPath.orEmpty(),
+                        url = lookupHistory.imageUrl.orEmpty(),
                         mbid = lookupHistory.id,
                         entity = lookupHistory.resource
                     )
@@ -86,7 +86,7 @@ private fun Date.toDisplayDate(): String {
 @DefaultPreviews
 @Composable
 internal fun PreviewLookupHistoryReleaseGroup(
-    coverArtPath: String = "https://www.example.com/image.jpg"
+    imageUrl: String = "https://www.example.com/image.jpg"
 ) {
     PreviewTheme {
         Surface {
@@ -96,7 +96,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
                     resource = MusicBrainzResource.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 9999,
-                    coverArtPath = coverArtPath,
+                    imageUrl = imageUrl,
                     lastAccessed = Date(2023, 5, 2)
                 )
             )
@@ -107,7 +107,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
 @DefaultPreviews
 @Composable
 internal fun PreviewLookupHistoryRelease(
-    coverArtPath: String = "https://www.example.com/image.jpg"
+    imageUrl: String = "https://www.example.com/image.jpg"
 ) {
     PreviewTheme {
         Surface {
@@ -116,7 +116,7 @@ internal fun PreviewLookupHistoryRelease(
                     title = "欠けた心象、世のよすが",
                     resource = MusicBrainzResource.RELEASE,
                     id = "165f6643-2edb-4795-9abe-26bd0533e59d",
-                    coverArtPath = coverArtPath,
+                    imageUrl = imageUrl,
                     lastAccessed = Date(2023, 5, 2)
                 )
             )
@@ -127,7 +127,7 @@ internal fun PreviewLookupHistoryRelease(
 @DefaultPreviews
 @Composable
 internal fun PreviewLookupHistoryArtist(
-    coverArtPath: String = "https://www.example.com/image.jpg"
+    imageUrl: String = "https://www.example.com/image.jpg"
 ) {
     PreviewTheme {
         Surface {
@@ -136,7 +136,7 @@ internal fun PreviewLookupHistoryArtist(
                     title = "月詠み",
                     resource = MusicBrainzResource.ARTIST,
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-                    coverArtPath = coverArtPath,
+                    imageUrl = imageUrl,
                     lastAccessed = Date(2023, 5, 2)
                 )
             )

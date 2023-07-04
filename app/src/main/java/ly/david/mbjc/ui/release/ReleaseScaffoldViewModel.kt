@@ -161,7 +161,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                         subtitle.value = "Release by ${releaseScaffoldModel.artistCredits.getDisplayNames()}"
                         release.value = releaseScaffoldModel
 
-                        getCoverArtUrl(releaseId, releaseScaffoldModel)
+                        fetchCoverArt(releaseId, releaseScaffoldModel)
 
                         isError.value = false
                     } catch (ex: HttpException) {
@@ -193,12 +193,12 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCoverArtUrl(
+    private suspend fun fetchCoverArt(
         releaseId: String,
         releaseScaffoldModel: ReleaseScaffoldModel
     ) {
-        val coverArtPath = releaseScaffoldModel.coverArtPath
-        url.value = coverArtPath ?: getReleaseCoverArtPathFromNetwork(
+        val imageUrl = releaseScaffoldModel.imageUrl
+        url.value = imageUrl ?: getReleaseCoverArtUrlFromNetwork(
             releaseId = releaseId,
             thumbnail = false
         )

@@ -69,7 +69,7 @@ data class ReleaseWithAllData(
         entityColumn = "mbid",
         projection = ["large_url"]
     )
-    val coverArtPath: String?
+    val largeUrl: String?
 ) : RoomModel
 
 /**

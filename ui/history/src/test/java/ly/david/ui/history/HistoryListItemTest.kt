@@ -32,21 +32,21 @@ class HistoryListItemTest : PaparazziScreenshotTest() {
     @Test
     fun releaseGroup() {
         snapshot {
-            PreviewLookupHistoryReleaseGroup(coverArtPath = "")
+            PreviewLookupHistoryReleaseGroup(imageUrl = "")
         }
     }
 
     @Test
     fun release() {
         snapshot {
-            PreviewLookupHistoryRelease(coverArtPath = "")
+            PreviewLookupHistoryRelease(imageUrl = "")
         }
     }
 
     @Test
     fun artist() {
         snapshot {
-            PreviewLookupHistoryArtist(coverArtPath = "")
+            PreviewLookupHistoryArtist(imageUrl = "")
         }
     }
 

@@ -17,7 +17,7 @@ data class ReleaseGroupForListItem(
         entity = MbidImage::class,
         parentColumn = "id",
         entityColumn = "mbid",
-        projection = ["image_path"]
+        projection = ["thumbnail_url"]
     )
-    val coverArtPath: String?
+    val thumbnailUrl: String?
 ) : RoomModel

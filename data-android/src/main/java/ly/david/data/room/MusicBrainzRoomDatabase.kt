@@ -46,7 +46,7 @@ import ly.david.data.room.work.WorkAttributeRoomModel
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.recordings.RecordingWork
 
-const val DATABASE_VERSION = 10
+const val DATABASE_VERSION = 11
 
 @Database(
     version = DATABASE_VERSION,
@@ -106,6 +106,7 @@ const val DATABASE_VERSION = 10
         AutoMigration(from = 6, to = 7),
         AutoMigration(from = 8, to = 9, spec = Migrations.DeleteCoverArtPath::class),
         AutoMigration(from = 9, to = 10),
+        AutoMigration(from = 10, to = 11, spec = Migrations.RenameThumbnailUrl::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)
