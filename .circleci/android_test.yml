@@ -42,6 +42,7 @@ jobs:
 
       - android/run-tests:
           max-tries: 2
+          no-output-timeout: 30m
           test-command: ./gradlew app:createDebugAndroidTestCoverageReport --stacktrace
 
       - android/save-gradle-cache:

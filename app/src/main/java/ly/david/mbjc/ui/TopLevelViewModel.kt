@@ -73,7 +73,7 @@ class MusicBrainzLoginContract(
 @HiltViewModel
 internal class TopLevelViewModel @Inject constructor(
     val appPreferences: AppPreferences,
-    val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+    private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
