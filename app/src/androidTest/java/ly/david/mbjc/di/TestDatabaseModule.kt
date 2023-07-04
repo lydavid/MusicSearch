@@ -9,21 +9,21 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.room.DatabaseModule
-import ly.david.data.room.MusicBrainzDatabase
-import ly.david.data.room.MusicBrainzRoomDatabase
+import ly.david.data.room.MusicSearchDatabase
+import ly.david.data.room.MusicSearchRoomDatabase
 
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [DatabaseModule::class]
 )
-internal object FakeDatabaseModule {
+internal object TestDatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): MusicBrainzDatabase {
+    fun provideDatabase(@ApplicationContext context: Context): MusicSearchDatabase {
         return Room.inMemoryDatabaseBuilder(
             context,
-            MusicBrainzRoomDatabase::class.java
+            MusicSearchRoomDatabase::class.java
         )
             .allowMainThreadQueries()
             .build()

@@ -109,5 +109,5 @@ const val DATABASE_VERSION = 11
         AutoMigration(from = 10, to = 11, spec = Migrations.RenameThumbnailUrl::class),
     ]
 )
-@TypeConverters(MusicBrainzRoomTypeConverters::class)
-abstract class MusicBrainzRoomDatabase : RoomDatabase(), MusicBrainzDatabase
+@TypeConverters(RoomTypeConverters::class)
+abstract class MusicSearchRoomDatabase : RoomDatabase(), MusicSearchDatabase

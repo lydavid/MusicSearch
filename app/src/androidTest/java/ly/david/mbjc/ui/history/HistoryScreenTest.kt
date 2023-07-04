@@ -10,7 +10,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.Destination
 import ly.david.data.network.lookupHistory
-import ly.david.data.room.MusicBrainzDatabase
+import ly.david.data.room.MusicSearchDatabase
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -25,7 +25,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
     private lateinit var navController: NavHostController
 
     @Inject
-    lateinit var db: MusicBrainzDatabase
+    lateinit var db: MusicSearchDatabase
     private lateinit var lookupHistoryDao: LookupHistoryDao
 
     @Before

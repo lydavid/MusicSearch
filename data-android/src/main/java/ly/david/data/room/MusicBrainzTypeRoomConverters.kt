@@ -8,7 +8,7 @@ import ly.david.data.network.resourceUri
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","
 
-internal class MusicBrainzRoomTypeConverters {
+internal class RoomTypeConverters {
 
     // For things like "secondary-types" which does not need its own table.
     @TypeConverter

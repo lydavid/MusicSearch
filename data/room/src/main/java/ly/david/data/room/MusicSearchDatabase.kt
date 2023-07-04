@@ -29,7 +29,7 @@ import ly.david.data.room.series.SeriesDao
 import ly.david.data.room.work.WorkDao
 import ly.david.data.room.work.recordings.RecordingWorkDao
 
-interface MusicBrainzDatabase {
+interface MusicSearchDatabase {
     fun getArtistDao(): ArtistDao
     fun getArtistReleaseDao(): ArtistReleaseDao
     fun getArtistReleaseGroupDao(): ArtistReleaseGroupDao

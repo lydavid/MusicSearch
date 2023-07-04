@@ -17,8 +17,8 @@ private const val DATABASE_NAME = "mbjc.db"
 object DatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): MusicBrainzDatabase {
-        return Room.databaseBuilder(context, MusicBrainzRoomDatabase::class.java, DATABASE_NAME)
+    fun provideDatabase(@ApplicationContext context: Context): MusicSearchDatabase {
+        return Room.databaseBuilder(context, MusicSearchRoomDatabase::class.java, DATABASE_NAME)
             .addMigrations(MIGRATION_7_8)
             .fallbackToDestructiveMigration()
             .build()

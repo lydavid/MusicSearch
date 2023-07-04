@@ -18,10 +18,10 @@ import javax.inject.Singleton
 internal object FakeDatabaseModule {
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context): MusicBrainzDatabase {
+    fun provideDatabase(@ApplicationContext context: Context): MusicSearchDatabase {
         return Room.inMemoryDatabaseBuilder(
             context,
-            MusicBrainzRoomDatabase::class.java
+            MusicSearchRoomDatabase::class.java
         )
             .allowMainThreadQueries()
             .build()

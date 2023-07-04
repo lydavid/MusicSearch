@@ -10,86 +10,86 @@ import ly.david.data.image.ImageUrlSaver
 @InstallIn(SingletonComponent::class)
 internal object DatabaseDaoModule {
     @Provides
-    fun provideArtistDao(db: MusicBrainzDatabase) = db.getArtistDao()
+    fun provideArtistDao(db: MusicSearchDatabase) = db.getArtistDao()
 
     @Provides
-    fun provideArtistReleaseDao(db: MusicBrainzDatabase) = db.getArtistReleaseDao()
+    fun provideArtistReleaseDao(db: MusicSearchDatabase) = db.getArtistReleaseDao()
 
     @Provides
-    fun provideArtistReleaseGroupDao(db: MusicBrainzDatabase) = db.getArtistReleaseGroupDao()
+    fun provideArtistReleaseGroupDao(db: MusicSearchDatabase) = db.getArtistReleaseGroupDao()
 
     @Provides
-    fun provideReleaseGroupDao(db: MusicBrainzDatabase) = db.getReleaseGroupDao()
+    fun provideReleaseGroupDao(db: MusicSearchDatabase) = db.getReleaseGroupDao()
 
     @Provides
-    fun provideReleaseReleaseGroupDao(db: MusicBrainzDatabase) = db.getReleaseReleaseGroupDao()
+    fun provideReleaseReleaseGroupDao(db: MusicSearchDatabase) = db.getReleaseReleaseGroupDao()
 
     @Provides
-    fun provideReleaseDao(db: MusicBrainzDatabase) = db.getReleaseDao()
+    fun provideReleaseDao(db: MusicSearchDatabase) = db.getReleaseDao()
 
     @Provides
-    fun provideMediumDao(db: MusicBrainzDatabase) = db.getMediumDao()
+    fun provideMediumDao(db: MusicSearchDatabase) = db.getMediumDao()
 
     @Provides
-    fun provideTrackDao(db: MusicBrainzDatabase) = db.getTrackDao()
+    fun provideTrackDao(db: MusicSearchDatabase) = db.getTrackDao()
 
     @Provides
-    fun provideRecordingDao(db: MusicBrainzDatabase) = db.getRecordingDao()
+    fun provideRecordingDao(db: MusicSearchDatabase) = db.getRecordingDao()
 
     @Provides
-    fun provideRecordingReleaseDao(db: MusicBrainzDatabase) = db.getRecordingReleaseDao()
+    fun provideRecordingReleaseDao(db: MusicSearchDatabase) = db.getRecordingReleaseDao()
 
     @Provides
-    fun provideWorkDao(db: MusicBrainzDatabase) = db.getWorkDao()
+    fun provideWorkDao(db: MusicSearchDatabase) = db.getWorkDao()
 
     @Provides
-    fun provideRecordingWorkDao(db: MusicBrainzDatabase) = db.getRecordingWorkDao()
+    fun provideRecordingWorkDao(db: MusicSearchDatabase) = db.getRecordingWorkDao()
 
     @Provides
-    fun provideAreaDao(db: MusicBrainzDatabase) = db.getAreaDao()
+    fun provideAreaDao(db: MusicSearchDatabase) = db.getAreaDao()
 
     @Provides
-    fun provideAreaPlaceDao(db: MusicBrainzDatabase) = db.getAreaPlaceDao()
+    fun provideAreaPlaceDao(db: MusicSearchDatabase) = db.getAreaPlaceDao()
 
     @Provides
-    fun provideEventPlaceDao(db: MusicBrainzDatabase) = db.getEventPlaceDao()
+    fun provideEventPlaceDao(db: MusicSearchDatabase) = db.getEventPlaceDao()
 
     @Provides
-    fun provideReleaseCountryDao(db: MusicBrainzDatabase) = db.getReleaseCountryDao()
+    fun provideReleaseCountryDao(db: MusicSearchDatabase) = db.getReleaseCountryDao()
 
     @Provides
-    fun providePlaceDao(db: MusicBrainzDatabase) = db.getPlaceDao()
+    fun providePlaceDao(db: MusicSearchDatabase) = db.getPlaceDao()
 
     @Provides
-    fun provideInstrumentDao(db: MusicBrainzDatabase) = db.getInstrumentDao()
+    fun provideInstrumentDao(db: MusicSearchDatabase) = db.getInstrumentDao()
 
     @Provides
-    fun provideLabelDao(db: MusicBrainzDatabase) = db.getLabelDao()
+    fun provideLabelDao(db: MusicSearchDatabase) = db.getLabelDao()
 
     @Provides
-    fun provideReleaseLabelDao(db: MusicBrainzDatabase) = db.getReleaseLabelDao()
+    fun provideReleaseLabelDao(db: MusicSearchDatabase) = db.getReleaseLabelDao()
 
     @Provides
-    fun provideEventDao(db: MusicBrainzDatabase) = db.getEventDao()
+    fun provideEventDao(db: MusicSearchDatabase) = db.getEventDao()
 
     @Provides
-    fun provideSeriesDao(db: MusicBrainzDatabase) = db.getSeriesDao()
+    fun provideSeriesDao(db: MusicSearchDatabase) = db.getSeriesDao()
 
     @Provides
-    fun provideRelationDao(db: MusicBrainzDatabase) = db.getRelationDao()
+    fun provideRelationDao(db: MusicSearchDatabase) = db.getRelationDao()
 
     @Provides
-    fun provideLookupHistoryDao(db: MusicBrainzDatabase) = db.getLookupHistoryDao()
+    fun provideLookupHistoryDao(db: MusicSearchDatabase) = db.getLookupHistoryDao()
 
     @Provides
-    fun provideSearchHistoryDao(db: MusicBrainzDatabase) = db.getSearchHistoryDao()
+    fun provideSearchHistoryDao(db: MusicSearchDatabase) = db.getSearchHistoryDao()
 
     @Provides
-    fun provideCollectionDao(db: MusicBrainzDatabase) = db.getCollectionDao()
+    fun provideCollectionDao(db: MusicSearchDatabase) = db.getCollectionDao()
 
     @Provides
-    fun provideCollectionEntityDao(db: MusicBrainzDatabase) = db.getCollectionEntityDao()
+    fun provideCollectionEntityDao(db: MusicSearchDatabase) = db.getCollectionEntityDao()
 
     @Provides
-    fun provideImageUrlSaver(db: MusicBrainzDatabase): ImageUrlSaver = db.getMbidImageDao()
+    fun provideImageUrlSaver(db: MusicSearchDatabase): ImageUrlSaver = db.getMbidImageDao()
 }
