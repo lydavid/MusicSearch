@@ -5,24 +5,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.room.history.LookupHistoryRoomModel
+import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HistoryScreen(
-    lazyPagingItems: LazyPagingItems<LookupHistoryRoomModel>,
+    lazyPagingItems: LazyPagingItems<LookupHistoryListItemModel>,
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
+    onDeleteItem: (LookupHistoryListItemModel) -> Unit = {}
 ) {
 
     PagingLoadingAndErrorHandler(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
-    ) { lookupHistory: LookupHistoryRoomModel? ->
+    ) { lookupHistory: LookupHistoryListItemModel? ->
         when (lookupHistory) {
-            is LookupHistoryRoomModel -> {
+            is LookupHistoryListItemModel -> {
                 HistoryListItem(
                     lookupHistory = lookupHistory,
                     modifier = Modifier.animateItemPlacement(),

@@ -33,7 +33,7 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
         ORDER BY last_accessed DESC
         """
     )
-    abstract fun getAllLookupHistory(query: String): PagingSource<Int, LookupHistoryRoomModel>
+    abstract fun getAllLookupHistory(query: String): PagingSource<Int, LookupHistoryForListItem>
 
     @Query(
         """

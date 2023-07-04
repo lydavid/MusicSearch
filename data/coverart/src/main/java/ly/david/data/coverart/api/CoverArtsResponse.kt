@@ -36,7 +36,7 @@ data class ThumbnailsUrls(
     @Json(name = "500") val resolution500Url: String? = null,
     @Json(name = "1200") val resolution1200Url: String? = null,
     @Json(name = "small") val small: String? = null,
-    @Json(name = "large") val larger: String? = null,
+    @Json(name = "large") val large: String? = null,
 )
 
 // There's more than 2 types: https://musicbrainz.org/doc/Cover_Art/Types
@@ -45,10 +45,12 @@ data class ThumbnailsUrls(
 //    @Json(name = "Back") BACK,
 //}
 
-/**
- * Returns a cover art url.
- */
-fun CoverArtsResponse.getFrontCoverArtUrl(): String? {
+fun CoverArtsResponse.getFrontThumbnailCoverArtUrl(): String? {
     // Note: MB doesn't fall back to any non-front covers
+    return coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution250Url
+        ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution500Url
+}
+
+fun CoverArtsResponse.getFrontLargeCoverArtUrl(): String? {
     return coverArtUrls.firstOrNull { it.front }?.imageUrl
 }

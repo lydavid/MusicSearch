@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ly.david.data.image.ImageUrlSaver
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -88,4 +89,7 @@ internal object DatabaseDaoModule {
 
     @Provides
     fun provideCollectionEntityDao(db: MusicBrainzDatabase) = db.getCollectionEntityDao()
+
+    @Provides
+    fun provideImageUrlSaver(db: MusicBrainzDatabase): ImageUrlSaver = db.getMbidImageDao()
 }

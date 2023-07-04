@@ -8,8 +8,8 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import ly.david.data.domain.listitem.ReleaseListItemModel
+import ly.david.data.image.FakeImageLoader
 import ly.david.data.room.area.releases.ReleaseCountry
-import ly.david.ui.common.FakeImageLoader
 import ly.david.ui.common.PaparazziScreenshotTest
 import org.junit.After
 import org.junit.Before
@@ -121,7 +121,7 @@ class ReleaseListItemTest : PaparazziScreenshotTest() {
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
-                    coverArtPath = "https://www.example.com/image.jpg"
+                    imageUrl = "https://www.example.com/image.jpg"
                 ),
                 showMoreInfo = true
             )

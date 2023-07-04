@@ -1,4 +1,4 @@
-package ly.david.ui.common.coverart
+package ly.david.ui.common.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
@@ -21,31 +21,34 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
-import ly.david.data.coverart.trimCoverArtSuffix
-import ly.david.ui.common.SMALL_COVER_ART_SIZE
+import ly.david.data.network.MusicBrainzResource
+import ly.david.ui.common.SMALL_IMAGE_SIZE
+import ly.david.ui.common.getIcon
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 
 @Composable
 fun ThumbnailImage(
-    coverArtUrl: String,
+    url: String,
+    mbid: String,
+    entity: MusicBrainzResource,
     modifier: Modifier = Modifier,
-    clipCircle: Boolean = false,
-    placeholderIcon: ImageVector = Icons.Default.Album,
 ) {
 
-    var _modifier = modifier.size(SMALL_COVER_ART_SIZE.dp)
-    if (clipCircle) _modifier = _modifier.clip(CircleShape)
+    val placeholderIcon = entity.getIcon()
 
-    if (coverArtUrl.isNotEmpty()) {
+    var _modifier = modifier.size(SMALL_IMAGE_SIZE.dp)
+    if (entity == MusicBrainzResource.ARTIST) _modifier = _modifier.clip(CircleShape)
+
+    if (url.isNotEmpty()) {
 
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(coverArtUrl.useHttps())
-                .size(Size(SMALL_COVER_ART_SIZE, SMALL_COVER_ART_SIZE))
+                .data(url.useHttps())
+                .size(Size(SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE))
                 .scale(Scale.FIT)
                 .crossfade(true)
-                .memoryCacheKey(coverArtUrl.trimCoverArtSuffix())
+                .memoryCacheKey(mbid)
                 .build(),
             imageLoader = LocalContext.current.imageLoader
         )
@@ -77,22 +80,26 @@ fun ThumbnailImage(
 @Composable
 private fun PlaceholderIcon(
     modifier: Modifier = Modifier,
-    placeholderIcon: ImageVector = Icons.Default.Album,
+    placeholderIcon: ImageVector? = null,
 ) {
     Icon(
         modifier = modifier
-            .size(SMALL_COVER_ART_SIZE.dp),
-        imageVector = placeholderIcon,
+            .size(SMALL_IMAGE_SIZE.dp),
+        imageVector = placeholderIcon ?: Icons.Default.Album,
         contentDescription = null
     )
 }
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewThumbnailImage() {
     PreviewTheme {
         Surface {
-            ThumbnailImage("https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489")
+            ThumbnailImage(
+                url = "https://coverartarchive.org/release/afa0b2a6-8384-44d4-a907-76da213ca24f/25740026489",
+                entity = MusicBrainzResource.RELEASE,
+                mbid = "afa0b2a6-8384-44d4-a907-76da213ca24f"
+            )
         }
     }
 }

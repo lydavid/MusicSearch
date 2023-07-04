@@ -3,13 +3,12 @@ package ly.david.data.room.release
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.coverart.UpdateReleaseCoverArtDao
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.room.BaseDao
 import ly.david.data.room.artist.credit.ArtistCreditDao
 
 @Dao
-abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao, UpdateReleaseCoverArtDao {
+abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
 
     @Transaction
     open suspend fun insertAllReleasesWithArtistCredits(releases: List<ReleaseMusicBrainzModel>) {
@@ -64,13 +63,4 @@ abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao, Update
         """
     )
     abstract suspend fun deleteReleaseById(releaseId: String)
-
-    @Query(
-        """
-            UPDATE `release`
-            SET cover_art_path = :coverArtPath
-            WHERE id = :releaseId
-        """
-    )
-    abstract override suspend fun setReleaseCoverArtPath(releaseId: String, coverArtPath: String)
 }

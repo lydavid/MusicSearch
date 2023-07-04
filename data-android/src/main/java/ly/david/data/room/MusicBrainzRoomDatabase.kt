@@ -21,6 +21,7 @@ import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.history.LookupHistoryRoomModel
 import ly.david.data.room.history.search.SearchHistoryRoomModel
+import ly.david.data.room.image.MbidImage
 import ly.david.data.room.instrument.InstrumentRoomModel
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.releases.ReleaseLabel
@@ -45,7 +46,7 @@ import ly.david.data.room.work.WorkAttributeRoomModel
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.recordings.RecordingWork
 
-const val DATABASE_VERSION = 6
+const val DATABASE_VERSION = 11
 
 @Database(
     version = DATABASE_VERSION,
@@ -85,7 +86,9 @@ const val DATABASE_VERSION = 6
         SearchHistoryRoomModel::class,
 
         CollectionRoomModel::class,
-        CollectionEntityRoomModel::class
+        CollectionEntityRoomModel::class,
+
+        MbidImage::class,
     ],
     views = [
         LabelWithCatalog::class,
@@ -100,6 +103,10 @@ const val DATABASE_VERSION = 6
         AutoMigration(from = 3, to = 4),
         AutoMigration(from = 4, to = 5),
         AutoMigration(from = 5, to = 6),
+        AutoMigration(from = 6, to = 7),
+        AutoMigration(from = 8, to = 9, spec = Migrations.DeleteCoverArtPath::class),
+        AutoMigration(from = 9, to = 10),
+        AutoMigration(from = 10, to = 11, spec = Migrations.RenameThumbnailUrl::class),
     ]
 )
 @TypeConverters(MusicBrainzRoomTypeConverters::class)

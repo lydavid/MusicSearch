@@ -11,6 +11,7 @@ import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.event.EventDao
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.search.SearchHistoryDao
+import ly.david.data.room.image.MbidImageDao
 import ly.david.data.room.instrument.InstrumentDao
 import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
@@ -66,4 +67,6 @@ interface MusicBrainzDatabase {
 
     fun getCollectionDao(): CollectionDao
     fun getCollectionEntityDao(): CollectionEntityDao
+
+    fun getMbidImageDao(): MbidImageDao
 }

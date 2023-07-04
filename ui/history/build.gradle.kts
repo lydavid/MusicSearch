@@ -19,6 +19,7 @@ android {
 dependencies {
     implementation(projects.data)
     implementation(projects.ui.common)
+    testImplementation(projects.testData)
 
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)

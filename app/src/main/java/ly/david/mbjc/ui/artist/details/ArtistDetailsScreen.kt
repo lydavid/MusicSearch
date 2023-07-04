@@ -14,7 +14,7 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.R
-import ly.david.ui.common.coverart.LargeImage
+import ly.david.ui.common.image.LargeImage
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader
@@ -36,7 +36,10 @@ internal fun ArtistDetailsScreen(
         state = lazyListState
     ) {
         item {
-            LargeImage(url = artistImageUrl)
+            LargeImage(
+                url = artistImageUrl,
+                mbid = artist.id
+            )
 
             artist.run {
                 InformationListSeparatorHeader(R.string.artist)

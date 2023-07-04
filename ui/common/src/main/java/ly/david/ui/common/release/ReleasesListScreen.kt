@@ -41,9 +41,12 @@ fun ReleasesListScreen(
                             release = releaseListItemModel,
                             modifier = Modifier.animateItemPlacement(),
                             showMoreInfo = showMoreInfo,
-                            requestForMissingCoverArtPath = {
+                            requestForMissingCoverArtUrl = {
                                 try {
-                                    viewModel.getReleaseCoverArtPathFromNetwork(releaseId = releaseListItemModel.id)
+                                    viewModel.getReleaseCoverArtUrlFromNetwork(
+                                        releaseId = releaseListItemModel.id,
+                                        thumbnail = true
+                                    )
                                 } catch (ex: Exception) {
                                     Timber.e(ex)
                                 }

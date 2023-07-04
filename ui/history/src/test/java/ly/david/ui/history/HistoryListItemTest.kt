@@ -1,55 +1,73 @@
 package ly.david.ui.history
 
+import coil.Coil
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import java.util.Date
-import ly.david.data.network.MusicBrainzResource
-import ly.david.data.room.history.LookupHistoryRoomModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import ly.david.data.image.FakeImageLoader
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(TestParameterInjector::class)
 class HistoryListItemTest : PaparazziScreenshotTest() {
+
+    @Before
+    fun before() {
+        val fakeImageLoader = FakeImageLoader()
+        Coil.setImageLoader(fakeImageLoader)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @After
+    fun teardown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun releaseGroup() {
         snapshot {
-            HistoryListItem(
-                lookupHistory = LookupHistoryRoomModel(
-                    title = "欠けた心象、世のよすが",
-                    resource = MusicBrainzResource.RELEASE_GROUP,
-                    id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-                    numberOfVisits = 9999,
-                    lastAccessed = Date(2023, 5, 2)
-                )
-            )
+            PreviewLookupHistoryReleaseGroup(imageUrl = "")
         }
     }
 
     @Test
     fun release() {
         snapshot {
-            HistoryListItem(
-                lookupHistory = LookupHistoryRoomModel(
-                    title = "欠けた心象、世のよすが",
-                    resource = MusicBrainzResource.RELEASE,
-                    id = "165f6643-2edb-4795-9abe-26bd0533e59d",
-                    lastAccessed = Date(2023, 5, 2)
-                )
-            )
+            PreviewLookupHistoryRelease(imageUrl = "")
         }
     }
 
     @Test
     fun artist() {
         snapshot {
-            HistoryListItem(
-                lookupHistory = LookupHistoryRoomModel(
-                    title = "月詠み",
-                    resource = MusicBrainzResource.ARTIST,
-                    id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
-                    lastAccessed = Date(2023, 5, 2)
-                )
-            )
+            PreviewLookupHistoryArtist(imageUrl = "")
+        }
+    }
+
+    @Test
+    fun releaseGroupWithCoverArt() {
+        snapshot {
+            PreviewLookupHistoryReleaseGroup()
+        }
+    }
+
+    @Test
+    fun releaseWithCoverArt() {
+        snapshot {
+            PreviewLookupHistoryRelease()
+        }
+    }
+
+    @Test
+    fun artistWithCoverArt() {
+        snapshot {
+            PreviewLookupHistoryArtist()
         }
     }
 }

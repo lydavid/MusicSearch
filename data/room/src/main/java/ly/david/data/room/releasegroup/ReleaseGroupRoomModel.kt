@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import ly.david.data.ReleaseGroup
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.release.ReleaseRoomModel
 
 @Entity(
     tableName = "release_group",
@@ -20,19 +19,6 @@ data class ReleaseGroupRoomModel(
     @ColumnInfo(name = "primary_type_id") val primaryTypeId: String? = null,
     @ColumnInfo(name = "secondary_types") override val secondaryTypes: List<String>? = null,
     @ColumnInfo(name = "secondary_type_ids") val secondaryTypeIds: List<String>? = null,
-
-    /**
-     * Release group cover art actually comes from a release.
-     * Since multiple releases can belong to a release group, we just store the release id as part of this path.
-     *
-     * May be one of:
-     * - `null`: Have not requested cover art
-     * - Empty: Requested but did not find any
-     * - string path: partial url path to cover art (eg. e6a9a248-649c-4be1-bc84-924638bafa49/32187188956)
-     *
-     * Also see [ReleaseRoomModel.coverArtPath].
-     */
-    @ColumnInfo(name = "cover_art_path") val coverArtPath: String? = null,
 ) : RoomModel, ReleaseGroup
 
 fun ReleaseGroupMusicBrainzModel.toRoomModel(): ReleaseGroupRoomModel =

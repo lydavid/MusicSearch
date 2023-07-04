@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
-import ly.david.data.coverart.buildCoverArtUrl
 import ly.david.data.domain.listitem.ReleaseListItemModel
+import ly.david.data.network.MusicBrainzResource
 import ly.david.data.room.area.releases.ReleaseCountry
-import ly.david.ui.common.coverart.ThumbnailImage
+import ly.david.ui.common.image.ThumbnailImage
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.theme.TextStyles
@@ -36,13 +34,13 @@ fun ReleaseListItem(
     release: ReleaseListItemModel,
     modifier: Modifier = Modifier,
     showMoreInfo: Boolean = true,
-    requestForMissingCoverArtPath: suspend () -> Unit = {},
+    requestForMissingCoverArtUrl: suspend () -> Unit = {},
     onClick: ReleaseListItemModel.() -> Unit = {}
 ) {
 
     LaunchedEffect(key1 = release.id) {
-        if (release.coverArtPath == null) {
-            requestForMissingCoverArtPath()
+        if (release.imageUrl == null) {
+            requestForMissingCoverArtUrl()
         }
     }
 
@@ -135,8 +133,9 @@ fun ReleaseListItem(
         },
         leadingContent = {
             ThumbnailImage(
-                placeholderIcon = Icons.Default.Album,
-                coverArtUrl = buildCoverArtUrl(release.coverArtPath.orEmpty())
+                url = release.imageUrl.orEmpty(),
+                mbid = release.id,
+                entity = MusicBrainzResource.RELEASE
             )
         }
     )

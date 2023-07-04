@@ -3,24 +3,19 @@ package ly.david.ui.history
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.data.room.history.LookupHistoryRoomModel
-import ly.david.ui.common.ResourceIcon
-import ly.david.ui.common.SMALL_COVER_ART_SIZE
 import ly.david.ui.common.getDisplayTextRes
+import ly.david.ui.common.image.ThumbnailImage
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.theme.PreviewTheme
@@ -28,10 +23,10 @@ import ly.david.ui.common.theme.TextStyles
 
 @Composable
 internal fun HistoryListItem(
-    lookupHistory: LookupHistoryRoomModel,
+    lookupHistory: LookupHistoryListItemModel,
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onDeleteItem: (LookupHistoryRoomModel) -> Unit = {}
+    onDeleteItem: (LookupHistoryListItemModel) -> Unit = {}
 ) {
     SwipeToDeleteListItem(
         content = {
@@ -62,9 +57,10 @@ internal fun HistoryListItem(
                     }
                 },
                 leadingContent = {
-                    ResourceIcon(
-                        resource = lookupHistory.resource,
-                        modifier = Modifier.size(SMALL_COVER_ART_SIZE.dp)
+                    ThumbnailImage(
+                        url = lookupHistory.imageUrl.orEmpty(),
+                        mbid = lookupHistory.id,
+                        entity = lookupHistory.resource
                     )
                 },
                 trailingContent = {
@@ -86,35 +82,65 @@ private fun Date.toDisplayDate(): String {
     return dateFormat.format(this)
 }
 
-internal class LookupHistoryPreviewParameterProvider : PreviewParameterProvider<LookupHistoryRoomModel> {
-    override val values: Sequence<LookupHistoryRoomModel> = sequenceOf(
-        LookupHistoryRoomModel(
-            title = "欠けた心象、世のよすが",
-            resource = MusicBrainzResource.RELEASE_GROUP,
-            id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
-            numberOfVisits = 9999
-        ),
-        LookupHistoryRoomModel(
-            title = "欠けた心象、世のよすが",
-            resource = MusicBrainzResource.RELEASE,
-            id = "165f6643-2edb-4795-9abe-26bd0533e59d"
-        ),
-        LookupHistoryRoomModel(
-            title = "月詠み",
-            resource = MusicBrainzResource.ARTIST,
-            id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c"
-        )
-    )
+// region Previews
+@DefaultPreviews
+@Composable
+internal fun PreviewLookupHistoryReleaseGroup(
+    imageUrl: String = "https://www.example.com/image.jpg"
+) {
+    PreviewTheme {
+        Surface {
+            HistoryListItem(
+                LookupHistoryListItemModel(
+                    title = "欠けた心象、世のよすが",
+                    resource = MusicBrainzResource.RELEASE_GROUP,
+                    id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
+                    numberOfVisits = 9999,
+                    imageUrl = imageUrl,
+                    lastAccessed = Date(2023, 5, 2)
+                )
+            )
+        }
+    }
 }
 
 @DefaultPreviews
 @Composable
-private fun Preview(
-    @PreviewParameter(LookupHistoryPreviewParameterProvider::class) history: LookupHistoryRoomModel
+internal fun PreviewLookupHistoryRelease(
+    imageUrl: String = "https://www.example.com/image.jpg"
 ) {
     PreviewTheme {
         Surface {
-            HistoryListItem(history)
+            HistoryListItem(
+                LookupHistoryListItemModel(
+                    title = "欠けた心象、世のよすが",
+                    resource = MusicBrainzResource.RELEASE,
+                    id = "165f6643-2edb-4795-9abe-26bd0533e59d",
+                    imageUrl = imageUrl,
+                    lastAccessed = Date(2023, 5, 2)
+                )
+            )
         }
     }
 }
+
+@DefaultPreviews
+@Composable
+internal fun PreviewLookupHistoryArtist(
+    imageUrl: String = "https://www.example.com/image.jpg"
+) {
+    PreviewTheme {
+        Surface {
+            HistoryListItem(
+                LookupHistoryListItemModel(
+                    title = "月詠み",
+                    resource = MusicBrainzResource.ARTIST,
+                    id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
+                    imageUrl = imageUrl,
+                    lastAccessed = Date(2023, 5, 2)
+                )
+            )
+        }
+    }
+}
+// endregion
