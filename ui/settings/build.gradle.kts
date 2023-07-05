@@ -27,9 +27,7 @@ dependencies {
     implementation(libs.aboutlibraries.compose)
     implementation(libs.aboutlibraries.core)
 
-    implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.paging.runtime)
 
     implementation(libs.appauth)
 
@@ -38,16 +36,13 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
-    androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
-    kaptAndroidTest(libs.hilt.android.compiler)
-    androidTestImplementation(libs.hilt.android.testing)
 
-    testImplementation(libs.bundles.kotlinx.coroutines)
+    testRuntimeOnly(libs.bundles.kotlinx.coroutines)
 
     testImplementation(libs.test.parameter.injector)
 }

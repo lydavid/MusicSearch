@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.modulegraph)
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.aboutlibraries) apply true
+    alias(libs.plugins.dependency.analysis)
 }
 
 subprojects {
