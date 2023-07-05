@@ -38,7 +38,7 @@ jobs:
       - android/start-emulator:
           avd-name: test
           restore-gradle-cache-prefix: v5
-          restore-gradle-cache-find-args: . -name "build.gradle*" -or -name "settings.gradle*" -or "libs.versions.toml"
+          restore-gradle-cache-find-args: . -name "build.gradle*" -or -name "settings.gradle*" -or -name "libs.versions.toml"
           post-emulator-launch-assemble-command: ./gradlew app:assembleDebugAndroidTest
 
       - android/run-tests:
