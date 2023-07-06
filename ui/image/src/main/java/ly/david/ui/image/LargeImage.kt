@@ -1,4 +1,4 @@
-package ly.david.ui.common.image
+package ly.david.ui.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -23,8 +23,8 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.common.useHttps
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 fun LargeImage(

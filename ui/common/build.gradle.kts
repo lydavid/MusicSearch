@@ -23,6 +23,8 @@ android {
 
 dependencies {
     implementation(projects.dataAndroid)
+    implementation(projects.ui.core)
+    implementation(projects.ui.image)
     testImplementation(projects.testData)
 
     implementation(libs.accompanist.swiperefresh)

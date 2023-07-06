@@ -1,6 +1,6 @@
 package ly.david.data.spotify
 
-import ly.david.data.base.JsonUtils
+import ly.david.data.common.JsonUtils
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

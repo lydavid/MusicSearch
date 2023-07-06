@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
 
 @Composable
 fun SettingSwitch(

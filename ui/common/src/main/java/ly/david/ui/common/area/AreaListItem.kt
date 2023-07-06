@@ -22,9 +22,9 @@ import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.getLifeSpanForDisplay
 import ly.david.data.showReleases
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
 
 /**
  * Also used for release event cards since their Destination is also an Area.

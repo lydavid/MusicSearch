@@ -26,7 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.ui.common.R
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable

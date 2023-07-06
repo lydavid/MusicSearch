@@ -14,11 +14,12 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.image.ThumbnailImage
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
-import ly.david.ui.common.theme.getSubTextColor
+import ly.david.ui.common.getIcon
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
+import ly.david.ui.core.theme.getSubTextColor
+import ly.david.ui.image.ThumbnailImage
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**
@@ -79,7 +80,7 @@ fun ReleaseGroupListItem(
             ThumbnailImage(
                 url = releaseGroup.imageUrl.orEmpty(),
                 mbid = releaseGroup.id,
-                entity = MusicBrainzResource.RELEASE_GROUP
+                placeholderIcon = MusicBrainzResource.RELEASE_GROUP.getIcon()
             )
         }
     )

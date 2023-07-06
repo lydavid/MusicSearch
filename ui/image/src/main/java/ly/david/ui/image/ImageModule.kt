@@ -1,4 +1,4 @@
-package ly.david.mbjc.di
+package ly.david.ui.image
 
 import android.content.Context
 import coil.ImageLoader
@@ -15,7 +15,7 @@ import okhttp3.Response
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object ImageModule {
+object ImageModule {
 
     @Provides
     @Singleton

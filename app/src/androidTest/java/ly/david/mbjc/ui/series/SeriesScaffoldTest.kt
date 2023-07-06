@@ -13,7 +13,7 @@ import ly.david.data.network.fakeSeries
 import ly.david.data.domain.series.SeriesRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 
 @HiltAndroidTest

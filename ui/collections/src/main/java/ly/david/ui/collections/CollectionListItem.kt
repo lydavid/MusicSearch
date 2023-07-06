@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.ResourceIcon
-import ly.david.ui.common.SMALL_IMAGE_SIZE
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.SMALL_IMAGE_SIZE
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
 
 @Composable
 fun CollectionListItem(

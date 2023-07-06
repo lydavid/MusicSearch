@@ -41,8 +41,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.zIndex
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.R
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 
 /**
  * [ScrollableTopAppBar] with filtering.

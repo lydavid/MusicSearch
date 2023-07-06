@@ -1,4 +1,4 @@
-package ly.david.ui.common.preview
+package ly.david.ui.core.preview
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

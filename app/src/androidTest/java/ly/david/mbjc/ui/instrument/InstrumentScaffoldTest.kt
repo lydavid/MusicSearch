@@ -12,7 +12,7 @@ import ly.david.data.network.fakeInstrument
 import ly.david.data.domain.instrument.InstrumentRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 
 @HiltAndroidTest

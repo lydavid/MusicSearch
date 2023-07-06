@@ -14,10 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.Destination
 import ly.david.ui.common.R
-import ly.david.ui.common.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeading
-import ly.david.ui.common.theme.PreviewTheme
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.settings.components.ClickableItem
 import ly.david.ui.settings.components.ProfileCard
 import ly.david.ui.settings.components.SettingSwitch

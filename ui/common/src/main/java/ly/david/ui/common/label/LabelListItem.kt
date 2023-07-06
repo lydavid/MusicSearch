@@ -19,9 +19,9 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.ui.common.R
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
-import ly.david.ui.common.theme.getSubTextColor
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
+import ly.david.ui.core.theme.getSubTextColor
 
 @Composable
 fun LabelListItem(

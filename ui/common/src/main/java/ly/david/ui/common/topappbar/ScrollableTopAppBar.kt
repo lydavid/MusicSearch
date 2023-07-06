@@ -36,8 +36,8 @@ import kotlinx.coroutines.delay
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.R
 import ly.david.ui.common.ResourceIcon
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 
 /**
  * Assuming an average api call finishes under 300ms, we should delay showing the loading indicator until we

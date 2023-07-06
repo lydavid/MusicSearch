@@ -27,7 +27,7 @@ import ly.david.data.network.underPressureReleaseGroup
 import ly.david.data.domain.artist.ArtistRepository
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 
 @HiltAndroidTest

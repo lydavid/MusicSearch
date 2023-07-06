@@ -45,6 +45,8 @@ include(
     ":test-data",
     ":ui:collections",
     ":ui:common",
+    ":ui:core",
     ":ui:history",
+    ":ui:image",
     ":ui:settings",
 )

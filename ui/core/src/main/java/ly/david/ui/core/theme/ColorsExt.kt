@@ -1,4 +1,4 @@
-package ly.david.ui.common.theme
+package ly.david.ui.core.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

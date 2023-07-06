@@ -8,7 +8,7 @@ import com.android.ide.common.rendering.api.SessionParams
 import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Rule
 import org.junit.runner.RunWith
 

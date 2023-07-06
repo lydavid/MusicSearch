@@ -31,7 +31,7 @@ import ly.david.data.network.underPressureTrack
 import ly.david.data.domain.release.ReleaseRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 

@@ -79,8 +79,10 @@ android {
 dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.ui.common)
+    implementation(projects.ui.core)
     implementation(projects.ui.collections)
     implementation(projects.ui.history)
+    implementation(projects.ui.image)
     implementation(projects.ui.settings)
     testImplementation(projects.testData)
     androidTestImplementation(projects.testData)
@@ -89,7 +91,6 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout.compose)
-    implementation(libs.androidx.core)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
@@ -127,15 +128,12 @@ dependencies {
 
     implementation(libs.bundles.retrofit)
 
-    androidTestImplementation(libs.room.testing)
-
     androidTestImplementation(libs.okhttp.mockwebserver)
     androidTestImplementation(libs.okhttp.tls)
 
     implementation(libs.timber)
 
     androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.arch.core.testing)
 }
 

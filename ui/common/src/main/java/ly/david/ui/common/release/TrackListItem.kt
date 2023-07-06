@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.listitem.TrackListItemModel
-import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.recording.RecordingListItem
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
 
 /**
  * Also see [RecordingListItem].

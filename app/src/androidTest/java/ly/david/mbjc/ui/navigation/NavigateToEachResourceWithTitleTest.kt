@@ -12,7 +12,7 @@ import ly.david.data.network.resourceUri
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

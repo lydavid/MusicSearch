@@ -32,9 +32,9 @@ import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.ui.collections.CollectionListItem
 import ly.david.ui.common.R
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 
 /**

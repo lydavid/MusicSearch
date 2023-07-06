@@ -9,8 +9,8 @@ import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.Tab
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 
 /**
  * Display all [stats] ordered/shown based on [tabs].

@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.ui.common.R
-import ly.david.ui.common.image.LargeImage
+import ly.david.ui.image.LargeImage
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeadingRes
 

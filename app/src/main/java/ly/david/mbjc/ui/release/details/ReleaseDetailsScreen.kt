@@ -23,13 +23,13 @@ import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.image.LargeImage
+import ly.david.ui.image.LargeImage
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeadingRes
-import ly.david.ui.common.theme.PreviewTheme
+import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun ReleaseDetailsScreen(

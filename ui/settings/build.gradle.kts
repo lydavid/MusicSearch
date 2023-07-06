@@ -23,6 +23,7 @@ android {
 dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.ui.common)
+    implementation(projects.ui.core)
 
     implementation(libs.aboutlibraries.compose)
     implementation(libs.aboutlibraries.core)

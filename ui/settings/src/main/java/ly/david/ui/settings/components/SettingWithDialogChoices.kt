@@ -18,9 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.ui.common.R
 import ly.david.ui.common.dialog.MultipleChoiceDialog
-import ly.david.ui.common.preview.DefaultPreviews
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.settings.AppPreferences
 
 @Composable
@@ -68,7 +68,7 @@ private fun Preview() {
     PreviewTheme {
         // Preview is intentionally max sized so that we can see the dialog pop up in the middle of the screen
         Surface(modifier = Modifier.fillMaxSize()) {
-            var theme by remember { mutableStateOf(ly.david.ui.settings.AppPreferences.Theme.SYSTEM) }
+            var theme by remember { mutableStateOf(AppPreferences.Theme.SYSTEM) }
 
             SettingWithDialogChoices(
                 titleRes = R.string.theme,

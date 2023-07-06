@@ -23,10 +23,10 @@ import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
-import ly.david.ui.common.preview.DefaultPreviews
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
-import ly.david.ui.common.theme.PreviewTheme
-import ly.david.ui.common.theme.TextStyles
+import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.core.theme.TextStyles
 
 // TODO: genre browsing isn't supported by API
 //  lookup only returns its name so there's not much for us to display ATM
