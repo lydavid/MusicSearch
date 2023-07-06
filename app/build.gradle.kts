@@ -128,12 +128,15 @@ dependencies {
 
     implementation(libs.bundles.retrofit)
 
+    androidTestImplementation(libs.room.testing)
+
     androidTestImplementation(libs.okhttp.mockwebserver)
     androidTestImplementation(libs.okhttp.tls)
 
     implementation(libs.timber)
 
     androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.arch.core.testing)
 }
 
