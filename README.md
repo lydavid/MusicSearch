@@ -65,6 +65,8 @@ graph LR
   room --> base
   room --> coverart
   room --> musicbrainz
+  image --> base
+  image --> core
   data --> base
   data --> coverart
   data --> domain
@@ -73,6 +75,7 @@ graph LR
   data --> musicbrainz
   settings --> data-android
   settings --> common
+  settings --> core
   data-android --> data
   data-android --> test-data
   test-data --> data
@@ -80,31 +83,46 @@ graph LR
   spotify --> base
   collections --> data
   collections --> common
+  collections --> core
   common --> data-android
+  common --> core
+  common --> image
+  common --> test-data
   app --> test-data
   app --> data-android
   app --> common
+  app --> core
   app --> collections
   app --> history
+  app --> image
   app --> settings
   app --> data-android
   app --> common
+  app --> core
   app --> collections
   app --> history
+  app --> image
   app --> settings
   app --> data-android
   app --> common
+  app --> core
   app --> collections
   app --> history
+  app --> image
   app --> settings
   app --> data-android
   app --> common
+  app --> core
   app --> collections
   app --> history
+  app --> image
   app --> settings
   app --> test-data
   coverart --> base
   history --> data
   history --> common
+  history --> core
+  history --> image
+  history --> test-data
 
 ```

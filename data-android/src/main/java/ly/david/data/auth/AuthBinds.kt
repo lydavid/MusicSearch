@@ -1,4 +1,4 @@
-package ly.david.data.common
+package ly.david.data.auth
 
 import dagger.Binds
 import dagger.Module
@@ -12,7 +12,7 @@ import ly.david.data.spotify.SpotifyOAuthImpl
 
 @InstallIn(SingletonComponent::class)
 @Module
-internal abstract class AppBinds {
+internal abstract class AuthBinds {
     @Singleton
     @Binds
     abstract fun provideMusicBrainzAuthState(bind: MusicBrainzAuthStateImpl): MusicBrainzAuthState
