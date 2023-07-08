@@ -86,7 +86,7 @@ kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-test"]
 retrofit = ["retrofit", "retrofit-converter-moshi"]
 
 [plugins]
-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version = "10.8.0" }
+aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version = "10.8.1" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.20.0" }
