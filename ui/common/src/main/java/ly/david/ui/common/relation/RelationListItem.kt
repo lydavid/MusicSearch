@@ -1,6 +1,7 @@
 package ly.david.ui.common.relation
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -10,7 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
 import ly.david.data.domain.listitem.RelationListItemModel
@@ -22,6 +27,7 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.core.theme.getSubTextColor
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RelationListItem(
     relation: RelationListItemModel,
@@ -30,6 +36,8 @@ fun RelationListItem(
 ) {
 
     val context = LocalContext.current
+    val haptics = LocalHapticFeedback.current
+    val clipboardManager = LocalClipboardManager.current
 
     ListItem(
         headlineContent = {
@@ -84,14 +92,21 @@ fun RelationListItem(
                 }
             }
         },
-        modifier = modifier.clickable {
-            val entity = relation.linkedResource
-            if (entity == MusicBrainzResource.URL) {
-                context.openUrl(relation.name)
-            } else {
-                onItemClick(entity, relation.linkedResourceId, relation.getNameWithDisambiguation())
-            }
-        }
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                    val entity = relation.linkedResource
+                    if (entity == MusicBrainzResource.URL) {
+                        context.openUrl(relation.name)
+                    } else {
+                        onItemClick(entity, relation.linkedResourceId, relation.getNameWithDisambiguation())
+                    }
+                },
+                onLongClick = {
+                    haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                    clipboardManager.setText(AnnotatedString(relation.name))
+                }
+            )
     )
 }
 
