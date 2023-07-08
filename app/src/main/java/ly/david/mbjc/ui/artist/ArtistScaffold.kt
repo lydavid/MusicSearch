@@ -101,10 +101,8 @@ internal fun ArtistScaffold(
                 resource = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
-                showFilterIcon = selectedTab in listOf(
-                    ArtistTab.RELEASE_GROUPS,
-                    ArtistTab.RELEASES,
-                    ArtistTab.RELATIONSHIPS
+                showFilterIcon = selectedTab !in listOf(
+                    ArtistTab.STATS,
                 ),
                 overflowDropdownMenuItems = {
                     OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
@@ -182,6 +180,7 @@ internal fun ArtistScaffold(
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            filterText = filterText,
                             artistImageUrl = url,
                             lazyListState = detailsLazyListState,
                             onItemClick = onItemClick,
@@ -196,7 +195,7 @@ internal fun ArtistScaffold(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        searchText = filterText,
+                        filterText = filterText,
                         isSorted = sortReleaseGroupListItems,
                         snackbarHostState = snackbarHostState,
                         onReleaseGroupClick = onItemClick,

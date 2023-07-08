@@ -17,7 +17,7 @@ import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 internal fun ReleaseGroupsByArtistScreen(
     artistId: String,
     modifier: Modifier,
-    searchText: String,
+    filterText: String,
     isSorted: Boolean,
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
@@ -31,7 +31,7 @@ internal fun ReleaseGroupsByArtistScreen(
         onPagedReleaseGroupsChange(viewModel.pagedResources)
     }
 
-    viewModel.updateQuery(query = searchText)
+    viewModel.updateQuery(query = filterText)
     viewModel.updateSorted(sorted = isSorted)
 
     ReleaseGroupsListScreen(

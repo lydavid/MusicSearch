@@ -75,7 +75,7 @@ internal fun SearchScreen(
         Row(modifier = Modifier.fillMaxWidth()) {
             TextField(
                 modifier = Modifier
-                    .testTag("searchTestField")
+                    .testTag(SearchScreenTestTag.TEXT_FIELD.name)
                     .weight(1f)
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
@@ -132,4 +132,8 @@ internal fun SearchScreen(
             )
         }
     }
+}
+
+enum class SearchScreenTestTag {
+    TEXT_FIELD
 }

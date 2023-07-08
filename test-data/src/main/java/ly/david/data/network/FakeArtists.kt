@@ -19,6 +19,16 @@ val carlosAlomar = ArtistMusicBrainzModel(
     typeId = "b6e035f4-3ce9-331c-97df-83397230b0df"
 )
 
+val davidBowieSpotify = UrlMusicBrainzModel(
+    id = "63debbe5-79e0-4047-882d-a0dc8280b4b9",
+    resource = "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+)
+
+val davidBowieDeezer = UrlMusicBrainzModel(
+    id = "cb9f2aef-c926-4163-9ce1-d906283bbf6c",
+    resource = "https://www.deezer.com/artist/997"
+)
+
 val davidBowie = ArtistMusicBrainzModel(
     id = "5441c29d-3602-4898-b1a1-b77fa23b8e50",
     name = "David Bowie",
@@ -45,7 +55,21 @@ val davidBowie = ArtistMusicBrainzModel(
             attributes = listOf("guitar"),
             type = "instrumental supporting musician",
             typeId = "ed6a7891-ce70-4e08-9839-1f2f62270497"
-        )
+        ),
+        RelationMusicBrainzModel(
+            url = davidBowieSpotify,
+            direction = Direction.FORWARD,
+            targetType = MusicBrainzResource.URL,
+            type = "free streaming",
+            typeId = "769085a1-c2f7-4c24-a532-2375a77693bd"
+        ),
+        RelationMusicBrainzModel(
+            url = davidBowieDeezer,
+            direction = Direction.FORWARD,
+            targetType = MusicBrainzResource.URL,
+            type = "free streaming",
+            typeId = "769085a1-c2f7-4c24-a532-2375a77693bd"
+        ),
     )
 )
 

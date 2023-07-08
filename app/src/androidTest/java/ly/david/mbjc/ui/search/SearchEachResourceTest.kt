@@ -77,7 +77,7 @@ internal class SearchEachResourceTest(
         composeTestRule.onRoot().printToLog("MY TAG")
 
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onNodeWithTag("searchTestField")
+            .onNodeWithTag(SearchScreenTestTag.TEXT_FIELD.name)
 
         searchFieldNode.assert(hasText(""))
             .performTextInput("Some search text")

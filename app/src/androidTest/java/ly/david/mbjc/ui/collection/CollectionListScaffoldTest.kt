@@ -25,6 +25,7 @@ import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
+import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -141,7 +142,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .onNodeWithContentDescription(filter)
             .performClick()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("should")
         waitForThenAssertIsDisplayed(name1)
         composeTestRule
@@ -152,7 +153,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .onNodeWithContentDescription(filter)
             .performClick()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("something such that we show no results")
         composeTestRule
             .onAllNodesWithText(name1)

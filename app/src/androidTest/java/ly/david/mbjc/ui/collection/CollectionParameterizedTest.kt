@@ -26,6 +26,7 @@ import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.navigation.goToResource
+import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -119,7 +120,7 @@ internal class CollectionParameterizedTest(
             .onNodeWithContentDescription(filter)
             .performClick()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("something")
         composeTestRule
             .onNodeWithText(entityName)

@@ -9,19 +9,17 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.ui.common.R
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-/**
- * Should be used inside a [ColumnScope].
- */
 @Composable
 fun LifeSpanText(
     lifeSpan: LifeSpan?,
     modifier: Modifier = Modifier,
     beginHeadingRes: Int = R.string.start_date,
-    endHeadingRes: Int = R.string.end_date
+    endHeadingRes: Int = R.string.end_date,
+    filterText: String = ""
 ) {
     lifeSpan?.run {
         Column(
@@ -29,13 +27,25 @@ fun LifeSpanText(
         ) {
             val beginDate = begin
             if (beginDate == end && beginDate != null) {
-                TextWithHeadingRes(headingRes = R.string.date, text = beginDate)
+                TextWithHeadingRes(
+                    headingRes = R.string.date,
+                    text = beginDate,
+                    filterText = filterText
+                )
             } else {
                 begin?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = beginHeadingRes, text = it)
+                    TextWithHeadingRes(
+                        headingRes = beginHeadingRes,
+                        text = it,
+                        filterText = filterText
+                    )
                 }
                 end?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = endHeadingRes, text = it)
+                    TextWithHeadingRes(
+                        headingRes = endHeadingRes,
+                        text = it,
+                        filterText = filterText
+                    )
                 }
             }
         }

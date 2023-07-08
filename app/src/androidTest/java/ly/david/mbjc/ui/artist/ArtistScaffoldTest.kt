@@ -13,28 +13,44 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
+import coil.Coil
+import coil.ImageLoaderFactory
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.bandAid
 import ly.david.data.network.carlosAlomar
 import ly.david.data.network.davidBowie
+import ly.david.data.network.davidBowieDeezer
+import ly.david.data.network.davidBowieSpotify
 import ly.david.data.network.underPressure
 import ly.david.data.network.underPressureReleaseGroup
-import ly.david.data.domain.artist.ArtistRepository
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var artistRepository: ArtistRepository
+
+    @Inject
+    lateinit var imageLoaderFactory: ImageLoaderFactory
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+        Coil.setImageLoader(imageLoaderFactory)
+    }
 
     private fun setArtist(artistMusicBrainzModel: ArtistMusicBrainzModel) {
         composeTestRule.activity.setContent {
@@ -45,14 +61,14 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
     }
 
     @Test
-    fun firstVisit_noLocalData() = runTest {
+    fun firstVisit_noLocalData() = runTest(timeout = 20.seconds) {
         setArtist(davidBowie)
 
         assertFieldsDisplayed()
     }
 
     @Test
-    fun repeatVisit_localData() = runTest {
+    fun repeatVisit_localData() = runTest(timeout = 20.seconds) {
         artistRepository.lookupArtist(davidBowie.id)
         setArtist(davidBowie)
 
@@ -61,9 +77,29 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
 
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(davidBowie.getNameWithDisambiguation())
-
         waitForThenAssertIsDisplayed("Type: ${davidBowie.type!!}")
         waitForThenAssertIsDisplayed("Gender: ${davidBowie.gender!!}")
+        waitForThenAssertIsDisplayed(davidBowieSpotify.resource)
+        waitForThenAssertIsDisplayed(davidBowieDeezer.resource)
+        composeTestRule
+            .onNodeWithContentDescription(filter)
+            .performClick()
+        composeTestRule
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
+            .performTextInput("spotify")
+        composeTestRule
+            .onNodeWithText("Type: ${davidBowie.type!!}")
+            .assertIsNotDisplayedOrDoesNotExist()
+        composeTestRule
+            .onNodeWithText("Gender: ${davidBowie.gender!!}")
+            .assertIsNotDisplayedOrDoesNotExist()
+        waitForThenAssertIsDisplayed(davidBowieSpotify.resource)
+        composeTestRule
+            .onNodeWithText(davidBowieDeezer.resource)
+            .assertIsNotDisplayedOrDoesNotExist()
+        composeTestRule
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_BACK.name)
+            .performClick()
 
         waitForThenPerformClickOn(releaseGroups)
         composeTestRule
@@ -103,7 +139,6 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
         waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
     }
 
-    // TODO: For some reason, there's a problem with waiting for this if we put it in above function
     @Test
     fun hasRelations() = runTest {
         setArtist(davidBowie)
@@ -115,7 +150,7 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
             .onNodeWithContentDescription(filter)
             .performClick()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("something such that we show no results")
         composeTestRule
             .onAllNodesWithText(bandAid.name)
@@ -124,10 +159,10 @@ internal class ArtistScaffoldTest : MainActivityTestWithMockServer(), StringRefe
             .onAllNodesWithText(carlosAlomar.name)
             .assertCountEquals(0)
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextClearance()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("band")
         composeTestRule
             .onNodeWithText(bandAid.name)

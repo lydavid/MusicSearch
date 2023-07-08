@@ -25,6 +25,7 @@ import ly.david.data.room.area.toAreaRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
+import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 
@@ -86,7 +87,7 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .onNodeWithContentDescription(filter)
             .performClick()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("something such that we show no results")
         composeTestRule
             .onAllNodesWithText(canada.name)
@@ -95,10 +96,10 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .onAllNodesWithText(toronto.name)
             .assertCountEquals(0)
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextClearance()
         composeTestRule
-            .onNodeWithTag("filterTextField")
+            .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
             .performTextInput("tor")
         waitForThenAssertIsDisplayed(toronto.name)
         composeTestRule

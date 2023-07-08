@@ -34,9 +34,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.zIndex
 import ly.david.data.network.MusicBrainzResource
@@ -137,7 +136,7 @@ internal fun TopAppBarWithFilterInternal(
                 Column {
                     TextField(
                         modifier = Modifier
-                            .semantics { testTag = "filterTextField" }
+                            .testTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
                             .focusRequester(focusRequester)
                             .fillMaxWidth(),
                         maxLines = 1,
@@ -148,10 +147,13 @@ internal fun TopAppBarWithFilterInternal(
                             disabledIndicatorColor = Color.Transparent
                         ),
                         leadingIcon = {
-                            IconButton(onClick = {
-                                onFilterModeChange(false)
-                                onFilterTextChange("")
-                            }) {
+                            IconButton(
+                                onClick = {
+                                    onFilterModeChange(false)
+                                    onFilterTextChange("")
+                                },
+                                modifier = Modifier.testTag(TopAppBarWithFilterTestTag.FILTER_BACK.name)
+                            ) {
                                 Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
                             }
                         },
@@ -213,6 +215,11 @@ internal fun TopAppBarWithFilterInternal(
             additionalBar = additionalBar
         )
     }
+}
+
+enum class TopAppBarWithFilterTestTag {
+    FILTER_TEXT_FIELD,
+    FILTER_BACK
 }
 
 // region Previews

@@ -83,7 +83,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
         composeTestRule.awaitIdle()
 
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onNodeWithTag("searchTestField")
+            .onNodeWithTag(SearchScreenTestTag.TEXT_FIELD.name)
 
         searchFieldNode
             .assert(hasText(""))
@@ -105,7 +105,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
     @Test
     fun searchHistorySmokeTest() = runTest(timeout = 15.seconds) {
         val searchFieldNode: SemanticsNodeInteraction = composeTestRule
-            .onNodeWithTag("searchTestField")
+            .onNodeWithTag(SearchScreenTestTag.TEXT_FIELD.name)
 
         searchFieldNode.performTextInput("Some search text")
         waitForThenPerformClickOn(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)

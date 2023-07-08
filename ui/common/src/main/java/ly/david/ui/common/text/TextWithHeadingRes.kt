@@ -13,13 +13,17 @@ import ly.david.ui.core.theme.PreviewTheme
 fun TextWithHeadingRes(
     @StringRes headingRes: Int,
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    filterText: String = ""
 ) {
-    TextWithHeading(
-        heading = stringResource(id = headingRes),
-        text = text,
-        modifier = modifier
-    )
+    val heading = stringResource(id = headingRes)
+    if (heading.contains(filterText) || text.contains(filterText)) {
+        TextWithHeading(
+            heading = heading,
+            text = text,
+            modifier = modifier
+        )
+    }
 }
 
 @DefaultPreviews

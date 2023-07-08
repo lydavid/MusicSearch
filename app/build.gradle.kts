@@ -59,21 +59,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    // TODO: Not working on Windows 10: https://issuetracker.google.com/issues/249111286
-//    testOptions {
-//        managedDevices {
-//            devices {
-//                pixel2api30 (com.android.build.api.dsl.ManagedVirtualDevice) {
-//                    // Use device profiles you typically see in Android Studio.
-//                    device = "Pixel 2"
-//                    // Use only API levels 27 and higher.
-//                    apiLevel = 30
-//                    // To include Google services, use "google".
-//                    systemImageSource = "aosp"
-//                }
-//            }
-//        }
-//    }
 }
 
 dependencies {

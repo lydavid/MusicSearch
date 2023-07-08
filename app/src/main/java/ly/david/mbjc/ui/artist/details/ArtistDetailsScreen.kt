@@ -14,19 +14,20 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.network.MusicBrainzResource
 import ly.david.ui.common.R
-import ly.david.ui.image.LargeImage
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.relation.RelationListItem
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.image.LargeImage
 
 @Composable
 internal fun ArtistDetailsScreen(
     artist: ArtistScaffoldModel,
     modifier: Modifier = Modifier,
+    filterText: String = "",
     artistImageUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -44,13 +45,25 @@ internal fun ArtistDetailsScreen(
             artist.run {
                 InformationListSeparatorHeader(R.string.artist)
                 sortName.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.sort_name, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.sort_name,
+                        text = it,
+                        filterText = filterText
+                    )
                 }
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it,
+                        filterText = filterText
+                    )
                 }
                 gender?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.gender, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.gender,
+                        text = it,
+                        filterText = filterText
+                    )
                 }
                 LifeSpanText(
                     lifeSpan = lifeSpan,
@@ -63,7 +76,8 @@ internal fun ArtistDetailsScreen(
                         "Person" -> R.string.died
                         // Characters do not "die": https://musicbrainz.org/doc/Artist
                         else -> R.string.dissolved
-                    }
+                    },
+                    filterText = filterText
                 )
 
                 // TODO: begin area, area, end area
@@ -78,12 +92,14 @@ internal fun ArtistDetailsScreen(
                 Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
                 ListSeparatorHeader("Links")
-                urls.forEach {
-                    RelationListItem(
-                        relation = it,
-                        onItemClick = onItemClick
-                    )
-                }
+                urls
+                    .filter { it.name.contains(filterText) || it.label.contains(filterText) }
+                    .forEach {
+                        RelationListItem(
+                            relation = it,
+                            onItemClick = onItemClick
+                        )
+                    }
             }
         }
     }
