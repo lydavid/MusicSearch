@@ -48,6 +48,7 @@ include(
     ":ui:core",
     ":ui:history",
     ":ui:image",
+    ":ui:test:image",
     ":ui:test:screenshot",
     ":ui:settings",
 )

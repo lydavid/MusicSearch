@@ -14,10 +14,6 @@ android {
             buildConfigField("int", "VERSION_CODE", project.properties["VERSION_CODE"] as String? ?: "")
             buildConfigField("String", "VERSION_NAME", "\"${project.properties["VERSION_NAME"] as String? ?: ""}\"")
         }
-        release {
-            isMinifyEnabled = true
-            consumerProguardFiles("consumer-rules.pro")
-        }
     }
 }
 

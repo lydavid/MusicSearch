@@ -14,7 +14,7 @@ dependencies {
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
-    testImplementation(projects.testData) // TODO: only used for FakeImageLoader
+    testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.androidx.paging.compose)
@@ -31,6 +31,6 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
-
+    testImplementation(libs.coil.compose)
     testImplementation(libs.test.parameter.injector)
 }

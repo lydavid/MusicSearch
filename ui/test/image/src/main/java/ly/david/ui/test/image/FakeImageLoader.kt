@@ -1,4 +1,4 @@
-package ly.david.data.image
+package ly.david.ui.test.image
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -15,7 +15,6 @@ import coil.request.ImageResult
 import coil.request.SuccessResult
 import kotlinx.coroutines.CompletableDeferred
 
-// TODO: either move this to its own test module, or rename this library's package
 /**
  * The one from https://coil-kt.github.io/coil/testing/ is not working but
  * this one does work: https://github.com/slackhq/circuit/pull/204/files#diff-90466f88d1428d95e3c54c80835a3544eb90ea3756edf479ee144d41c2ce8707

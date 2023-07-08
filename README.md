@@ -59,6 +59,7 @@ graph LR
   end
 
   subgraph test
+    image
     screenshot
   end
   domain --> base
@@ -94,6 +95,7 @@ graph LR
   common --> core
   common --> image
   common --> test-data
+  common --> image
   common --> screenshot
   app --> test-data
   app --> data-android
@@ -130,7 +132,7 @@ graph LR
   history --> common
   history --> core
   history --> image
-  history --> test-data
+  history --> image
   history --> screenshot
 
 ```
