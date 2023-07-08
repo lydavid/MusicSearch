@@ -17,6 +17,7 @@ mockk = "1.13.5"
 moshi = "1.15.0"
 okhttp = "4.11.0"
 paging = "3.1.1"
+paparazzi = "1.2.0"
 retrofit = "2.9.0"
 room = "2.5.2"
 
@@ -65,6 +66,7 @@ moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.re
 okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 okhttp-tls = { group = "com.squareup.okhttp3", name = "okhttp-tls", version.ref = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 robolectric = { group = "org.robolectric", name = "robolectric", version = "4.10.3" }
@@ -97,4 +99,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version = "0.4.0" }
-paparazzi = { id = "app.cash.paparazzi", version = "1.2.0" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }

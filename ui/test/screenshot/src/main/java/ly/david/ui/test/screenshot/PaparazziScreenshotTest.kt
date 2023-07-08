@@ -1,4 +1,4 @@
-package ly.david.ui.common
+package ly.david.ui.test.screenshot
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable

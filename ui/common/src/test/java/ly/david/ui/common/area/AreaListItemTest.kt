@@ -3,7 +3,7 @@ package ly.david.ui.common.area
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.data.AreaType
 import ly.david.data.domain.listitem.AreaListItemModel
-import ly.david.ui.common.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 

@@ -58,6 +58,9 @@ graph LR
     spotify
   end
 
+  subgraph test
+    screenshot
+  end
   domain --> base
   domain --> coverart
   domain --> musicbrainz
@@ -73,9 +76,11 @@ graph LR
   data --> room
   data --> spotify
   data --> musicbrainz
+  screenshot --> core
   settings --> data-android
   settings --> common
   settings --> core
+  settings --> screenshot
   data-android --> data
   data-android --> test-data
   test-data --> data
@@ -84,10 +89,12 @@ graph LR
   collections --> data
   collections --> common
   collections --> core
+  collections --> screenshot
   common --> data-android
   common --> core
   common --> image
   common --> test-data
+  common --> screenshot
   app --> test-data
   app --> data-android
   app --> common
@@ -124,5 +131,6 @@ graph LR
   history --> core
   history --> image
   history --> test-data
+  history --> screenshot
 
 ```

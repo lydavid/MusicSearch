@@ -14,7 +14,8 @@ dependencies {
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
-    testImplementation(projects.testData)
+    testImplementation(projects.testData) // TODO: only used for FakeImageLoader
+    testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)

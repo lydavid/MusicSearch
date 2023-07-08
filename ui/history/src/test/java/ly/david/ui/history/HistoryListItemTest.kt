@@ -8,6 +8,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import ly.david.data.image.FakeImageLoader
+import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

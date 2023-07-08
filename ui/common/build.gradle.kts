@@ -26,6 +26,7 @@ dependencies {
     implementation(projects.ui.core)
     implementation(projects.ui.image)
     testImplementation(projects.testData)
+    testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.accompanist.swiperefresh)
 

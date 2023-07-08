@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.setMain
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.image.FakeImageLoader
 import ly.david.data.room.area.releases.ReleaseCountry
-import ly.david.ui.common.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
