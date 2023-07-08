@@ -3,21 +3,20 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.hilt) apply false
-    alias(libs.plugins.detekt) apply false
-    alias(libs.plugins.google.services) apply false
-    alias(libs.plugins.firebase.crashlytics) apply false
-    alias(libs.plugins.modulegraph)
     alias(libs.plugins.paparazzi) apply false
-    alias(libs.plugins.aboutlibraries) apply true
+
+    alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
+    alias(libs.plugins.modulegraph)
 }
 
 subprojects {
-    apply(plugin = "com.mikepenz.aboutlibraries.plugin")
-
     repositories {
         google()
         mavenCentral()
