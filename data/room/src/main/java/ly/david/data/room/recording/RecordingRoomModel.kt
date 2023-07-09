@@ -47,7 +47,7 @@ data class RecordingForScaffold(
 
     @Relation(
         parentColumn = "id",
-        entityColumn = "resource_id"
+        entityColumn = "entity_id"
     )
     val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>
 ) : RoomModel

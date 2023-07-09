@@ -12,7 +12,7 @@ data class ReleaseGroupWithAllData(
 
     @Relation(
         parentColumn = "id",
-        entityColumn = "resource_id"
+        entityColumn = "entity_id"
     )
     val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>,
 

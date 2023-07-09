@@ -16,7 +16,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
             FROM release_group rg
             INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
             INNER JOIN artist a ON a.id = arg.artist_id
-            LEFT JOIN artist_credit_entity acr ON acr.resource_id = rg.id
+            LEFT JOIN artist_credit_entity acr ON acr.entity_id = rg.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE a.id = :artistId
         """

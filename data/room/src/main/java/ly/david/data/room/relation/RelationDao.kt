@@ -21,7 +21,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun markEntityHasUrls(hasUrls: HasUrls): Long
 
-    @Query("SELECT * FROM has_urls WHERE resource_id = :entityId")
+    @Query("SELECT * FROM has_urls WHERE entity_id = :entityId")
     abstract suspend fun hasUrls(entityId: String): HasUrls?
 
     @Transaction
@@ -111,7 +111,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
             SELECT *
             FROM browse_entity_count
-            WHERE resource_id = :entityId AND browse_resource = :browseEntity
+            WHERE entity_id = :entityId AND browse_entity = :browseEntity
         """
     )
     abstract suspend fun getBrowseEntityCount(
@@ -123,7 +123,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
             UPDATE browse_entity_count
             SET local_count = :localCount
-            WHERE resource_id = :entityId AND browse_resource = :browseEntity
+            WHERE entity_id = :entityId AND browse_entity = :browseEntity
         """
     )
     abstract suspend fun updateLocalCountForEntity(
@@ -145,7 +145,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
         DELETE FROM browse_entity_count
-        WHERE resource_id = :entityId AND browse_resource = :browseEntity
+        WHERE entity_id = :entityId AND browse_entity = :browseEntity
         """
     )
     abstract suspend fun deleteBrowseEntityCountByEntity(entityId: String, browseEntity: MusicBrainzEntity)
@@ -153,7 +153,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
         DELETE FROM browse_entity_count
-        WHERE resource_id IN
+        WHERE entity_id IN
             (SELECT id FROM collection 
             WHERE is_remote)
         """

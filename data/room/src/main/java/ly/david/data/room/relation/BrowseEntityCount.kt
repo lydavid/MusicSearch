@@ -27,11 +27,11 @@ import ly.david.data.network.MusicBrainzEntity
  */
 @Entity(
     tableName = "browse_entity_count",
-    primaryKeys = ["resource_id", "browse_resource"]
+    primaryKeys = ["entity_id", "browse_entity"]
 )
 data class BrowseEntityCount(
-    @ColumnInfo(name = "resource_id") val entityId: String,
-    @ColumnInfo(name = "browse_resource") val browseEntity: MusicBrainzEntity,
+    @ColumnInfo(name = "entity_id") val entityId: String,
+    @ColumnInfo(name = "browse_entity") val browseEntity: MusicBrainzEntity,
     @ColumnInfo(name = "local_count") val localCount: Int = 0,
     @ColumnInfo(name = "remote_count") val remoteCount: Int? = null,
 )

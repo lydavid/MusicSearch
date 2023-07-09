@@ -48,4 +48,11 @@ internal object Migrations {
     @RenameColumn(tableName = "relation", fromColumnName = "linked_resource", toColumnName = "linked_entity")
     @RenameColumn(tableName = "has_relations", fromColumnName = "resource_id", toColumnName = "entity_id")
     class RenameColumnsToEntity : AutoMigrationSpec
+
+    @RenameColumn(tableName = "has_urls", fromColumnName = "resource_id", toColumnName = "entity_id")
+    @RenameColumn(tableName = "artist_credit_entity", fromColumnName = "resource_id", toColumnName = "entity_id")
+    @RenameColumn(tableName = "artist_credit_names_entity", fromColumnName = "resource_id", toColumnName = "entity_id")
+    @RenameColumn(tableName = "browse_entity_count", fromColumnName = "resource_id", toColumnName = "entity_id")
+    @RenameColumn(tableName = "browse_entity_count", fromColumnName = "browse_resource", toColumnName = "browse_entity")
+    class RenameColumnsToEntityPart2 : AutoMigrationSpec
 }
