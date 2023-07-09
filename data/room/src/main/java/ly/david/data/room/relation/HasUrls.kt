@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 )
 data class HasUrls(
     @PrimaryKey
-    @ColumnInfo(name = "resource_id")
-    val resourceId: String,
+    @ColumnInfo(name = "entity_id")
+    val entityId: String,
 
     @ColumnInfo(name = "has_urls")
     val hasUrls: Boolean = false,

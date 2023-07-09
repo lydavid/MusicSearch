@@ -18,7 +18,7 @@ abstract class ReleaseCountryDao : BaseDao<ReleaseCountry>() {
             FROM release r
             INNER JOIN release_country rc ON r.id = rc.release_id
             INNER JOIN area a ON a.id = rc.country_id
-            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE a.id = :areaId
         """

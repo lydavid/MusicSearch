@@ -5,7 +5,7 @@ import ly.david.data.domain.listitem.ListItemModel
 
 interface SortablePagedList<LI : ListItemModel> : IPagedList<LI> {
     data class ViewModelState(
-        val resourceId: String = "",
+        val entityId: String = "",
         val query: String = "",
         val isRemote: Boolean = true,
         val sorted: Boolean = false

@@ -2,8 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
-    <ID>LongMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
-    <ID>ReturnCount:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( resourceId: String, order: Int, ): RelationRoomModel?</ID>
+    <ID>CyclomaticComplexMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( entityId: String, order: Int, ): RelationRoomModel?</ID>
+    <ID>LongMethod:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( entityId: String, order: Int, ): RelationRoomModel?</ID>
+    <ID>ReturnCount:RelationRoomModel.kt$fun RelationMusicBrainzModel.toRelationRoomModel( entityId: String, order: Int, ): RelationRoomModel?</ID>
   </CurrentIssues>
 </SmellBaseline>

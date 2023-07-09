@@ -25,9 +25,9 @@ class ReleaseGroupRepository @Inject constructor(
         return lookupReleaseGroup(releaseGroupId)
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupReleaseGroup(
-            releaseGroupId = resourceId,
+            releaseGroupId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

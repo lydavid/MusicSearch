@@ -31,7 +31,7 @@ internal fun RecordingStatsScreen(
         totalRemote = viewModel.getTotalRemoteReleases(recordingId)
         totalLocal = viewModel.getTotalLocalReleases(recordingId)
 
-        totalRelations = viewModel.getNumberOfRelationsByResource(recordingId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(recordingId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(recordingId)
     }
 

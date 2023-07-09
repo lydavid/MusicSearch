@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -19,7 +19,7 @@ fun RecordingsListScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit,
+    onRecordingClick: (entity: MusicBrainzEntity, String, String) -> Unit,
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -33,7 +33,7 @@ fun RecordingsListScreen(
                     recording = recordingListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onRecordingClick(MusicBrainzResource.RECORDING, id, getNameWithDisambiguation())
+                    onRecordingClick(MusicBrainzEntity.RECORDING, id, getNameWithDisambiguation())
                 }
             }
             else -> {

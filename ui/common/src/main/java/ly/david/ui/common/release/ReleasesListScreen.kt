@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import timber.log.Timber
@@ -23,7 +23,7 @@ fun ReleasesListScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     showMoreInfo: Boolean = true,
-    onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     viewModel: ReleasesListViewModel = hiltViewModel()
 ) {
@@ -52,7 +52,7 @@ fun ReleasesListScreen(
                                 }
                             }
                         ) {
-                            onReleaseClick(MusicBrainzResource.RELEASE, id, getNameWithDisambiguation())
+                            onReleaseClick(MusicBrainzEntity.RELEASE, id, getNameWithDisambiguation())
                         }
                     },
                     disable = onDeleteFromCollection == null,

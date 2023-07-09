@@ -14,6 +14,6 @@ class PlaceStatsViewModel @Inject constructor(
     private val eventPlaceDao: EventPlaceDao
 ) : ViewModel(), RelationsStats, EventStats {
 
-    override suspend fun getTotalLocalEvents(resourceId: String): Int =
-        eventPlaceDao.getNumberOfEventsByPlace(resourceId)
+    override suspend fun getTotalLocalEvents(entityId: String): Int =
+        eventPlaceDao.getNumberOfEventsByPlace(entityId)
 }

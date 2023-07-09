@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.listitem.toPlaceListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -26,7 +26,7 @@ internal class PlacesByAreaViewModel @Inject constructor(
     private val placeDao: PlaceDao,
     pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
 ) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
-    byEntity = MusicBrainzResource.PLACE,
+    byEntity = MusicBrainzEntity.PLACE,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -50,21 +50,21 @@ internal class PlacesByAreaViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        areaPlaceDao.deletePlacesByArea(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.PLACE)
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
+        areaPlaceDao.deletePlacesByArea(entityId)
+        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.PLACE)
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, PlaceRoomModel> = when {
         query.isEmpty() -> {
-            areaPlaceDao.getPlacesByArea(resourceId)
+            areaPlaceDao.getPlacesByArea(entityId)
         }
         else -> {
             areaPlaceDao.getPlacesByAreaFiltered(
-                areaId = resourceId,
+                areaId = entityId,
                 query = "%$query%"
             )
         }

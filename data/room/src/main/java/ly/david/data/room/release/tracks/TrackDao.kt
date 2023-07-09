@@ -16,7 +16,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
             FROM track t
             INNER JOIN medium m ON t.medium_id = m.id
             INNER JOIN release r ON m.release_id = r.id
-            LEFT JOIN artist_credit_resource acr ON acr.resource_id = t.id
+            LEFT JOIN artist_credit_entity acr ON acr.entity_id = t.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE r.id = :releaseId
         """
@@ -36,7 +36,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
 
     @Transaction
     open suspend fun insertTrackWithArtistCredits(track: TrackMusicBrainzModel, mediumId: Long) {
-        insertArtistCredits(artistCredits = track.artistCredits, resourceId = track.id)
+        insertArtistCredits(artistCredits = track.artistCredits, entityId = track.id)
         insertReplace(track.toTrackRoomModel(mediumId))
     }
 

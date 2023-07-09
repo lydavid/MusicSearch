@@ -33,12 +33,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 import ly.david.ui.common.R
-import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -61,13 +61,13 @@ internal fun ReleaseGroupScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.RELEASE_GROUP
+    val resource = MusicBrainzEntity.RELEASE_GROUP
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -102,13 +102,13 @@ internal fun ReleaseGroupScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 subtitle = subtitle,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE_GROUP, resourceId = releaseGroupId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.RELEASE_GROUP, entityId = releaseGroupId)
                     CopyToClipboardMenuItem(releaseGroupId)
                     if (selectedTab == ReleaseGroupTab.RELEASES) {
                         ToggleMenuItem(
@@ -126,12 +126,12 @@ internal fun ReleaseGroupScaffold(
                     releaseGroup?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
-                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
-                                onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
+                                onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
                             })
                     }
                 },

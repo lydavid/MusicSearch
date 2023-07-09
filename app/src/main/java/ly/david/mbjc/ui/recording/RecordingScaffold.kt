@@ -32,12 +32,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
 import ly.david.ui.common.R
-import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -55,13 +55,13 @@ internal fun RecordingScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: RecordingScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.RECORDING
+    val resource = MusicBrainzEntity.RECORDING
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -95,13 +95,13 @@ internal fun RecordingScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 subtitle = subtitle,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = resource, resourceId = recordingId)
+                    OpenInBrowserMenuItem(entity = resource, entityId = recordingId)
                     CopyToClipboardMenuItem(recordingId)
                     if (selectedTab == RecordingTab.RELEASES) {
                         ToggleMenuItem(
@@ -119,10 +119,10 @@ internal fun RecordingScaffold(
                     recording?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(
                             text = { Text(artistCredit.name) },
-                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
+                                onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
                             }
                         )
                     }

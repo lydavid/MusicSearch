@@ -5,9 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.mbjc.ui.navigation.goToResource
+import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -16,16 +16,16 @@ import org.junit.runners.Parameterized
 
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class LookupEachResourceErrorTest(
-    private val resource: MusicBrainzResource
+internal class LookupEachEntityErrorTest(
+    private val entity: MusicBrainzEntity
 ) : MainActivityTestWithMockServer(), StringReferences {
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
-        fun data(): Collection<MusicBrainzResource> {
-            return MusicBrainzResource.values().filterNot {
-                it in listOf(MusicBrainzResource.URL, MusicBrainzResource.COLLECTION)
+        fun data(): Collection<MusicBrainzEntity> {
+            return MusicBrainzEntity.values().filterNot {
+                it in listOf(MusicBrainzEntity.URL, MusicBrainzEntity.COLLECTION)
             }
         }
     }
@@ -45,11 +45,11 @@ internal class LookupEachResourceErrorTest(
     }
 
     @Test
-    fun lookupEachResourceError() = runTest {
+    fun lookupEachEntityError() = runTest {
         composeTestRule.awaitIdle()
 
-        val resourceId = "error"
-        navController.goToResource(entity = resource, id = resourceId)
+        val entityId = "error"
+        navController.goToEntityScreen(entity = entity, id = entityId)
 
         waitForThenAssertAtLeastOneIsDisplayed(retry)
 

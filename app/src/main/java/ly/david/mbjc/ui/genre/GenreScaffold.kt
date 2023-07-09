@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.common.lookupInBrowser
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
@@ -39,7 +39,7 @@ internal fun GenreScaffold(
     onBack: () -> Unit = {},
     viewModel: GenreScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.GENRE
+    val resource = MusicBrainzEntity.GENRE
     val context = LocalContext.current
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
@@ -61,7 +61,7 @@ internal fun GenreScaffold(
         modifier = modifier,
         topBar = {
             ScrollableTopAppBar(
-                resource = resource,
+                entity = resource,
                 title = title,
                 onBack = onBack,
             )

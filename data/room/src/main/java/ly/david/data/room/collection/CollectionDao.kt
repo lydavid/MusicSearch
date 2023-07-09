@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.BaseDao
 
 @Dao
@@ -34,11 +34,11 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
         """
         SELECT * 
         FROM collection
-        WHERE entity = :resource
+        WHERE entity = :entity
         ORDER BY name
         """
     )
-    abstract fun getAllCollectionsOfType(resource: MusicBrainzResource): PagingSource<Int, CollectionWithEntities>
+    abstract fun getAllCollectionsOfType(entity: MusicBrainzEntity): PagingSource<Int, CollectionWithEntities>
 
     @Query(
         """

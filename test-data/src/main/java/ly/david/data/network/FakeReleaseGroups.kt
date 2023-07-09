@@ -19,7 +19,7 @@ val underPressureReleaseGroup = ReleaseGroupMusicBrainzModel(
             type = "single from",
             typeId = "fcf680a9-6871-4519-8c4b-8c6549575b35",
             direction = Direction.FORWARD,
-            targetType = MusicBrainzResource.RELEASE_GROUP,
+            targetType = MusicBrainzEntity.RELEASE_GROUP,
             releaseGroup = hotSpaceReleaseGroup
         )
     )

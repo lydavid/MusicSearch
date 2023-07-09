@@ -7,7 +7,7 @@ import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.WorkListItemModel
 import ly.david.data.domain.listitem.toWorkListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.api.BrowseWorksResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -29,7 +29,7 @@ internal class WorksByCollectionViewModel @Inject constructor(
     pagedList: PagedList<WorkRoomModel, WorkListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<WorkRoomModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
-    byEntity = MusicBrainzResource.WORK,
+    byEntity = MusicBrainzEntity.WORK,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,23 +54,23 @@ internal class WorksByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.AREA)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, WorkRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getWorksByCollection(resourceId)
+            collectionEntityDao.getWorksByCollection(entityId)
         }
         else -> {
             collectionEntityDao.getWorksByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

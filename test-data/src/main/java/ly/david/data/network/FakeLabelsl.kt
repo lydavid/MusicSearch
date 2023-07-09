@@ -19,7 +19,7 @@ val elektra = LabelMusicBrainzModel(
             type = "imprint",
             typeId = "23f8c592-006d-4214-9080-c4e5000c05d7",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzResource.LABEL,
+            targetType = MusicBrainzEntity.LABEL,
             label = elektraMusicGroup
         )
     )

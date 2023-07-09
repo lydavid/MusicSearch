@@ -11,7 +11,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.listitem.RecordingListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.recording.RecordingsListScreen
 
 @Composable
@@ -21,15 +21,15 @@ internal fun RecordingsByWorkScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     recordingsLazyListState: LazyListState = rememberLazyListState(),
     recordingsLazyPagingItems: LazyPagingItems<RecordingListItemModel>,
-    onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit,
+    onRecordingClick: (entity: MusicBrainzEntity, String, String) -> Unit,
     onPagedRecordingsFlowChange: (Flow<PagingData<RecordingListItemModel>>) -> Unit,
     filterText: String,
     viewModel: RecordingsByWorkViewModel = hiltViewModel(),
 ) {
 
     LaunchedEffect(key1 = workId) {
-        viewModel.loadPagedResources(workId)
-        onPagedRecordingsFlowChange(viewModel.pagedResources)
+        viewModel.loadPagedEntities(workId)
+        onPagedRecordingsFlowChange(viewModel.pagedEntities)
     }
     viewModel.updateQuery(filterText)
 

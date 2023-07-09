@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 )
 data class HasRelations(
     @PrimaryKey
-    @ColumnInfo(name = "resource_id")
-    val resourceId: String,
+    @ColumnInfo(name = "entity_id")
+    val entityId: String,
 
     @ColumnInfo(name = "has_relations")
     val hasRelations: Boolean = false,

@@ -25,7 +25,7 @@ internal fun ReleaseStatsScreen(
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(releaseId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(releaseId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(releaseId)
     }
 

@@ -51,7 +51,7 @@ internal fun CollectionListScaffold(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     var filterText by rememberSaveable { mutableStateOf("") }
-    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+    val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.pagedEntities)
         .collectAsLazyPagingItems()
     val showLocal by viewModel.appPreferences.showLocalCollections.collectAsState(initial = true)
     val showRemote by viewModel.appPreferences.showRemoteCollections.collectAsState(initial = true)

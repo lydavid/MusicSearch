@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
@@ -23,8 +23,8 @@ internal class CollectionViewModel @Inject constructor(
 
         if (!recordedLookup && collection != null) {
             recordLookupHistory(
-                resourceId = collectionId,
-                resource = MusicBrainzResource.COLLECTION,
+                entityId = collectionId,
+                entity = MusicBrainzEntity.COLLECTION,
                 summary = collection.name
             )
             recordedLookup = true

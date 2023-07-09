@@ -16,7 +16,7 @@ class RecordingRepository @Inject constructor(
 
     suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
         val recordingRoomModel = recordingDao.getRecordingWithArtistCredits(recordingId)
-        if (recordingRoomModel != null && recordingRoomModel.artistCreditNamesWithResources.isNotEmpty()) {
+        if (recordingRoomModel != null && recordingRoomModel.artistCreditNamesWithEntities.isNotEmpty()) {
             return recordingRoomModel.toRecordingScaffoldModel()
         }
 
@@ -25,9 +25,9 @@ class RecordingRepository @Inject constructor(
         return recordingMusicBrainzModel.toRecordingScaffoldModel()
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupRecording(
-            recordingId = resourceId,
+            recordingId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

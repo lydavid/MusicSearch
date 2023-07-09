@@ -15,7 +15,7 @@ abstract class ReleaseLabelDao : BaseDao<ReleaseLabel>() {
             FROM release r
             INNER JOIN release_label rl ON r.id = rl.release_id
             INNER JOIN label l ON l.id = rl.label_id
-            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE l.id = :labelId
         """

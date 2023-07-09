@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.network.LabelMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseLabelsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.collection.CollectionEntityDao
@@ -29,7 +29,7 @@ internal class LabelsByCollectionViewModel @Inject constructor(
     pagedList: PagedList<LabelRoomModel, LabelListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
-    byEntity = MusicBrainzResource.LABEL,
+    byEntity = MusicBrainzEntity.LABEL,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,23 +54,23 @@ internal class LabelsByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.AREA)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, LabelRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getLabelsByCollection(resourceId)
+            collectionEntityDao.getLabelsByCollection(entityId)
         }
         else -> {
             collectionEntityDao.getLabelsByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

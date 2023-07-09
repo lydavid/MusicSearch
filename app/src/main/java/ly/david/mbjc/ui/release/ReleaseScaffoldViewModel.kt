@@ -28,14 +28,14 @@ import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.TrackListItemModel
 import ly.david.data.domain.listitem.toTrackListItemModel
-import ly.david.data.domain.paging.LookupResourceRemoteMediator
+import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.release.ReleaseRepository
 import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.image.ImageUrlSaver
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.data.room.release.ReleaseDao
@@ -43,7 +43,7 @@ import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.MediumRoomModel
 import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.release.tracks.TrackForListItem
-import ly.david.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
@@ -59,7 +59,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
-) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
+) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
     ReleaseImageManager {
 
@@ -75,7 +75,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     }.distinctUntilChanged()
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE
+    override val entity: MusicBrainzEntity = MusicBrainzEntity.RELEASE
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
@@ -98,10 +98,10 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
             .flatMapLatest { (releaseId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = LookupResourceRemoteMediator(
-                        hasResourceBeenStored = { hasReleaseTracksBeenStored(releaseId) },
-                        lookupResource = { repository.lookupRelease(releaseId) },
-                        deleteLocalResource = { releaseDao.deleteReleaseById(releaseId) }
+                    remoteMediator = LookupEntityRemoteMediator(
+                        hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
+                        lookupEntity = { repository.lookupRelease(releaseId) },
+                        deleteLocalEntity = { releaseDao.deleteReleaseById(releaseId) }
                     ),
                     pagingSourceFactory = {
                         getPagingSource(releaseId, query)
@@ -177,8 +177,8 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                     // But clicking on it will update its title, so we're not fixing it right now.
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = releaseId,
-                            resource = resource,
+                            entityId = releaseId,
+                            entity = entity,
                             summary = title.value
                         )
                         recordedLookup = true

@@ -17,9 +17,9 @@ class AreaStatsViewModel @Inject constructor(
     private val areaPlaceDao: AreaPlaceDao
 ) : ViewModel(), RelationsStats, ReleasesStats, PlacesStats {
 
-    override suspend fun getTotalLocalReleases(resourceId: String): Int =
-        releaseCountryDao.getNumberOfReleasesByCountry(resourceId)
+    override suspend fun getTotalLocalReleases(entityId: String): Int =
+        releaseCountryDao.getNumberOfReleasesByCountry(entityId)
 
-    override suspend fun getTotalLocalPlaces(resourceId: String): Int =
-        areaPlaceDao.getNumberOfPlacesByArea(resourceId)
+    override suspend fun getTotalLocalPlaces(entityId: String): Int =
+        areaPlaceDao.getNumberOfPlacesByArea(entityId)
 }

@@ -31,7 +31,7 @@ internal fun ReleaseGroupStatsScreen(
         totalRemote = viewModel.getTotalRemoteReleases(releaseGroupId)
         totalLocal = viewModel.getTotalLocalReleases(releaseGroupId)
 
-        totalRelations = viewModel.getNumberOfRelationsByResource(releaseGroupId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(releaseGroupId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(releaseGroupId)
     }
 

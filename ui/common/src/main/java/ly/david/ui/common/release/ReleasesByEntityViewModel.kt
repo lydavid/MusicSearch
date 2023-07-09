@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.domain.listitem.toReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
-import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.BrowseEntityCount
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
 import ly.david.data.room.release.toRoomModel
-import ly.david.ui.common.paging.BrowseResourceUseCase
+import ly.david.ui.common.paging.BrowseEntityUseCase
 import ly.david.ui.common.paging.IPagedList
 import ly.david.ui.common.paging.PagedList
 
@@ -22,7 +22,7 @@ abstract class ReleasesByEntityViewModel(
     private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
-    BrowseResourceUseCase<ReleaseForListItem, ReleaseListItemModel> {
+    BrowseEntityUseCase<ReleaseForListItem, ReleaseListItemModel> {
 
     init {
         pagedList.scope = viewModelScope
@@ -36,38 +36,38 @@ abstract class ReleasesByEntityViewModel(
         releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
     )
 
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        val response = browseReleasesByEntity(resourceId, nextOffset)
+    override suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int {
+        val response = browseReleasesByEntity(entityId, nextOffset)
 
         if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.RELEASE,
+            relationDao.insertBrowseEntityCount(
+                browseEntityCount = BrowseEntityCount(
+                    entityId = entityId,
+                    browseEntity = MusicBrainzEntity.RELEASE,
                     localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForResource(
-                resourceId = resourceId,
-                browseResource = MusicBrainzResource.RELEASE,
+            relationDao.incrementLocalCountForEntity(
+                entityId = entityId,
+                browseEntity = MusicBrainzEntity.RELEASE,
                 additionalOffset = response.musicBrainzModels.size
             )
         }
 
         val releaseMusicBrainzModels = response.musicBrainzModels
         releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
-        insertAllLinkingModels(resourceId, releaseMusicBrainzModels)
+        insertAllLinkingModels(entityId, releaseMusicBrainzModels)
 
         return releaseMusicBrainzModels.size
     }
 
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
+    override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
+        relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.remoteCount
 
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String) =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.localCount ?: 0
+    override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
+        relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.localCount ?: 0
 
     override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
         return roomModel.toReleaseListItemModel()

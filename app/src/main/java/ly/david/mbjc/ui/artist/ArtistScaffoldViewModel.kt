@@ -11,12 +11,12 @@ import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.image.ImageUrlSaver
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.data.spotify.ArtistImageManager
 import ly.david.data.spotify.SpotifyApi
-import ly.david.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
@@ -29,12 +29,12 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     private val relationsList: RelationsList,
     override val spotifyApi: SpotifyApi,
     override val imageUrlSaver: ImageUrlSaver
-) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
+) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
     ArtistImageManager {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.ARTIST
+    override val entity: MusicBrainzEntity = MusicBrainzEntity.ARTIST
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
@@ -71,8 +71,8 @@ internal class ArtistScaffoldViewModel @Inject constructor(
 
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = artistId,
-                            resource = resource,
+                            entityId = artistId,
+                            entity = entity,
                             summary = title.value,
                             searchHint = artist.value?.sortName ?: ""
                         )

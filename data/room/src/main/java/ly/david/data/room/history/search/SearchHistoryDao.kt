@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.BaseDao
 
 @Dao
@@ -19,7 +19,7 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
         """
     )
     abstract fun getAllSearchHistory(
-        entity: MusicBrainzResource
+        entity: MusicBrainzEntity
     ): PagingSource<Int, SearchHistoryRoomModel>
 
     @Query(
@@ -30,7 +30,7 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
     )
     abstract suspend fun delete(
         query: String,
-        entity: MusicBrainzResource
+        entity: MusicBrainzEntity
     )
 
     @Query(
@@ -39,5 +39,5 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
             WHERE entity = :entity
         """
     )
-    abstract suspend fun deleteAll(entity: MusicBrainzResource)
+    abstract suspend fun deleteAll(entity: MusicBrainzEntity)
 }

@@ -7,22 +7,22 @@ import java.io.IOException
 import kotlinx.coroutines.delay
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.toListItemModel
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.MusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
 import ly.david.data.network.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.network.api.STARTING_OFFSET
 import ly.david.data.network.api.SearchApi
 import retrofit2.HttpException
 
 /**
- * This is not a [RemoteMediator] compared to [BrowseResourceRemoteMediator] and [LookupResourceRemoteMediator].
+ * This is not a [RemoteMediator] compared to [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].
  *
  * We are not storing search results locally.
  * We want all search results to always be fresh.
  */
 class SearchMusicBrainzPagingSource(
     private val searchApi: SearchApi,
-    private val resource: MusicBrainzResource,
+    private val entity: MusicBrainzEntity,
     private val queryString: String,
 ) : PagingSource<Int, ListItemModel>() {
 
@@ -48,7 +48,7 @@ class SearchMusicBrainzPagingSource(
             val limit = params.loadSize
             val response = getQueryResults(
                 searchApi = searchApi,
-                resource = resource,
+                entity = entity,
                 queryString = queryString,
                 currentOffset = currentOffset,
                 limit = limit
@@ -79,13 +79,13 @@ class SearchMusicBrainzPagingSource(
 
     private suspend fun getQueryResults(
         searchApi: SearchApi,
-        resource: MusicBrainzResource,
+        entity: MusicBrainzEntity,
         queryString: String,
         currentOffset: Int,
         limit: Int
     ): QueryResults {
-        return when (resource) {
-            MusicBrainzResource.ARTIST -> {
+        return when (entity) {
+            MusicBrainzEntity.ARTIST -> {
                 val queryArtists = searchApi.queryArtists(
                     query = queryString,
                     offset = currentOffset,
@@ -97,7 +97,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.RELEASE_GROUP -> {
+            MusicBrainzEntity.RELEASE_GROUP -> {
                 val queryReleaseGroups = searchApi.queryReleaseGroups(
                     query = queryString,
                     offset = currentOffset,
@@ -109,7 +109,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.RELEASE -> {
+            MusicBrainzEntity.RELEASE -> {
                 val queryReleases = searchApi.queryReleases(
                     query = queryString,
                     offset = currentOffset,
@@ -121,7 +121,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.RECORDING -> {
+            MusicBrainzEntity.RECORDING -> {
                 val queryRecordings = searchApi.queryRecordings(
                     query = queryString,
                     offset = currentOffset,
@@ -133,7 +133,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.WORK -> {
+            MusicBrainzEntity.WORK -> {
                 val queryWorks = searchApi.queryWorks(
                     query = queryString,
                     offset = currentOffset,
@@ -145,7 +145,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.AREA -> {
+            MusicBrainzEntity.AREA -> {
                 val queryAreas = searchApi.queryAreas(
                     query = queryString,
                     offset = currentOffset,
@@ -157,7 +157,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.PLACE -> {
+            MusicBrainzEntity.PLACE -> {
                 val queryPlaces = searchApi.queryPlaces(
                     query = queryString,
                     offset = currentOffset,
@@ -169,7 +169,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.INSTRUMENT -> {
+            MusicBrainzEntity.INSTRUMENT -> {
                 val queryInstruments = searchApi.queryInstruments(
                     query = queryString,
                     offset = currentOffset,
@@ -181,7 +181,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.LABEL -> {
+            MusicBrainzEntity.LABEL -> {
                 val queryLabels = searchApi.queryLabels(
                     query = queryString,
                     offset = currentOffset,
@@ -193,7 +193,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.EVENT -> {
+            MusicBrainzEntity.EVENT -> {
                 val queryEvents = searchApi.queryEvents(
                     query = queryString,
                     offset = currentOffset,
@@ -205,7 +205,7 @@ class SearchMusicBrainzPagingSource(
                 )
             }
 
-            MusicBrainzResource.SERIES -> {
+            MusicBrainzEntity.SERIES -> {
                 val queryEvents = searchApi.querySeries(
                     query = queryString,
                     offset = currentOffset,
@@ -218,9 +218,9 @@ class SearchMusicBrainzPagingSource(
             }
 
             // TODO: The following are not searchable. Is there a better model to switch on?
-            MusicBrainzResource.COLLECTION,
-            MusicBrainzResource.GENRE,
-            MusicBrainzResource.URL -> {
+            MusicBrainzEntity.COLLECTION,
+            MusicBrainzEntity.GENRE,
+            MusicBrainzEntity.URL -> {
                 QueryResults(
                     offset = 0,
                     data = listOf()

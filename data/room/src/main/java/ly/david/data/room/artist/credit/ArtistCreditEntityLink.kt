@@ -14,8 +14,8 @@ import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
  * - [RecordingRoomModel]
  */
 @Entity(
-    tableName = "artist_credit_resource",
-    primaryKeys = ["artist_credit_id", "resource_id"],
+    tableName = "artist_credit_entity",
+    primaryKeys = ["artist_credit_id", "entity_id"],
     // TODO: can't FK to multiple tables directly?
     foreignKeys = [
         ForeignKey(
@@ -27,10 +27,10 @@ import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
         )
     ]
 )
-data class ArtistCreditResource(
+data class ArtistCreditEntityLink(
     @ColumnInfo(name = "artist_credit_id")
     val artistCreditId: Long,
 
-    @ColumnInfo(name = "resource_id")
-    val resourceId: String
+    @ColumnInfo(name = "entity_id")
+    val entityId: String
 )

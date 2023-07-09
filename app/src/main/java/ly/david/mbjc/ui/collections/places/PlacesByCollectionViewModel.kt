@@ -7,7 +7,7 @@ import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.listitem.toPlaceListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -29,7 +29,7 @@ internal class PlacesByCollectionViewModel @Inject constructor(
     pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
-    byEntity = MusicBrainzResource.PLACE,
+    byEntity = MusicBrainzEntity.PLACE,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,23 +54,23 @@ internal class PlacesByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.PLACE)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.PLACE)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, PlaceRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getPlacesByCollection(resourceId)
+            collectionEntityDao.getPlacesByCollection(entityId)
         }
         else -> {
             collectionEntityDao.getPlacesByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

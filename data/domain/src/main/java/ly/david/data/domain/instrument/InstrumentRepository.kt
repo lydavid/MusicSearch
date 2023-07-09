@@ -31,9 +31,9 @@ class InstrumentRepository @Inject constructor(
 
     // TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them
     //  eg. https://musicbrainz.org/instrument/1b165fa4-8510-4a3e-a2b5-2d38baf55176/artists
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupInstrument(
-            instrumentId = resourceId,
+            instrumentId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTestWithMockServer
@@ -20,15 +20,15 @@ import org.junit.runners.Parameterized
 
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBrainzResource) :
+internal class NavigateToEachEntityWithTitleTest(private val entity: MusicBrainzEntity) :
     MainActivityTestWithMockServer() {
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
-        fun data(): Collection<MusicBrainzResource> {
-            return MusicBrainzResource.values().filterNot {
-                it in listOf(MusicBrainzResource.URL, MusicBrainzResource.COLLECTION)
+        fun data(): Collection<MusicBrainzEntity> {
+            return MusicBrainzEntity.values().filterNot {
+                it in listOf(MusicBrainzEntity.URL, MusicBrainzEntity.COLLECTION)
             }
         }
     }
@@ -48,13 +48,13 @@ internal class NavigateToEachResourceWithTitleTest(private val resource: MusicBr
     }
 
     @Test
-    fun navigateToEachResourceScreenWithCustomTitle() = runTest {
+    fun navigateToEachEntityScreenWithCustomTitle() = runTest {
         composeTestRule.awaitIdle()
 
-        val title = resource.resourceUri
-        val resourceId = resource.toFakeMusicBrainzModel().id
+        val title = entity.resourceUri
+        val entityId = entity.toFakeMusicBrainzModel().id
 
-        navController.goToResource(entity = resource, id = resourceId, title = title)
+        navController.goToEntityScreen(entity = entity, id = entityId, title = title)
 
         composeTestRule
             .onNodeWithText(title)

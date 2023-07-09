@@ -20,7 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.data.network.underPressureReleaseGroup
@@ -33,7 +33,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * General UI test for search screen. For testing each resource, see [SearchEachResourceTest].
+ * General UI test for search screen. For testing each resource, see [SearchEachEntityTest].
  */
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
@@ -108,9 +108,9 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
             .onNodeWithTag(SearchScreenTestTag.TEXT_FIELD.name)
 
         searchFieldNode.performTextInput("Some search text")
-        waitForThenPerformClickOn(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+        waitForThenPerformClickOn(MusicBrainzEntity.ARTIST.toFakeMusicBrainzModel().name!!)
         composeTestRule
-            .onNodeWithText(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+            .onNodeWithText(MusicBrainzEntity.ARTIST.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithContentDescription(back)
@@ -120,9 +120,9 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
             .performClick()
 
         searchFieldNode.performTextInput("Some other search text")
-        waitForThenPerformClickOn(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+        waitForThenPerformClickOn(MusicBrainzEntity.ARTIST.toFakeMusicBrainzModel().name!!)
         composeTestRule
-            .onNodeWithText(MusicBrainzResource.ARTIST.toFakeMusicBrainzModel().name!!)
+            .onNodeWithText(MusicBrainzEntity.ARTIST.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
         composeTestRule
             .onNodeWithContentDescription(back)
@@ -172,14 +172,14 @@ internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), S
     // TODO: flaky
     //  No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
     @Test
-    fun deeplinkToSearchWithQueryAndResource() = runTest {
+    fun deeplinkToSearchWithQueryAndType() = runTest {
         composeTestRule.awaitIdle()
 
         composeTestRule.activityRule.scenario.onActivity {
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 val query = "some query" // The query doesn't matter for this test since we're returning fakes.
-                val resource = MusicBrainzResource.RELEASE_GROUP.resourceUri
-                data = Uri.parse("$deeplinkSchema://app/lookup?query=$query&type=$resource")
+                val resourceUri = MusicBrainzEntity.RELEASE_GROUP.resourceUri
+                data = Uri.parse("$deeplinkSchema://app/lookup?query=$query&type=$resourceUri")
             }
             it.startActivity(intent)
         }

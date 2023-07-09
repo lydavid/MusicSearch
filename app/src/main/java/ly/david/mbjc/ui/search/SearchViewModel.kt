@@ -28,7 +28,7 @@ import ly.david.data.domain.listitem.SearchHistoryListItemModel
 import ly.david.data.domain.listitem.toSearchHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.history.search.SearchHistoryDao
 import ly.david.data.room.history.search.SearchHistoryRoomModel
@@ -44,16 +44,16 @@ internal class SearchViewModel @Inject constructor(
 
     private data class ViewModelState(
         val query: String,
-        val entity: MusicBrainzResource,
+        val entity: MusicBrainzEntity,
     )
 
     val searchQuery = MutableStateFlow("")
-    val searchEntity = MutableStateFlow(MusicBrainzResource.ARTIST)
+    val searchEntity = MutableStateFlow(MusicBrainzEntity.ARTIST)
     private val viewModelState = combine(searchQuery, searchEntity) { query, entity ->
         ViewModelState(query, entity)
     }
 
-    fun search(query: String? = null, entity: MusicBrainzResource? = null) {
+    fun search(query: String? = null, entity: MusicBrainzEntity? = null) {
         if (query != null) {
             searchQuery.value = query
         }
@@ -107,7 +107,7 @@ internal class SearchViewModel @Inject constructor(
                     pagingSourceFactory = {
                         SearchMusicBrainzPagingSource(
                             searchApi = musicBrainzApiService,
-                            resource = viewModelState.entity,
+                            entity = viewModelState.entity,
                             queryString = viewModelState.query,
                         )
                     }

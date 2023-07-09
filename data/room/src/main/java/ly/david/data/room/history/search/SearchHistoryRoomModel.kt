@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import java.util.Date
 import ly.david.data.Identifiable
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 
 /**
  * Record of what the user has recently searched.
@@ -23,6 +23,6 @@ import ly.david.data.network.MusicBrainzResource
 data class SearchHistoryRoomModel(
     @ColumnInfo(name = "id") override val id: String,
     @ColumnInfo(name = "query") val query: String,
-    @ColumnInfo(name = "entity") val entity: MusicBrainzResource,
+    @ColumnInfo(name = "entity") val entity: MusicBrainzEntity,
     @ColumnInfo(name = "last_accessed") val lastAccessed: Date = Date()
 ) : Identifiable

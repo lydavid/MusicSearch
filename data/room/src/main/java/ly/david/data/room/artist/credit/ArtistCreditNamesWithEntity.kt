@@ -5,17 +5,18 @@ import androidx.room.DatabaseView
 import androidx.room.Embedded
 
 @DatabaseView(
-    """
-    SELECT acr.resource_id, acn.*
-    FROM artist_credit_resource acr
+    value = """
+    SELECT acr.entity_id, acn.*
+    FROM artist_credit_entity acr
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
-"""
+    """,
+    viewName = "artist_credit_names_entity"
 )
-data class ArtistCreditNamesWithResource(
+data class ArtistCreditNamesWithEntity(
 
-    @ColumnInfo(name = "resource_id")
-    val resourceId: String,
+    @ColumnInfo(name = "entity_id")
+    val entityId: String,
 
     @Embedded
     val artistCreditNameRoomModel: ArtistCreditNameRoomModel,

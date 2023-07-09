@@ -10,12 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.R
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
-internal fun LazyListScope.addResourcesStatsSection(
+internal fun LazyListScope.addEntitiesStatsSection(
     totalRemote: Int?,
     totalLocal: Int,
     @StringRes headerRes: Int,
@@ -40,7 +40,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             LazyColumn {
-                addResourcesStatsSection(
+                addEntitiesStatsSection(
                     totalRemote = 10,
                     totalLocal = 7,
                     headerRes = R.string.releases,

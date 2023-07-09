@@ -30,9 +30,9 @@ class LabelRepository @Inject constructor(
         return labelMusicBrainzModel.toLabelListItemModel()
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupLabel(
-            labelId = resourceId,
+            labelId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

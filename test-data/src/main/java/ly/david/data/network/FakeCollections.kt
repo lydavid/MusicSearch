@@ -5,13 +5,13 @@ import ly.david.data.network.api.BrowseCollectionsResponse
 val fakeAreaCollection = CollectionMusicBrainzModel(
     id = "fakeAreaCollection",
     name = "My areas",
-    entity = MusicBrainzResource.AREA
+    entity = MusicBrainzEntity.AREA
 )
 
 val fakeArtistCollection = CollectionMusicBrainzModel(
     id = "fakeArtistCollection",
     name = "My artists",
-    entity = MusicBrainzResource.ARTIST
+    entity = MusicBrainzEntity.ARTIST
 )
 
 val fakeCollections = listOf(

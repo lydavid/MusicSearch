@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.stats
 
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationDao
 import ly.david.mbjc.ui.release.stats.ReleaseStatsViewModel
 
@@ -11,8 +11,8 @@ import ly.david.mbjc.ui.release.stats.ReleaseStatsViewModel
 interface ReleasesStats {
     val relationDao: RelationDao
 
-    suspend fun getTotalRemoteReleases(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.RELEASE)?.remoteCount
+    suspend fun getTotalRemoteReleases(entityId: String): Int? =
+        relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.remoteCount
 
-    suspend fun getTotalLocalReleases(resourceId: String): Int
+    suspend fun getTotalLocalReleases(entityId: String): Int
 }

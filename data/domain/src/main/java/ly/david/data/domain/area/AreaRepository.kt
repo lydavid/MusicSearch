@@ -38,9 +38,9 @@ class AreaRepository @Inject constructor(
         areaDao.insertAllCountryCodes(area.getAreaCountryCodes())
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupArea(
-            areaId = resourceId,
+            areaId = entityId,
             include = INC_ALL_RELATIONS
         ).relations
     }

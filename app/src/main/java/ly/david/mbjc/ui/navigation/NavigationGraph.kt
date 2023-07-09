@@ -17,9 +17,9 @@ import java.nio.charset.StandardCharsets
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.Destination
 import ly.david.data.domain.toLookupDestination
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
-import ly.david.data.network.toMusicBrainzResource
+import ly.david.data.network.toMusicBrainzEntity
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
@@ -52,7 +52,7 @@ private fun String.decodeUtf8(): String {
     return URLDecoder.decode(this, StandardCharsets.UTF_8.toString())
 }
 
-internal fun NavHostController.goToResource(entity: MusicBrainzResource, id: String, title: String? = null) {
+internal fun NavHostController.goToEntityScreen(entity: MusicBrainzEntity, id: String, title: String? = null) {
     val route = "${entity.toLookupDestination().route}/$id" +
         title?.encodeUtf8().transformThisIfNotNullOrEmpty { "?$TITLE=$it" }
     this.navigate(route)
@@ -71,7 +71,7 @@ internal fun NavigationGraph(
     onLoginClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     onCreateCollectionClick: () -> Unit = {},
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit = { _, _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
@@ -86,15 +86,15 @@ internal fun NavigationGraph(
         startDestination = Destination.LOOKUP.route,
     ) {
 
-        val onLookupEntityClick: (MusicBrainzResource, String, String?) -> Unit = { entity, id, title ->
-            navController.goToResource(entity, id, title)
+        val onLookupEntityClick: (MusicBrainzEntity, String, String?) -> Unit = { entity, id, title ->
+            navController.goToEntityScreen(entity, id, title)
         }
 
         val onCollectionClick: (String, Boolean) -> Unit = { collectionId, _ ->
             navController.navigate("${Destination.COLLECTIONS.route}/$collectionId")
         }
 
-        val searchMusicBrainz: (String, MusicBrainzResource) -> Unit = { query, type ->
+        val searchMusicBrainz: (String, MusicBrainzEntity) -> Unit = { query, type ->
             val route = Destination.LOOKUP.route + "?query=$query&type=${type.resourceUri}"
             navController.navigate(route)
         }
@@ -123,7 +123,7 @@ internal fun NavigationGraph(
             )
         ) { entry ->
             val query = entry.arguments?.getString("query")?.decodeUtf8()
-            val type = entry.arguments?.getString("type")?.toMusicBrainzResource()
+            val type = entry.arguments?.getString("type")?.toMusicBrainzEntity()
 
             SearchScaffold(
                 modifier = modifier,
@@ -133,12 +133,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.AREA,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.AREA,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             AreaScaffold(
-                areaId = resourceId,
+                areaId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -149,12 +149,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.ARTIST,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.ARTIST,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entity, title ->
             ArtistScaffold(
-                artistId = resourceId,
+                artistId = entity,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onItemClick = onLookupEntityClick,
@@ -167,12 +167,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.EVENT,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.EVENT,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             EventScaffold(
-                eventId = resourceId,
+                eventId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -181,24 +181,24 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.GENRE,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.GENRE,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             GenreScaffold(
-                genreId = resourceId,
+                genreId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.INSTRUMENT,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.INSTRUMENT,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             InstrumentScaffold(
-                instrumentId = resourceId,
+                instrumentId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -207,12 +207,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.LABEL,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.LABEL,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             LabelScaffold(
-                labelId = resourceId,
+                labelId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -223,12 +223,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.PLACE,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.PLACE,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             PlaceScaffold(
-                placeId = resourceId,
+                placeId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -237,12 +237,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.RECORDING,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.RECORDING,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             RecordingScaffold(
-                recordingId = resourceId,
+                recordingId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -253,12 +253,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.RELEASE,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.RELEASE,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             ReleaseScaffold(
-                releaseId = resourceId,
+                releaseId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -266,12 +266,12 @@ internal fun NavigationGraph(
                 onAddToCollectionMenuClick = onAddToCollectionMenuClick
             )
         }
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.RELEASE_GROUP,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.RELEASE_GROUP,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             ReleaseGroupScaffold(
-                releaseGroupId = resourceId,
+                releaseGroupId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -282,12 +282,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.SERIES,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.SERIES,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             SeriesScaffold(
-                seriesId = resourceId,
+                seriesId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -296,12 +296,12 @@ internal fun NavigationGraph(
             )
         }
 
-        addLookupResourceScreen(
-            resource = MusicBrainzResource.WORK,
+        addLookupEntityScreen(
+            entity = MusicBrainzEntity.WORK,
             uriPrefix = uriPrefix
-        ) { resourceId, title ->
+        ) { entityId, title ->
             WorkScaffold(
-                workId = resourceId,
+                workId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
@@ -404,13 +404,13 @@ internal fun NavigationGraph(
     }
 }
 
-private fun NavGraphBuilder.addLookupResourceScreen(
-    resource: MusicBrainzResource,
+private fun NavGraphBuilder.addLookupEntityScreen(
+    entity: MusicBrainzEntity,
     uriPrefix: String,
-    scaffold: @Composable (resourceId: String, titleWithDisambiguation: String?) -> Unit
+    scaffold: @Composable (entityId: String, titleWithDisambiguation: String?) -> Unit
 ) {
     composable(
-        route = "${resource.toLookupDestination().route}/{$ID}?$TITLE={$TITLE}",
+        route = "${entity.toLookupDestination().route}/{$ID}?$TITLE={$TITLE}",
         arguments = listOf(
             navArgument(ID) {
                 type = NavType.StringType // Make argument type safe
@@ -423,12 +423,12 @@ private fun NavGraphBuilder.addLookupResourceScreen(
         ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$uriPrefix${resource.resourceUri}/{$ID}?$TITLE={$TITLE}"
+                uriPattern = "$uriPrefix${entity.resourceUri}/{$ID}?$TITLE={$TITLE}"
             }
         )
     ) { entry: NavBackStackEntry ->
-        val resourceId = entry.arguments?.getString(ID) ?: return@composable
+        val entityId = entry.arguments?.getString(ID) ?: return@composable
         val title = entry.arguments?.getString(TITLE)?.decodeUtf8()
-        scaffold(resourceId, title)
+        scaffold(entityId, title)
     }
 }

@@ -4,17 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import ly.david.data.Coordinates
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
 import ly.david.data.network.resourceUri
 
 /**
- * Launches web browser for MusicBrainz's page for [resource] with [musicBrainzId].
+ * Launches web browser for MusicBrainz's page for [entity] with [musicBrainzId].
  */
-fun Context.lookupInBrowser(resource: MusicBrainzResource, musicBrainzId: String) {
+fun Context.lookupInBrowser(entity: MusicBrainzEntity, musicBrainzId: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${resource.resourceUri}/${musicBrainzId}")
+            data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/${musicBrainzId}")
         }
     )
 }

@@ -65,7 +65,7 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     imageUrl = largeUrl,
     areas = areas.map { it.toAreaListItemModel() },
-    artistCredits = artistCreditNamesWithResources.map {
+    artistCredits = artistCreditNamesWithEntities.map {
         it.artistCreditNameRoomModel.toArtistCreditUiModel()
     },
     releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),

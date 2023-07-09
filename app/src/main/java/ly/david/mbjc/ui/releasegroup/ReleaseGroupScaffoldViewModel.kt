@@ -14,10 +14,10 @@ import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.image.ImageUrlSaver
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
-import ly.david.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
@@ -30,12 +30,12 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private val relationsList: RelationsList,
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     override val imageUrlSaver: ImageUrlSaver,
-) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
+) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
     IRelationsList by relationsList,
     ReleaseGroupImageManager {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.RELEASE_GROUP
+    override val entity: MusicBrainzEntity = MusicBrainzEntity.RELEASE_GROUP
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
@@ -76,8 +76,8 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
 
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = releaseGroupId,
-                            resource = resource,
+                            entityId = releaseGroupId,
+                            entity = entity,
                             summary = title.value
                         )
                         recordedLookup = true

@@ -28,8 +28,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.searchableResources
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.network.searchableEntities
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -38,9 +38,9 @@ import ly.david.ui.common.rememberFlowWithLifecycleStarted
 internal fun SearchScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,
-    initialEntity: MusicBrainzResource? = null,
+    initialEntity: MusicBrainzEntity? = null,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
 
@@ -59,7 +59,7 @@ internal fun SearchScreen(
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
 
-    fun search(query: String? = null, entity: MusicBrainzResource? = null) {
+    fun search(query: String? = null, entity: MusicBrainzEntity? = null) {
         coroutineScope.launch {
             viewModel.search(query = query, entity = entity)
             searchResultsListState.scrollToItem(0)
@@ -102,7 +102,7 @@ internal fun SearchScreen(
 
             ExposedDropdownMenuBox(
                 modifier = Modifier.weight(1f),
-                options = searchableResources,
+                options = searchableEntities,
                 selectedOption = selectedEntity,
                 onSelectOption = { entity ->
                     search(entity = entity)

@@ -8,9 +8,9 @@ import ly.david.data.room.relation.RelationDao
 interface RelationsStats {
     val relationDao: RelationDao
 
-    suspend fun getNumberOfRelationsByResource(resourceId: String) =
-        relationDao.getNumberOfRelationsByResource(resourceId)
+    suspend fun getNumberOfRelationsByEntity(entityId: String) =
+        relationDao.getNumberOfRelationsByEntity(entityId)
 
-    suspend fun getCountOfEachRelationshipType(resourceId: String) =
-        relationDao.getCountOfEachRelationshipType(resourceId)
+    suspend fun getCountOfEachRelationshipType(entityId: String) =
+        relationDao.getCountOfEachRelationshipType(entityId)
 }

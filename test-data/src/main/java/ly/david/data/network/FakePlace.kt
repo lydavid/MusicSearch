@@ -15,7 +15,7 @@ val eventHeldAtPlace = RelationMusicBrainzModel(
     type = "doesn't matter",
     typeId = "e2c6f697-07dc-38b1-be0b-83d740165532",
     direction = Direction.BACKWARD,
-    targetType = MusicBrainzResource.EVENT,
+    targetType = MusicBrainzEntity.EVENT,
     event = fakeEvent
 )
 

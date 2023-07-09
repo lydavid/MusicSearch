@@ -6,7 +6,7 @@ data class CollectionMusicBrainzModel(
     @Json(name = "id") override val id: String,
     @Json(name = "name") override val name: String,
     override val disambiguation: String? = null, // TODO: unused, is MusicBrainzModel too strict?
-    @Json(name = "entity-type") val entity: MusicBrainzResource,
+    @Json(name = "entity-type") val entity: MusicBrainzEntity,
     @Json(name = "type") val type: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
     @Json(name = "editor") val editor: String = "",
@@ -26,17 +26,17 @@ data class CollectionMusicBrainzModel(
 
 fun CollectionMusicBrainzModel.getCount(): Int {
     return when (entity) {
-        MusicBrainzResource.AREA -> areaCount
-        MusicBrainzResource.ARTIST -> artistCount
-        MusicBrainzResource.EVENT -> eventCount
-        MusicBrainzResource.INSTRUMENT -> instrumentCount
-        MusicBrainzResource.LABEL -> labelCount
-        MusicBrainzResource.PLACE -> placeCount
-        MusicBrainzResource.RECORDING -> recordingCount
-        MusicBrainzResource.RELEASE -> releaseCount
-        MusicBrainzResource.RELEASE_GROUP -> releaseGroupCount
-        MusicBrainzResource.SERIES -> seriesCount
-        MusicBrainzResource.WORK -> workCount
+        MusicBrainzEntity.AREA -> areaCount
+        MusicBrainzEntity.ARTIST -> artistCount
+        MusicBrainzEntity.EVENT -> eventCount
+        MusicBrainzEntity.INSTRUMENT -> instrumentCount
+        MusicBrainzEntity.LABEL -> labelCount
+        MusicBrainzEntity.PLACE -> placeCount
+        MusicBrainzEntity.RECORDING -> recordingCount
+        MusicBrainzEntity.RELEASE -> releaseCount
+        MusicBrainzEntity.RELEASE_GROUP -> releaseGroupCount
+        MusicBrainzEntity.SERIES -> seriesCount
+        MusicBrainzEntity.WORK -> workCount
         else -> 0
     } ?: 0
 }

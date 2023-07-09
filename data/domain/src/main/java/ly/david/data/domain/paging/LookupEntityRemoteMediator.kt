@@ -9,18 +9,18 @@ import ly.david.data.room.RoomModel
 import retrofit2.HttpException
 
 /**
- * When using [LoadType.REFRESH], [hasResourceBeenStored] does not need to be checked.
- * A refresh load will always call [lookupResource] with force refresh flag.
+ * When using [LoadType.REFRESH], [hasEntityBeenStored] does not need to be checked.
+ * A refresh load will always call [lookupEntity] with force refresh flag.
  */
 @OptIn(ExperimentalPagingApi::class)
-class LookupResourceRemoteMediator<RM : RoomModel>(
-    private val hasResourceBeenStored: suspend () -> Boolean,
-    private val lookupResource: suspend (forceRefresh: Boolean) -> Unit,
-    private val deleteLocalResource: suspend () -> Unit
+class LookupEntityRemoteMediator<RM : RoomModel>(
+    private val hasEntityBeenStored: suspend () -> Boolean,
+    private val lookupEntity: suspend (forceRefresh: Boolean) -> Unit,
+    private val deleteLocalEntity: suspend () -> Unit
 ) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
-        return if (hasResourceBeenStored()) {
+        return if (hasEntityBeenStored()) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
             InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -33,13 +33,13 @@ class LookupResourceRemoteMediator<RM : RoomModel>(
     ): MediatorResult {
 
         return try {
-            if (!hasResourceBeenStored()) {
-                lookupResource(true)
+            if (!hasEntityBeenStored()) {
+                lookupEntity(true)
             } else if (loadType == LoadType.REFRESH) {
-                deleteLocalResource()
-                lookupResource(true)
+                deleteLocalEntity()
+                lookupEntity(true)
             } else {
-                lookupResource(false)
+                lookupEntity(false)
             }
 
             MediatorResult.Success(endOfPaginationReached = true)

@@ -1,6 +1,6 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.collection.CollectionWithEntities
 
 data class CollectionListItemModel(
@@ -8,7 +8,7 @@ data class CollectionListItemModel(
     val isRemote: Boolean,
     val name: String,
     val description: String = "",
-    val entity: MusicBrainzResource,
+    val entity: MusicBrainzEntity,
     val entityCount: Int = 0,
     val entityIds: List<String> = listOf()
 ) : ListItemModel()

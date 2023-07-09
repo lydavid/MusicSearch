@@ -26,7 +26,7 @@ internal fun RecordingForScaffold.toRecordingScaffoldModel() = RecordingScaffold
     length = recording.length,
     video = recording.video,
     isrcs = recording.isrcs,
-    artistCredits = artistCreditNamesWithResources.map {
+    artistCredits = artistCreditNamesWithEntities.map {
         it.artistCreditNameRoomModel.toArtistCreditUiModel()
     }
 )

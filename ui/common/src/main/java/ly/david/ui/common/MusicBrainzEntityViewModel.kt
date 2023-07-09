@@ -1,13 +1,13 @@
 package ly.david.ui.common
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 
 /**
  * Contract with generic properties that each MusicBrainz scaffold ViewModel should implement.
  */
-interface MusicBrainzResourceViewModel {
-    val resource: MusicBrainzResource
+interface MusicBrainzEntityViewModel {
+    val entity: MusicBrainzEntity
 
     val title: MutableStateFlow<String>
     val isError: MutableStateFlow<Boolean>

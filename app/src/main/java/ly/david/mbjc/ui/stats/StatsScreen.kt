@@ -4,7 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.R
@@ -25,7 +25,7 @@ internal fun StatsScreen(
         tabs.forEach { tab ->
             when (tab) {
                 Tab.EVENTS -> {
-                    addResourcesStatsSection(
+                    addEntitiesStatsSection(
                         totalRemote = stats.totalRemoteEvents,
                         totalLocal = stats.totalLocalEvents,
                         headerRes = R.string.events,
@@ -33,7 +33,7 @@ internal fun StatsScreen(
                     )
                 }
                 Tab.PLACES -> {
-                    addResourcesStatsSection(
+                    addEntitiesStatsSection(
                         totalRemote = stats.totalRemotePlaces,
                         totalLocal = stats.totalLocalPlaces,
                         headerRes = R.string.places,
@@ -41,7 +41,7 @@ internal fun StatsScreen(
                     )
                 }
                 Tab.RECORDINGS -> {
-                    addResourcesStatsSection(
+                    addEntitiesStatsSection(
                         totalRemote = stats.totalRemoteRecordings,
                         totalLocal = stats.totalLocalRecordings,
                         headerRes = R.string.recordings,
@@ -55,7 +55,7 @@ internal fun StatsScreen(
                     )
                 }
                 Tab.RELEASES -> {
-                    addResourcesStatsSection(
+                    addEntitiesStatsSection(
                         totalRemote = stats.totalRemoteReleases,
                         totalLocal = stats.totalLocalReleases,
                         headerRes = R.string.releases,
@@ -98,8 +98,8 @@ private fun Preview() {
                     ),
                     totalRelations = 696,
                     relationTypeCounts = listOf(
-                        RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, count = 17),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, count = 397),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.ARTIST, count = 17),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.RECORDING, count = 397),
                     ),
                     totalRemoteReleases = 20,
                     totalLocalReleases = 15

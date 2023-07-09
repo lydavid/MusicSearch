@@ -2,7 +2,7 @@ package ly.david.mbjc.ui.artist.releasegroups
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -47,14 +47,14 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        artistReleaseGroupDao.deleteReleaseGroupsByArtist(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE_GROUP)
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
+        artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
+        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
     }
 
-    override fun getLinkedResourcesPagingSource(resourceId: String, query: String, sorted: Boolean) =
+    override fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean) =
         artistReleaseGroupDao.getReleaseGroupsByArtist(
-            artistId = resourceId,
+            artistId = entityId,
             query = "%$query%",
             sorted = sorted
         )

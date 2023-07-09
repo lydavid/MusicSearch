@@ -38,7 +38,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.zIndex
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -52,7 +52,7 @@ fun TopAppBarWithFilter(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    resource: MusicBrainzResource? = null,
+    entity: MusicBrainzEntity? = null,
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -80,7 +80,7 @@ fun TopAppBarWithFilter(
         modifier = modifier,
         onBack = onBack,
         showBackButton = showBackButton,
-        resource = resource,
+        entity = entity,
         title = title,
         subtitle = subtitle,
         scrollBehavior = scrollBehavior,
@@ -102,7 +102,7 @@ internal fun TopAppBarWithFilterInternal(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    resource: MusicBrainzResource? = null,
+    entity: MusicBrainzEntity? = null,
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -193,7 +193,7 @@ internal fun TopAppBarWithFilterInternal(
             modifier = modifier,
             onBack = onBack,
             showBackButton = showBackButton,
-            resource = resource,
+            entity = entity,
             title = title,
             subtitle = subtitle,
             scrollBehavior = scrollBehavior,

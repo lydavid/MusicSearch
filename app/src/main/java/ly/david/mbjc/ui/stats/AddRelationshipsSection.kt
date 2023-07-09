@@ -19,12 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationTypeCount
-import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.EntityIcon
+import ly.david.ui.common.R
 import ly.david.ui.common.getDisplayTextRes
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -48,7 +48,7 @@ internal fun LazyListScope.addRelationshipsSection(
     }
     items(relationTypeCounts) { relationTypeCount ->
 
-        val linkedResource = relationTypeCount.linkedResource
+        val linkedEntity = relationTypeCount.linkedEntity
 
         Column(
             modifier = Modifier
@@ -58,17 +58,17 @@ internal fun LazyListScope.addRelationshipsSection(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (linkedResource == MusicBrainzResource.URL) {
+                if (linkedEntity == MusicBrainzEntity.URL) {
                     Spacer(modifier = Modifier.padding(end = 32.dp))
                 } else {
-                    ResourceIcon(
+                    EntityIcon(
                         modifier = Modifier.padding(end = 8.dp),
-                        resource = linkedResource
+                        entity = linkedEntity
                     )
                 }
                 Text(
                     style = TextStyles.getCardBodySubTextStyle(),
-                    text = "${stringResource(id = linkedResource.getDisplayTextRes())}: ${relationTypeCount.count}"
+                    text = "${stringResource(id = linkedEntity.getDisplayTextRes())}: ${relationTypeCount.count}"
                 )
             }
 
@@ -101,19 +101,19 @@ private fun Default() {
                 addRelationshipsSection(
                     totalRelations = 49,
                     relationTypeCounts = listOf(
-                        RelationTypeCount(linkedResource = MusicBrainzResource.AREA, count = 1),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.ARTIST, count = 2),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.EVENT, count = 3),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.GENRE, count = 4),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.INSTRUMENT, count = 5),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.LABEL, count = 6),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.PLACE, count = 7),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RECORDING, count = 6),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RELEASE, count = 5),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.RELEASE_GROUP, count = 4),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.SERIES, count = 3),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.URL, count = 2),
-                        RelationTypeCount(linkedResource = MusicBrainzResource.WORK, count = 1),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.AREA, count = 1),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.ARTIST, count = 2),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.EVENT, count = 3),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.GENRE, count = 4),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.INSTRUMENT, count = 5),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.LABEL, count = 6),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.PLACE, count = 7),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.RECORDING, count = 6),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.RELEASE, count = 5),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.RELEASE_GROUP, count = 4),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.SERIES, count = 3),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.URL, count = 2),
+                        RelationTypeCount(linkedEntity = MusicBrainzEntity.WORK, count = 1),
                     )
                 )
             }

@@ -19,7 +19,7 @@ abstract class RecordingDao : BaseDao<RecordingRoomModel>(), ArtistCreditDao {
 
     @Transaction
     open suspend fun insertRecordingWithArtistCredits(recording: RecordingMusicBrainzModel) {
-        insertArtistCredits(artistCredits = recording.artistCredits, resourceId = recording.id)
+        insertArtistCredits(artistCredits = recording.artistCredits, entityId = recording.id)
         insert(recording.toRoomModel())
     }
 

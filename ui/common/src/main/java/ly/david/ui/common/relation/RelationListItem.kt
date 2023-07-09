@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.ResourceIcon
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -32,7 +32,7 @@ import ly.david.ui.core.theme.getSubTextColor
 fun RelationListItem(
     relation: RelationListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     val context = LocalContext.current
@@ -52,8 +52,8 @@ fun RelationListItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    ResourceIcon(
-                        resource = relation.linkedResource,
+                    EntityIcon(
+                        entity = relation.linkedEntity,
                         modifier = Modifier.padding(end = 8.dp)
                     )
 
@@ -95,11 +95,11 @@ fun RelationListItem(
         modifier = modifier
             .combinedClickable(
                 onClick = {
-                    val entity = relation.linkedResource
-                    if (entity == MusicBrainzResource.URL) {
+                    val entity = relation.linkedEntity
+                    if (entity == MusicBrainzEntity.URL) {
                         context.openUrl(relation.name)
                     } else {
-                        onItemClick(entity, relation.linkedResourceId, relation.getNameWithDisambiguation())
+                        onItemClick(entity, relation.linkedEntityId, relation.getNameWithDisambiguation())
                     }
                 },
                 onLongClick = {
@@ -119,8 +119,8 @@ internal fun PreviewArtistRelationListItem() {
             RelationListItem(
                 relation = RelationListItemModel(
                     id = "2_0",
-                    linkedResourceId = "2",
-                    linkedResource = MusicBrainzResource.ARTIST,
+                    linkedEntityId = "2",
+                    linkedEntity = MusicBrainzEntity.ARTIST,
                     label = "miscellaneous support",
                     name = "Artist Name",
                     disambiguation = "that guy",
@@ -139,8 +139,8 @@ internal fun PreviewRecordingRelationListItem() {
             RelationListItem(
                 relation = RelationListItemModel(
                     id = "2_1",
-                    linkedResourceId = "2",
-                    linkedResource = MusicBrainzResource.RECORDING,
+                    linkedEntityId = "2",
+                    linkedEntity = MusicBrainzEntity.RECORDING,
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
@@ -158,8 +158,8 @@ internal fun PreviewUrlRelationListItem() {
             RelationListItem(
                 relation = RelationListItemModel(
                     id = "2_1",
-                    linkedResourceId = "3",
-                    linkedResource = MusicBrainzResource.URL,
+                    linkedEntityId = "3",
+                    linkedEntity = MusicBrainzEntity.URL,
                     label = "Stream for free",
                     name = "https://www.example.com",
                 )

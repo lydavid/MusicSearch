@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.domain.listitem.SearchHistoryListItemModel
-import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.ResourceIcon
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.TINY_ICON_SIZE
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.core.preview.DefaultPreviews
@@ -22,7 +22,7 @@ import ly.david.ui.core.theme.TextStyles
 internal fun SearchHistoryListItem(
     searchHistory: SearchHistoryListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzResource, query: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {}
 ) {
     SwipeToDeleteListItem(
@@ -39,8 +39,8 @@ internal fun SearchHistoryListItem(
                     onItemClick(searchHistory.entity, searchHistory.query)
                 },
                 leadingContent = {
-                    ResourceIcon(
-                        resource = searchHistory.entity,
+                    EntityIcon(
+                        entity = searchHistory.entity,
                         modifier = Modifier.size(TINY_ICON_SIZE.dp)
                     )
                 },
@@ -61,7 +61,7 @@ private fun Preview() {
                 searchHistory = SearchHistoryListItemModel(
                     id = "ARTIST_aha",
                     query = "aha",
-                    entity = MusicBrainzResource.ARTIST
+                    entity = MusicBrainzEntity.ARTIST
                 )
             )
         }

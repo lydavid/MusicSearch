@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +29,7 @@ class ScrollableTopAppBarTest : PaparazziScreenshotTest() {
     fun withIcon() {
         snapshot {
             ScrollableTopAppBar(
-                resource = MusicBrainzResource.ARTIST,
+                entity = MusicBrainzEntity.ARTIST,
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
                 subtitle = "A subtitle that is also very long that will also go off the screen."
             )
@@ -42,7 +42,7 @@ class ScrollableTopAppBarTest : PaparazziScreenshotTest() {
             var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
 
             ScrollableTopAppBar(
-                resource = MusicBrainzResource.RELEASE_GROUP,
+                entity = MusicBrainzEntity.RELEASE_GROUP,
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
                 subtitle = "A subtitle that is also very long that will also go off the screen.",
                 additionalBar = {

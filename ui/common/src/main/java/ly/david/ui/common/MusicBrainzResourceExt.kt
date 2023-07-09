@@ -16,48 +16,48 @@ import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.TheaterComedy
 import androidx.compose.ui.graphics.vector.ImageVector
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 
 /**
- * Returns an appropriate string resource for this [MusicBrainzResource].
+ * Returns an appropriate string resource for this [MusicBrainzEntity].
  */
 @StringRes
-fun MusicBrainzResource.getDisplayTextRes(): Int {
+fun MusicBrainzEntity.getDisplayTextRes(): Int {
     return when (this) {
-        MusicBrainzResource.AREA -> R.string.area
-        MusicBrainzResource.ARTIST -> R.string.artist
-        MusicBrainzResource.EVENT -> R.string.event
-        MusicBrainzResource.GENRE -> R.string.genre
-        MusicBrainzResource.INSTRUMENT -> R.string.instrument
-        MusicBrainzResource.LABEL -> R.string.label
-        MusicBrainzResource.PLACE -> R.string.place
-        MusicBrainzResource.RECORDING -> R.string.recording
-        MusicBrainzResource.RELEASE -> R.string.release
-        MusicBrainzResource.RELEASE_GROUP -> R.string.release_group
-        MusicBrainzResource.SERIES -> R.string.series
-        MusicBrainzResource.WORK -> R.string.work
-        MusicBrainzResource.URL -> R.string.url
-        MusicBrainzResource.COLLECTION -> R.string.collection
+        MusicBrainzEntity.AREA -> R.string.area
+        MusicBrainzEntity.ARTIST -> R.string.artist
+        MusicBrainzEntity.EVENT -> R.string.event
+        MusicBrainzEntity.GENRE -> R.string.genre
+        MusicBrainzEntity.INSTRUMENT -> R.string.instrument
+        MusicBrainzEntity.LABEL -> R.string.label
+        MusicBrainzEntity.PLACE -> R.string.place
+        MusicBrainzEntity.RECORDING -> R.string.recording
+        MusicBrainzEntity.RELEASE -> R.string.release
+        MusicBrainzEntity.RELEASE_GROUP -> R.string.release_group
+        MusicBrainzEntity.SERIES -> R.string.series
+        MusicBrainzEntity.WORK -> R.string.work
+        MusicBrainzEntity.URL -> R.string.url
+        MusicBrainzEntity.COLLECTION -> R.string.collection
     }
 }
 
-fun MusicBrainzResource.getIcon(): ImageVector? {
+fun MusicBrainzEntity.getIcon(): ImageVector? {
     return when (this) {
-        MusicBrainzResource.AREA -> Icons.Default.Public
-        MusicBrainzResource.ARTIST -> Icons.Default.Person
-        MusicBrainzResource.COLLECTION -> Icons.Default.CollectionsBookmark
-        MusicBrainzResource.EVENT -> Icons.Default.Event
-        MusicBrainzResource.GENRE -> Icons.Default.TheaterComedy
-        MusicBrainzResource.INSTRUMENT -> Icons.Default.Piano
-        MusicBrainzResource.LABEL -> Icons.Default.CorporateFare
-        MusicBrainzResource.PLACE -> Icons.Default.Place
-        MusicBrainzResource.RECORDING -> Icons.Default.Mic
-        MusicBrainzResource.RELEASE -> Icons.Default.Album
-        MusicBrainzResource.RELEASE_GROUP -> Icons.Default.Folder
-        MusicBrainzResource.SERIES -> Icons.Default.List
-        MusicBrainzResource.WORK -> Icons.Default.MusicNote
+        MusicBrainzEntity.AREA -> Icons.Default.Public
+        MusicBrainzEntity.ARTIST -> Icons.Default.Person
+        MusicBrainzEntity.COLLECTION -> Icons.Default.CollectionsBookmark
+        MusicBrainzEntity.EVENT -> Icons.Default.Event
+        MusicBrainzEntity.GENRE -> Icons.Default.TheaterComedy
+        MusicBrainzEntity.INSTRUMENT -> Icons.Default.Piano
+        MusicBrainzEntity.LABEL -> Icons.Default.CorporateFare
+        MusicBrainzEntity.PLACE -> Icons.Default.Place
+        MusicBrainzEntity.RECORDING -> Icons.Default.Mic
+        MusicBrainzEntity.RELEASE -> Icons.Default.Album
+        MusicBrainzEntity.RELEASE_GROUP -> Icons.Default.Folder
+        MusicBrainzEntity.SERIES -> Icons.Default.List
+        MusicBrainzEntity.WORK -> Icons.Default.MusicNote
         else -> {
-            // Non-searchable resources like Genre, URL
+            // Non-searchable entities like Genre, URL
             // No icons.
             null
         }

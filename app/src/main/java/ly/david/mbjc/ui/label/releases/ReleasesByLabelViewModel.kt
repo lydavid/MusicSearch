@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -47,24 +47,24 @@ internal class ReleasesByLabelViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         releaseLabelDao.withTransaction {
-            releaseLabelDao.deleteReleasesByLabel(resourceId)
-            releaseLabelDao.deleteLabelReleaseLinks(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+            releaseLabelDao.deleteReleasesByLabel(entityId)
+            releaseLabelDao.deleteLabelReleaseLinks(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
-            releaseLabelDao.getReleasesByLabel(resourceId)
+            releaseLabelDao.getReleasesByLabel(entityId)
         }
         else -> {
             releaseLabelDao.getReleasesByLabelFiltered(
-                labelId = resourceId,
+                labelId = entityId,
                 query = "%$query%"
             )
         }

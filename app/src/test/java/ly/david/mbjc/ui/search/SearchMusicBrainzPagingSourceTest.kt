@@ -4,9 +4,9 @@ import androidx.paging.PagingSource
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.listitem.toListItemModel
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.FakeMusicBrainzApiService
-import ly.david.data.network.searchableResources
+import ly.david.data.network.searchableEntities
 import ly.david.data.network.toFakeMusicBrainzModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -14,27 +14,27 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Parameterized::class)
-internal class SearchMusicBrainzPagingSourceTest(private val resource: MusicBrainzResource) {
+internal class SearchMusicBrainzPagingSourceTest(private val entity: MusicBrainzEntity) {
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
-        fun data(): Collection<MusicBrainzResource> {
-            return searchableResources
+        fun data(): Collection<MusicBrainzEntity> {
+            return searchableEntities
         }
     }
 
     @Test
-    fun loadEachResource() = runTest {
+    fun loadEachEntity() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
             FakeMusicBrainzApiService(),
-            resource,
+            entity,
             ""
         )
         assertEquals(
             PagingSource.LoadResult.Page(
                 data = listOf(
-                    resource.toFakeMusicBrainzModel().toListItemModel()
+                    entity.toFakeMusicBrainzModel().toListItemModel()
                 ),
                 prevKey = null,
                 nextKey = 1

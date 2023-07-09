@@ -24,7 +24,7 @@ internal fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroup
         disambiguation = releaseGroup.disambiguation,
         primaryType = releaseGroup.primaryType,
         secondaryTypes = releaseGroup.secondaryTypes,
-        artistCredits = artistCreditNamesWithResources.map {
+        artistCredits = artistCreditNamesWithEntities.map {
             it.artistCreditNameRoomModel.toArtistCreditUiModel()
         },
         imageUrl = largeUrl

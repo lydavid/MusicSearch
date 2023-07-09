@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.InstrumentListItemModel
 import ly.david.data.domain.listitem.toInstrumentListItemModel
 import ly.david.data.network.InstrumentMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseInstrumentsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.collection.CollectionEntityDao
@@ -29,7 +29,7 @@ internal class InstrumentsByCollectionViewModel @Inject constructor(
     pagedList: PagedList<InstrumentRoomModel, InstrumentListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<InstrumentRoomModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
-    byEntity = MusicBrainzResource.INSTRUMENT,
+    byEntity = MusicBrainzEntity.INSTRUMENT,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,24 +54,24 @@ internal class InstrumentsByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.AREA)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, InstrumentRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getInstrumentsByCollection(resourceId)
+            collectionEntityDao.getInstrumentsByCollection(entityId)
         }
 
         else -> {
             collectionEntityDao.getInstrumentsByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

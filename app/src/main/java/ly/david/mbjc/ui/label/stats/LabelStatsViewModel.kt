@@ -14,6 +14,6 @@ class LabelStatsViewModel @Inject constructor(
     private val releaseLabelDao: ReleaseLabelDao
 ) : ViewModel(), ReleasesStats, RelationsStats {
 
-    override suspend fun getTotalLocalReleases(resourceId: String): Int =
-        releaseLabelDao.getNumberOfReleasesByLabel(resourceId)
+    override suspend fun getTotalLocalReleases(entityId: String): Int =
+        releaseLabelDao.getNumberOfReleasesByLabel(entityId)
 }

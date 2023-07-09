@@ -24,7 +24,7 @@ internal fun EventStatsScreen(
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(eventId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(eventId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(eventId)
     }
 

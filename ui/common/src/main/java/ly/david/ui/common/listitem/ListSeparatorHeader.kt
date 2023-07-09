@@ -41,13 +41,13 @@ fun ListSeparatorHeader(
 }
 
 @Composable
-fun AttributesListSeparatorHeader(@StringRes resourceStringRes: Int) {
-    ListSeparatorHeader(text = stringResource(id = R.string.attributes_header, stringResource(id = resourceStringRes)))
+fun AttributesListSeparatorHeader(@StringRes entityStringRes: Int) {
+    ListSeparatorHeader(text = stringResource(id = R.string.attributes_header, stringResource(id = entityStringRes)))
 }
 
 @Composable
-fun InformationListSeparatorHeader(@StringRes resourceStringRes: Int) {
-    ListSeparatorHeader(text = stringResource(id = R.string.information_header, stringResource(id = resourceStringRes)))
+fun InformationListSeparatorHeader(@StringRes entityStringRes: Int) {
+    ListSeparatorHeader(text = stringResource(id = R.string.information_header, stringResource(id = entityStringRes)))
 }
 
 @DefaultPreviews

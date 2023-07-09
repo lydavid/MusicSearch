@@ -1,21 +1,21 @@
 package ly.david.data.room.history
 
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 
 interface RecordLookupHistory {
     val lookupHistoryDao: LookupHistoryDao
 
     suspend fun recordLookupHistory(
-        resourceId: String,
-        resource: MusicBrainzResource,
+        entityId: String,
+        entity: MusicBrainzEntity,
         summary: String,
         searchHint: String = ""
     ) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistoryRoomModel(
                 title = summary,
-                resource = resource,
-                id = resourceId,
+                entity = entity,
+                id = entityId,
                 searchHint = searchHint
             )
         )

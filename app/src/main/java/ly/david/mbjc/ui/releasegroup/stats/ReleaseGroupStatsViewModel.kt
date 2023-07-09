@@ -14,6 +14,6 @@ internal class ReleaseGroupStatsViewModel @Inject constructor(
     override val relationDao: RelationDao
 ) : ViewModel(), RelationsStats, ReleasesStats {
 
-    override suspend fun getTotalLocalReleases(resourceId: String) =
-        releaseReleaseGroupDao.getNumberOfReleasesByReleaseGroup(resourceId)
+    override suspend fun getTotalLocalReleases(entityId: String) =
+        releaseReleaseGroupDao.getNumberOfReleasesByReleaseGroup(entityId)
 }
