@@ -1,23 +1,18 @@
 package ly.david.ui.image
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.imageLoader
-import coil.request.ImageRequest
-import coil.size.Scale
-import coil.size.Size
+import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.components.rememberImageComponent
+import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 import ly.david.data.common.useHttps
 import ly.david.ui.core.SMALL_IMAGE_SIZE
 import ly.david.ui.core.preview.DefaultPreviews
@@ -35,36 +30,46 @@ fun ThumbnailImage(
 
     if (url.isNotEmpty()) {
 
-        val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(url.useHttps())
-                .size(Size(SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE))
-                .scale(Scale.FIT)
-                .crossfade(true)
-                .memoryCacheKey(mbid)
-                .build(),
-            imageLoader = LocalContext.current.imageLoader
-        )
-
-        when (painter.state) {
-            is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
-                PlaceholderIcon(sizeModifier, placeholderIcon)
-            }
-
-            is AsyncImagePainter.State.Success -> {
-                Image(
-                    modifier = sizeModifier,
-                    painter = painter,
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth,
+        CoilImage(
+            imageModel = { url.useHttps() },
+            modifier = sizeModifier,
+            component = rememberImageComponent {
+                +ShimmerPlugin(
+                    baseColor = MaterialTheme.colorScheme.surface,
+                    highlightColor = MaterialTheme.colorScheme.onSurface
                 )
             }
-
-            is AsyncImagePainter.State.Error -> {
-                // No need to show error. List items will auto-retry when next recomposed.
-                PlaceholderIcon(sizeModifier, placeholderIcon)
-            }
-        }
+        )
+//        val painter = rememberAsyncImagePainter(
+//            model = ImageRequest.Builder(LocalContext.current)
+//                .data(url.useHttps())
+//                .size(Size(SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE))
+//                .scale(Scale.FIT)
+//                .crossfade(true)
+//                .memoryCacheKey(mbid)
+//                .build(),
+//            imageLoader = LocalContext.current.imageLoader
+//        )
+//
+//        when (painter.state) {
+//            is AsyncImagePainter.State.Loading, AsyncImagePainter.State.Empty -> {
+//                PlaceholderIcon(sizeModifier, placeholderIcon)
+//            }
+//
+//            is AsyncImagePainter.State.Success -> {
+//                Image(
+//                    modifier = sizeModifier,
+//                    painter = painter,
+//                    contentDescription = null,
+//                    contentScale = ContentScale.FillWidth,
+//                )
+//            }
+//
+//            is AsyncImagePainter.State.Error -> {
+//                // No need to show error. List items will auto-retry when next recomposed.
+//                PlaceholderIcon(sizeModifier, placeholderIcon)
+//            }
+//        }
     } else {
         PlaceholderIcon(sizeModifier, placeholderIcon)
     }

@@ -13,6 +13,7 @@ hilt-navigation = "1.0.0"
 junit = "4.13.2"
 kotlin = "1.8.22"
 kotlinx-coroutines = "1.7.1"
+landscapist = "2.2.2"
 mockk = "1.13.5"
 moshi = "1.15.0"
 okhttp = "4.11.0"
@@ -61,6 +62,8 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+landscapist-coil = { group = "com.github.skydoves", name = "landscapist-coil", version.ref = "landscapist"}
+landscapist-placeholder = { group = "com.github.skydoves", name = "landscapist-placeholder", version.ref = "landscapist"}
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }

@@ -24,4 +24,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    implementation(libs.landscapist.coil)
+    implementation(libs.landscapist.placeholder)
 }
