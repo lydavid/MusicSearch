@@ -22,5 +22,10 @@ release-keystore.jks
 # Generated credentials from google-github-actions/auth
 gha-creds-*.json
 
-# Spotify client id/secret
+# We only need this file for building locally.
+# CI environments will set these using ORG_GRADLE_PROJECT_ prefix as env.
+# MUSICBRAINZ_CLIENT_ID
+# MUSICBRAINZ_CLIENT_SECRET
+# SPOTIFY_CLIENT_ID
+# SPOTIFY_CLIENT_SECRET
 secrets.properties

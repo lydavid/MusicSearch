@@ -25,7 +25,6 @@ dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
-    testImplementation(projects.testData)
     testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 
