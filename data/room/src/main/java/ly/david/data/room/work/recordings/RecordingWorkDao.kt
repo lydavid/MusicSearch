@@ -15,7 +15,7 @@ abstract class RecordingWorkDao : BaseDao<RecordingWork>() {
             FROM recording r
             INNER JOIN recording_work rw ON r.id = rw.recording_id
             INNER JOIN work w ON w.id = rw.work_id
-            LEFT JOIN artist_credit_resource acr ON acr.resource_id = r.id
+            LEFT JOIN artist_credit_entity acr ON acr.resource_id = r.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE w.id = :workId
         """

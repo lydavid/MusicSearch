@@ -2,6 +2,7 @@ package ly.david.data.room
 
 import androidx.room.DeleteColumn
 import androidx.room.RenameColumn
+import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -36,4 +37,9 @@ internal object Migrations {
 
     @RenameColumn(tableName = "mbid_image", fromColumnName = "image_path", toColumnName = "thumbnail_url")
     class RenameThumbnailUrl : AutoMigrationSpec
+
+    @RenameTable(fromTableName = "ArtistCreditNamesWithResource", toTableName = "artist_credit_names_entity")
+    @RenameTable(fromTableName = "artist_credit_resource", toTableName = "artist_credit_entity")
+    @RenameTable(fromTableName = "browse_resource_count", toTableName = "browse_entity_count")
+    class RenameTablesToEntity : AutoMigrationSpec
 }

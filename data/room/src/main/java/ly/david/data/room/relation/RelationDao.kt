@@ -110,7 +110,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
             SELECT *
-            FROM browse_resource_count
+            FROM browse_entity_count
             WHERE resource_id = :entityId AND browse_resource = :browseEntity
         """
     )
@@ -121,7 +121,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-            UPDATE browse_resource_count
+            UPDATE browse_entity_count
             SET local_count = :localCount
             WHERE resource_id = :entityId AND browse_resource = :browseEntity
         """
@@ -144,7 +144,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-        DELETE FROM browse_resource_count
+        DELETE FROM browse_entity_count
         WHERE resource_id = :entityId AND browse_resource = :browseEntity
         """
     )
@@ -152,7 +152,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-        DELETE FROM browse_resource_count
+        DELETE FROM browse_entity_count
         WHERE resource_id IN
             (SELECT id FROM collection 
             WHERE is_remote)

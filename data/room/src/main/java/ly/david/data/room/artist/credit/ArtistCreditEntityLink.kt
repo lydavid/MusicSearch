@@ -14,7 +14,7 @@ import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
  * - [RecordingRoomModel]
  */
 @Entity(
-    tableName = "artist_credit_resource",
+    tableName = "artist_credit_entity",
     primaryKeys = ["artist_credit_id", "resource_id"],
     // TODO: can't FK to multiple tables directly?
     foreignKeys = [

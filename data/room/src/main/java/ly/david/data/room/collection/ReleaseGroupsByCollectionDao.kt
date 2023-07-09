@@ -13,7 +13,7 @@ interface ReleaseGroupsByCollectionDao {
             FROM release_group rg
             INNER JOIN collection_entity ce ON rg.id = ce.entity_id
             INNER JOIN collection c ON c.id = ce.id
-            LEFT JOIN artist_credit_resource acr ON acr.resource_id = rg.id
+            LEFT JOIN artist_credit_entity acr ON acr.resource_id = rg.id
             LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
             WHERE c.id = :collectionId
         """

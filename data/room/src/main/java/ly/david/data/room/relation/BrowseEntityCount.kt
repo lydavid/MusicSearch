@@ -26,7 +26,7 @@ import ly.david.data.network.MusicBrainzEntity
  *  null means we have not yet started browsing. 0 means there were none.
  */
 @Entity(
-    tableName = "browse_resource_count",
+    tableName = "browse_entity_count",
     primaryKeys = ["resource_id", "browse_resource"]
 )
 data class BrowseEntityCount(
