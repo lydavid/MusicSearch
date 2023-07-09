@@ -22,7 +22,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -33,7 +33,7 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilter
 fun HistoryScaffold(
     deleteHistoryDelegate: DeleteHistoryDelegate,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()

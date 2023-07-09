@@ -1,19 +1,19 @@
 package ly.david.data.network
 
-fun MusicBrainzResource.toFakeMusicBrainzModel(): MusicBrainzModel =
+fun MusicBrainzEntity.toFakeMusicBrainzModel(): MusicBrainzModel =
     when (this) {
-        MusicBrainzResource.AREA -> ontario
-        MusicBrainzResource.ARTIST -> davidBowie
-        MusicBrainzResource.EVENT -> fakeEvent
-        MusicBrainzResource.GENRE -> fakeGenre
-        MusicBrainzResource.INSTRUMENT -> fakeInstrument
-        MusicBrainzResource.LABEL -> elektra
-        MusicBrainzResource.PLACE -> fakePlace
-        MusicBrainzResource.RECORDING -> underPressureRecording
-        MusicBrainzResource.RELEASE -> underPressure
-        MusicBrainzResource.RELEASE_GROUP -> underPressureReleaseGroup
-        MusicBrainzResource.SERIES -> fakeSeries
-        MusicBrainzResource.WORK -> fakeWorkWithAllData
-        MusicBrainzResource.URL,
-        MusicBrainzResource.COLLECTION -> error("Not supported.")
+        MusicBrainzEntity.AREA -> ontario
+        MusicBrainzEntity.ARTIST -> davidBowie
+        MusicBrainzEntity.EVENT -> fakeEvent
+        MusicBrainzEntity.GENRE -> fakeGenre
+        MusicBrainzEntity.INSTRUMENT -> fakeInstrument
+        MusicBrainzEntity.LABEL -> elektra
+        MusicBrainzEntity.PLACE -> fakePlace
+        MusicBrainzEntity.RECORDING -> underPressureRecording
+        MusicBrainzEntity.RELEASE -> underPressure
+        MusicBrainzEntity.RELEASE_GROUP -> underPressureReleaseGroup
+        MusicBrainzEntity.SERIES -> fakeSeries
+        MusicBrainzEntity.WORK -> fakeWorkWithAllData
+        MusicBrainzEntity.URL,
+        MusicBrainzEntity.COLLECTION -> error("Not supported.")
     }

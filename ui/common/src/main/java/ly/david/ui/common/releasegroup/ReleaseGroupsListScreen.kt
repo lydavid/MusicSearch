@@ -12,7 +12,7 @@ import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
@@ -25,7 +25,7 @@ fun ReleaseGroupsListScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
-    onReleaseGroupClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     viewModel: ReleaseGroupsListViewModel = hiltViewModel()
 ) {
@@ -53,7 +53,7 @@ fun ReleaseGroupsListScreen(
                                 }
                             }
                         ) {
-                            onReleaseGroupClick(MusicBrainzResource.RELEASE_GROUP, id, getNameWithDisambiguation())
+                            onReleaseGroupClick(MusicBrainzEntity.RELEASE_GROUP, id, getNameWithDisambiguation())
                         }
                     },
                     disable = onDeleteFromCollection == null,

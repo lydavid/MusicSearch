@@ -11,7 +11,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.listitem.EventListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.event.EventsListScreen
 
 @Composable
@@ -21,14 +21,14 @@ internal fun EventsByPlaceScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     lazyListState: LazyListState = rememberLazyListState(),
     lazyPagingItems: LazyPagingItems<EventListItemModel>,
-    onEventClick: (entity: MusicBrainzResource, String, String) -> Unit,
+    onEventClick: (entity: MusicBrainzEntity, String, String) -> Unit,
     onPagedEventsFlowChange: (Flow<PagingData<EventListItemModel>>) -> Unit,
     filterText: String,
     viewModel: EventsByPlaceViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = placeId) {
-        viewModel.loadPagedResources(placeId)
-        onPagedEventsFlowChange(viewModel.pagedResources)
+        viewModel.loadPagedEntities(placeId)
+        onPagedEventsFlowChange(viewModel.pagedEntities)
     }
 
     viewModel.updateQuery(filterText)

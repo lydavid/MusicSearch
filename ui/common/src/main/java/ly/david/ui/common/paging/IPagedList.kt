@@ -7,17 +7,17 @@ import ly.david.data.domain.listitem.ListItemModel
 
 interface IPagedList<LI : ListItemModel> {
     data class ViewModelState(
-        val resourceId: String = "",
+        val entityId: String = "",
         val query: String = "",
         val isRemote: Boolean = true
     )
 
-    val resourceId: MutableStateFlow<String>
+    val entityId: MutableStateFlow<String>
     val query: MutableStateFlow<String>
     val isRemote: MutableStateFlow<Boolean>
 
-    fun loadPagedResources(resourceId: String) {
-        this.resourceId.value = resourceId
+    fun loadPagedEntities(entityId: String) {
+        this.entityId.value = entityId
     }
 
     fun updateQuery(query: String) {
@@ -28,5 +28,5 @@ interface IPagedList<LI : ListItemModel> {
         this.isRemote.value = isRemote
     }
 
-    val pagedResources: Flow<PagingData<LI>>
+    val pagedEntities: Flow<PagingData<LI>>
 }

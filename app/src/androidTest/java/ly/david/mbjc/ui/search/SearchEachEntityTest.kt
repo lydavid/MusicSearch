@@ -14,9 +14,9 @@ import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
-import ly.david.data.network.searchableResources
+import ly.david.data.network.searchableEntities
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -29,19 +29,19 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 /**
- * Test interacting with each [searchableResources] from [SearchScreen].
+ * Test interacting with each [searchableEntities] from [SearchScreen].
  */
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class SearchEachResourceTest(
-    private val resource: MusicBrainzResource
+internal class SearchEachEntityTest(
+    private val entity: MusicBrainzEntity
 ) : MainActivityTest(), StringReferences {
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
-        fun data(): Collection<MusicBrainzResource> {
-            return searchableResources
+        fun data(): Collection<MusicBrainzEntity> {
+            return searchableEntities
         }
     }
 
@@ -60,17 +60,17 @@ internal class SearchEachResourceTest(
     }
 
     @Test
-    fun searchEachResource() {
+    fun searchEachEntity() {
         composeTestRule
             .onNodeWithText(resourceLabel)
             .performClick()
 
         composeTestRule
-            .onNodeWithTag(resource.resourceUri)
+            .onNodeWithTag(entity.resourceUri)
             .performClick()
 
         composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(resource.getDisplayTextRes()))
+            .onNodeWithText(composeTestRule.activity.getString(entity.getDisplayTextRes()))
             .assertIsDisplayed()
 
         // Entity shows up in search result
@@ -81,9 +81,9 @@ internal class SearchEachResourceTest(
 
         searchFieldNode.assert(hasText(""))
             .performTextInput("Some search text")
-        waitForThenPerformClickOn(resource.toFakeMusicBrainzModel().name!!)
+        waitForThenPerformClickOn(entity.toFakeMusicBrainzModel().name!!)
         composeTestRule
-            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
+            .onNodeWithText(entity.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
 
         // Entity shows up in history
@@ -91,11 +91,11 @@ internal class SearchEachResourceTest(
             .onNodeWithText(history)
             .performClick()
         composeTestRule
-            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
+            .onNodeWithText(entity.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
             .performClick()
         composeTestRule
-            .onNodeWithText(resource.toFakeMusicBrainzModel().name!!)
+            .onNodeWithText(entity.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
     }
 }

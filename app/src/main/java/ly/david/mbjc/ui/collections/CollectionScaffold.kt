@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.listitem.CollectionListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.collections.areas.AreasByCollectionScreen
 import ly.david.mbjc.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.mbjc.ui.collections.events.EventsByCollectionScreen
@@ -52,7 +52,7 @@ internal fun CollectionScaffold(
     collectionId: String,
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
@@ -64,7 +64,7 @@ internal fun CollectionScaffold(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var collection: CollectionListItemModel? by remember { mutableStateOf(null) }
-    var entity: MusicBrainzResource? by rememberSaveable { mutableStateOf(null) }
+    var entity: MusicBrainzEntity? by rememberSaveable { mutableStateOf(null) }
     var isRemote: Boolean by rememberSaveable { mutableStateOf(false) }
     var filterText by rememberSaveable { mutableStateOf("") }
 
@@ -84,10 +84,10 @@ internal fun CollectionScaffold(
                 showFilterIcon = true,
                 overflowDropdownMenuItems = {
                     if (collection?.isRemote == true) {
-                        OpenInBrowserMenuItem(resource = MusicBrainzResource.COLLECTION, resourceId = collectionId)
+                        OpenInBrowserMenuItem(entity = MusicBrainzEntity.COLLECTION, entityId = collectionId)
                     }
                     CopyToClipboardMenuItem(collectionId)
-                    if (entity == MusicBrainzResource.RELEASE_GROUP) {
+                    if (entity == MusicBrainzEntity.RELEASE_GROUP) {
                         ToggleMenuItem(
                             toggleOnText = R.string.sort,
                             toggleOffText = R.string.unsort,
@@ -95,7 +95,7 @@ internal fun CollectionScaffold(
                             onToggle = onSortReleaseGroupListItemsChange
                         )
                     }
-                    if (entity == MusicBrainzResource.RELEASE) {
+                    if (entity == MusicBrainzEntity.RELEASE) {
                         ToggleMenuItem(
                             toggleOnText = R.string.show_more_info,
                             toggleOffText = R.string.show_less_info,
@@ -142,17 +142,17 @@ private fun CollectionScaffoldContent(
     collectionId: String,
     isRemote: Boolean,
     filterText: String,
-    entity: MusicBrainzResource?,
+    entity: MusicBrainzEntity?,
     snackbarHostState: SnackbarHostState,
     innerPadding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     showMoreInfoInReleaseListItem: Boolean = true,
     sortReleaseGroupListItems: Boolean = false,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
 ) {
     when (entity) {
-        MusicBrainzResource.AREA -> {
+        MusicBrainzEntity.AREA -> {
             AreasByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -167,7 +167,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.ARTIST -> {
+        MusicBrainzEntity.ARTIST -> {
             ArtistsByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -182,7 +182,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.EVENT -> {
+        MusicBrainzEntity.EVENT -> {
             EventsByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -197,7 +197,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.INSTRUMENT -> {
+        MusicBrainzEntity.INSTRUMENT -> {
             InstrumentsByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -212,7 +212,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.LABEL -> {
+        MusicBrainzEntity.LABEL -> {
             LabelsByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -227,7 +227,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.PLACE -> {
+        MusicBrainzEntity.PLACE -> {
             PlacesByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -242,7 +242,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.RECORDING -> {
+        MusicBrainzEntity.RECORDING -> {
             RecordingsByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -257,7 +257,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.RELEASE -> {
+        MusicBrainzEntity.RELEASE -> {
             ReleasesByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -273,7 +273,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.RELEASE_GROUP -> {
+        MusicBrainzEntity.RELEASE_GROUP -> {
             ReleaseGroupsByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -289,7 +289,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.SERIES -> {
+        MusicBrainzEntity.SERIES -> {
             SeriesByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -304,7 +304,7 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.WORK -> {
+        MusicBrainzEntity.WORK -> {
             WorksByCollectionScreen(
                 collectionId = collectionId,
                 isRemote = isRemote,
@@ -319,9 +319,9 @@ private fun CollectionScaffoldContent(
             )
         }
 
-        MusicBrainzResource.COLLECTION,
-        MusicBrainzResource.GENRE,
-        MusicBrainzResource.URL -> {
+        MusicBrainzEntity.COLLECTION,
+        MusicBrainzEntity.GENRE,
+        MusicBrainzEntity.URL -> {
             error("Collections by ${entity.name} not supported.")
         }
 

@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.GenreMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.data.room.history.RecordLookupHistory
 import retrofit2.HttpException
 import timber.log.Timber
@@ -21,10 +21,10 @@ import timber.log.Timber
 internal class GenreScaffoldViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     override val lookupHistoryDao: LookupHistoryDao,
-) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory {
+) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.GENRE
+    override val entity: MusicBrainzEntity = MusicBrainzEntity.GENRE
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
@@ -51,8 +51,8 @@ internal class GenreScaffoldViewModel @Inject constructor(
 
             if (!recordedLookup) {
                 recordLookupHistory(
-                    resourceId = genreId,
-                    resource = resource,
+                    entityId = genreId,
+                    entity = entity,
                     summary = title.value
                 )
                 recordedLookup = true

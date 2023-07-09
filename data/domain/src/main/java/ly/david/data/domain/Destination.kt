@@ -1,6 +1,6 @@
 package ly.david.data.domain
 
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.RESOURCE_AREA
 import ly.david.data.network.RESOURCE_ARTIST
 import ly.david.data.network.RESOURCE_EVENT
@@ -59,22 +59,22 @@ enum class Destination(val route: String) {
     EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "SPOTIFY")
 }
 
-fun MusicBrainzResource.toLookupDestination() =
+fun MusicBrainzEntity.toLookupDestination() =
     when (this) {
-        MusicBrainzResource.AREA -> Destination.LOOKUP_AREA
-        MusicBrainzResource.ARTIST -> Destination.LOOKUP_ARTIST
-        MusicBrainzResource.EVENT -> Destination.LOOKUP_EVENT
-        MusicBrainzResource.GENRE -> Destination.LOOKUP_GENRE
-        MusicBrainzResource.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
-        MusicBrainzResource.LABEL -> Destination.LOOKUP_LABEL
-        MusicBrainzResource.PLACE -> Destination.LOOKUP_PLACE
-        MusicBrainzResource.RECORDING -> Destination.LOOKUP_RECORDING
-        MusicBrainzResource.RELEASE -> Destination.LOOKUP_RELEASE
-        MusicBrainzResource.RELEASE_GROUP -> Destination.LOOKUP_RELEASE_GROUP
-        MusicBrainzResource.SERIES -> Destination.LOOKUP_SERIES
-        MusicBrainzResource.WORK -> Destination.LOOKUP_WORK
-        MusicBrainzResource.URL -> Destination.LOOKUP_URL
-        MusicBrainzResource.COLLECTION -> Destination.COLLECTIONS
+        MusicBrainzEntity.AREA -> Destination.LOOKUP_AREA
+        MusicBrainzEntity.ARTIST -> Destination.LOOKUP_ARTIST
+        MusicBrainzEntity.EVENT -> Destination.LOOKUP_EVENT
+        MusicBrainzEntity.GENRE -> Destination.LOOKUP_GENRE
+        MusicBrainzEntity.INSTRUMENT -> Destination.LOOKUP_INSTRUMENT
+        MusicBrainzEntity.LABEL -> Destination.LOOKUP_LABEL
+        MusicBrainzEntity.PLACE -> Destination.LOOKUP_PLACE
+        MusicBrainzEntity.RECORDING -> Destination.LOOKUP_RECORDING
+        MusicBrainzEntity.RELEASE -> Destination.LOOKUP_RELEASE
+        MusicBrainzEntity.RELEASE_GROUP -> Destination.LOOKUP_RELEASE_GROUP
+        MusicBrainzEntity.SERIES -> Destination.LOOKUP_SERIES
+        MusicBrainzEntity.WORK -> Destination.LOOKUP_WORK
+        MusicBrainzEntity.URL -> Destination.LOOKUP_URL
+        MusicBrainzEntity.COLLECTION -> Destination.COLLECTIONS
     }
 
 /**

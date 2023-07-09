@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.network.EventMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseEventsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.collection.CollectionEntityDao
@@ -29,7 +29,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
     pagedList: PagedList<EventRoomModel, EventListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
-    byEntity = MusicBrainzResource.EVENT,
+    byEntity = MusicBrainzEntity.EVENT,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,23 +54,23 @@ internal class EventsByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.EVENT)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, EventRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getEventsByCollection(resourceId)
+            collectionEntityDao.getEventsByCollection(entityId)
         }
         else -> {
             collectionEntityDao.getEventsByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

@@ -33,9 +33,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.R
-import ly.david.ui.common.ResourceIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -46,10 +46,10 @@ import ly.david.ui.core.theme.PreviewTheme
 private const val DELAY_LOADING_MS = 300L
 
 /**
- * [TopAppBar] with icon for [resource], scrollable [title]/[subtitle];
+ * [TopAppBar] with icon for [entity], scrollable [title]/[subtitle];
  * back button if [showBackButton], invoking [onBack].
  *
- * @param resource What [MusicBrainzResource]'s icon to display.
+ * @param entity What [MusicBrainzEntity]'s icon to display.
  * @param actions Actions displayed in a [RowScope].
  * @param overflowDropdownMenuItems If set, displays three-ellipses action button at the end of the bar.
  *  When clicked, the items in this composable will be displayed in a dropdown menu.
@@ -62,7 +62,7 @@ fun ScrollableTopAppBar(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     showBackButton: Boolean = true,
-    resource: MusicBrainzResource? = null,
+    entity: MusicBrainzEntity? = null,
     title: String = "",
     subtitle: String = "",
     scrollBehavior: TopAppBarScrollBehavior? = null,
@@ -80,7 +80,7 @@ fun ScrollableTopAppBar(
             title = {
                 TitleAndSubtitle(
                     title = title,
-                    resource = resource,
+                    entity = entity,
                     subtitle = subtitle,
                     subtitleDropdownMenuItems = subtitleDropdownMenuItems
                 )
@@ -106,7 +106,7 @@ fun ScrollableTopAppBar(
 @Composable
 private fun TitleAndSubtitle(
     title: String,
-    resource: MusicBrainzResource? = null,
+    entity: MusicBrainzEntity? = null,
     subtitle: String = "",
     subtitleDropdownMenuItems: @Composable (OverflowMenuScope.() -> Unit)? = null,
 ) {
@@ -129,9 +129,9 @@ private fun TitleAndSubtitle(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.horizontalScroll(rememberScrollState())
             ) {
-                if (resource != null) {
-                    ResourceIcon(
-                        resource = resource,
+                if (entity != null) {
+                    EntityIcon(
+                        entity = entity,
                         modifier = Modifier.padding(end = 8.dp)
                     )
                 }
@@ -254,7 +254,7 @@ private fun Default() {
 private fun WithIcon() {
     PreviewTheme {
         ScrollableTopAppBar(
-            resource = MusicBrainzResource.ARTIST,
+            entity = MusicBrainzEntity.ARTIST,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen."
         )
@@ -269,7 +269,7 @@ private fun WithTabs() {
         var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
 
         ScrollableTopAppBar(
-            resource = MusicBrainzResource.RELEASE_GROUP,
+            entity = MusicBrainzEntity.RELEASE_GROUP,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
             subtitle = "A subtitle that is also very long that will also go off the screen.",
             additionalBar = {

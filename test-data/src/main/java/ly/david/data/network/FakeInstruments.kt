@@ -11,7 +11,7 @@ val fakeInstrument = InstrumentMusicBrainzModel(
             type = "",
             typeId = "0b67183b-9f36-4b09-b561-0fa531508f91",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzResource.AREA,
+            targetType = MusicBrainzEntity.AREA,
             area = ontario
         )
     )

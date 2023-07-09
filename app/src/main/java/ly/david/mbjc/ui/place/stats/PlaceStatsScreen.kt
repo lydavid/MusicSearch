@@ -26,7 +26,7 @@ internal fun PlaceStatsScreen(
     var totalLocalEvents by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(placeId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(placeId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(placeId)
         totalRemoteEvents = viewModel.getTotalRemoteEvents(placeId)
         totalLocalEvents = viewModel.getTotalLocalEvents(placeId)

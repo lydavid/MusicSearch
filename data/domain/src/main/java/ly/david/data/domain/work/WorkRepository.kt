@@ -35,9 +35,9 @@ class WorkRepository @Inject constructor(
         return workMusicBrainzModel.toWorkListItemModel()
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupWork(
-            workId = resourceId,
+            workId = entityId,
             include = WORK_INC_DEFAULT
         ).relations
     }

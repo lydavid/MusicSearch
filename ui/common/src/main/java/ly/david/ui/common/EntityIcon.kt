@@ -3,19 +3,19 @@ package ly.david.ui.common
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 
 /**
- * An appropriate icon for a given [resource].
+ * An appropriate icon for a given [entity].
  */
 @Composable
-fun ResourceIcon(
-    resource: MusicBrainzResource,
+fun EntityIcon(
+    entity: MusicBrainzEntity,
     modifier: Modifier = Modifier
 ) {
     Icon(
         modifier = modifier,
-        imageVector = resource.getIcon() ?: return,
+        imageVector = entity.getIcon() ?: return,
         contentDescription = null
     )
 }

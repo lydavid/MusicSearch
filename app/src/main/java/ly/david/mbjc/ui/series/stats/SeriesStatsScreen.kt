@@ -25,7 +25,7 @@ internal fun SeriesStatsScreen(
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(seriesId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(seriesId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(seriesId)
     }
 

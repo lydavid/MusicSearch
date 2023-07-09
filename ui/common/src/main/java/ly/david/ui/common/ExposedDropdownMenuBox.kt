@@ -23,16 +23,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExposedDropdownMenuBox(
-    options: List<MusicBrainzResource>,
-    selectedOption: MusicBrainzResource,
+    options: List<MusicBrainzEntity>,
+    selectedOption: MusicBrainzEntity,
     modifier: Modifier = Modifier,
-    onSelectOption: (MusicBrainzResource) -> Unit
+    onSelectOption: (MusicBrainzEntity) -> Unit
 ) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -82,9 +82,9 @@ fun ExposedDropdownMenuBox(
                         },
                         text = {
                             Row(verticalAlignment = CenterVertically) {
-                                ResourceIcon(
+                                EntityIcon(
                                     modifier = Modifier.padding(end = 8.dp),
-                                    resource = option
+                                    entity = option
                                 )
                                 Text(text = stringResource(id = option.getDisplayTextRes()))
                             }

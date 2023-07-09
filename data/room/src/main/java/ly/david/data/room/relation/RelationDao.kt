@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.BaseDao
 
 @Dao
@@ -15,28 +15,28 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun markEntityHasRelations(hasRelations: HasRelations): Long
 
-    @Query("SELECT * FROM has_relations WHERE resource_id = :resourceId")
-    abstract suspend fun hasRelations(resourceId: String): HasRelations?
+    @Query("SELECT * FROM has_relations WHERE resource_id = :entityId")
+    abstract suspend fun hasRelations(entityId: String): HasRelations?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun markEntityHasUrls(hasUrls: HasUrls): Long
 
-    @Query("SELECT * FROM has_urls WHERE resource_id = :resourceId")
-    abstract suspend fun hasUrls(resourceId: String): HasUrls?
+    @Query("SELECT * FROM has_urls WHERE resource_id = :entityId")
+    abstract suspend fun hasUrls(entityId: String): HasUrls?
 
     @Transaction
     @Query(
         """
             SELECT *
             FROM relation
-            WHERE resource_id = :resourceId AND linked_resource != "url" AND
+            WHERE resource_id = :entityId AND linked_resource != "url" AND
             (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
             attributes LIKE :query OR additional_info LIKE :query)
             ORDER BY linked_resource, label, `order`
         """
     )
     abstract fun getEntityRelationships(
-        resourceId: String,
+        entityId: String,
         query: String = "%%"
     ): PagingSource<Int, RelationRoomModel>
 
@@ -45,32 +45,32 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
             SELECT *
             FROM relation
-            WHERE resource_id = :resourceId AND linked_resource = "url" AND
+            WHERE resource_id = :entityId AND linked_resource = "url" AND
             (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
             attributes LIKE :query OR additional_info LIKE :query)
             ORDER BY linked_resource, label, `order`
         """
     )
     abstract fun getEntityUrls(
-        resourceId: String,
+        entityId: String,
         query: String = "%%"
     ): PagingSource<Int, RelationRoomModel>
 
     @Query(
         """
         DELETE FROM relation 
-        WHERE resource_id = :resourceId AND linked_resource != "url"
+        WHERE resource_id = :entityId AND linked_resource != "url"
         """
     )
-    abstract suspend fun deleteRelationshipsByEntity(resourceId: String)
+    abstract suspend fun deleteRelationshipsByEntity(entityId: String)
 
     @Query(
         """
         DELETE FROM relation 
-        WHERE resource_id = :resourceId AND linked_resource == "url"
+        WHERE resource_id = :entityId AND linked_resource == "url"
         """
     )
-    abstract suspend fun deleteUrlsByEntity(resourceId: String)
+    abstract suspend fun deleteUrlsByEntity(entityId: String)
 
     // region Relationship stats
     /**
@@ -80,75 +80,75 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
         SELECT
             CASE 
-                WHEN (SELECT has_relations FROM has_relations WHERE resource_id = :resourceId) IS NULL THEN
+                WHEN (SELECT has_relations FROM has_relations WHERE resource_id = :entityId) IS NULL THEN
                     NULL
                 ELSE
                     (SELECT COUNT(*)
                     FROM relation
-                    WHERE resource_id = :resourceId)
+                    WHERE resource_id = :entityId)
             END
         AS numRelations
     """
     )
-    abstract suspend fun getNumberOfRelationsByResource(resourceId: String): Int?
+    abstract suspend fun getNumberOfRelationsByEntity(entityId: String): Int?
 
     @Query(
         """
         SELECT linked_resource, COUNT(resource_id) as count
         FROM relation
-        WHERE resource_id = :resourceId
+        WHERE resource_id = :entityId
         GROUP BY linked_resource
     """
     )
-    abstract suspend fun getCountOfEachRelationshipType(resourceId: String): List<RelationTypeCount>
+    abstract suspend fun getCountOfEachRelationshipType(entityId: String): List<RelationTypeCount>
     // endregion
 
-    // region BrowseResourceCount
+    // region BrowseEntityCount
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insertBrowseResourceCount(browseResourceCount: BrowseResourceCount): Long
+    abstract suspend fun insertBrowseEntityCount(browseEntityCount: BrowseEntityCount): Long
 
     @Query(
         """
             SELECT *
             FROM browse_resource_count
-            WHERE resource_id = :resourceId AND browse_resource = :browseResource
+            WHERE resource_id = :entityId AND browse_resource = :browseEntity
         """
     )
-    abstract suspend fun getBrowseResourceCount(
-        resourceId: String,
-        browseResource: MusicBrainzResource
-    ): BrowseResourceCount?
+    abstract suspend fun getBrowseEntityCount(
+        entityId: String,
+        browseEntity: MusicBrainzEntity
+    ): BrowseEntityCount?
 
     @Query(
         """
             UPDATE browse_resource_count
             SET local_count = :localCount
-            WHERE resource_id = :resourceId AND browse_resource = :browseResource
+            WHERE resource_id = :entityId AND browse_resource = :browseEntity
         """
     )
-    abstract suspend fun updateLocalCountForResource(
-        resourceId: String,
-        browseResource: MusicBrainzResource,
+    abstract suspend fun updateLocalCountForEntity(
+        entityId: String,
+        browseEntity: MusicBrainzEntity,
         localCount: Int
     )
 
     @Transaction
-    open suspend fun incrementLocalCountForResource(
-        resourceId: String,
-        browseResource: MusicBrainzResource,
+    open suspend fun incrementLocalCountForEntity(
+        entityId: String,
+        browseEntity: MusicBrainzEntity,
         additionalOffset: Int
     ) {
-        val currentOffset = getBrowseResourceCount(resourceId, browseResource)?.localCount ?: 0
-        updateLocalCountForResource(resourceId, browseResource, currentOffset + additionalOffset)
+        val currentOffset = getBrowseEntityCount(entityId, browseEntity)?.localCount ?: 0
+        updateLocalCountForEntity(entityId, browseEntity, currentOffset + additionalOffset)
     }
 
     @Query(
         """
         DELETE FROM browse_resource_count
-        WHERE resource_id = :resourceId AND browse_resource = :browseResource
+        WHERE resource_id = :entityId AND browse_resource = :browseEntity
         """
     )
-    abstract suspend fun deleteBrowseResourceCountByResource(resourceId: String, browseResource: MusicBrainzResource)
+    abstract suspend fun deleteBrowseEntityCountByEntity(entityId: String, browseEntity: MusicBrainzEntity)
 
     @Query(
         """
@@ -158,6 +158,6 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
             WHERE is_remote)
         """
     )
-    abstract suspend fun deleteAllBrowseResourceCountByRemoteCollections()
+    abstract suspend fun deleteAllBrowseEntityCountByRemoteCollections()
     // endregion
 }

@@ -24,7 +24,7 @@ import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.api.MusicBrainzOAuthInfo
@@ -93,7 +93,7 @@ internal class TopLevelViewModel @Inject constructor(
         val actionLabel: String? = null
     )
 
-    private val entity: MutableStateFlow<MusicBrainzResource> = MutableStateFlow(MusicBrainzResource.ARTIST)
+    private val entity: MutableStateFlow<MusicBrainzEntity> = MutableStateFlow(MusicBrainzEntity.ARTIST)
     private val entityId: MutableStateFlow<String> = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -113,7 +113,7 @@ internal class TopLevelViewModel @Inject constructor(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    fun setEntity(entity: MusicBrainzResource) {
+    fun setEntity(entity: MusicBrainzEntity) {
         this.entity.value = entity
     }
 
@@ -121,7 +121,7 @@ internal class TopLevelViewModel @Inject constructor(
         this.entityId.value = entityId
     }
 
-    fun createNewCollection(name: String, entity: MusicBrainzResource) {
+    fun createNewCollection(name: String, entity: MusicBrainzEntity) {
         viewModelScope.launch {
             collectionDao.insert(
                 CollectionRoomModel(

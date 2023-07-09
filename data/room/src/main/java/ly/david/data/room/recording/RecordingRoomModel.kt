@@ -8,7 +8,7 @@ import androidx.room.Relation
 import ly.david.data.Recording
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 
 @Entity(tableName = "recording")
 data class RecordingRoomModel(
@@ -49,5 +49,5 @@ data class RecordingForScaffold(
         parentColumn = "id",
         entityColumn = "resource_id"
     )
-    val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>
+    val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>
 ) : RoomModel

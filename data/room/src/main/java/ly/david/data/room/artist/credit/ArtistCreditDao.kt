@@ -24,11 +24,11 @@ interface ArtistCreditDao {
     suspend fun insertAllArtistCreditNames(artistCreditNameRoomModel: List<ArtistCreditNameRoomModel>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertArtistCreditResource(artistCreditResource: ArtistCreditResource): Long
+    suspend fun insertArtistCreditEntityLink(artistCreditEntityLink: ArtistCreditEntityLink): Long
 
     suspend fun insertArtistCredits(
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
-        resourceId: String
+        entityId: String
     ) {
         val artistCreditName = artistCredits.getDisplayNames()
         var artistCreditId = insertArtistCredit(ArtistCredit(name = artistCreditName))
@@ -38,10 +38,10 @@ interface ArtistCreditDao {
             insertAllArtistCreditNames(artistCredits.toArtistCreditNameRoomModels(artistCreditId))
         }
 
-        insertArtistCreditResource(
-            ArtistCreditResource(
+        insertArtistCreditEntityLink(
+            ArtistCreditEntityLink(
                 artistCreditId = artistCreditId,
-                resourceId = resourceId
+                entityId = entityId
             )
         )
     }

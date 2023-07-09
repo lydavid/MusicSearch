@@ -29,9 +29,9 @@ class EventRepository @Inject constructor(
         return eventMusicBrainzModel.toEventListItemModel()
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupEvent(
-            eventId = resourceId,
+            eventId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

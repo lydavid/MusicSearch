@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.SeriesListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.domain.series.SeriesRepository
-import ly.david.ui.common.MusicBrainzResourceViewModel
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -24,11 +24,11 @@ internal class SeriesScaffoldViewModel @Inject constructor(
     private val repository: SeriesRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,
-) : ViewModel(), MusicBrainzResourceViewModel, RecordLookupHistory,
+) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
-    override val resource: MusicBrainzResource = MusicBrainzResource.SERIES
+    override val entity: MusicBrainzEntity = MusicBrainzEntity.SERIES
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
@@ -63,8 +63,8 @@ internal class SeriesScaffoldViewModel @Inject constructor(
 
                     if (!recordedLookup) {
                         recordLookupHistory(
-                            resourceId = seriesId,
-                            resource = resource,
+                            entityId = seriesId,
+                            entity = entity,
                             summary = title.value
                         )
                         recordedLookup = true

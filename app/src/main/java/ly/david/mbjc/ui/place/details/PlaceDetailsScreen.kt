@@ -16,7 +16,7 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.text.TextWithHeadingRes
@@ -33,7 +33,7 @@ internal fun PlaceDetailsScreen(
     context: Context = LocalContext.current,
     place: PlaceListItemModel,
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
 
     LazyColumn(
@@ -64,7 +64,7 @@ internal fun PlaceDetailsScreen(
                         area = it,
                         showType = false,
                         onAreaClick = {
-                            onItemClick(MusicBrainzResource.AREA, id, getNameWithDisambiguation())
+                            onItemClick(MusicBrainzEntity.AREA, id, getNameWithDisambiguation())
                         }
                     )
                 }

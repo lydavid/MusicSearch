@@ -19,7 +19,7 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.ui.common.getIcon
 import ly.david.ui.core.preview.DefaultPreviews
@@ -136,7 +136,7 @@ fun ReleaseListItem(
             ThumbnailImage(
                 url = release.imageUrl.orEmpty(),
                 mbid = release.id,
-                placeholderIcon = MusicBrainzResource.RELEASE.getIcon(),
+                placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
             )
         }
     )

@@ -8,13 +8,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.collection.toCollectionRoomModel
-import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.BrowseEntityCount
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.settings.AppPreferences
 
@@ -43,9 +43,9 @@ internal class CollectionListViewModel @Inject constructor(
             musicBrainzAuthState.username.collectLatest { username ->
                 if (username.isEmpty()) {
                     // This id lets the rest of the functions know to avoid network requests
-                    loadPagedResources(ONLY_GIVE_ME_LOCAL_COLLECTIONS)
+                    loadPagedEntities(ONLY_GIVE_ME_LOCAL_COLLECTIONS)
                 } else {
-                    loadPagedResources(username)
+                    loadPagedEntities(username)
                 }
             }
         }
@@ -61,28 +61,28 @@ internal class CollectionListViewModel @Inject constructor(
         updateShowRemote(show)
     }
 
-    override suspend fun browseLinkedResourcesAndStore(resourceId: String, nextOffset: Int): Int {
-        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
+    override suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int {
+        if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
         val response = musicBrainzApiService.browseCollectionsByUser(
-            username = resourceId,
+            username = entityId,
             offset = nextOffset,
             include = USER_COLLECTIONS
         )
 
         if (response.offset == 0) {
-            relationDao.insertBrowseResourceCount(
-                browseResourceCount = BrowseResourceCount(
-                    resourceId = resourceId,
-                    browseResource = MusicBrainzResource.COLLECTION,
+            relationDao.insertBrowseEntityCount(
+                browseEntityCount = BrowseEntityCount(
+                    entityId = entityId,
+                    browseEntity = MusicBrainzEntity.COLLECTION,
                     localCount = response.musicBrainzModels.size,
                     remoteCount = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForResource(
-                resourceId = resourceId,
-                browseResource = MusicBrainzResource.COLLECTION,
+            relationDao.incrementLocalCountForEntity(
+                entityId = entityId,
+                browseEntity = MusicBrainzEntity.COLLECTION,
                 additionalOffset = response.musicBrainzModels.size
             )
         }
@@ -93,28 +93,28 @@ internal class CollectionListViewModel @Inject constructor(
         return collectionMusicBrainzModels.size
     }
 
-    override suspend fun getRemoteLinkedResourcesCountByResource(resourceId: String): Int? {
-        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
+    override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? {
+        if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        return relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.COLLECTION)?.remoteCount
+        return relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.COLLECTION)?.remoteCount
     }
 
-    override suspend fun getLocalLinkedResourcesCountByResource(resourceId: String): Int {
-        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
+    override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int {
+        if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        return relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.COLLECTION)?.localCount ?: 0
+        return relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.COLLECTION)?.localCount ?: 0
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        if (resourceId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
+        if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return
 
         collectionDao.withTransaction {
-            relationDao.deleteAllBrowseResourceCountByRemoteCollections()
+            relationDao.deleteAllBrowseEntityCountByRemoteCollections()
             collectionDao.deleteMusicBrainzCollections()
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
+    override fun getLinkedEntitiesPagingSource(
         viewState: ICollectionPagedList.ViewModelState
     ): PagingSource<Int, CollectionWithEntities> =
         collectionDao.getAllCollections(

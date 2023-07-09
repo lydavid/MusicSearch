@@ -8,7 +8,7 @@ import ly.david.data.common.emptyToNull
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 import ly.david.data.getDisplayNames
 import ly.david.data.getLifeSpanForDisplay
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.getFormattedAttributesForDisplay
 import ly.david.data.network.getHeader
@@ -18,7 +18,7 @@ import ly.david.data.room.RoomModel
 //  web doesn't display it twice, so maybe we shouldn't either.
 
 /**
- * The existence of this model for a [resourceId] should be enough to indicate that we have locally stored
+ * The existence of this model for a [entityId] should be enough to indicate that we have locally stored
  * all of its relationships since there's no pagination for relationships.
  * That's not actually true because it won't handle the case where a resource has no relationships.
  * It would make us always true to fetch it even though we've discovered there are none.
@@ -29,14 +29,14 @@ import ly.david.data.room.RoomModel
 )
 data class RelationRoomModel(
     @ColumnInfo(name = "resource_id")
-    val resourceId: String,
+    val entityId: String,
 
     // TODO: can we make it nullable so that we don't pass url id?
     @ColumnInfo(name = "linked_resource_id")
-    override val linkedResourceId: String,
+    override val linkedEntityId: String,
 
     @ColumnInfo(name = "linked_resource")
-    override val linkedResource: MusicBrainzResource,
+    override val linkedEntity: MusicBrainzEntity,
 
     // TODO: an artist can appear multiple times similar to artist credits
     //  how about using label as another key?
@@ -78,136 +78,136 @@ data class RelationRoomModel(
  * that any of them are nullable.
  */
 fun RelationMusicBrainzModel.toRelationRoomModel(
-    resourceId: String,
+    entityId: String,
     order: Int,
 ): RelationRoomModel? {
 
-    var linkedResourceId = ""
-    var linkedResourceName = ""
-    var linkedResourceDisambiguation: String? = null
+    var linkedEntityId = ""
+    var linkedEntityName = ""
+    var linkedEntityDisambiguation: String? = null
     var additionalInfo: String? = null
     val linkedTargetType = targetType
     when (linkedTargetType) {
-        MusicBrainzResource.ARTIST -> {
+        MusicBrainzEntity.ARTIST -> {
             if (artist == null) return null
             artist?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
                 additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             }
         }
-        MusicBrainzResource.RELEASE_GROUP -> {
+        MusicBrainzEntity.RELEASE_GROUP -> {
             if (releaseGroup == null) return null
             releaseGroup?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
                 additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
-        MusicBrainzResource.RELEASE -> {
+        MusicBrainzEntity.RELEASE -> {
             if (release == null) return null
             release?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
                 additionalInfo = getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
-        MusicBrainzResource.RECORDING -> {
+        MusicBrainzEntity.RECORDING -> {
             if (recording == null) return null
             recording?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
                 additionalInfo = artistCredits.getDisplayNames().transformThisIfNotNullOrEmpty { "by $it" } +
                     getLifeSpanForDisplay().transformThisIfNotNullOrEmpty { "($it)" }
             } ?: return null
         }
-        MusicBrainzResource.LABEL -> {
+        MusicBrainzEntity.LABEL -> {
             if (label == null) return null
             label?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.AREA -> {
+        MusicBrainzEntity.AREA -> {
             if (area == null) return null
             area?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.PLACE -> {
+        MusicBrainzEntity.PLACE -> {
             if (place == null) return null
             place?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.WORK -> {
+        MusicBrainzEntity.WORK -> {
             if (work == null) return null
             work?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.INSTRUMENT -> {
+        MusicBrainzEntity.INSTRUMENT -> {
             if (instrument == null) return null
             instrument?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.GENRE -> {
+        MusicBrainzEntity.GENRE -> {
             if (genre == null) return null
             genre?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.EVENT -> {
+        MusicBrainzEntity.EVENT -> {
             if (event == null) return null
             event?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.SERIES -> {
+        MusicBrainzEntity.SERIES -> {
             if (series == null) return null
             series?.apply {
-                linkedResourceId = id
-                linkedResourceName = targetCredit.emptyToNull() ?: name
-                linkedResourceDisambiguation = disambiguation
+                linkedEntityId = id
+                linkedEntityName = targetCredit.emptyToNull() ?: name
+                linkedEntityDisambiguation = disambiguation
             } ?: return null
         }
-        MusicBrainzResource.URL -> {
+        MusicBrainzEntity.URL -> {
             if (url == null) return null
             url?.apply {
-                linkedResourceId = id
-                linkedResourceName = URLDecoder.decode(resource, "utf-8")
-                linkedResourceDisambiguation = null
+                linkedEntityId = id
+                linkedEntityName = URLDecoder.decode(resource, "utf-8")
+                linkedEntityDisambiguation = null
             } ?: return null
         }
         else -> return null
     }
 
     return RelationRoomModel(
-        resourceId = resourceId,
-        linkedResourceId = linkedResourceId,
-        linkedResource = linkedTargetType,
+        entityId = entityId,
+        linkedEntityId = linkedEntityId,
+        linkedEntity = linkedTargetType,
         order = order,
         label = getHeader(),
-        name = linkedResourceName,
-        disambiguation = linkedResourceDisambiguation,
+        name = linkedEntityName,
+        disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
         additionalInfo = additionalInfo
     )

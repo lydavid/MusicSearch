@@ -26,6 +26,8 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ly.david.data.Identifiable
+import ly.david.data.domain.paging.BrowseEntityRemoteMediator
+import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.ui.common.R
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
@@ -36,7 +38,7 @@ import ly.david.ui.common.fullscreen.FullScreenText
  * Handles loading and errors for paging screens.
  *
  * Also handles swipe to refresh. The source for [lazyPagingItems] is expected to implement refresh behaviour.
- * This can be done using [BrowseResourceRemoteMediator] or [LookupResourceRemoteMediator].
+ * This can be done using [BrowseEntityRemoteMediator] or [LookupEntityRemoteMediator].
  *
  * @param lazyPagingItems The items to display. Their [Identifiable.id] must be unique.
  *  This is already true for any item that uses MB's UUID, but separators must also have a unique id.

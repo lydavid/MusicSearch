@@ -10,7 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.listitem.PlaceListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.place.PlacesListScreen
 
 @Composable
@@ -21,13 +21,13 @@ internal fun PlacesByAreaScreen(
     placesLazyListState: LazyListState,
     placesLazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     modifier: Modifier = Modifier,
-    onPlaceClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onPlaceClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit = {},
     viewModel: PlacesByAreaViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {
-        viewModel.loadPagedResources(areaId)
-        onPagedPlacesFlowChange(viewModel.pagedResources)
+        viewModel.loadPagedEntities(areaId)
+        onPagedPlacesFlowChange(viewModel.pagedEntities)
     }
 
     viewModel.updateQuery(filterText)

@@ -28,7 +28,7 @@ internal fun AreaStatsScreen(
     var totalLocalPlaces by remember { mutableStateOf(0) }
 
     LaunchedEffect(key1 = Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(areaId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(areaId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(areaId)
         totalRemoteReleases = viewModel.getTotalRemoteReleases(areaId)
         totalLocalReleases = viewModel.getTotalLocalReleases(areaId)

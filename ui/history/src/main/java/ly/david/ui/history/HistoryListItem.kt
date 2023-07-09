@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.getDisplayTextRes
 import ly.david.ui.common.getIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
@@ -28,7 +28,7 @@ import ly.david.ui.image.ThumbnailImage
 internal fun HistoryListItem(
     lookupHistory: LookupHistoryListItemModel,
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {}
 ) {
     SwipeToDeleteListItem(
@@ -42,11 +42,11 @@ internal fun HistoryListItem(
                     )
                 },
                 modifier = modifier.clickable {
-                    onItemClick(lookupHistory.resource, lookupHistory.id, lookupHistory.title)
+                    onItemClick(lookupHistory.entity, lookupHistory.id, lookupHistory.title)
                 },
                 supportingContent = {
                     Column {
-                        val resource = stringResource(id = lookupHistory.resource.getDisplayTextRes())
+                        val resource = stringResource(id = lookupHistory.entity.getDisplayTextRes())
                         Text(
                             text = resource,
                             style = TextStyles.getCardBodySubTextStyle(),
@@ -60,7 +60,7 @@ internal fun HistoryListItem(
                     }
                 },
                 leadingContent = {
-                    val clipModifier = if (lookupHistory.resource == MusicBrainzResource.ARTIST) {
+                    val clipModifier = if (lookupHistory.entity == MusicBrainzEntity.ARTIST) {
                         Modifier.clip(CircleShape)
                     } else {
                         Modifier
@@ -68,7 +68,7 @@ internal fun HistoryListItem(
                     ThumbnailImage(
                         url = lookupHistory.imageUrl.orEmpty(),
                         mbid = lookupHistory.id,
-                        placeholderIcon = lookupHistory.resource.getIcon(),
+                        placeholderIcon = lookupHistory.entity.getIcon(),
                         modifier = clipModifier
                     )
                 },
@@ -102,7 +102,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
             HistoryListItem(
                 LookupHistoryListItemModel(
                     title = "欠けた心象、世のよすが",
-                    resource = MusicBrainzResource.RELEASE_GROUP,
+                    entity = MusicBrainzEntity.RELEASE_GROUP,
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 9999,
                     imageUrl = imageUrl,
@@ -123,7 +123,7 @@ internal fun PreviewLookupHistoryRelease(
             HistoryListItem(
                 LookupHistoryListItemModel(
                     title = "欠けた心象、世のよすが",
-                    resource = MusicBrainzResource.RELEASE,
+                    entity = MusicBrainzEntity.RELEASE,
                     id = "165f6643-2edb-4795-9abe-26bd0533e59d",
                     imageUrl = imageUrl,
                     lastAccessed = Date(2023, 5, 2)
@@ -143,7 +143,7 @@ internal fun PreviewLookupHistoryArtist(
             HistoryListItem(
                 LookupHistoryListItemModel(
                     title = "月詠み",
-                    resource = MusicBrainzResource.ARTIST,
+                    entity = MusicBrainzEntity.ARTIST,
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                     imageUrl = imageUrl,
                     lastAccessed = Date(2023, 5, 2)

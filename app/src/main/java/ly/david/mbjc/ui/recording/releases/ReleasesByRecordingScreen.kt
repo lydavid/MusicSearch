@@ -10,7 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.release.ReleasesListScreen
 
 @Composable
@@ -22,14 +22,14 @@ internal fun ReleasesByRecordingScreen(
     releasesLazyListState: LazyListState,
     releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
     modifier: Modifier = Modifier,
-    onReleaseClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
     viewModel: ReleasesByRecordingViewModel = hiltViewModel(),
 ) {
 
     LaunchedEffect(key1 = recordingId) {
-        viewModel.loadPagedResources(recordingId)
-        onPagedReleasesFlowChange(viewModel.pagedResources)
+        viewModel.loadPagedEntities(recordingId)
+        onPagedReleasesFlowChange(viewModel.pagedEntities)
     }
     viewModel.updateQuery(filterText)
 

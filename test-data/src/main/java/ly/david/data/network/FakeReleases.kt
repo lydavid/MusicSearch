@@ -14,7 +14,7 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     type = "remaster",
     typeId = "48e327b5-2d04-4518-93f1-fed5f0f0fa3c",
     direction = Direction.BACKWARD,
-    targetType = MusicBrainzResource.RELEASE,
+    targetType = MusicBrainzEntity.RELEASE,
     release = underPressureRemastered
 )
 

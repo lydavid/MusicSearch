@@ -8,7 +8,7 @@ import ly.david.data.room.RoomModel
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.CountryCode
 import ly.david.data.room.area.releases.ReleaseCountry
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 import ly.david.data.room.image.MbidImage
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.releases.ReleaseLabel
@@ -50,7 +50,7 @@ data class ReleaseWithAllData(
         parentColumn = "id",
         entityColumn = "resource_id"
     )
-    val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>,
+    val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>,
 
     @Relation(
         parentColumn = "id",

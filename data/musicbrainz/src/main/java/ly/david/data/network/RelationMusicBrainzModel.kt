@@ -14,7 +14,7 @@ data class RelationMusicBrainzModel(
     // TODO: we should order with backward relations first
     @Json(name = "direction") val direction: Direction,
 
-    @Json(name = "target-type") val targetType: MusicBrainzResource?,
+    @Json(name = "target-type") val targetType: MusicBrainzEntity?,
     @Json(name = "target-credit") val targetCredit: String? = null, // prefer this credit over object's name if it exists
 
     @Json(name = "attributes") val attributes: List<String>? = null, // strings, task

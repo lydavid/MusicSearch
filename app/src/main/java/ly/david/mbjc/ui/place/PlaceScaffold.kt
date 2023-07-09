@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.EventListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 import ly.david.mbjc.ui.place.stats.PlaceStatsScreen
@@ -52,11 +52,11 @@ internal fun PlaceScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     viewModel: PlaceScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.PLACE
+    val resource = MusicBrainzEntity.PLACE
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -90,12 +90,12 @@ internal fun PlaceScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = resource, resourceId = placeId)
+                    OpenInBrowserMenuItem(entity = resource, entityId = placeId)
                     CopyToClipboardMenuItem(placeId)
                     AddToCollectionMenuItem {
                         onAddToCollectionMenuClick(resource, placeId)

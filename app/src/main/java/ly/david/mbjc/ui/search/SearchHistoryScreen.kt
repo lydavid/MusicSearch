@@ -14,7 +14,7 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.Header
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.SearchHistoryListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
@@ -24,7 +24,7 @@ import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 internal fun SearchHistoryScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzResource, query: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
     onDeleteAllHistory: () -> Unit = {}
 ) {

@@ -11,7 +11,7 @@ val fakeEvent = EventMusicBrainzModel(
             type = "",
             typeId = "542f8484-8bc7-3ce5-a022-747850b2b928",
             direction = Direction.FORWARD,
-            targetType = MusicBrainzResource.AREA,
+            targetType = MusicBrainzEntity.AREA,
             area = ontario
         )
     )

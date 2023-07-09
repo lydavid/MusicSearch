@@ -28,14 +28,14 @@ val ontario = AreaMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzResource.AREA,
+            targetType = MusicBrainzEntity.AREA,
             area = canada
         ),
         RelationMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.FORWARD,
-            targetType = MusicBrainzResource.AREA,
+            targetType = MusicBrainzEntity.AREA,
             area = toronto
         ),
     )

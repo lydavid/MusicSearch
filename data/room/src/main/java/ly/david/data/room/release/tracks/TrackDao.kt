@@ -36,7 +36,7 @@ abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
 
     @Transaction
     open suspend fun insertTrackWithArtistCredits(track: TrackMusicBrainzModel, mediumId: Long) {
-        insertArtistCredits(artistCredits = track.artistCredits, resourceId = track.id)
+        insertArtistCredits(artistCredits = track.artistCredits, entityId = track.id)
         insertReplace(track.toTrackRoomModel(mediumId))
     }
 

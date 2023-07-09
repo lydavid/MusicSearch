@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -18,7 +18,7 @@ fun PlacesListScreen(
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<PlaceListItemModel>,
     modifier: Modifier = Modifier,
-    onPlaceClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onPlaceClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
 ) {
     PagingLoadingAndErrorHandler(
         lazyPagingItems = lazyPagingItems,
@@ -32,7 +32,7 @@ fun PlacesListScreen(
                     place = placeListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onPlaceClick(MusicBrainzResource.PLACE, id, getNameWithDisambiguation())
+                    onPlaceClick(MusicBrainzEntity.PLACE, id, getNameWithDisambiguation())
                 }
             }
             else -> {

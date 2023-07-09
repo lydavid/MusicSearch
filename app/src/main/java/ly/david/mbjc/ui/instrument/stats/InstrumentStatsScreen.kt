@@ -24,7 +24,7 @@ internal fun InstrumentStatsScreen(
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
 
     LaunchedEffect(Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(instrumentId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(instrumentId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(instrumentId)
     }
 

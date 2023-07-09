@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.RecordingListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 import ly.david.mbjc.ui.work.stats.WorkGroupStatsScreen
@@ -51,11 +51,11 @@ internal fun WorkScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     viewModel: WorkScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.WORK
+    val resource = MusicBrainzEntity.WORK
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -88,12 +88,12 @@ internal fun WorkScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = resource, resourceId = workId)
+                    OpenInBrowserMenuItem(entity = resource, entityId = workId)
                     CopyToClipboardMenuItem(workId)
                     AddToCollectionMenuItem {
                         onAddToCollectionMenuClick(resource, workId)

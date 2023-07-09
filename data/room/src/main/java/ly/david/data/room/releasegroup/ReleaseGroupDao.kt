@@ -19,7 +19,7 @@ abstract class ReleaseGroupDao : BaseDao<ReleaseGroupRoomModel>(), ArtistCreditD
 
     @Transaction
     open suspend fun insertReleaseGroupWithArtistCredits(releaseGroup: ReleaseGroupMusicBrainzModel) {
-        insertArtistCredits(artistCredits = releaseGroup.artistCredits, resourceId = releaseGroup.id)
+        insertArtistCredits(artistCredits = releaseGroup.artistCredits, entityId = releaseGroup.id)
         insert(releaseGroup.toRoomModel())
     }
 

@@ -6,7 +6,7 @@ import javax.inject.Inject
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -54,23 +54,23 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getReleasesByCollection(resourceId)
+            collectionEntityDao.getReleasesByCollection(entityId)
         }
         else -> {
             collectionEntityDao.getReleasesByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

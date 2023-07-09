@@ -27,10 +27,10 @@ import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
         )
     ]
 )
-data class ArtistCreditResource(
+data class ArtistCreditEntityLink(
     @ColumnInfo(name = "artist_credit_id")
     val artistCreditId: Long,
 
     @ColumnInfo(name = "resource_id")
-    val resourceId: String
+    val entityId: String
 )

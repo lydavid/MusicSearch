@@ -2,7 +2,7 @@ package ly.david.data.room
 
 import androidx.room.TypeConverter
 import java.util.Date
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 
 // Just need to make sure possible values cannot include this delimiter
@@ -23,11 +23,11 @@ internal class RoomTypeConverters {
         }
 
     @TypeConverter
-    fun toResource(string: String?): MusicBrainzResource? =
-        MusicBrainzResource.values().firstOrNull { it.resourceUri == string }
+    fun toEntity(string: String?): MusicBrainzEntity? =
+        MusicBrainzEntity.values().firstOrNull { it.resourceUri == string }
 
     @TypeConverter
-    fun fromResource(resource: MusicBrainzResource?): String? = resource?.resourceUri
+    fun fromEntity(entity: MusicBrainzEntity?): String? = entity?.resourceUri
 
     @TypeConverter
     fun toDate(dateLong: Long): Date = Date(dateLong)

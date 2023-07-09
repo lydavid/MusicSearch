@@ -32,8 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.collectableResources
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.network.collectableEntities
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
@@ -43,11 +43,11 @@ import ly.david.ui.core.theme.TextStyles
 @Composable
 fun CreateCollectionDialog(
     onDismiss: () -> Unit = {},
-    onSubmit: (name: String, entity: MusicBrainzResource) -> Unit = { _, _ -> }
+    onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> }
 ) {
 
     var name by rememberSaveable { mutableStateOf("") }
-    var selectedEntity by rememberSaveable { mutableStateOf(MusicBrainzResource.RELEASE) }
+    var selectedEntity by rememberSaveable { mutableStateOf(MusicBrainzEntity.RELEASE) }
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
@@ -111,7 +111,7 @@ fun CreateCollectionDialog(
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .focusable(),
-                    options = collectableResources,
+                    options = collectableEntities,
                     selectedOption = selectedEntity,
                     onSelectOption = {
                         selectedEntity = it

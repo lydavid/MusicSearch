@@ -35,7 +35,7 @@ internal fun ArtistStatsScreen(
         releaseGroupTypeCounts = viewModel.getCountOfEachAlbumType(artistId)
         totalRemoteReleases = viewModel.getTotalRemoteReleases(artistId)
         totalLocalReleases = viewModel.getTotalLocalReleases(artistId)
-        totalRelations = viewModel.getNumberOfRelationsByResource(artistId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(artistId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(artistId)
     }
 

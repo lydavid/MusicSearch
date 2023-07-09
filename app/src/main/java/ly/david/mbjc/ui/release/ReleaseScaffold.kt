@@ -30,11 +30,11 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
-import ly.david.ui.common.ResourceIcon
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -54,11 +54,11 @@ internal fun ReleaseScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     viewModel: ReleaseScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.RELEASE
+    val resource = MusicBrainzEntity.RELEASE
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -92,14 +92,14 @@ internal fun ReleaseScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 subtitle = subtitle,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = MusicBrainzResource.RELEASE, resourceId = releaseId)
-                    CopyToClipboardMenuItem(resourceId = releaseId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.RELEASE, entityId = releaseId)
+                    CopyToClipboardMenuItem(entityId = releaseId)
                     AddToCollectionMenuItem {
                         onAddToCollectionMenuClick(resource, releaseId)
                     }
@@ -107,18 +107,18 @@ internal fun ReleaseScaffold(
                 subtitleDropdownMenuItems = {
                     release?.artistCredits?.forEach { artistCredit ->
                         DropdownMenuItem(text = { Text(artistCredit.name) },
-                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.ARTIST) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(MusicBrainzResource.ARTIST, artistCredit.artistId, null)
+                                onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
                             })
                     }
                     release?.releaseGroup?.let { releaseGroup ->
                         DropdownMenuItem(text = { Text(text = releaseGroup.name) },
-                            leadingIcon = { ResourceIcon(resource = MusicBrainzResource.RELEASE_GROUP) },
+                            leadingIcon = { EntityIcon(entity = MusicBrainzEntity.RELEASE_GROUP) },
                             onClick = {
                                 closeMenu()
-                                onItemClick(MusicBrainzResource.RELEASE_GROUP, releaseGroup.id, null)
+                                onItemClick(MusicBrainzEntity.RELEASE_GROUP, releaseGroup.id, null)
                             })
                     }
                 },
@@ -176,10 +176,10 @@ internal fun ReleaseScaffold(
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             coverArtUrl = url,
                             onLabelClick = {
-                                onItemClick(MusicBrainzResource.LABEL, id, name)
+                                onItemClick(MusicBrainzEntity.LABEL, id, name)
                             },
                             onAreaClick = {
-                                onItemClick(MusicBrainzResource.AREA, id, name)
+                                onItemClick(MusicBrainzEntity.AREA, id, name)
                             },
                             lazyListState = detailsLazyListState,
                         )
@@ -196,7 +196,7 @@ internal fun ReleaseScaffold(
                         lazyListState = tracksLazyListState,
                         lazyPagingItems = tracksLazyPagingItems,
                         onRecordingClick = { id, title ->
-                            onItemClick(MusicBrainzResource.RECORDING, id, title)
+                            onItemClick(MusicBrainzEntity.RECORDING, id, title)
                         }
                     )
                 }

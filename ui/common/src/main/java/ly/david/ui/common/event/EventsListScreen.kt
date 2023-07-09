@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -18,7 +18,7 @@ fun EventsListScreen(
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<EventListItemModel>,
     modifier: Modifier = Modifier,
-    onEventClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onEventClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -32,7 +32,7 @@ fun EventsListScreen(
                     event = eventListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onEventClick(MusicBrainzResource.EVENT, id, getNameWithDisambiguation())
+                    onEventClick(MusicBrainzEntity.EVENT, id, getNameWithDisambiguation())
                 }
             }
             else -> {

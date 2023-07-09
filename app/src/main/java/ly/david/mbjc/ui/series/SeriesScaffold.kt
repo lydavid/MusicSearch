@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
 import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
@@ -50,11 +50,11 @@ internal fun SeriesScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     viewModel: SeriesScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.SERIES
+    val resource = MusicBrainzEntity.SERIES
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -87,7 +87,7 @@ internal fun SeriesScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,

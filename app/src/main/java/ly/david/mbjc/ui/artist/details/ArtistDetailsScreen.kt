@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
@@ -30,7 +30,7 @@ internal fun ArtistDetailsScreen(
     filterText: String = "",
     artistImageUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,

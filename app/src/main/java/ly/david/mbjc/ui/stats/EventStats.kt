@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.stats
 
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationDao
 
 /**
@@ -9,8 +9,8 @@ import ly.david.data.room.relation.RelationDao
 interface EventStats {
     val relationDao: RelationDao
 
-    suspend fun getTotalRemoteEvents(resourceId: String): Int? =
-        relationDao.getBrowseResourceCount(resourceId, MusicBrainzResource.EVENT)?.remoteCount
+    suspend fun getTotalRemoteEvents(entityId: String): Int? =
+        relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.EVENT)?.remoteCount
 
-    suspend fun getTotalLocalEvents(resourceId: String): Int
+    suspend fun getTotalLocalEvents(entityId: String): Int
 }

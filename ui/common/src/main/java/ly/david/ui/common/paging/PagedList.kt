@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.paging.BrowseResourceRemoteMediator
+import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.RoomModel
 
@@ -29,32 +29,32 @@ import ly.david.data.room.RoomModel
  */
 class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor() : IPagedList<LI> {
 
-    override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
     override val isRemote: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    private val paramState = combine(resourceId, query, isRemote) { resourceId, query, isRemote ->
-        IPagedList.ViewModelState(resourceId, query, isRemote)
+    private val paramState = combine(entityId, query, isRemote) { entityId, query, isRemote ->
+        IPagedList.ViewModelState(entityId, query, isRemote)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseResourceUseCase<RM, LI>
+    lateinit var useCase: BrowseEntityUseCase<RM, LI>
 
-    private fun getRemoteMediator(resourceId: String) = BrowseResourceRemoteMediator<RM>(
-        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
-        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
-        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
-        browseResource = { offset -> useCase.browseLinkedResourcesAndStore(resourceId, offset) }
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<RM>(
+        getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
+        getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
+        deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
+        browseEntity = { offset -> useCase.browseLinkedEntitiesAndStore(entityId, offset) }
     )
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedResources: Flow<PagingData<LI>> by lazy {
-        paramState.filterNot { it.resourceId.isEmpty() }
+    override val pagedEntities: Flow<PagingData<LI>> by lazy {
+        paramState.filterNot { it.entityId.isEmpty() }
             .distinctUntilChanged()
-            .flatMapLatest { (resourceId, query, isRemote) ->
+            .flatMapLatest { (entityId, query, isRemote) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = getRemoteMediator(resourceId).takeIf { isRemote },
-                    pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query) }
+                    remoteMediator = getRemoteMediator(entityId).takeIf { isRemote },
+                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query) }
                 )
                     .flow
                     .map { pagingData ->

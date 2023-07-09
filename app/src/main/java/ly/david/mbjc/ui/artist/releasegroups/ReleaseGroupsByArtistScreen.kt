@@ -10,7 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 
 @Composable
@@ -22,13 +22,13 @@ internal fun ReleaseGroupsByArtistScreen(
     snackbarHostState: SnackbarHostState,
     lazyListState: LazyListState,
     lazyPagingItems: LazyPagingItems<ListItemModel>,
-    onReleaseGroupClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onPagedReleaseGroupsChange: (Flow<PagingData<ListItemModel>>) -> Unit = {},
     viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = artistId) {
-        viewModel.loadPagedResources(artistId)
-        onPagedReleaseGroupsChange(viewModel.pagedResources)
+        viewModel.loadPagedEntities(artistId)
+        onPagedReleaseGroupsChange(viewModel.pagedEntities)
     }
 
     viewModel.updateQuery(query = filterText)

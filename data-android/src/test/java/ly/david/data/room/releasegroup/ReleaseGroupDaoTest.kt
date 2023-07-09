@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
 import ly.david.data.network.fakeReleaseGroupWithArtistCredits
 import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -40,11 +40,11 @@ internal class ReleaseGroupDaoTest : HiltTest() {
 
         var releaseGroupWithArtistCredits = releaseGroupDao.getReleaseGroup("1")
         assertThat(releaseGroupWithArtistCredits?.releaseGroup?.name, `is`("name"))
-        assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithResources, `is`(listOf()))
+        assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithEntities, `is`(listOf()))
 
         releaseGroupWithArtistCredits = releaseGroupDao.getReleaseGroup("2")
         assertThat(releaseGroupWithArtistCredits?.releaseGroup?.name, `is`("blah"))
-        assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithResources, `is`(listOf()))
+        assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithEntities, `is`(listOf()))
     }
 
     @Test
@@ -54,12 +54,12 @@ internal class ReleaseGroupDaoTest : HiltTest() {
         val releaseGroupWithArtistCredits =
             releaseGroupDao.getReleaseGroup(fakeReleaseGroupWithArtistCredits.id)
         assertThat(releaseGroupWithArtistCredits?.releaseGroup?.name, `is`(fakeReleaseGroupWithArtistCredits.name))
-        assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithResources?.size, `is`(2))
+        assertThat(releaseGroupWithArtistCredits?.artistCreditNamesWithEntities?.size, `is`(2))
         assertThat(
-            releaseGroupWithArtistCredits?.artistCreditNamesWithResources?.get(0),
+            releaseGroupWithArtistCredits?.artistCreditNamesWithEntities?.get(0),
             `is`(
-                ArtistCreditNamesWithResource(
-                    resourceId = "fakeReleaseGroup2",
+                ArtistCreditNamesWithEntity(
+                    entityId = "fakeReleaseGroup2",
                     artistCreditNameRoomModel = ArtistCreditNameRoomModel(
                         artistCreditId = 1,
                         position = 0,
@@ -71,10 +71,10 @@ internal class ReleaseGroupDaoTest : HiltTest() {
             )
         )
         assertThat(
-            releaseGroupWithArtistCredits?.artistCreditNamesWithResources?.get(1),
+            releaseGroupWithArtistCredits?.artistCreditNamesWithEntities?.get(1),
             `is`(
-                ArtistCreditNamesWithResource(
-                    resourceId = "fakeReleaseGroup2",
+                ArtistCreditNamesWithEntity(
+                    entityId = "fakeReleaseGroup2",
                     artistCreditNameRoomModel = ArtistCreditNameRoomModel(
                         artistCreditId = 1,
                         position = 1,

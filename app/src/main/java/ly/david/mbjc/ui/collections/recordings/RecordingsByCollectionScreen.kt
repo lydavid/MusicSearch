@@ -11,7 +11,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -25,20 +25,20 @@ internal fun RecordingsByCollectionScreen(
     filterText: String,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    onRecordingClick: (entity: MusicBrainzResource, String, String) -> Unit = { _, _, _ -> },
+    onRecordingClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: RecordingsByCollectionViewModel = hiltViewModel(),
 ) {
 
-    val entity = MusicBrainzResource.RECORDING
+    val entity = MusicBrainzEntity.RECORDING
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<RecordingListItemModel> =
-        rememberFlowWithLifecycleStarted(viewModel.pagedResources)
+        rememberFlowWithLifecycleStarted(viewModel.pagedEntities)
             .collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = collectionId) {
         viewModel.setRemote(isRemote)
-        viewModel.loadPagedResources(collectionId)
+        viewModel.loadPagedEntities(collectionId)
     }
 
     LaunchedEffect(key1 = filterText) {

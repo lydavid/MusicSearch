@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.data.domain.listitem.CollectionListItemModel
-import ly.david.data.network.MusicBrainzResource
-import ly.david.ui.common.ResourceIcon
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.SMALL_IMAGE_SIZE
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -46,8 +46,8 @@ fun CollectionListItem(
         leadingContent = {
             // TODO: don't need it when viewed from within an entity's page
 
-            ResourceIcon(
-                resource = collection.entity,
+            EntityIcon(
+                entity = collection.entity,
                 modifier = Modifier.size(SMALL_IMAGE_SIZE.dp)
             )
         },
@@ -81,7 +81,7 @@ private fun Preview() {
                     isRemote = true,
                     name = "My collection with a very long title",
                     description = "Some songs",
-                    entity = MusicBrainzResource.RECORDING,
+                    entity = MusicBrainzEntity.RECORDING,
                     entityCount = 9999,
                     entityIds = listOf(
                         "1b1e4b65-9b1a-48cd-8e3a-b4824f15bf0c",

@@ -29,9 +29,9 @@ class SeriesRepository @Inject constructor(
         return seriesMusicBrainzModel.toSeriesListItemModel()
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupSeries(
-            seriesId = resourceId,
+            seriesId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

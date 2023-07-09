@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.MainActivityTestWithMockServer
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -71,11 +71,11 @@ internal class NavigationTest : MainActivityTestWithMockServer(), StringReferenc
         composeTestRule.awaitIdle()
 
         val title = "H&M <>#"
-        val resourceId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
+        val entityId = "497eb1f1-8632-4b4e-b29a-88aa4c08ba62"
 
-        navController.goToResource(
-            entity = MusicBrainzResource.ARTIST,
-            id = resourceId,
+        navController.goToEntityScreen(
+            entity = MusicBrainzEntity.ARTIST,
+            id = entityId,
             title = title
         )
 

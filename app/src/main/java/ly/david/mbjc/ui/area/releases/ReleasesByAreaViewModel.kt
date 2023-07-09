@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -51,24 +51,24 @@ internal class ReleasesByAreaViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         releaseCountryDao.withTransaction {
-            releaseCountryDao.deleteReleasesByCountry(resourceId)
-            releaseCountryDao.deleteArtistReleaseLinks(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RELEASE)
+            releaseCountryDao.deleteReleasesByCountry(entityId)
+            releaseCountryDao.deleteArtistReleaseLinks(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
-            releaseCountryDao.getReleasesByCountry(resourceId)
+            releaseCountryDao.getReleasesByCountry(entityId)
         }
         else -> {
             releaseCountryDao.getReleasesByCountryFiltered(
-                areaId = resourceId,
+                areaId = entityId,
                 query = "%$query%"
             )
         }

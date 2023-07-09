@@ -10,7 +10,7 @@ import ly.david.ui.common.BuildConfig
 
 @Composable
 fun OverflowMenuScope.CopyToClipboardMenuItem(
-    resourceId: String,
+    entityId: String,
     modifier: Modifier = Modifier
 ) {
     if (!BuildConfig.DEBUG) return
@@ -20,7 +20,7 @@ fun OverflowMenuScope.CopyToClipboardMenuItem(
     DropdownMenuItem(
         text = { Text("Copy to clipboard") },
         onClick = {
-            clipboardManager.setText(AnnotatedString(resourceId))
+            clipboardManager.setText(AnnotatedString(entityId))
             closeMenu()
         },
         modifier = modifier

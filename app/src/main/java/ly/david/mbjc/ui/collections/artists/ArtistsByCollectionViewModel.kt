@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.ArtistListItemModel
 import ly.david.data.domain.listitem.toArtistListItemModel
 import ly.david.data.network.ArtistMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseArtistsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.artist.ArtistDao
@@ -29,7 +29,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
     pagedList: PagedList<ArtistRoomModel, ArtistListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<ArtistRoomModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
-    byEntity = MusicBrainzResource.ARTIST,
+    byEntity = MusicBrainzEntity.ARTIST,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,24 +54,24 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.ARTIST)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.ARTIST)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, ArtistRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getArtistsByCollection(resourceId)
+            collectionEntityDao.getArtistsByCollection(entityId)
         }
 
         else -> {
             collectionEntityDao.getArtistsByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

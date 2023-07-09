@@ -15,8 +15,8 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzResource
-import ly.david.data.network.collectableResources
+import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.network.collectableEntities
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
@@ -25,7 +25,7 @@ import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
-import ly.david.mbjc.ui.navigation.goToResource
+import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -39,14 +39,14 @@ import org.junit.runners.Parameterized
 @HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class CollectionParameterizedTest(
-    private val entity: MusicBrainzResource
+    private val entity: MusicBrainzEntity
 ) : MainActivityTest(), StringReferences {
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
-        fun data(): Collection<MusicBrainzResource> {
-            return collectableResources
+        fun data(): Collection<MusicBrainzEntity> {
+            return collectableEntities
         }
     }
 
@@ -92,8 +92,8 @@ internal class CollectionParameterizedTest(
             .onNodeWithText(collectionName) // title
             .assertIsDisplayed()
 
-        val resourceId = entity.toFakeMusicBrainzModel().id
-        navController.goToResource(entity = entity, id = resourceId)
+        val entityId = entity.toFakeMusicBrainzModel().id
+        navController.goToEntityScreen(entity = entity, id = entityId)
 
         composeTestRule
             .onNodeWithContentDescription(moreActions)

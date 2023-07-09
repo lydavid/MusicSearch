@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
@@ -54,16 +54,16 @@ internal fun ArtistScaffold(
     artistId: String,
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onBack: () -> Unit = {},
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     viewModel: ArtistScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.ARTIST
+    val resource = MusicBrainzEntity.ARTIST
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -98,14 +98,14 @@ internal fun ArtistScaffold(
         topBar = {
             TopAppBarWithFilter(
                 onBack = onBack,
-                resource = resource,
+                entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 showFilterIcon = selectedTab !in listOf(
                     ArtistTab.STATS,
                 ),
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = MusicBrainzResource.ARTIST, resourceId = artistId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.ARTIST, entityId = artistId)
                     CopyToClipboardMenuItem(artistId)
                     if (selectedTab == ArtistTab.RELEASE_GROUPS) {
                         ToggleMenuItem(

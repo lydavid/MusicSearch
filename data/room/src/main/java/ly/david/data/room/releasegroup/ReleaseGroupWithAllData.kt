@@ -3,7 +3,7 @@ package ly.david.data.room.releasegroup
 import androidx.room.Embedded
 import androidx.room.Relation
 import ly.david.data.room.RoomModel
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 import ly.david.data.room.image.MbidImage
 
 data class ReleaseGroupWithAllData(
@@ -14,7 +14,7 @@ data class ReleaseGroupWithAllData(
         parentColumn = "id",
         entityColumn = "resource_id"
     )
-    val artistCreditNamesWithResources: List<ArtistCreditNamesWithResource>,
+    val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>,
 
     @Relation(
         entity = MbidImage::class,

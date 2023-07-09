@@ -14,6 +14,6 @@ internal class WorkStatsViewModel @Inject constructor(
     private val recordingWorkDao: RecordingWorkDao
 ) : ViewModel(), RelationsStats, RecordingStats {
 
-    override suspend fun getTotalLocalRecordings(resourceId: String) =
-        recordingWorkDao.getNumberOfRecordingsByWork(resourceId)
+    override suspend fun getTotalLocalRecordings(entityId: String) =
+        recordingWorkDao.getNumberOfRecordingsByWork(entityId)
 }

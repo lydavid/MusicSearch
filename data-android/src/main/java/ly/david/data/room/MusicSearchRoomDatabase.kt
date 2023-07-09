@@ -12,8 +12,8 @@ import ly.david.data.room.artist.ArtistRoomModel
 import ly.david.data.room.artist.UrlRelation
 import ly.david.data.room.artist.credit.ArtistCredit
 import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithResource
-import ly.david.data.room.artist.credit.ArtistCreditResource
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
+import ly.david.data.room.artist.credit.ArtistCreditEntityLink
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releases.ArtistRelease
 import ly.david.data.room.collection.CollectionEntityRoomModel
@@ -29,7 +29,7 @@ import ly.david.data.room.place.PlaceRoomModel
 import ly.david.data.room.place.events.EventPlace
 import ly.david.data.room.recording.RecordingRoomModel
 import ly.david.data.room.recording.releases.RecordingRelease
-import ly.david.data.room.relation.BrowseResourceCount
+import ly.david.data.room.relation.BrowseEntityCount
 import ly.david.data.room.relation.HasRelations
 import ly.david.data.room.relation.HasUrls
 import ly.david.data.room.relation.RelationRoomModel
@@ -60,7 +60,7 @@ const val DATABASE_VERSION = 11
         SeriesRoomModel::class,
 
         // Other tables
-        ArtistCredit::class, ArtistCreditNameRoomModel::class, ArtistCreditResource::class,
+        ArtistCredit::class, ArtistCreditNameRoomModel::class, ArtistCreditEntityLink::class,
         MediumRoomModel::class, TrackRoomModel::class,
         CountryCode::class,
         WorkAttributeRoomModel::class,
@@ -69,7 +69,7 @@ const val DATABASE_VERSION = 11
         RelationRoomModel::class,
         HasRelations::class,
         HasUrls::class,
-        BrowseResourceCount::class,
+        BrowseEntityCount::class,
 
         AreaPlace::class,
         ArtistRelease::class,
@@ -92,7 +92,7 @@ const val DATABASE_VERSION = 11
     ],
     views = [
         LabelWithCatalog::class,
-        ArtistCreditNamesWithResource::class,
+        ArtistCreditNamesWithEntity::class,
         AreaWithReleaseDate::class,
         ReleaseFormatTrackCount::class,
         UrlRelation::class

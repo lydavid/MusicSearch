@@ -17,13 +17,13 @@ internal class ArtistStatsViewModel @Inject constructor(
     override val relationDao: RelationDao
 ) : ViewModel(), ReleaseGroupsStats, ReleasesStats, RelationsStats {
 
-    override suspend fun getTotalLocalReleaseGroups(resourceId: String) =
-        artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(resourceId)
+    override suspend fun getTotalLocalReleaseGroups(entityId: String) =
+        artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId)
 
-    override suspend fun getCountOfEachAlbumType(resourceId: String) =
-        artistReleaseGroupDao.getCountOfEachAlbumType(resourceId)
+    override suspend fun getCountOfEachAlbumType(entityId: String) =
+        artistReleaseGroupDao.getCountOfEachAlbumType(entityId)
 
-    override suspend fun getTotalLocalReleases(resourceId: String): Int {
-        return artistReleaseDao.getNumberOfReleasesByArtist(resourceId)
+    override suspend fun getTotalLocalReleases(entityId: String): Int {
+        return artistReleaseDao.getNumberOfReleasesByArtist(entityId)
     }
 }

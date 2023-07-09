@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseAreasResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.area.AreaDao
@@ -29,7 +29,7 @@ internal class AreasByCollectionViewModel @Inject constructor(
     pagedList: PagedList<AreaRoomModel, AreaListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<AreaRoomModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
-    byEntity = MusicBrainzResource.AREA,
+    byEntity = MusicBrainzEntity.AREA,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -54,24 +54,24 @@ internal class AreasByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.AREA)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, AreaRoomModel> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getAreasByCollection(resourceId)
+            collectionEntityDao.getAreasByCollection(entityId)
         }
 
         else -> {
             collectionEntityDao.getAreasByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

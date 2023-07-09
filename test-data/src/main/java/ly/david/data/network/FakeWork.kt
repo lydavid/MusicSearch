@@ -18,7 +18,7 @@ val arrangements = RelationMusicBrainzModel(
     type = "doesn't matter",
     typeId = "51975ed8-bbfa-486b-9f28-5947f4370299",
     direction = Direction.FORWARD,
-    targetType = MusicBrainzResource.WORK,
+    targetType = MusicBrainzEntity.WORK,
     work = fakeWork2
 )
 

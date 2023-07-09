@@ -26,7 +26,7 @@ internal fun LabelStatsScreen(
     var totalLocalReleases by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(labelId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(labelId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(labelId)
         totalRemoteReleases = viewModel.getTotalRemoteReleases(labelId)
         totalLocalReleases = viewModel.getTotalLocalReleases(labelId)

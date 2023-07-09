@@ -51,7 +51,7 @@ class ReleaseRepository @Inject constructor(
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
 
         if (releaseWithAllData != null &&
-            releaseWithAllData.artistCreditNamesWithResources.isNotEmpty() &&
+            releaseWithAllData.artistCreditNamesWithEntities.isNotEmpty() &&
             releaseWithAllData.formatTrackCounts.isNotEmpty()
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
@@ -108,9 +108,9 @@ class ReleaseRepository @Inject constructor(
         }
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupRelease(
-            releaseId = resourceId,
+            releaseId = entityId,
             include = LookupApi.INC_ALL_RELATIONS
         ).relations
     }

@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -26,7 +26,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
     private val recordingDao: RecordingDao,
     pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
-    byEntity = MusicBrainzResource.RECORDING,
+    byEntity = MusicBrainzEntity.RECORDING,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -53,21 +53,21 @@ internal class RecordingsByWorkViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        recordingWorkDao.deleteRecordingsByWork(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RECORDING)
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
+        recordingWorkDao.deleteRecordingsByWork(entityId)
+        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
-            recordingWorkDao.getRecordingsByWork(resourceId)
+            recordingWorkDao.getRecordingsByWork(entityId)
         }
         else -> {
             recordingWorkDao.getRecordingsByWorkFiltered(
-                workId = resourceId,
+                workId = entityId,
                 query = "%$query%"
             )
         }

@@ -14,7 +14,7 @@ val underPressureRecording = RecordingMusicBrainzModel(
             type = "producer",
             typeId = "5c0ceac3-feb4-41f0-868d-dc06f6e27fc0",
             direction = Direction.BACKWARD,
-            targetType = MusicBrainzResource.ARTIST,
+            targetType = MusicBrainzEntity.ARTIST,
             artist = davidBowie
         )
     )

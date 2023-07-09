@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
@@ -58,13 +58,13 @@ internal fun AreaScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: AreaScaffoldViewModel = hiltViewModel(),
 ) {
-    val resource = MusicBrainzResource.AREA
+    val resource = MusicBrainzEntity.AREA
     val snackbarHostState = remember { SnackbarHostState() }
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -99,11 +99,11 @@ internal fun AreaScaffold(
         topBar = {
             TopAppBarWithFilter(
                 onBack = onBack,
-                resource = resource,
+                entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = MusicBrainzResource.AREA, resourceId = areaId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.AREA, entityId = areaId)
                     CopyToClipboardMenuItem(areaId)
                     if (selectedTab == AreaTab.RELEASES) {
                         ToggleMenuItem(

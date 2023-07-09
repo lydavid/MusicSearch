@@ -5,8 +5,6 @@ import androidx.room.Entity
 
 /**
  * This is a junction table linking artists and release_groups.
- *
- * For artist credits, see [ArtistCreditResource].
  */
 @Entity(
     tableName = "artist_release_group",

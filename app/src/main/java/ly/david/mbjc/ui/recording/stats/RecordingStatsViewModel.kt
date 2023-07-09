@@ -14,6 +14,6 @@ internal class RecordingStatsViewModel @Inject constructor(
     private val recordingReleaseDao: RecordingReleaseDao
 ) : ViewModel(), RelationsStats, ReleasesStats {
 
-    override suspend fun getTotalLocalReleases(resourceId: String) =
-        recordingReleaseDao.getNumberOfReleasesByRecording(resourceId)
+    override suspend fun getTotalLocalReleases(entityId: String) =
+        recordingReleaseDao.getNumberOfReleasesByRecording(entityId)
 }

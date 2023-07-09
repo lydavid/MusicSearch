@@ -37,7 +37,7 @@ class ArtistRepository @Inject constructor(
             val relations = mutableListOf<RelationRoomModel>()
             artistMusicBrainzModel.relations?.forEachIndexed { index, relationMusicBrainzModel ->
                 relationMusicBrainzModel.toRelationRoomModel(
-                    resourceId = artistId,
+                    entityId = artistId,
                     order = index
                 )?.let { relationRoomModel ->
                     relations.add(relationRoomModel)
@@ -46,7 +46,7 @@ class ArtistRepository @Inject constructor(
             relationDao.insertAll(relations)
             relationDao.markEntityHasUrls(
                 hasUrls = HasUrls(
-                    resourceId = artistId,
+                    entityId = artistId,
                     hasUrls = true
                 )
             )
@@ -55,9 +55,9 @@ class ArtistRepository @Inject constructor(
         return lookupArtist(artistId)
     }
 
-    override suspend fun lookupRelationsFromNetwork(resourceId: String): List<RelationMusicBrainzModel>? {
+    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupArtist(
-            artistId = resourceId,
+            artistId = entityId,
             include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS
         ).relations
     }

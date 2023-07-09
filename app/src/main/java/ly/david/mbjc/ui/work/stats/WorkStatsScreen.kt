@@ -27,7 +27,7 @@ internal fun WorkGroupStatsScreen(
     var totalLocalRecordings by rememberSaveable { mutableStateOf(0) }
 
     LaunchedEffect(key1 = totalRemoteRecordings, key2 = totalLocalRecordings) {
-        totalRelations = viewModel.getNumberOfRelationsByResource(workId)
+        totalRelations = viewModel.getNumberOfRelationsByEntity(workId)
         relationTypeCounts = viewModel.getCountOfEachRelationshipType(workId)
         totalRemoteRecordings = viewModel.getTotalRemoteRecordings(workId)
         totalLocalRecordings = viewModel.getTotalLocalRecordings(workId)

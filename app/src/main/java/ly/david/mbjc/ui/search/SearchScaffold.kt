@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
@@ -17,9 +17,9 @@ import ly.david.ui.common.topappbar.ScrollableTopAppBar
 @Composable
 internal fun SearchScaffold(
     modifier: Modifier = Modifier,
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,
-    initialEntity: MusicBrainzResource? = null,
+    initialEntity: MusicBrainzEntity? = null,
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }

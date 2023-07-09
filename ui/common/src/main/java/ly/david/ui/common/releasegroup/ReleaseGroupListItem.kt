@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.getIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -80,7 +80,7 @@ fun ReleaseGroupListItem(
             ThumbnailImage(
                 url = releaseGroup.imageUrl.orEmpty(),
                 mbid = releaseGroup.id,
-                placeholderIcon = MusicBrainzResource.RELEASE_GROUP.getIcon()
+                placeholderIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon()
             )
         }
     )

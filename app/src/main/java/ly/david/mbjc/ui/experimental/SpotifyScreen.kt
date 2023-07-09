@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.core.theme.TextStyles.getCardBodyTextStyle
 
 object BroadcastTypes {
@@ -105,7 +105,7 @@ fun SpotifyBroadcastReceiver(
 
 @Composable
 internal fun SpotifyScreen(
-    searchMusicBrainz: (query: String, id: MusicBrainzResource) -> Unit = { _, _ -> },
+    searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
 
     var metadata: SpotifyMetadata by remember { mutableStateOf(SpotifyMetadata()) }
@@ -127,7 +127,7 @@ internal fun SpotifyScreen(
             metadata.artistName.ifNotNullOrEmpty { artistName ->
                 Text(
                     modifier = Modifier.clickable {
-                        searchMusicBrainz(artistName, MusicBrainzResource.ARTIST)
+                        searchMusicBrainz(artistName, MusicBrainzEntity.ARTIST)
                     },
                     text = artistName,
                     style = getCardBodyTextStyle()
@@ -136,7 +136,7 @@ internal fun SpotifyScreen(
                 metadata.albumName.ifNotNullOrEmpty { albumName ->
                     Text(
                         modifier = Modifier.clickable {
-                            searchMusicBrainz("$albumName AND artist:$artistName", MusicBrainzResource.RELEASE_GROUP)
+                            searchMusicBrainz("$albumName AND artist:$artistName", MusicBrainzEntity.RELEASE_GROUP)
                         },
                         text = albumName,
                         style = getCardBodyTextStyle()
@@ -146,7 +146,7 @@ internal fun SpotifyScreen(
                 metadata.trackName.ifNotNullOrEmpty { trackName ->
                     Text(
                         modifier = Modifier.clickable {
-                            searchMusicBrainz("$trackName AND artist:$artistName", MusicBrainzResource.RECORDING)
+                            searchMusicBrainz("$trackName AND artist:$artistName", MusicBrainzEntity.RECORDING)
                         },
                         text = trackName,
                         style = getCardBodyTextStyle()

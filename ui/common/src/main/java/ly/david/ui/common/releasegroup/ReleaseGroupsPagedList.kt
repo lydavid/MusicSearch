@@ -20,11 +20,11 @@ import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.toReleaseGroupListItemModel
-import ly.david.data.getDisplayTypes
-import ly.david.data.domain.paging.BrowseResourceRemoteMediator
+import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
+import ly.david.data.getDisplayTypes
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
-import ly.david.ui.common.paging.BrowseSortableResourceUseCase
+import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList
 
 /**
@@ -36,34 +36,34 @@ import ly.david.ui.common.paging.SortablePagedList
  */
 class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<ListItemModel> {
 
-    override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
     override val isRemote: MutableStateFlow<Boolean> = MutableStateFlow(true)
     override val sorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val paramState = combine(resourceId, query, isRemote, sorted) { resourceId, query, isRemote, sorted ->
-        SortablePagedList.ViewModelState(resourceId, query, isRemote, sorted)
+    private val paramState = combine(entityId, query, isRemote, sorted) { entityId, query, isRemote, sorted ->
+        SortablePagedList.ViewModelState(entityId, query, isRemote, sorted)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseSortableResourceUseCase<ReleaseGroupForListItem>
+    lateinit var useCase: BrowseSortableEntityUseCase<ReleaseGroupForListItem>
 
-    private fun getRemoteMediator(resourceId: String) = BrowseResourceRemoteMediator<ReleaseGroupForListItem>(
-        getRemoteResourceCount = { useCase.getRemoteLinkedResourcesCountByResource(resourceId) },
-        getLocalResourceCount = { useCase.getLocalLinkedResourcesCountByResource(resourceId) },
-        deleteLocalResource = { useCase.deleteLinkedResourcesByResource(resourceId) },
-        browseResource = { offset ->
-            useCase.browseLinkedResourcesAndStore(resourceId, offset)
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<ReleaseGroupForListItem>(
+        getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
+        getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
+        deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
+        browseEntity = { offset ->
+            useCase.browseLinkedEntitiesAndStore(entityId, offset)
         }
     )
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
-    override val pagedResources: Flow<PagingData<ListItemModel>> by lazy {
-        paramState.filterNot { it.resourceId.isEmpty() }
-            .flatMapLatest { (resourceId, query, isRemote, sorted) ->
+    override val pagedEntities: Flow<PagingData<ListItemModel>> by lazy {
+        paramState.filterNot { it.entityId.isEmpty() }
+            .flatMapLatest { (entityId, query, isRemote, sorted) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = getRemoteMediator(resourceId).takeIf { isRemote },
-                    pagingSourceFactory = { useCase.getLinkedResourcesPagingSource(resourceId, query, sorted) }
+                    remoteMediator = getRemoteMediator(entityId).takeIf { isRemote },
+                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query, sorted) }
                 ).flow.map { pagingData ->
                     pagingData.map {
                         it.toReleaseGroupListItemModel()

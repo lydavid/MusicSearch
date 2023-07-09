@@ -6,7 +6,7 @@ import javax.inject.Inject
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.network.EventMusicBrainzModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseEventsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.event.EventDao
@@ -26,7 +26,7 @@ internal class EventsByPlaceViewModel @Inject constructor(
     private val relationDao: RelationDao,
     pagedList: PagedList<EventRoomModel, EventListItemModel>,
 ) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
-    byEntity = MusicBrainzResource.EVENT,
+    byEntity = MusicBrainzEntity.EVENT,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -50,21 +50,21 @@ internal class EventsByPlaceViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
-        eventPlaceDao.deleteEventsByPlace(resourceId)
-        relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.EVENT)
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
+        eventPlaceDao.deleteEventsByPlace(entityId)
+        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, EventRoomModel> = when {
         query.isEmpty() -> {
-            eventPlaceDao.getEventsByPlace(resourceId)
+            eventPlaceDao.getEventsByPlace(entityId)
         }
         else -> {
             eventPlaceDao.getEventsByPlaceFiltered(
-                placeId = resourceId,
+                placeId = entityId,
                 query = "%$query%"
             )
         }

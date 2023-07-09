@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
@@ -53,13 +53,13 @@ internal fun LabelScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    onItemClick: (entity: MusicBrainzResource, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onAddToCollectionMenuClick: (entity: MusicBrainzResource, id: String) -> Unit = { _, _ -> },
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     viewModel: LabelScaffoldViewModel = hiltViewModel()
 ) {
-    val resource = MusicBrainzResource.LABEL
+    val resource = MusicBrainzEntity.LABEL
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -92,12 +92,12 @@ internal fun LabelScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                resource = resource,
+                entity = resource,
                 title = title,
                 scrollBehavior = scrollBehavior,
                 onBack = onBack,
                 overflowDropdownMenuItems = {
-                    OpenInBrowserMenuItem(resource = MusicBrainzResource.LABEL, resourceId = labelId)
+                    OpenInBrowserMenuItem(entity = MusicBrainzEntity.LABEL, entityId = labelId)
                     CopyToClipboardMenuItem(labelId)
                     if (selectedTab == LabelTab.RELEASES) {
                         ToggleMenuItem(

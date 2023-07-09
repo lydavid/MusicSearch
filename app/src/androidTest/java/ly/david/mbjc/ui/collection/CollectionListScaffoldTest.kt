@@ -17,7 +17,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
@@ -94,9 +94,9 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .performClick()
         composeTestRule
             .onNodeWithTag("ExposedDropdownMenu")
-            .performScrollToNode(hasTestTag(MusicBrainzResource.WORK.resourceUri))
+            .performScrollToNode(hasTestTag(MusicBrainzEntity.WORK.resourceUri))
         composeTestRule
-            .onNodeWithTag(MusicBrainzResource.WORK.resourceUri)
+            .onNodeWithTag(MusicBrainzEntity.WORK.resourceUri)
             .performClick()
         composeTestRule
             .onNodeWithText(ok)
@@ -120,7 +120,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             CollectionRoomModel(
                 id = "1",
                 name = name1,
-                entity = MusicBrainzResource.AREA,
+                entity = MusicBrainzEntity.AREA,
                 isRemote = false
             )
         )
@@ -130,7 +130,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             CollectionRoomModel(
                 id = "2",
                 name = name2,
-                entity = MusicBrainzResource.RECORDING,
+                entity = MusicBrainzEntity.RECORDING,
                 isRemote = false
             )
         )

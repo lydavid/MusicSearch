@@ -7,7 +7,7 @@ import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
-import ly.david.data.network.MusicBrainzResource
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
 import ly.david.data.network.api.MusicBrainzApiService
@@ -29,7 +29,7 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
     pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
-    byEntity = MusicBrainzResource.RECORDING,
+    byEntity = MusicBrainzEntity.RECORDING,
     relationDao = relationDao,
     pagedList = pagedList
 ) {
@@ -57,23 +57,23 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
         )
     }
 
-    override suspend fun deleteLinkedResourcesByResource(resourceId: String) {
+    override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteAllFromCollection(resourceId)
-            relationDao.deleteBrowseResourceCountByResource(resourceId, MusicBrainzResource.RECORDING)
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
         }
     }
 
-    override fun getLinkedResourcesPagingSource(
-        resourceId: String,
+    override fun getLinkedEntitiesPagingSource(
+        entityId: String,
         query: String
     ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
-            collectionEntityDao.getRecordingsByCollection(resourceId)
+            collectionEntityDao.getRecordingsByCollection(entityId)
         }
         else -> {
             collectionEntityDao.getRecordingsByCollectionFiltered(
-                collectionId = resourceId,
+                collectionId = entityId,
                 query = "%$query%"
             )
         }

@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.paging.LookupResourceRemoteMediator
+import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.relation.HasRelations
 import ly.david.data.room.relation.RelationDao
@@ -31,16 +31,16 @@ import ly.david.data.room.relation.toRelationRoomModel
  */
 interface IRelationsList {
 
-    val resourceId: MutableStateFlow<String>
+    val entityId: MutableStateFlow<String>
     val query: MutableStateFlow<String>
 
     val pagedRelations: Flow<PagingData<RelationListItemModel>>
 
     /**
-     * Sets [resourceId] which will cause [pagedRelations] to get all relationships for this [resourceId].
+     * Sets [entityId] which will cause [pagedRelations] to get all relationships for this [entityId].
      */
-    fun loadRelations(resourceId: String) {
-        this.resourceId.value = resourceId
+    fun loadRelations(entityId: String) {
+        this.entityId.value = entityId
     }
 
     fun updateQuery(query: String) {
@@ -64,14 +64,14 @@ class RelationsList @Inject constructor(
 ) : IRelationsList {
 
     data class State(
-        val resourceId: String = "",
+        val entityId: String = "",
         val query: String = "",
     )
 
-    override val resourceId: MutableStateFlow<String> = MutableStateFlow("")
+    override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
-    private val paramState = combine(resourceId, query) { resourceId, query ->
-        State(resourceId, query)
+    private val paramState = combine(entityId, query) { entityId, query ->
+        State(entityId, query)
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
@@ -79,21 +79,21 @@ class RelationsList @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     override val pagedRelations: Flow<PagingData<RelationListItemModel>> by lazy {
-        paramState.filterNot { it.resourceId.isEmpty() }
-            .flatMapLatest { (resourceId, query) ->
+        paramState.filterNot { it.entityId.isEmpty() }
+            .flatMapLatest { (entityId, query) ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = LookupResourceRemoteMediator(
-                        hasResourceBeenStored = { hasRelationsBeenStored() },
-                        lookupResource = { forceRefresh ->
-                            lookupRelationsAndStore(resourceId, forceRefresh = forceRefresh)
+                    remoteMediator = LookupEntityRemoteMediator(
+                        hasEntityBeenStored = { hasRelationsBeenStored() },
+                        lookupEntity = { forceRefresh ->
+                            lookupRelationsAndStore(entityId, forceRefresh = forceRefresh)
                         },
-                        deleteLocalResource = {
-                            deleteLocalRelations(resourceId)
+                        deleteLocalEntity = {
+                            deleteLocalRelations(entityId)
                         }
                     ),
                     pagingSourceFactory = {
-                        relationDao.getEntityRelationships(resourceId, "%$query%")
+                        relationDao.getEntityRelationships(entityId, "%$query%")
                     }
                 ).flow.map { pagingData ->
                     pagingData.map { relation ->
@@ -111,7 +111,7 @@ class RelationsList @Inject constructor(
      * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
      */
     override suspend fun hasRelationsBeenStored(): Boolean =
-        relationDao.hasRelations(resourceId.value)?.hasRelations == true
+        relationDao.hasRelations(entityId.value)?.hasRelations == true
 
     /**
      * This is responsible for making a lookup request for this resource's relationships,
@@ -119,14 +119,14 @@ class RelationsList @Inject constructor(
      *
      * Unlike browse requests, this is expected to only be called once.
      */
-    private suspend fun lookupRelationsAndStore(resourceId: String, forceRefresh: Boolean) {
+    private suspend fun lookupRelationsAndStore(entityId: String, forceRefresh: Boolean) {
 
         if (!forceRefresh) return
 
         val relations = mutableListOf<RelationRoomModel>()
-        repository.lookupRelationsFromNetwork(resourceId)?.forEachIndexed { index, relationMusicBrainzModel ->
+        repository.lookupRelationsFromNetwork(entityId)?.forEachIndexed { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationRoomModel(
-                resourceId = resourceId,
+                entityId = entityId,
                 order = index
             )?.let { relationRoomModel ->
                 relations.add(relationRoomModel)
@@ -140,7 +140,7 @@ class RelationsList @Inject constructor(
     override suspend fun markEntityHasRelations() {
         relationDao.markEntityHasRelations(
             hasRelations = HasRelations(
-                resourceId = resourceId.value,
+                entityId = entityId.value,
                 hasRelations = true
             )
         )
