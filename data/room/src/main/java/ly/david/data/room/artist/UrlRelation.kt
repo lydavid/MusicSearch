@@ -8,7 +8,7 @@ import ly.david.data.room.relation.RelationRoomModel
     value = """
         SELECT *
         FROM relation r
-        WHERE r.linked_resource = "url"
+        WHERE r.linked_entity = "url"
     """,
     viewName = "url_relation"
 )

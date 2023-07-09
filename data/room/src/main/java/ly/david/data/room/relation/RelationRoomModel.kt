@@ -25,17 +25,17 @@ import ly.david.data.room.RoomModel
  */
 @Entity(
     tableName = "relation",
-    primaryKeys = ["resource_id", "linked_resource_id", "order"],
+    primaryKeys = ["entity_id", "linked_entity_id", "order"],
 )
 data class RelationRoomModel(
-    @ColumnInfo(name = "resource_id")
+    @ColumnInfo(name = "entity_id")
     val entityId: String,
 
     // TODO: can we make it nullable so that we don't pass url id?
-    @ColumnInfo(name = "linked_resource_id")
+    @ColumnInfo(name = "linked_entity_id")
     override val linkedEntityId: String,
 
-    @ColumnInfo(name = "linked_resource")
+    @ColumnInfo(name = "linked_entity")
     override val linkedEntity: MusicBrainzEntity,
 
     // TODO: an artist can appear multiple times similar to artist credits

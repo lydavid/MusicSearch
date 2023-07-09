@@ -42,4 +42,10 @@ internal object Migrations {
     @RenameTable(fromTableName = "artist_credit_resource", toTableName = "artist_credit_entity")
     @RenameTable(fromTableName = "browse_resource_count", toTableName = "browse_entity_count")
     class RenameTablesToEntity : AutoMigrationSpec
+
+    @RenameColumn(tableName = "relation", fromColumnName = "resource_id", toColumnName = "entity_id")
+    @RenameColumn(tableName = "relation", fromColumnName = "linked_resource_id", toColumnName = "linked_entity_id")
+    @RenameColumn(tableName = "relation", fromColumnName = "linked_resource", toColumnName = "linked_entity")
+    @RenameColumn(tableName = "has_relations", fromColumnName = "resource_id", toColumnName = "entity_id")
+    class RenameColumnsToEntity : AutoMigrationSpec
 }

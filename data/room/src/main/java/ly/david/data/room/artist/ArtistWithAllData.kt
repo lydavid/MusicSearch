@@ -11,7 +11,7 @@ data class ArtistWithAllData(
 
     @Relation(
         parentColumn = "id",
-        entityColumn = "resource_id"
+        entityColumn = "entity_id"
     )
     val urls: List<UrlRelation>,
 

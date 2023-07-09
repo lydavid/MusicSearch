@@ -15,7 +15,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun markEntityHasRelations(hasRelations: HasRelations): Long
 
-    @Query("SELECT * FROM has_relations WHERE resource_id = :entityId")
+    @Query("SELECT * FROM has_relations WHERE entity_id = :entityId")
     abstract suspend fun hasRelations(entityId: String): HasRelations?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -29,10 +29,10 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
             SELECT *
             FROM relation
-            WHERE resource_id = :entityId AND linked_resource != "url" AND
+            WHERE entity_id = :entityId AND linked_entity != "url" AND
             (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
             attributes LIKE :query OR additional_info LIKE :query)
-            ORDER BY linked_resource, label, `order`
+            ORDER BY linked_entity, label, `order`
         """
     )
     abstract fun getEntityRelationships(
@@ -45,10 +45,10 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
             SELECT *
             FROM relation
-            WHERE resource_id = :entityId AND linked_resource = "url" AND
+            WHERE entity_id = :entityId AND linked_entity = "url" AND
             (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
             attributes LIKE :query OR additional_info LIKE :query)
-            ORDER BY linked_resource, label, `order`
+            ORDER BY linked_entity, label, `order`
         """
     )
     abstract fun getEntityUrls(
@@ -59,7 +59,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
         DELETE FROM relation 
-        WHERE resource_id = :entityId AND linked_resource != "url"
+        WHERE entity_id = :entityId AND linked_entity != "url"
         """
     )
     abstract suspend fun deleteRelationshipsByEntity(entityId: String)
@@ -67,7 +67,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query(
         """
         DELETE FROM relation 
-        WHERE resource_id = :entityId AND linked_resource == "url"
+        WHERE entity_id = :entityId AND linked_entity == "url"
         """
     )
     abstract suspend fun deleteUrlsByEntity(entityId: String)
@@ -80,12 +80,12 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
         """
         SELECT
             CASE 
-                WHEN (SELECT has_relations FROM has_relations WHERE resource_id = :entityId) IS NULL THEN
+                WHEN (SELECT has_relations FROM has_relations WHERE entity_id = :entityId) IS NULL THEN
                     NULL
                 ELSE
                     (SELECT COUNT(*)
                     FROM relation
-                    WHERE resource_id = :entityId)
+                    WHERE entity_id = :entityId)
             END
         AS numRelations
     """
@@ -94,10 +94,10 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
 
     @Query(
         """
-        SELECT linked_resource, COUNT(resource_id) as count
+        SELECT linked_entity, COUNT(entity_id) as count
         FROM relation
-        WHERE resource_id = :entityId
-        GROUP BY linked_resource
+        WHERE entity_id = :entityId
+        GROUP BY linked_entity
     """
     )
     abstract suspend fun getCountOfEachRelationshipType(entityId: String): List<RelationTypeCount>
