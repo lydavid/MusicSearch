@@ -10,8 +10,6 @@ import ly.david.data.network.MusicBrainzEntity
  * Record of what the user has recently searched.
  * Allows the user to deeplink search with the same query.
  *
- * @param id Used just to conform to [Identifiable].
- *  Just combine the primary keys [query] and [entity].
  * @param query Search query.
  * @param entity Which entity we were searching.
  * @param lastAccessed When we searched for it.
@@ -21,8 +19,10 @@ import ly.david.data.network.MusicBrainzEntity
     primaryKeys = ["query", "entity"],
 )
 data class SearchHistoryRoomModel(
-    @ColumnInfo(name = "id") override val id: String,
     @ColumnInfo(name = "query") val query: String,
     @ColumnInfo(name = "entity") val entity: MusicBrainzEntity,
     @ColumnInfo(name = "last_accessed") val lastAccessed: Date = Date()
-) : Identifiable
+) : Identifiable {
+    override val id: String
+        get() = "${query}_$entity"
+}

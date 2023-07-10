@@ -55,4 +55,7 @@ internal object Migrations {
     @RenameColumn(tableName = "browse_entity_count", fromColumnName = "resource_id", toColumnName = "entity_id")
     @RenameColumn(tableName = "browse_entity_count", fromColumnName = "browse_resource", toColumnName = "browse_entity")
     class RenameColumnsToEntityPart2 : AutoMigrationSpec
+
+    @DeleteColumn(tableName = "search_history", columnName = "id")
+    class DeleteSearchHistoryId : AutoMigrationSpec
 }

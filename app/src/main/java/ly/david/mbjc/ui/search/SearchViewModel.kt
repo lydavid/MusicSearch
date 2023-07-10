@@ -73,7 +73,6 @@ internal class SearchViewModel @Inject constructor(
             val entity = searchEntity.value
             searchHistoryDao.insertReplace(
                 SearchHistoryRoomModel(
-                    id = "${entity}_$query",
                     query = query,
                     entity = entity
                 )

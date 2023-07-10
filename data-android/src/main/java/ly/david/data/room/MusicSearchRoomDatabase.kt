@@ -46,7 +46,7 @@ import ly.david.data.room.work.WorkAttributeRoomModel
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.recordings.RecordingWork
 
-const val DATABASE_VERSION = 14
+const val DATABASE_VERSION = 15
 
 @Database(
     version = DATABASE_VERSION,
@@ -110,6 +110,7 @@ const val DATABASE_VERSION = 14
         AutoMigration(from = 11, to = 12, spec = Migrations.RenameTablesToEntity::class),
         AutoMigration(from = 12, to = 13, spec = Migrations.RenameColumnsToEntity::class),
         AutoMigration(from = 13, to = 14, spec = Migrations.RenameColumnsToEntityPart2::class),
+        AutoMigration(from = 14, to = 15, spec = Migrations.DeleteSearchHistoryId::class),
     ]
 )
 @TypeConverters(RoomTypeConverters::class)
