@@ -28,5 +28,14 @@ internal fun DevSettingsSection(
                 .fillMaxWidth(),
             text = "Spotify"
         )
+
+        Text(
+            modifier = Modifier
+                .clickable {
+                    onDestinationClick(Destination.EXPERIMENTAL_NOWPLAYING)
+                }
+                .fillMaxWidth(),
+            text = "Now Playing"
+        )
     }
 }

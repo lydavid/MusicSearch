@@ -5,16 +5,18 @@
     <application
         android:name=".MusicSearchApplication"
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MusicSearch">
+        android:theme="@style/Theme.MusicSearch"
+        tools:targetApi="tiramisu">
 
         <activity
             android:name="ly.david.mbjc.ui.MainActivity"
-            android:exported="true"
             android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
+            android:exported="true"
             android:theme="@style/Theme.MusicSearch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +55,23 @@
 
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".ui.experimental.nowplaying.NowPlayingNotificationListener"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.notification.default_filter_types"
+                android:value="ongoing|silent|alerting" />
+            <meta-data
+                android:name="android.service.notification.disabled_filter_types"
+                android:value="conversations" />
+        </service>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

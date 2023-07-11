@@ -20,6 +20,7 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.history.LookupHistoryRoomModel
+import ly.david.data.room.history.nowplaying.NowPlayingHistoryRoomModel
 import ly.david.data.room.history.search.SearchHistoryRoomModel
 import ly.david.data.room.image.MbidImage
 import ly.david.data.room.instrument.InstrumentRoomModel
@@ -46,7 +47,7 @@ import ly.david.data.room.work.WorkAttributeRoomModel
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.recordings.RecordingWork
 
-const val DATABASE_VERSION = 15
+const val DATABASE_VERSION = 16
 
 @Database(
     version = DATABASE_VERSION,
@@ -84,6 +85,7 @@ const val DATABASE_VERSION = 15
         // Additional features tables
         LookupHistoryRoomModel::class,
         SearchHistoryRoomModel::class,
+        NowPlayingHistoryRoomModel::class,
 
         CollectionRoomModel::class,
         CollectionEntityRoomModel::class,
@@ -111,6 +113,7 @@ const val DATABASE_VERSION = 15
         AutoMigration(from = 12, to = 13, spec = Migrations.RenameColumnsToEntity::class),
         AutoMigration(from = 13, to = 14, spec = Migrations.RenameColumnsToEntityPart2::class),
         AutoMigration(from = 14, to = 15, spec = Migrations.DeleteSearchHistoryId::class),
+        AutoMigration(from = 15, to = 16),
     ]
 )
 @TypeConverters(RoomTypeConverters::class)

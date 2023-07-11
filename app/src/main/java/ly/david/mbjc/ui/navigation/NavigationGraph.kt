@@ -26,6 +26,7 @@ import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
+import ly.david.mbjc.ui.experimental.nowplaying.NowPlayingHistoryScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
@@ -356,16 +357,7 @@ internal fun NavigationGraph(
         }
 
         val onSettingsClick: (Destination) -> Unit = { destination ->
-            when (destination) {
-                Destination.SETTINGS_LICENSES,
-                Destination.EXPERIMENTAL_SPOTIFY -> {
-                    navController.goTo(destination)
-                }
-
-                else -> {
-                    // Nothing.
-                }
-            }
+            navController.goTo(destination)
         }
 
         composable(
@@ -400,6 +392,12 @@ internal fun NavigationGraph(
             SpotifyScreen(
                 searchMusicBrainz = searchMusicBrainz
             )
+        }
+
+        composable(
+            Destination.EXPERIMENTAL_NOWPLAYING.route
+        ) {
+            NowPlayingHistoryScreen()
         }
     }
 }
