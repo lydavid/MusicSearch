@@ -29,7 +29,7 @@ internal fun HistoryListItem(
     lookupHistory: LookupHistoryListItemModel,
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
-    onDeleteItem: (LookupHistoryListItemModel) -> Unit = {}
+    onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
     SwipeToDeleteListItem(
         content = {
@@ -95,7 +95,7 @@ private fun Date.toDisplayDate(): String {
 @DefaultPreviews
 @Composable
 internal fun PreviewLookupHistoryReleaseGroup(
-    imageUrl: String = "https://www.example.com/image.jpg"
+    imageUrl: String = "https://www.example.com/image.jpg",
 ) {
     PreviewTheme {
         Surface {
@@ -116,7 +116,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
 @DefaultPreviews
 @Composable
 internal fun PreviewLookupHistoryRelease(
-    imageUrl: String = "https://www.example.com/image.jpg"
+    imageUrl: String = "https://www.example.com/image.jpg",
 ) {
     PreviewTheme {
         Surface {
@@ -136,7 +136,7 @@ internal fun PreviewLookupHistoryRelease(
 @DefaultPreviews
 @Composable
 internal fun PreviewLookupHistoryArtist(
-    imageUrl: String = "https://www.example.com/image.jpg"
+    imageUrl: String = "https://www.example.com/image.jpg",
 ) {
     PreviewTheme {
         Surface {

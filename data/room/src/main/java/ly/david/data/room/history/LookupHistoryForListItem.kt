@@ -14,5 +14,5 @@ data class LookupHistoryForListItem(
         entityColumn = "mbid",
         projection = ["thumbnail_url"]
     )
-    val thumbnailUrl: String? = null
+    val thumbnailUrl: String? = null,
 )

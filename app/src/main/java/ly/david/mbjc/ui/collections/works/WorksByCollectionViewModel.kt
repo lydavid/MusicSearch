@@ -3,10 +3,10 @@ package ly.david.mbjc.ui.collections.works
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.WorkListItemModel
 import ly.david.data.domain.listitem.toWorkListItemModel
+import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.api.BrowseWorksResponse
@@ -63,7 +63,7 @@ internal class WorksByCollectionViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, WorkRoomModel> = when {
         query.isEmpty() -> {
             collectionEntityDao.getWorksByCollection(entityId)

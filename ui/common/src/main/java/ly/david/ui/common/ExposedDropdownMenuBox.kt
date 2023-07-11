@@ -32,9 +32,8 @@ fun ExposedDropdownMenuBox(
     options: List<MusicBrainzEntity>,
     selectedOption: MusicBrainzEntity,
     modifier: Modifier = Modifier,
-    onSelectOption: (MusicBrainzEntity) -> Unit
+    onSelectOption: (MusicBrainzEntity) -> Unit,
 ) {
-
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     // TODO: this can't properly take up the full size allotted to it

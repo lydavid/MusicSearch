@@ -57,6 +57,6 @@ interface ReleasesByCollectionDao {
     )
     fun getReleasesByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem>
 }

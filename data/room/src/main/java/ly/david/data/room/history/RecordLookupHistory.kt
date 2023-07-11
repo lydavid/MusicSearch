@@ -9,7 +9,7 @@ interface RecordLookupHistory {
         entityId: String,
         entity: MusicBrainzEntity,
         summary: String,
-        searchHint: String = ""
+        searchHint: String = "",
     ) {
         lookupHistoryDao.incrementOrInsertLookupHistory(
             LookupHistoryRoomModel(

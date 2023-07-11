@@ -74,7 +74,7 @@ class SearchMusicBrainzPagingSource(
 
     private data class QueryResults(
         val offset: Int,
-        val data: List<MusicBrainzModel>
+        val data: List<MusicBrainzModel>,
     )
 
     private suspend fun getQueryResults(
@@ -82,7 +82,7 @@ class SearchMusicBrainzPagingSource(
         entity: MusicBrainzEntity,
         queryString: String,
         currentOffset: Int,
-        limit: Int
+        limit: Int,
     ): QueryResults {
         return when (entity) {
             MusicBrainzEntity.ARTIST -> {
@@ -220,7 +220,8 @@ class SearchMusicBrainzPagingSource(
             // TODO: The following are not searchable. Is there a better model to switch on?
             MusicBrainzEntity.COLLECTION,
             MusicBrainzEntity.GENRE,
-            MusicBrainzEntity.URL -> {
+            MusicBrainzEntity.URL,
+            -> {
                 QueryResults(
                     offset = 0,
                     data = listOf()

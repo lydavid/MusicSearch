@@ -71,6 +71,6 @@ interface InstrumentsByCollectionDao {
     )
     fun getInstrumentsByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, InstrumentRoomModel>
 }

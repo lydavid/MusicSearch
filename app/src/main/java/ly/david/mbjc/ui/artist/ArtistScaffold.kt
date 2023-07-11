@@ -61,7 +61,7 @@ internal fun ArtistScaffold(
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
-    viewModel: ArtistScaffoldViewModel = hiltViewModel()
+    viewModel: ArtistScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.ARTIST
     val scope = rememberCoroutineScope()

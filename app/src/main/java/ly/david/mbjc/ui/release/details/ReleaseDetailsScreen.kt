@@ -38,7 +38,7 @@ internal fun ReleaseDetailsScreen(
     coverArtUrl: String = "",
     onLabelClick: LabelListItemModel.() -> Unit = {},
     onAreaClick: AreaListItemModel.() -> Unit = {},
-    lazyListState: LazyListState = rememberLazyListState()
+    lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
         modifier = modifier,

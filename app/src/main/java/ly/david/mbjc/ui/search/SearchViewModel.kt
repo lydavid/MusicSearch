@@ -39,7 +39,7 @@ private const val SEARCH_DELAY_MS = 500L
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val searchHistoryDao: SearchHistoryDao
+    private val searchHistoryDao: SearchHistoryDao,
 ) : ViewModel() {
 
     private data class ViewModelState(

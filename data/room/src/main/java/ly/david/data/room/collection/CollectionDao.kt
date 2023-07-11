@@ -26,7 +26,7 @@ abstract class CollectionDao : BaseDao<CollectionRoomModel>() {
     abstract fun getAllCollections(
         showLocal: Boolean = true,
         showRemote: Boolean = true,
-        query: String
+        query: String,
     ): PagingSource<Int, CollectionWithEntities>
 
     @Transaction

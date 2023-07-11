@@ -14,7 +14,7 @@ class FakeCoverArtArchiveApiService : CoverArtArchiveApiService {
                     front = true
                 )
             ),
-            release = "blah"
+            releaseUrl = "blah"
         )
     }
 
@@ -27,7 +27,7 @@ class FakeCoverArtArchiveApiService : CoverArtArchiveApiService {
                     front = true
                 )
             ),
-            release = "blah"
+            releaseUrl = "blah"
         )
     }
 }

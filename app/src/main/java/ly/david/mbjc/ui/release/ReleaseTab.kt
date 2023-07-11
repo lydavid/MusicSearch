@@ -6,5 +6,5 @@ internal enum class ReleaseTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
     TRACKS(Tab.TRACKS),
     RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
+    STATS(Tab.STATS),
 }

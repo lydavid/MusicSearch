@@ -36,7 +36,7 @@ class ReleaseRepository @Inject constructor(
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
-    private val releaseLabelDao: ReleaseLabelDao
+    private val releaseLabelDao: ReleaseLabelDao,
 ) : RelationsListRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?

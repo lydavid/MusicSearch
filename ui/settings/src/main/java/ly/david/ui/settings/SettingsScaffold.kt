@@ -34,9 +34,8 @@ fun SettingsScaffold(
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
-    viewModel: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
-
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -86,9 +85,8 @@ fun SettingsScreen(
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
-    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {}
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
 ) {
-
     LazyColumn(modifier = modifier) {
         item {
             ProfileCard(

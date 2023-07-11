@@ -11,7 +11,6 @@ interface ReleaseGroupTypes {
  * Returns primary type concatenated with all secondary types for display.
  */
 fun ReleaseGroupTypes.getDisplayTypes(): String {
-
     var displayTypes = primaryType.orEmpty()
 
     if (displayTypes.isNotEmpty() && !secondaryTypes.isNullOrEmpty()) {

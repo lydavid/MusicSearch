@@ -101,7 +101,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseAreasResponse {
         return browseAreasResponse
     }
@@ -110,7 +110,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseArtistsResponse {
         return browseArtistsResponse
     }
@@ -119,7 +119,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         username: String,
         limit: Int,
         offset: Int,
-        include: String?
+        include: String?,
     ): BrowseCollectionsResponse {
         return browseCollectionsResponse
     }
@@ -128,7 +128,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseEventsResponse {
         return browseEventsResponse
     }
@@ -141,7 +141,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseInstrumentsResponse {
         return browseInstrumentsResponse
     }
@@ -150,7 +150,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseLabelsResponse {
         return browseLabelsResponse
     }
@@ -163,7 +163,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowsePlacesResponse {
         return browsePlacesResponse
     }
@@ -172,7 +172,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseRecordingsResponse {
         return browseRecordingsResponse
     }
@@ -184,7 +184,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByArea(
         areaId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -197,7 +197,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -206,7 +206,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         labelId: String,
         limit: Int,
         offset: Int,
-        include: String
+        include: String,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -214,7 +214,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByRecording(
         recordingId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -222,7 +222,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
     override suspend fun browseReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -231,7 +231,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         artistId: String,
         limit: Int,
         offset: Int,
-        include: String
+        include: String,
     ): BrowseReleaseGroupsResponse {
         return browseReleaseGroupsResponse
     }
@@ -241,7 +241,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         collectionId: String,
         limit: Int,
         offset: Int,
-        include: String
+        include: String,
     ): BrowseReleaseGroupsResponse {
         return browseReleaseGroupsResponse
     }
@@ -250,7 +250,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseSeriesResponse {
         return browseSeriesResponse
     }
@@ -259,7 +259,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         bearerToken: String?,
         collectionId: String,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): BrowseWorksResponse {
         return browseWorksResponse
     }
@@ -320,7 +320,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         collectionId: String,
         resourceUriPlural: String,
         mbids: String,
-        client: String
+        client: String,
     ) {
         TODO("Not yet implemented")
     }
@@ -329,7 +329,7 @@ class FakeMusicBrainzApiService : MusicBrainzApiService {
         collectionId: String,
         resourceUriPlural: String,
         mbids: String,
-        client: String
+        client: String,
     ) {
         TODO("Not yet implemented")
     }

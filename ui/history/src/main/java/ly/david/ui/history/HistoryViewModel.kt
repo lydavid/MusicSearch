@@ -22,7 +22,7 @@ import ly.david.data.room.history.LookupHistoryForListItem
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val lookupHistoryDao: LookupHistoryDao
+    private val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel() {
 
     private val query: MutableStateFlow<String> = MutableStateFlow("")

@@ -16,7 +16,7 @@ import retrofit2.HttpException
 class LookupEntityRemoteMediator<RM : RoomModel>(
     private val hasEntityBeenStored: suspend () -> Boolean,
     private val lookupEntity: suspend (forceRefresh: Boolean) -> Unit,
-    private val deleteLocalEntity: suspend () -> Unit
+    private val deleteLocalEntity: suspend () -> Unit,
 ) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -29,9 +29,8 @@ class LookupEntityRemoteMediator<RM : RoomModel>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RM>
+        state: PagingState<Int, RM>,
     ): MediatorResult {
-
         return try {
             if (!hasEntityBeenStored()) {
                 lookupEntity(true)

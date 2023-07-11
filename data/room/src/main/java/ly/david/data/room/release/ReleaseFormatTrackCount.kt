@@ -15,10 +15,10 @@ import androidx.room.DatabaseView
 data class ReleaseFormatTrackCount(
     val releaseId: String,
     val format: String?,
-    val trackCount: Int
+    val trackCount: Int,
 )
 
 data class FormatTrackCount(
     val format: String?,
-    val trackCount: Int
+    val trackCount: Int,
 )

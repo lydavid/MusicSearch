@@ -90,6 +90,6 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
     )
     abstract fun getReleasesByArtistFiltered(
         artistId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem>
 }

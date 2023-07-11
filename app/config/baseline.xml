@@ -22,7 +22,6 @@
     <ID>ComposableParamOrder:TracksInReleaseScreen.kt$TracksInReleaseScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
-    <ID>MatchingDeclarationName:Annotations.kt$ExcludeFromJacocoGeneratedReport</ID>
     <ID>MaxLineLength:ArtistsByCollectionViewModel.kt$ArtistsByCollectionViewModel$)</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
     <ID>MaxLineLength:InstrumentsByCollectionViewModel.kt$InstrumentsByCollectionViewModel$)</ID>

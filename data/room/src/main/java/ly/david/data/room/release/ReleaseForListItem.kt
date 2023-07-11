@@ -34,5 +34,5 @@ data class ReleaseForListItem(
         entityColumn = "mbid",
         projection = ["thumbnail_url"]
     )
-    val thumbnailUrl: String?
+    val thumbnailUrl: String?,
 ) : RoomModel

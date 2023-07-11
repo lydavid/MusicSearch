@@ -30,11 +30,9 @@ fun ThumbnailImage(
     placeholderIcon: ImageVector?,
     modifier: Modifier = Modifier,
 ) {
-
     val sizeModifier = modifier.size(SMALL_IMAGE_SIZE.dp)
 
     if (url.isNotEmpty()) {
-
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url.useHttps())

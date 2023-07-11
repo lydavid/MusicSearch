@@ -11,8 +11,10 @@ import ly.david.mbjc.ui.stats.RelationsStats
 @HiltViewModel
 internal class WorkStatsViewModel @Inject constructor(
     override val relationDao: RelationDao,
-    private val recordingWorkDao: RecordingWorkDao
-) : ViewModel(), RelationsStats, RecordingStats {
+    private val recordingWorkDao: RecordingWorkDao,
+) : ViewModel(),
+    RelationsStats,
+    RecordingStats {
 
     override suspend fun getTotalLocalRecordings(entityId: String) =
         recordingWorkDao.getNumberOfRecordingsByWork(entityId)

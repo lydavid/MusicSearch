@@ -12,7 +12,6 @@ class MusicBrainzAuthenticator @Inject constructor(
     private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-
         if (response.request.header(AUTHORIZATION) != null) return null
 
         return runBlocking {

@@ -6,7 +6,6 @@ interface Place : NameWithDisambiguation {
     override val disambiguation: String?
     val address: String
     val type: String?
-//    val typeId: String?
     val coordinates: Coordinates?
     val lifeSpan: LifeSpan?
 }

@@ -15,5 +15,5 @@ enum class Tab(@StringRes val titleRes: Int) {
     RELEASES(R.string.releases),
     RELEASE_GROUPS(R.string.release_groups),
     STATS(R.string.stats),
-    TRACKS(R.string.tracks)
+    TRACKS(R.string.tracks),
 }

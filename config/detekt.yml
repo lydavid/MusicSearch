@@ -11,6 +11,13 @@ complexity:
       - "Composable"
   TooManyFunctions:
     active: false
+formatting:
+  ImportOrdering:
+    active: false
+  MaximumLineLength:
+    active: false
+  TrailingCommaOnDeclarationSite:
+    active: true
 naming:
   FunctionNaming:
     ignoreAnnotated:

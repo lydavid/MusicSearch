@@ -31,7 +31,7 @@ interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
         val query: String = "",
         val isRemote: Boolean = true,
         val showLocal: Boolean,
-        val showRemote: Boolean
+        val showRemote: Boolean,
     )
 
     val showLocal: MutableStateFlow<Boolean>

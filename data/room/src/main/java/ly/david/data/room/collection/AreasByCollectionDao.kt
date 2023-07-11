@@ -77,6 +77,6 @@ interface AreasByCollectionDao {
     )
     fun getAreasByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, AreaRoomModel>
 }

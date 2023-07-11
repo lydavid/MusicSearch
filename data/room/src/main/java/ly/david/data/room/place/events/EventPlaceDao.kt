@@ -80,6 +80,6 @@ abstract class EventPlaceDao : BaseDao<EventPlace>() {
     )
     abstract fun getEventsByPlaceFiltered(
         placeId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, EventRoomModel>
 }

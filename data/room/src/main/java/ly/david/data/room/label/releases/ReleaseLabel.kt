@@ -37,7 +37,7 @@ data class ReleaseLabel(
     val labelId: String,
 
     @ColumnInfo(name = "catalog_number")
-    val catalogNumber: String = ""
+    val catalogNumber: String = "",
 )
 
 fun List<LabelInfo>.toReleaseLabels(releaseId: String, labelId: String? = null): List<ReleaseLabel> {
@@ -52,4 +52,3 @@ fun List<LabelInfo>.toReleaseLabels(releaseId: String, labelId: String? = null):
             }
         }
 }
-

@@ -37,7 +37,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     )
     abstract fun getEntityRelationships(
         entityId: String,
-        query: String = "%%"
+        query: String = "%%",
     ): PagingSource<Int, RelationRoomModel>
 
     @Transaction
@@ -53,7 +53,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     )
     abstract fun getEntityUrls(
         entityId: String,
-        query: String = "%%"
+        query: String = "%%",
     ): PagingSource<Int, RelationRoomModel>
 
     @Query(
@@ -116,7 +116,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     )
     abstract suspend fun getBrowseEntityCount(
         entityId: String,
-        browseEntity: MusicBrainzEntity
+        browseEntity: MusicBrainzEntity,
     ): BrowseEntityCount?
 
     @Query(
@@ -129,14 +129,14 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     abstract suspend fun updateLocalCountForEntity(
         entityId: String,
         browseEntity: MusicBrainzEntity,
-        localCount: Int
+        localCount: Int,
     )
 
     @Transaction
     open suspend fun incrementLocalCountForEntity(
         entityId: String,
         browseEntity: MusicBrainzEntity,
-        additionalOffset: Int
+        additionalOffset: Int,
     ) {
         val currentOffset = getBrowseEntityCount(entityId, browseEntity)?.localCount ?: 0
         updateLocalCountForEntity(entityId, browseEntity, currentOffset + additionalOffset)

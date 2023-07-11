@@ -78,6 +78,6 @@ interface ArtistsByCollectionDao {
     )
     fun getArtistsByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ArtistRoomModel>
 }

@@ -26,7 +26,7 @@ internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
 ) : ReleaseGroupsByEntityViewModel(
     relationDao = relationDao,
     releaseGroupDao = releaseGroupDao,
-    releaseGroupsPagedList = releaseGroupsPagedList
+    releaseGroupsPagedList = releaseGroupsPagedList,
 ) {
 
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
@@ -39,7 +39,7 @@ internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>
+        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     ) {
         collectionEntityDao.insertAll(
             releaseGroupMusicBrainzModels.map { releaseGroup ->

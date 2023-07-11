@@ -29,7 +29,6 @@ internal fun ArtistsByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: ArtistsByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.ARTIST
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<ArtistListItemModel> =

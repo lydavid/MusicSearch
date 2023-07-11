@@ -19,7 +19,7 @@ import ly.david.ui.core.theme.PreviewTheme
 internal fun StatsScreen(
     tabs: List<Tab>,
     stats: Stats,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->

@@ -12,10 +12,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.listitem.InstrumentListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.instrument.InstrumentListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.instrument.InstrumentListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,7 +29,6 @@ internal fun InstrumentsByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: InstrumentsByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.INSTRUMENT
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<InstrumentListItemModel> =

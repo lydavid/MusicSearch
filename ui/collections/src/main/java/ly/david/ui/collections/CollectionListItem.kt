@@ -25,7 +25,7 @@ import ly.david.ui.core.theme.TextStyles
 fun CollectionListItem(
     collection: CollectionListItemModel,
     modifier: Modifier = Modifier,
-    onClick: CollectionListItemModel.() -> Unit = {}
+    onClick: CollectionListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {

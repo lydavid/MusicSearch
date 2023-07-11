@@ -14,7 +14,7 @@ private const val MS_TO_S = 1000L
 
 class SpotifyAccessTokenInterceptor @Inject constructor(
     private val spotifyOAuth: SpotifyOAuth,
-    private val spotifyAuthApi: SpotifyAuthApi
+    private val spotifyAuthApi: SpotifyAuthApi,
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {

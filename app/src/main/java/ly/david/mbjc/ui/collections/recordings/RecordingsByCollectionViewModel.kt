@@ -3,10 +3,10 @@ package ly.david.mbjc.ui.collections.recordings
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
+import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
@@ -31,7 +31,7 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     relationDao = relationDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
@@ -44,7 +44,7 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        musicBrainzModels: List<RecordingMusicBrainzModel>
+        musicBrainzModels: List<RecordingMusicBrainzModel>,
     ) {
         recordingDao.insertAll(musicBrainzModels.map { it.toRoomModel() })
         collectionEntityDao.insertAll(
@@ -66,7 +66,7 @@ internal class RecordingsByCollectionViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
             collectionEntityDao.getRecordingsByCollection(entityId)

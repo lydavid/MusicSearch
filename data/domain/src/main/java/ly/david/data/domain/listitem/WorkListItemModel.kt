@@ -15,7 +15,7 @@ data class WorkListItemModel(
     override val type: String? = null,
     override val language: String? = null,
     override val iswcs: List<String>? = null,
-    val attributes: List<WorkAttributeUiModel> = listOf()
+    val attributes: List<WorkAttributeUiModel> = listOf(),
 ) : Work, ListItemModel()
 
 internal fun WorkMusicBrainzModel.toWorkListItemModel() =

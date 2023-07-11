@@ -32,5 +32,5 @@ data class ArtistCreditEntityLink(
     val artistCreditId: Long,
 
     @ColumnInfo(name = "entity_id")
-    val entityId: String
+    val entityId: String,
 )

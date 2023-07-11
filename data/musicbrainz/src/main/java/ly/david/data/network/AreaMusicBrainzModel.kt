@@ -16,5 +16,5 @@ data class AreaMusicBrainzModel(
     @Json(name = "iso-3166-1-codes") val countryCodes: List<String>? = null,
     @Json(name = "iso-3166-2-codes") val countrySubDivisionCodes: List<String>? = null,
     @Json(name = "iso-3166-3-codes") val formerCountryCodes: List<String>? = null,
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Area

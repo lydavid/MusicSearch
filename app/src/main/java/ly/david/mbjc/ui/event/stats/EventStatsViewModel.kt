@@ -9,4 +9,5 @@ import ly.david.mbjc.ui.stats.RelationsStats
 @HiltViewModel
 class EventStatsViewModel @Inject constructor(
     override val relationDao: RelationDao,
-) : ViewModel(), RelationsStats
+) : ViewModel(),
+    RelationsStats

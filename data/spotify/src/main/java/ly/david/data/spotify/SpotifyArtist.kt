@@ -1,7 +1,7 @@
 package ly.david.data.spotify
 
 data class SpotifyArtist(
-    val images: List<SpotifyImage>
+    val images: List<SpotifyImage>,
 )
 
 fun SpotifyArtist.getLargeImageUrl(): String {

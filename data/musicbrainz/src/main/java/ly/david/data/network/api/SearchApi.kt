@@ -101,65 +101,65 @@ interface SearchApi {
 data class SearchAreasResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "areas") val areas: List<AreaMusicBrainzModel>
+    @Json(name = "areas") val areas: List<AreaMusicBrainzModel>,
 )
 
 data class SearchArtistsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "artists") val artists: List<ArtistMusicBrainzModel>
+    @Json(name = "artists") val artists: List<ArtistMusicBrainzModel>,
 )
 
 data class SearchEventsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "events") val events: List<EventMusicBrainzModel>
+    @Json(name = "events") val events: List<EventMusicBrainzModel>,
 )
 
 data class SearchInstrumentsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "instruments") val instruments: List<InstrumentMusicBrainzModel>
+    @Json(name = "instruments") val instruments: List<InstrumentMusicBrainzModel>,
 )
 
 data class SearchLabelsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "labels") val labels: List<LabelMusicBrainzModel>
+    @Json(name = "labels") val labels: List<LabelMusicBrainzModel>,
 )
 
 data class SearchPlacesResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "places") val places: List<PlaceMusicBrainzModel>
+    @Json(name = "places") val places: List<PlaceMusicBrainzModel>,
 )
 
 data class SearchRecordingsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>
+    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>,
 )
 
 data class SearchReleasesResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>
+    @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>,
 )
 
 data class SearchReleaseGroupsResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>
+    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>,
 )
 
 data class SearchSeriesResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "series") val series: List<SeriesMusicBrainzModel>
+    @Json(name = "series") val series: List<SeriesMusicBrainzModel>,
 )
 
 data class SearchWorksResponse(
     @Json(name = "count") val count: Int, // Total hits
     @Json(name = "offset") val offset: Int,
-    @Json(name = "works") val works: List<WorkMusicBrainzModel>
+    @Json(name = "works") val works: List<WorkMusicBrainzModel>,
 )

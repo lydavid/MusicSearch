@@ -28,7 +28,7 @@ internal class PlacesByAreaViewModel @Inject constructor(
 ) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzEntity.PLACE,
     relationDao = relationDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowsePlacesResponse {
@@ -57,7 +57,7 @@ internal class PlacesByAreaViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, PlaceRoomModel> = when {
         query.isEmpty() -> {
             areaPlaceDao.getPlacesByArea(entityId)

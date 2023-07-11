@@ -22,5 +22,5 @@ data class ReleaseGroupWithAllData(
         entityColumn = "mbid",
         projection = ["large_url"]
     )
-    val largeUrl: String?
+    val largeUrl: String?,
 ) : RoomModel

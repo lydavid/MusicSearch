@@ -10,7 +10,7 @@ data class LookupHistoryListItemModel(
     val entity: MusicBrainzEntity,
     val numberOfVisits: Int = 1,
     val lastAccessed: Date = Date(),
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
 ) : ListItemModel()
 
 fun LookupHistoryForListItem.toLookupHistoryListItemModel() =

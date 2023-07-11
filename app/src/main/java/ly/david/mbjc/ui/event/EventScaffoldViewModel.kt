@@ -7,13 +7,13 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import ly.david.data.domain.event.EventRepository
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.domain.event.EventRepository
-import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
@@ -24,7 +24,9 @@ internal class EventScaffoldViewModel @Inject constructor(
     private val repository: EventRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -41,7 +43,7 @@ internal class EventScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         eventId: String,
-        selectedTab: EventTab
+        selectedTab: EventTab,
     ) {
         when (selectedTab) {
             EventTab.DETAILS -> {
@@ -71,6 +73,7 @@ internal class EventScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             EventTab.RELATIONSHIPS -> loadRelations(eventId)
             else -> {
                 // Not handled here.

@@ -65,7 +65,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
     abstract fun getReleaseGroupsByArtist(
         artistId: String,
         query: String = "%%",
-        sorted: Boolean = false
+        sorted: Boolean = false,
     ): PagingSource<Int, ReleaseGroupForListItem>
 
     @Query(

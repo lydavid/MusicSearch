@@ -9,16 +9,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.room.relation.RelationTypeCount
-import ly.david.ui.common.topappbar.Tab
 import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen
+import ly.david.ui.common.topappbar.Tab
 
 @Composable
 internal fun EventStatsScreen(
     modifier: Modifier = Modifier,
     eventId: String,
     tabs: List<Tab>,
-    viewModel: EventStatsViewModel = hiltViewModel()
+    viewModel: EventStatsViewModel = hiltViewModel(),
 ) {
     var totalRelations: Int? by remember { mutableStateOf(null) }
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }

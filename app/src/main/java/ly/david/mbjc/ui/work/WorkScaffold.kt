@@ -53,7 +53,7 @@ internal fun WorkScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: WorkScaffoldViewModel = hiltViewModel()
+    viewModel: WorkScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.WORK
     val scope = rememberCoroutineScope()

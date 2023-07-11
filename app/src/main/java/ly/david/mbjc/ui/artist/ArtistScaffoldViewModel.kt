@@ -28,8 +28,10 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
     override val spotifyApi: SpotifyApi,
-    override val imageUrlSaver: ImageUrlSaver
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+    override val imageUrlSaver: ImageUrlSaver,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList,
     ArtistImageManager {
 
@@ -48,7 +50,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         artistId: String,
-        selectedTab: ArtistTab
+        selectedTab: ArtistTab,
     ) {
         when (selectedTab) {
             ArtistTab.DETAILS -> {
@@ -89,7 +91,7 @@ internal class ArtistScaffoldViewModel @Inject constructor(
     }
 
     private suspend fun fetchArtistImage(
-        artist: ArtistScaffoldModel
+        artist: ArtistScaffoldModel,
     ) {
         val imageUrl = artist.imageUrl
         url.value = if (imageUrl == null) {

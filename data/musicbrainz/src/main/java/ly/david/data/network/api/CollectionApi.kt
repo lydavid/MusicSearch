@@ -16,7 +16,7 @@ interface CollectionApi {
         @Path("collectionId") collectionId: String,
         @Path("resourceUriPlural") resourceUriPlural: String,
         @Path("mbids") mbids: String,
-        @Query("client") client: String = "MusicSearch"
+        @Query("client") client: String = "MusicSearch",
     )
 
     @DELETE("collection/{collectionId}/{resourceUriPlural}/{mbids}")
@@ -24,6 +24,6 @@ interface CollectionApi {
         @Path("collectionId") collectionId: String,
         @Path("resourceUriPlural") resourceUriPlural: String,
         @Path("mbids") mbids: String,
-        @Query("client") client: String = "MusicSearch"
+        @Query("client") client: String = "MusicSearch",
     )
 }

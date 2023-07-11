@@ -13,9 +13,9 @@ import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.area.AreaListItem
+import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.listitem.SwipeToDeleteListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,7 +29,6 @@ internal fun AreasByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: AreasByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.AREA
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<AreaListItemModel> =

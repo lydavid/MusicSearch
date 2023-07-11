@@ -13,7 +13,7 @@ class CollectionListItemTest : PaparazziScreenshotTest() {
 
     @Test
     fun isRemote(
-        @TestParameter isRemote: Boolean
+        @TestParameter isRemote: Boolean,
     ) {
         snapshot {
             CollectionListItem(

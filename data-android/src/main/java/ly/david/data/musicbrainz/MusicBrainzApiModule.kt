@@ -20,18 +20,18 @@ object MusicBrainzApiModule {
     @Singleton
     @Provides
     fun provideCoverArtArchiveApi(
-        builder: Retrofit.Builder
+        builder: Retrofit.Builder,
     ): CoverArtArchiveApiService = CoverArtArchiveApiServiceImpl.create(builder)
 
     @Singleton
     @Provides
     fun provideMusicBrainzApi(
-        builder: Retrofit.Builder
+        builder: Retrofit.Builder,
     ): MusicBrainzApiService = MusicBrainzApiServiceImpl.create(builder)
 
     @Singleton
     @Provides
     fun provideMusicBrainzAuthApi(
-        builder: Retrofit.Builder
+        builder: Retrofit.Builder,
     ): MusicBrainzAuthApi = MusicBrainzAuthApiImpl.create(builder)
 }

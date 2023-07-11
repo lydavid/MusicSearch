@@ -91,6 +91,6 @@ abstract class RecordingReleaseDao : BaseDao<RecordingRelease>() {
     )
     abstract fun getReleasesByRecordingFiltered(
         recordingId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem>
 }

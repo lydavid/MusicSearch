@@ -69,7 +69,7 @@ data class ReleaseWithAllData(
         entityColumn = "mbid",
         projection = ["large_url"]
     )
-    val largeUrl: String?
+    val largeUrl: String?,
 ) : RoomModel
 
 /**
@@ -97,7 +97,7 @@ data class AreaWithReleaseDate(
         parentColumn = "id",
         entityColumn = "area_id"
     )
-    val countryCodes: List<CountryCode>
+    val countryCodes: List<CountryCode>,
 ) : RoomModel
 
 /**
@@ -118,5 +118,5 @@ data class LabelWithCatalog(
     val label: LabelRoomModel,
 
     @Embedded
-    val releaseLabel: ReleaseLabel
+    val releaseLabel: ReleaseLabel,
 )

@@ -13,7 +13,7 @@ fun <T> DetailsWithErrorHandling(
     onRetryClick: () -> Unit,
     scaffoldModel: T?,
     modifier: Modifier = Modifier,
-    detailsScreen: @Composable ((T) -> Unit)
+    detailsScreen: @Composable ((T) -> Unit),
 ) {
     when {
         showError -> {

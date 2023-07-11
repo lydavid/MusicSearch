@@ -10,10 +10,10 @@ import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseEventsResponse
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.event.EventDao
-import ly.david.data.room.place.events.EventPlace
-import ly.david.data.room.place.events.EventPlaceDao
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.event.toEventRoomModel
+import ly.david.data.room.place.events.EventPlace
+import ly.david.data.room.place.events.EventPlaceDao
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
@@ -57,7 +57,7 @@ internal class EventsByPlaceViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, EventRoomModel> = when {
         query.isEmpty() -> {
             eventPlaceDao.getEventsByPlace(entityId)

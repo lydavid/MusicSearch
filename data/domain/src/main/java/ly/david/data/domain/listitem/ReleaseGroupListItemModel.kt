@@ -12,7 +12,6 @@ import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
  * Representation of a [ReleaseGroup] for our UI.
  * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
  */
-//@Immutable
 data class ReleaseGroupListItemModel(
     override val id: String,
     override val name: String,

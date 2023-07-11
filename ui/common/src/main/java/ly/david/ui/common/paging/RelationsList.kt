@@ -60,7 +60,7 @@ interface IRelationsList {
  * The ViewModel should should assign [scope] and [repository] in its init block.
  */
 class RelationsList @Inject constructor(
-    private val relationDao: RelationDao
+    private val relationDao: RelationDao,
 ) : IRelationsList {
 
     data class State(
@@ -118,7 +118,6 @@ class RelationsList @Inject constructor(
      * Unlike browse requests, this is expected to only be called once.
      */
     private suspend fun lookupRelationsAndStore(entityId: String, forceRefresh: Boolean) {
-
         if (!forceRefresh) return
 
         val relations = mutableListOf<RelationRoomModel>()

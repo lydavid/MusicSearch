@@ -30,7 +30,9 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private val relationsList: RelationsList,
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     override val imageUrlSaver: ImageUrlSaver,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList,
     ReleaseGroupImageManager {
 
@@ -50,7 +52,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         releaseGroupId: String,
-        selectedTab: ReleaseGroupTab
+        selectedTab: ReleaseGroupTab,
     ) {
         when (selectedTab) {
             ReleaseGroupTab.DETAILS -> {
@@ -98,7 +100,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
 
     private suspend fun fetchCoverArt(
         releaseGroupId: String,
-        releaseGroupScaffoldModel: ReleaseGroupScaffoldModel
+        releaseGroupScaffoldModel: ReleaseGroupScaffoldModel,
     ) {
         val imageUrl = releaseGroupScaffoldModel.imageUrl
         url.value = imageUrl ?: getReleaseGroupCoverArtUrlFromNetwork(

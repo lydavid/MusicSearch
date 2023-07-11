@@ -66,7 +66,7 @@ private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
 
 class AppPreferencesImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
-    @ApplicationScope private val coroutineScope: CoroutineScope
+    @ApplicationScope private val coroutineScope: CoroutineScope,
 ) : AppPreferences {
 
     override val theme: Flow<AppPreferences.Theme>

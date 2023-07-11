@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.collections.releases
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.getBearerToken
-import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
@@ -15,8 +15,8 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
-import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.release.ReleasesByEntityViewModel
 
 @HiltViewModel
 internal class ReleasesByCollectionViewModel @Inject constructor(
@@ -29,7 +29,7 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,
     releaseDao = releaseDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
@@ -42,7 +42,7 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
         collectionEntityDao.insertAll(
             releaseMusicBrainzModels.map { release ->
@@ -63,7 +63,7 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             collectionEntityDao.getReleasesByCollection(entityId)

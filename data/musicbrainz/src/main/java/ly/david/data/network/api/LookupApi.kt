@@ -98,7 +98,7 @@ interface LookupApi {
     suspend fun lookupArea(
         @Path("areaId") areaId: String,
 
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
@@ -106,51 +106,48 @@ interface LookupApi {
 
         // TODO: place-rels doesn't return anything
         //  it isn't enough to get the data on this page: https://musicbrainz.org/area/74e50e58-5deb-4b99-93a2-decbb365c07f/places
-
-        //"area-rels+artist-rels+event-rels+instrument-rels+label-rels" +
-        //"+place-rels+recording-rels+release-rels+release-group-rels+series-rels+url-rels+work-rels"
     ): AreaMusicBrainzModel
 
     @GET("artist/{artistId}")
     suspend fun lookupArtist(
         @Path("artistId") artistId: String,
-        @Query("inc") include: String? = URL_REL
+        @Query("inc") include: String? = URL_REL,
     ): ArtistMusicBrainzModel
 
     @GET("event/{eventId}")
     suspend fun lookupEvent(
         @Path("eventId") eventId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
     ): EventMusicBrainzModel
 
     @GET("genre/{genreId}")
     suspend fun lookupGenre(
         @Path("genreId") genreId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
     ): GenreMusicBrainzModel
 
     @GET("instrument/{instrumentId}")
     suspend fun lookupInstrument(
         @Path("instrumentId") instrumentId: String,
-        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels+genre-rels+label-rels"
+        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels+genre-rels+label-rels",
     ): InstrumentMusicBrainzModel
 
     @GET("label/{labelId}")
     suspend fun lookupLabel(
         @Path("labelId") labelId: String,
-        @Query("inc") include: String = "artist-rels+label-rels+url-rels"
+        @Query("inc") include: String = "artist-rels+label-rels+url-rels",
     ): LabelMusicBrainzModel
 
     @GET("place/{placeId}")
     suspend fun lookupPlace(
         @Path("placeId") placeId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
     ): PlaceMusicBrainzModel
 
     @GET("recording/{recordingId}")
     suspend fun lookupRecording(
         @Path("recordingId") recordingId: String,
-        @Query("inc") include: String = "artist-credits"
+        @Query("inc") include: String = "artist-credits",
     ): RecordingMusicBrainzModel
 
     @GET("release/{releaseId}")
@@ -159,24 +156,24 @@ interface LookupApi {
         @Query("inc") include: String = "artist-credits" +
             "+labels" + // gives us labels (alternatively, we can get them from rels)
             "+recordings" + // gives us tracks
-            "+release-groups" // gives us types
+            "+release-groups", // gives us types
     ): ReleaseMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
-        @Query("inc") include: String = "artists" // "releases+artists+media"
+        @Query("inc") include: String = "artists", // "releases+artists+media"
     ): ReleaseGroupMusicBrainzModel
 
     @GET("series/{seriesId}")
     suspend fun lookupSeries(
         @Path("seriesId") seriesId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
     ): SeriesMusicBrainzModel
 
     @GET("work/{workId}")
     suspend fun lookupWork(
         @Path("workId") workId: String,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
     ): WorkMusicBrainzModel
 }

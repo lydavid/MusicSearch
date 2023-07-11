@@ -26,7 +26,7 @@ import ly.david.ui.core.theme.TextStyles
 fun ArtistListItem(
     artist: ArtistListItemModel,
     modifier: Modifier = Modifier,
-    onArtistClick: ArtistListItemModel.() -> Unit = {}
+    onArtistClick: ArtistListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -101,7 +101,7 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistL
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistListItemModel
+    @PreviewParameter(ArtistPreviewParameterProvider::class) artist: ArtistListItemModel,
 ) {
     PreviewTheme {
         Surface {

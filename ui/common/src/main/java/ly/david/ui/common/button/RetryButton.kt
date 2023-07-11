@@ -19,7 +19,7 @@ import ly.david.ui.core.theme.PreviewTheme
 @Composable
 fun RetryButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Button(
         onClick = onClick,

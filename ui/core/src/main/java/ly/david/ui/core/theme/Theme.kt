@@ -27,7 +27,7 @@ fun BaseTheme(
     context: Context,
     darkTheme: Boolean = isSystemInDarkTheme(),
     materialYou: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val isAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val useMaterialYou = materialYou && isAndroid12

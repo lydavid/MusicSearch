@@ -37,12 +37,12 @@ data class SpotifyMetadata(
     val albumName: String? = null,
     val trackName: String? = null,
     val trackLengthInSec: Int? = null,
-    val timeSentInMs: Long? = null
+    val timeSentInMs: Long? = null,
 )
 
 @Composable
 fun SpotifyBroadcastReceiver(
-    onMetadataChange: (SpotifyMetadata) -> Unit
+    onMetadataChange: (SpotifyMetadata) -> Unit,
 ) {
     // Grab the current context in this part of the UI tree
     val context = LocalContext.current
@@ -107,7 +107,6 @@ fun SpotifyBroadcastReceiver(
 internal fun SpotifyScreen(
     searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
-
     var metadata: SpotifyMetadata by remember { mutableStateOf(SpotifyMetadata()) }
 
     SpotifyBroadcastReceiver {
@@ -116,7 +115,6 @@ internal fun SpotifyScreen(
 
     Surface {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-
             metadata.trackId.ifNotNullOrEmpty {
                 Text(
                     text = it,

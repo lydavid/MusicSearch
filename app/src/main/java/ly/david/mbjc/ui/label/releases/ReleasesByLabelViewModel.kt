@@ -13,8 +13,8 @@ import ly.david.data.room.label.releases.toReleaseLabels
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
-import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.release.ReleasesByEntityViewModel
 
 @HiltViewModel
 internal class ReleasesByLabelViewModel @Inject constructor(
@@ -26,7 +26,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,
     releaseDao = releaseDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
@@ -38,7 +38,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
         releaseLabelDao.insertAll(
             releaseMusicBrainzModels.flatMap { release ->
@@ -57,7 +57,7 @@ internal class ReleasesByLabelViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             releaseLabelDao.getReleasesByLabel(entityId)

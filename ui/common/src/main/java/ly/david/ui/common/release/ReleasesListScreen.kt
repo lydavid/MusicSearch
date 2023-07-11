@@ -25,7 +25,7 @@ fun ReleasesListScreen(
     showMoreInfo: Boolean = true,
     onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
-    viewModel: ReleasesListViewModel = hiltViewModel()
+    viewModel: ReleasesListViewModel = hiltViewModel(),
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,

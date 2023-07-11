@@ -19,7 +19,7 @@ import ly.david.ui.common.paging.PagedList
 abstract class ReleasesByEntityViewModel(
     private val relationDao: RelationDao,
     private val releaseDao: ReleaseDao,
-    private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>
+    private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
     BrowseEntityUseCase<ReleaseForListItem, ReleaseListItemModel> {
@@ -33,7 +33,7 @@ abstract class ReleasesByEntityViewModel(
 
     abstract suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     )
 
     override suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int {

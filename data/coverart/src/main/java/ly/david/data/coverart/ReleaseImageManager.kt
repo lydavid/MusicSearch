@@ -25,7 +25,7 @@ interface ReleaseImageManager {
      */
     suspend fun getReleaseCoverArtUrlFromNetwork(
         releaseId: String,
-        thumbnail: Boolean
+        thumbnail: Boolean,
     ): String {
         return try {
             val coverArts = coverArtArchiveApiService.getReleaseCoverArts(releaseId)

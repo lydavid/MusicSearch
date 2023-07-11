@@ -11,7 +11,7 @@ import ly.david.data.network.MusicBrainzEntity
 @Composable
 fun EntityIcon(
     entity: MusicBrainzEntity,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Icon(
         modifier = modifier,

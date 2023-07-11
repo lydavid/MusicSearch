@@ -13,5 +13,5 @@ data class RecordingMusicBrainzModel(
     @Json(name = "isrcs") val isrcs: List<String>? = null,
 
     @Json(name = "artist-credit") val artistCredits: List<ArtistCreditMusicBrainzModel>? = null,
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Recording

@@ -22,7 +22,7 @@ import ly.david.ui.core.theme.TextStyles
 fun InstrumentListItem(
     instrument: InstrumentListItemModel,
     modifier: Modifier = Modifier,
-    onInstrumentClick: InstrumentListItemModel.() -> Unit = {}
+    onInstrumentClick: InstrumentListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -89,7 +89,7 @@ internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel
+    @PreviewParameter(InstrumentCardPreviewParameterProvider::class) instrument: InstrumentListItemModel,
 ) {
     PreviewTheme {
         Surface {

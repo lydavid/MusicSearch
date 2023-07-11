@@ -7,14 +7,14 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.data.domain.recordng.RecordingScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.domain.recordng.RecordingRepository
-import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import retrofit2.HttpException
@@ -25,7 +25,9 @@ internal class RecordingScaffoldViewModel @Inject constructor(
     private val repository: RecordingRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -43,7 +45,7 @@ internal class RecordingScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         recordingId: String,
-        selectedTab: RecordingTab
+        selectedTab: RecordingTab,
     ) {
         when (selectedTab) {
             RecordingTab.DETAILS -> {

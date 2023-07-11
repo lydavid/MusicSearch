@@ -59,13 +59,15 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList,
     ReleaseImageManager {
 
     private data class ViewModelState(
         val releaseId: String = "",
-        val query: String = ""
+        val query: String = "",
     )
 
     private val releaseId: MutableStateFlow<String> = MutableStateFlow("")
@@ -149,7 +151,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         releaseId: String,
-        selectedTab: ReleaseTab
+        selectedTab: ReleaseTab,
     ) {
         when (selectedTab) {
             ReleaseTab.DETAILS -> {
@@ -197,7 +199,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 
     private suspend fun fetchCoverArt(
         releaseId: String,
-        releaseScaffoldModel: ReleaseScaffoldModel
+        releaseScaffoldModel: ReleaseScaffoldModel,
     ) {
         val imageUrl = releaseScaffoldModel.imageUrl
         url.value = imageUrl ?: getReleaseCoverArtUrlFromNetwork(

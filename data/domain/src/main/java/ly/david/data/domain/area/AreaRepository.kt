@@ -14,7 +14,7 @@ import ly.david.data.room.area.toAreaRoomModel
 @Singleton
 class AreaRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
-    private val areaDao: AreaDao
+    private val areaDao: AreaDao,
 ) : RelationsListRepository {
 
     /**

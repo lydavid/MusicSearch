@@ -24,7 +24,7 @@ fun SettingSwitch(
     header: String,
     checked: Boolean,
     modifier: Modifier = Modifier,
-    onCheckedChange: (Boolean) -> Unit = {}
+    onCheckedChange: (Boolean) -> Unit = {},
 ) {
     Row(
         modifier = modifier

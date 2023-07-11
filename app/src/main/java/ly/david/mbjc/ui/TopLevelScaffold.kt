@@ -45,9 +45,8 @@ import timber.log.Timber
 @Composable
 internal fun TopLevelScaffold(
     navController: NavHostController,
-    viewModel: TopLevelViewModel = hiltViewModel()
+    viewModel: TopLevelViewModel = hiltViewModel(),
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
 
     val sortReleaseGroupListItems by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)

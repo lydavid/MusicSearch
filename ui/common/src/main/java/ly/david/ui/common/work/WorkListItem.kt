@@ -19,7 +19,7 @@ import ly.david.ui.core.theme.TextStyles
 fun WorkListItem(
     work: WorkListItemModel,
     modifier: Modifier = Modifier,
-    onWorkClick: WorkListItemModel.() -> Unit = {}
+    onWorkClick: WorkListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {

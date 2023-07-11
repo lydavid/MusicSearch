@@ -71,6 +71,6 @@ interface SeriesByCollectionDao {
     )
     fun getSeriesByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, SeriesRoomModel>
 }

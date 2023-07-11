@@ -34,7 +34,7 @@ fun AreaListItem(
     area: AreaListItemModel,
     modifier: Modifier = Modifier,
     showType: Boolean = true,
-    onAreaClick: AreaListItemModel.() -> Unit = {}
+    onAreaClick: AreaListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -119,7 +119,7 @@ internal class AreaListItemPreviewParameterProvider : PreviewParameterProvider<A
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(AreaListItemPreviewParameterProvider::class) area: AreaListItemModel
+    @PreviewParameter(AreaListItemPreviewParameterProvider::class) area: AreaListItemModel,
 ) {
     PreviewTheme {
         Surface {

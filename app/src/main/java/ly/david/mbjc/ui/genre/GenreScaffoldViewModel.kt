@@ -12,8 +12,8 @@ import ly.david.data.network.GenreMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.room.history.LookupHistoryDao
-import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.data.room.history.RecordLookupHistory
+import ly.david.ui.common.MusicBrainzEntityViewModel
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -21,7 +21,9 @@ import timber.log.Timber
 internal class GenreScaffoldViewModel @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     override val lookupHistoryDao: LookupHistoryDao,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory {
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory {
 
     private var recordedLookup = false
     override val entity: MusicBrainzEntity = MusicBrainzEntity.GENRE
@@ -30,9 +32,7 @@ internal class GenreScaffoldViewModel @Inject constructor(
 
     val genre: MutableStateFlow<GenreMusicBrainzModel?> = MutableStateFlow(null)
 
-    fun onSelectedTabChange(
-        genreId: String
-    ) {
+    fun onSelectedTabChange(genreId: String) {
         viewModelScope.launch {
             try {
                 val eventListItemModel = musicBrainzApiService.lookupGenre(genreId)

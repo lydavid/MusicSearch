@@ -9,7 +9,7 @@ interface IPagedList<LI : ListItemModel> {
     data class ViewModelState(
         val entityId: String = "",
         val query: String = "",
-        val isRemote: Boolean = true
+        val isRemote: Boolean = true,
     )
 
     val entityId: MutableStateFlow<String>

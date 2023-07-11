@@ -57,6 +57,6 @@ abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
     )
     abstract fun getTracksInReleaseFiltered(
         releaseId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, TrackForListItem>
 }

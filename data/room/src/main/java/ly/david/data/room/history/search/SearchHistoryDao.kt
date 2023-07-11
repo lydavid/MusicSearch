@@ -19,7 +19,7 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
         """
     )
     abstract fun getAllSearchHistory(
-        entity: MusicBrainzEntity
+        entity: MusicBrainzEntity,
     ): PagingSource<Int, SearchHistoryRoomModel>
 
     @Query(
@@ -30,7 +30,7 @@ abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
     )
     abstract suspend fun delete(
         query: String,
-        entity: MusicBrainzEntity
+        entity: MusicBrainzEntity,
     )
 
     @Query(

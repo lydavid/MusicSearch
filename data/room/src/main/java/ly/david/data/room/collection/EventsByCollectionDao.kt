@@ -77,6 +77,6 @@ interface EventsByCollectionDao {
     )
     fun getEventsByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, EventRoomModel>
 }

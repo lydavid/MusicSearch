@@ -28,5 +28,5 @@ data class WorkMusicBrainzModel(
 data class WorkAttributeMusicBrainzModel(
     @Json(name = "type") override val type: String,
     @Json(name = "type-id") override val typeId: String,
-    @Json(name = "value") override val value: String
+    @Json(name = "value") override val value: String,
 ) : WorkAttribute

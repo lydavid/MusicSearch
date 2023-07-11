@@ -25,7 +25,7 @@ interface SpotifyOAuth {
 
 class SpotifyOAuthImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
-    @ApplicationScope private val coroutineScope: CoroutineScope
+    @ApplicationScope private val coroutineScope: CoroutineScope,
 ) : SpotifyOAuth {
 
     override suspend fun getAccessToken(): String? {
@@ -35,7 +35,7 @@ class SpotifyOAuthImpl @Inject constructor(
 
     override fun saveAccessToken(
         accessToken: String,
-        expirationSystemTime: Long
+        expirationSystemTime: Long,
     ) {
         coroutineScope.launch {
             preferencesDataStore.edit {

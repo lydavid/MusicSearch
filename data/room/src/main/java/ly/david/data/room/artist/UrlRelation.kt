@@ -14,5 +14,5 @@ import ly.david.data.room.relation.RelationRoomModel
 )
 data class UrlRelation(
     @Embedded
-    val relation: RelationRoomModel
+    val relation: RelationRoomModel,
 )

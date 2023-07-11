@@ -7,7 +7,6 @@ class FormatsAndTracksTest {
 
     @Test
     fun `null`() {
-
         assertEquals("", null.getFormatsForDisplay())
         assertEquals("", null.getTracksForDisplay())
     }

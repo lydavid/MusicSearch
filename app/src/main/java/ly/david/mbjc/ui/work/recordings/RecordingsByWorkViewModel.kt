@@ -40,7 +40,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        musicBrainzModels: List<RecordingMusicBrainzModel>
+        musicBrainzModels: List<RecordingMusicBrainzModel>,
     ) {
         recordingDao.insertAll(musicBrainzModels.map { it.toRoomModel() })
         recordingWorkDao.insertAll(
@@ -60,7 +60,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, RecordingForListItem> = when {
         query.isEmpty() -> {
             recordingWorkDao.getRecordingsByWork(entityId)

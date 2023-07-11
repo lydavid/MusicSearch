@@ -32,7 +32,7 @@ object MusicBrainzAuthModule {
 
     @Provides
     fun provideAuthorizationService(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): AuthorizationService {
         return AuthorizationService(context)
     }
@@ -51,7 +51,7 @@ object MusicBrainzAuthModule {
     fun provideAuthorizationRequest(
         serviceConfig: AuthorizationServiceConfiguration,
         musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
-        appInfo: AppInfo
+        appInfo: AppInfo,
     ): AuthorizationRequest {
         return AuthorizationRequest.Builder(
             serviceConfig,
@@ -65,7 +65,7 @@ object MusicBrainzAuthModule {
 
     @Provides
     fun provideClientAuthentication(
-        musicBrainzOAuthInfo: MusicBrainzOAuthInfo
+        musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     ): ClientAuthentication {
         return ClientSecretBasic(musicBrainzOAuthInfo.clientSecret)
     }

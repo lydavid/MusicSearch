@@ -96,6 +96,6 @@ abstract class ReleaseLabelDao : BaseDao<ReleaseLabel>() {
     )
     abstract fun getReleasesByLabelFiltered(
         labelId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem>
 }

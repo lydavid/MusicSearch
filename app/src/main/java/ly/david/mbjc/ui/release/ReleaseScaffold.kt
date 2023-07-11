@@ -56,7 +56,7 @@ internal fun ReleaseScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: ReleaseScaffoldViewModel = hiltViewModel()
+    viewModel: ReleaseScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.RELEASE
     val scope = rememberCoroutineScope()
@@ -84,7 +84,8 @@ internal fun ReleaseScaffold(
 
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
-            releaseId = releaseId, selectedTab = selectedTab
+            releaseId = releaseId,
+            selectedTab = selectedTab
         )
     }
 
@@ -106,20 +107,24 @@ internal fun ReleaseScaffold(
                 },
                 subtitleDropdownMenuItems = {
                     release?.artistCredits?.forEach { artistCredit ->
-                        DropdownMenuItem(text = { Text(artistCredit.name) },
+                        DropdownMenuItem(
+                            text = { Text(artistCredit.name) },
                             leadingIcon = { EntityIcon(entity = MusicBrainzEntity.ARTIST) },
                             onClick = {
                                 closeMenu()
                                 onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
-                            })
+                            }
+                        )
                     }
                     release?.releaseGroup?.let { releaseGroup ->
-                        DropdownMenuItem(text = { Text(text = releaseGroup.name) },
+                        DropdownMenuItem(
+                            text = { Text(text = releaseGroup.name) },
                             leadingIcon = { EntityIcon(entity = MusicBrainzEntity.RELEASE_GROUP) },
                             onClick = {
                                 closeMenu()
                                 onItemClick(MusicBrainzEntity.RELEASE_GROUP, releaseGroup.id, null)
-                            })
+                            }
+                        )
                     }
                 },
                 showFilterIcon = selectedTab in listOf(
@@ -154,7 +159,8 @@ internal fun ReleaseScaffold(
             rememberFlowWithLifecycleStarted(viewModel.pagedRelations).collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = ReleaseTab.values().size, state = pagerState
+            pageCount = ReleaseTab.values().size,
+            state = pagerState,
         ) { page ->
             when (ReleaseTab.values()[page]) {
                 ReleaseTab.DETAILS -> {
@@ -216,12 +222,14 @@ internal fun ReleaseScaffold(
                 }
 
                 ReleaseTab.STATS -> {
-                    ReleaseStatsScreen(releaseId = releaseId,
+                    ReleaseStatsScreen(
+                        releaseId = releaseId,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = ReleaseTab.values().map { it.tab })
+                        tabs = ReleaseTab.values().map { it.tab },
+                    )
                 }
             }
         }

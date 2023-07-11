@@ -19,13 +19,13 @@ private enum class BottomNavigationItem(val stringRes: Int, val icon: ImageVecto
     Search(R.string.search, Icons.Default.Search, Destination.LOOKUP),
     History(R.string.history, Icons.Default.History, Destination.HISTORY),
     Collection(R.string.collections, Icons.Default.CollectionsBookmark, Destination.COLLECTIONS),
-    Settings(R.string.settings, Icons.Default.Settings, Destination.SETTINGS)
+    Settings(R.string.settings, Icons.Default.Settings, Destination.SETTINGS),
 }
 
 @Composable
 internal fun BottomNavigationBar(
     currentTopLevelDestination: Destination,
-    navigateToTopLevelDestination: (Destination) -> Unit = {}
+    navigateToTopLevelDestination: (Destination) -> Unit = {},
 ) {
     NavigationBar {
         BottomNavigationItem.values().forEach { item ->

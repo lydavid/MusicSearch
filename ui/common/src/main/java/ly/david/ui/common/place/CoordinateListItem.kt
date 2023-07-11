@@ -29,9 +29,8 @@ fun CoordinateListItem(
     context: Context,
     coordinates: Coordinates,
     modifier: Modifier = Modifier,
-    label: String? = null
+    label: String? = null,
 ) {
-
     val text = coordinates.formatForDisplay() ?: return
 
     ListItem(

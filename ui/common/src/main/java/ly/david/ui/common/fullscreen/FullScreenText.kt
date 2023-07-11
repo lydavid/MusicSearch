@@ -12,7 +12,7 @@ import ly.david.ui.core.theme.PreviewTheme
 @Composable
 fun FullScreenText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     FullScreenContent(modifier = modifier) {
         Text(

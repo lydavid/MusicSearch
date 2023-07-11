@@ -52,7 +52,7 @@ internal fun EventScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: EventScaffoldViewModel = hiltViewModel()
+    viewModel: EventScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.EVENT
     val scope = rememberCoroutineScope()

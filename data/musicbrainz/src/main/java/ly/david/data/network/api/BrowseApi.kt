@@ -50,7 +50,7 @@ interface BrowseApi {
         @Query("editor") username: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-        @Query("inc") include: String? = null
+        @Query("inc") include: String? = null,
     ): BrowseCollectionsResponse
 
     @GET("event")
@@ -118,14 +118,14 @@ interface BrowseApi {
     suspend fun browseReleasesByArea(
         @Query("area") areaId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): BrowseReleasesResponse
 
     @GET("release")
     suspend fun browseReleasesByArtist(
         @Query("artist") artistId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): BrowseReleasesResponse
 
     @GET("release")
@@ -133,7 +133,7 @@ interface BrowseApi {
         @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): BrowseReleasesResponse
 
     @GET("release")
@@ -141,24 +141,21 @@ interface BrowseApi {
         @Query("label") labelId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = LABELS
+        @Query("inc") include: String = LABELS,
     ): BrowseReleasesResponse
 
     @GET("release")
     suspend fun browseReleasesByRecording(
         @Query("recording") recordingId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): BrowseReleasesResponse
 
     @GET("release")
     suspend fun browseReleasesByReleaseGroup(
         @Query("release-group") releaseGroupId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
-//        @Query("inc") include: String = RELEASE_GROUPS
-        // artist-credits, labels, recordings, release-groups, media, discids, isrcs (with recordings)
-        // todo if our condition for looking up release is that formats and tracks are populated, then we can't inc media here
+        @Query("offset") offset: Int = 0,
     ): BrowseReleasesResponse
 
     @GET("release-group")
@@ -166,7 +163,7 @@ interface BrowseApi {
         @Query("artist") artistId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = "artist-credits"
+        @Query("inc") include: String = "artist-credits",
     ): BrowseReleaseGroupsResponse
 
     @GET("release-group")
@@ -175,7 +172,7 @@ interface BrowseApi {
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
         @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = "artist-credits"
+        @Query("inc") include: String = "artist-credits",
     ): BrowseReleaseGroupsResponse
 
     @GET("series")
@@ -183,7 +180,7 @@ interface BrowseApi {
         @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): BrowseSeriesResponse
 
     @GET("work")
@@ -191,7 +188,7 @@ interface BrowseApi {
         @Header(AUTHORIZATION) bearerToken: String? = null,
         @Query("collection") collectionId: String,
         @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0
+        @Query("offset") offset: Int = 0,
     ): BrowseWorksResponse
 }
 
@@ -207,71 +204,71 @@ interface Browsable<MM : MusicBrainzModel> {
 data class BrowseAreasResponse(
     @Json(name = "area-count") override val count: Int,
     @Json(name = "area-offset") override val offset: Int,
-    @Json(name = "areas") override val musicBrainzModels: List<AreaMusicBrainzModel>
+    @Json(name = "areas") override val musicBrainzModels: List<AreaMusicBrainzModel>,
 ) : Browsable<AreaMusicBrainzModel>
 
 data class BrowseArtistsResponse(
     @Json(name = "artist-count") override val count: Int,
     @Json(name = "artist-offset") override val offset: Int,
-    @Json(name = "artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>
+    @Json(name = "artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>,
 ) : Browsable<ArtistMusicBrainzModel>
 
 data class BrowseCollectionsResponse(
     @Json(name = "collection-count") override val count: Int,
     @Json(name = "collection-offset") override val offset: Int,
-    @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>
+    @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
 ) : Browsable<CollectionMusicBrainzModel>
 
 data class BrowseEventsResponse(
     @Json(name = "event-count") override val count: Int,
     @Json(name = "event-offset") override val offset: Int,
-    @Json(name = "events") override val musicBrainzModels: List<EventMusicBrainzModel>
+    @Json(name = "events") override val musicBrainzModels: List<EventMusicBrainzModel>,
 ) : Browsable<EventMusicBrainzModel>
 
 data class BrowseInstrumentsResponse(
     @Json(name = "instrument-count") override val count: Int,
     @Json(name = "instrument-offset") override val offset: Int,
-    @Json(name = "instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>
+    @Json(name = "instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>,
 ) : Browsable<InstrumentMusicBrainzModel>
 
 data class BrowseLabelsResponse(
     @Json(name = "label-count") override val count: Int,
     @Json(name = "label-offset") override val offset: Int,
-    @Json(name = "labels") override val musicBrainzModels: List<LabelMusicBrainzModel>
+    @Json(name = "labels") override val musicBrainzModels: List<LabelMusicBrainzModel>,
 ) : Browsable<LabelMusicBrainzModel>
 
 data class BrowsePlacesResponse(
     @Json(name = "place-count") override val count: Int,
     @Json(name = "place-offset") override val offset: Int,
-    @Json(name = "places") override val musicBrainzModels: List<PlaceMusicBrainzModel>
+    @Json(name = "places") override val musicBrainzModels: List<PlaceMusicBrainzModel>,
 ) : Browsable<PlaceMusicBrainzModel>
 
 data class BrowseRecordingsResponse(
     @Json(name = "recording-count") override val count: Int,
     @Json(name = "recording-offset") override val offset: Int,
-    @Json(name = "recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>
+    @Json(name = "recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>,
 ) : Browsable<RecordingMusicBrainzModel>
 
 data class BrowseReleasesResponse(
     @Json(name = "release-count") override val count: Int,
     @Json(name = "release-offset") override val offset: Int,
-    @Json(name = "releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>
+    @Json(name = "releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>,
 ) : Browsable<ReleaseMusicBrainzModel>
 
 data class BrowseReleaseGroupsResponse(
     @Json(name = "release-group-count") override val count: Int,
     @Json(name = "release-group-offset") override val offset: Int,
-    @Json(name = "release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>
+    @Json(name = "release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
 ) : Browsable<ReleaseGroupMusicBrainzModel>
 
 data class BrowseSeriesResponse(
     @Json(name = "series-count") override val count: Int,
     @Json(name = "series-offset") override val offset: Int,
-    @Json(name = "series") override val musicBrainzModels: List<SeriesMusicBrainzModel>
+    @Json(name = "series") override val musicBrainzModels: List<SeriesMusicBrainzModel>,
 ) : Browsable<SeriesMusicBrainzModel>
 
 data class BrowseWorksResponse(
     @Json(name = "work-count") override val count: Int,
     @Json(name = "work-offset") override val offset: Int,
-    @Json(name = "works") override val musicBrainzModels: List<WorkMusicBrainzModel>
+    @Json(name = "works") override val musicBrainzModels: List<WorkMusicBrainzModel>,
 ) : Browsable<WorkMusicBrainzModel>

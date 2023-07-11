@@ -14,8 +14,8 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.place.PlaceListItem
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,7 +29,6 @@ internal fun PlacesByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: PlacesByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.PLACE
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<PlaceListItemModel> =

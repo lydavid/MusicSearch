@@ -23,7 +23,7 @@ import ly.david.ui.core.theme.TextStyles
 @Composable
 internal fun RecentSearchesHeader(
     isListEmpty: Boolean = false,
-    onDeleteAllHistory: () -> Unit = {}
+    onDeleteAllHistory: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier.padding(16.dp),

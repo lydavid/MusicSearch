@@ -6,5 +6,5 @@ internal enum class LabelTab(val tab: Tab) {
     DETAILS(Tab.DETAILS),
     RELEASES(Tab.RELEASES),
     RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
+    STATS(Tab.STATS),
 }

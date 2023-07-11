@@ -48,7 +48,7 @@ import timber.log.Timber
 
 class MusicBrainzLoginContract(
     private val authService: AuthorizationService,
-    private val authRequest: AuthorizationRequest
+    private val authRequest: AuthorizationRequest,
 ) : ActivityResultContract<Unit, MusicBrainzLoginContract.Result>() {
 
     data class Result(
@@ -85,12 +85,12 @@ internal class TopLevelViewModel @Inject constructor(
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication,
 
-    private val lookupHistoryDao: LookupHistoryDao
+    private val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel() {
 
     data class RemoteResult(
         val message: String = "",
-        val actionLabel: String? = null
+        val actionLabel: String? = null,
     )
 
     private val entity: MutableStateFlow<MusicBrainzEntity> = MutableStateFlow(MusicBrainzEntity.ARTIST)
@@ -178,7 +178,7 @@ internal class TopLevelViewModel @Inject constructor(
     suspend fun deleteFromCollectionAndGetResult(
         collectionId: String,
         entityId: String,
-        entityName: String
+        entityName: String,
     ): RemoteResult {
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {

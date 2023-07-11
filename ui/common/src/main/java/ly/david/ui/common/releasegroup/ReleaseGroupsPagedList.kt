@@ -69,8 +69,7 @@ class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<ListItemM
                         .map(ReleaseGroupForListItem::toReleaseGroupListItemModel)
                         .insertSeparators { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
                             if (sorted && rg2 != null &&
-                                (rg1?.primaryType != rg2.primaryType ||
-                                    rg1?.secondaryTypes != rg2.secondaryTypes)
+                                (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)
                             ) {
                                 ListSeparator(
                                     id = "${rg1?.id}_${rg2.id}",

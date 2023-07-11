@@ -20,7 +20,7 @@ import ly.david.ui.core.theme.TextStyles
 fun TextWithHeading(
     heading: String,
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     SelectionContainer {
         Text(

@@ -34,7 +34,7 @@ data class ReleaseMusicBrainzModel(
     // inc=release-groups
     @Json(name = "release-group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
 
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Release
 
 data class ReleaseEvent(

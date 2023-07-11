@@ -22,7 +22,7 @@ import ly.david.ui.core.theme.TextStyles
 fun SeriesListItem(
     series: SeriesListItemModel,
     modifier: Modifier = Modifier,
-    onSeriesClick: SeriesListItemModel.() -> Unit = {}
+    onSeriesClick: SeriesListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -78,7 +78,7 @@ internal class SeriesPreviewParameterProvider : PreviewParameterProvider<SeriesL
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesListItemModel
+    @PreviewParameter(SeriesPreviewParameterProvider::class) series: SeriesListItemModel,
 ) {
     PreviewTheme {
         Surface {

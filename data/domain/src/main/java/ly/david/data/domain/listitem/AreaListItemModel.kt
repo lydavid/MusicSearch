@@ -14,7 +14,7 @@ data class AreaListItemModel(
     override val type: String? = "",
     override val lifeSpan: LifeSpan? = null,
     val countryCodes: List<String>? = null,
-    val date: String? = null
+    val date: String? = null,
 ) : Area, ListItemModel()
 
 internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = AreaListItemModel(

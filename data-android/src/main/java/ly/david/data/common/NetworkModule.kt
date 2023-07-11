@@ -28,7 +28,7 @@ object NetworkModule {
     fun provideOkHttpClient(
         @ApplicationContext context: Context,
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        musicBrainzAuthenticator: MusicBrainzAuthenticator
+        musicBrainzAuthenticator: MusicBrainzAuthenticator,
     ): OkHttpClient {
         val clientBuilder = OkHttpClient().newBuilder()
 
