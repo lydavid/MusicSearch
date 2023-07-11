@@ -88,9 +88,7 @@ class CollectionPagedList @Inject constructor() : ICollectionPagedList {
                     remoteMediator = getRemoteMediator(state.entityId).takeIf { state.isRemote },
                     pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(state) }
                 ).flow.map { pagingData ->
-                    pagingData.map {
-                        it.toCollectionListItemModel()
-                    }
+                    pagingData.map(CollectionWithEntities::toCollectionListItemModel)
                 }
             }
             .distinctUntilChanged()

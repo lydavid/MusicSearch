@@ -105,9 +105,7 @@ internal class TopLevelViewModel @Inject constructor(
                     collectionDao.getAllCollectionsOfType(it)
                 }
             ).flow.map { pagingData ->
-                pagingData.map { collection: CollectionWithEntities ->
-                    collection.toCollectionListItemModel()
-                }
+                pagingData.map(CollectionWithEntities::toCollectionListItemModel)
             }
         }
             .distinctUntilChanged()

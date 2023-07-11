@@ -107,23 +107,23 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                         getPagingSource(releaseId, query)
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map { track: TrackForListItem ->
-                        track.toTrackListItemModel()
-                    }.insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
-                        if (before?.mediumId != after?.mediumId && after != null) {
-                            val medium: MediumRoomModel =
-                                mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
+                    pagingData
+                        .map(TrackForListItem::toTrackListItemModel)
+                        .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
+                            if (before?.mediumId != after?.mediumId && after != null) {
+                                val medium: MediumRoomModel =
+                                    mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
 
-                            ListSeparator(
-                                id = "${medium.id}",
-                                text = medium.format.orEmpty() +
-                                    (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
-                                    medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
-                            )
-                        } else {
-                            null
+                                ListSeparator(
+                                    id = "${medium.id}",
+                                    text = medium.format.orEmpty() +
+                                        (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
+                                        medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
+                                )
+                            } else {
+                                null
+                            }
                         }
-                    }
                 }
             }
             .distinctUntilChanged()
@@ -138,6 +138,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         query.isEmpty() -> {
             trackDao.getTracksInRelease(releaseId)
         }
+
         else -> {
             trackDao.getTracksInReleaseFiltered(
                 releaseId = releaseId,
@@ -185,6 +186,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             ReleaseTab.TRACKS -> loadTracks(releaseId)
             ReleaseTab.RELATIONSHIPS -> loadRelations(releaseId)
             ReleaseTab.STATS -> {

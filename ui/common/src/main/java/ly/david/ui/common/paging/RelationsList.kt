@@ -96,9 +96,7 @@ class RelationsList @Inject constructor(
                         relationDao.getEntityRelationships(entityId, "%$query%")
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map { relation ->
-                        relation.toRelationListItemModel()
-                    }
+                    pagingData.map(RelationRoomModel::toRelationListItemModel)
                 }
             }
             .distinctUntilChanged()

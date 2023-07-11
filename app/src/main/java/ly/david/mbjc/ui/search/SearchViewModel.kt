@@ -129,12 +129,13 @@ internal class SearchViewModel @Inject constructor(
                         )
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map {
-                        it.toSearchHistoryListItemModel()
-                    }.insertSeparators { before: SearchHistoryListItemModel?, after: SearchHistoryListItemModel? ->
-                        // TODO: rather than changing behaviour of header when empty, just modify full empty screen text
-                        if (before == null) Header(isListEmpty = after == null) else null
-                    }
+                    pagingData
+                        .map(SearchHistoryRoomModel::toSearchHistoryListItemModel)
+                        .insertSeparators { before: SearchHistoryListItemModel?, after: SearchHistoryListItemModel? ->
+                            // TODO: rather than changing behaviour of header when empty,
+                            //  just modify full empty screen text
+                            if (before == null) Header(isListEmpty = after == null) else null
+                        }
                 }
             }
             .distinctUntilChanged()
