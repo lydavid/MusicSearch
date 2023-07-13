@@ -3,10 +3,10 @@ package ly.david.mbjc.ui.collections.artists
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.ArtistListItemModel
 import ly.david.data.domain.listitem.toArtistListItemModel
+import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseArtistsResponse
@@ -31,7 +31,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
 ) : BrowseEntitiesByEntityViewModel<ArtistRoomModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
     byEntity = MusicBrainzEntity.ARTIST,
     relationDao = relationDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseArtistsResponse {
@@ -63,7 +63,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ArtistRoomModel> = when {
         query.isEmpty() -> {
             collectionEntityDao.getArtistsByCollection(entityId)

@@ -7,7 +7,7 @@ import com.squareup.moshi.Json
  */
 data class CoverArtsResponse(
     @Json(name = "images") val coverArtUrls: List<CoverArtUrls>,
-    @Json(name = "release") val release: String // URL back to Music Brainz release
+    @Json(name = "release") val releaseUrl: String,
 )
 
 data class CoverArtUrls(
@@ -38,12 +38,6 @@ data class ThumbnailsUrls(
     @Json(name = "small") val small: String? = null,
     @Json(name = "large") val large: String? = null,
 )
-
-// There's more than 2 types: https://musicbrainz.org/doc/Cover_Art/Types
-//enum class CoverArtType {
-//    @Json(name = "Front") FRONT,
-//    @Json(name = "Back") BACK,
-//}
 
 fun CoverArtsResponse.getFrontThumbnailCoverArtUrl(): String? {
     // Note: MB doesn't fall back to any non-front covers

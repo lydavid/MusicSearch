@@ -23,7 +23,7 @@ import ly.david.ui.core.theme.TextStyles
 internal fun LocalRemoteProgressBar(
     totalRemote: Int?,
     totalLocal: Int,
-    cachedLocalOfRemoteRes: Int
+    cachedLocalOfRemoteRes: Int,
 ) {
     Column(
         modifier = Modifier

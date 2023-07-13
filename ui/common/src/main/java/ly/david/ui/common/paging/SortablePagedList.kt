@@ -8,7 +8,7 @@ interface SortablePagedList<LI : ListItemModel> : IPagedList<LI> {
         val entityId: String = "",
         val query: String = "",
         val isRemote: Boolean = true,
-        val sorted: Boolean = false
+        val sorted: Boolean = false,
     )
 
     val sorted: MutableStateFlow<Boolean>

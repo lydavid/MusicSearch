@@ -59,7 +59,7 @@ internal fun RecordingScaffold(
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    viewModel: RecordingScaffoldViewModel = hiltViewModel()
+    viewModel: RecordingScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.RECORDING
     val scope = rememberCoroutineScope()

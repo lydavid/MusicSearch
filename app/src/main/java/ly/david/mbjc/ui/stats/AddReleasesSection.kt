@@ -19,7 +19,7 @@ internal fun LazyListScope.addEntitiesStatsSection(
     totalRemote: Int?,
     totalLocal: Int,
     @StringRes headerRes: Int,
-    @StringRes cachedLocalOfRemoteRes: Int
+    @StringRes cachedLocalOfRemoteRes: Int,
 ) {
     item {
         ListSeparatorHeader(text = stringResource(id = headerRes))

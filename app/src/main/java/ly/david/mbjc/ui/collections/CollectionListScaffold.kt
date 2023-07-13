@@ -32,10 +32,10 @@ import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.ui.collections.CollectionListItem
 import ly.david.ui.common.R
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 
 /**
  * Displays a list of all of your collections.
@@ -46,7 +46,7 @@ internal fun CollectionListScaffold(
     modifier: Modifier = Modifier,
     onCollectionClick: (id: String, isRemote: Boolean) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {},
-    viewModel: CollectionListViewModel = hiltViewModel()
+    viewModel: CollectionListViewModel = hiltViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -117,7 +117,6 @@ internal fun CollectionListScaffold(
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CollectionsFilterChipsBar(
@@ -156,7 +155,6 @@ private fun CollectionsFilterChipsBar(
 @Composable
 private fun Preview() {
     PreviewTheme {
-
         var showLocal by rememberSaveable { mutableStateOf(true) }
         var showRemote by rememberSaveable { mutableStateOf(true) }
 

@@ -74,9 +74,7 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
             artistReleaseGroupDao.getReleaseGroupsByArtist("a1")
         )
 
-        assertThat(
-            "Should find me", `is`(releaseGroupWithArtistCredits[0].releaseGroup.name)
-        )
+        assertThat("Should find me", `is`(releaseGroupWithArtistCredits[0].releaseGroup.name))
         assertThat("and me", `is`(releaseGroupWithArtistCredits[1].releaseGroup.name))
     }
 
@@ -357,7 +355,7 @@ internal class ArtistReleaseGroupDaoTest : HiltTest() {
 
     // TODO: generic
     private suspend fun getReleaseGroupsFromPagingSource(
-        pagingSource: PagingSource<Int, ReleaseGroupForListItem>
+        pagingSource: PagingSource<Int, ReleaseGroupForListItem>,
     ): List<ReleaseGroupForListItem> {
         val loadResult: PagingSource.LoadResult<Int, ReleaseGroupForListItem> = pagingSource.load(
             PagingSource.LoadParams.Refresh(key = null, loadSize = 10, placeholdersEnabled = false)

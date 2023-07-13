@@ -13,8 +13,9 @@ import ly.david.data.room.history.RecordLookupHistory
 @HiltViewModel
 internal class CollectionViewModel @Inject constructor(
     private val collectionDao: CollectionDao,
-    override val lookupHistoryDao: LookupHistoryDao
-) : ViewModel(), RecordLookupHistory {
+    override val lookupHistoryDao: LookupHistoryDao,
+) : ViewModel(),
+    RecordLookupHistory {
 
     private var recordedLookup = false
 

@@ -13,8 +13,8 @@ import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
-import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.release.ReleasesByEntityViewModel
 
 @HiltViewModel
 internal class ReleasesByReleaseGroupViewModel @Inject constructor(
@@ -38,7 +38,7 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
         releaseReleaseGroupDao.insertAll(
             releaseMusicBrainzModels.map { release ->
@@ -60,7 +60,7 @@ internal class ReleasesByReleaseGroupViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             releaseReleaseGroupDao.getReleasesByReleaseGroup(entityId)

@@ -34,7 +34,6 @@ fun RelationListItem(
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
-
     val context = LocalContext.current
     val haptics = LocalHapticFeedback.current
     val clipboardManager = LocalClipboardManager.current
@@ -51,7 +50,6 @@ fun RelationListItem(
                     modifier = Modifier.padding(top = 4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     EntityIcon(
                         entity = relation.linkedEntity,
                         modifier = Modifier.padding(end = 8.dp)

@@ -18,12 +18,12 @@ import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.place.CoordinateListItem
-import ly.david.ui.common.R
+import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -35,7 +35,6 @@ internal fun PlaceDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
-
     LazyColumn(
         modifier = modifier,
         state = lazyListState

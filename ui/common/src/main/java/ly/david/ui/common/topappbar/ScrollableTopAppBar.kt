@@ -74,7 +74,6 @@ fun ScrollableTopAppBar(
 
     additionalBar: @Composable () -> Unit = {},
 ) {
-
     Column(modifier = modifier) {
         TopAppBar(
             title = {
@@ -202,7 +201,7 @@ private fun SubtitleWithOverflow(
 
 @Composable
 private fun OverflowMenu(
-    overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null
+    overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null,
 ) {
     var showMenu by rememberSaveable { mutableStateOf(false) }
 

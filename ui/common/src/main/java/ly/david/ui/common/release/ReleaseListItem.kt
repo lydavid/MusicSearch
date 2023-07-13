@@ -36,9 +36,8 @@ fun ReleaseListItem(
     modifier: Modifier = Modifier,
     showMoreInfo: Boolean = true,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
-    onClick: ReleaseListItemModel.() -> Unit = {}
+    onClick: ReleaseListItemModel.() -> Unit = {},
 ) {
-
     LaunchedEffect(key1 = release.id) {
         if (release.imageUrl == null) {
             requestForMissingCoverArtUrl()
@@ -208,7 +207,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseListItemModel
+    @PreviewParameter(ReleasePreviewParameterProvider::class) release: ReleaseListItemModel,
 ) {
     PreviewTheme {
         Surface {

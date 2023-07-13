@@ -11,5 +11,5 @@ data class CoverArtArchive(
 
     @ColumnInfo(name = "cover_art_count")
     @Json(name = "count")
-    val count: Int = 0
+    val count: Int = 0,
 )

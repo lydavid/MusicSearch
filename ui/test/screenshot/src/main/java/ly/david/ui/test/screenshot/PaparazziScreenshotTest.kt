@@ -19,7 +19,7 @@ private const val PAPARAZZI_THEME = "android:Theme.Material.Light.NoActionBar"
  */
 @RunWith(TestParameterInjector::class)
 abstract class PaparazziScreenshotTest(
-    private val isFullScreen: Boolean = false
+    private val isFullScreen: Boolean = false,
 ) {
 
     @TestParameter

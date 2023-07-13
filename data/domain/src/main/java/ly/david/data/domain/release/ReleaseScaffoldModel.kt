@@ -43,7 +43,7 @@ data class ReleaseScaffoldModel(
     val labels: List<LabelListItemModel> = listOf(),
 
     val releaseLength: Int? = null,
-    val hasNullLength: Boolean = false
+    val hasNullLength: Boolean = false,
 ) : Release
 
 internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(

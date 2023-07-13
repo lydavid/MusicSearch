@@ -38,7 +38,7 @@ data class RecordingForListItem(
 
     // This allows us to filter on this.
     @ColumnInfo("artist_credit_names")
-    val artistCreditNames: String?
+    val artistCreditNames: String?,
 ) : RoomModel
 
 data class RecordingForScaffold(
@@ -49,5 +49,5 @@ data class RecordingForScaffold(
         parentColumn = "id",
         entityColumn = "entity_id"
     )
-    val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>
+    val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>,
 ) : RoomModel

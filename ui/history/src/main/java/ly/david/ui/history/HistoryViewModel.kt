@@ -18,10 +18,11 @@ import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.domain.listitem.toLookupHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.room.history.LookupHistoryForListItem
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val lookupHistoryDao: LookupHistoryDao
+    private val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel() {
 
     private val query: MutableStateFlow<String> = MutableStateFlow("")
@@ -39,9 +40,7 @@ class HistoryViewModel @Inject constructor(
                     lookupHistoryDao.getAllLookupHistory("%$query%")
                 }
             ).flow.map { pagingData ->
-                pagingData.map {
-                    it.toLookupHistoryListItemModel()
-                }
+                pagingData.map(LookupHistoryForListItem::toLookupHistoryListItemModel)
             }
         }
             .distinctUntilChanged()

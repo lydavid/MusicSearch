@@ -37,8 +37,8 @@ import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.releasegroup.details.ReleaseGroupDetailsScreen
 import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
-import ly.david.ui.common.R
 import ly.david.ui.common.EntityIcon
+import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -65,7 +65,7 @@ internal fun ReleaseGroupScaffold(
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel()
+    viewModel: ReleaseGroupScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.RELEASE_GROUP
     val scope = rememberCoroutineScope()
@@ -132,7 +132,8 @@ internal fun ReleaseGroupScaffold(
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
                                 onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
-                            })
+                            }
+                        )
                     }
                 },
                 showFilterIcon = selectedTab in listOf(

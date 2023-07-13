@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.getDisplayTypes
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
-import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.R
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -28,7 +28,7 @@ import ly.david.ui.core.theme.TextStyles
 internal fun LazyListScope.addReleaseGroupsSection(
     totalRemote: Int?,
     totalLocal: Int,
-    releaseGroupTypeCounts: List<ReleaseGroupTypeCount>
+    releaseGroupTypeCounts: List<ReleaseGroupTypeCount>,
 ) {
     item {
         ListSeparatorHeader(text = stringResource(id = R.string.release_groups))

@@ -12,10 +12,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.label.LabelListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,7 +29,6 @@ internal fun LabelsByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: LabelsByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.LABEL
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<LabelListItemModel> =

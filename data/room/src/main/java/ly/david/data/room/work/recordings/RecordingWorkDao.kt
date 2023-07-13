@@ -83,6 +83,6 @@ abstract class RecordingWorkDao : BaseDao<RecordingWork>() {
     )
     abstract fun getRecordingsByWorkFiltered(
         workId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, RecordingForListItem>
 }

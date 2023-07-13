@@ -81,7 +81,6 @@ fun RelationMusicBrainzModel.toRelationRoomModel(
     entityId: String,
     order: Int,
 ): RelationRoomModel? {
-
     var linkedEntityId = ""
     var linkedEntityName = ""
     var linkedEntityDisambiguation: String? = null

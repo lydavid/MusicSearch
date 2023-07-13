@@ -27,8 +27,8 @@ data class LifeSpan(
      */
     @ColumnInfo(name = "ended")
     @Json(name = "ended")
-    override val ended: Boolean? = null
-): ILifeSpan
+    override val ended: Boolean? = null,
+) : ILifeSpan
 
 fun ILifeSpan?.getLifeSpanForDisplay(): String {
     if (this == null) return ""

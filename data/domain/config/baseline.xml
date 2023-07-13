@@ -2,8 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int ): QueryResults</ID>
-    <ID>LongParameterList:ReleaseRepository.kt$ReleaseRepository$( private val musicBrainzApiService: MusicBrainzApiService, private val releaseDao: ReleaseDao, private val releaseReleaseGroupDao: ReleaseReleaseGroupDao, private val releaseGroupDao: ReleaseGroupDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, private val releaseCountryDao: ReleaseCountryDao, private val areaDao: AreaDao, private val labelDao: LabelDao, private val releaseLabelDao: ReleaseLabelDao )</ID>
-    <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, RM&gt; ): MediatorResult</ID>
+    <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
+    <ID>LongParameterList:ReleaseRepository.kt$ReleaseRepository$( private val musicBrainzApiService: MusicBrainzApiService, private val releaseDao: ReleaseDao, private val releaseReleaseGroupDao: ReleaseReleaseGroupDao, private val releaseGroupDao: ReleaseGroupDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, private val releaseCountryDao: ReleaseCountryDao, private val areaDao: AreaDao, private val labelDao: LabelDao, private val releaseLabelDao: ReleaseLabelDao, )</ID>
+    <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, RM&gt;, ): MediatorResult</ID>
   </CurrentIssues>
 </SmellBaseline>

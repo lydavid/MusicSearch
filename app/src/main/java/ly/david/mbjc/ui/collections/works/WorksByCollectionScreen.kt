@@ -29,7 +29,6 @@ internal fun WorksByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: WorksByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.WORK
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<WorkListItemModel> =

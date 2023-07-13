@@ -12,10 +12,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
+import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.event.EventListItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,7 +29,6 @@ internal fun EventsByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: EventsByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.EVENT
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<EventListItemModel> =

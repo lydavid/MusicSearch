@@ -11,7 +11,7 @@ fun TabsBar(
     modifier: Modifier = Modifier,
     tabsTitle: List<String> = listOf(),
     selectedTabIndex: Int = 0,
-    onSelectTabIndex: (Int) -> Unit = {}
+    onSelectTabIndex: (Int) -> Unit = {},
 ) {
     if (tabsTitle.isNotEmpty()) {
         ScrollableTabRow(

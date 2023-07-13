@@ -26,7 +26,6 @@ internal fun ReleasesByRecordingScreen(
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
     viewModel: ReleasesByRecordingViewModel = hiltViewModel(),
 ) {
-
     LaunchedEffect(key1 = recordingId) {
         viewModel.loadPagedEntities(recordingId)
         onPagedReleasesFlowChange(viewModel.pagedEntities)

@@ -25,7 +25,6 @@ internal fun ReleasesByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: ReleasesByCollectionViewModel = hiltViewModel(),
 ) {
-
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<ReleaseListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedEntities)

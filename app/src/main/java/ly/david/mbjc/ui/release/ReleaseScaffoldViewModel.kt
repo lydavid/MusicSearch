@@ -59,13 +59,15 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
     override val coverArtArchiveApiService: CoverArtArchiveApiService,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList,
     ReleaseImageManager {
 
     private data class ViewModelState(
         val releaseId: String = "",
-        val query: String = ""
+        val query: String = "",
     )
 
     private val releaseId: MutableStateFlow<String> = MutableStateFlow("")
@@ -107,23 +109,23 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                         getPagingSource(releaseId, query)
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map { track: TrackForListItem ->
-                        track.toTrackListItemModel()
-                    }.insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
-                        if (before?.mediumId != after?.mediumId && after != null) {
-                            val medium: MediumRoomModel =
-                                mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
+                    pagingData
+                        .map(TrackForListItem::toTrackListItemModel)
+                        .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
+                            if (before?.mediumId != after?.mediumId && after != null) {
+                                val medium: MediumRoomModel =
+                                    mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
 
-                            ListSeparator(
-                                id = "${medium.id}",
-                                text = medium.format.orEmpty() +
-                                    (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
-                                    medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
-                            )
-                        } else {
-                            null
+                                ListSeparator(
+                                    id = "${medium.id}",
+                                    text = medium.format.orEmpty() +
+                                        (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
+                                        medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
+                                )
+                            } else {
+                                null
+                            }
                         }
-                    }
                 }
             }
             .distinctUntilChanged()
@@ -138,6 +140,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         query.isEmpty() -> {
             trackDao.getTracksInRelease(releaseId)
         }
+
         else -> {
             trackDao.getTracksInReleaseFiltered(
                 releaseId = releaseId,
@@ -148,7 +151,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         releaseId: String,
-        selectedTab: ReleaseTab
+        selectedTab: ReleaseTab,
     ) {
         when (selectedTab) {
             ReleaseTab.DETAILS -> {
@@ -185,6 +188,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             ReleaseTab.TRACKS -> loadTracks(releaseId)
             ReleaseTab.RELATIONSHIPS -> loadRelations(releaseId)
             ReleaseTab.STATS -> {
@@ -195,7 +199,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 
     private suspend fun fetchCoverArt(
         releaseId: String,
-        releaseScaffoldModel: ReleaseScaffoldModel
+        releaseScaffoldModel: ReleaseScaffoldModel,
     ) {
         val imageUrl = releaseScaffoldModel.imageUrl
         url.value = imageUrl ?: getReleaseCoverArtUrlFromNetwork(

@@ -26,7 +26,6 @@ internal fun RecordingsByWorkScreen(
     filterText: String,
     viewModel: RecordingsByWorkViewModel = hiltViewModel(),
 ) {
-
     LaunchedEffect(key1 = workId) {
         viewModel.loadPagedEntities(workId)
         onPagedRecordingsFlowChange(viewModel.pagedEntities)

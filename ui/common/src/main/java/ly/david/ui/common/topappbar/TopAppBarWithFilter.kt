@@ -116,7 +116,6 @@ internal fun TopAppBarWithFilterInternal(
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
 ) {
-
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -127,7 +126,6 @@ internal fun TopAppBarWithFilterInternal(
             enter = expandVertically(),
             exit = shrinkVertically()
         ) {
-
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
             }
@@ -219,7 +217,7 @@ internal fun TopAppBarWithFilterInternal(
 
 enum class TopAppBarWithFilterTestTag {
     FILTER_TEXT_FIELD,
-    FILTER_BACK
+    FILTER_BACK,
 }
 
 // region Previews

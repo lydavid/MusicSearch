@@ -26,7 +26,6 @@ internal fun ReleasesByLabelScreen(
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
     viewModel: ReleasesByLabelViewModel = hiltViewModel(),
 ) {
-
     LaunchedEffect(key1 = labelId) {
         viewModel.loadPagedEntities(labelId)
         onPagedReleasesFlowChange(viewModel.pagedEntities)

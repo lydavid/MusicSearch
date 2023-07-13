@@ -34,7 +34,7 @@ object ImageModule {
 
     private class RequestHeaderInterceptor(
         private val name: String,
-        private val value: String
+        private val value: String,
     ) : Interceptor {
 
         override fun intercept(chain: Interceptor.Chain): Response {

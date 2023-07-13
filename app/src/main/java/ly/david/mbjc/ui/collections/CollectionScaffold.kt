@@ -58,7 +58,7 @@ internal fun CollectionScaffold(
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
-    viewModel: CollectionViewModel = hiltViewModel()
+    viewModel: CollectionViewModel = hiltViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -321,7 +321,8 @@ private fun CollectionScaffoldContent(
 
         MusicBrainzEntity.COLLECTION,
         MusicBrainzEntity.GENRE,
-        MusicBrainzEntity.URL -> {
+        MusicBrainzEntity.URL,
+        -> {
             error("Collections by ${entity.name} not supported.")
         }
 

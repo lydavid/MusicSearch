@@ -12,7 +12,7 @@ data class AreaScaffoldModel(
     override val disambiguation: String? = "",
     override val type: String? = "",
     override val lifeSpan: LifeSpan? = null,
-    val countryCodes: List<String>? = null
+    val countryCodes: List<String>? = null,
 ) : Area
 
 internal fun AreaMusicBrainzModel.toAreaScaffoldModel() = AreaScaffoldModel(

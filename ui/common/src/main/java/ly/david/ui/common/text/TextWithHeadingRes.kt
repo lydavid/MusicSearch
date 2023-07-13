@@ -14,7 +14,7 @@ fun TextWithHeadingRes(
     @StringRes headingRes: Int,
     text: String,
     modifier: Modifier = Modifier,
-    filterText: String = ""
+    filterText: String = "",
 ) {
     val heading = stringResource(id = headingRes)
     if (heading.contains(filterText) || text.contains(filterText)) {

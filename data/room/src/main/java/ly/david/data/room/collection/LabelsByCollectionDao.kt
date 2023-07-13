@@ -71,6 +71,6 @@ interface LabelsByCollectionDao {
     )
     fun getLabelsByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, LabelRoomModel>
 }

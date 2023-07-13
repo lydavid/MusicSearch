@@ -15,5 +15,6 @@ fun MusicBrainzEntity.toFakeMusicBrainzModel(): MusicBrainzModel =
         MusicBrainzEntity.SERIES -> fakeSeries
         MusicBrainzEntity.WORK -> fakeWorkWithAllData
         MusicBrainzEntity.URL,
-        MusicBrainzEntity.COLLECTION -> error("Not supported.")
+        MusicBrainzEntity.COLLECTION,
+        -> error("Not supported.")
     }

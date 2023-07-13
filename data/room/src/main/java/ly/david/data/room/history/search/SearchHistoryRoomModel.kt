@@ -21,7 +21,7 @@ import ly.david.data.network.MusicBrainzEntity
 data class SearchHistoryRoomModel(
     @ColumnInfo(name = "query") val query: String,
     @ColumnInfo(name = "entity") val entity: MusicBrainzEntity,
-    @ColumnInfo(name = "last_accessed") val lastAccessed: Date = Date()
+    @ColumnInfo(name = "last_accessed") val lastAccessed: Date = Date(),
 ) : Identifiable {
     override val id: String
         get() = "${query}_$entity"

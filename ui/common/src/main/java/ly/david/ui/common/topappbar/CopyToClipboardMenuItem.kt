@@ -11,7 +11,7 @@ import ly.david.ui.common.BuildConfig
 @Composable
 fun OverflowMenuScope.CopyToClipboardMenuItem(
     entityId: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (!BuildConfig.DEBUG) return
 

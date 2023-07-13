@@ -8,5 +8,6 @@ import ly.david.mbjc.ui.stats.RelationsStats
 
 @HiltViewModel
 internal class ReleaseStatsViewModel @Inject constructor(
-    override val relationDao: RelationDao
-) : ViewModel(), RelationsStats
+    override val relationDao: RelationDao,
+) : ViewModel(),
+    RelationsStats

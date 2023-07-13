@@ -54,7 +54,7 @@ internal fun PlaceScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: PlaceScaffoldViewModel = hiltViewModel()
+    viewModel: PlaceScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.PLACE
     val context = LocalContext.current

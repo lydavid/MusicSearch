@@ -19,7 +19,7 @@ fun LifeSpanText(
     modifier: Modifier = Modifier,
     beginHeadingRes: Int = R.string.start_date,
     endHeadingRes: Int = R.string.end_date,
-    filterText: String = ""
+    filterText: String = "",
 ) {
     lifeSpan?.run {
         Column(
@@ -80,7 +80,7 @@ internal class LifeSpanPreviewParameterProvider : PreviewParameterProvider<LifeS
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(LifeSpanPreviewParameterProvider::class) lifeSpan: LifeSpan
+    @PreviewParameter(LifeSpanPreviewParameterProvider::class) lifeSpan: LifeSpan,
 ) {
     PreviewTheme {
         Surface {

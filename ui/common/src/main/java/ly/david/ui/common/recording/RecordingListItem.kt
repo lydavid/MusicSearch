@@ -17,8 +17,8 @@ import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.release.TrackListItem
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
@@ -29,7 +29,7 @@ import ly.david.ui.core.theme.TextStyles
 fun RecordingListItem(
     recording: RecordingListItemModel,
     modifier: Modifier = Modifier,
-    onRecordingClick: RecordingListItemModel.() -> Unit = {}
+    onRecordingClick: RecordingListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -96,7 +96,7 @@ internal class RecordingPreviewParameterProvider : PreviewParameterProvider<Reco
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingListItemModel
+    @PreviewParameter(RecordingPreviewParameterProvider::class) recording: RecordingListItemModel,
 ) {
     PreviewTheme {
         Surface {

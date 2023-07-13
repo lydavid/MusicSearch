@@ -20,7 +20,6 @@ class ListSeparatorHeaderTest : PaparazziScreenshotTest() {
     fun attributesListSeparatorHeader() {
         snapshot {
             AttributesListSeparatorHeader(R.string.work)
-
         }
     }
 

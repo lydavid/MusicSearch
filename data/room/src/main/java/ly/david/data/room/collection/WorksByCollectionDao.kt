@@ -71,6 +71,6 @@ interface WorksByCollectionDao {
     )
     fun getWorksByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, WorkRoomModel>
 }

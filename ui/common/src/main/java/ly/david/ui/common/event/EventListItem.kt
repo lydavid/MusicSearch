@@ -25,13 +25,12 @@ import ly.david.ui.core.theme.TextStyles
 fun EventListItem(
     event: EventListItemModel,
     modifier: Modifier = Modifier,
-    onEventClick: EventListItemModel.() -> Unit = {}
+    onEventClick: EventListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
             Column {
                 event.run {
-
                     Text(
                         text = name,
                         style = TextStyles.getCardBodyTextStyle()
@@ -89,7 +88,7 @@ internal class EventPreviewParameterProvider : PreviewParameterProvider<EventLis
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(EventPreviewParameterProvider::class) event: EventListItemModel
+    @PreviewParameter(EventPreviewParameterProvider::class) event: EventListItemModel,
 ) {
     PreviewTheme {
         Surface {

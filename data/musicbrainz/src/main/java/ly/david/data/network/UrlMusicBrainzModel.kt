@@ -11,5 +11,5 @@ data class UrlMusicBrainzModel(
     /**
      * The url itself.
      */
-    @Json(name = "resource") val resource: String
-): Identifiable
+    @Json(name = "resource") val resource: String,
+) : Identifiable

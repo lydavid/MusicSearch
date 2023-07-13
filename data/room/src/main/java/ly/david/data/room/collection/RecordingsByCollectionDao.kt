@@ -80,6 +80,6 @@ interface RecordingsByCollectionDao {
     )
     fun getRecordingsByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, RecordingForListItem>
 }

@@ -4,9 +4,9 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
-import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.label.releases.ReleaseLabel
 import ly.david.data.room.label.releases.ReleaseLabelDao
+import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseRoomModel
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -18,8 +18,10 @@ internal class ReleaseLabelDaoTest : HiltTest() {
 
     @Inject
     lateinit var releaseLabelDao: ReleaseLabelDao
+
     @Inject
     lateinit var releaseDao: ReleaseDao
+
     @Inject
     lateinit var labelDao: LabelDao
 

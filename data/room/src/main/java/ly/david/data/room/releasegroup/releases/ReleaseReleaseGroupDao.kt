@@ -91,6 +91,6 @@ abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
     )
     abstract fun getReleasesByReleaseGroupFiltered(
         releaseGroupId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem>
 }

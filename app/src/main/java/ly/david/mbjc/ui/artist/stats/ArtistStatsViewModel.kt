@@ -14,8 +14,11 @@ import ly.david.mbjc.ui.stats.ReleasesStats
 internal class ArtistStatsViewModel @Inject constructor(
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
-    override val relationDao: RelationDao
-) : ViewModel(), ReleaseGroupsStats, ReleasesStats, RelationsStats {
+    override val relationDao: RelationDao,
+) : ViewModel(),
+    ReleaseGroupsStats,
+    ReleasesStats,
+    RelationsStats {
 
     override suspend fun getTotalLocalReleaseGroups(entityId: String) =
         artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId)

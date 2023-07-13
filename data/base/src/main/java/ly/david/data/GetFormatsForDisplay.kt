@@ -8,7 +8,6 @@ package ly.david.data
  * * 2×CD + Blu-ray
  */
 fun List<String?>?.getFormatsForDisplay(): String {
-
     val hashMap = hashMapOf<String, Int>()
 
     this?.forEach { format ->

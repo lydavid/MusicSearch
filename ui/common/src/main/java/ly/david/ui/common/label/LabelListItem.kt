@@ -27,7 +27,7 @@ import ly.david.ui.core.theme.getSubTextColor
 fun LabelListItem(
     label: LabelListItemModel,
     modifier: Modifier = Modifier,
-    onLabelClick: LabelListItemModel.() -> Unit = {}
+    onLabelClick: LabelListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -111,7 +111,7 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun Preview(
-    @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelListItemModel
+    @PreviewParameter(LabelCardPreviewParameterProvider::class) label: LabelListItemModel,
 ) {
     PreviewTheme {
         Surface {

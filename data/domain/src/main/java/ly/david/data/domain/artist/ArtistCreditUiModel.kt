@@ -8,7 +8,7 @@ import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
 data class ArtistCreditUiModel(
     val artistId: String,
     override val name: String,
-    override val joinPhrase: String? = null
+    override val joinPhrase: String? = null,
 ) : ArtistCreditName
 
 internal fun List<ArtistCreditMusicBrainzModel>?.toArtistCreditUiModels(): List<ArtistCreditUiModel> =

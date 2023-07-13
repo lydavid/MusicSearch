@@ -22,11 +22,10 @@ data class Coordinates(
  * Turns [Coordinates] to this format: 40.76688°N, 73.98905°W
  */
 fun Coordinates.formatForDisplay(): String? {
-
     if (longitude == null || latitude == null) return null
 
-    val lat = if (latitude < 0) "${abs(latitude)}°S" else "${latitude}°N"
-    val long = if (longitude < 0) "${abs(longitude)}°W" else "${longitude}°E"
+    val lat = if (latitude < 0) "${abs(latitude)}°S" else "$latitude°N"
+    val long = if (longitude < 0) "${abs(longitude)}°W" else "$longitude°E"
 
     return "$lat, $long"
 }

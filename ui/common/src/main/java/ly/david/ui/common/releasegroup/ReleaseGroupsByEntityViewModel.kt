@@ -30,7 +30,7 @@ abstract class ReleaseGroupsByEntityViewModel(
 
     abstract suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>
+        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     )
 
     override suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int {

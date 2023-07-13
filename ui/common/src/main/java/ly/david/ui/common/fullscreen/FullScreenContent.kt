@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun FullScreenContent(
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),

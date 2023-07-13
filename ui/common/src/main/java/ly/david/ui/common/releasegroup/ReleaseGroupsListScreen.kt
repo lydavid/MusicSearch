@@ -27,7 +27,7 @@ fun ReleaseGroupsListScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
-    viewModel: ReleaseGroupsListViewModel = hiltViewModel()
+    viewModel: ReleaseGroupsListViewModel = hiltViewModel(),
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,

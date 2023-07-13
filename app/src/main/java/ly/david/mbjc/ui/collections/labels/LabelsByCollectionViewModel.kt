@@ -3,10 +3,10 @@ package ly.david.mbjc.ui.collections.labels
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
+import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseLabelsResponse
@@ -31,7 +31,7 @@ internal class LabelsByCollectionViewModel @Inject constructor(
 ) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,
     relationDao = relationDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseLabelsResponse {
@@ -63,7 +63,7 @@ internal class LabelsByCollectionViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, LabelRoomModel> = when {
         query.isEmpty() -> {
             collectionEntityDao.getLabelsByCollection(entityId)

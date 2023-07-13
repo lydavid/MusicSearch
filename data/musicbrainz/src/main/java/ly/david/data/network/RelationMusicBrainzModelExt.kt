@@ -28,7 +28,6 @@ fun RelationMusicBrainzModel.getFormattedAttributesForDisplay(): String =
  * Returns a human-readable label for this relationship based on its type and link direction.
  */
 fun RelationMusicBrainzModel.getHeader(): String {
-
     val labels: Pair<String, String>? = relationshipHeaders[typeId]
 
     return if (labels == null) {

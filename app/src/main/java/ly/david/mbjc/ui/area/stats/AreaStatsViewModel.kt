@@ -14,8 +14,11 @@ import ly.david.mbjc.ui.stats.ReleasesStats
 class AreaStatsViewModel @Inject constructor(
     override val relationDao: RelationDao,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val areaPlaceDao: AreaPlaceDao
-) : ViewModel(), RelationsStats, ReleasesStats, PlacesStats {
+    private val areaPlaceDao: AreaPlaceDao,
+) : ViewModel(),
+    RelationsStats,
+    ReleasesStats,
+    PlacesStats {
 
     override suspend fun getTotalLocalReleases(entityId: String): Int =
         releaseCountryDao.getNumberOfReleasesByCountry(entityId)

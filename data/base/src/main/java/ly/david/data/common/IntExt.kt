@@ -7,7 +7,6 @@ private const val MINUTES_IN_HOUR = 60
 const val UNKNOWN_TIME = "?:??"
 
 fun Int?.toDisplayTime(): String {
-
     if (this == null || this < 0) return UNKNOWN_TIME
 
     val timeWithoutMs = this / MS

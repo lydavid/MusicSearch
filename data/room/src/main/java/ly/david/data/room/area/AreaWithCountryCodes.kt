@@ -12,5 +12,5 @@ data class AreaWithCountryCodes(
         parentColumn = "id",
         entityColumn = "area_id"
     )
-    val countryCodes: List<CountryCode>
+    val countryCodes: List<CountryCode>,
 ) : RoomModel

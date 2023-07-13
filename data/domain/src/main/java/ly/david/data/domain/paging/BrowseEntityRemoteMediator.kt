@@ -29,7 +29,7 @@ class BrowseEntityRemoteMediator<RM : RoomModel>(
     private val getRemoteEntityCount: suspend () -> Int?,
     private val getLocalEntityCount: suspend () -> Int,
     private val deleteLocalEntity: suspend () -> Unit,
-    private val browseEntity: suspend (offset: Int) -> Int
+    private val browseEntity: suspend (offset: Int) -> Int,
 ) : RemoteMediator<Int, RM>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -42,11 +42,9 @@ class BrowseEntityRemoteMediator<RM : RoomModel>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RM>
+        state: PagingState<Int, RM>,
     ): MediatorResult {
-
         return try {
-
             val nextOffset: Int = when (loadType) {
                 LoadType.REFRESH -> {
                     // We want to start with LAUNCH_INITIAL_REFRESH but we don't want to delete on this initial refresh
@@ -55,6 +53,7 @@ class BrowseEntityRemoteMediator<RM : RoomModel>(
                     }
                     0
                 }
+
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     val localEntityCount = getLocalEntityCount()
@@ -75,7 +74,7 @@ class BrowseEntityRemoteMediator<RM : RoomModel>(
             MediatorResult.Success(endOfPaginationReached = browseEntity(nextOffset) < SEARCH_BROWSE_LIMIT)
         } catch (ex: HttpException) {
             MediatorResult.Error(ex)
-        }  catch (ex: IOException) {
+        } catch (ex: IOException) {
             MediatorResult.Error(ex)
         }
     }

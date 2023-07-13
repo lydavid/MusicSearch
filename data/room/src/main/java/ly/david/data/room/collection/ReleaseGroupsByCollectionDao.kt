@@ -61,7 +61,7 @@ interface ReleaseGroupsByCollectionDao {
     fun getReleaseGroupsByCollection(
         collectionId: String,
         query: String = "%%",
-        sorted: Boolean = false
+        sorted: Boolean = false,
     ): PagingSource<Int, ReleaseGroupForListItem>
 
     @Query(

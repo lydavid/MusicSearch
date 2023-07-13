@@ -10,16 +10,16 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
-import ly.david.ui.common.topappbar.Tab
 import ly.david.mbjc.ui.stats.Stats
 import ly.david.mbjc.ui.stats.StatsScreen
+import ly.david.ui.common.topappbar.Tab
 
 @Composable
 internal fun ArtistStatsScreen(
     artistId: String,
     tabs: List<Tab>,
     modifier: Modifier = Modifier,
-    viewModel: ArtistStatsViewModel = hiltViewModel()
+    viewModel: ArtistStatsViewModel = hiltViewModel(),
 ) {
     var totalRemoteReleaseGroups: Int? by remember { mutableStateOf(null) }
     var totalLocalReleaseGroups by remember { mutableStateOf(0) }

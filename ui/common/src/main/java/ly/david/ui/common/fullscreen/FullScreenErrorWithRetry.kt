@@ -15,7 +15,7 @@ import ly.david.ui.core.theme.PreviewTheme
 @Composable
 fun FullScreenErrorWithRetry(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     FullScreenContent(modifier = modifier) {
         Text(

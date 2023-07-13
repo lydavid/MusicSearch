@@ -32,9 +32,8 @@ fun ReleaseGroupListItem(
     releaseGroup: ReleaseGroupListItemModel,
     modifier: Modifier = Modifier,
     requestForMissingCoverArtUrl: suspend () -> Unit = {},
-    onClick: ReleaseGroupListItemModel.() -> Unit = {}
+    onClick: ReleaseGroupListItemModel.() -> Unit = {},
 ) {
-
     LaunchedEffect(key1 = releaseGroup.id) {
         if (releaseGroup.imageUrl == null) {
             requestForMissingCoverArtUrl()

@@ -21,7 +21,7 @@ import ly.david.ui.core.theme.TextStyles
 @Composable
 internal fun ClickableItem(
     text: String,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier

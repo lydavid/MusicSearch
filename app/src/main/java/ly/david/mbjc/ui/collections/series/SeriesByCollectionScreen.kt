@@ -29,7 +29,6 @@ internal fun SeriesByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: SeriesByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.SERIES
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<SeriesListItemModel> =

@@ -10,7 +10,7 @@ import ly.david.ui.common.R
 @Composable
 fun OverflowMenuScope.AddToCollectionMenuItem(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     DropdownMenuItem(
         text = {

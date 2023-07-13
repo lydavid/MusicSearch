@@ -11,8 +11,10 @@ import ly.david.mbjc.ui.stats.RelationsStats
 @HiltViewModel
 class PlaceStatsViewModel @Inject constructor(
     override val relationDao: RelationDao,
-    private val eventPlaceDao: EventPlaceDao
-) : ViewModel(), RelationsStats, EventStats {
+    private val eventPlaceDao: EventPlaceDao,
+) : ViewModel(),
+    RelationsStats,
+    EventStats {
 
     override suspend fun getTotalLocalEvents(entityId: String): Int =
         eventPlaceDao.getNumberOfEventsByPlace(entityId)

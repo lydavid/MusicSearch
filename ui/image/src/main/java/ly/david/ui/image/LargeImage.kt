@@ -33,7 +33,6 @@ fun LargeImage(
     modifier: Modifier = Modifier,
 ) {
     if (url.isNotEmpty()) {
-
         val painter = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url.useHttps())
@@ -87,7 +86,7 @@ fun LargeImage(
 @Composable
 private fun PainterImage(
     painter: Painter,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Image(
         modifier = modifier

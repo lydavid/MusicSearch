@@ -7,12 +7,12 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import ly.david.data.domain.area.AreaRepository
 import ly.david.data.domain.area.AreaScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
-import ly.david.data.domain.area.AreaRepository
 import ly.david.data.showReleases
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
@@ -25,7 +25,9 @@ internal class AreaScaffoldViewModel @Inject constructor(
     private val repository: AreaRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -43,7 +45,7 @@ internal class AreaScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         areaId: String,
-        selectedTab: AreaTab
+        selectedTab: AreaTab,
     ) {
         when (selectedTab) {
             AreaTab.DETAILS -> {
@@ -77,6 +79,7 @@ internal class AreaScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             AreaTab.RELATIONSHIPS -> loadRelations(areaId)
             else -> {
                 // Not handled here.

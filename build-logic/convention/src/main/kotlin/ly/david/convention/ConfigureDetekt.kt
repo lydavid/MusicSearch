@@ -14,7 +14,8 @@ fun Project.configureDetekt() {
     }
 
     dependencies {
-        add("detektPlugins", "io.nlopez.compose.rules:detekt:0.1.10")
+        add("detektPlugins", libs.findLibrary("detekt-compose").get())
+        add("detektPlugins", libs.findLibrary("detekt-formatting").get())
     }
 
     detekt {

@@ -7,5 +7,5 @@ internal enum class ArtistTab(val tab: Tab) {
     RELEASE_GROUPS(Tab.RELEASE_GROUPS),
     RELEASES(Tab.RELEASES),
     RELATIONSHIPS(Tab.RELATIONSHIPS),
-    STATS(Tab.STATS)
+    STATS(Tab.STATS),
 }

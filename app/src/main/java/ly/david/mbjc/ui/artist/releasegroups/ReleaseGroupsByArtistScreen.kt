@@ -24,7 +24,7 @@ internal fun ReleaseGroupsByArtistScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onPagedReleaseGroupsChange: (Flow<PagingData<ListItemModel>>) -> Unit = {},
-    viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel()
+    viewModel: ReleaseGroupsByArtistViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(key1 = artistId) {
         viewModel.loadPagedEntities(artistId)

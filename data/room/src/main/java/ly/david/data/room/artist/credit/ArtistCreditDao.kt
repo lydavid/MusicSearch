@@ -28,7 +28,7 @@ interface ArtistCreditDao {
 
     suspend fun insertArtistCredits(
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
-        entityId: String
+        entityId: String,
     ) {
         val artistCreditName = artistCredits.getDisplayNames()
         var artistCreditId = insertArtistCredit(ArtistCredit(name = artistCreditName))

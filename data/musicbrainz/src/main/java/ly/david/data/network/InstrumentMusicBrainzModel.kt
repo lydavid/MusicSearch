@@ -11,5 +11,5 @@ data class InstrumentMusicBrainzModel(
     @Json(name = "type") override val type: String? = null,
     @Json(name = "type-id") val typeId: String? = null,
 
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Instrument

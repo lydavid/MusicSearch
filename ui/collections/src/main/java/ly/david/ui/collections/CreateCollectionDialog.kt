@@ -43,9 +43,8 @@ import ly.david.ui.core.theme.TextStyles
 @Composable
 fun CreateCollectionDialog(
     onDismiss: () -> Unit = {},
-    onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> }
+    onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
-
     var name by rememberSaveable { mutableStateOf("") }
     var selectedEntity by rememberSaveable { mutableStateOf(MusicBrainzEntity.RELEASE) }
     val focusManager = LocalFocusManager.current
@@ -67,7 +66,6 @@ fun CreateCollectionDialog(
             Column(
                 modifier = Modifier.padding(24.dp),
             ) {
-
                 Text(
                     modifier = Modifier,
                     text = stringResource(id = R.string.create_collection),

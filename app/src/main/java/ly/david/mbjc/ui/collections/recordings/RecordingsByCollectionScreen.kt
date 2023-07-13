@@ -14,8 +14,8 @@ import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
-import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.recording.RecordingListItem
+import ly.david.ui.common.rememberFlowWithLifecycleStarted
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -29,7 +29,6 @@ internal fun RecordingsByCollectionScreen(
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
     viewModel: RecordingsByCollectionViewModel = hiltViewModel(),
 ) {
-
     val entity = MusicBrainzEntity.RECORDING
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<RecordingListItemModel> =

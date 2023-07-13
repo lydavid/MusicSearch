@@ -22,7 +22,7 @@ data class CollectionMusicBrainzModel(
     @Json(name = "release-group-count") val releaseGroupCount: Int? = null,
     @Json(name = "series-count") val seriesCount: Int? = null,
     @Json(name = "work-count") val workCount: Int? = null,
-): MusicBrainzModel()
+) : MusicBrainzModel()
 
 fun CollectionMusicBrainzModel.getCount(): Int {
     return when (entity) {

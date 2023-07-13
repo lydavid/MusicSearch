@@ -8,11 +8,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.PlaceListItemModel
+import ly.david.data.domain.place.PlaceRepository
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
-import ly.david.data.domain.place.PlaceRepository
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -24,7 +24,9 @@ internal class PlaceScaffoldViewModel @Inject constructor(
     private val repository: PlaceRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,
-) : ViewModel(), MusicBrainzEntityViewModel, RecordLookupHistory,
+) : ViewModel(),
+    MusicBrainzEntityViewModel,
+    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -41,7 +43,7 @@ internal class PlaceScaffoldViewModel @Inject constructor(
 
     fun loadDataForTab(
         placeId: String,
-        selectedTab: PlaceTab
+        selectedTab: PlaceTab,
     ) {
         when (selectedTab) {
             PlaceTab.DETAILS -> {
@@ -71,6 +73,7 @@ internal class PlaceScaffoldViewModel @Inject constructor(
                     }
                 }
             }
+
             PlaceTab.RELATIONSHIPS -> loadRelations(placeId)
             else -> {
                 // Not handled here.

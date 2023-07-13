@@ -23,7 +23,7 @@ data class WorkAttributeRoomModel(
     @ColumnInfo(name = "work_id") val workId: String,
     @ColumnInfo(name = "type") override val type: String,
     @ColumnInfo(name = "type_id") override val typeId: String,
-    @ColumnInfo(name = "value") override val value: String
+    @ColumnInfo(name = "value") override val value: String,
 ) : WorkAttribute
 
 fun WorkAttributeMusicBrainzModel.toWorkAttributeRoomModel(workId: String) =

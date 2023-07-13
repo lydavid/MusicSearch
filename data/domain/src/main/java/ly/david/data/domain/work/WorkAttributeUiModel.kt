@@ -7,7 +7,7 @@ import ly.david.data.room.work.WorkAttributeRoomModel
 data class WorkAttributeUiModel(
     override val type: String,
     override val typeId: String,
-    override val value: String
+    override val value: String,
 ) : WorkAttribute
 
 internal fun WorkAttributeMusicBrainzModel.toWorkAttributeUiModel() =

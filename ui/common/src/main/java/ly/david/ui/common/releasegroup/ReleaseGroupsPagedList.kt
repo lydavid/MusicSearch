@@ -65,13 +65,11 @@ class ReleaseGroupsPagedList @Inject constructor() : SortablePagedList<ListItemM
                     remoteMediator = getRemoteMediator(entityId).takeIf { isRemote },
                     pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query, sorted) }
                 ).flow.map { pagingData ->
-                    pagingData.map {
-                        it.toReleaseGroupListItemModel()
-                    }
+                    pagingData
+                        .map(ReleaseGroupForListItem::toReleaseGroupListItemModel)
                         .insertSeparators { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
                             if (sorted && rg2 != null &&
-                                (rg1?.primaryType != rg2.primaryType ||
-                                    rg1?.secondaryTypes != rg2.secondaryTypes)
+                                (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)
                             ) {
                                 ListSeparator(
                                     id = "${rg1?.id}_${rg2.id}",

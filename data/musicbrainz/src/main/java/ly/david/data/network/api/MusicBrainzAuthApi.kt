@@ -15,7 +15,7 @@ interface MusicBrainzAuthApi {
     suspend fun logout(
         @Field("token") token: String,
         @Field("client_id") clientId: String,
-        @Field("client_secret") clientSecret: String
+        @Field("client_secret") clientSecret: String,
     )
 }
 

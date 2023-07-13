@@ -3,7 +3,6 @@ package ly.david.data.room.event
 import androidx.room.Dao
 import androidx.room.Query
 import ly.david.data.room.BaseDao
-import ly.david.data.room.event.EventRoomModel
 
 @Dao
 abstract class EventDao : BaseDao<EventRoomModel>() {

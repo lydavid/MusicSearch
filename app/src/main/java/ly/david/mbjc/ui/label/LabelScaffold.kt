@@ -57,7 +57,7 @@ internal fun LabelScaffold(
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    viewModel: LabelScaffoldViewModel = hiltViewModel()
+    viewModel: LabelScaffoldViewModel = hiltViewModel(),
 ) {
     val resource = MusicBrainzEntity.LABEL
     val scope = rememberCoroutineScope()

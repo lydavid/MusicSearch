@@ -41,9 +41,8 @@ internal fun SearchScreen(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,
     initialEntity: MusicBrainzEntity? = null,
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
 ) {
-
     val searchResults: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.searchResults)
             .collectAsLazyPagingItems()
@@ -135,5 +134,5 @@ internal fun SearchScreen(
 }
 
 enum class SearchScreenTestTag {
-    TEXT_FIELD
+    TEXT_FIELD,
 }

@@ -15,5 +15,5 @@ data class CollectionWithEntities(
         parentColumn = "id",
         entityColumn = "id"
     )
-    val entities: List<CollectionEntityRoomModel>
+    val entities: List<CollectionEntityRoomModel>,
 ) : RoomModel

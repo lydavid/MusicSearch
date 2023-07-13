@@ -25,7 +25,7 @@ import ly.david.ui.core.theme.TextStyles
 fun PlaceListItem(
     place: PlaceListItemModel,
     modifier: Modifier = Modifier,
-    onPlaceClick: PlaceListItemModel.() -> Unit = {}
+    onPlaceClick: PlaceListItemModel.() -> Unit = {},
 ) {
     ListItem(
         headlineContent = {
@@ -105,7 +105,7 @@ internal class PlacePreviewParameterProvider : PreviewParameterProvider<PlaceLis
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(PlacePreviewParameterProvider::class) place: PlaceListItemModel
+    @PreviewParameter(PlacePreviewParameterProvider::class) place: PlaceListItemModel,
 ) {
     PreviewTheme {
         Surface {

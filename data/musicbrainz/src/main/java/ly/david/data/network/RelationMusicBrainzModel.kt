@@ -40,8 +40,11 @@ data class RelationMusicBrainzModel(
 ) : ILifeSpan
 
 enum class Direction {
-    @Json(name = "backward") BACKWARD,
-    @Json(name = "forward") FORWARD
+    @Json(name = "backward")
+    BACKWARD,
+
+    @Json(name = "forward")
+    FORWARD,
 }
 
 // TODO: instead of this, just use Map<String, String>
@@ -57,5 +60,5 @@ data class AttributeValue(
     val task: String? = null,
 
     @Json(name = "number")
-    val number: String? = null
+    val number: String? = null,
 )

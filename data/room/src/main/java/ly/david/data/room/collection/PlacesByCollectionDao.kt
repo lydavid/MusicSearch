@@ -77,6 +77,6 @@ interface PlacesByCollectionDao {
     )
     fun getPlacesByCollectionFiltered(
         collectionId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, PlaceRoomModel>
 }

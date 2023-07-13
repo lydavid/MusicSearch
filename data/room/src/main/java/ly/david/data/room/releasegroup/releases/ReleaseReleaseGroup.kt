@@ -20,5 +20,5 @@ data class ReleaseReleaseGroup(
     val releaseId: String,
 
     @ColumnInfo(name = "release_group_id")
-    val releaseGroupId: String
+    val releaseGroupId: String,
 )

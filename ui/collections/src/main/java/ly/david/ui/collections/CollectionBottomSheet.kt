@@ -36,7 +36,7 @@ fun CollectionBottomSheet(
     collections: LazyPagingItems<CollectionListItemModel>,
     onDismiss: () -> Unit,
     onCreateCollectionClick: () -> Unit,
-    onAddToCollection: suspend (collectionId: String) -> Unit
+    onAddToCollection: suspend (collectionId: String) -> Unit,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,

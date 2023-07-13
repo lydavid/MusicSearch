@@ -23,9 +23,8 @@ internal fun ReleaseGroupsByCollectionScreen(
     modifier: Modifier = Modifier,
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
-    viewModel: ReleaseGroupsByCollectionViewModel = hiltViewModel()
+    viewModel: ReleaseGroupsByCollectionViewModel = hiltViewModel(),
 ) {
-
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.pagedEntities)

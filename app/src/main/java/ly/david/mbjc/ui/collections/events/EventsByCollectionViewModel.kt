@@ -3,10 +3,10 @@ package ly.david.mbjc.ui.collections.events
 import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.domain.listitem.toEventListItemModel
+import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseEventsResponse
@@ -31,7 +31,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
 ) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
     relationDao = relationDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
@@ -63,7 +63,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, EventRoomModel> = when {
         query.isEmpty() -> {
             collectionEntityDao.getEventsByCollection(entityId)

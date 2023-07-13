@@ -80,6 +80,6 @@ abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
     )
     abstract fun getPlacesByAreaFiltered(
         areaId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, PlaceRoomModel>
 }

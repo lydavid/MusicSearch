@@ -14,7 +14,7 @@ data class LabelListItemModel(
     override val labelCode: Int? = null,
 
     // TODO: don't need this in scaffold model
-    val catalogNumber: String? = null
+    val catalogNumber: String? = null,
 ) : Label, ListItemModel()
 
 internal fun LabelMusicBrainzModel.toLabelListItemModel() =

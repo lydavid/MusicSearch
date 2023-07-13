@@ -15,7 +15,7 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideRetrofitBuilder(
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
     ): Retrofit.Builder {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))

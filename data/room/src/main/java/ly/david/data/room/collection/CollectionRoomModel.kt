@@ -19,7 +19,7 @@ data class CollectionRoomModel(
     @ColumnInfo(name = "type") val type: String? = null,
     @ColumnInfo(name = "type_id") val typeId: String? = null,
     @ColumnInfo(name = "entity_count") val entityCount: Int = 0,
-): RoomModel
+) : RoomModel
 
 fun CollectionMusicBrainzModel.toCollectionRoomModel(): CollectionRoomModel {
     return CollectionRoomModel(

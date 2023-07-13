@@ -7,5 +7,5 @@ internal enum class AreaTab(val tab: Tab) {
     RELATIONSHIPS(Tab.RELATIONSHIPS),
     RELEASES(Tab.RELEASES),
     PLACES(Tab.PLACES),
-    STATS(Tab.STATS)
+    STATS(Tab.STATS),
 }

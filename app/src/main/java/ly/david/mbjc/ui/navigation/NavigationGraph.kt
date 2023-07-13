@@ -86,7 +86,6 @@ internal fun NavigationGraph(
         navController = navController,
         startDestination = Destination.LOOKUP.route,
     ) {
-
         val onLookupEntityClick: (MusicBrainzEntity, String, String?) -> Unit = { entity, id, title ->
             navController.goToEntityScreen(entity, id, title)
         }
@@ -103,7 +102,7 @@ internal fun NavigationGraph(
         composable(Destination.LOOKUP.route) {
             SearchScaffold(
                 modifier = modifier,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
             )
         }
 
@@ -405,7 +404,7 @@ internal fun NavigationGraph(
 private fun NavGraphBuilder.addLookupEntityScreen(
     entity: MusicBrainzEntity,
     uriPrefix: String,
-    scaffold: @Composable (entityId: String, titleWithDisambiguation: String?) -> Unit
+    scaffold: @Composable (entityId: String, titleWithDisambiguation: String?) -> Unit,
 ) {
     composable(
         route = "${entity.toLookupDestination().route}/{$ID}?$TITLE={$TITLE}",

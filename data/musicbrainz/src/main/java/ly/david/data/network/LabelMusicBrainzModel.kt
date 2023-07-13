@@ -14,5 +14,5 @@ data class LabelMusicBrainzModel(
     @Json(name = "life-span") val lifeSpan: LifeSpan? = null,
 
     @Json(name = "area") val area: AreaMusicBrainzModel? = null,
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Label

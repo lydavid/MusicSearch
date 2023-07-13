@@ -53,9 +53,8 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
     noResultsText: String = stringResource(id = R.string.no_results_found),
-    itemContent: @Composable LazyItemScope.(value: T?) -> Unit
+    itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
-
 //    val refreshScope = rememberCoroutineScope()
 //    var refreshing by remember { mutableStateOf(false) }
 
@@ -86,7 +85,6 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
             )
         }
     ) {
-
         // This doesn't affect "loads" from db/source.
         when {
             lazyPagingItems.loadState.refresh is LoadState.Loading -> {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun <T> rememberFlowWithLifecycleStarted(
     flow: Flow<T>,
-    lifecycleOwner: Lifecycle = LocalLifecycleOwner.current.lifecycle
+    lifecycleOwner: Lifecycle = LocalLifecycleOwner.current.lifecycle,
 ): Flow<T> = remember(flow, lifecycleOwner) {
     flow.flowWithLifecycle(
         lifecycle = lifecycleOwner,

@@ -27,7 +27,7 @@ fun SwipeToDeleteListItem(
     content: @Composable RowScope.() -> Unit,
     modifier: Modifier = Modifier,
     disable: Boolean = false,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     if (disable) {
         Row(modifier = modifier) {
@@ -80,7 +80,7 @@ private fun SwipeToDeleteListItem(
 
 @Composable
 private fun SwipeToDeleteBackground(
-    alignment: Alignment
+    alignment: Alignment,
 ) {
     Box(
         modifier = Modifier

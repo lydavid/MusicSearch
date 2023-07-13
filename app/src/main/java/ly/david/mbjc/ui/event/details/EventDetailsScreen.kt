@@ -18,10 +18,10 @@ import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.common.R
+import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -92,4 +92,3 @@ private fun Preview() {
     }
 }
 // endregion
-

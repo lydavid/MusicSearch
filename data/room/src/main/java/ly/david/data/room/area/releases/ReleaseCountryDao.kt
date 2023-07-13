@@ -98,7 +98,7 @@ abstract class ReleaseCountryDao : BaseDao<ReleaseCountry>() {
     )
     abstract fun getReleasesByCountryFiltered(
         areaId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem>
     // endregion
 }

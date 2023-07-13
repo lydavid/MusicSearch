@@ -8,5 +8,5 @@ internal enum class PlaceTab(val tab: Tab) {
     // TODO: Should exclude event-rels because they appear to be the same as the results from browse events by place
     RELATIONSHIPS(Tab.RELATIONSHIPS),
     EVENTS(Tab.EVENTS),
-    STATS(Tab.STATS)
+    STATS(Tab.STATS),
 }

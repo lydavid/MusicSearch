@@ -26,9 +26,8 @@ internal fun SearchHistoryScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, query: String) -> Unit = { _, _ -> },
     onDeleteItem: (SearchHistoryListItemModel) -> Unit = {},
-    onDeleteAllHistory: () -> Unit = {}
+    onDeleteAllHistory: () -> Unit = {},
 ) {
-
     var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
 
     if (showDeleteConfirmationDialog) {
@@ -50,8 +49,9 @@ internal fun SearchHistoryScreen(
                 RecentSearchesHeader(
                     isListEmpty = listItemModel.isListEmpty,
                     onDeleteAllHistory = {
-                    showDeleteConfirmationDialog = true
-                })
+                        showDeleteConfirmationDialog = true
+                    }
+                )
             }
 
             is SearchHistoryListItemModel -> {

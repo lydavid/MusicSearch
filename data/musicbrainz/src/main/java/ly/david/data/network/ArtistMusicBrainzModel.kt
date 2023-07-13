@@ -15,5 +15,5 @@ data class ArtistMusicBrainzModel(
     @Json(name = "country") override val countryCode: String? = null,
     @Json(name = "life-span") override val lifeSpan: LifeSpan? = null,
 
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null
+    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Artist

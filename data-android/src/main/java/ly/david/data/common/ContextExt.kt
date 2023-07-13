@@ -14,7 +14,7 @@ import ly.david.data.network.resourceUri
 fun Context.lookupInBrowser(entity: MusicBrainzEntity, musicBrainzId: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/${musicBrainzId}")
+            data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/$musicBrainzId")
         }
     )
 }

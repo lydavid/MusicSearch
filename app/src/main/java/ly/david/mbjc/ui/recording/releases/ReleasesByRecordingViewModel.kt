@@ -13,8 +13,8 @@ import ly.david.data.room.recording.releases.RecordingReleaseDao
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
-import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.release.ReleasesByEntityViewModel
 
 @HiltViewModel
 internal class ReleasesByRecordingViewModel @Inject constructor(
@@ -22,11 +22,11 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
     private val recordingReleaseDao: RecordingReleaseDao,
     private val relationDao: RelationDao,
     releaseDao: ReleaseDao,
-    pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>
+    pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,
     releaseDao = releaseDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
@@ -38,7 +38,7 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
 
     override suspend fun insertAllLinkingModels(
         entityId: String,
-        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>
+        releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
         recordingReleaseDao.insertAll(
             releaseMusicBrainzModels.map { release ->
@@ -60,7 +60,7 @@ internal class ReleasesByRecordingViewModel @Inject constructor(
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
-        query: String
+        query: String,
     ): PagingSource<Int, ReleaseForListItem> = when {
         query.isEmpty() -> {
             recordingReleaseDao.getReleasesByRecording(entityId)

@@ -21,7 +21,6 @@ internal fun SearchScaffold(
     initialQuery: String? = null,
     initialEntity: MusicBrainzEntity? = null,
 ) {
-
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(

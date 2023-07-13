@@ -28,7 +28,7 @@ sealed class ListItemModel : Identifiable
  */
 class Header(
     override val id: String = "Header",
-    val isListEmpty: Boolean
+    val isListEmpty: Boolean,
 ) : ListItemModel()
 
 /**
@@ -43,7 +43,7 @@ object EndOfList : ListItemModel() {
  */
 class ListSeparator(
     override val id: String,
-    val text: String
+    val text: String,
 ) : ListItemModel()
 
 /**

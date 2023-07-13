@@ -36,7 +36,7 @@ data class ArtistCreditNameRoomModel(
     override val name: String,
 
     @ColumnInfo(name = "join_phrase")
-    override val joinPhrase: String? = null
+    override val joinPhrase: String? = null,
 ) : ArtistCreditName
 
 /**
@@ -47,7 +47,7 @@ data class ArtistCreditNameRoomModel(
  * The receiver must be a list because we need its index.
  */
 internal fun List<ArtistCreditMusicBrainzModel>?.toArtistCreditNameRoomModels(
-    artistCreditId: Long
+    artistCreditId: Long,
 ): List<ArtistCreditNameRoomModel> =
     this?.mapIndexed { index, artistCredit ->
         ArtistCreditNameRoomModel(
