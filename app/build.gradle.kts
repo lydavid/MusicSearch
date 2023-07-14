@@ -6,6 +6,7 @@ plugins {
     id("ly.david.android.compose")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    alias(libs.plugins.android.versioning)
 }
 
 if (file("google-services.json").exists() ||
@@ -41,8 +42,8 @@ android {
 
     defaultConfig {
         applicationId = "io.github.lydavid.musicsearch"
-        versionCode = (project.properties["VERSION_CODE"] as String?)?.toInt()
-        versionName = project.properties["VERSION_NAME"] as String?
+        versionCode = versioning.getVersionCode()
+        versionName = versioning.getVersionName()
 
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {

@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("app.cash.paparazzi")
     id("com.mikepenz.aboutlibraries.plugin")
+    alias(libs.plugins.android.versioning)
 }
 
 android {
@@ -11,8 +12,8 @@ android {
 
     buildTypes {
         all {
-            buildConfigField("int", "VERSION_CODE", project.properties["VERSION_CODE"] as String? ?: "")
-            buildConfigField("String", "VERSION_NAME", "\"${project.properties["VERSION_NAME"] as String? ?: ""}\"")
+            buildConfigField("int", "VERSION_CODE", versioning.getVersionCode().toString())
+            buildConfigField("String", "VERSION_NAME", "\"${versioning.getVersionName()}\"")
         }
     }
 }

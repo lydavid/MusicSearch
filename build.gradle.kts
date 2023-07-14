@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
     alias(libs.plugins.modulegraph)
+    alias(libs.plugins.android.versioning) apply false
 }
 
 subprojects {
