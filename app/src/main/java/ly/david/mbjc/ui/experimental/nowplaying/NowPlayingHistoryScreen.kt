@@ -12,7 +12,7 @@ import ly.david.ui.common.rememberFlowWithLifecycleStarted
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun NowPlayingHistoryScreen(
-    viewModel: NowPlayingViewModel = hiltViewModel()
+    viewModel: NowPlayingViewModel = hiltViewModel(),
 ) {
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.nowPlayingHistory)
         .collectAsLazyPagingItems()

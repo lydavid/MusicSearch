@@ -12,7 +12,7 @@ import ly.david.data.room.history.nowplaying.NowPlayingHistoryRoomModel
 import timber.log.Timber
 
 @AndroidEntryPoint
-internal class NowPlayingNotificationListener: NotificationListenerService() {
+internal class NowPlayingNotificationListener : NotificationListenerService() {
 
     @Inject
     @ApplicationScope

@@ -21,7 +21,7 @@ import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 
 @HiltViewModel
 internal class NowPlayingViewModel @Inject constructor(
-    private val nowPlayingHistoryDao: NowPlayingHistoryDao
+    private val nowPlayingHistoryDao: NowPlayingHistoryDao,
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
@@ -33,8 +33,7 @@ internal class NowPlayingViewModel @Inject constructor(
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     pagingSourceFactory = {
-                        nowPlayingHistoryDao.getAllNowPlayingHistory(
-                        )
+                        nowPlayingHistoryDao.getAllNowPlayingHistory()
                     }
                 ).flow.map { pagingData ->
                     pagingData.map {

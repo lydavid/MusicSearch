@@ -14,13 +14,12 @@ import ly.david.data.common.ApplicationScope
 @Module
 internal object CoroutinesScopesModule {
 
-    @Singleton // Provide always the same instance
+    @Singleton
     @ApplicationScope
     @Provides
     fun providesCoroutineScope(
         @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     ): CoroutineScope {
-        // Run this code when providing an instance of CoroutineScope
         return CoroutineScope(SupervisorJob() + defaultDispatcher)
     }
 }

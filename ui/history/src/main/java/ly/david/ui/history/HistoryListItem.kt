@@ -11,9 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
+import ly.david.data.common.toDisplayDate
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.getDisplayTextRes
@@ -84,11 +83,6 @@ internal fun HistoryListItem(
             onDeleteItem(lookupHistory)
         }
     )
-}
-
-private fun Date.toDisplayDate(): String {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    return dateFormat.format(this)
 }
 
 // region Previews

@@ -12,8 +12,8 @@ import ly.david.data.Identifiable
 data class NowPlayingHistoryRoomModel(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "text") val text: String,
-    @ColumnInfo(name = "last_played") val lastPlayed: Date = Date()
-): Identifiable {
+    @ColumnInfo(name = "last_played") val lastPlayed: Date = Date(),
+) : Identifiable {
     override val id: String
         get() = "${title}_$text"
 }

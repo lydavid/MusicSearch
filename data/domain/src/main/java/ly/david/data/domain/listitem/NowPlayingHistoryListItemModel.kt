@@ -7,7 +7,7 @@ data class NowPlayingHistoryListItemModel(
     override val id: String,
     val title: String,
     val text: String,
-    val lastPlayed: Date = Date()
+    val lastPlayed: Date = Date(),
 ) : ListItemModel()
 
 fun NowPlayingHistoryRoomModel.toNowPlayingHistoryListItemModel() = NowPlayingHistoryListItemModel(
