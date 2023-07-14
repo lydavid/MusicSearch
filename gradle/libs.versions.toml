@@ -9,7 +9,7 @@ compose-material = "1.4.3"
 compose-material3 = "1.1.1"
 compose-ui = "1.4.3"
 detekt = "1.23.0"
-hilt = "2.46.1"
+hilt = "2.47"
 hilt-navigation = "1.0.0"
 junit = "4.13.2"
 kotlin = "1.8.22"
@@ -54,9 +54,9 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", versi
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "hilt" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version = "0.1.12" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.1.1" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.2.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version = "21.3.0" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version = "18.3.7" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version = "18.4.0" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
@@ -96,7 +96,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.20.0" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.6" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.7" }
 google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
