@@ -13,8 +13,9 @@ abstract class NowPlayingHistoryDao : BaseDao<NowPlayingHistoryRoomModel>() {
     @Query(
         """
         SELECT * FROM now_playing_history
+        WHERE raw LIKE :query
         ORDER BY last_played DESC
         """
     )
-    abstract fun getAllNowPlayingHistory(): PagingSource<Int, NowPlayingHistoryRoomModel>
+    abstract fun getAllNowPlayingHistory(query: String = "%%"): PagingSource<Int, NowPlayingHistoryRoomModel>
 }

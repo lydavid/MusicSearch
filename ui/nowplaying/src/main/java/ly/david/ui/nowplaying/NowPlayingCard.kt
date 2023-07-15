@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.experimental.nowplaying
+package ly.david.ui.nowplaying
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.ListItem

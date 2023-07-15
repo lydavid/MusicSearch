@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.experimental.nowplaying
+package ly.david.ui.nowplaying
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,23 +24,28 @@ internal class NowPlayingViewModel @Inject constructor(
     private val nowPlayingHistoryDao: NowPlayingHistoryDao,
 ) : ViewModel() {
 
-    val searchQuery = MutableStateFlow("")
+    private val query = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val nowPlayingHistory: Flow<PagingData<NowPlayingHistoryListItemModel>> =
-        searchQuery
-            .flatMapLatest {
-                Pager(
-                    config = MusicBrainzPagingConfig.pagingConfig,
-                    pagingSourceFactory = {
-                        nowPlayingHistoryDao.getAllNowPlayingHistory()
-                    }
-                ).flow.map { pagingData ->
-                    pagingData.map {
-                        it.toNowPlayingHistoryListItemModel()
-                    }
+        query.flatMapLatest { query ->
+            Pager(
+                config = MusicBrainzPagingConfig.pagingConfig,
+                pagingSourceFactory = {
+                    nowPlayingHistoryDao.getAllNowPlayingHistory(
+                        query = "%$query%",
+                    )
+                }
+            ).flow.map { pagingData ->
+                pagingData.map {
+                    it.toNowPlayingHistoryListItemModel()
                 }
             }
+        }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
+
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
 }

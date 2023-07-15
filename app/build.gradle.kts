@@ -76,6 +76,7 @@ dependencies {
     implementation(projects.ui.collections)
     implementation(projects.ui.history)
     implementation(projects.ui.image)
+    implementation(projects.ui.nowplaying)
     implementation(projects.ui.settings)
     testImplementation(projects.testData)
     androidTestImplementation(projects.testData)

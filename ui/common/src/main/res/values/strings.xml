@@ -50,6 +50,8 @@
     <string name="clear_history">Clear history</string>
     <string name="delete_lookup_history_confirmation">Clear your history?</string>
 
+    <string name="now_playing_history">Now Playing History</string>
+
     <string name="labels">Labels</string>
     <string name="details">Details</string>
     <string name="events">Events</string>

@@ -26,7 +26,6 @@ import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.experimental.SpotifyScreen
-import ly.david.mbjc.ui.experimental.nowplaying.NowPlayingHistoryScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
@@ -39,6 +38,7 @@ import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 import ly.david.ui.common.R
 import ly.david.ui.history.HistoryScaffold
+import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 
@@ -400,7 +400,8 @@ internal fun NavigationGraph(
         composable(
             Destination.EXPERIMENTAL_NOWPLAYING.route
         ) {
-            NowPlayingHistoryScreen(
+            NowPlayingHistoryScaffold(
+                modifier = modifier,
                 searchMusicBrainz = searchMusicBrainz,
             )
         }
