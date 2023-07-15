@@ -381,6 +381,16 @@ internal fun NavigationGraph(
         }
 
         composable(
+            Destination.SETTINGS_NOWPLAYING.route
+        ) {
+            NowPlayingHistoryScaffold(
+                modifier = modifier,
+                onBack = navController::navigateUp,
+                searchMusicBrainz = searchMusicBrainz,
+            )
+        }
+
+        composable(
             Destination.SETTINGS_LICENSES.route
         ) {
             LicensesScaffold(
@@ -394,15 +404,6 @@ internal fun NavigationGraph(
         ) {
             SpotifyScreen(
                 searchMusicBrainz = searchMusicBrainz
-            )
-        }
-
-        composable(
-            Destination.EXPERIMENTAL_NOWPLAYING.route
-        ) {
-            NowPlayingHistoryScaffold(
-                modifier = modifier,
-                searchMusicBrainz = searchMusicBrainz,
             )
         }
     }

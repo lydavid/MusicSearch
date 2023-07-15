@@ -24,12 +24,14 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilter
 @Composable
 fun NowPlayingHistoryScaffold(
     modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
     var filterText by rememberSaveable { mutableStateOf("") }
 
     NowPlayingHistoryScaffold(
         modifier = modifier,
+        onBack = onBack,
         searchMusicBrainz = searchMusicBrainz,
         filterText = filterText,
         onFilterTextChange = { filterText = it }
@@ -40,6 +42,7 @@ fun NowPlayingHistoryScaffold(
 @Composable
 internal fun NowPlayingHistoryScaffold(
     modifier: Modifier = Modifier,
+    onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
     filterText: String = "",
     onFilterTextChange: (String) -> Unit = { _ -> },
@@ -53,7 +56,8 @@ internal fun NowPlayingHistoryScaffold(
         modifier = modifier,
         topBar = {
             TopAppBarWithFilter(
-                showBackButton = false,
+                showBackButton = true,
+                onBack = onBack,
                 title = stringResource(id = R.string.now_playing_history),
                 scrollBehavior = scrollBehavior,
                 filterText = filterText,

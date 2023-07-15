@@ -22,6 +22,7 @@ private const val TOP_LEVEL_SETTINGS = "settings"
 
 private const val EXPERIMENTAL = "experimental"
 private const val LICENSES = "licenses"
+private const val NOWPLAYING = "nowplaying"
 
 /**
  * This divider should be the same used for dividing parameters such as {artistId} passed to navigation.
@@ -56,8 +57,8 @@ enum class Destination(val route: String) {
 
     SETTINGS(TOP_LEVEL_SETTINGS),
     SETTINGS_LICENSES("$TOP_LEVEL_SETTINGS$DIVIDER$LICENSES"),
+    SETTINGS_NOWPLAYING("$TOP_LEVEL_SETTINGS$DIVIDER$NOWPLAYING"),
     EXPERIMENTAL_SPOTIFY("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "SPOTIFY"),
-    EXPERIMENTAL_NOWPLAYING("$TOP_LEVEL_SETTINGS$DIVIDER$EXPERIMENTAL$DIVIDER" + "NOWPLAYING"),
 }
 
 fun MusicBrainzEntity.toLookupDestination() =

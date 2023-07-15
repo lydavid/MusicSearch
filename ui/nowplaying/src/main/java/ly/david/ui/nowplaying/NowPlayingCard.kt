@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import java.util.Date
+import ly.david.data.common.getTimeFormatted
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -22,13 +23,19 @@ internal fun NowPlayingCard(
         headlineContent = {
             Text(
                 text = nowPlayingHistory.title,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         supportingContent = {
             Text(
                 text = nowPlayingHistory.artist,
-                style = TextStyles.getCardBodySubTextStyle()
+                style = TextStyles.getCardBodySubTextStyle(),
+            )
+        },
+        trailingContent = {
+            Text(
+                text = nowPlayingHistory.lastPlayed.getTimeFormatted(),
+                style = TextStyles.getCardBodySubTextStyle(),
             )
         },
         modifier = modifier.clickable { onClick(nowPlayingHistory) },
@@ -45,7 +52,7 @@ internal fun PreviewNowPlayingCard() {
                     id = "Immigrant Song by Led Zeppelin",
                     title = "Immigrant Song",
                     artist = "Led Zeppelin",
-                    lastPlayed = Date(2023, 6, 13)
+                    lastPlayed = Date(2023, 6, 13, 13, 30)
                 )
             )
         }
