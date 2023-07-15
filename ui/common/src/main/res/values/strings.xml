@@ -50,6 +50,11 @@
     <string name="clear_history">Clear history</string>
     <string name="delete_lookup_history_confirmation">Clear your history?</string>
 
+    <string name="now_playing_history">Now Playing History</string>
+    <string name="now_playing_history_subtitle">Records tracks picked up by Now Playing</string>
+    <string name="enable_notification_listener">Enable notification listener</string>
+    <string name="enable_notification_listener_subtitle">Allows the app to listen to Now Playing, allowing you to quickly search the track title and artist</string>
+
     <string name="labels">Labels</string>
     <string name="details">Details</string>
     <string name="events">Events</string>
@@ -125,5 +130,6 @@
     <string name="collection_name_placeholder">Enter name</string>
     <string name="add_to_collection">Add to collection</string>
 
+    <string name="about">About</string>
     <string name="open_source_licenses">Open source licenses</string>
 </resources>

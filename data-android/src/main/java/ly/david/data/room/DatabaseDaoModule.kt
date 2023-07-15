@@ -85,6 +85,9 @@ internal object DatabaseDaoModule {
     fun provideSearchHistoryDao(db: MusicSearchDatabase) = db.getSearchHistoryDao()
 
     @Provides
+    fun provideNowPlayingHistoryDao(db: MusicSearchDatabase) = db.getNowPlayingHistoryDao()
+
+    @Provides
     fun provideCollectionDao(db: MusicSearchDatabase) = db.getCollectionDao()
 
     @Provides

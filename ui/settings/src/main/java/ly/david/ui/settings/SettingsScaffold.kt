@@ -1,8 +1,13 @@
 package ly.david.ui.settings
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.provider.Settings
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -10,10 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.Destination
 import ly.david.ui.common.R
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.core.preview.DefaultPreviews
@@ -46,6 +54,8 @@ fun SettingsScaffold(
         },
     ) { innerPadding ->
 
+        val context = LocalContext.current
+
         val username by viewModel.musicBrainzAuthState.username.collectAsState(initial = "")
         val authState by viewModel.musicBrainzAuthState.authStateFlow.collectAsState(initial = null)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
@@ -65,13 +75,17 @@ fun SettingsScaffold(
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
+            onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
+            isNotificationListenerEnabled = context.isNotificationListenerEnabled(),
+            onGoToNotificationListenerSettings = {
+                context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+            },
         )
     }
 }
 
 @Composable
-fun SettingsScreen(
+internal fun SettingsScreen(
     modifier: Modifier = Modifier,
     username: String = "",
     showLogin: Boolean = true,
@@ -86,6 +100,8 @@ fun SettingsScreen(
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
+    isNotificationListenerEnabled: Boolean = false,
+    onGoToNotificationListenerSettings: () -> Unit = {},
 ) {
     LazyColumn(modifier = modifier) {
         item {
@@ -124,22 +140,37 @@ fun SettingsScreen(
                 onCheckedChange = onSortReleaseGroupListItemsChange
             )
 
+            if (isNotificationListenerEnabled) {
+                ClickableItem(
+                    title = stringResource(id = R.string.now_playing_history),
+                    subtitle = stringResource(id = R.string.now_playing_history_subtitle),
+                    endIcon = Icons.Default.ChevronRight,
+                    onClick = {
+                        onDestinationClick(Destination.SETTINGS_NOWPLAYING)
+                    },
+                )
+            } else {
+                ClickableItem(
+                    title = stringResource(id = R.string.enable_notification_listener),
+                    subtitle = stringResource(id = R.string.enable_notification_listener_subtitle),
+                    onClick = onGoToNotificationListenerSettings,
+                )
+            }
+
+            ListSeparatorHeader(text = stringResource(id = R.string.about))
+
             ClickableItem(
-                text = stringResource(id = R.string.open_source_licenses),
+                title = stringResource(id = R.string.open_source_licenses),
+                endIcon = Icons.Default.ChevronRight,
                 onClick = {
                     onDestinationClick(Destination.SETTINGS_LICENSES)
-                }
+                },
             )
 
             val versionKey = stringResource(id = R.string.app_version)
             val versionName = BuildConfig.VERSION_NAME
             val versionCode = BuildConfig.VERSION_CODE.toString()
             TextWithHeading(heading = versionKey, text = "$versionName ($versionCode)")
-
-            // TODO: sharedpreference to use artist sort name throughout app
-            //  helpful for non-Latin names
-            //  other entities have a sort_name field in backend
-            //  but doesn't seem to be exposed for editing/displaying
 
             if (BuildConfig.DEBUG) {
                 DevSettingsSection(
@@ -150,12 +181,30 @@ fun SettingsScreen(
     }
 }
 
+private fun Context.isNotificationListenerEnabled(): Boolean {
+    return NotificationManagerCompat.getEnabledListenerPackages(this).any { it == this.packageName }
+}
+
+// region Previews
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewSettingsScreen() {
     PreviewTheme {
         Surface {
             SettingsScreen()
         }
     }
 }
+
+@DefaultPreviews
+@Composable
+internal fun PreviewSettingsScreenNotificationListenerEnable() {
+    PreviewTheme {
+        Surface {
+            SettingsScreen(
+                isNotificationListenerEnabled = true,
+            )
+        }
+    }
+}
+// endregion
