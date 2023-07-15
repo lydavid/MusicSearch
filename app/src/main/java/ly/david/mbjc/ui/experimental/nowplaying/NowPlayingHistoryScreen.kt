@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 
@@ -13,6 +14,7 @@ import ly.david.ui.common.rememberFlowWithLifecycleStarted
 @Composable
 internal fun NowPlayingHistoryScreen(
     viewModel: NowPlayingViewModel = hiltViewModel(),
+    searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.nowPlayingHistory)
         .collectAsLazyPagingItems()
@@ -24,7 +26,13 @@ internal fun NowPlayingHistoryScreen(
             is NowPlayingHistoryListItemModel -> {
                 NowPlayingCard(
                     nowPlayingHistory = nowPlayingHistory,
-                    modifier = Modifier.animateItemPlacement()
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = {
+                        searchMusicBrainz(
+                            "$title artist:\"$artist\"",
+                            MusicBrainzEntity.RECORDING,
+                        )
+                    },
                 )
             }
 

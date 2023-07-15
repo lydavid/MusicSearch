@@ -11,6 +11,10 @@ Note the `'`. Need to include this when building uri with `&`.
 adb shell am start -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=tsukuyomi&type=artist"' -a android.intent.action.VIEW
 ```
 
+```shell
+adb shell am start -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=沈香学&type=release-group"' -a android.intent.action.VIEW
+```
+
 ## Collection
 
 ```shell

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 16,
-    "identityHash": "d8b73345c48fc6e01c78f4d3666307da",
+    "identityHash": "d32d3916df2011e799a95468a1d3c6ad",
     "entities": [
       {
         "tableName": "artist",
@@ -1698,17 +1698,11 @@
       },
       {
         "tableName": "now_playing_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `text` TEXT NOT NULL, `last_played` INTEGER NOT NULL, PRIMARY KEY(`title`, `text`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`raw` TEXT NOT NULL, `last_played` INTEGER NOT NULL, PRIMARY KEY(`raw`))",
         "fields": [
           {
-            "fieldPath": "title",
-            "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "text",
-            "columnName": "text",
+            "fieldPath": "raw",
+            "columnName": "raw",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -1722,8 +1716,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "title",
-            "text"
+            "raw"
           ]
         },
         "indices": [],
@@ -1882,7 +1875,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd8b73345c48fc6e01c78f4d3666307da')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd32d3916df2011e799a95468a1d3c6ad')"
     ]
   }
 }

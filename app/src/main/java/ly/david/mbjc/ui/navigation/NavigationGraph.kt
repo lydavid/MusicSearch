@@ -44,6 +44,8 @@ import ly.david.ui.settings.licenses.LicensesScaffold
 
 private const val ID = "id"
 private const val TITLE = "title"
+private const val QUERY = "query"
+private const val TYPE = "type"
 
 private fun String.encodeUtf8(): String {
     return URLEncoder.encode(this, StandardCharsets.UTF_8.toString())
@@ -95,7 +97,9 @@ internal fun NavigationGraph(
         }
 
         val searchMusicBrainz: (String, MusicBrainzEntity) -> Unit = { query, type ->
-            val route = Destination.LOOKUP.route + "?query=$query&type=${type.resourceUri}"
+            val route = Destination.LOOKUP.route +
+                "?$QUERY=${query.encodeUtf8()}" +
+                "&$TYPE=${type.resourceUri}"
             navController.navigate(route)
         }
 
@@ -107,23 +111,23 @@ internal fun NavigationGraph(
         }
 
         composable(
-            route = "${Destination.LOOKUP.route}?query={query}&type={type}",
+            route = "${Destination.LOOKUP.route}?$QUERY={query}&$TYPE={type}",
             arguments = listOf(
-                navArgument("query") {
+                navArgument(QUERY) {
                     type = NavType.StringType
                 },
-                navArgument("type") {
+                navArgument(TYPE) {
                     type = NavType.StringType
                 }
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$uriPrefix${Destination.LOOKUP.route}?query={query}&type={type}"
+                    uriPattern = "$uriPrefix${Destination.LOOKUP.route}?$QUERY={query}&$TYPE={type}"
                 }
             )
         ) { entry ->
-            val query = entry.arguments?.getString("query")?.decodeUtf8()
-            val type = entry.arguments?.getString("type")?.toMusicBrainzEntity()
+            val query = entry.arguments?.getString(QUERY)?.decodeUtf8()
+            val type = entry.arguments?.getString(TYPE)?.toMusicBrainzEntity()
 
             SearchScaffold(
                 modifier = modifier,
@@ -396,7 +400,9 @@ internal fun NavigationGraph(
         composable(
             Destination.EXPERIMENTAL_NOWPLAYING.route
         ) {
-            NowPlayingHistoryScreen()
+            NowPlayingHistoryScreen(
+                searchMusicBrainz = searchMusicBrainz,
+            )
         }
     }
 }
