@@ -3,7 +3,7 @@ package ly.david.data.common
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-internal class ToDisplayTimeTest {
+internal class IntExtTest {
 
     @Test
     fun `null`() {

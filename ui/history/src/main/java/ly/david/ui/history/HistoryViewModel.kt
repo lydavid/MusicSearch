@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.insertSeparators
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,6 +15,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.data.common.getDateFormatted
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.domain.listitem.toLookupHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
@@ -32,7 +36,7 @@ class HistoryViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lookUpHistory: Flow<PagingData<LookupHistoryListItemModel>> =
+    val lookUpHistory: Flow<PagingData<ListItemModel>> =
         query.flatMapLatest { query ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
@@ -40,7 +44,20 @@ class HistoryViewModel @Inject constructor(
                     lookupHistoryDao.getAllLookupHistory("%$query%")
                 }
             ).flow.map { pagingData ->
-                pagingData.map(LookupHistoryForListItem::toLookupHistoryListItemModel)
+                pagingData
+                    .map(LookupHistoryForListItem::toLookupHistoryListItemModel)
+                    .insertSeparators { before: LookupHistoryListItemModel?, after: LookupHistoryListItemModel? ->
+                        val beforeDate = before?.lastAccessed?.getDateFormatted()
+                        val afterDate = after?.lastAccessed?.getDateFormatted()
+                        if (beforeDate != afterDate && afterDate != null) {
+                            ListSeparator(
+                                id = afterDate,
+                                text = afterDate,
+                            )
+                        } else {
+                            null
+                        }
+                    }
             }
         }
             .distinctUntilChanged()

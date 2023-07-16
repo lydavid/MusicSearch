@@ -11,12 +11,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
@@ -70,12 +74,18 @@ internal fun NowPlayingHistoryScaffold(
     ) { innerPadding ->
         PagingLoadingAndErrorHandler(
             lazyPagingItems = lazyPagingItems,
-            modifier = Modifier.padding(innerPadding),
-        ) { nowPlayingHistory: NowPlayingHistoryListItemModel? ->
-            when (nowPlayingHistory) {
+            modifier = Modifier
+                .padding(innerPadding)
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
+        ) { listItemModel: ListItemModel? ->
+            when (listItemModel) {
+                is ListSeparator -> {
+                    ListSeparatorHeader(text = listItemModel.text)
+                }
+
                 is NowPlayingHistoryListItemModel -> {
                     NowPlayingCard(
-                        nowPlayingHistory = nowPlayingHistory,
+                        nowPlayingHistory = listItemModel,
                         modifier = Modifier.animateItemPlacement(),
                         onClick = {
                             searchMusicBrainz(

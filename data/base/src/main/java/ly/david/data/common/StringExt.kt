@@ -1,5 +1,9 @@
 package ly.david.data.common
 
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 private const val YEAR_FIRST_INDEX = 0
 private const val YEAR_LAST_INDEX = 4
 
@@ -73,4 +77,8 @@ fun String.toFlagEmoji(): String {
     val secondLetter = Character.codePointAt(countryCodeCaps, 1) - 0x41 + 0x1F1E6
 
     return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
+}
+
+fun String.toDate(): Date {
+    return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(this)
 }

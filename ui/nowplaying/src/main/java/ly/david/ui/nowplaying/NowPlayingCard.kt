@@ -6,8 +6,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import java.util.Date
 import ly.david.data.common.getTimeFormatted
+import ly.david.data.common.toDate
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -52,7 +52,7 @@ internal fun PreviewNowPlayingCard() {
                     id = "Immigrant Song by Led Zeppelin",
                     title = "Immigrant Song",
                     artist = "Led Zeppelin",
-                    lastPlayed = Date(2023, 6, 13, 13, 30)
+                    lastPlayed = "2023-07-15 11:42:20".toDate(),
                 )
             )
         }
