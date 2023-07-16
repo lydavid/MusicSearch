@@ -84,6 +84,12 @@ graph LR
   settings --> screenshot
   data-android --> data
   data-android --> test-data
+  nowplaying --> data
+  nowplaying --> common
+  nowplaying --> core
+  nowplaying --> image
+  nowplaying --> image
+  nowplaying --> screenshot
   test-data --> data
   musicbrainz --> base
   spotify --> base
@@ -94,7 +100,6 @@ graph LR
   common --> data-android
   common --> core
   common --> image
-  common --> test-data
   common --> image
   common --> screenshot
   app --> test-data
@@ -104,6 +109,7 @@ graph LR
   app --> collections
   app --> history
   app --> image
+  app --> nowplaying
   app --> settings
   app --> data-android
   app --> common
@@ -111,6 +117,7 @@ graph LR
   app --> collections
   app --> history
   app --> image
+  app --> nowplaying
   app --> settings
   app --> data-android
   app --> common
@@ -118,6 +125,7 @@ graph LR
   app --> collections
   app --> history
   app --> image
+  app --> nowplaying
   app --> settings
   app --> data-android
   app --> common
@@ -125,6 +133,7 @@ graph LR
   app --> collections
   app --> history
   app --> image
+  app --> nowplaying
   app --> settings
   app --> test-data
   coverart --> base
