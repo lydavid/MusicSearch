@@ -1,7 +1,7 @@
 plugins {
     id("ly.david.android.library")
     id("ly.david.android.compose")
-    id("app.cash.paparazzi")
+    alias(libs.plugins.paparazzi)
 }
 
 android {

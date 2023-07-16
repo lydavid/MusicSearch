@@ -2,8 +2,8 @@ plugins {
     id("ly.david.android.library")
     id("ly.david.android.compose")
     id("kotlin-kapt")
-    id("app.cash.paparazzi")
-    id("com.mikepenz.aboutlibraries.plugin")
+    alias(libs.plugins.aboutlibraries)
+    alias(libs.plugins.paparazzi)
 }
 
 android {

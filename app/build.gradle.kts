@@ -4,8 +4,8 @@ import java.util.Properties
 plugins {
     id("ly.david.android.application")
     id("ly.david.android.compose")
-    id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    alias(libs.plugins.hilt)
 }
 
 if (file("google-services.json").exists() ||
