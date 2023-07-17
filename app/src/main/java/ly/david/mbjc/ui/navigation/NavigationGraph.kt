@@ -315,7 +315,12 @@ internal fun NavigationGraph(
         }
 
         composable(
-            Destination.HISTORY.route
+            route = Destination.HISTORY.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$uriPrefix${Destination.HISTORY.route}"
+                }
+            ),
         ) {
             HistoryScaffold(
                 deleteHistoryDelegate = deleteHistoryDelegate,
@@ -325,7 +330,12 @@ internal fun NavigationGraph(
         }
 
         composable(
-            Destination.COLLECTIONS.route
+            route = Destination.COLLECTIONS.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}"
+                }
+            ),
         ) {
             CollectionListScaffold(
                 modifier = modifier,
@@ -340,7 +350,7 @@ internal fun NavigationGraph(
                 navDeepLink {
                     uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}"
                 }
-            )
+            ),
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
 
@@ -364,7 +374,12 @@ internal fun NavigationGraph(
         }
 
         composable(
-            Destination.SETTINGS.route
+            Destination.SETTINGS.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$uriPrefix${Destination.SETTINGS.route}"
+                }
+            ),
         ) {
             SettingsScaffold(
                 modifier = modifier,
