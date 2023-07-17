@@ -42,7 +42,9 @@ data class ThumbnailsUrls(
 fun CoverArtsResponse.getFrontThumbnailCoverArtUrl(): String? {
     // Note: MB doesn't fall back to any non-front covers
     return coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution250Url
+        ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.small
         ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.resolution500Url
+        ?: coverArtUrls.firstOrNull { it.front }?.thumbnailsUrls?.large
 }
 
 fun CoverArtsResponse.getFrontLargeCoverArtUrl(): String? {
