@@ -1,30 +1,43 @@
-# Test Data
+# Deep links
 
-Note that these deeplinks are for the debug version of the app.
-The release version also supports deeplinks, but you will have to remove the `.debug` suffix
+Note that these deep links are for the debug version of the app.
+The release version also supports deep links, but you will have to remove the `.debug` part.
 
 ## Search
 
 Note the `'`. Need to include this when building uri with `&`.
 
 ```shell
-adb shell am start -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=tsukuyomi&type=artist"' -a android.intent.action.VIEW
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=tsukuyomi&type=artist"'
 ```
 
 ```shell
-adb shell am start -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=沈香学&type=release-group"' -a android.intent.action.VIEW
+adb shell am start -a android.intent.action.VIEW -d '"io.github.lydavid.musicsearch.debug://app/lookup?query=沈香学&type=release-group"'
 ```
+
+
+## History
+
+```shell
+adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/history"
+```
+
 
 ## Collection
 
 ```shell
-adb shell am start -d '"io.github.lydavid.musicsearch.debug://app/collections/1ca78505-90ed-43a6-b85c-a138033a6c86"' -a android.intent.action.VIEW
+adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collections"
 ```
+
+```shell
+adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/collections/debe8581-e0c8-45ee-8fda-3ddcb5233f91"
+```
+
 
 ## Artist
 
 ```sh
-adb shell am start -d "io.github.lydavid.musicsearch.debug://app/artist/d044577e-aa22-43b7-ab29-cabee5f6643c" -a android.intent.action.VIEW
+adb shell am start -a android.intent.action.VIEW -d "io.github.lydavid.musicsearch.debug://app/artist/dfc6a151-3792-4695-8fda-f64723eaa788"
 ```
 
 ## Event

@@ -13,5 +13,9 @@ A place to document my development, testing, and release processes.
 - [Switch from Navigation Drawer to Bottom Navigation Bar](./implemented/drawer_to_bottom_nav.md)
 - [OAuth 2 with MusicBrainz](./implemented/oauth_musicbrainz.md)
 
+## Testing
+
+- [Deep links](deep_links.md)
+
 ## Release
 - [Automated Release](./automated_release.md)
