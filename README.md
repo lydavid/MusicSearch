@@ -12,10 +12,11 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
 - Search MusicBrainz's massive database for any information related to your favorite artist or song
 - All data is cached on device after loading each page/tab
-- History: See every page you've visited, and quickly get back to them
-- Filter: Almost every tab allows you to search its content instantaneously
-- Collections: Save anything to a collection
+- See every page you've visited in the history screen, and quickly get back to them
+- Almost every tab allows you to search its content instantaneously
+- Save anything to a collection
 - Login using your MusicBrainz account to add to your existing collections
+- Have a Pixel phone? Enable notification listener to record Now Playing history
 - Cover arts
 - Dark theme
 - Material You theme
