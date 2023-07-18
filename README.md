@@ -22,9 +22,9 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
 ## Screenshots
 
-| Search artist                             | Artist details                                    | Release groups by artist                          | Release details                             |
-|-------------------------------------------|---------------------------------------------------|---------------------------------------------------|---------------------------------------------|
-| ![](assets/screenshots/search_artist.png) | ![](assets/screenshots/artist_release_groups.png) | ![](assets/screenshots/artist_release_groups.png) | ![](assets/screenshots/release_details.png) | 
+| Search artist                             | Artist details                             | Release groups by artist                          | Release details                             |
+|-------------------------------------------|--------------------------------------------|---------------------------------------------------|---------------------------------------------|
+| ![](assets/screenshots/search_artist.png) | ![](assets/screenshots/artist_details.png) | ![](assets/screenshots/artist_release_groups.png) | ![](assets/screenshots/release_details.png) | 
 
 | Release tracks                             | All collections                             | Collection of releases                 | Lookup history                             |
 |--------------------------------------------|---------------------------------------------|----------------------------------------|--------------------------------------------|
