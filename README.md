@@ -22,13 +22,13 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 
 ## Screenshots
 
-| Search artist       | Release groups by artist   | Release details     | Release tracks      |
-|---------------------|----------------------------|---------------------|---------------------|
-| ![](assets/1.png)   | ![](assets/2.png)          | ![](assets/3.png)   | ![](assets/4.png)   | 
+| Search artist                             | Artist details                                    | Release groups by artist                          | Release details                             |
+|-------------------------------------------|---------------------------------------------------|---------------------------------------------------|---------------------------------------------|
+| ![](assets/screenshots/search_artist.png) | ![](assets/screenshots/artist_release_groups.png) | ![](assets/screenshots/artist_release_groups.png) | ![](assets/screenshots/release_details.png) | 
 
-| Artist stats      | Lookup history    | Collection of release groups |
-|-------------------|-------------------|------------------------------|
-| ![](assets/5.png) | ![](assets/6.png) | ![](assets/7.png)            |
+| Release tracks                             | All collections                             | Collection of releases                 | Lookup history                             |
+|--------------------------------------------|---------------------------------------------|----------------------------------------|--------------------------------------------|
+| ![](assets/screenshots/release_tracks.png) | ![](assets/screenshots/all_collections.png) | ![](assets/screenshots/collection.png) | ![](assets/screenshots/lookup_history.png) |
 
 ## Development
 
