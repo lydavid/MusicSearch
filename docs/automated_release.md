@@ -34,3 +34,9 @@ We need to manually merge `beta` into `master` to trigger [publish_production.ym
 which will publish a new build from master directly to production.
 We publish again rather than promote the beta build so that we can change `VERSION_NAME` to match our semantic release version/tag,
 which on production will not include `-beta.x` suffix.
+
+Rather than using a GitHub PR, we should rebase `beta` onto `master` using our command line.
+Using a PR will either:
+- create an unnecessary merge commit when using the "Create a merge commit" option
+- hide our commits from `beta` when using "Squash and merge"
+- create duplicate commits when using "Rebase and merge"
