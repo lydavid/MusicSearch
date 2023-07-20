@@ -3,7 +3,7 @@ aboutlibraries = "10.8.3"
 accompanist = "0.30.1"
 androidGradlePlugin = "8.0.2"
 coil = "2.4.0"
-compose-compiler = "1.4.8"
+compose-compiler = "1.5.0"
 compose-foundation = "1.4.3"
 compose-material = "1.4.3"
 compose-material3 = "1.1.1"
@@ -12,8 +12,9 @@ detekt = "1.23.0"
 hilt = "2.47"
 hilt-navigation = "1.0.0"
 junit = "4.13.2"
-kotlin = "1.8.22"
+kotlin = "1.9.0"
 kotlinx-coroutines = "1.7.1"
+ksp = "1.9.0-1.0.11"
 mockk = "1.13.5"
 moshi = "1.15.0"
 okhttp = "4.11.0"
@@ -85,6 +86,8 @@ timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+
 
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-test"]
@@ -101,5 +104,6 @@ google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version = "0.4.0" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }

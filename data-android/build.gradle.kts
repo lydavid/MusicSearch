@@ -3,16 +3,15 @@ import java.util.Properties
 plugins {
     id("ly.david.android.library")
     id("kotlin-kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "ly.david.data"
 
     defaultConfig {
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 
@@ -114,7 +113,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
 
     implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
 
