@@ -32,7 +32,7 @@ class NowPlayingNotificationListener : NotificationListenerService() {
 
         if (packageName == ANDROID_SYSTEM_INTELLIGENCE_PACKAGE_NAME) {
             coroutineScope.launch {
-                nowPlayingHistoryDao.insert(
+                nowPlayingHistoryDao.insertReplace(
                     NowPlayingHistoryRoomModel(
                         raw = titleAndArtist,
                     )
