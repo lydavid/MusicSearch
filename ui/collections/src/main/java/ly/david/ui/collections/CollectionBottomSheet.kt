@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.items
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.CollectionListItemModel
@@ -65,8 +64,10 @@ fun CollectionBottomSheet(
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            items(collections) { collection ->
-                when (collection) {
+            items(
+                count = collections.itemCount,
+            ) { index ->
+                when (val collection = collections[index]) {
                     is CollectionListItemModel -> {
                         CollectionListItem(
                             collection = collection,
