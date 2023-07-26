@@ -25,5 +25,5 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
     }
 }
 
-private fun Project.android(configure: CommonExtension<*, *, *, *>.() -> Unit) =
+private fun Project.android(configure: CommonExtension<*, *, *, *, *>.() -> Unit) =
     extensions.configure(CommonExtension::class, configure)
