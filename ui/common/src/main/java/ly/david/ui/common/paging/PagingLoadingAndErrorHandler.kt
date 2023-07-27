@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemsIndexed
+import androidx.paging.compose.itemKey
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -115,11 +115,12 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                     modifier = Modifier.fillMaxSize(),
                     state = lazyListState
                 ) {
-                    itemsIndexed(
-                        items = lazyPagingItems,
-                        key = { _, item -> item.id }
-                    ) { index: Int, value: T? ->
-                        itemContent(value)
+                    items(
+                        count = lazyPagingItems.itemCount,
+                        key = lazyPagingItems.itemKey { it.id },
+                        contentType = { lazyPagingItems[it] },
+                    ) { index ->
+                        itemContent(lazyPagingItems[index])
 
                         // Is this inefficient? At least it preserves list state on configuration change.
                         if (index == lazyPagingItems.itemCount - 1) {
