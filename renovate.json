@@ -23,12 +23,6 @@
         "androidx.compose.compiler",
         "org.jetbrains.kotlin"
       ]
-    },
-    {
-      "matchPackagePatterns": [
-        "androidx.paging:paging-compose"
-      ],
-      "allowedVersions": "!/.*1\\.0\\.0-alpha.*$/"
     }
   ]
 }
