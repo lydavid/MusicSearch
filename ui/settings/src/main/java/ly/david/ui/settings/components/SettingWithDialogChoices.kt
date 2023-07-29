@@ -28,7 +28,7 @@ internal fun SettingWithDialogChoices(
     titleRes: Int,
     choices: List<String>,
     selectedChoiceIndex: Int,
-    onSelectChoiceIndex: (Int) -> Unit,
+    onSelectChoiceIndex: (Int) -> Unit = {},
 ) {
     var showThemeDialog by rememberSaveable { mutableStateOf(false) }
 

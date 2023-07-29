@@ -1,6 +1,5 @@
 package ly.david.ui.settings.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,15 +51,24 @@ fun SettingSwitch(
     }
 }
 
+// region Previews
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewSettingSwitchChecked() {
     PreviewTheme {
         Surface {
-            Column {
-                SettingSwitch(header = "A setting", checked = true)
-                SettingSwitch(header = "A setting", checked = false)
-            }
+            SettingSwitch(header = "A setting", checked = true)
         }
     }
 }
+
+@DefaultPreviews
+@Composable
+internal fun PreviewSettingSwitchUnchecked() {
+    PreviewTheme {
+        Surface {
+            SettingSwitch(header = "A setting", checked = false)
+        }
+    }
+}
+// endregion

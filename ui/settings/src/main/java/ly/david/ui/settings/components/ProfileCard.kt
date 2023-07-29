@@ -80,6 +80,7 @@ internal fun ProfileCard(
     }
 }
 
+// region Previews
 @DefaultPreviews
 @Composable
 internal fun PreviewProfileCardLoggedOut() {
@@ -118,3 +119,4 @@ internal fun PreviewProfileCardLoggedInWaitingForUsername() {
         }
     }
 }
+// endregion
