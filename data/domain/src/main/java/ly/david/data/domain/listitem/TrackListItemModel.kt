@@ -9,8 +9,8 @@ data class TrackListItemModel(
     override val number: String,
     override val title: String,
     override val length: Int? = null,
-    val mediumId: Long,
-    val recordingId: String,
+    val mediumId: Long = 0,
+    val recordingId: String = "",
 
     val formattedArtistCredits: String? = null,
 ) : ListItemModel(), Track

@@ -1,21 +1,27 @@
 package ly.david.ui.common.release
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import ly.david.ui.core.preview.DefaultPreviews
+import ly.david.ui.core.theme.PreviewTheme
 import timber.log.Timber
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReleasesListScreen(
     lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
@@ -26,6 +32,40 @@ fun ReleasesListScreen(
     onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
     viewModel: ReleasesListViewModel = hiltViewModel(),
+) {
+    ReleasesListScreenInternal(
+        lazyPagingItems = lazyPagingItems,
+        modifier = modifier,
+        snackbarHostState = snackbarHostState,
+        lazyListState = lazyListState,
+        showMoreInfo = showMoreInfo,
+        onReleaseClick = onReleaseClick,
+        onDeleteFromCollection = onDeleteFromCollection,
+        requestForMissingCoverArtUrl = {
+            try {
+                viewModel.getReleaseCoverArtUrlFromNetwork(
+                    releaseId = it,
+                    thumbnail = true
+                )
+            } catch (ex: Exception) {
+                Timber.e(ex)
+            }
+        }
+    )
+}
+
+@VisibleForTesting
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+internal fun ReleasesListScreenInternal(
+    lazyPagingItems: LazyPagingItems<ReleaseListItemModel>,
+    modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    lazyListState: LazyListState = rememberLazyListState(),
+    showMoreInfo: Boolean = true,
+    onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
+    onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
+    requestForMissingCoverArtUrl: suspend (id: String) -> Unit = {},
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,
@@ -42,14 +82,7 @@ fun ReleasesListScreen(
                             modifier = Modifier.animateItemPlacement(),
                             showMoreInfo = showMoreInfo,
                             requestForMissingCoverArtUrl = {
-                                try {
-                                    viewModel.getReleaseCoverArtUrlFromNetwork(
-                                        releaseId = releaseListItemModel.id,
-                                        thumbnail = true
-                                    )
-                                } catch (ex: Exception) {
-                                    Timber.e(ex)
-                                }
+                                requestForMissingCoverArtUrl(releaseListItemModel.id)
                             }
                         ) {
                             onReleaseClick(MusicBrainzEntity.RELEASE, id, getNameWithDisambiguation())
@@ -65,6 +98,22 @@ fun ReleasesListScreen(
             else -> {
                 // Do nothing.
             }
+        }
+    }
+}
+
+@DefaultPreviews
+@Composable
+internal fun PreviewReleasesListScreen() {
+    PreviewTheme {
+        Surface {
+            val items = MutableStateFlow(
+                PagingData.from(
+                    ReleasePreviewParameterProvider().values.toList()
+                )
+            )
+
+            ReleasesListScreenInternal(lazyPagingItems = items.collectAsLazyPagingItems())
         }
     }
 }

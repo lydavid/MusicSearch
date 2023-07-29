@@ -149,24 +149,24 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             name = "Release title",
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "2",
             name = "Release title",
             disambiguation = "Disambiguation text",
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "3",
             name = "Release title",
             disambiguation = "Disambiguation text",
             countryCode = "US"
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "4",
             name = "Release title",
             disambiguation = "",
             countryCode = "CA"
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "5",
             name = "Release title",
             date = "2021-09-08",
             countryCode = "JP",
@@ -174,24 +174,24 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             formattedTracks = "15 + 8 + 24"
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "6",
             name = "Release title",
             date = "2022-04-03",
             countryCode = "NL",
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "7",
             name = "Release title",
             countryCode = "NL",
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "8",
             name = "Release title",
             date = "2022-04-03",
             formattedArtistCredits = "Some artist feat. Other artist"
         ),
         ReleaseListItemModel(
-            id = "1",
+            id = "9",
             name = "Release title",
             countryCode = "DZ",
             releaseCountries = listOf(
