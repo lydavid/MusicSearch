@@ -15,7 +15,9 @@ data class RelationMusicBrainzModel(
     @Json(name = "direction") val direction: Direction,
 
     @Json(name = "target-type") val targetType: MusicBrainzEntity?,
-    @Json(name = "target-credit") val targetCredit: String? = null, // prefer this credit over object's name if it exists
+
+    // prefer this credit over object's name if it exists
+    @Json(name = "target-credit") val targetCredit: String? = null,
 
     @Json(name = "attributes") val attributes: List<String>? = null, // strings, task
     @Json(name = "attribute-values") val attributeValues: AttributeValue? = null, // "director & organizer"
