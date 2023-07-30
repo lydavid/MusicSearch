@@ -34,7 +34,7 @@ class Header(
 /**
  * Represents the end of the list of [ListItemModel] being displayed.
  */
-object EndOfList : ListItemModel() {
+data object EndOfList : ListItemModel() {
     override val id: String = "EndOfList"
 }
 

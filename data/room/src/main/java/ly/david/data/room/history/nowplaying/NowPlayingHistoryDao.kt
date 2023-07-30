@@ -18,4 +18,12 @@ abstract class NowPlayingHistoryDao : BaseDao<NowPlayingHistoryRoomModel>() {
         """
     )
     abstract fun getAllNowPlayingHistory(query: String = "%%"): PagingSource<Int, NowPlayingHistoryRoomModel>
+
+    @Query(
+        """
+          DELETE FROM now_playing_history 
+          WHERE raw = :raw
+    """
+    )
+    abstract suspend fun delete(raw: String)
 }

@@ -69,4 +69,8 @@ internal class NowPlayingViewModel @Inject constructor(
             null
         }
     }
+
+    suspend fun delete(id: String) {
+        nowPlayingHistoryDao.delete(raw = id)
+    }
 }
