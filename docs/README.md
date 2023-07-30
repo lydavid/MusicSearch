@@ -19,3 +19,4 @@ A place to document my development, testing, and release processes.
 
 ## Release
 - [Automated Release](./automated_release.md)
+- [Release merge problem (v0.13.0)](./release_merge_problem.md)
