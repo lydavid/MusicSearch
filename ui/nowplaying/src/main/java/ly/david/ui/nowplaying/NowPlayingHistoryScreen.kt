@@ -44,7 +44,7 @@ internal fun NowPlayingHistoryScreen(
                             modifier = Modifier.animateItemPlacement(),
                             onClick = {
                                 searchMusicBrainz(
-                                    "$title artist:\"$artist\"",
+                                    "\"$title\" artist:\"$artist\"",
                                     MusicBrainzEntity.RECORDING,
                                 )
                             },
@@ -63,6 +63,7 @@ internal fun NowPlayingHistoryScreen(
     }
 }
 
+// region Previews
 @DefaultPreviews
 @Composable
 internal fun PreviewNowPlayingHistoryScreen() {
@@ -104,3 +105,4 @@ internal fun PreviewNowPlayingHistoryScreen() {
         }
     }
 }
+// endregion
