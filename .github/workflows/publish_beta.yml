@@ -60,9 +60,19 @@ jobs:
       - name: Setup semantic-release
         run: npm install
 
+      - name: Extract release notes
+        run: npx semantic-release --dry-run --release-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
       - name: Get next release version
         id: get-next-version
         run: npx semantic-release --dry-run
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Extract version information
+        run: npx semantic-release --dry-run --version
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
 
@@ -114,6 +124,12 @@ jobs:
           track: beta
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
+          releaseNotes: ${{ steps.extract-release-notes.outputs.release-notes }}
+
+      - name: Update Google Play Store listing
+        run: # Add the command to update the Google Play Store listing with the release notes here
+        env:
+          GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
 
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
