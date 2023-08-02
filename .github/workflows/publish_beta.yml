@@ -124,7 +124,7 @@ jobs:
           track: beta
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
-          whatsNewDirectory: path/to/whatsNewDirectory
+          whatsNewDirectory: 'path/to/release/notes/directory'
 
       - name: Update Google Play Store listing
         run: # Add the command to update the Google Play Store listing with the release notes here
