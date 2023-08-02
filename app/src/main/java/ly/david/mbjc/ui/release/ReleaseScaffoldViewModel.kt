@@ -72,7 +72,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
 
     private val releaseId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
-    private val tracksParamState = combine(releaseId, query) { releaseId, query ->
+    private val tracksParamState: Flow<ViewModelState> = combine(releaseId, query) { releaseId, query ->
         ViewModelState(releaseId, query)
     }.distinctUntilChanged()
 

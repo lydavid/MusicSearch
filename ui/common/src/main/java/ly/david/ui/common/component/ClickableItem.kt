@@ -1,4 +1,4 @@
-package ly.david.ui.settings.components
+package ly.david.ui.common.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,14 +21,15 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-internal fun ClickableItem(
+fun ClickableItem(
     title: String,
+    modifier: Modifier = Modifier,
     subtitle: String? = null,
     endIcon: ImageVector? = null,
     onClick: () -> Unit = {},
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() }
             .padding(16.dp),

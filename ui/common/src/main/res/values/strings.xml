@@ -131,5 +131,12 @@
     <string name="add_to_collection">Add to collection</string>
 
     <string name="about">About</string>
+    <string name="experimental_search">Experimental search methods</string>
     <string name="open_source_licenses">Open source licenses</string>
+
+    <string name="spotify">Spotify</string>
+    <string name="spotify_subtitle">Search the playing song\'s artist/album/track</string>
+    <string name="spotify_tutorial">Enable Device Broadcast Status in the Spotify app\'s settings in order for MusicSearch to detect the playing song</string>
+    <string name="search_x">Search %1$s</string>
+    <string name="search_x_by_x">Search %1$s by %2$s</string>
 </resources>

@@ -25,7 +25,6 @@ import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.collections.CollectionListScaffold
 import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
-import ly.david.mbjc.ui.experimental.SpotifyScreen
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
 import ly.david.mbjc.ui.label.LabelScaffold
@@ -41,6 +40,7 @@ import ly.david.ui.history.HistoryScaffold
 import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
+import ly.david.ui.spotify.SpotifyScaffold
 
 private const val ID = "id"
 private const val TITLE = "title"
@@ -417,7 +417,9 @@ internal fun NavigationGraph(
         composable(
             Destination.EXPERIMENTAL_SPOTIFY.route
         ) {
-            SpotifyScreen(
+            SpotifyScaffold(
+                modifier = modifier,
+                onBack = navController::navigateUp,
                 searchMusicBrainz = searchMusicBrainz
             )
         }
