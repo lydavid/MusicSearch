@@ -124,7 +124,7 @@ jobs:
           track: beta
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
-          releaseNotes: ${{ steps.extract-release-notes.outputs.release-notes }}
+          whatsNewDirectory: path/to/whatsNewDirectory
 
       - name: Update Google Play Store listing
         run: # Add the command to update the Google Play Store listing with the release notes here
