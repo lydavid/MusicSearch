@@ -21,3 +21,4 @@ workflows:
             gradlew run_android_test true
             gradlew.bat run_android_test true
             .*AndroidManifest\.xml run_android_test true
+            .*\.properties run_android_test true
