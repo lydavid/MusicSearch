@@ -5,9 +5,9 @@ data class SpotifyArtist(
 )
 
 fun SpotifyArtist.getLargeImageUrl(): String {
-    return images.maxBy { it.width }.url
+    return images.maxByOrNull { it.width }?.url.orEmpty()
 }
 
 fun SpotifyArtist.getThumbnailImageUrl(): String {
-    return images.minBy { it.width }.url
+    return images.minByOrNull { it.width }?.url.orEmpty()
 }
