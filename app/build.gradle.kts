@@ -78,6 +78,7 @@ dependencies {
     implementation(projects.ui.image)
     implementation(projects.ui.nowplaying)
     implementation(projects.ui.settings)
+    implementation(projects.ui.spotify)
     testImplementation(projects.testData)
     androidTestImplementation(projects.testData)
 

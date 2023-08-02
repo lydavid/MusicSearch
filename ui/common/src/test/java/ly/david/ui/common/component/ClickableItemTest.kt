@@ -1,4 +1,4 @@
-package ly.david.ui.settings.components
+package ly.david.ui.common.component
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest

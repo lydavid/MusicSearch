@@ -10,11 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import ly.david.data.domain.Destination
 import ly.david.ui.common.R
+import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
-import ly.david.ui.settings.components.ClickableItem
 import ly.david.ui.settings.components.ProfileCard
 import ly.david.ui.settings.components.SettingSwitch
 import ly.david.ui.settings.components.SettingWithDialogChoices
@@ -78,6 +78,8 @@ internal fun SettingsScreen(
                 onCheckedChange = onSortReleaseGroupListItemsChange
             )
 
+            ListSeparatorHeader(text = stringResource(id = R.string.experimental_search))
+
             if (isNotificationListenerEnabled) {
                 ClickableItem(
                     title = stringResource(id = R.string.now_playing_history),
@@ -95,6 +97,15 @@ internal fun SettingsScreen(
                 )
             }
 
+            ClickableItem(
+                title = stringResource(id = R.string.spotify),
+                subtitle = stringResource(id = R.string.spotify_subtitle),
+                endIcon = Icons.Default.ChevronRight,
+                onClick = {
+                    onDestinationClick(Destination.EXPERIMENTAL_SPOTIFY)
+                },
+            )
+
             ListSeparatorHeader(text = stringResource(id = R.string.about))
 
             ClickableItem(
@@ -111,7 +122,6 @@ internal fun SettingsScreen(
             if (BuildConfig.DEBUG) {
                 DevSettingsSection(
                     databaseVersion = databaseVersion,
-                    onDestinationClick = onDestinationClick,
                 )
             }
         }
