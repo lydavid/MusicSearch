@@ -55,7 +55,7 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", versi
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "hilt" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version = "0.1.13" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.2.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.2.1" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx", version = "21.3.0" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version = "18.4.0" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
