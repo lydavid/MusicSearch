@@ -109,21 +109,21 @@ internal fun ReleaseDetailsScreen(
                         headingRes = R.string.packaging,
                         text = it,
                         filterText = filterText,
-                        )
+                    )
                 }
                 status?.ifNotNullOrEmpty {
                     TextWithHeadingRes(
                         headingRes = R.string.status,
                         text = it,
                         filterText = filterText,
-                        )
+                    )
                 }
                 textRepresentation?.language?.ifNotNullOrEmpty {
                     TextWithHeadingRes(
                         headingRes = R.string.language,
                         text = Locale(it).displayLanguage,
                         filterText = filterText,
-                        )
+                    )
                 }
                 textRepresentation?.script?.ifNotNullOrEmpty { script ->
                     val scriptOrCode = if (script == "Qaaa") {
@@ -147,14 +147,14 @@ internal fun ReleaseDetailsScreen(
                         headingRes = R.string.data_quality,
                         text = it,
                         filterText = filterText,
-                        )
+                    )
                 }
                 asin?.ifNotNullOrEmpty {
                     TextWithHeadingRes(
                         headingRes = R.string.asin,
                         text = it,
                         filterText = filterText,
-                        )
+                    )
                 }
 
                 labels.ifNotNullOrEmpty {

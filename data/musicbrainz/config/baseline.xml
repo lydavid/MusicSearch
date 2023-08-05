@@ -5,7 +5,6 @@
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
     <ID>MaxLineLength:LookupApi.kt$LookupApi.Companion$"$AREA_REL+$ARTIST_REL+$EVENT_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"</ID>
-    <ID>MaxLineLength:RelationMusicBrainzModel.kt$RelationMusicBrainzModel$@Json(name = "target-credit") val targetCredit: String? = null</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$"01d3488d-8d2a-4cff-9226-5250404db4dc" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$"26b5d3aa-7d05-4121-a9eb-bf8a9aeb6e28" to ("mail-order purchase page for the score of" to "purchase score for mail-order")</ID>
     <ID>MaxLineLength:RelationshipHeaders.kt$"287361d2-1dce-4d39-9f82-222b786e2b30" to ("holds phonographic copyright (℗) for" to "phonographic copyright (℗) by")</ID>
