@@ -2,6 +2,7 @@ name: Record Screenshot Tests
 
 on:
   issue_comment:
+    types: [created]
 
 jobs:
   record:
