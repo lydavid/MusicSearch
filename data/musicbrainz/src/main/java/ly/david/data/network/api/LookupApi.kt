@@ -156,13 +156,14 @@ interface LookupApi {
         @Query("inc") include: String = "artist-credits" +
             "+labels" + // gives us labels (alternatively, we can get them from rels)
             "+recordings" + // gives us tracks
-            "+release-groups", // gives us types
+            "+release-groups" + // gives us types
+            "+$URL_REL",
     ): ReleaseMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
-        @Query("inc") include: String = "artists", // "releases+artists+media"
+        @Query("inc") include: String = "artists+$URL_REL", // "releases+artists+media"
     ): ReleaseGroupMusicBrainzModel
 
     @GET("series/{seriesId}")

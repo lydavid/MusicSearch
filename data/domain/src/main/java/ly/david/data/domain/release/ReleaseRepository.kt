@@ -17,6 +17,10 @@ import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.label.releases.toReleaseLabels
 import ly.david.data.room.label.toRoomModels
+import ly.david.data.room.relation.HasUrls
+import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RelationRoomModel
+import ly.david.data.room.relation.toRelationRoomModel
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
@@ -37,6 +41,7 @@ class ReleaseRepository @Inject constructor(
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
+    private val relationDao: RelationDao,
 ) : RelationsListRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -105,13 +110,30 @@ class ReleaseRepository @Inject constructor(
                 }.orEmpty()
             )
             releaseCountryDao.insertAll(release.getReleaseCountries())
+
+            val relations = mutableListOf<RelationRoomModel>()
+            release.relations?.forEachIndexed { index, relationMusicBrainzModel ->
+                relationMusicBrainzModel.toRelationRoomModel(
+                    entityId = release.id,
+                    order = index
+                )?.let { relationRoomModel ->
+                    relations.add(relationRoomModel)
+                }
+            }
+            relationDao.insertAll(relations)
+            relationDao.markEntityHasUrls(
+                hasUrls = HasUrls(
+                    entityId = release.id,
+                    hasUrls = true
+                )
+            )
         }
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupRelease(
             releaseId = entityId,
-            include = LookupApi.INC_ALL_RELATIONS
+            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations
     }
 }

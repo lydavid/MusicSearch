@@ -7,10 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayTypes
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
-import ly.david.ui.image.LargeImage
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
+import ly.david.ui.image.LargeImage
 
 @Composable
 internal fun ReleaseGroupDetailsScreen(
@@ -18,6 +20,7 @@ internal fun ReleaseGroupDetailsScreen(
     modifier: Modifier = Modifier,
     coverArtUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,
@@ -34,6 +37,12 @@ internal fun ReleaseGroupDetailsScreen(
             releaseGroup.run {
                 InformationListSeparatorHeader(R.string.release_group)
                 TextWithHeadingRes(headingRes = R.string.type, text = getDisplayTypes())
+
+                UrlsSection(
+                    urls = urls,
+//                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }

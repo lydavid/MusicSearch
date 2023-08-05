@@ -19,25 +19,27 @@ import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.image.LargeImage
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
+import ly.david.ui.image.LargeImage
 
 @Composable
 internal fun ReleaseDetailsScreen(
     release: ReleaseScaffoldModel,
     modifier: Modifier = Modifier,
+    filterText: String = "",
     coverArtUrl: String = "",
-    onLabelClick: LabelListItemModel.() -> Unit = {},
-    onAreaClick: AreaListItemModel.() -> Unit = {},
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
@@ -53,13 +55,25 @@ internal fun ReleaseDetailsScreen(
             release.run {
                 InformationListSeparatorHeader(R.string.release)
                 barcode?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.barcode, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.barcode,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 formattedFormats?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.format, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.format,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 formattedTracks?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.tracks, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.tracks,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
 
                 val releaseLength = releaseLength.toDisplayTime()
@@ -68,24 +82,48 @@ internal fun ReleaseDetailsScreen(
                 } else {
                     releaseLength
                 }
-                TextWithHeadingRes(headingRes = R.string.length, text = formattedReleaseLength)
+                TextWithHeadingRes(
+                    headingRes = R.string.length,
+                    text = formattedReleaseLength,
+                    filterText = filterText,
+                )
 
                 date?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.date, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.date,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
 
                 ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
                 releaseGroup?.let {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it.getDisplayTypes())
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it.getDisplayTypes(),
+                        filterText = filterText,
+                    )
                 }
                 packaging?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.packaging, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.packaging,
+                        text = it,
+                        filterText = filterText,
+                        )
                 }
                 status?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.status, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.status,
+                        text = it,
+                        filterText = filterText,
+                        )
                 }
                 textRepresentation?.language?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.language, text = Locale(it).displayLanguage)
+                    TextWithHeadingRes(
+                        headingRes = R.string.language,
+                        text = Locale(it).displayLanguage,
+                        filterText = filterText,
+                        )
                 }
                 textRepresentation?.script?.ifNotNullOrEmpty { script ->
                     val scriptOrCode = if (script == "Qaaa") {
@@ -100,20 +138,34 @@ internal fun ReleaseDetailsScreen(
                     }
                     TextWithHeadingRes(
                         headingRes = R.string.script,
-                        text = scriptOrCode
+                        text = scriptOrCode,
+                        filterText = filterText,
                     )
                 }
                 quality?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.data_quality, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.data_quality,
+                        text = it,
+                        filterText = filterText,
+                        )
                 }
                 asin?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.asin, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.asin,
+                        text = it,
+                        filterText = filterText,
+                        )
                 }
 
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.labels))
                     it.forEach { label ->
-                        LabelListItem(label = label, onLabelClick = onLabelClick)
+                        LabelListItem(
+                            label = label,
+                            onLabelClick = {
+                                onItemClick(MusicBrainzEntity.LABEL, id, name)
+                            }
+                        )
                     }
                 }
 
@@ -124,9 +176,17 @@ internal fun ReleaseDetailsScreen(
                     AreaListItem(
                         area = item,
                         showType = false,
-                        onAreaClick = onAreaClick
+                        onAreaClick = {
+                            onItemClick(MusicBrainzEntity.AREA, id, name)
+                        }
                     )
                 }
+
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }
