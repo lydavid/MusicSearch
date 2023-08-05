@@ -18,13 +18,8 @@ jobs:
     - name: Record screenshot tests
       run: ./gradlew recordPaparazziDebug
 
-    - name: Configure git
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-
     - name: Commit screenshots
-      run: |
-        git add app/src/test/java/com/example/app/screenshots
-        git commit -m "Update screenshot tests [skip ci]"
-        git push origin HEAD:${{ github.head_ref }}
+      uses: stefanzweifel/git-auto-commit-action@v4.16.0
+      with:
+        commit_message: 'Update screenshot tests [skip ci]'
+        file_pattern: 'app/src/test/java/com/example/app/screenshots'
