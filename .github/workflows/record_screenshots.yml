@@ -1,17 +1,22 @@
 name: Record Screenshot Tests
 
 on:
-  issue_comment:
-    types: [created]
+  repository_dispatch:
+    types: [record-command]
 
 jobs:
   record:
     permissions:
       contents: write
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '/record')
+    if: github.event.action == 'record.command'
     runs-on: ubuntu-latest
 
     steps:
+    - name: Slash Command Dispatch
+    uses: peter-evans/slash-command-dispatch@v2
+    with:
+    token: ${{ secrets.GITHUB_TOKEN }}
+    commands: record.command
     - name: Checkout code
       uses: actions/checkout@v2
 
