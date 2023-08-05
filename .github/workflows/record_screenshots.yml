@@ -1,10 +1,11 @@
 name: Record Screenshot Tests
 
 on:
-  pull_request:
+  issue_comment:
 
 jobs:
   record:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/record')
     runs-on: ubuntu-latest
 
     steps:
