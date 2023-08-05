@@ -18,6 +18,7 @@ import ly.david.ui.image.LargeImage
 internal fun ReleaseGroupDetailsScreen(
     releaseGroup: ReleaseGroupScaffoldModel,
     modifier: Modifier = Modifier,
+    filterText: String = "",
     coverArtUrl: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -36,11 +37,15 @@ internal fun ReleaseGroupDetailsScreen(
         item {
             releaseGroup.run {
                 InformationListSeparatorHeader(R.string.release_group)
-                TextWithHeadingRes(headingRes = R.string.type, text = getDisplayTypes())
+                TextWithHeadingRes(
+                    headingRes = R.string.type,
+                    text = getDisplayTypes(),
+                    filterText = filterText,
+                )
 
                 UrlsSection(
                     urls = urls,
-//                    filterText = filterText,
+                    filterText = filterText,
                     onItemClick = onItemClick
                 )
             }

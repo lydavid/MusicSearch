@@ -134,26 +134,25 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/f671900
 
 ## Release Group
 
-Death Magnetic
-- has relationships
-
+Has relationships
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/5c8a25bf-4764-3cce-8f37-30af79d3b101" -a android.intent.action.VIEW
 ```
 
-Heaven Shall Burn… When We Are Gathered
-- artist-rel `inspired the name of`
-
+artist-rel `inspired the name of`
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/807d9a32-e55c-317a-8a97-c4d5eaaa38b0" -a android.intent.action.VIEW
 ```
 
-SMITHEREENS
-- Release event with null area
+Release event with null area
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/f2b2abf8-09af-4d45-aee9-b0c99d4fcabc" -a android.intent.action.VIEW
 ```
 
+Has urls-rels
+```sh
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/367b4517-4cb1-3834-8132-e980ddb65162" -a android.intent.action.VIEW
+```
 
 ## Label
 

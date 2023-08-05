@@ -186,6 +186,7 @@ internal fun ReleaseGroupScaffold(
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            filterText = filterText,
                             coverArtUrl = url,
                             lazyListState = detailsLazyListState,
                             onItemClick = onItemClick,
