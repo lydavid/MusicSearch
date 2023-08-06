@@ -103,6 +103,10 @@ graph LR
   common --> image
   common --> image
   common --> screenshot
+  spotify --> base
+  spotify --> core
+  spotify --> common
+  spotify --> screenshot
   app --> test-data
   app --> data-android
   app --> common
@@ -112,6 +116,7 @@ graph LR
   app --> image
   app --> nowplaying
   app --> settings
+  app --> spotify
   app --> data-android
   app --> common
   app --> core
@@ -120,6 +125,7 @@ graph LR
   app --> image
   app --> nowplaying
   app --> settings
+  app --> spotify
   app --> data-android
   app --> common
   app --> core
@@ -128,6 +134,7 @@ graph LR
   app --> image
   app --> nowplaying
   app --> settings
+  app --> spotify
   app --> data-android
   app --> common
   app --> core
@@ -136,6 +143,7 @@ graph LR
   app --> image
   app --> nowplaying
   app --> settings
+  app --> spotify
   app --> test-data
   coverart --> base
   history --> data
