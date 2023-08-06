@@ -81,6 +81,7 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed("Gender: ${davidBowie.gender!!}")
         waitForThenAssertIsDisplayed(davidBowieSpotify.resource)
         waitForThenAssertIsDisplayed(davidBowieDeezer.resource)
+
         composeTestRule
             .onNodeWithContentDescription(filter)
             .performClick()
