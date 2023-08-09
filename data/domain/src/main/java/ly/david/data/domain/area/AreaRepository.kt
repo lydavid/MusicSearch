@@ -26,7 +26,8 @@ class AreaRepository @Inject constructor(
      */
     suspend fun lookupArea(areaId: String): AreaScaffoldModel {
         val areaRoomModel = areaDao.getArea(areaId)
-        if (areaRoomModel != null) {
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)
+        if (areaRoomModel != null && hasUrlsBeenSavedForEntity) {
             return areaRoomModel.toAreaScaffoldModel()
         }
 

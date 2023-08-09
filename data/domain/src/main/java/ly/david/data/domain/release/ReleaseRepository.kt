@@ -4,6 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.RelationsListRepository
+import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.LookupApi
@@ -17,10 +18,6 @@ import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.label.releases.toReleaseLabels
 import ly.david.data.room.label.toRoomModels
-import ly.david.data.room.relation.HasUrls
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.relation.RelationRoomModel
-import ly.david.data.room.relation.toRelationRoomModel
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
@@ -41,7 +38,7 @@ class ReleaseRepository @Inject constructor(
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
-    private val relationDao: RelationDao,
+    private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -54,10 +51,11 @@ class ReleaseRepository @Inject constructor(
      */
     suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
-
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (releaseWithAllData != null &&
             releaseWithAllData.artistCreditNamesWithEntities.isNotEmpty() &&
-            releaseWithAllData.formatTrackCounts.isNotEmpty()
+            releaseWithAllData.formatTrackCounts.isNotEmpty() &&
+            hasUrlsBeenSavedForEntity
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
@@ -111,21 +109,9 @@ class ReleaseRepository @Inject constructor(
             )
             releaseCountryDao.insertAll(release.getReleaseCountries())
 
-            val relations = mutableListOf<RelationRoomModel>()
-            release.relations?.forEachIndexed { index, relationMusicBrainzModel ->
-                relationMusicBrainzModel.toRelationRoomModel(
-                    entityId = release.id,
-                    order = index
-                )?.let { relationRoomModel ->
-                    relations.add(relationRoomModel)
-                }
-            }
-            relationDao.insertAll(relations)
-            relationDao.markEntityHasUrls(
-                hasUrls = HasUrls(
-                    entityId = release.id,
-                    hasUrls = true
-                )
+            relationRepository.insertAllRelations(
+                entityId = release.id,
+                relationMusicBrainzModels = release.relations,
             )
         }
     }

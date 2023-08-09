@@ -134,7 +134,7 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/f671900
 
 ## Release Group
 
-Has relationships
+Release group with relations
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/5c8a25bf-4764-3cce-8f37-30af79d3b101" -a android.intent.action.VIEW
 ```

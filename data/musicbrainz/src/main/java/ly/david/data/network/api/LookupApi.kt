@@ -117,7 +117,7 @@ interface LookupApi {
     @GET("event/{eventId}")
     suspend fun lookupEvent(
         @Path("eventId") eventId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): EventMusicBrainzModel
 
     @GET("genre/{genreId}")
