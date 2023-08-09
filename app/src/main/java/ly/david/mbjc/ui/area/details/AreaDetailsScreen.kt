@@ -9,19 +9,23 @@ import androidx.compose.ui.Modifier
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.area.AreaScaffoldModel
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun AreaDetailsScreen(
     area: AreaScaffoldModel,
     modifier: Modifier = Modifier,
+    filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,
@@ -40,6 +44,12 @@ internal fun AreaDetailsScreen(
 
                 // TODO: api doesn't seem to include area containment
                 //  but we could get its parent area via relations "part of" "backward"
+
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick,
+                )
             }
         }
     }

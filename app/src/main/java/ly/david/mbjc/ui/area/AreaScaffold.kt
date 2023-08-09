@@ -173,7 +173,9 @@ internal fun AreaScaffold(
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

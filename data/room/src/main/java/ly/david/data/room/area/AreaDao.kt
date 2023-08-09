@@ -12,7 +12,7 @@ abstract class AreaDao : BaseDao<AreaRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM area WHERE id = :areaId")
-    abstract suspend fun getArea(areaId: String): AreaWithCountryCodes?
+    abstract suspend fun getArea(areaId: String): AreaWithAllData?
 
     // We don't expect these to change.
     @Insert(onConflict = OnConflictStrategy.IGNORE)

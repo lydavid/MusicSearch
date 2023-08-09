@@ -2,8 +2,9 @@ package ly.david.data.domain.area
 
 import ly.david.data.Area
 import ly.david.data.LifeSpan
-import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.room.area.AreaWithCountryCodes
+import ly.david.data.domain.listitem.RelationListItemModel
+import ly.david.data.domain.listitem.toRelationListItemModel
+import ly.david.data.room.area.AreaWithAllData
 
 data class AreaScaffoldModel(
     override val id: String,
@@ -13,22 +14,15 @@ data class AreaScaffoldModel(
     override val type: String? = "",
     override val lifeSpan: LifeSpan? = null,
     val countryCodes: List<String>? = null,
+    val urls: List<RelationListItemModel> = listOf(),
 ) : Area
 
-internal fun AreaMusicBrainzModel.toAreaScaffoldModel() = AreaScaffoldModel(
-    id = id,
-    name = name,
-    disambiguation = disambiguation,
-    type = type,
-    lifeSpan = lifeSpan,
-    countryCodes = countryCodes,
-)
-
-internal fun AreaWithCountryCodes.toAreaScaffoldModel() = AreaScaffoldModel(
+internal fun AreaWithAllData.toAreaScaffoldModel() = AreaScaffoldModel(
     id = area.id,
     name = area.name,
     disambiguation = area.disambiguation,
     type = area.type,
     lifeSpan = area.lifeSpan,
-    countryCodes = countryCodes.map { it.code }
+    countryCodes = countryCodes.map { it.code },
+    urls = urls.map { it.relation.toRelationListItemModel() },
 )
