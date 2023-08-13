@@ -30,8 +30,8 @@ import ly.david.ui.core.theme.TextStyles
 
 @Composable
 internal fun EventDetailsScreen(
-    modifier: Modifier = Modifier,
     event: EventScaffoldModel,
+    modifier: Modifier = Modifier,
     filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
@@ -44,11 +44,19 @@ internal fun EventDetailsScreen(
             event.run {
                 InformationListSeparatorHeader(R.string.event)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 LifeSpanText(lifeSpan = lifeSpan)
                 time?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.time, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.time,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 if (cancelled == true) {
                     SelectionContainer {

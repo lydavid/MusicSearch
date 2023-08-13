@@ -111,9 +111,8 @@ internal fun LabelScaffold(
                         onAddToCollectionMenuClick(resource, labelId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    LabelTab.RELEASES,
-                    LabelTab.RELATIONSHIPS
+                showFilterIcon = selectedTab !in listOf(
+                    LabelTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -157,12 +156,14 @@ internal fun LabelScaffold(
                         scaffoldModel = label
                     ) {
                         LabelDetailsScreen(
+                            label = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            label = it,
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

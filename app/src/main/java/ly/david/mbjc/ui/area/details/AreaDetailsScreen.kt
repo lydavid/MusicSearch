@@ -35,11 +35,19 @@ internal fun AreaDetailsScreen(
             area.run {
                 InformationListSeparatorHeader(R.string.area)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 LifeSpanText(lifeSpan = lifeSpan)
                 countryCodes?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.iso_3166_1, text = it.joinToString(", "))
+                    TextWithHeadingRes(
+                        headingRes = R.string.iso_3166_1,
+                        text = it.joinToString(", "),
+                        filterText = filterText,
+                    )
                 }
 
                 // TODO: api doesn't seem to include area containment

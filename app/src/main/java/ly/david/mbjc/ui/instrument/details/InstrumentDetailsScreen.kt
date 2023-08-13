@@ -41,7 +41,11 @@ internal fun InstrumentDetailsScreen(
             instrument.run {
                 InformationListSeparatorHeader(R.string.instrument)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
 
                 ListSeparatorHeader(stringResource(id = R.string.description))
