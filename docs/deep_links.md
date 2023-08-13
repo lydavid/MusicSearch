@@ -164,6 +164,17 @@ Warner Records
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/label/d4cd174f-784d-48d7-91c6-7427bd5d57fe" -a android.intent.action.VIEW
 ```
 
+## Place
+
+Place with artist rels
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/place/ed121457-87f6-4df9-a24b-d3f1bab1fdad" -a android.intent.action.VIEW
+```
+
+Place with url rels
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/place/e6cfb74d-d69b-44c3-b890-1b3f509816e4" -a android.intent.action.VIEW
+```
 
 ## Genre
 
@@ -276,12 +287,6 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/artist/89ad4ac3
 
 
 
-### Place with artist
-
-
-```shell
-adb shell am start -d "io.github.lydavid.musicsearch.debug://app/place/ed121457-87f6-4df9-a24b-d3f1bab1fdad" -a android.intent.action.VIEW
-```
 
 
 

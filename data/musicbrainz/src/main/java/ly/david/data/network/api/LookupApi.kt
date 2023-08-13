@@ -68,7 +68,7 @@ interface LookupApi {
                 "$SERIES_REL+" +
                 WORK_REL
 
-        const val INC_ALL_RELATIONS_EXCEPT_EVENTS =
+        const val INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS =
             "$AREA_REL+" +
                 "$ARTIST_REL+" +
                 "$GENRE_REL+" +
@@ -79,7 +79,6 @@ interface LookupApi {
                 "$RELEASE_REL+" +
                 "$RELEASE_GROUP_REL+" +
                 "$SERIES_REL+" +
-                "$URL_REL+" +
                 WORK_REL
 
         // TODO: use this if we decide to split area relations lookup
@@ -129,19 +128,19 @@ interface LookupApi {
     @GET("instrument/{instrumentId}")
     suspend fun lookupInstrument(
         @Path("instrumentId") instrumentId: String,
-        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels+genre-rels+label-rels",
+        @Query("inc") include: String = "artist-rels+$URL_REL+area-rels+instrument-rels+genre-rels+label-rels",
     ): InstrumentMusicBrainzModel
 
     @GET("label/{labelId}")
     suspend fun lookupLabel(
         @Path("labelId") labelId: String,
-        @Query("inc") include: String = "artist-rels+label-rels+url-rels",
+        @Query("inc") include: String = "artist-rels+label-rels+$URL_REL",
     ): LabelMusicBrainzModel
 
     @GET("place/{placeId}")
     suspend fun lookupPlace(
         @Path("placeId") placeId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): PlaceMusicBrainzModel
 
     @GET("recording/{recordingId}")

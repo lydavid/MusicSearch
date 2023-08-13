@@ -14,7 +14,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.AreaListItemModel
-import ly.david.data.domain.listitem.PlaceListItemModel
+import ly.david.data.domain.place.PlaceScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
@@ -24,14 +24,16 @@ import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.place.CoordinateListItem
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun PlaceDetailsScreen(
+    place: PlaceScaffoldModel,
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current,
-    place: PlaceListItemModel,
+    filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
@@ -43,29 +45,48 @@ internal fun PlaceDetailsScreen(
             place.run {
                 InformationListSeparatorHeader(R.string.place)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 lifeSpan?.run {
                     begin?.ifNotNullOrEmpty {
-                        TextWithHeadingRes(headingRes = R.string.opened, text = it)
+                        TextWithHeadingRes(
+                            headingRes = R.string.opened,
+                            text = it,
+                            filterText = filterText,
+                        )
                     }
                     end?.ifNotNullOrEmpty {
-                        TextWithHeadingRes(headingRes = R.string.closed, text = it)
+                        TextWithHeadingRes(
+                            headingRes = R.string.closed,
+                            text = it,
+                            filterText = filterText,
+                        )
                     }
                 }
                 address.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.address, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.address,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
 
                 area?.ifNotNull {
-                    ListSeparatorHeader(text = stringResource(id = R.string.area))
-                    AreaListItem(
-                        area = it,
-                        showType = false,
-                        onAreaClick = {
-                            onItemClick(MusicBrainzEntity.AREA, id, getNameWithDisambiguation())
-                        }
-                    )
+                    val areaName = it.getNameWithDisambiguation()
+                    if (areaName.contains(filterText)) {
+                        ListSeparatorHeader(text = stringResource(id = R.string.area))
+                        AreaListItem(
+                            area = it,
+                            showType = false,
+                            onAreaClick = {
+                                onItemClick(MusicBrainzEntity.AREA, id, areaName)
+                            }
+                        )
+                    }
                 }
 
                 coordinates?.let {
@@ -78,6 +99,12 @@ internal fun PlaceDetailsScreen(
                         label = label
                     )
                 }
+
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }
@@ -91,7 +118,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             PlaceDetailsScreen(
-                place = PlaceListItemModel(
+                place = PlaceScaffoldModel(
                     id = "p1",
                     name = "Some Place",
                     type = "Venue",

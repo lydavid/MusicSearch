@@ -7,8 +7,8 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.place.PlaceRepository
+import ly.david.data.domain.place.PlaceScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
@@ -34,7 +34,7 @@ internal class PlaceScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val place: MutableStateFlow<PlaceListItemModel?> = MutableStateFlow(null)
+    val place: MutableStateFlow<PlaceScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope

@@ -5,7 +5,7 @@ import ly.david.data.LifeSpan
 import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.room.place.PlaceRoomModel
-import ly.david.data.room.place.PlaceWithArea
+import ly.david.data.room.place.PlaceWithAllData
 
 data class PlaceListItemModel(
     override val id: String,
@@ -43,7 +43,7 @@ fun PlaceRoomModel.toPlaceListItemModel() = PlaceListItemModel(
     area = null
 )
 
-fun PlaceWithArea.toPlaceListItemModel() = PlaceListItemModel(
+fun PlaceWithAllData.toPlaceListItemModel() = PlaceListItemModel(
     id = place.id,
     name = place.name,
     disambiguation = place.disambiguation,
