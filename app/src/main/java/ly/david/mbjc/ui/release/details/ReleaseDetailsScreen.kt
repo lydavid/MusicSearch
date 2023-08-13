@@ -19,6 +19,7 @@ import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
+import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.TextRepresentation
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
@@ -159,7 +160,10 @@ internal fun ReleaseDetailsScreen(
 
                 labels.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.labels))
-                    it.forEach { label ->
+                }
+                labels
+                    .filter { it.getNameWithDisambiguation().contains(filterText) }
+                    .forEach { label ->
                         LabelListItem(
                             label = label,
                             onLabelClick = {
@@ -167,20 +171,21 @@ internal fun ReleaseDetailsScreen(
                             }
                         )
                     }
-                }
 
-                if (areas.isNotEmpty()) {
+                areas.ifNotNullOrEmpty {
                     ListSeparatorHeader(text = stringResource(id = R.string.release_events))
                 }
-                areas.forEach { item: AreaListItemModel ->
-                    AreaListItem(
-                        area = item,
-                        showType = false,
-                        onAreaClick = {
-                            onItemClick(MusicBrainzEntity.AREA, id, name)
-                        }
-                    )
-                }
+                areas
+                    .filter { it.getNameWithDisambiguation().contains(filterText) }
+                    .forEach { area: AreaListItemModel ->
+                        AreaListItem(
+                            area = area,
+                            showType = false,
+                            onAreaClick = {
+                                onItemClick(MusicBrainzEntity.AREA, id, name)
+                            }
+                        )
+                    }
 
                 UrlsSection(
                     urls = urls,
