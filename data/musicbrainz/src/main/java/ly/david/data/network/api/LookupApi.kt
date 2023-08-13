@@ -146,7 +146,7 @@ interface LookupApi {
     @GET("recording/{recordingId}")
     suspend fun lookupRecording(
         @Path("recordingId") recordingId: String,
-        @Query("inc") include: String = "artist-credits",
+        @Query("inc") include: String = "artist-credits+$URL_REL",
     ): RecordingMusicBrainzModel
 
     @GET("release/{releaseId}")
@@ -168,12 +168,12 @@ interface LookupApi {
     @GET("series/{seriesId}")
     suspend fun lookupSeries(
         @Path("seriesId") seriesId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): SeriesMusicBrainzModel
 
     @GET("work/{workId}")
     suspend fun lookupWork(
         @Path("workId") workId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): WorkMusicBrainzModel
 }

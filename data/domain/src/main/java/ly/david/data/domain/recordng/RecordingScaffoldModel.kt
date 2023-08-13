@@ -4,8 +4,10 @@ import ly.david.data.Recording
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModels
+import ly.david.data.domain.listitem.RelationListItemModel
+import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.room.recording.RecordingForScaffold
+import ly.david.data.room.recording.RecordingWithAllData
 
 data class RecordingScaffoldModel(
     override val id: String,
@@ -16,9 +18,10 @@ data class RecordingScaffoldModel(
     override val video: Boolean = false,
     val isrcs: List<String>? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
+    val urls: List<RelationListItemModel> = listOf(),
 ) : Recording
 
-internal fun RecordingForScaffold.toRecordingScaffoldModel() = RecordingScaffoldModel(
+internal fun RecordingWithAllData.toRecordingScaffoldModel() = RecordingScaffoldModel(
     id = recording.id,
     name = recording.name,
     firstReleaseDate = recording.firstReleaseDate,
@@ -28,7 +31,8 @@ internal fun RecordingForScaffold.toRecordingScaffoldModel() = RecordingScaffold
     isrcs = recording.isrcs,
     artistCredits = artistCreditNamesWithEntities.map {
         it.artistCreditNameRoomModel.toArtistCreditUiModel()
-    }
+    },
+    urls = urls.map { it.relation.toRelationListItemModel() },
 )
 
 internal fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(

@@ -23,10 +23,7 @@ abstract class RecordingDao : BaseDao<RecordingRoomModel>(), ArtistCreditDao {
         insert(recording.toRoomModel())
     }
 
-    @Query("SELECT * FROM recording WHERE id = :recordingId")
-    abstract suspend fun getRecording(recordingId: String): RecordingRoomModel?
-
     @Transaction
     @Query("SELECT * FROM recording WHERE id = :recordingId")
-    abstract suspend fun getRecordingWithArtistCredits(recordingId: String): RecordingForScaffold?
+    abstract suspend fun getRecording(recordingId: String): RecordingWithAllData?
 }

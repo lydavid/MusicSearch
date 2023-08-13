@@ -55,25 +55,21 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/event/3a6d0f96-
 ## Recording
 
 Recording with recording
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/a53c97d7-5501-443b-baa3-cb282fc64275" -a android.intent.action.VIEW
 ```
 Recording with artist, label, place, work rels
 
-https://app/musicbrainz.org/recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea" -a android.intent.action.VIEW
 ```
 
 Recording with url
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/ac474974-600b-497e-902e-3b85b62cf58f" -a android.intent.action.VIEW
 ```
 
 Recording with many artist credits
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd21677f-d6ae-4dc2-b576-cb4cb5a66b79" -a android.intent.action.VIEW
 ```
