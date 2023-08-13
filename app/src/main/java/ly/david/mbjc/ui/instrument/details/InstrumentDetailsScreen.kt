@@ -13,21 +13,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.listitem.InstrumentListItemModel
+import ly.david.data.domain.instrument.InstrumentScaffoldModel
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.R
+import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
 internal fun InstrumentDetailsScreen(
+    instrument: InstrumentScaffoldModel,
     modifier: Modifier = Modifier,
-    instrument: InstrumentListItemModel,
+    filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,
@@ -52,6 +56,12 @@ internal fun InstrumentDetailsScreen(
                         )
                     }
                 }
+
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }
@@ -65,7 +75,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             InstrumentDetailsScreen(
-                instrument = InstrumentListItemModel(
+                instrument = InstrumentScaffoldModel(
                     id = "i1",
                     name = "baroque guitar",
                     disambiguation = "Baroque gut string guitar",

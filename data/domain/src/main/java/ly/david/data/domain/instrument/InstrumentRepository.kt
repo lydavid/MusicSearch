@@ -3,8 +3,7 @@ package ly.david.data.domain.instrument
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
-import ly.david.data.domain.listitem.InstrumentListItemModel
-import ly.david.data.domain.listitem.toInstrumentListItemModel
+import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
@@ -15,18 +14,25 @@ import ly.david.data.room.instrument.toInstrumentRoomModel
 class InstrumentRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val instrumentDao: InstrumentDao,
+    private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
-    suspend fun lookupInstrument(instrumentId: String): InstrumentListItemModel {
+    suspend fun lookupInstrument(instrumentId: String): InstrumentScaffoldModel {
         val instrumentRoomModel = instrumentDao.getInstrument(instrumentId)
-        if (instrumentRoomModel != null) {
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)
+        if (instrumentRoomModel != null && hasUrlsBeenSavedForEntity) {
             return instrumentRoomModel.toInstrumentListItemModel()
         }
 
         val instrumentMusicBrainzModel = musicBrainzApiService.lookupInstrument(instrumentId)
-        instrumentDao.insert(instrumentMusicBrainzModel.toInstrumentRoomModel())
-
-        return instrumentMusicBrainzModel.toInstrumentListItemModel()
+        instrumentDao.withTransaction {
+            instrumentDao.insert(instrumentMusicBrainzModel.toInstrumentRoomModel())
+            relationRepository.insertAllRelations(
+                entityId = instrumentId,
+                relationMusicBrainzModels = instrumentMusicBrainzModel.relations,
+            )
+        }
+        return lookupInstrument(instrumentId)
     }
 
     // TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them
@@ -34,7 +40,7 @@ class InstrumentRepository @Inject constructor(
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupInstrument(
             instrumentId = entityId,
-            include = LookupApi.INC_ALL_RELATIONS
+            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations
     }
 }

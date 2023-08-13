@@ -17,7 +17,7 @@ data class EventScaffoldModel(
     val urls: List<RelationListItemModel> = listOf(),
 ) : Event
 
-fun EventWithAllData.toEventScaffoldModel() =
+internal fun EventWithAllData.toEventScaffoldModel() =
     EventScaffoldModel(
         id = event.id,
         name = event.name,

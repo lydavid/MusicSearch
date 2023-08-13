@@ -117,10 +117,8 @@ internal fun AreaScaffold(
                         onAddToCollectionMenuClick(resource, areaId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    AreaTab.RELATIONSHIPS,
-                    AreaTab.RELEASES,
-                    AreaTab.PLACES
+                showFilterIcon = selectedTab !in listOf(
+                    AreaTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
