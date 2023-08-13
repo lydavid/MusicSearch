@@ -65,15 +65,6 @@ interface LookupApi {
                 "$RELEASE_GROUP_REL+" +
                 "$SERIES_REL+" +
                 WORK_REL
-
-        // TODO: use this if we decide to split area relations lookup
-        const val AREA_DEFAULT_RELS =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
-        const val ARTIST_INC_DEFAULT = "$ARTIST_REL+$LABEL_REL+$RELEASE_GROUP_REL+$URL_REL"
-        const val EVENT_INC_DEFAULT =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
-        const val WORK_INC_DEFAULT =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
     }
 
     // TODO: lookup with all rels might be a bit too much, especially since there's no pagination
@@ -82,7 +73,7 @@ interface LookupApi {
     suspend fun lookupArea(
         @Path("areaId") areaId: String,
 
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these

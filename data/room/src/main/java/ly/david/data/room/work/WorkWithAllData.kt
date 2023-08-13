@@ -2,8 +2,9 @@ package ly.david.data.room.work
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import ly.david.data.room.artist.UrlRelation
 
-data class WorkWithAttributes(
+data class WorkWithAllData(
     @Embedded
     val work: WorkRoomModel,
 
@@ -12,4 +13,10 @@ data class WorkWithAttributes(
         entityColumn = "work_id",
     )
     val attributes: List<WorkAttributeRoomModel>,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "entity_id"
+    )
+    val urls: List<UrlRelation>,
 )

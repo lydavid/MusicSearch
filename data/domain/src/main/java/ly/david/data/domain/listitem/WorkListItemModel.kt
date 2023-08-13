@@ -5,7 +5,6 @@ import ly.david.data.domain.work.WorkAttributeUiModel
 import ly.david.data.domain.work.toWorkAttributeUiModel
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.room.work.WorkRoomModel
-import ly.david.data.room.work.WorkWithAttributes
 
 // TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name
 data class WorkListItemModel(
@@ -27,17 +26,6 @@ internal fun WorkMusicBrainzModel.toWorkListItemModel() =
         language = language,
         iswcs = iswcs,
         attributes = attributes?.map { it.toWorkAttributeUiModel() }.orEmpty()
-    )
-
-internal fun WorkWithAttributes.toWorkListItemModel() =
-    WorkListItemModel(
-        id = work.id,
-        name = work.name,
-        disambiguation = work.disambiguation,
-        type = work.type,
-        language = work.language,
-        iswcs = work.iswcs,
-        attributes = attributes.map { it.toWorkAttributeUiModel() }
     )
 
 fun WorkRoomModel.toWorkListItemModel() =

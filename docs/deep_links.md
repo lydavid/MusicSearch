@@ -193,23 +193,21 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/series/44d6cf07
 
 ## Work
 
-- work attributes
-
+Work with work attributes, url-rels
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/412c8cf4-6905-3b4b-a59a-1a71f98e2677" -a android.intent.action.VIEW
 ```
 
 - arrangements
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3" -a android.intent.action.VIEW
 ```
 
 - arrangement of
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/7a7d89a4-ddb9-44af-a293-cf3b7ad59cf3" -a android.intent.action.VIEW
 ```
+
 
 
 <details><summary>area</summary><blockquote>
