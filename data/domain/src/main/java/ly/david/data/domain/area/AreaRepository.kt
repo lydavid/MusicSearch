@@ -25,10 +25,10 @@ class AreaRepository @Inject constructor(
      * Lookup area, and stores all relevant data.
      */
     suspend fun lookupArea(areaId: String): AreaScaffoldModel {
-        val areaRoomModel = areaDao.getArea(areaId)
+        val areaWithAllData = areaDao.getArea(areaId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)
-        if (areaRoomModel != null && hasUrlsBeenSavedForEntity) {
-            return areaRoomModel.toAreaScaffoldModel()
+        if (areaWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return areaWithAllData.toAreaScaffoldModel()
         }
 
         val areaMusicBrainzModel = musicBrainzApiService.lookupArea(areaId)

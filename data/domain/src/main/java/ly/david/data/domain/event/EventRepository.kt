@@ -18,10 +18,10 @@ class EventRepository @Inject constructor(
 ) : RelationsListRepository {
 
     suspend fun lookupEvent(eventId: String): EventScaffoldModel {
-        val eventRoomModel = eventDao.getEvent(eventId)
+        val eventWithAllData = eventDao.getEvent(eventId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(eventId)
-        if (eventRoomModel != null && hasUrlsBeenSavedForEntity) {
-            return eventRoomModel.toEventScaffoldModel()
+        if (eventWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return eventWithAllData.toEventScaffoldModel()
         }
 
         val eventMusicBrainzModel = musicBrainzApiService.lookupEvent(eventId)

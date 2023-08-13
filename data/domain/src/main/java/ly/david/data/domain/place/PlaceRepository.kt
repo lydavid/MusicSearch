@@ -24,10 +24,10 @@ class PlaceRepository @Inject constructor(
 ) : RelationsListRepository {
 
     suspend fun lookupPlace(placeId: String): PlaceScaffoldModel {
-        val placeRoomModel = placeDao.getPlace(placeId)
+        val placeWithAllData = placeDao.getPlace(placeId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(placeId)
-        if (placeRoomModel != null && hasUrlsBeenSavedForEntity) {
-            return placeRoomModel.toPlaceScaffoldModel()
+        if (placeWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return placeWithAllData.toPlaceScaffoldModel()
         }
 
         val placeMusicBrainzModel = musicBrainzApiService.lookupPlace(placeId)

@@ -17,13 +17,13 @@ class RecordingRepository @Inject constructor(
 ) : RelationsListRepository {
 
     suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
-        val recordingRoomModel = recordingDao.getRecording(recordingId)
+        val recordingWithAllData = recordingDao.getRecording(recordingId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(recordingId)
-        if (recordingRoomModel != null &&
-            recordingRoomModel.artistCreditNamesWithEntities.isNotEmpty() &&
+        if (recordingWithAllData != null &&
+            recordingWithAllData.artistCreditNamesWithEntities.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
-            return recordingRoomModel.toRecordingScaffoldModel()
+            return recordingWithAllData.toRecordingScaffoldModel()
         }
 
         val recordingMusicBrainzModel = musicBrainzApiService.lookupRecording(recordingId)

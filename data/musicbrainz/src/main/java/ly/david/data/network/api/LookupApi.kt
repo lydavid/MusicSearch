@@ -39,21 +39,6 @@ private const val WORK_REL = "work-rels"
 interface LookupApi {
 
     companion object {
-        const val INC_ALL_RELATIONS =
-            "$AREA_REL+" +
-                "$ARTIST_REL+" +
-                "$EVENT_REL+" +
-                "$GENRE_REL+" +
-                "$INSTRUMENT_REL+" +
-                "$LABEL_REL+" +
-                "$PLACE_REL+" +
-                "$RECORDING_REL+" +
-                "$RELEASE_REL+" +
-                "$RELEASE_GROUP_REL+" +
-                "$SERIES_REL+" +
-                "$URL_REL+" +
-                WORK_REL
-
         const val INC_ALL_RELATIONS_EXCEPT_URLS =
             "$AREA_REL+" +
                 "$ARTIST_REL+" +

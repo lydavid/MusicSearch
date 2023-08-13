@@ -18,10 +18,10 @@ class LabelRepository @Inject constructor(
 ) : RelationsListRepository {
 
     suspend fun lookupLabel(labelId: String): LabelScaffoldModel {
-        val labelRoomModel = labelDao.getLabel(labelId)
+        val labelWithAllData = labelDao.getLabel(labelId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(labelId)
-        if (labelRoomModel != null && hasUrlsBeenSavedForEntity) {
-            return labelRoomModel.toLabelScaffoldModel()
+        if (labelWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return labelWithAllData.toLabelScaffoldModel()
         }
 
         val labelMusicBrainzModel = musicBrainzApiService.lookupLabel(labelId)

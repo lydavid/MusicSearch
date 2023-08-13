@@ -18,10 +18,10 @@ class InstrumentRepository @Inject constructor(
 ) : RelationsListRepository {
 
     suspend fun lookupInstrument(instrumentId: String): InstrumentScaffoldModel {
-        val instrumentRoomModel = instrumentDao.getInstrument(instrumentId)
+        val instrumentWithAllData = instrumentDao.getInstrument(instrumentId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)
-        if (instrumentRoomModel != null && hasUrlsBeenSavedForEntity) {
-            return instrumentRoomModel.toInstrumentListItemModel()
+        if (instrumentWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return instrumentWithAllData.toInstrumentListItemModel()
         }
 
         val instrumentMusicBrainzModel = musicBrainzApiService.lookupInstrument(instrumentId)

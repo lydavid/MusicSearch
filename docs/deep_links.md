@@ -180,11 +180,15 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/genre/911c7bbb-
 
 ## Series
 
-- Work award
+Work award series
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/series/2bb59d7e-88f9-455d-888e-802b5f688dac" -a android.intent.action.VIEW
 ```
 
+Series with schedule url-rels
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/series/44d6cf07-798b-4667-9d1a-c969d6471e4b" -a android.intent.action.VIEW
+```
 
 
 ## Work

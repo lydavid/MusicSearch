@@ -17,10 +17,10 @@ class ReleaseGroupRepository @Inject constructor(
 ) : RelationsListRepository {
 
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
-        val roomReleaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
+        val releaseGroupWithAllData = releaseGroupDao.getReleaseGroup(releaseGroupId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
-        if (roomReleaseGroup != null && hasUrlsBeenSavedForEntity) {
-            return roomReleaseGroup.toReleaseGroupScaffoldModel()
+        if (releaseGroupWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return releaseGroupWithAllData.toReleaseGroupScaffoldModel()
         }
 
         val releaseGroupMusicBrainzModel = musicBrainzApiService.lookupReleaseGroup(releaseGroupId)
