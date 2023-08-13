@@ -119,7 +119,7 @@ internal fun TopAppBarWithFilterInternal(
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    Box {
+    Box(modifier = modifier) {
         AnimatedVisibility(
             visible = isFilterMode,
             modifier = Modifier.zIndex(1f),
@@ -188,7 +188,6 @@ internal fun TopAppBarWithFilterInternal(
         }
 
         ScrollableTopAppBar(
-            modifier = modifier,
             onBack = onBack,
             showBackButton = showBackButton,
             entity = entity,
