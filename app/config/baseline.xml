@@ -2,22 +2,16 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComposableParamOrder:EventDetailsScreen.kt$EventDetailsScreen</ID>
     <ID>ComposableParamOrder:EventStatsScreen.kt$EventStatsScreen</ID>
     <ID>ComposableParamOrder:EventsByPlaceScreen.kt$EventsByPlaceScreen</ID>
-    <ID>ComposableParamOrder:InstrumentDetailsScreen.kt$InstrumentDetailsScreen</ID>
     <ID>ComposableParamOrder:InstrumentStatsScreen.kt$InstrumentStatsScreen</ID>
-    <ID>ComposableParamOrder:LabelDetailsScreen.kt$LabelDetailsScreen</ID>
     <ID>ComposableParamOrder:LabelStatsScreen.kt$LabelStatsScreen</ID>
-    <ID>ComposableParamOrder:PlaceDetailsScreen.kt$PlaceDetailsScreen</ID>
     <ID>ComposableParamOrder:PlaceStatsScreen.kt$PlaceStatsScreen</ID>
-    <ID>ComposableParamOrder:RecordingDetailsScreen.kt$RecordingDetailsScreen</ID>
     <ID>ComposableParamOrder:RecordingStatsScreen.kt$RecordingStatsScreen</ID>
     <ID>ComposableParamOrder:RecordingsByWorkScreen.kt$RecordingsByWorkScreen</ID>
     <ID>ComposableParamOrder:ReleaseGroupStatsScreen.kt$ReleaseGroupStatsScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
     <ID>ComposableParamOrder:SearchScreen.kt$SearchScreen</ID>
-    <ID>ComposableParamOrder:SeriesDetailsScreen.kt$SeriesDetailsScreen</ID>
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>

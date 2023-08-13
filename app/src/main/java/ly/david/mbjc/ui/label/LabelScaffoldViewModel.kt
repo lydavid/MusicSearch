@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.label.LabelRepository
-import ly.david.data.domain.listitem.LabelListItemModel
+import ly.david.data.domain.label.LabelScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
@@ -34,7 +34,7 @@ internal class LabelScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val label: MutableStateFlow<LabelListItemModel?> = MutableStateFlow(null)
+    val label: MutableStateFlow<LabelScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope

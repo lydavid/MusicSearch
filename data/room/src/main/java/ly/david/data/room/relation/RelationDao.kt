@@ -24,6 +24,7 @@ abstract class RelationDao : BaseDao<RelationRoomModel>() {
     @Query("SELECT * FROM has_urls WHERE entity_id = :entityId")
     abstract suspend fun hasUrls(entityId: String): HasUrls?
 
+    // TODO: we're excluding urls from everywhere, but not showing urls in non-artist details
     @Transaction
     @Query(
         """

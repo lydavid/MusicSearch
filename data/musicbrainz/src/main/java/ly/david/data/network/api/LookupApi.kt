@@ -39,21 +39,6 @@ private const val WORK_REL = "work-rels"
 interface LookupApi {
 
     companion object {
-        const val INC_ALL_RELATIONS =
-            "$AREA_REL+" +
-                "$ARTIST_REL+" +
-                "$EVENT_REL+" +
-                "$GENRE_REL+" +
-                "$INSTRUMENT_REL+" +
-                "$LABEL_REL+" +
-                "$PLACE_REL+" +
-                "$RECORDING_REL+" +
-                "$RELEASE_REL+" +
-                "$RELEASE_GROUP_REL+" +
-                "$SERIES_REL+" +
-                "$URL_REL+" +
-                WORK_REL
-
         const val INC_ALL_RELATIONS_EXCEPT_URLS =
             "$AREA_REL+" +
                 "$ARTIST_REL+" +
@@ -68,7 +53,7 @@ interface LookupApi {
                 "$SERIES_REL+" +
                 WORK_REL
 
-        const val INC_ALL_RELATIONS_EXCEPT_EVENTS =
+        const val INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS =
             "$AREA_REL+" +
                 "$ARTIST_REL+" +
                 "$GENRE_REL+" +
@@ -79,17 +64,7 @@ interface LookupApi {
                 "$RELEASE_REL+" +
                 "$RELEASE_GROUP_REL+" +
                 "$SERIES_REL+" +
-                "$URL_REL+" +
                 WORK_REL
-
-        // TODO: use this if we decide to split area relations lookup
-        const val AREA_DEFAULT_RELS =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
-        const val ARTIST_INC_DEFAULT = "$ARTIST_REL+$LABEL_REL+$RELEASE_GROUP_REL+$URL_REL"
-        const val EVENT_INC_DEFAULT =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$PLACE_REL+$RECORDING_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
-        const val WORK_INC_DEFAULT =
-            "$AREA_REL+$ARTIST_REL+$EVENT_REL+$GENRE_REL+$INSTRUMENT_REL+$LABEL_REL+$PLACE_REL+$RELEASE_REL+$RELEASE_GROUP_REL+$SERIES_REL+$URL_REL+$WORK_REL"
     }
 
     // TODO: lookup with all rels might be a bit too much, especially since there's no pagination
@@ -98,7 +73,7 @@ interface LookupApi {
     suspend fun lookupArea(
         @Path("areaId") areaId: String,
 
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
@@ -117,7 +92,7 @@ interface LookupApi {
     @GET("event/{eventId}")
     suspend fun lookupEvent(
         @Path("eventId") eventId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): EventMusicBrainzModel
 
     @GET("genre/{genreId}")
@@ -129,25 +104,25 @@ interface LookupApi {
     @GET("instrument/{instrumentId}")
     suspend fun lookupInstrument(
         @Path("instrumentId") instrumentId: String,
-        @Query("inc") include: String = "artist-rels+url-rels+area-rels+instrument-rels+genre-rels+label-rels",
+        @Query("inc") include: String = "artist-rels+$URL_REL+area-rels+instrument-rels+genre-rels+label-rels",
     ): InstrumentMusicBrainzModel
 
     @GET("label/{labelId}")
     suspend fun lookupLabel(
         @Path("labelId") labelId: String,
-        @Query("inc") include: String = "artist-rels+label-rels+url-rels",
+        @Query("inc") include: String = "artist-rels+label-rels+$URL_REL",
     ): LabelMusicBrainzModel
 
     @GET("place/{placeId}")
     suspend fun lookupPlace(
         @Path("placeId") placeId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): PlaceMusicBrainzModel
 
     @GET("recording/{recordingId}")
     suspend fun lookupRecording(
         @Path("recordingId") recordingId: String,
-        @Query("inc") include: String = "artist-credits",
+        @Query("inc") include: String = "artist-credits+$URL_REL",
     ): RecordingMusicBrainzModel
 
     @GET("release/{releaseId}")
@@ -156,24 +131,25 @@ interface LookupApi {
         @Query("inc") include: String = "artist-credits" +
             "+labels" + // gives us labels (alternatively, we can get them from rels)
             "+recordings" + // gives us tracks
-            "+release-groups", // gives us types
+            "+release-groups" + // gives us types
+            "+$URL_REL",
     ): ReleaseMusicBrainzModel
 
     @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
         @Path("releaseGroupId") releaseGroupId: String,
-        @Query("inc") include: String = "artists", // "releases+artists+media"
+        @Query("inc") include: String = "artists+$URL_REL", // "releases+artists+media"
     ): ReleaseGroupMusicBrainzModel
 
     @GET("series/{seriesId}")
     suspend fun lookupSeries(
         @Path("seriesId") seriesId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): SeriesMusicBrainzModel
 
     @GET("work/{workId}")
     suspend fun lookupWork(
         @Path("workId") workId: String,
-        @Query("inc") include: String? = null,
+        @Query("inc") include: String? = URL_REL,
     ): WorkMusicBrainzModel
 }

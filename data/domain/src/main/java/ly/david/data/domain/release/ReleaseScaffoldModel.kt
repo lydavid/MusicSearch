@@ -5,9 +5,11 @@ import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
+import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
+import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.listitem.toReleaseGroupListItemModel
 import ly.david.data.getFormatsForDisplay
 import ly.david.data.getTracksForDisplay
@@ -41,6 +43,7 @@ data class ReleaseScaffoldModel(
     val releaseGroup: ReleaseGroupListItemModel? = null,
     val areas: List<AreaListItemModel> = listOf(),
     val labels: List<LabelListItemModel> = listOf(),
+    val urls: List<RelationListItemModel> = listOf(),
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
@@ -70,6 +73,7 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     },
     releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
     labels = labels.map { it.toLabelListItemModel() },
+    urls = urls.map { it.relation.toRelationListItemModel() },
     releaseLength = releaseLength,
     hasNullLength = hasNullLength
 )

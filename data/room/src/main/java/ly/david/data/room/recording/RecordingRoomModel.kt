@@ -1,14 +1,11 @@
 package ly.david.data.room.recording
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 import ly.david.data.Recording
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 
 @Entity(tableName = "recording")
 data class RecordingRoomModel(
@@ -31,23 +28,3 @@ fun RecordingMusicBrainzModel.toRoomModel() =
         video = video ?: false,
         isrcs = isrcs
     )
-
-data class RecordingForListItem(
-    @Embedded
-    val recording: RecordingRoomModel,
-
-    // This allows us to filter on this.
-    @ColumnInfo("artist_credit_names")
-    val artistCreditNames: String?,
-) : RoomModel
-
-data class RecordingForScaffold(
-    @Embedded
-    val recording: RecordingRoomModel,
-
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "entity_id"
-    )
-    val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>,
-) : RoomModel

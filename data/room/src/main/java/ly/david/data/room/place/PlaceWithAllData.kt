@@ -5,8 +5,9 @@ import androidx.room.Junction
 import androidx.room.Relation
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.places.AreaPlace
+import ly.david.data.room.artist.UrlRelation
 
-data class PlaceWithArea(
+data class PlaceWithAllData(
     @Embedded
     val place: PlaceRoomModel,
 
@@ -20,4 +21,10 @@ data class PlaceWithArea(
         )
     )
     val area: AreaRoomModel?,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "entity_id"
+    )
+    val urls: List<UrlRelation>,
 )

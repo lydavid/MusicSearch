@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.instrument.InstrumentRepository
-import ly.david.data.domain.listitem.InstrumentListItemModel
+import ly.david.data.domain.instrument.InstrumentScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
@@ -34,7 +34,7 @@ internal class InstrumentScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val instrument: MutableStateFlow<InstrumentListItemModel?> = MutableStateFlow(null)
+    val instrument: MutableStateFlow<InstrumentScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope

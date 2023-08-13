@@ -98,7 +98,7 @@ internal fun EventScaffold(
                         onAddToCollectionMenuClick(resource, eventId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(EventTab.RELATIONSHIPS),
+                showFilterIcon = selectedTab !in listOf(EventTab.STATS),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -135,12 +135,14 @@ internal fun EventScaffold(
                         scaffoldModel = event
                     ) {
                         EventDetailsScreen(
+                            event = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            event = it,
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

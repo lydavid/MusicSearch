@@ -55,25 +55,21 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/event/3a6d0f96-
 ## Recording
 
 Recording with recording
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/a53c97d7-5501-443b-baa3-cb282fc64275" -a android.intent.action.VIEW
 ```
 Recording with artist, label, place, work rels
 
-https://app/musicbrainz.org/recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/6c38b565-83ed-4e6f-b8c4-484b963a12ea" -a android.intent.action.VIEW
 ```
 
 Recording with url
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/ac474974-600b-497e-902e-3b85b62cf58f" -a android.intent.action.VIEW
 ```
 
 Recording with many artist credits
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/recording/dd21677f-d6ae-4dc2-b576-cb4cb5a66b79" -a android.intent.action.VIEW
 ```
@@ -134,26 +130,25 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release/f671900
 
 ## Release Group
 
-Death Magnetic
-- has relationships
-
+Release group with relations
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/5c8a25bf-4764-3cce-8f37-30af79d3b101" -a android.intent.action.VIEW
 ```
 
-Heaven Shall Burn… When We Are Gathered
-- artist-rel `inspired the name of`
-
+artist-rel `inspired the name of`
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/807d9a32-e55c-317a-8a97-c4d5eaaa38b0" -a android.intent.action.VIEW
 ```
 
-SMITHEREENS
-- Release event with null area
+Release event with null area
 ```sh
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/f2b2abf8-09af-4d45-aee9-b0c99d4fcabc" -a android.intent.action.VIEW
 ```
 
+Has urls-rels
+```sh
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/release-group/367b4517-4cb1-3834-8132-e980ddb65162" -a android.intent.action.VIEW
+```
 
 ## Label
 
@@ -165,6 +160,17 @@ Warner Records
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/label/d4cd174f-784d-48d7-91c6-7427bd5d57fe" -a android.intent.action.VIEW
 ```
 
+## Place
+
+Place with artist rels
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/place/ed121457-87f6-4df9-a24b-d3f1bab1fdad" -a android.intent.action.VIEW
+```
+
+Place with url rels
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/place/e6cfb74d-d69b-44c3-b890-1b3f509816e4" -a android.intent.action.VIEW
+```
 
 ## Genre
 
@@ -174,32 +180,34 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/genre/911c7bbb-
 
 ## Series
 
-- Work award
+Work award series
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/series/2bb59d7e-88f9-455d-888e-802b5f688dac" -a android.intent.action.VIEW
 ```
 
+Series with schedule url-rels
+```shell
+adb shell am start -d "io.github.lydavid.musicsearch.debug://app/series/44d6cf07-798b-4667-9d1a-c969d6471e4b" -a android.intent.action.VIEW
+```
 
 
 ## Work
 
-- work attributes
-
+Work with work attributes, url-rels
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/412c8cf4-6905-3b4b-a59a-1a71f98e2677" -a android.intent.action.VIEW
 ```
 
 - arrangements
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/c4ebe5b5-6965-4b8a-9f5e-7e543fc2acf3" -a android.intent.action.VIEW
 ```
 
 - arrangement of
-
 ```shell
 adb shell am start -d "io.github.lydavid.musicsearch.debug://app/work/7a7d89a4-ddb9-44af-a293-cf3b7ad59cf3" -a android.intent.action.VIEW
 ```
+
 
 
 <details><summary>area</summary><blockquote>
@@ -277,12 +285,6 @@ adb shell am start -d "io.github.lydavid.musicsearch.debug://app/artist/89ad4ac3
 
 
 
-### Place with artist
-
-
-```shell
-adb shell am start -d "io.github.lydavid.musicsearch.debug://app/place/ed121457-87f6-4df9-a24b-d3f1bab1fdad" -a android.intent.action.VIEW
-```
 
 
 

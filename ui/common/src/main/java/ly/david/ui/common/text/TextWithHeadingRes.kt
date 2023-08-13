@@ -17,13 +17,12 @@ fun TextWithHeadingRes(
     filterText: String = "",
 ) {
     val heading = stringResource(id = headingRes)
-    if (heading.contains(filterText) || text.contains(filterText)) {
-        TextWithHeading(
-            heading = heading,
-            text = text,
-            modifier = modifier
-        )
-    }
+    TextWithHeading(
+        heading = heading,
+        text = text,
+        modifier = modifier,
+        filterText = filterText,
+    )
 }
 
 @DefaultPreviews
@@ -31,7 +30,10 @@ fun TextWithHeadingRes(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            TextWithHeadingRes(headingRes = R.string.format, text = "Digital Media")
+            TextWithHeadingRes(
+                headingRes = R.string.format,
+                text = "Digital Media",
+            )
         }
     }
 }

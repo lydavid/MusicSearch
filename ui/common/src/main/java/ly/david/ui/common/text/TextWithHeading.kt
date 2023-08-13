@@ -21,20 +21,23 @@ fun TextWithHeading(
     heading: String,
     text: String,
     modifier: Modifier = Modifier,
+    filterText: String = "",
 ) {
-    SelectionContainer {
-        Text(
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("$heading: ")
-                }
-                append(text)
-            },
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 4.dp),
-            style = TextStyles.getCardBodyTextStyle()
-        )
+    if (heading.contains(filterText) || text.contains(filterText)) {
+        SelectionContainer {
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("$heading: ")
+                    }
+                    append(text)
+                },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                style = TextStyles.getCardBodyTextStyle()
+            )
+        }
     }
 }
 
@@ -43,7 +46,10 @@ fun TextWithHeading(
 private fun Preview() {
     PreviewTheme {
         Surface {
-            TextWithHeading(heading = "Format", text = "Digital Media")
+            TextWithHeading(
+                heading = "Format",
+                text = "Digital Media",
+            )
         }
     }
 }

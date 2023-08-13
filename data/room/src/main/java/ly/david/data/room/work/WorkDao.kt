@@ -12,7 +12,7 @@ abstract class WorkDao : BaseDao<WorkRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM work WHERE id = :workId")
-    abstract suspend fun getWork(workId: String): WorkWithAttributes?
+    abstract suspend fun getWork(workId: String): WorkWithAllData?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertAllAttributes(entities: List<WorkAttributeRoomModel>)

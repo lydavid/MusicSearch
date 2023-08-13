@@ -136,9 +136,8 @@ internal fun ReleaseGroupScaffold(
                         )
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    ReleaseGroupTab.RELEASES,
-                    ReleaseGroupTab.RELATIONSHIPS,
+                showFilterIcon = selectedTab !in listOf(
+                    ReleaseGroupTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -187,8 +186,10 @@ internal fun ReleaseGroupScaffold(
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            filterText = filterText,
                             coverArtUrl = url,
                             lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

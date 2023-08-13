@@ -26,6 +26,7 @@ val fakeReleaseEvent = ReleaseEvent(
 val underPressure = ReleaseMusicBrainzModel(
     id = "61735bf8-219e-3164-a94c-b74b1482fd01",
     name = "Under Pressure",
+    barcode = "123",
     date = "1981-10",
     artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
     releaseGroup = underPressureReleaseGroup,

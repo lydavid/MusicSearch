@@ -4,6 +4,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.AreaType
 import ly.david.data.domain.RelationsListRepository
+import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.LookupApi
@@ -37,6 +38,7 @@ class ReleaseRepository @Inject constructor(
     private val areaDao: AreaDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
+    private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -49,10 +51,11 @@ class ReleaseRepository @Inject constructor(
      */
     suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
-
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (releaseWithAllData != null &&
             releaseWithAllData.artistCreditNamesWithEntities.isNotEmpty() &&
-            releaseWithAllData.formatTrackCounts.isNotEmpty()
+            releaseWithAllData.formatTrackCounts.isNotEmpty() &&
+            hasUrlsBeenSavedForEntity
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
@@ -105,13 +108,18 @@ class ReleaseRepository @Inject constructor(
                 }.orEmpty()
             )
             releaseCountryDao.insertAll(release.getReleaseCountries())
+
+            relationRepository.insertAllRelations(
+                entityId = release.id,
+                relationMusicBrainzModels = release.relations,
+            )
         }
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupRelease(
             releaseId = entityId,
-            include = LookupApi.INC_ALL_RELATIONS
+            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations
     }
 }

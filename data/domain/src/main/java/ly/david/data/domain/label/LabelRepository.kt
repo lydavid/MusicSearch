@@ -3,8 +3,7 @@ package ly.david.data.domain.label
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
-import ly.david.data.domain.listitem.LabelListItemModel
-import ly.david.data.domain.listitem.toLabelListItemModel
+import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
 import ly.david.data.network.api.MusicBrainzApiService
@@ -15,25 +14,31 @@ import ly.david.data.room.label.toLabelRoomModel
 class LabelRepository @Inject constructor(
     private val musicBrainzApiService: MusicBrainzApiService,
     private val labelDao: LabelDao,
+    private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
-    suspend fun lookupLabel(labelId: String): LabelListItemModel {
-        val labelRoomModel = labelDao.getLabel(labelId)
-        if (labelRoomModel != null) {
-            return labelRoomModel.toLabelListItemModel()
+    suspend fun lookupLabel(labelId: String): LabelScaffoldModel {
+        val labelWithAllData = labelDao.getLabel(labelId)
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(labelId)
+        if (labelWithAllData != null && hasUrlsBeenSavedForEntity) {
+            return labelWithAllData.toLabelScaffoldModel()
         }
 
         val labelMusicBrainzModel = musicBrainzApiService.lookupLabel(labelId)
-
-        labelDao.insert(labelMusicBrainzModel.toLabelRoomModel())
-
-        return labelMusicBrainzModel.toLabelListItemModel()
+        labelDao.withTransaction {
+            labelDao.insert(labelMusicBrainzModel.toLabelRoomModel())
+            relationRepository.insertAllRelations(
+                entityId = labelId,
+                relationMusicBrainzModels = labelMusicBrainzModel.relations,
+            )
+        }
+        return lookupLabel(labelId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
         return musicBrainzApiService.lookupLabel(
             labelId = entityId,
-            include = LookupApi.INC_ALL_RELATIONS
+            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations
     }
 }

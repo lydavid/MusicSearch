@@ -13,8 +13,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
@@ -91,11 +90,15 @@ private fun PainterImage(
     Image(
         modifier = modifier
             .fillMaxWidth()
-            .semantics { testTag = "coverArtImage" },
+            .testTag(LargeImageTestTag.IMAGE.name),
         painter = painter,
         contentDescription = null,
         contentScale = ContentScale.FillWidth,
     )
+}
+
+enum class LargeImageTestTag {
+    IMAGE,
 }
 
 // Only see loading spinner in IDE, but works if we run the preview.
