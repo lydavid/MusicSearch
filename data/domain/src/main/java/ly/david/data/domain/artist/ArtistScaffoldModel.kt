@@ -19,7 +19,7 @@ data class ArtistScaffoldModel(
     val imageUrl: String? = null,
 ) : Artist
 
-fun ArtistWithAllData.toArtistScaffoldModel() =
+internal fun ArtistWithAllData.toArtistScaffoldModel() =
     ArtistScaffoldModel(
         id = artist.id,
         name = artist.name,

@@ -16,21 +16,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.data.LifeSpan
 import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.domain.listitem.EventListItemModel
+import ly.david.data.domain.event.EventScaffoldModel
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
 internal fun EventDetailsScreen(
+    event: EventScaffoldModel,
     modifier: Modifier = Modifier,
-    event: EventListItemModel,
+    filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,
@@ -40,11 +44,19 @@ internal fun EventDetailsScreen(
             event.run {
                 InformationListSeparatorHeader(R.string.event)
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.type, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.type,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 LifeSpanText(lifeSpan = lifeSpan)
                 time?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.time, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.time,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 if (cancelled == true) {
                     SelectionContainer {
@@ -62,6 +74,12 @@ internal fun EventDetailsScreen(
 
                 // TODO: set list
                 //  api for this seems like some kind markdown?
+
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }
@@ -75,7 +93,7 @@ private fun Preview() {
     PreviewTheme {
         Surface {
             EventDetailsScreen(
-                event = EventListItemModel(
+                event = EventScaffoldModel(
                     id = "e1",
                     name = "Some Place",
                     type = "Festival",

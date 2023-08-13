@@ -8,6 +8,7 @@ import ly.david.data.room.RoomModel
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.CountryCode
 import ly.david.data.room.area.releases.ReleaseCountry
+import ly.david.data.room.artist.UrlRelation
 import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 import ly.david.data.room.image.MbidImage
 import ly.david.data.room.label.LabelRoomModel
@@ -70,6 +71,12 @@ data class ReleaseWithAllData(
         projection = ["large_url"]
     )
     val largeUrl: String?,
+
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "entity_id"
+    )
+    val urls: List<UrlRelation>,
 ) : RoomModel
 
 /**

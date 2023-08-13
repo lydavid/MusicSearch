@@ -3,6 +3,8 @@ package ly.david.data.domain.releasegroup
 import ly.david.data.ReleaseGroup
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
+import ly.david.data.domain.listitem.RelationListItemModel
+import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.releasegroup.ReleaseGroupWithAllData
 
 data class ReleaseGroupScaffoldModel(
@@ -14,6 +16,7 @@ data class ReleaseGroupScaffoldModel(
     override val secondaryTypes: List<String>? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val imageUrl: String? = null,
+    val urls: List<RelationListItemModel> = listOf(),
 ) : ReleaseGroup
 
 internal fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroupScaffoldModel {
@@ -27,6 +30,7 @@ internal fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroup
         artistCredits = artistCreditNamesWithEntities.map {
             it.artistCreditNameRoomModel.toArtistCreditUiModel()
         },
-        imageUrl = largeUrl
+        imageUrl = largeUrl,
+        urls = urls.map { it.relation.toRelationListItemModel() },
     )
 }

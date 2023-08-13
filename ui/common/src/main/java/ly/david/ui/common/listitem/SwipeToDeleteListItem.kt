@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 
-// TODO: if we fail to delete item, would be nice to show it again until of a red background
+// TODO: if we fail to delete item, would be nice to show it again instead of a red background
 //  this may suggest we shouldn't use swipe to delete for remote items, as the ux will be strange no matter what we do
 @Composable
 fun SwipeToDeleteListItem(

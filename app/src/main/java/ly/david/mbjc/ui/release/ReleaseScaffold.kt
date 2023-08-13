@@ -127,9 +127,8 @@ internal fun ReleaseScaffold(
                         )
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    ReleaseTab.TRACKS,
-                    ReleaseTab.RELATIONSHIPS
+                showFilterIcon = selectedTab !in listOf(
+                    ReleaseTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -180,13 +179,9 @@ internal fun ReleaseScaffold(
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            filterText = filterText,
                             coverArtUrl = url,
-                            onLabelClick = {
-                                onItemClick(MusicBrainzEntity.LABEL, id, name)
-                            },
-                            onAreaClick = {
-                                onItemClick(MusicBrainzEntity.AREA, id, name)
-                            },
+                            onItemClick = onItemClick,
                             lazyListState = detailsLazyListState,
                         )
                     }

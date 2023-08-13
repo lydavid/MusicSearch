@@ -8,5 +8,5 @@ import ly.david.data.room.BaseDao
 abstract class SeriesDao : BaseDao<SeriesRoomModel>() {
 
     @Query("SELECT * FROM series WHERE id = :seriesId")
-    abstract suspend fun getSeries(seriesId: String): SeriesRoomModel?
+    abstract suspend fun getSeries(seriesId: String): SeriesWithAllData?
 }

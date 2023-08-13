@@ -10,5 +10,5 @@ abstract class PlaceDao : BaseDao<PlaceRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM place WHERE id = :placeId")
-    abstract suspend fun getPlace(placeId: String): PlaceWithArea?
+    abstract suspend fun getPlace(placeId: String): PlaceWithAllData?
 }

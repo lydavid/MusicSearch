@@ -8,5 +8,5 @@ import ly.david.data.room.BaseDao
 abstract class InstrumentDao : BaseDao<InstrumentRoomModel>() {
 
     @Query("SELECT * FROM instrument WHERE id = :instrumentId")
-    abstract suspend fun getInstrument(instrumentId: String): InstrumentRoomModel?
+    abstract suspend fun getInstrument(instrumentId: String): InstrumentWithAllData?
 }

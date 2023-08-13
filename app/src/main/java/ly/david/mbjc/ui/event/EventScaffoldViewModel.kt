@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.event.EventRepository
-import ly.david.data.domain.listitem.EventListItemModel
+import ly.david.data.domain.event.EventScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
@@ -34,7 +34,7 @@ internal class EventScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val event: MutableStateFlow<EventListItemModel?> = MutableStateFlow(null)
+    val event: MutableStateFlow<EventScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope

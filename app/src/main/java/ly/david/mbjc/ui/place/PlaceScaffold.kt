@@ -101,9 +101,8 @@ internal fun PlaceScaffold(
                         onAddToCollectionMenuClick(resource, placeId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    PlaceTab.EVENTS,
-                    PlaceTab.RELATIONSHIPS
+                showFilterIcon = selectedTab !in listOf(
+                    PlaceTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -147,14 +146,15 @@ internal fun PlaceScaffold(
                         scaffoldModel = place
                     ) {
                         PlaceDetailsScreen(
+                            place = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
                             context = context,
-                            place = it,
+                            filterText = filterText,
                             lazyListState = detailsLazyListState,
-                            onItemClick = onItemClick
+                            onItemClick = onItemClick,
                         )
                     }
                 }
