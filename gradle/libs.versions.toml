@@ -97,7 +97,7 @@ retrofit = ["retrofit", "retrofit-converter-moshi"]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.20.0" }
+dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.21.0" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.8" }
 google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
