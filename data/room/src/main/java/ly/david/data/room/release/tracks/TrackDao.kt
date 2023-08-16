@@ -44,19 +44,11 @@ abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
     @Query(
         """
         $SELECT_TRACKS_IN_RELEASE
-    """
-    )
-    abstract fun getTracksInRelease(releaseId: String): PagingSource<Int, TrackForListItem>
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_TRACKS_IN_RELEASE
         $FILTERED
     """
     )
-    abstract fun getTracksInReleaseFiltered(
+    abstract fun getTracksByRelease(
         releaseId: String,
-        query: String,
+        query: String = "%%",
     ): PagingSource<Int, TrackForListItem>
 }
