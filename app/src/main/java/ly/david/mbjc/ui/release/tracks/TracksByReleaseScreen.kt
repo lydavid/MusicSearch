@@ -6,10 +6,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
@@ -20,6 +23,33 @@ import ly.david.ui.common.release.TrackListItem
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
+@Composable
+internal fun TracksByReleaseScreen(
+    releaseId: String,
+    filterText: String,
+    lazyPagingItems: LazyPagingItems<ListItemModel>,
+    modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    lazyListState: LazyListState = rememberLazyListState(),
+    onRecordingClick: (String, String) -> Unit = { _, _ -> },
+    onPagedTracksFlowChange: (Flow<PagingData<ListItemModel>>) -> Unit = {},
+    viewModel: TracksByReleaseViewModel = hiltViewModel(),
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.loadTracks(releaseId)
+        onPagedTracksFlowChange(viewModel.pagedTracks)
+    }
+    viewModel.updateQuery(filterText)
+
+    TracksByReleaseScreen(
+        lazyPagingItems = lazyPagingItems,
+        modifier = modifier,
+        snackbarHostState = snackbarHostState,
+        lazyListState = lazyListState,
+        onRecordingClick = onRecordingClick,
+    )
+}
+
 /**
  * Main screen for Release lookup. Shows all tracks in all media in this release.
  *
@@ -28,7 +58,7 @@ import ly.david.ui.core.theme.PreviewTheme
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun TracksInReleaseScreen(
+private fun TracksByReleaseScreen(
     lazyPagingItems: LazyPagingItems<ListItemModel>,
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
@@ -61,6 +91,7 @@ internal fun TracksInReleaseScreen(
     }
 }
 
+// region Previews
 @DefaultPreviews
 @Composable
 internal fun PreviewTracksInReleaseScreen() {
@@ -95,9 +126,10 @@ internal fun PreviewTracksInReleaseScreen() {
                 )
             )
 
-            TracksInReleaseScreen(
+            TracksByReleaseScreen(
                 lazyPagingItems = items.collectAsLazyPagingItems()
             )
         }
     }
 }
+// endregion
