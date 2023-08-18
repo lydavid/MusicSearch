@@ -1,0 +1,31 @@
+name: Record Screenshot Tests
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  record_screenshot_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Record Screenshot Tests
+        run: ./gradlew recordPaparazziDebug
+
+      - name: Commit Screenshot Tests
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add .
+          git commit -m "Recorded screenshot tests"
+
+      - name: Push Screenshot Tests
+        uses: ad-m/github-push-action@v0.5.0
+        with:
+       
+
