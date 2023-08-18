@@ -67,7 +67,7 @@ internal fun ArtistScaffold(
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = ArtistTab.values()::size)
 
     var filterText by rememberSaveable { mutableStateOf("") }
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
@@ -163,7 +163,6 @@ internal fun ArtistScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = ArtistTab.values().size,
             state = pagerState
         ) { page ->
             when (ArtistTab.values()[page]) {

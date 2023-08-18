@@ -58,7 +58,7 @@ internal fun InstrumentScaffold(
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = InstrumentTab.values()::size)
 
     var selectedTab by rememberSaveable { mutableStateOf(InstrumentTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -123,7 +123,6 @@ internal fun InstrumentScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = InstrumentTab.values().size,
             state = pagerState
         ) { page ->
             when (InstrumentTab.values()[page]) {

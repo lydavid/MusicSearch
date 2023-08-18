@@ -71,7 +71,7 @@ internal fun ReleaseGroupScaffold(
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = ReleaseGroupTab.values()::size)
 
     var selectedTab by rememberSaveable { mutableStateOf(ReleaseGroupTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -169,7 +169,6 @@ internal fun ReleaseGroupScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = ReleaseGroupTab.values().size,
             state = pagerState
         ) { page ->
             when (ReleaseGroupTab.values()[page]) {
