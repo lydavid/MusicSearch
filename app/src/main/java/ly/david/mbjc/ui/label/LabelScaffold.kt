@@ -63,7 +63,7 @@ internal fun LabelScaffold(
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = LabelTab.values()::size)
 
     var selectedTab by rememberSaveable { mutableStateOf(LabelTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -144,7 +144,6 @@ internal fun LabelScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = LabelTab.values().size,
             state = pagerState
         ) { page ->
             when (LabelTab.values()[page]) {
