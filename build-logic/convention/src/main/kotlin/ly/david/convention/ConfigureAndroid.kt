@@ -5,9 +5,9 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
-private const val COMPILE_SDK_VERSION = 33
+private const val COMPILE_SDK_VERSION = 34
 private const val MIN_SDK_VERSION = 23
-private const val TARGET_SDK_VERSION = 33
+private const val TARGET_SDK_VERSION = 34
 
 fun Project.configureAndroid() {
     android {
