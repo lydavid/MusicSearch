@@ -65,7 +65,7 @@ internal fun RecordingScaffold(
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = RecordingTab.values()::size)
 
     var selectedTab by rememberSaveable { mutableStateOf(RecordingTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -159,7 +159,6 @@ internal fun RecordingScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = RecordingTab.values().size,
             state = pagerState
         ) { page ->
             when (RecordingTab.values()[page]) {

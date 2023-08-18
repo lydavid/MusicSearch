@@ -61,7 +61,7 @@ internal fun PlaceScaffold(
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = PlaceTab.values()::size)
 
     var selectedTab by rememberSaveable { mutableStateOf(PlaceTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -134,7 +134,6 @@ internal fun PlaceScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = PlaceTab.values().size,
             state = pagerState
         ) { page ->
             when (PlaceTab.values()[page]) {

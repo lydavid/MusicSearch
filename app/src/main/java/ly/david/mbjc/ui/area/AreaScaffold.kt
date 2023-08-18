@@ -71,12 +71,13 @@ internal fun AreaScaffold(
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
 
     val title by viewModel.title.collectAsState()
     val area by viewModel.area.collectAsState()
     val areaTabs by viewModel.areaTabs.collectAsState()
     val showError by viewModel.isError.collectAsState()
+
+    val pagerState = rememberPagerState(pageCount = areaTabs::size)
 
     LaunchedEffect(key1 = areaId) {
         viewModel.setTitle(titleWithDisambiguation)
@@ -155,7 +156,6 @@ internal fun AreaScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            pageCount = areaTabs.size,
             state = pagerState
         ) { page ->
             when (areaTabs[page]) {
