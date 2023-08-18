@@ -36,8 +36,8 @@ import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.recording.details.RecordingDetailsScreen
 import ly.david.mbjc.ui.recording.releases.ReleasesByRecordingScreen
 import ly.david.mbjc.ui.recording.stats.RecordingStatsScreen
-import ly.david.ui.common.R
 import ly.david.ui.common.EntityIcon
+import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -127,9 +127,8 @@ internal fun RecordingScaffold(
                         )
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    RecordingTab.RELEASES,
-                    RecordingTab.RELATIONSHIPS
+                showFilterIcon = selectedTab !in listOf(
+                    RecordingTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -172,12 +171,14 @@ internal fun RecordingScaffold(
                         scaffoldModel = recording
                     ) {
                         RecordingDetailsScreen(
+                            recording = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            recording = it,
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

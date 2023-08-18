@@ -93,7 +93,10 @@ class RelationsList @Inject constructor(
                         }
                     ),
                     pagingSourceFactory = {
-                        relationDao.getEntityRelationships(entityId, "%$query%")
+                        relationDao.getEntityRelationships(
+                            entityId = entityId,
+                            query = "%$query%",
+                        )
                     }
                 ).flow.map { pagingData ->
                     pagingData.map(RelationRoomModel::toRelationListItemModel)

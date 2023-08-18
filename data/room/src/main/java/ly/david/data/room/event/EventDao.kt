@@ -8,5 +8,5 @@ import ly.david.data.room.BaseDao
 abstract class EventDao : BaseDao<EventRoomModel>() {
 
     @Query("SELECT * FROM event WHERE id = :eventId")
-    abstract suspend fun getEvent(eventId: String): EventRoomModel?
+    abstract suspend fun getEvent(eventId: String): EventWithAllData?
 }

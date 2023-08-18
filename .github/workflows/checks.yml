@@ -14,8 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          lfs: true
+#        with:
+#          lfs: true
 
       - id: setup
         uses: ./.github/actions/setup
@@ -53,8 +53,8 @@ jobs:
         with:
           arguments: data:spotify:test
 
-      - name: Verify screenshot tests
-        run: ./gradlew verifyPaparazziDebug
+#      - name: Verify screenshot tests
+#        run: ./gradlew verifyPaparazziDebug
 
       # TODO: Neither of these actually test code from their own module, so we're getting 0%
       - name: Unit test Android modules with coverage

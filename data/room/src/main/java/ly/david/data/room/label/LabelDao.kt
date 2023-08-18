@@ -8,5 +8,5 @@ import ly.david.data.room.BaseDao
 abstract class LabelDao : BaseDao<LabelRoomModel>() {
 
     @Query("SELECT * FROM label WHERE id = :labelId")
-    abstract suspend fun getLabel(labelId: String): LabelRoomModel?
+    abstract suspend fun getLabel(labelId: String): LabelWithAllData?
 }

@@ -40,10 +40,11 @@ fun MultipleChoiceDialog(
         }
     ) {
         Surface(
-            shape = RoundedCornerShape(28.dp)
+            shape = RoundedCornerShape(28.dp),
+            modifier = modifier,
         ) {
             Column(
-                modifier = modifier.padding(24.dp),
+                modifier = Modifier.padding(24.dp),
             ) {
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),

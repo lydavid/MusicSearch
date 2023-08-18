@@ -26,14 +26,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
-import ly.david.mbjc.ui.release.tracks.TracksInReleaseScreen
+import ly.david.mbjc.ui.release.tracks.TracksByReleaseScreen
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
@@ -127,9 +130,8 @@ internal fun ReleaseScaffold(
                         )
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    ReleaseTab.TRACKS,
-                    ReleaseTab.RELATIONSHIPS
+                showFilterIcon = selectedTab !in listOf(
+                    ReleaseTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -151,8 +153,10 @@ internal fun ReleaseScaffold(
         val detailsLazyListState = rememberLazyListState()
 
         val tracksLazyListState = rememberLazyListState()
+        var pagedTracksFlow: Flow<PagingData<ListItemModel>> by remember { mutableStateOf(emptyFlow()) }
         val tracksLazyPagingItems: LazyPagingItems<ListItemModel> =
-            rememberFlowWithLifecycleStarted(viewModel.pagedTracks).collectAsLazyPagingItems()
+            rememberFlowWithLifecycleStarted(pagedTracksFlow)
+                .collectAsLazyPagingItems()
 
         val relationsLazyListState = rememberLazyListState()
         val relationsLazyPagingItems =
@@ -180,27 +184,26 @@ internal fun ReleaseScaffold(
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
+                            filterText = filterText,
                             coverArtUrl = url,
-                            onLabelClick = {
-                                onItemClick(MusicBrainzEntity.LABEL, id, name)
-                            },
-                            onAreaClick = {
-                                onItemClick(MusicBrainzEntity.AREA, id, name)
-                            },
+                            onItemClick = onItemClick,
                             lazyListState = detailsLazyListState,
                         )
                     }
                 }
 
                 ReleaseTab.TRACKS -> {
-                    TracksInReleaseScreen(
+                    TracksByReleaseScreen(
+                        releaseId = releaseId,
+                        filterText = filterText,
+                        lazyListState = tracksLazyListState,
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         snackbarHostState = snackbarHostState,
-                        lazyListState = tracksLazyListState,
                         lazyPagingItems = tracksLazyPagingItems,
+                        onPagedTracksFlowChange = { pagedTracksFlow = it },
                         onRecordingClick = { id, title ->
                             onItemClick(MusicBrainzEntity.RECORDING, id, title)
                         }

@@ -7,8 +7,8 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.SeriesListItemModel
 import ly.david.data.domain.series.SeriesRepository
+import ly.david.data.domain.series.SeriesScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
@@ -34,7 +34,7 @@ internal class SeriesScaffoldViewModel @Inject constructor(
     override val title = MutableStateFlow("")
     override val isError = MutableStateFlow(false)
 
-    val series: MutableStateFlow<SeriesListItemModel?> = MutableStateFlow(null)
+    val series: MutableStateFlow<SeriesScaffoldModel?> = MutableStateFlow(null)
 
     init {
         relationsList.scope = viewModelScope

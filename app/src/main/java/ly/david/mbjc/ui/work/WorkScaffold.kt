@@ -99,9 +99,8 @@ internal fun WorkScaffold(
                         onAddToCollectionMenuClick(resource, workId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(
-                    WorkTab.RECORDINGS,
-                    WorkTab.RELATIONSHIPS,
+                showFilterIcon = selectedTab !in listOf(
+                    WorkTab.STATS,
                 ),
                 filterText = filterText,
                 onFilterTextChange = {
@@ -145,12 +144,14 @@ internal fun WorkScaffold(
                         scaffoldModel = work
                     ) {
                         WorkDetailsScreen(
+                            work = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            work = it,
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

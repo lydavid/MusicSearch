@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.CorporateFare
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MusicNote
@@ -56,8 +57,8 @@ fun MusicBrainzEntity.getIcon(): ImageVector? {
         MusicBrainzEntity.RELEASE_GROUP -> Icons.Default.Folder
         MusicBrainzEntity.SERIES -> Icons.Default.List
         MusicBrainzEntity.WORK -> Icons.Default.MusicNote
+        MusicBrainzEntity.URL -> Icons.Default.Link
         else -> {
-            // Non-searchable entities like Genre, URL
             // No icons.
             null
         }

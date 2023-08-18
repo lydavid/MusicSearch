@@ -16,9 +16,8 @@ import ly.david.data.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.relation.RelationListItem
 import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.image.LargeImage
@@ -91,15 +90,11 @@ internal fun ArtistDetailsScreen(
 
                 Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
-                ListSeparatorHeader("Links")
-                urls
-                    .filter { it.name.contains(filterText) || it.label.contains(filterText) }
-                    .forEach {
-                        RelationListItem(
-                            relation = it,
-                            onItemClick = onItemClick
-                        )
-                    }
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }

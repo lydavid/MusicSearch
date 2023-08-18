@@ -98,7 +98,7 @@ internal fun InstrumentScaffold(
                         onAddToCollectionMenuClick(resource, instrumentId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(InstrumentTab.RELATIONSHIPS),
+                showFilterIcon = selectedTab !in listOf(InstrumentTab.STATS),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -135,12 +135,14 @@ internal fun InstrumentScaffold(
                         scaffoldModel = instrument
                     ) {
                         InstrumentDetailsScreen(
+                            instrument = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            instrument = it,
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

@@ -98,7 +98,9 @@ internal fun SeriesScaffold(
                         onAddToCollectionMenuClick(resource, seriesId)
                     }
                 },
-                showFilterIcon = selectedTab in listOf(SeriesTab.RELATIONSHIPS),
+                showFilterIcon = selectedTab !in listOf(
+                    SeriesTab.STATS,
+                ),
                 filterText = filterText,
                 onFilterTextChange = {
                     filterText = it
@@ -135,12 +137,14 @@ internal fun SeriesScaffold(
                         scaffoldModel = series
                     ) {
                         SeriesDetailsScreen(
+                            series = it,
                             modifier = Modifier
                                 .padding(innerPadding)
                                 .fillMaxSize()
                                 .nestedScroll(scrollBehavior.nestedScrollConnection),
-                            series = it,
-                            lazyListState = detailsLazyListState
+                            filterText = filterText,
+                            lazyListState = detailsLazyListState,
+                            onItemClick = onItemClick,
                         )
                     }
                 }

@@ -39,7 +39,7 @@ internal fun LazyListScope.addRelationshipsSection(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             style = TextStyles.getCardBodyTextStyle(),
-            text = if (totalRelations == null) {
+            text = if (totalRelations == null || relationTypeCounts.isEmpty()) {
                 "No relationship stats available. Tap Relationships tab to fetch this entity's relationships."
             } else {
                 "Total relationships: $totalRelations"
@@ -58,14 +58,10 @@ internal fun LazyListScope.addRelationshipsSection(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (linkedEntity == MusicBrainzEntity.URL) {
-                    Spacer(modifier = Modifier.padding(end = 32.dp))
-                } else {
-                    EntityIcon(
-                        modifier = Modifier.padding(end = 8.dp),
-                        entity = linkedEntity
-                    )
-                }
+                EntityIcon(
+                    modifier = Modifier.padding(end = 8.dp),
+                    entity = linkedEntity
+                )
                 Text(
                     style = TextStyles.getCardBodySubTextStyle(),
                     text = "${stringResource(id = linkedEntity.getDisplayTextRes())}: ${relationTypeCount.count}"

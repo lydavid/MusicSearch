@@ -10,18 +10,22 @@ import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toDisplayTime
 import ly.david.data.domain.recordng.RecordingScaffoldModel
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
-import ly.david.ui.common.text.TextWithHeadingRes
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.R
+import ly.david.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 internal fun RecordingDetailsScreen(
-    modifier: Modifier = Modifier,
     recording: RecordingScaffoldModel,
+    modifier: Modifier = Modifier,
+    filterText: String = "",
     lazyListState: LazyListState = rememberLazyListState(),
+    onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     LazyColumn(
         modifier = modifier,
@@ -31,14 +35,32 @@ internal fun RecordingDetailsScreen(
             recording.run {
                 InformationListSeparatorHeader(R.string.recording)
                 length?.ifNotNull {
-                    TextWithHeadingRes(headingRes = R.string.length, text = it.toDisplayTime())
+                    TextWithHeadingRes(
+                        headingRes = R.string.length,
+                        text = it.toDisplayTime(),
+                        filterText = filterText,
+                    )
                 }
                 firstReleaseDate?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.first_release_date, text = it)
+                    TextWithHeadingRes(
+                        headingRes = R.string.first_release_date,
+                        text = it,
+                        filterText = filterText,
+                    )
                 }
                 isrcs?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(headingRes = R.string.isrc, text = it.joinToString("\n"))
+                    TextWithHeadingRes(
+                        headingRes = R.string.isrc,
+                        text = it.joinToString("\n"),
+                        filterText = filterText,
+                    )
                 }
+
+                UrlsSection(
+                    urls = urls,
+                    filterText = filterText,
+                    onItemClick = onItemClick
+                )
             }
         }
     }
