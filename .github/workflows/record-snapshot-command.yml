@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
+        with:
+          token: ${{ secrets.PAT }}
 
       - id: setup
         uses: ./.github/actions/setup
