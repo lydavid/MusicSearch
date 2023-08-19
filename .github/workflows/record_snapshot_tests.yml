@@ -1,4 +1,4 @@
-name: Record screenshot tests
+name: Record snapshot tests
 
 on:
   issue_comment:
@@ -16,15 +16,17 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      # This handles renaming of snapshot test functions
+      # Renamed and deleted test functions are not automatically removed by Paparazzi
       - name: Delete all snapshot golden
-        run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*'
+        run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*' | xargs rm
 
-      - name: Record screenshot tests
+      - name: Record snapshots
         run: ./gradlew recordPaparazziDebug
 
-      - name: Commit
+      - name: Commit new snapshots
         run: |
           git add '*/snapshots/images/*'
           git commit -m "chore: rerecord screenshot tests"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
