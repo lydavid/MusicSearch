@@ -1,12 +1,11 @@
-name: Record snapshot tests
+name: record-snapshot-command
 
 on:
-  issue_comment:
-    types:
-      - created
+  repository_dispatch:
+    types: [record-snapshot-command]
 
 jobs:
-  record:
+  record-snapshot:
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/record' }}
     steps:
@@ -29,4 +28,4 @@ jobs:
           git commit -m "chore: rerecord screenshot tests"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
