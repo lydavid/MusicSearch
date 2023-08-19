@@ -23,8 +23,7 @@ jobs:
 
       - name: Commit new snapshots
         run: |
+          echo "${{ secrets.REPO_PAT }}" | gh auth login --with-token
           git add '*/snapshots/images/*'
           git commit -m "chore: rerecord screenshot tests"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
