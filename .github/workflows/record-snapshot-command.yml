@@ -7,7 +7,6 @@ on:
 jobs:
   record-snapshot:
     runs-on: ubuntu-latest
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/record' }}
     steps:
       - name: Checkout
         uses: nschloe/action-cached-lfs-checkout@v1
