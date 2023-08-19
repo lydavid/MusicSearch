@@ -1,7 +1,7 @@
 # Automated Release
 
 ## Beta
-Every night, we have a [workflow](../.github/workflows/publish_beta.yml) that tries to publish the app to Google Play's beta track and to GitHub as a pre-release.
+Every night, we have a [workflow](../.github/workflows/publish-beta.yml) that tries to publish the app to Google Play's beta track and to GitHub as a pre-release.
 This workflow has two jobs. The first runs a check to determine whether to exit early, and the second actually does the publishing.
 
 ### `check`
@@ -30,7 +30,7 @@ We commit them in this job so that we guarantee a unique version, and ensure tha
 ## Production
 
 This step isn't actually completely automated.
-We need to manually merge `beta` into `master` to trigger [publish_production.yml](../.github/workflows/publish_production.yml),
+We need to manually merge `beta` into `master` to trigger [publish_production.yml](../.github/workflows/publish-production.yml),
 which will publish a new build from master directly to production.
 We publish again rather than promote the beta build so that we can change `VERSION_NAME` to match our semantic release version/tag,
 which on production will not include `-beta.x` suffix.
