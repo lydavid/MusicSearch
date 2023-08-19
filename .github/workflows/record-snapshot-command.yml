@@ -2,7 +2,7 @@ name: record-snapshot-command
 
 on:
   repository_dispatch:
-    types: [record-snapshot-command]
+    types: [ record-snapshot-command ]
 
 jobs:
   record-snapshot:
@@ -23,7 +23,8 @@ jobs:
 
       - name: Commit new snapshots
         run: |
-          echo "${{ secrets.REPO_PAT }}" | gh auth login --with-token
           git add '*/snapshots/images/*'
-          git commit -m "chore: rerecord screenshot tests"
+          git -c user.name="github-actions[bot]" \
+            -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -m "chore: rerecord screenshot tests"
           git push
