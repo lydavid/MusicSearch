@@ -12,5 +12,4 @@ jobs:
         uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
-          commands: record
-          repository: lydavid/record-snapshot-command
+          commands: record-snapshot
