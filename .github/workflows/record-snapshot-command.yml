@@ -27,4 +27,4 @@ jobs:
           git commit -m "chore: rerecord screenshot tests"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.REPO_PAT }}
