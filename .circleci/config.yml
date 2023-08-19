@@ -10,7 +10,7 @@ workflows:
     jobs:
       - path-filtering/filter:
           base-revision: master
-          config-path: .circleci/android_test.yml
+          config-path: .circleci/android-test.yml
           mapping: |
             .ci/.* run_android_test true
             .circleci/.* run_android_test true
