@@ -12,6 +12,8 @@ jobs:
         uses: nschloe/action-cached-lfs-checkout@v1
         with:
           token: ${{ secrets.PAT }}
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.client_payload.pull_request.head.ref }}
 
       - id: setup
         uses: ./.github/actions/setup
@@ -28,5 +30,5 @@ jobs:
           git add '*/snapshots/images/*'
           git -c user.name="github-actions[bot]" \
             -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
-            commit -m "chore: rerecord screenshot tests"
+            commit -m "chore: rerecord snapshot tests"
           git push
