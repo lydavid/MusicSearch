@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.stats
+package ly.david.ui.stats
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
@@ -16,7 +16,7 @@ import ly.david.ui.core.theme.PreviewTheme
  * Display all [stats] ordered/shown based on [tabs].
  */
 @Composable
-internal fun StatsScreen(
+fun StatsScreen(
     tabs: List<Tab>,
     stats: Stats,
     modifier: Modifier = Modifier,
@@ -80,7 +80,7 @@ internal fun StatsScreen(
 // region Previews
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewStatsScreen() {
     PreviewTheme {
         Surface {
             StatsScreen(

@@ -5,8 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.work.recordings.RecordingWorkDao
-import ly.david.mbjc.ui.stats.RecordingStats
-import ly.david.mbjc.ui.stats.RelationsStats
+import ly.david.ui.stats.RecordingStats
+import ly.david.ui.stats.RelationsStats
 
 @HiltViewModel
 internal class WorkStatsViewModel @Inject constructor(

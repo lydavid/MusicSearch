@@ -5,8 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.room.place.events.EventPlaceDao
 import ly.david.data.room.relation.RelationDao
-import ly.david.mbjc.ui.stats.EventStats
-import ly.david.mbjc.ui.stats.RelationsStats
+import ly.david.ui.stats.EventStats
+import ly.david.ui.stats.RelationsStats
 
 @HiltViewModel
 class PlaceStatsViewModel @Inject constructor(

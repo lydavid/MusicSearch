@@ -5,8 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
-import ly.david.mbjc.ui.stats.RelationsStats
-import ly.david.mbjc.ui.stats.ReleasesStats
+import ly.david.ui.stats.RelationsStats
+import ly.david.ui.stats.ReleasesStats
 
 @HiltViewModel
 internal class ReleaseGroupStatsViewModel @Inject constructor(

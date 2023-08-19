@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.stats
+package ly.david.ui.stats
 
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount

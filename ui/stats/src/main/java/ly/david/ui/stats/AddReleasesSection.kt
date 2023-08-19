@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.stats
+package ly.david.ui.stats
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer

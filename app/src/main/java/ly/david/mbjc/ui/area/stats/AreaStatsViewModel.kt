@@ -6,9 +6,9 @@ import javax.inject.Inject
 import ly.david.data.room.area.places.AreaPlaceDao
 import ly.david.data.room.area.releases.ReleaseCountryDao
 import ly.david.data.room.relation.RelationDao
-import ly.david.mbjc.ui.stats.PlacesStats
-import ly.david.mbjc.ui.stats.RelationsStats
-import ly.david.mbjc.ui.stats.ReleasesStats
+import ly.david.ui.stats.PlacesStats
+import ly.david.ui.stats.RelationsStats
+import ly.david.ui.stats.ReleasesStats
 
 @HiltViewModel
 class AreaStatsViewModel @Inject constructor(

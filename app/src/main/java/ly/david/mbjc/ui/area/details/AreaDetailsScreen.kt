@@ -67,7 +67,7 @@ internal fun AreaDetailsScreen(
 @ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewAreaDetailsScreen() {
     PreviewTheme {
         Surface {
             AreaDetailsScreen(

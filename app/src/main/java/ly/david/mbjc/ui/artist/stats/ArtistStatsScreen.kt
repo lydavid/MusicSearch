@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
-import ly.david.mbjc.ui.stats.Stats
-import ly.david.mbjc.ui.stats.StatsScreen
 import ly.david.ui.common.topappbar.Tab
+import ly.david.ui.stats.Stats
+import ly.david.ui.stats.StatsScreen
 
 @Composable
 internal fun ArtistStatsScreen(

@@ -6,9 +6,9 @@ import javax.inject.Inject
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.artist.releases.ArtistReleaseDao
 import ly.david.data.room.relation.RelationDao
-import ly.david.mbjc.ui.stats.RelationsStats
-import ly.david.mbjc.ui.stats.ReleaseGroupsStats
-import ly.david.mbjc.ui.stats.ReleasesStats
+import ly.david.ui.stats.RelationsStats
+import ly.david.ui.stats.ReleaseGroupsStats
+import ly.david.ui.stats.ReleasesStats
 
 @HiltViewModel
 internal class ArtistStatsViewModel @Inject constructor(
