@@ -54,3 +54,4 @@ include(
     ":ui:settings",
     ":ui:spotify"
 )
+include(":ui:stats")

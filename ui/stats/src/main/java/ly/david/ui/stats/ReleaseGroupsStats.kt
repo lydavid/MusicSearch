@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.stats
+package ly.david.ui.stats
 
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationDao
@@ -7,7 +7,7 @@ import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 /**
  * Stats about release groups.
  */
-internal interface ReleaseGroupsStats {
+interface ReleaseGroupsStats {
     val relationDao: RelationDao
 
     suspend fun getTotalRemoteReleaseGroups(entityId: String): Int? =

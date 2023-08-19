@@ -1,0 +1,30 @@
+name: Record screenshot tests
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/record' }}
+    steps:
+      - name: Checkout
+        uses: nschloe/action-cached-lfs-checkout@v1
+
+      - id: setup
+        uses: ./.github/actions/setup
+
+      # This handles renaming of snapshot test functions
+      - name: Delete all snapshot golden
+        run: find . -type f ! -path '*/build/*' -a -path '*/snapshots/images/*'
+
+      - name: Record screenshot tests
+        run: ./gradlew recordPaparazziDebug
+
+      - name: Commit
+        run: |
+          git add '*/snapshots/images/*'
+          git commit -m "chore: rerecord screenshot tests"
+          git push

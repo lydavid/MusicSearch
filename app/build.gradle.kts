@@ -6,6 +6,7 @@ plugins {
     id("ly.david.android.compose")
     id("kotlin-kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.paparazzi)
 }
 
 if (file("google-services.json").exists() ||
@@ -79,6 +80,7 @@ dependencies {
     implementation(projects.ui.nowplaying)
     implementation(projects.ui.settings)
     implementation(projects.ui.spotify)
+    implementation(projects.ui.stats)
     testImplementation(projects.testData)
     androidTestImplementation(projects.testData)
 
