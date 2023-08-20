@@ -16,17 +16,17 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.common.getDateFormatted
+import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.domain.listitem.toLookupHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.LookupHistoryForListItem
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val lookupHistoryDao: LookupHistoryDao,
+    private val lookupHistoryRepository: LookupHistoryRepository,
 ) : ViewModel() {
 
     private val query: MutableStateFlow<String> = MutableStateFlow("")
@@ -41,7 +41,7 @@ class HistoryViewModel @Inject constructor(
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
-                    lookupHistoryDao.getAllLookupHistory("%$query%")
+                    lookupHistoryRepository.getAllLookupHistory(query)
                 }
             ).flow.map { pagingData ->
                 pagingData

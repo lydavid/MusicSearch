@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
@@ -35,7 +36,6 @@ import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.collection.CollectionWithEntities
-import ly.david.data.room.history.LookupHistoryDao
 import ly.david.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationException
@@ -85,7 +85,7 @@ internal class TopLevelViewModel @Inject constructor(
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication,
 
-    private val lookupHistoryDao: LookupHistoryDao,
+    private val lookupHistoryRepository: LookupHistoryRepository,
 ) : ViewModel() {
 
     data class RemoteResult(
@@ -249,26 +249,26 @@ internal class TopLevelViewModel @Inject constructor(
     }
 
     suspend fun markHistoryAsDeleted(mbid: String) {
-        lookupHistoryDao.markAsDeleted(mbid, true)
+        lookupHistoryRepository.markHistoryAsDeleted(mbid)
     }
 
     suspend fun undoDeleteHistory(mbid: String) {
-        lookupHistoryDao.markAsDeleted(mbid, false)
+        lookupHistoryRepository.undoDeleteHistory(mbid)
     }
 
     suspend fun markAllHistoryAsDeleted() {
-        lookupHistoryDao.markAllAsDeleted(true)
+        lookupHistoryRepository.markAllHistoryAsDeleted()
     }
 
     suspend fun undoDeleteAllHistory() {
-        lookupHistoryDao.markAllAsDeleted(false)
+        lookupHistoryRepository.undoDeleteAllHistory()
     }
 
     suspend fun deleteHistory(mbid: String) {
-        lookupHistoryDao.delete(mbid)
+        lookupHistoryRepository.deleteHistory(mbid)
     }
 
     suspend fun deleteAllHistory() {
-        lookupHistoryDao.deleteAll()
+        lookupHistoryRepository.deleteAllHistory()
     }
 }
