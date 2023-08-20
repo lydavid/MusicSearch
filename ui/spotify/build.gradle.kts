@@ -10,7 +10,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.data.base)
+    implementation(projects.data.core)
     implementation(projects.data.spotify)
     implementation(projects.ui.core)
     implementation(projects.ui.common)

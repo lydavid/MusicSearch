@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.data.base)
+    implementation(projects.data.core)
     implementation(projects.data.coverart)
     implementation(projects.data.musicbrainz)
 

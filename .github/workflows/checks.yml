@@ -21,10 +21,10 @@ jobs:
       - name: Detekt code smells
         run: ./gradlew detekt
 
-      - name: Unit test :data:base
+      - name: Unit test :data:core
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: data:base:test
+          arguments: data:core:test
 
       - name: Unit test :data:coverart
         uses: gradle/gradle-build-action@v2

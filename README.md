@@ -51,7 +51,7 @@ See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 graph LR
 
   subgraph data
-    base
+    core
     coverart
     domain
     musicbrainz
@@ -63,16 +63,16 @@ graph LR
     image
     screenshot
   end
-  domain --> base
+  domain --> core
   domain --> coverart
   domain --> musicbrainz
   domain --> room
-  room --> base
+  room --> core
   room --> coverart
   room --> musicbrainz
-  image --> base
   image --> core
-  data --> base
+  image --> core
+  data --> core
   data --> coverart
   data --> domain
   data --> room
@@ -96,8 +96,8 @@ graph LR
   stats --> common
   stats --> core
   stats --> screenshot
-  musicbrainz --> base
-  spotify --> base
+  musicbrainz --> core
+  spotify --> core
   collections --> data
   collections --> common
   collections --> core
@@ -107,7 +107,7 @@ graph LR
   common --> image
   common --> image
   common --> screenshot
-  spotify --> base
+  spotify --> core
   spotify --> core
   spotify --> common
   spotify --> screenshot
@@ -153,7 +153,7 @@ graph LR
   app --> spotify
   app --> stats
   app --> test-data
-  coverart --> base
+  coverart --> core
   history --> data
   history --> common
   history --> core

@@ -36,7 +36,7 @@ include(
     ":app",
     ":data-android",
     ":data",
-    ":data:base",
+    ":data:core",
     ":data:coverart",
     ":data:domain",
     ":data:spotify",
