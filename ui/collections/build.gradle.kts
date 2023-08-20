@@ -1,6 +1,8 @@
 plugins {
     id("ly.david.android.library")
     id("ly.david.android.compose")
+    id("kotlin-kapt")
+    alias(libs.plugins.hilt)
     alias(libs.plugins.paparazzi)
 }
 
@@ -17,8 +19,10 @@ android {
 
 dependencies {
     implementation(projects.data)
+    implementation(projects.dataAndroid)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
+    implementation(projects.ui.settings)
     testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.androidx.paging.compose)
@@ -31,6 +35,10 @@ dependencies {
     implementation(libs.compose.ui.preview)
     androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
 

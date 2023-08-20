@@ -24,7 +24,7 @@ import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.mbjc.ui.collections.CollectionListScaffold
+import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
