@@ -19,7 +19,7 @@ jobs:
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: nschloe/action-cached-lfs-checkout@v1
         with:
           token: ${{ secrets.PAT }}
 

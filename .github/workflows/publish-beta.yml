@@ -17,7 +17,7 @@ jobs:
       status: ${{ steps.early_exit.outputs.status }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: nschloe/action-cached-lfs-checkout@v1
 
       # Cannot early exit jobs with GHA yet
       # Workaround: https://github.com/actions/runner/issues/662#issuecomment-1372855726
@@ -44,7 +44,7 @@ jobs:
       ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET: ${{ secrets.ORG_GRADLE_PROJECT_SPOTIFY_CLIENT_SECRET }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: nschloe/action-cached-lfs-checkout@v1
         with:
           token: ${{ secrets.PAT }}
 
