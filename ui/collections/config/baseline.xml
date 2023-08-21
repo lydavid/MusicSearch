@@ -2,6 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>MaxLineLength:ArtistsByCollectionViewModel.kt$ArtistsByCollectionViewModel$)</ID>
+    <ID>MaxLineLength:InstrumentsByCollectionViewModel.kt$InstrumentsByCollectionViewModel$)</ID>
+    <ID>MaxLineLength:RecordingsByCollectionViewModel.kt$RecordingsByCollectionViewModel$)</ID>
     <ID>ModifierMissing:CollectionBottomSheet.kt$CollectionBottomSheet</ID>
     <ID>ModifierMissing:CreateCollectionDialog.kt$CreateCollectionDialog</ID>
   </CurrentIssues>

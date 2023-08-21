@@ -22,8 +22,6 @@ import ly.david.data.network.resourceUri
 import ly.david.data.network.toMusicBrainzEntity
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
-import ly.david.mbjc.ui.collections.CollectionListScaffold
-import ly.david.mbjc.ui.collections.CollectionScaffold
 import ly.david.mbjc.ui.event.EventScaffold
 import ly.david.mbjc.ui.genre.GenreScaffold
 import ly.david.mbjc.ui.instrument.InstrumentScaffold
@@ -35,6 +33,8 @@ import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
+import ly.david.ui.collections.CollectionListScaffold
+import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.R
 import ly.david.ui.history.HistoryScaffold
 import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
