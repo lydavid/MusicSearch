@@ -6,22 +6,6 @@ plugins {
 
 android {
     namespace = "ly.david.data"
-
-    defaultConfig {
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
-    }
-
-    buildTypes {
-        debug {
-            isTestCoverageEnabled = true
-        }
-        release {
-            isMinifyEnabled = true
-            consumerProguardFiles("consumer-rules.pro")
-        }
-    }
 }
 
 dependencies {
