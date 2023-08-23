@@ -30,8 +30,10 @@ We commit them in this job so that we guarantee a unique version, and ensure tha
 ## Production
 
 This step isn't actually completely automated.
-We need to manually merge `beta` into `master` to trigger [publish_production.yml](../.github/workflows/publish-production.yml),
-which will publish a new build from master directly to production.
+We need to manually merge `beta` into `master`.
+We intended for [publish_production.yml](../.github/workflows/publish-production.yml) to run, but it does not seem to if we rebase and push.
+So, we need to manually run this workflow through https://github.com/lydavid/MusicSearch/actions/workflows/publish-production.yml.
+This workflow will publish a new build from master directly to production.
 We publish again rather than promote the beta build so that we can change `VERSION_NAME` to match our semantic release version/tag,
 which on production will not include `-beta.x` suffix.
 
