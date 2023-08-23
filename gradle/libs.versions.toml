@@ -34,7 +34,7 @@ androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name 
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.10.1" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.6.1" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.0" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.1" }
 androidx-paging-common = { group = "androidx.paging", name = "paging-common-ktx", version.ref = "paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
