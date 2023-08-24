@@ -139,4 +139,11 @@
     <string name="spotify_tutorial">Enable Device Broadcast Status in the Spotify app\'s settings in order for MusicSearch to detect the playing song</string>
     <string name="search_x">Search %1$s</string>
     <string name="search_x_by_x">Search %1$s by %2$s</string>
+
+    <string name="alphabetically">Alphabetically</string>
+    <string name="alphabetically_reverse">Reverse alphabetically</string>
+    <string name="recently_visited">Recently visited</string>
+    <string name="least_recently_visited">Least recently visited</string>
+    <string name="most_visited">Most visited</string>
+    <string name="least_visited">Least visited</string>
 </resources>

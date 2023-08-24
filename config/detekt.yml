@@ -6,6 +6,7 @@ complexity:
     ignoreAnnotated:
       - "Composable"
       - "HiltViewModel"
+      - "Query"
   LongMethod:
     ignoreAnnotated:
       - "Composable"
