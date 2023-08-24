@@ -54,32 +54,53 @@ class HistoryViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val lookUpHistory: Flow<PagingData<ListItemModel>> =
-        uiState.flatMapLatest { (query, sort) ->
+        uiState.flatMapLatest { (query, sortOption) ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
                     lookupHistoryRepository.getAllLookupHistory(
                         query = query,
-                        sort = sort
+                        sortOption = sortOption
                     )
                 }
             ).flow.map { pagingData ->
                 pagingData
                     .map(LookupHistoryForListItem::toLookupHistoryListItemModel)
-                    .insertSeparators { before: LookupHistoryListItemModel?, after: LookupHistoryListItemModel? ->
-                        val beforeDate = before?.lastAccessed?.getDateFormatted()
-                        val afterDate = after?.lastAccessed?.getDateFormatted()
-                        if (beforeDate != afterDate && afterDate != null) {
-                            ListSeparator(
-                                id = afterDate,
-                                text = afterDate,
-                            )
-                        } else {
-                            null
-                        }
+                    .insertSeparators {
+                            before: LookupHistoryListItemModel?,
+                            after: LookupHistoryListItemModel?,
+                        ->
+                        getListSeparator(
+                            before = before,
+                            after = after,
+                            sortOption = sortOption
+                        )
                     }
             }
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
+
+    private fun getListSeparator(
+        before: LookupHistoryListItemModel?,
+        after: LookupHistoryListItemModel?,
+        sortOption: HistorySortOption,
+    ): ListSeparator? {
+        if (sortOption != HistorySortOption.RECENTLY_VISITED &&
+            sortOption != HistorySortOption.LEAST_RECENTLY_VISITED
+        ) {
+            return null
+        }
+
+        val beforeDate = before?.lastAccessed?.getDateFormatted()
+        val afterDate = after?.lastAccessed?.getDateFormatted()
+        if (beforeDate == afterDate || afterDate == null) {
+            return null
+        }
+
+        return ListSeparator(
+            id = afterDate,
+            text = afterDate,
+        )
+    }
 }
