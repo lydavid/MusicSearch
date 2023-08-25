@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
+    implementation(projects.ui.settings)
     testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 

@@ -36,6 +36,7 @@ import ly.david.mbjc.ui.work.WorkScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.R
+import ly.david.ui.history.DeleteHistoryDelegate
 import ly.david.ui.history.HistoryScaffold
 import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
@@ -69,17 +70,17 @@ internal fun NavHostController.goTo(destination: Destination) {
 @Composable
 internal fun NavigationGraph(
     navController: NavHostController,
-    deleteHistoryDelegate: ly.david.ui.history.DeleteHistoryDelegate,
+    deleteHistoryDelegate: DeleteHistoryDelegate,
+    onLoginClick: () -> Unit,
+    onLogoutClick: () -> Unit,
+    onCreateCollectionClick: () -> Unit,
+    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit,
+    onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit,
+    showMoreInfoInReleaseListItem: Boolean,
+    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit,
+    sortReleaseGroupListItems: Boolean,
+    onSortReleaseGroupListItemsChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    onLoginClick: () -> Unit = {},
-    onLogoutClick: () -> Unit = {},
-    onCreateCollectionClick: () -> Unit = {},
-    onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    onDeleteFromCollection: (collectionId: String, entityId: String, name: String) -> Unit = { _, _, _ -> },
-    showMoreInfoInReleaseListItem: Boolean = true,
-    onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    sortReleaseGroupListItems: Boolean = false,
-    onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
 ) {
     val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
     val uriPrefix = "$deeplinkSchema://app/"

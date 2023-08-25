@@ -49,7 +49,8 @@ internal fun TopLevelScaffold(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val sortReleaseGroupListItems by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
+    val sortReleaseGroupListItems
+        by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
     val showMoreInfoInReleaseListItem
         by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
@@ -234,7 +235,7 @@ internal fun TopLevelScaffold(
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = viewModel.appPreferences::setShowMoreInfoInReleaseListItem,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = viewModel.appPreferences::setSortReleaseGroupListItems
+            onSortReleaseGroupListItemsChange = viewModel.appPreferences::setSortReleaseGroupListItems,
         )
     }
 }

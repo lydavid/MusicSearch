@@ -12,11 +12,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import ly.david.data.common.getDateFormatted
 import ly.david.data.domain.history.HistorySortOption
 import ly.david.data.domain.history.LookupHistoryRepository
@@ -26,22 +28,28 @@ import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.domain.listitem.toLookupHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.history.LookupHistoryForListItem
+import ly.david.ui.settings.AppPreferences
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
+    private val appPreferences: AppPreferences,
     private val lookupHistoryRepository: LookupHistoryRepository,
 ) : ViewModel() {
 
-    data class UiState(
+    data class ViewModelState(
         val query: String,
         val sortOption: HistorySortOption,
     )
 
     private val query: MutableStateFlow<String> = MutableStateFlow("")
-    private val _sortOption: MutableStateFlow<HistorySortOption> = MutableStateFlow(HistorySortOption.RECENTLY_VISITED)
-    val sortOption = _sortOption.asStateFlow()
-    private val uiState = combine(query, _sortOption) { query, sortOption ->
-        UiState(query, sortOption)
+    val sortOption: StateFlow<HistorySortOption> = appPreferences.historySortOption
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = HistorySortOption.RECENTLY_VISITED,
+        )
+    private val viewModelState = combine(query, sortOption) { query, sortOption ->
+        ViewModelState(query, sortOption)
     }
 
     fun updateQuery(query: String) {
@@ -49,12 +57,12 @@ class HistoryViewModel @Inject constructor(
     }
 
     fun updateSortOption(sortOption: HistorySortOption) {
-        this._sortOption.value = sortOption
+        appPreferences.setHistorySortOption(sortOption)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val lookUpHistory: Flow<PagingData<ListItemModel>> =
-        uiState.flatMapLatest { (query, sortOption) ->
+        viewModelState.flatMapLatest { (query, sortOption) ->
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
