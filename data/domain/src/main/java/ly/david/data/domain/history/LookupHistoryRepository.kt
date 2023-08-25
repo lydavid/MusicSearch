@@ -8,8 +8,16 @@ import ly.david.data.room.history.LookupHistoryDao
 class LookupHistoryRepository @Inject constructor(
     private val lookupHistoryDao: LookupHistoryDao,
 ) {
-    fun getAllLookupHistory(query: String) =
-        lookupHistoryDao.getAllLookupHistory("%$query%")
+    fun getAllLookupHistory(query: String, sortOption: HistorySortOption) =
+        lookupHistoryDao.getAllLookupHistory(
+            query = "%$query%",
+            alphabetically = sortOption == HistorySortOption.ALPHABETICALLY,
+            alphabeticallyReverse = sortOption == HistorySortOption.ALPHABETICALLY_REVERSE,
+            recentlyVisited = sortOption == HistorySortOption.RECENTLY_VISITED,
+            leastRecentlyVisited = sortOption == HistorySortOption.LEAST_RECENTLY_VISITED,
+            mostVisited = sortOption == HistorySortOption.MOST_VISITED,
+            leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
+        )
 
     suspend fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, true)

@@ -11,7 +11,9 @@ import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,8 +44,10 @@ fun HistoryScaffold(
     var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.lookUpHistory)
         .collectAsLazyPagingItems()
-
+    val sortOption by viewModel.sortOption.collectAsState()
     var showDeleteConfirmationDialog by rememberSaveable { mutableStateOf(false) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+    val bottomSheetState = rememberModalBottomSheetState()
 
     if (showDeleteConfirmationDialog) {
         SimpleAlertDialog(
@@ -52,6 +56,15 @@ fun HistoryScaffold(
             dismissText = stringResource(id = R.string.no),
             onDismiss = { showDeleteConfirmationDialog = false },
             onConfirmClick = { deleteHistoryDelegate.deleteAll() }
+        )
+    }
+
+    if (showBottomSheet) {
+        HistorySortBottomSheet(
+            sortOption = sortOption,
+            onSortOptionClick = viewModel::updateSortOption,
+            bottomSheetState = bottomSheetState,
+            onDismiss = { showBottomSheet = false }
         )
     }
 
@@ -72,6 +85,13 @@ fun HistoryScaffold(
                         text = { Text(stringResource(id = R.string.clear_history)) },
                         onClick = {
                             showDeleteConfirmationDialog = true
+                            closeMenu()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(id = R.string.sort)) },
+                        onClick = {
+                            showBottomSheet = true
                             closeMenu()
                         }
                     )

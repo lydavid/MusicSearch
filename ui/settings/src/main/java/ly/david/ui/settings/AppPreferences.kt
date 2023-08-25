@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.ApplicationScope
+import ly.david.data.domain.history.HistorySortOption
 import ly.david.ui.common.R
 
 interface AppPreferences {
@@ -40,6 +41,9 @@ interface AppPreferences {
 
     val showRemoteCollections: Flow<Boolean>
     fun setShowRemoteCollections(show: Boolean)
+
+    val historySortOption: Flow<HistorySortOption>
+    fun setHistorySortOption(sort: HistorySortOption)
 }
 
 private const val THEME_KEY = "theme"
@@ -76,7 +80,6 @@ class AppPreferencesImpl @Inject constructor(
             }
             .distinctUntilChanged()
 
-    // If injecting coroutineScope causes issues, we can turn this into suspend and have consumer launch in coroutine
     override fun setTheme(theme: AppPreferences.Theme) {
         coroutineScope.launch {
             preferencesDataStore.edit {
@@ -159,4 +162,22 @@ class AppPreferencesImpl @Inject constructor(
             }
         }
     }
+
+    // region History
+    private val historySortOptionPreference = stringPreferencesKey("historySortOption")
+
+    override val historySortOption: Flow<HistorySortOption>
+        get() = preferencesDataStore.data
+            .map {
+                HistorySortOption.valueOf(it[historySortOptionPreference] ?: HistorySortOption.RECENTLY_VISITED.name)
+            }
+
+    override fun setHistorySortOption(sort: HistorySortOption) {
+        coroutineScope.launch {
+            preferencesDataStore.edit {
+                it[historySortOptionPreference] = sort.name
+            }
+        }
+    }
+    // endregion
 }

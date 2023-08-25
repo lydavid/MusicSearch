@@ -49,12 +49,13 @@ internal fun TopLevelScaffold(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val sortReleaseGroupListItems by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
+    val sortReleaseGroupListItems
+        by viewModel.appPreferences.sortReleaseGroupListItems.collectAsState(initial = false)
     val showMoreInfoInReleaseListItem
         by viewModel.appPreferences.showMoreInfoInReleaseListItem.collectAsState(initial = true)
 
     val scope = rememberCoroutineScope()
-    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
     var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
     val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
@@ -120,12 +121,12 @@ internal fun TopLevelScaffold(
         }
     }
 
-    if (openBottomSheet) {
+    if (showBottomSheet) {
         CollectionBottomSheet(
             bottomSheetState = bottomSheetState,
             scope = scope,
             collections = collections,
-            onDismiss = { openBottomSheet = false },
+            onDismiss = { showBottomSheet = false },
             onCreateCollectionClick = { showCreateCollectionDialog = true },
             onAddToCollection = { collectionId ->
                 scope.launch {
@@ -219,7 +220,7 @@ internal fun TopLevelScaffold(
             onAddToCollectionMenuClick = { entity, id ->
                 viewModel.setEntity(entity)
                 viewModel.setEntityId(id)
-                openBottomSheet = true
+                showBottomSheet = true
             },
             onDeleteFromCollection = { collectionId, entityId, name ->
                 scope.launch {
@@ -234,7 +235,7 @@ internal fun TopLevelScaffold(
             showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
             onShowMoreInfoInReleaseListItemChange = viewModel.appPreferences::setShowMoreInfoInReleaseListItem,
             sortReleaseGroupListItems = sortReleaseGroupListItems,
-            onSortReleaseGroupListItemsChange = viewModel.appPreferences::setSortReleaseGroupListItems
+            onSortReleaseGroupListItemsChange = viewModel.appPreferences::setSortReleaseGroupListItems,
         )
     }
 }

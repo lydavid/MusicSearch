@@ -10,30 +10,31 @@ import ly.david.data.room.BaseDao
 @Dao
 abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
-//    @Transaction
-//    @Query(
-//        """
-//        SELECT * FROM lookup_history
-//        WHERE NOT deleted
-//        ORDER BY last_accessed DESC
-//        """
-//    )
-//    abstract fun getAllLookupHistory(): PagingSource<Int, LookupHistoryRoomModel>
-
-    // TODO: can't search "release group", need to use "release_group" or "release-group"
-    //  rather than having the user type "artist" to filter artist, use pills or something
-    //  reserving text search for title only
     @Transaction
     @Query(
         """
         SELECT * 
         FROM lookup_history
         WHERE NOT deleted AND
-        (title LIKE :query OR resource LIKE :query OR search_hint LIKE :query)
-        ORDER BY last_accessed DESC
+          (title LIKE :query OR resource LIKE :query OR search_hint LIKE :query)
+        ORDER BY
+          CASE WHEN :alphabetically THEN title END ASC,
+          CASE WHEN :alphabeticallyReverse THEN title END DESC,
+          CASE WHEN :recentlyVisited THEN last_accessed END DESC,
+          CASE WHEN :leastRecentlyVisited THEN last_accessed END ASC,
+          CASE WHEN :mostVisited THEN number_of_visits END DESC,
+          CASE WHEN :leastVisited THEN number_of_visits END ASC
         """
     )
-    abstract fun getAllLookupHistory(query: String): PagingSource<Int, LookupHistoryForListItem>
+    abstract fun getAllLookupHistory(
+        query: String,
+        alphabetically: Boolean,
+        alphabeticallyReverse: Boolean,
+        recentlyVisited: Boolean,
+        leastRecentlyVisited: Boolean,
+        mostVisited: Boolean,
+        leastVisited: Boolean,
+    ): PagingSource<Int, LookupHistoryForListItem>
 
     @Query(
         """
