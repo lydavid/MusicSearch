@@ -16,8 +16,8 @@ using [MusicBrainz's API](https://wiki.musicbrainz.org/MusicBrainz_API).
 - Almost every tab allows you to search its content instantaneously
 - Save anything to a collection
 - Login using your MusicBrainz account to add to your existing collections
+- Listening on Spotify? Enable Device Broadcast Status to search the artist or song from the app
 - Have a Pixel phone? Enable notification listener to record Now Playing history
-- Cover arts
 - Dark theme
 - Material You theme
 
