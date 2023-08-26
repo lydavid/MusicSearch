@@ -18,5 +18,6 @@ A place to document my development, testing, and release processes.
 - [Deep links](deep_links.md)
 
 ## Release
-- [Automated Release](./automated_release.md)
+- [Automated Nightly Release](./automated_beta_release.md)
+- [Production Release](./production_release.md)
 - [Release merge problem (v0.13.0)](./release_merge_problem.md)
