@@ -96,6 +96,7 @@ jobs:
         with:
           commit_message: 'chore: bump version [skip ci]'
           file_pattern: 'gradle.properties'
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
 
       - name: Publish to GitHub
         id: publish_github
