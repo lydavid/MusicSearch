@@ -99,8 +99,25 @@ graph LR
   musicbrainz --> core
   spotify --> core
   collections --> data
+  collections --> data-android
   collections --> common
   collections --> core
+  collections --> settings
+  collections --> data
+  collections --> data-android
+  collections --> common
+  collections --> core
+  collections --> settings
+  collections --> data
+  collections --> data-android
+  collections --> common
+  collections --> core
+  collections --> settings
+  collections --> data
+  collections --> data-android
+  collections --> common
+  collections --> core
+  collections --> settings
   collections --> screenshot
   common --> data-android
   common --> core
@@ -158,6 +175,7 @@ graph LR
   history --> common
   history --> core
   history --> image
+  history --> settings
   history --> image
   history --> screenshot
 
