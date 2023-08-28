@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>SwallowedException:ArtistImageRepository.kt$ArtistImageRepository$ex: ClientRequestException</ID>
+    <ID>SwallowedException:ArtistImageRepository.kt$ArtistImageRepository$ex: ServerResponseException</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -14,6 +14,7 @@ hilt-navigation = "1.0.0"
 junit = "4.13.2"
 kotlin = "1.9.0"
 kotlinx-coroutines = "1.7.1"
+ktor = "2.3.3"
 ksp = "1.9.10-1.0.13"
 mockk = "1.13.7"
 moshi = "1.15.0"
@@ -22,6 +23,7 @@ paging = "3.2.0"
 paparazzi = "1.3.1"
 retrofit = "2.9.0"
 room = "2.5.2"
+
 
 [libraries]
 aboutlibraries-compose = { group = "com.mikepenz", name = "aboutlibraries-compose", version.ref = "aboutlibraries" }
@@ -65,6 +67,14 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
+ktor-client-core = { module = "io.ktor:ktor-client-core" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
@@ -91,7 +101,17 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-test"]
+ktor-android = [
+    "ktor-client-android",
+    "ktor-client-auth",
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-client-logging",
+    "ktor-client-okhttp",
+    "ktor-serialization-kotlinx-json",
+]
 retrofit = ["retrofit", "retrofit-converter-moshi"]
+
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
@@ -104,6 +124,7 @@ google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version = "0.4.0" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
