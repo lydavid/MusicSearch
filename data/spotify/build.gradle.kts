@@ -1,5 +1,6 @@
 plugins {
     id("ly.david.kotlin")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {
@@ -7,6 +8,9 @@ dependencies {
 
     implementation(libs.moshi.kotlin)
     implementation(libs.bundles.retrofit)
+
+    implementation(platform(libs.ktor.bom))
+    implementation(libs.bundles.ktor.android)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

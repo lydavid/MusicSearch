@@ -10,43 +10,43 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ly.david.data.common.ApplicationScope
+import ly.david.data.spotify.auth.SpotifyOAuth
 
-private const val SPOTIFY_ACCESS_TOKEN_KEY = "SPOTIFY_ACCESS_TOKEN_KEY"
-private val ACCESS_TOKEN_PREFERENCE = stringPreferencesKey(SPOTIFY_ACCESS_TOKEN_KEY)
-private const val SPOTIFY_ACCESS_TOKEN_EXPIRATION_KEY = "SPOTIFY_ACCESS_TOKEN_EXPIRATION_KEY"
-private val SPOTIFY_ACCESS_TOKEN_EXPIRATION_PREFERENCE = longPreferencesKey(SPOTIFY_ACCESS_TOKEN_EXPIRATION_KEY)
-
-interface SpotifyOAuth {
-    fun saveAccessToken(accessToken: String, expirationSystemTime: Long)
-
-    suspend fun getAccessToken(): String?
-    suspend fun getExpirationTime(): Long?
-}
+private val accessTokenPreference = stringPreferencesKey("SPOTIFY_ACCESS_TOKEN_KEY")
+private val refreshTokenPreference = stringPreferencesKey("SPOTIFY_REFRESH_TOKEN_KEY")
+private val expirationTimePreference = longPreferencesKey("SPOTIFY_ACCESS_TOKEN_EXPIRATION_KEY")
 
 class SpotifyOAuthImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
     @ApplicationScope private val coroutineScope: CoroutineScope,
 ) : SpotifyOAuth {
 
-    override suspend fun getAccessToken(): String? {
-        val preferences = preferencesDataStore.data.first()
-        return preferences[ACCESS_TOKEN_PREFERENCE]
-    }
-
     override fun saveAccessToken(
         accessToken: String,
+        refreshToken: String,
         expirationSystemTime: Long,
     ) {
         coroutineScope.launch {
             preferencesDataStore.edit {
-                it[ACCESS_TOKEN_PREFERENCE] = accessToken
-                it[SPOTIFY_ACCESS_TOKEN_EXPIRATION_PREFERENCE] = expirationSystemTime
+                it[accessTokenPreference] = accessToken
+                it[refreshTokenPreference] = refreshToken
+                it[expirationTimePreference] = expirationSystemTime
             }
         }
     }
 
+    override suspend fun getAccessToken(): String? {
+        val preferences = preferencesDataStore.data.first()
+        return preferences[accessTokenPreference]
+    }
+
+    override suspend fun getRefreshToken(): String? {
+        val preferences = preferencesDataStore.data.first()
+        return preferences[refreshTokenPreference]
+    }
+
     override suspend fun getExpirationTime(): Long? {
         val preferences = preferencesDataStore.data.first()
-        return preferences[SPOTIFY_ACCESS_TOKEN_EXPIRATION_PREFERENCE]
+        return preferences[expirationTimePreference]
     }
 }

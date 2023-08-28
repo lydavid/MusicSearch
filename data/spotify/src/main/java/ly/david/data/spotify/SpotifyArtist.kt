@@ -1,5 +1,8 @@
 package ly.david.data.spotify
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SpotifyArtist(
     val images: List<SpotifyImage>,
 )

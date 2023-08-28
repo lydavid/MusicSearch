@@ -1,32 +1,93 @@
 package ly.david.data.spotify
 
-import ly.david.data.common.JsonUtils
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.get
+import io.ktor.http.appendPathSegments
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
+import ly.david.data.spotify.auth.SpotifyAuthApi
+import ly.david.data.spotify.auth.SpotifyOAuth
 
-private const val SPOTIFY_BASE_URL = "https://api.spotify.com/v1/"
+private const val HOST = "api.spotify.com"
+private const val BASE_URL = "https://$HOST/v1/"
+private const val ARTISTS = "${BASE_URL}artists"
+
+private const val MS_TO_S = 1000L
 
 interface SpotifyApi {
 
-    @GET("artists/{artistId}")
+    companion object {
+        fun create(
+            clientId: String,
+            clientSecret: String,
+            spotifyAuthApi: SpotifyAuthApi,
+            spotifyOAuth: SpotifyOAuth,
+        ): SpotifyApi {
+            val client = HttpClient(Android) {
+                install(Logging) {
+                    level = LogLevel.ALL
+                }
+                install(ContentNegotiation) {
+                    json(Json {
+                        ignoreUnknownKeys = true
+                    })
+                }
+                install(Auth) {
+                    bearer {
+                        loadTokens {
+                            val accessToken = spotifyOAuth.getAccessToken() ?: return@loadTokens null
+                            val refreshToken = spotifyOAuth.getRefreshToken() ?: return@loadTokens null
+                            BearerTokens(accessToken, refreshToken)
+                        }
+                        refreshTokens {
+                            val newAccessToken = spotifyAuthApi.getAccessToken(
+                                clientId = clientId,
+                                clientSecret = clientSecret,
+                            )
+                            spotifyOAuth.saveAccessToken(
+                                accessToken = newAccessToken.accessToken,
+                                refreshToken = "blah",//newAccessToken.refreshToken,
+                                expirationSystemTime = (newAccessToken.expiresIn * MS_TO_S) + System.currentTimeMillis() // TODO: don't need
+                            )
+
+                            val accessToken = spotifyOAuth.getAccessToken() ?: return@refreshTokens null
+                            val refreshToken = spotifyOAuth.getRefreshToken() ?: return@refreshTokens null
+                            BearerTokens(accessToken, refreshToken)
+                        }
+                        sendWithoutRequest { request ->
+                            request.url.host == HOST
+                        }
+                    }
+                }
+            }
+
+            return SpotifyApiImpl(
+                client = client
+            )
+        }
+    }
+
     suspend fun getArtist(
-        @Path("artistId") spotifyArtistId: String,
+        spotifyArtistId: String,
     ): SpotifyArtist
 }
 
-interface SpotifyApiImpl {
-    companion object {
-        fun create(okHttpClient: OkHttpClient): SpotifyApi {
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create(JsonUtils.moshi))
-                .baseUrl(SPOTIFY_BASE_URL)
-                .client(okHttpClient)
-                .build()
-
-            return retrofit.create(SpotifyApi::class.java)
-        }
+class SpotifyApiImpl(
+    private val client: HttpClient,
+) : SpotifyApi {
+    override suspend fun getArtist(spotifyArtistId: String): SpotifyArtist {
+        return client.get(ARTISTS) {
+            url {
+                appendPathSegments(spotifyArtistId)
+            }
+        }.body()
     }
 }
