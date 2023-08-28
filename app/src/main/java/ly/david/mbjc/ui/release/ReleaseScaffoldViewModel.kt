@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.coverart.ReleaseImageManager
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.domain.release.ReleaseRepository
 import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayNames
@@ -27,7 +27,7 @@ import timber.log.Timber
 internal class ReleaseScaffoldViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
     override val imageUrlSaver: ImageUrlSaver,
-    override val coverArtArchiveApiService: CoverArtArchiveApiService,
+    override val coverArtArchiveApi: CoverArtArchiveApi,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
 ) : ViewModel(),

@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.coverart.ReleaseGroupImageManager
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
@@ -28,7 +28,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private val repository: ReleaseGroupRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-    override val coverArtArchiveApiService: CoverArtArchiveApiService,
+    override val coverArtArchiveApi: CoverArtArchiveApi,
     override val imageUrlSaver: ImageUrlSaver,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,

@@ -1,4 +1,4 @@
-package ly.david.data.spotify
+package ly.david.data.spotify.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -13,8 +13,8 @@ import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import ly.david.data.spotify.auth.SpotifyAuthApi
-import ly.david.data.spotify.auth.SpotifyOAuth
+import ly.david.data.spotify.api.auth.SpotifyAuthApi
+import ly.david.data.spotify.api.auth.SpotifyOAuth
 
 private const val HOST = "api.spotify.com"
 private const val BASE_URL = "https://$HOST/v1/"

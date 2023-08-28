@@ -1,7 +1,7 @@
 package ly.david.data.coverart
 
 import java.net.HttpURLConnection.HTTP_NOT_FOUND
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.data.image.ImageUrlSaver
@@ -12,7 +12,7 @@ import retrofit2.HttpException
  */
 interface ReleaseGroupImageManager {
 
-    val coverArtArchiveApiService: CoverArtArchiveApiService
+    val coverArtArchiveApi: CoverArtArchiveApi
     val imageUrlSaver: ImageUrlSaver
 
     /**
@@ -28,7 +28,7 @@ interface ReleaseGroupImageManager {
         thumbnail: Boolean,
     ): String {
         return try {
-            val coverArts = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId)
+            val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(releaseGroupId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontLargeCoverArtUrl().orEmpty()
             imageUrlSaver.saveUrl(

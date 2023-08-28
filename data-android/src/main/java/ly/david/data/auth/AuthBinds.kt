@@ -8,7 +8,7 @@ import javax.inject.Singleton
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.MusicBrainzAuthStateImpl
 import ly.david.data.spotify.SpotifyOAuthImpl
-import ly.david.data.spotify.auth.SpotifyOAuth
+import ly.david.data.spotify.api.auth.SpotifyOAuth
 
 @InstallIn(SingletonComponent::class)
 @Module

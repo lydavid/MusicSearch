@@ -1,4 +1,4 @@
-package ly.david.data.spotify
+package ly.david.data.spotify.api
 
 import kotlinx.serialization.Serializable
 

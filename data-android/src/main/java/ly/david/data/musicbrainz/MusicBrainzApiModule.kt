@@ -5,8 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import ly.david.data.coverart.api.CoverArtArchiveApiService
-import ly.david.data.coverart.api.CoverArtArchiveApiServiceImpl
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiServiceImpl
 import ly.david.data.network.api.MusicBrainzAuthApi
@@ -19,9 +18,7 @@ object MusicBrainzApiModule {
 
     @Singleton
     @Provides
-    fun provideCoverArtArchiveApi(
-        builder: Retrofit.Builder,
-    ): CoverArtArchiveApiService = CoverArtArchiveApiServiceImpl.create(builder)
+    fun provideCoverArtArchiveApi(): CoverArtArchiveApi = CoverArtArchiveApi.create()
 
     @Singleton
     @Provides
