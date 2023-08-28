@@ -15,9 +15,7 @@ object SpotifyApiModule {
 
     @Singleton
     @Provides
-    fun provideSpotifyAuthApi(
-//        builder: Retrofit.Builder,
-    ): SpotifyAuthApi {
+    fun provideSpotifyAuthApi(): SpotifyAuthApi {
         return SpotifyAuthApi.create()
     }
 
@@ -27,14 +25,6 @@ object SpotifyApiModule {
         spotifyOAuth: SpotifyOAuth,
         spotifyAuthApi: SpotifyAuthApi,
     ): SpotifyApi {
-//        val clientBuilder = OkHttpClient().newBuilder()
-//
-//        if (BuildConfig.DEBUG) {
-//            clientBuilder.addInterceptor(httpLoggingInterceptor)
-//        }
-//
-//        clientBuilder.addInterceptor(spotifyAccessTokenInterceptor)
-
         return SpotifyApi.create(
             clientId = BuildConfig.SPOTIFY_CLIENT_ID,
             clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,

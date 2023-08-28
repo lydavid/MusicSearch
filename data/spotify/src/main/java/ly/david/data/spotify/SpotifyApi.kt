@@ -20,8 +20,6 @@ private const val HOST = "api.spotify.com"
 private const val BASE_URL = "https://$HOST/v1/"
 private const val ARTISTS = "${BASE_URL}artists"
 
-private const val MS_TO_S = 1000L
-
 interface SpotifyApi {
 
     companion object {
@@ -36,16 +34,17 @@ interface SpotifyApi {
                     level = LogLevel.ALL
                 }
                 install(ContentNegotiation) {
-                    json(Json {
-                        ignoreUnknownKeys = true
-                    })
+                    json(
+                        Json {
+                            ignoreUnknownKeys = true
+                        }
+                    )
                 }
                 install(Auth) {
                     bearer {
                         loadTokens {
                             val accessToken = spotifyOAuth.getAccessToken() ?: return@loadTokens null
-                            val refreshToken = spotifyOAuth.getRefreshToken() ?: return@loadTokens null
-                            BearerTokens(accessToken, refreshToken)
+                            BearerTokens(accessToken, "")
                         }
                         refreshTokens {
                             val newAccessToken = spotifyAuthApi.getAccessToken(
@@ -54,13 +53,10 @@ interface SpotifyApi {
                             )
                             spotifyOAuth.saveAccessToken(
                                 accessToken = newAccessToken.accessToken,
-                                refreshToken = "blah",//newAccessToken.refreshToken,
-                                expirationSystemTime = (newAccessToken.expiresIn * MS_TO_S) + System.currentTimeMillis() // TODO: don't need
                             )
 
                             val accessToken = spotifyOAuth.getAccessToken() ?: return@refreshTokens null
-                            val refreshToken = spotifyOAuth.getRefreshToken() ?: return@refreshTokens null
-                            BearerTokens(accessToken, refreshToken)
+                            BearerTokens(accessToken, "")
                         }
                         sendWithoutRequest { request ->
                             request.url.host == HOST
