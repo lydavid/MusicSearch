@@ -7,10 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
 import ly.david.data.spotify.auth.SpotifyAuthApi
-import ly.david.data.spotify.auth.SpotifyAuthApiImpl
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
+import ly.david.data.spotify.auth.SpotifyOAuth
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -18,26 +15,21 @@ object SpotifyApiModule {
 
     @Singleton
     @Provides
-    fun provideSpotifyAuthApi(
-        builder: Retrofit.Builder,
-    ): SpotifyAuthApi {
-        return SpotifyAuthApiImpl.create(builder)
+    fun provideSpotifyAuthApi(): SpotifyAuthApi {
+        return SpotifyAuthApi.create()
     }
 
     @Singleton
     @Provides
     fun provideSpotifyApi(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        spotifyAccessTokenInterceptor: SpotifyAccessTokenInterceptor,
+        spotifyOAuth: SpotifyOAuth,
+        spotifyAuthApi: SpotifyAuthApi,
     ): SpotifyApi {
-        val clientBuilder = OkHttpClient().newBuilder()
-
-        if (BuildConfig.DEBUG) {
-            clientBuilder.addInterceptor(httpLoggingInterceptor)
-        }
-
-        clientBuilder.addInterceptor(spotifyAccessTokenInterceptor)
-
-        return SpotifyApiImpl.create(clientBuilder.build())
+        return SpotifyApi.create(
+            clientId = BuildConfig.SPOTIFY_CLIENT_ID,
+            clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
+            spotifyAuthApi = spotifyAuthApi,
+            spotifyOAuth = spotifyOAuth,
+        )
     }
 }

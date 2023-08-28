@@ -1,8 +1,11 @@
 package ly.david.data.spotify.auth
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SpotifyAccessToken(
-    @Json(name = "access_token") val accessToken: String,
-    @Json(name = "expires_in") val expiresIn: Long,
+    @SerialName("access_token") val accessToken: String,
+//    @SerialName("refresh_token") val refreshToken: String,
+    @SerialName("expires_in") val expiresIn: Long,
 )
