@@ -7,13 +7,11 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.coverart.ReleaseGroupImageManager
-import ly.david.data.coverart.api.CoverArtArchiveApi
+import ly.david.data.coverart.ReleaseGroupImageRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.image.ImageUrlSaver
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
@@ -28,13 +26,11 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
     private val repository: ReleaseGroupRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,
-    override val coverArtArchiveApi: CoverArtArchiveApi,
-    override val imageUrlSaver: ImageUrlSaver,
+    private val releaseGroupImageRepository: ReleaseGroupImageRepository,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
     RecordLookupHistory,
-    IRelationsList by relationsList,
-    ReleaseGroupImageManager {
+    IRelationsList by relationsList {
 
     private var recordedLookup = false
     override val entity: MusicBrainzEntity = MusicBrainzEntity.RELEASE_GROUP
@@ -103,7 +99,7 @@ internal class ReleaseGroupScaffoldViewModel @Inject constructor(
         releaseGroupScaffoldModel: ReleaseGroupScaffoldModel,
     ) {
         val imageUrl = releaseGroupScaffoldModel.imageUrl
-        url.value = imageUrl ?: getReleaseGroupCoverArtUrlFromNetwork(
+        url.value = imageUrl ?: releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
             releaseGroupId = releaseGroupId,
             thumbnail = false
         )

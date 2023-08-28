@@ -1,19 +1,21 @@
 package ly.david.data.coverart
 
-import java.net.HttpURLConnection.HTTP_NOT_FOUND
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.ServerResponseException
+import io.ktor.http.HttpStatusCode.Companion.NotFound
+import javax.inject.Inject
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.data.image.ImageUrlSaver
-import retrofit2.HttpException
 
 /**
  * Logic to retrieve release cover art path.
  */
-interface ReleaseImageManager {
-
-    val coverArtArchiveApi: CoverArtArchiveApi
-    val imageUrlSaver: ImageUrlSaver
+class ReleaseImageRepository @Inject constructor(
+    private val coverArtArchiveApi: CoverArtArchiveApi,
+    private val imageUrlSaver: ImageUrlSaver,
+) {
 
     /**
      * Returns a url to the cover art.
@@ -37,14 +39,19 @@ interface ReleaseImageManager {
                 largeUrl = largeUrl.removeFileExtension()
             )
             return if (thumbnail) thumbnailUrl else largeUrl
-        } catch (ex: HttpException) {
-            if (ex.code() == HTTP_NOT_FOUND) {
+        } catch (ex: ClientRequestException) {
+            if (ex.response.status == NotFound) {
                 imageUrlSaver.saveUrl(
                     mbid = releaseId,
                     thumbnailUrl = "",
                     largeUrl = ""
                 )
+            } else {
+                // TODO: log
             }
+            ""
+        } catch (ex: ServerResponseException) {
+            // TODO: should offer retry
             ""
         }
     }
