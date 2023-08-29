@@ -6,7 +6,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.network.api.FakeSpotifyApiService
-import ly.david.data.spotify.SpotifyApi
+import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.SpotifyApiModule
 
 @Module

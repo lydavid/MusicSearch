@@ -1,19 +1,21 @@
 package ly.david.data.coverart
 
-import java.net.HttpURLConnection.HTTP_NOT_FOUND
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.ServerResponseException
+import io.ktor.http.HttpStatusCode
+import javax.inject.Inject
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
 import ly.david.data.image.ImageUrlSaver
-import retrofit2.HttpException
 
 /**
  * Logic to retrieve release group cover art path.
  */
-interface ReleaseGroupImageManager {
-
-    val coverArtArchiveApiService: CoverArtArchiveApiService
-    val imageUrlSaver: ImageUrlSaver
+class ReleaseGroupImageRepository @Inject constructor(
+    private val coverArtArchiveApi: CoverArtArchiveApi,
+    private val imageUrlSaver: ImageUrlSaver,
+) {
 
     /**
      * Returns an appropriate cover art for the release group with [releaseGroupId].
@@ -28,7 +30,7 @@ interface ReleaseGroupImageManager {
         thumbnail: Boolean,
     ): String {
         return try {
-            val coverArts = coverArtArchiveApiService.getReleaseGroupCoverArts(releaseGroupId)
+            val coverArts = coverArtArchiveApi.getReleaseGroupCoverArts(releaseGroupId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontLargeCoverArtUrl().orEmpty()
             imageUrlSaver.saveUrl(
@@ -37,14 +39,19 @@ interface ReleaseGroupImageManager {
                 largeUrl = largeUrl.removeFileExtension()
             )
             return if (thumbnail) thumbnailUrl else largeUrl
-        } catch (ex: HttpException) {
-            if (ex.code() == HTTP_NOT_FOUND) {
+        } catch (ex: ClientRequestException) {
+            if (ex.response.status == HttpStatusCode.NotFound) {
                 imageUrlSaver.saveUrl(
                     mbid = releaseGroupId,
                     thumbnailUrl = "",
                     largeUrl = ""
                 )
+            } else {
+                // TODO: log
             }
+            ""
+        } catch (ex: ServerResponseException) {
+            // TODO: should offer retry
             ""
         }
     }

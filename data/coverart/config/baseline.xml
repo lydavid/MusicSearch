@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues></CurrentIssues>
+  <CurrentIssues>
+    <ID>SwallowedException:ReleaseGroupImageRepository.kt$ReleaseGroupImageRepository$ex: ServerResponseException</ID>
+    <ID>SwallowedException:ReleaseImageRepository.kt$ReleaseImageRepository$ex: ServerResponseException</ID>
+  </CurrentIssues>
 </SmellBaseline>

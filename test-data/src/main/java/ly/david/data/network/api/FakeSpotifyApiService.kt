@@ -1,8 +1,8 @@
 package ly.david.data.network.api
 
-import ly.david.data.spotify.SpotifyApi
-import ly.david.data.spotify.SpotifyArtist
-import ly.david.data.spotify.SpotifyImage
+import ly.david.data.spotify.api.SpotifyApi
+import ly.david.data.spotify.api.SpotifyArtist
+import ly.david.data.spotify.api.SpotifyImage
 
 class FakeSpotifyApiService : SpotifyApi {
     override suspend fun getArtist(spotifyArtistId: String): SpotifyArtist {

@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ly.david.data.common.ApplicationScope
-import ly.david.data.spotify.auth.SpotifyOAuth
+import ly.david.data.spotify.api.auth.SpotifyOAuth
 
 private val accessTokenPreference = stringPreferencesKey("SPOTIFY_ACCESS_TOKEN_KEY")
 

@@ -1,10 +1,10 @@
 package ly.david.data.network.api
 
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.CoverArtUrls
 import ly.david.data.coverart.api.CoverArtsResponse
 
-class FakeCoverArtArchiveApiService : CoverArtArchiveApiService {
+class FakeCoverArtArchiveApi : CoverArtArchiveApi {
     override suspend fun getReleaseCoverArts(releaseId: String): CoverArtsResponse {
         return CoverArtsResponse(
             coverArtUrls = listOf(
