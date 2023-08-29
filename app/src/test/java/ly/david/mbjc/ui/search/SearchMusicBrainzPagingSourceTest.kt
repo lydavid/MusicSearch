@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.listitem.toListItemModel
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.api.FakeMusicBrainzApiService
+import ly.david.data.network.api.FakeMusicBrainzApi
 import ly.david.data.network.searchableEntities
 import ly.david.data.network.toFakeMusicBrainzModel
 import org.junit.Assert.assertEquals
@@ -27,7 +27,7 @@ internal class SearchMusicBrainzPagingSourceTest(private val entity: MusicBrainz
     @Test
     fun loadEachEntity() = runTest {
         val pagingSource = SearchMusicBrainzPagingSource(
-            FakeMusicBrainzApiService(),
+            FakeMusicBrainzApi(),
             entity,
             ""
         )

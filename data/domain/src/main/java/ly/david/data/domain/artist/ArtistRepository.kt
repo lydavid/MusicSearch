@@ -6,13 +6,13 @@ import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.artist.ArtistDao
 import ly.david.data.room.artist.toArtistRoomModel
 
 @Singleton
 class ArtistRepository @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
@@ -24,7 +24,7 @@ class ArtistRepository @Inject constructor(
             return artistWithAllData.toArtistScaffoldModel()
         }
 
-        val artistMusicBrainzModel = musicBrainzApiService.lookupArtist(
+        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(
             artistId = artistId,
         )
         artistDao.withTransaction {
@@ -38,7 +38,7 @@ class ArtistRepository @Inject constructor(
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupArtist(
+        return musicBrainzApi.lookupArtist(
             artistId = entityId,
             include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations

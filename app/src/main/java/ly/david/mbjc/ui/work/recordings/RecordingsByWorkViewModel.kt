@@ -8,7 +8,7 @@ import ly.david.data.domain.listitem.toRecordingListItemModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.api.BrowseRecordingsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.recording.RecordingDao
 import ly.david.data.room.recording.RecordingForListItem
 import ly.david.data.room.recording.toRoomModel
@@ -20,7 +20,7 @@ import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class RecordingsByWorkViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val recordingWorkDao: RecordingWorkDao,
     private val relationDao: RelationDao,
     private val recordingDao: RecordingDao,
@@ -32,7 +32,7 @@ internal class RecordingsByWorkViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
-        return musicBrainzApiService.browseRecordingsByWork(
+        return musicBrainzApi.browseRecordingsByWork(
             workId = entityId,
             offset = offset
         )

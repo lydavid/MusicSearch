@@ -10,7 +10,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseEventsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.event.EventDao
@@ -22,7 +22,7 @@ import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class EventsByCollectionViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
     private val relationDao: RelationDao,
@@ -35,7 +35,7 @@ internal class EventsByCollectionViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
-        return musicBrainzApiService.browseEventsByCollection(
+        return musicBrainzApi.browseEventsByCollection(
             bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset

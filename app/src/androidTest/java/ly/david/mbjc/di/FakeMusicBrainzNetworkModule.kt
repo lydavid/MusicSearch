@@ -8,8 +8,8 @@ import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.MusicBrainzApiModule
 import ly.david.data.network.api.FakeCoverArtArchiveApi
-import ly.david.data.network.api.FakeMusicBrainzApiService
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.FakeMusicBrainzApi
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.network.api.MusicBrainzAuthApi
 import retrofit2.Retrofit
 
@@ -29,7 +29,7 @@ internal object FakeMusicBrainzApiModule {
 
     @Singleton
     @Provides
-    fun provideMusicBrainzApi(): MusicBrainzApiService = FakeMusicBrainzApiService()
+    fun provideMusicBrainzApi(): MusicBrainzApi = FakeMusicBrainzApi()
 
     @Singleton
     @Provides

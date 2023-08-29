@@ -6,14 +6,14 @@ import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.work.WorkDao
 import ly.david.data.room.work.toWorkAttributeRoomModel
 import ly.david.data.room.work.toWorkRoomModel
 
 @Singleton
 class WorkRepository @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val workDao: WorkDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
@@ -27,7 +27,7 @@ class WorkRepository @Inject constructor(
             return workWithAllData.toWorkScaffoldModel()
         }
 
-        val workMusicBrainzModel = musicBrainzApiService.lookupWork(workId = workId)
+        val workMusicBrainzModel = musicBrainzApi.lookupWork(workId = workId)
         workDao.withTransaction {
             workDao.insert(workMusicBrainzModel.toWorkRoomModel())
             workDao.insertAllAttributes(
@@ -42,7 +42,7 @@ class WorkRepository @Inject constructor(
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupWork(
+        return musicBrainzApi.lookupWork(
             workId = entityId,
             include = INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations

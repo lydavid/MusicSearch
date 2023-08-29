@@ -29,7 +29,7 @@ import ly.david.data.domain.listitem.toSearchHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.history.search.SearchHistoryDao
 import ly.david.data.room.history.search.SearchHistoryRoomModel
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
@@ -38,7 +38,7 @@ private const val SEARCH_DELAY_MS = 500L
 
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val searchHistoryDao: SearchHistoryDao,
 ) : ViewModel() {
 
@@ -105,7 +105,7 @@ internal class SearchViewModel @Inject constructor(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     pagingSourceFactory = {
                         SearchMusicBrainzPagingSource(
-                            searchApi = musicBrainzApiService,
+                            searchApi = musicBrainzApi,
                             entity = viewModelState.entity,
                             queryString = viewModelState.query,
                         )

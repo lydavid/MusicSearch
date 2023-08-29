@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.GenreMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
@@ -19,7 +19,7 @@ import timber.log.Timber
 
 @HiltViewModel
 internal class GenreScaffoldViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
@@ -35,7 +35,7 @@ internal class GenreScaffoldViewModel @Inject constructor(
     fun onSelectedTabChange(genreId: String) {
         viewModelScope.launch {
             try {
-                val eventListItemModel = musicBrainzApiService.lookupGenre(genreId)
+                val eventListItemModel = musicBrainzApi.lookupGenre(genreId)
                 if (title.value.isEmpty()) {
                     title.value = eventListItemModel.getNameWithDisambiguation()
                 }

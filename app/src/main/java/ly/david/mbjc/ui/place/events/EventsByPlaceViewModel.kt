@@ -8,7 +8,7 @@ import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseEventsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.event.EventDao
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.event.toEventRoomModel
@@ -20,7 +20,7 @@ import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class EventsByPlaceViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val eventPlaceDao: EventPlaceDao,
     private val eventDao: EventDao,
     private val relationDao: RelationDao,
@@ -32,7 +32,7 @@ internal class EventsByPlaceViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
-        return musicBrainzApiService.browseEventsByPlace(
+        return musicBrainzApi.browseEventsByPlace(
             placeId = entityId,
             offset = offset
         )

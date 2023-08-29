@@ -10,7 +10,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseArtistsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.artist.ArtistDao
 import ly.david.data.room.artist.ArtistRoomModel
 import ly.david.data.room.artist.toArtistRoomModel
@@ -22,7 +22,7 @@ import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class ArtistsByCollectionViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val artistDao: ArtistDao,
     private val relationDao: RelationDao,
@@ -35,7 +35,7 @@ internal class ArtistsByCollectionViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseArtistsResponse {
-        return musicBrainzApiService.browseArtistsByCollection(
+        return musicBrainzApi.browseArtistsByCollection(
             bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset

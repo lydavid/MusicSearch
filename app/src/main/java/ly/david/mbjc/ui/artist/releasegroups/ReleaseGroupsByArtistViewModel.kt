@@ -5,7 +5,7 @@ import javax.inject.Inject
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.relation.RelationDao
@@ -15,7 +15,7 @@ import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 
 @HiltViewModel
 internal class ReleaseGroupsByArtistViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val relationDao: RelationDao,
     releaseGroupDao: ReleaseGroupDao,
@@ -27,7 +27,7 @@ internal class ReleaseGroupsByArtistViewModel @Inject constructor(
 ) {
 
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
-        return musicBrainzApiService.browseReleaseGroupsByArtist(
+        return musicBrainzApi.browseReleaseGroupsByArtist(
             artistId = entityId,
             offset = offset
         )

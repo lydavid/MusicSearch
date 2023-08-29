@@ -26,7 +26,7 @@ import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.api.MusicBrainzOAuthInfo
 import ly.david.data.network.resourceUriPlural
@@ -77,7 +77,7 @@ internal class TopLevelViewModel @Inject constructor(
 
     private val collectionDao: CollectionDao,
     private val collectionEntityDao: CollectionEntityDao,
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
 
     private val musicBrainzAuthState: MusicBrainzAuthState,
     private val musicBrainzAuthApi: MusicBrainzAuthApi,
@@ -137,7 +137,7 @@ internal class TopLevelViewModel @Inject constructor(
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
-                musicBrainzApiService.uploadToCollection(
+                musicBrainzApi.uploadToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.value.resourceUriPlural,
                     mbids = entityId.value
@@ -183,7 +183,7 @@ internal class TopLevelViewModel @Inject constructor(
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
-                musicBrainzApiService.deleteFromCollection(
+                musicBrainzApi.deleteFromCollection(
                     collectionId = collectionId,
                     resourceUriPlural = collection.entity.resourceUriPlural,
                     mbids = entityId

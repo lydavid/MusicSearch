@@ -8,7 +8,7 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.LookupApi
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.releases.ReleaseCountryDao
@@ -28,7 +28,7 @@ import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
 
 @Singleton
 class ReleaseRepository @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
@@ -63,7 +63,7 @@ class ReleaseRepository @Inject constructor(
         }
 
         // Fetch from network. Store all relevant models.
-        val releaseMusicBrainzModel = musicBrainzApiService.lookupRelease(releaseId)
+        val releaseMusicBrainzModel = musicBrainzApi.lookupRelease(releaseId)
         insertAllModels(releaseMusicBrainzModel)
         return lookupRelease(releaseId)
     }
@@ -117,7 +117,7 @@ class ReleaseRepository @Inject constructor(
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupRelease(
+        return musicBrainzApi.lookupRelease(
             releaseId = entityId,
             include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations
