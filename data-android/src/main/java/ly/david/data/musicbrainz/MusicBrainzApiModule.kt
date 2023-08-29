@@ -7,7 +7,6 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.network.api.MusicBrainzApi
-import ly.david.data.network.api.MusicBrainzApiImpl
 import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.api.MusicBrainzAuthApiImpl
 import retrofit2.Retrofit
@@ -22,9 +21,7 @@ object MusicBrainzApiModule {
 
     @Singleton
     @Provides
-    fun provideMusicBrainzApi(
-        builder: Retrofit.Builder,
-    ): MusicBrainzApi = MusicBrainzApiImpl.create(builder)
+    fun provideMusicBrainzApi(): MusicBrainzApi = MusicBrainzApi.create()
 
     @Singleton
     @Provides

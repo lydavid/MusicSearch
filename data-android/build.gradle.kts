@@ -106,7 +106,7 @@ dependencies {
     kaptTest(libs.hilt.android.compiler)
     testImplementation(libs.hilt.android.testing)
 
-    implementation(libs.moshi.kotlin)
+//    implementation(libs.moshi.kotlin)
 
     implementation(libs.okhttp.logging.interceptor)
 

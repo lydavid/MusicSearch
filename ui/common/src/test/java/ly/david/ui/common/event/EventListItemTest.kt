@@ -1,7 +1,7 @@
 package ly.david.ui.common.event
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test
@@ -34,7 +34,7 @@ class EventListItemTest : PaparazziScreenshotTest() {
                     disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, " +
                         "a Rolling Stone Magazine 30th anniversary special",
                     type = null,
-                    lifeSpan = LifeSpan(
+                    lifeSpan = LifeSpanMusicBrainzModel(
                         begin = "1998-01-22",
                         end = "1998-01-22",
                         ended = true

@@ -4,11 +4,14 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.Coordinates
-import ly.david.data.LifeSpan
+import ly.david.data.CoordinatesRoomModel
+import ly.david.data.LifeSpanMusicBrainzModel
+import ly.david.data.LifeSpanRoomModel
 import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.room.RoomModel
+import ly.david.data.toCoordinatesRoomModel
+import ly.david.data.toLifeSpanRoomModel
 
 @Entity(tableName = "place")
 data class PlaceRoomModel(
@@ -18,8 +21,8 @@ data class PlaceRoomModel(
     @ColumnInfo(name = "address") override val address: String,
     @ColumnInfo(name = "type") override val type: String?,
     @ColumnInfo(name = "type_id") val typeId: String? = null,
-    @Embedded override val coordinates: Coordinates?,
-    @Embedded override val lifeSpan: LifeSpan?,
+    @Embedded override val coordinates: CoordinatesRoomModel?,
+    @Embedded override val lifeSpan: LifeSpanRoomModel?,
 ) : RoomModel, Place
 
 fun PlaceMusicBrainzModel.toPlaceRoomModel() =
@@ -30,6 +33,6 @@ fun PlaceMusicBrainzModel.toPlaceRoomModel() =
         address = address,
         type = type,
         typeId = typeId,
-        coordinates = coordinates,
-        lifeSpan = lifeSpan
+        coordinates = coordinates?.toCoordinatesRoomModel(),
+        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
     )

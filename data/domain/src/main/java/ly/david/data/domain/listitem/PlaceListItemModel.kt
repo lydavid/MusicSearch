@@ -1,10 +1,11 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.Coordinates
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.room.place.PlaceRoomModel
+import ly.david.data.toLifeSpanUiModel
 
 data class PlaceListItemModel(
     override val id: String,
@@ -14,7 +15,7 @@ data class PlaceListItemModel(
     override val type: String? = null,
 //    override val typeId: String?,
     override val coordinates: Coordinates? = null,
-    override val lifeSpan: LifeSpan? = null,
+    override val lifeSpan: LifeSpanUiModel? = null,
 
     val area: AreaListItemModel? = null,
 ) : Place, ListItemModel()
@@ -27,7 +28,7 @@ internal fun PlaceMusicBrainzModel.toPlaceListItemModel() =
         address = address,
         type = type,
         coordinates = coordinates,
-        lifeSpan = lifeSpan,
+        lifeSpan = lifeSpan?.toLifeSpanUiModel(),
         area = area?.toAreaListItemModel()
     )
 
@@ -38,6 +39,6 @@ fun PlaceRoomModel.toPlaceListItemModel() = PlaceListItemModel(
     address = address,
     type = type,
     coordinates = coordinates,
-    lifeSpan = lifeSpan,
+    lifeSpan = lifeSpan?.toLifeSpanUiModel(),
     area = null
 )

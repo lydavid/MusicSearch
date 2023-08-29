@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanMusicBrainzModel
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.common.toFlagEmoji
@@ -85,7 +86,7 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistL
             sortName = "sort name should not be seen",
             disambiguation = "blah, blah, blah, some really long text that forces wrapping",
             countryCode = "XW",
-            lifeSpan = LifeSpan(
+            lifeSpan = LifeSpanUiModel(
                 begin = "2020-12-31",
                 end = "2022-01-01"
             )

@@ -1,17 +1,19 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.ArtistCreditName
 
+@Serializable
 data class ArtistCreditMusicBrainzModel(
 
-    @Json(name = "artist")
+    @SerialName("artist")
     val artist: ArtistMusicBrainzModel,
 
-    @Json(name = "name")
+    @SerialName("name")
     override val name: String,
 
     // At least returns "" for browse, but could be null for query
-    @Json(name = "joinphrase")
+    @SerialName("joinphrase")
     override val joinPhrase: String? = null,
 ) : ArtistCreditName

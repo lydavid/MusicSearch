@@ -5,9 +5,11 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.Release
-import ly.david.data.network.CoverArtArchive
+import ly.david.data.network.CoverArtArchiveRoomModel
 import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.TextRepresentation
+import ly.david.data.network.TextRepresentationRoomModel
+import ly.david.data.network.toCoverArtArchiveRoomModel
+import ly.david.data.network.toTextRepresentationRoomModel
 import ly.david.data.room.RoomModel
 
 @Entity(
@@ -41,9 +43,9 @@ data class ReleaseRoomModel(
     @ColumnInfo(name = "packaging_id") override val packagingId: String? = null,
 
     // TODO: might be able to remove this unless we care about the number of cover art it has
-    @Embedded override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
+    @Embedded override val coverArtArchive: CoverArtArchiveRoomModel = CoverArtArchiveRoomModel(),
 
-    @Embedded override val textRepresentation: TextRepresentation? = null,
+    @Embedded override val textRepresentation: TextRepresentationRoomModel? = null,
 ) : RoomModel, Release
 
 fun ReleaseMusicBrainzModel.toRoomModel() =
@@ -60,6 +62,6 @@ fun ReleaseMusicBrainzModel.toRoomModel() =
         packagingId = packagingId,
         asin = asin,
         quality = quality,
-        coverArtArchive = coverArtArchive,
-        textRepresentation = textRepresentation
+        coverArtArchive = coverArtArchive.toCoverArtArchiveRoomModel(),
+        textRepresentation = textRepresentation?.toTextRepresentationRoomModel(),
     )

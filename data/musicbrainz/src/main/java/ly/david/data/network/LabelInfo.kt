@@ -1,8 +1,10 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class LabelInfo(
-    @Json(name = "catalog-number") val catalogNumber: String? = null,
-    @Json(name = "label") val label: LabelMusicBrainzModel? = null,
+    @SerialName("catalog-number") val catalogNumber: String? = null,
+    @SerialName("label") val label: LabelMusicBrainzModel? = null,
 )

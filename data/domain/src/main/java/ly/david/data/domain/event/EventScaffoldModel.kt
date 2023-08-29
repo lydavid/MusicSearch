@@ -1,10 +1,11 @@
 package ly.david.data.domain.event
 
 import ly.david.data.Event
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.event.EventWithAllData
+import ly.david.data.toLifeSpanUiModel
 
 data class EventScaffoldModel(
     override val id: String,
@@ -13,7 +14,7 @@ data class EventScaffoldModel(
     override val type: String? = null,
     override val time: String? = null,
     override val cancelled: Boolean? = null,
-    override val lifeSpan: LifeSpan? = null,
+    override val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
 ) : Event
 
@@ -25,6 +26,6 @@ internal fun EventWithAllData.toEventScaffoldModel() =
         type = event.type,
         time = event.time,
         cancelled = event.cancelled,
-        lifeSpan = event.lifeSpan,
+        lifeSpan = event.lifeSpan?.toLifeSpanUiModel(),
         urls = urls.map { it.relation.toRelationListItemModel() },
     )

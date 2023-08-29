@@ -1,7 +1,7 @@
 package ly.david.ui.common.artist
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.domain.listitem.ArtistListItemModel
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test
@@ -35,7 +35,7 @@ class ArtistListItemTest : PaparazziScreenshotTest() {
                     sortName = "sort name should not be seen",
                     disambiguation = "blah, blah, blah, some really long text that forces wrapping",
                     countryCode = "XW",
-                    lifeSpan = LifeSpan(
+                    lifeSpan = LifeSpanMusicBrainzModel(
                         begin = "2020-12-31",
                         end = "2022-01-01"
                     )

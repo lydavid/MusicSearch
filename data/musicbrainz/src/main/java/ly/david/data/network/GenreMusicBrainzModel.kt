@@ -1,10 +1,12 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.Genre
 
+@Serializable
 data class GenreMusicBrainzModel(
-    @Json(name = "id") override val id: String,
-    @Json(name = "name") override val name: String,
-    @Json(name = "disambiguation") override val disambiguation: String? = null,
+    @SerialName("id") override val id: String,
+    @SerialName("name") override val name: String,
+    @SerialName("disambiguation") override val disambiguation: String? = null,
 ) : Genre, MusicBrainzModel()

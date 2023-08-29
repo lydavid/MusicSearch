@@ -7,5 +7,5 @@ interface Place : NameWithDisambiguation {
     val address: String
     val type: String?
     val coordinates: Coordinates?
-    val lifeSpan: LifeSpan?
+    val lifeSpan: ILifeSpan?
 }

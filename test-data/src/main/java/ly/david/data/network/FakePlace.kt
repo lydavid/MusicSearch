@@ -1,7 +1,7 @@
 package ly.david.data.network
 
-import ly.david.data.Coordinates
-import ly.david.data.LifeSpan
+import ly.david.data.CoordinatesUiModel
+import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
 import ly.david.data.network.api.SearchPlacesResponse
 
@@ -25,13 +25,13 @@ val fakePlaceWithAllData = PlaceMusicBrainzModel(
     disambiguation = "that one",
     address = "123 Fake St",
     type = "Studio",
-    lifeSpan = LifeSpan(
+    lifeSpan = LifeSpanMusicBrainzModel(
         begin = "2022-01-01",
         end = "2022-12-10",
         ended = true
     ),
     area = ontario,
-    coordinates = Coordinates(
+    coordinates = CoordinatesUiModel(
         longitude = 123.123,
         latitude = 123.123
     ),

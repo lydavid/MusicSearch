@@ -1,6 +1,12 @@
 package ly.david.data.network.api
 
-import com.squareup.moshi.Json
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.http.appendPathSegments
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
@@ -20,11 +26,10 @@ import retrofit2.http.Query
  */
 interface SearchApi {
 
-    @GET("area")
     suspend fun queryAreas(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchAreasResponse
 
     @GET("artist")
@@ -98,68 +103,134 @@ interface SearchApi {
     ): SearchWorksResponse
 }
 
+interface SearchApiImpl : SearchApi {
+    val client: HttpClient
+
+    override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
+        return client.get {
+            url {
+                appendPathSegments("area")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryInstruments(query: String, limit: Int, offset: Int): SearchInstrumentsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryLabels(query: String, limit: Int, offset: Int): SearchLabelsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryReleaseGroups(query: String, limit: Int, offset: Int): SearchReleaseGroupsResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
+        TODO("Not yet implemented")
+    }
+}
+
+@Serializable
 data class SearchAreasResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "areas") val areas: List<AreaMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("areas") val areas: List<AreaMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchArtistsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "artists") val artists: List<ArtistMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("artists") val artists: List<ArtistMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchEventsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "events") val events: List<EventMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("events") val events: List<EventMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchInstrumentsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "instruments") val instruments: List<InstrumentMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("instruments") val instruments: List<InstrumentMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchLabelsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "labels") val labels: List<LabelMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("labels") val labels: List<LabelMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchPlacesResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "places") val places: List<PlaceMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("places") val places: List<PlaceMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchRecordingsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "recordings") val recordings: List<RecordingMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("recordings") val recordings: List<RecordingMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchReleasesResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "releases") val releases: List<ReleaseMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("releases") val releases: List<ReleaseMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchReleaseGroupsResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("release-groups") val releaseGroups: List<ReleaseGroupMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchSeriesResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "series") val series: List<SeriesMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("series") val series: List<SeriesMusicBrainzModel>,
 )
 
+@Serializable
 data class SearchWorksResponse(
-    @Json(name = "count") val count: Int, // Total hits
-    @Json(name = "offset") val offset: Int,
-    @Json(name = "works") val works: List<WorkMusicBrainzModel>,
+    @SerialName("count") val count: Int, // Total hits
+    @SerialName("offset") val offset: Int,
+    @SerialName("works") val works: List<WorkMusicBrainzModel>,
 )

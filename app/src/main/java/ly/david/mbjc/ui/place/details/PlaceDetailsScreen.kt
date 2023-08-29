@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import ly.david.data.Coordinates
-import ly.david.data.LifeSpan
+import ly.david.data.CoordinatesUiModel
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.AreaListItemModel
@@ -123,8 +123,8 @@ private fun Preview() {
                     name = "Some Place",
                     type = "Venue",
                     address = "123 Fake St",
-                    coordinates = Coordinates(-123.4567, 123.4567),
-                    lifeSpan = LifeSpan(
+                    coordinates = CoordinatesUiModel(-123.4567, 123.4567),
+                    lifeSpan = LifeSpanUiModel(
                         begin = "2022-01-01",
                         end = "2022-12-10",
                         ended = true

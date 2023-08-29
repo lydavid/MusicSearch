@@ -5,11 +5,11 @@ import org.junit.Test
 
 internal class CoordinatesTest {
 
-    private lateinit var coordinates: Coordinates
+    private lateinit var coordinates: CoordinatesUiModel
 
     @Test
     fun `null lat, null long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = null,
             longitude = null
         )
@@ -18,7 +18,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `null lat, has long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = null,
             longitude = 0.0
         )
@@ -27,7 +27,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `has lat, null long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = 0.0,
             longitude = null
         )
@@ -36,7 +36,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `N lat, E long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = 0.0,
             longitude = 0.0
         )
@@ -45,7 +45,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `N lat, W long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = 0.0,
             longitude = -1.0
         )
@@ -54,7 +54,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `S lat, E long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = -1.0,
             longitude = 0.0
         )
@@ -63,7 +63,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `S lat, W long`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = -1.0,
             longitude = -1.0
         )
@@ -72,7 +72,7 @@ internal class CoordinatesTest {
 
     @Test
     fun `more decimals`() {
-        coordinates = Coordinates(
+        coordinates = CoordinatesUiModel(
             latitude = 1.23456789,
             longitude = 73.98905
         )

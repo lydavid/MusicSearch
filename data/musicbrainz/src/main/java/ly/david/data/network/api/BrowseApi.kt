@@ -1,6 +1,7 @@
 package ly.david.data.network.api
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.AUTHORIZATION
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
@@ -201,74 +202,86 @@ interface Browsable<MM : MusicBrainzModel> {
     val musicBrainzModels: List<MM>
 }
 
+@Serializable
 data class BrowseAreasResponse(
-    @Json(name = "area-count") override val count: Int,
-    @Json(name = "area-offset") override val offset: Int,
-    @Json(name = "areas") override val musicBrainzModels: List<AreaMusicBrainzModel>,
+    @SerialName("area-count") override val count: Int,
+    @SerialName("area-offset") override val offset: Int,
+    @SerialName("areas") override val musicBrainzModels: List<AreaMusicBrainzModel>,
 ) : Browsable<AreaMusicBrainzModel>
 
+@Serializable
 data class BrowseArtistsResponse(
-    @Json(name = "artist-count") override val count: Int,
-    @Json(name = "artist-offset") override val offset: Int,
-    @Json(name = "artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>,
+    @SerialName("artist-count") override val count: Int,
+    @SerialName("artist-offset") override val offset: Int,
+    @SerialName("artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>,
 ) : Browsable<ArtistMusicBrainzModel>
 
+@Serializable
 data class BrowseCollectionsResponse(
-    @Json(name = "collection-count") override val count: Int,
-    @Json(name = "collection-offset") override val offset: Int,
-    @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
+    @SerialName("collection-count") override val count: Int,
+    @SerialName("collection-offset") override val offset: Int,
+    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
 ) : Browsable<CollectionMusicBrainzModel>
 
+@Serializable
 data class BrowseEventsResponse(
-    @Json(name = "event-count") override val count: Int,
-    @Json(name = "event-offset") override val offset: Int,
-    @Json(name = "events") override val musicBrainzModels: List<EventMusicBrainzModel>,
+    @SerialName("event-count") override val count: Int,
+    @SerialName("event-offset") override val offset: Int,
+    @SerialName("events") override val musicBrainzModels: List<EventMusicBrainzModel>,
 ) : Browsable<EventMusicBrainzModel>
 
+@Serializable
 data class BrowseInstrumentsResponse(
-    @Json(name = "instrument-count") override val count: Int,
-    @Json(name = "instrument-offset") override val offset: Int,
-    @Json(name = "instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>,
+    @SerialName("instrument-count") override val count: Int,
+    @SerialName("instrument-offset") override val offset: Int,
+    @SerialName("instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>,
 ) : Browsable<InstrumentMusicBrainzModel>
 
+@Serializable
 data class BrowseLabelsResponse(
-    @Json(name = "label-count") override val count: Int,
-    @Json(name = "label-offset") override val offset: Int,
-    @Json(name = "labels") override val musicBrainzModels: List<LabelMusicBrainzModel>,
+    @SerialName("label-count") override val count: Int,
+    @SerialName("label-offset") override val offset: Int,
+    @SerialName("labels") override val musicBrainzModels: List<LabelMusicBrainzModel>,
 ) : Browsable<LabelMusicBrainzModel>
 
+@Serializable
 data class BrowsePlacesResponse(
-    @Json(name = "place-count") override val count: Int,
-    @Json(name = "place-offset") override val offset: Int,
-    @Json(name = "places") override val musicBrainzModels: List<PlaceMusicBrainzModel>,
+    @SerialName("place-count") override val count: Int,
+    @SerialName("place-offset") override val offset: Int,
+    @SerialName("places") override val musicBrainzModels: List<PlaceMusicBrainzModel>,
 ) : Browsable<PlaceMusicBrainzModel>
 
+@Serializable
 data class BrowseRecordingsResponse(
-    @Json(name = "recording-count") override val count: Int,
-    @Json(name = "recording-offset") override val offset: Int,
-    @Json(name = "recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>,
+    @SerialName("recording-count") override val count: Int,
+    @SerialName("recording-offset") override val offset: Int,
+    @SerialName("recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>,
 ) : Browsable<RecordingMusicBrainzModel>
 
+@Serializable
 data class BrowseReleasesResponse(
-    @Json(name = "release-count") override val count: Int,
-    @Json(name = "release-offset") override val offset: Int,
-    @Json(name = "releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>,
+    @SerialName("release-count") override val count: Int,
+    @SerialName("release-offset") override val offset: Int,
+    @SerialName("releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>,
 ) : Browsable<ReleaseMusicBrainzModel>
 
+@Serializable
 data class BrowseReleaseGroupsResponse(
-    @Json(name = "release-group-count") override val count: Int,
-    @Json(name = "release-group-offset") override val offset: Int,
-    @Json(name = "release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
+    @SerialName("release-group-count") override val count: Int,
+    @SerialName("release-group-offset") override val offset: Int,
+    @SerialName("release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
 ) : Browsable<ReleaseGroupMusicBrainzModel>
 
+@Serializable
 data class BrowseSeriesResponse(
-    @Json(name = "series-count") override val count: Int,
-    @Json(name = "series-offset") override val offset: Int,
-    @Json(name = "series") override val musicBrainzModels: List<SeriesMusicBrainzModel>,
+    @SerialName("series-count") override val count: Int,
+    @SerialName("series-offset") override val offset: Int,
+    @SerialName("series") override val musicBrainzModels: List<SeriesMusicBrainzModel>,
 ) : Browsable<SeriesMusicBrainzModel>
 
+@Serializable
 data class BrowseWorksResponse(
-    @Json(name = "work-count") override val count: Int,
-    @Json(name = "work-offset") override val offset: Int,
-    @Json(name = "works") override val musicBrainzModels: List<WorkMusicBrainzModel>,
+    @SerialName("work-count") override val count: Int,
+    @SerialName("work-offset") override val offset: Int,
+    @SerialName("works") override val musicBrainzModels: List<WorkMusicBrainzModel>,
 ) : Browsable<WorkMusicBrainzModel>
