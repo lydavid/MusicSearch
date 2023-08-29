@@ -6,8 +6,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
-import ly.david.data.spotify.auth.SpotifyAuthApi
-import ly.david.data.spotify.auth.SpotifyOAuth
+import ly.david.data.spotify.api.SpotifyApi
+import ly.david.data.spotify.api.auth.SpotifyAuthApi
+import ly.david.data.spotify.api.auth.SpotifyOAuth
 
 @Module
 @InstallIn(SingletonComponent::class)

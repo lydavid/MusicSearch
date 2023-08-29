@@ -7,13 +7,11 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.coverart.ReleaseImageManager
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.ReleaseImageRepository
 import ly.david.data.domain.release.ReleaseRepository
 import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayNames
 import ly.david.data.getNameWithDisambiguation
-import ly.david.data.image.ImageUrlSaver
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
@@ -26,15 +24,13 @@ import timber.log.Timber
 @HiltViewModel
 internal class ReleaseScaffoldViewModel @Inject constructor(
     override val lookupHistoryDao: LookupHistoryDao,
-    override val imageUrlSaver: ImageUrlSaver,
-    override val coverArtArchiveApiService: CoverArtArchiveApiService,
+    private val releaseImageRepository: ReleaseImageRepository,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
     RecordLookupHistory,
-    IRelationsList by relationsList,
-    ReleaseImageManager {
+    IRelationsList by relationsList {
 
     private var recordedLookup = false
     override val entity: MusicBrainzEntity = MusicBrainzEntity.RELEASE
@@ -102,7 +98,7 @@ internal class ReleaseScaffoldViewModel @Inject constructor(
         releaseScaffoldModel: ReleaseScaffoldModel,
     ) {
         val imageUrl = releaseScaffoldModel.imageUrl
-        url.value = imageUrl ?: getReleaseCoverArtUrlFromNetwork(
+        url.value = imageUrl ?: releaseImageRepository.getReleaseCoverArtUrlFromNetwork(
             releaseId = releaseId,
             thumbnail = false
         )

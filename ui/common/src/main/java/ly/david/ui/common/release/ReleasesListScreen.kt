@@ -45,7 +45,6 @@ fun ReleasesListScreen(
             try {
                 viewModel.getReleaseCoverArtUrlFromNetwork(
                     releaseId = it,
-                    thumbnail = true
                 )
             } catch (ex: Exception) {
                 Timber.e(ex)

@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
-import ly.david.data.coverart.api.CoverArtArchiveApiService
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.MusicBrainzApiModule
-import ly.david.data.network.api.FakeCoverArtArchiveApiService
+import ly.david.data.network.api.FakeCoverArtArchiveApi
 import ly.david.data.network.api.FakeMusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzApiService
 import ly.david.data.network.api.MusicBrainzAuthApi
@@ -25,7 +25,7 @@ internal object FakeMusicBrainzApiModule {
 
     @Singleton
     @Provides
-    fun provideCoverArtArchiveApi(): CoverArtArchiveApiService = FakeCoverArtArchiveApiService()
+    fun provideCoverArtArchiveApi(): CoverArtArchiveApi = FakeCoverArtArchiveApi()
 
     @Singleton
     @Provides
