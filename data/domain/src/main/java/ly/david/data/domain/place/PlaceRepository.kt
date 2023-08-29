@@ -6,7 +6,7 @@ import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.places.AreaPlace
 import ly.david.data.room.area.places.AreaPlaceDao
@@ -16,7 +16,7 @@ import ly.david.data.room.place.toPlaceRoomModel
 
 @Singleton
 class PlaceRepository @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val placeDao: PlaceDao,
     private val areaPlaceDao: AreaPlaceDao,
     private val areaDao: AreaDao,
@@ -30,7 +30,7 @@ class PlaceRepository @Inject constructor(
             return placeWithAllData.toPlaceScaffoldModel()
         }
 
-        val placeMusicBrainzModel = musicBrainzApiService.lookupPlace(placeId)
+        val placeMusicBrainzModel = musicBrainzApi.lookupPlace(placeId)
         areaDao.withTransaction {
             placeDao.insert(placeMusicBrainzModel.toPlaceRoomModel())
             placeMusicBrainzModel.area?.let { area ->
@@ -51,7 +51,7 @@ class PlaceRepository @Inject constructor(
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupPlace(
+        return musicBrainzApi.lookupPlace(
             placeId = entityId,
             include = LookupApi.INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS,
         ).relations

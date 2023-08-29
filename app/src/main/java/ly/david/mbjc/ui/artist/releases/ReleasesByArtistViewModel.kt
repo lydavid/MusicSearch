@@ -7,7 +7,7 @@ import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.artist.releases.ArtistRelease
 import ly.david.data.room.artist.releases.ArtistReleaseDao
 import ly.david.data.room.relation.RelationDao
@@ -18,7 +18,7 @@ import ly.david.ui.common.release.ReleasesByEntityViewModel
 
 @HiltViewModel
 internal class ReleasesByArtistViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseDao: ArtistReleaseDao,
     private val relationDao: RelationDao,
     releaseDao: ReleaseDao,
@@ -30,7 +30,7 @@ internal class ReleasesByArtistViewModel @Inject constructor(
 ) {
 
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
-        return musicBrainzApiService.browseReleasesByArtist(
+        return musicBrainzApi.browseReleasesByArtist(
             artistId = entityId,
             offset = offset
         )

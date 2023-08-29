@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.collection.toCollectionRoomModel
@@ -24,7 +24,7 @@ private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIO
 class CollectionListViewModel @Inject constructor(
     val appPreferences: AppPreferences,
     private val pagedList: CollectionPagedList,
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val musicBrainzAuthState: MusicBrainzAuthState,
     private val collectionDao: CollectionDao,
     private val relationDao: RelationDao,
@@ -64,7 +64,7 @@ class CollectionListViewModel @Inject constructor(
     override suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        val response = musicBrainzApiService.browseCollectionsByUser(
+        val response = musicBrainzApi.browseCollectionsByUser(
             username = entityId,
             offset = nextOffset,
             include = USER_COLLECTIONS

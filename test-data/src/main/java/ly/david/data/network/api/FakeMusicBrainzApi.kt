@@ -49,7 +49,7 @@ import ly.david.data.network.searchReleasesResponse
 import ly.david.data.network.searchSeriesResponse
 import ly.david.data.network.searchWorksResponse
 
-class FakeMusicBrainzApiService : MusicBrainzApiService {
+class FakeMusicBrainzApi : MusicBrainzApi {
     // region Search
     override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
         return searchAreasResponse

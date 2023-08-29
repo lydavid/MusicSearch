@@ -7,7 +7,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RelationDao
@@ -17,7 +17,7 @@ import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 
 @HiltViewModel
 internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     releaseGroupDao: ReleaseGroupDao,
@@ -30,7 +30,7 @@ internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
 ) {
 
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
-        return musicBrainzApiService.browseReleaseGroupsByCollection(
+        return musicBrainzApi.browseReleaseGroupsByCollection(
             bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset

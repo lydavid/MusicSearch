@@ -7,14 +7,14 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.toAreaRoomModel
 
 @Singleton
 class AreaRepository @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
@@ -31,7 +31,7 @@ class AreaRepository @Inject constructor(
             return areaWithAllData.toAreaScaffoldModel()
         }
 
-        val areaMusicBrainzModel = musicBrainzApiService.lookupArea(areaId)
+        val areaMusicBrainzModel = musicBrainzApi.lookupArea(areaId)
         insertAllModels(areaMusicBrainzModel)
         return lookupArea(areaId)
     }
@@ -49,7 +49,7 @@ class AreaRepository @Inject constructor(
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApiService.lookupArea(
+        return musicBrainzApi.lookupArea(
             areaId = entityId,
             include = INC_ALL_RELATIONS_EXCEPT_URLS,
         ).relations

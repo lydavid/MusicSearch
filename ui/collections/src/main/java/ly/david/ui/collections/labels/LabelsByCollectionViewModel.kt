@@ -10,7 +10,7 @@ import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseLabelsResponse
-import ly.david.data.network.api.MusicBrainzApiService
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.label.LabelDao
@@ -22,7 +22,7 @@ import ly.david.ui.common.paging.PagedList
 
 @HiltViewModel
 internal class LabelsByCollectionViewModel @Inject constructor(
-    private val musicBrainzApiService: MusicBrainzApiService,
+    private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val labelDao: LabelDao,
     private val relationDao: RelationDao,
@@ -35,7 +35,7 @@ internal class LabelsByCollectionViewModel @Inject constructor(
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseLabelsResponse {
-        return musicBrainzApiService.browseLabelsByCollection(
+        return musicBrainzApi.browseLabelsByCollection(
             bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
