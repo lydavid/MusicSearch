@@ -18,8 +18,6 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 /**
  * Search for MusicBrainz entities using text.
@@ -32,74 +30,64 @@ interface SearchApi {
         offset: Int = 0,
     ): SearchAreasResponse
 
-    @GET("artist")
     suspend fun queryArtists(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchArtistsResponse
 
-    @GET("event")
     suspend fun queryEvents(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchEventsResponse
 
-    @GET("instrument")
     suspend fun queryInstruments(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchInstrumentsResponse
 
-    @GET("label")
     suspend fun queryLabels(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchLabelsResponse
 
-    @GET("place")
     suspend fun queryPlaces(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchPlacesResponse
 
-    @GET("recording")
     suspend fun queryRecordings(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchRecordingsResponse
 
-    @GET("release")
     suspend fun queryReleases(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchReleasesResponse
 
-    @GET("release-group")
     suspend fun queryReleaseGroups(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchReleaseGroupsResponse
 
-    @GET("series")
     suspend fun querySeries(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchSeriesResponse
 
-    @GET("work")
     suspend fun queryWorks(
-        @Query("query") query: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        query: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): SearchWorksResponse
 }
 
@@ -118,43 +106,113 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("artist")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("event")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryInstruments(query: String, limit: Int, offset: Int): SearchInstrumentsResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("instrument")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryLabels(query: String, limit: Int, offset: Int): SearchLabelsResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("label")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("place")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("recording")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("release")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryReleaseGroups(query: String, limit: Int, offset: Int): SearchReleaseGroupsResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("release-group")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("series")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 
     override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
-        TODO("Not yet implemented")
+        return client.get {
+            url {
+                appendPathSegments("work")
+                parameter("query", query)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
     }
 }
 

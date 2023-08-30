@@ -16,7 +16,7 @@ data class RelationMusicBrainzModel(
     // TODO: we should order with backward relations first
     @SerialName("direction") val direction: Direction,
 
-    @SerialName("target-type") val targetType: MusicBrainzEntity?,
+    @SerialName("target-type") val targetType: MusicBrainzEntity? = null,
 
     // prefer this credit over object's name if it exists
     @SerialName("target-credit") val targetCredit: String? = null,

@@ -8,12 +8,7 @@ import kotlinx.serialization.Serializable
  * Because it's embedded, all of its fields should be nullable.
  */
 interface Coordinates {
-    //    @Json(name = "longitude")
-//    @ColumnInfo(name = "longitude")
     val longitude: Double?
-
-    //    @Json(name = "latitude")
-//    @ColumnInfo(name = "latitude")
     val latitude: Double?
 }
 
@@ -32,26 +27,15 @@ fun CoordinatesMusicBrainzModel.toCoordinatesRoomModel() = CoordinatesRoomModel(
     latitude = latitude
 )
 
-//@Serializable
 data class CoordinatesUiModel(
-//    @Json(name = "longitude")
-//    @ColumnInfo(name = "longitude")
     override val longitude: Double?,
-
-//    @Json(name = "latitude")
-//    @ColumnInfo(name = "latitude")
     override val latitude: Double?,
 ): Coordinates
 
 @Serializable
 data class CoordinatesMusicBrainzModel(
-//    @Json(name = "longitude")
-//    @ColumnInfo(name = "longitude")
-    override val longitude: Double?,
-
-//    @Json(name = "latitude")
-//    @ColumnInfo(name = "latitude")
-    override val latitude: Double?,
+    override val longitude: Double? = null,
+    override val latitude: Double? = null,
 ): Coordinates
 
 /**

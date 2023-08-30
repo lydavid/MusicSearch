@@ -19,7 +19,8 @@ data class ReleaseMusicBrainzModel(
     @SerialName("packaging-id") override val packagingId: String? = null,
     @SerialName("asin") override val asin: String? = null,
     @SerialName("quality") override val quality: String? = null,
-    @SerialName("cover-art-archive") override val coverArtArchive: CoverArtArchiveMusicBrainzModel = CoverArtArchiveMusicBrainzModel(),
+    @SerialName("cover-art-archive")
+    override val coverArtArchive: CoverArtArchiveMusicBrainzModel = CoverArtArchiveMusicBrainzModel(),
     @SerialName("text-representation") override val textRepresentation: TextRepresentationMusicBrainzModel? = null,
 
     @SerialName("release-events") val releaseEvents: List<ReleaseEvent>? = null,

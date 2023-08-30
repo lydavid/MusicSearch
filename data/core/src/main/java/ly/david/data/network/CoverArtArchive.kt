@@ -22,7 +22,6 @@ data class CoverArtArchiveRoomModel(
 
 @Serializable
 data class CoverArtArchiveMusicBrainzModel(
-//    @SerialName("count")
     override val count: Int = 0,
 ): CoverArtArchive
 

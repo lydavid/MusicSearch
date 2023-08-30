@@ -14,19 +14,8 @@ interface ILifeSpan {
  */
 @Serializable
 data class LifeSpanMusicBrainzModel(
-//    @ColumnInfo(name = "begin")
-//    @SerialName("begin")
     override val begin: String? = null,
-
-//    @ColumnInfo(name = "end")
-//    @SerialName("end")
     override val end: String? = null,
-
-    /**
-     * Despite SQL saying non-null, this could actually be null.
-     */
-//    @ColumnInfo(name = "ended")
-//    @SerialName("ended")
     override val ended: Boolean? = null,
 ) : ILifeSpan
 

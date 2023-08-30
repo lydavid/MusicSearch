@@ -9,8 +9,8 @@ import ly.david.data.Medium
  */
 @Serializable
 data class MediumMusicBrainzModel(
-    @SerialName("position") override val position: Int?,
-    @SerialName("title") override val title: String?,
+    @SerialName("position") override val position: Int? = null,
+    @SerialName("title") override val title: String? = null,
     @SerialName("track-count") override val trackCount: Int,
     @SerialName("format") override val format: String? = null,
     @SerialName("format-id") val formatId: String? = null,
