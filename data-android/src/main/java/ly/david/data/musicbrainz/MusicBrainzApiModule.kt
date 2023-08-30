@@ -8,8 +8,6 @@ import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.network.api.MusicBrainzAuthApi
-import ly.david.data.network.api.MusicBrainzAuthApiImpl
-import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -25,7 +23,5 @@ object MusicBrainzApiModule {
 
     @Singleton
     @Provides
-    fun provideMusicBrainzAuthApi(
-        builder: Retrofit.Builder,
-    ): MusicBrainzAuthApi = MusicBrainzAuthApiImpl.create(builder)
+    fun provideMusicBrainzAuthApi(): MusicBrainzAuthApi = MusicBrainzAuthApi.create()
 }

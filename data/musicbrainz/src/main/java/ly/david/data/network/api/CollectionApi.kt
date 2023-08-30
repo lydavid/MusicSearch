@@ -1,9 +1,10 @@
 package ly.david.data.network.api
 
-import retrofit2.http.DELETE
-import retrofit2.http.PUT
-import retrofit2.http.Path
-import retrofit2.http.Query
+import io.ktor.client.HttpClient
+import io.ktor.client.request.delete
+import io.ktor.client.request.parameter
+import io.ktor.client.request.put
+import io.ktor.http.appendPathSegments
 
 interface CollectionApi {
 
@@ -11,19 +12,49 @@ interface CollectionApi {
         const val USER_COLLECTIONS = "user-collections"
     }
 
-    @PUT("collection/{collectionId}/{resourceUriPlural}/{mbids}")
     suspend fun uploadToCollection(
-        @Path("collectionId") collectionId: String,
-        @Path("resourceUriPlural") resourceUriPlural: String,
-        @Path("mbids") mbids: String,
-        @Query("client") client: String = "MusicSearch",
+        collectionId: String,
+        resourceUriPlural: String,
+        mbids: String,
+        client: String = "MusicSearch",
     )
 
-    @DELETE("collection/{collectionId}/{resourceUriPlural}/{mbids}")
     suspend fun deleteFromCollection(
-        @Path("collectionId") collectionId: String,
-        @Path("resourceUriPlural") resourceUriPlural: String,
-        @Path("mbids") mbids: String,
-        @Query("client") client: String = "MusicSearch",
+        collectionId: String,
+        resourceUriPlural: String,
+        mbids: String,
+        client: String = "MusicSearch",
     )
+}
+
+interface CollectionApiImpl : CollectionApi {
+    val httpClient: HttpClient
+
+    override suspend fun uploadToCollection(
+        collectionId: String,
+        resourceUriPlural: String,
+        mbids: String,
+        client: String,
+    ) {
+        httpClient.put {
+            url {
+                appendPathSegments("collection", collectionId, resourceUriPlural, mbids)
+                parameter("client", client)
+            }
+        }
+    }
+
+    override suspend fun deleteFromCollection(
+        collectionId: String,
+        resourceUriPlural: String,
+        mbids: String,
+        client: String,
+    ) {
+        httpClient.delete {
+            url {
+                appendPathSegments("collection", collectionId, resourceUriPlural, mbids)
+                parameter("client", client)
+            }
+        }
+    }
 }

@@ -176,7 +176,7 @@ interface BrowseApi {
 }
 
 interface BrowseApiImpl : BrowseApi {
-    val client: HttpClient
+    val httpClient: HttpClient
 
     override suspend fun browseAreasByCollection(
         bearerToken: String?,
@@ -184,7 +184,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseAreasResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("area")
                 header(AUTHORIZATION, bearerToken)
@@ -201,7 +201,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseArtistsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("artist")
                 header(AUTHORIZATION, bearerToken)
@@ -218,7 +218,7 @@ interface BrowseApiImpl : BrowseApi {
         offset: Int,
         include: String?,
     ): BrowseCollectionsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("collection")
                 parameter("editor", username)
@@ -235,7 +235,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseEventsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("event")
                 header(AUTHORIZATION, bearerToken)
@@ -251,7 +251,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseEventsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("event")
                 parameter("place", placeId)
@@ -267,7 +267,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseInstrumentsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("instrument")
                 header(AUTHORIZATION, bearerToken)
@@ -284,7 +284,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseLabelsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("label")
                 header(AUTHORIZATION, bearerToken)
@@ -300,7 +300,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowsePlacesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("place")
                 parameter("area", areaId)
@@ -316,7 +316,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowsePlacesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("place")
                 header(AUTHORIZATION, bearerToken)
@@ -333,7 +333,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseRecordingsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("recording")
                 header(AUTHORIZATION, bearerToken)
@@ -349,7 +349,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseRecordingsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("recording")
                 parameter("work", workId)
@@ -364,7 +364,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 parameter("area", areaId)
@@ -379,7 +379,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 parameter("artist", artistId)
@@ -395,7 +395,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 header(AUTHORIZATION, bearerToken)
@@ -412,7 +412,7 @@ interface BrowseApiImpl : BrowseApi {
         offset: Int,
         include: String,
     ): BrowseReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 parameter("label", labelId)
@@ -427,7 +427,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 parameter("recording", recordingId)
@@ -442,7 +442,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 parameter("release-group", releaseGroupId)
@@ -458,7 +458,7 @@ interface BrowseApiImpl : BrowseApi {
         offset: Int,
         include: String,
     ): BrowseReleaseGroupsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release-group")
                 parameter("artist", artistId)
@@ -475,7 +475,7 @@ interface BrowseApiImpl : BrowseApi {
         offset: Int,
         include: String,
     ): BrowseReleaseGroupsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release-group")
                 header(AUTHORIZATION, bearerToken)
@@ -492,7 +492,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseSeriesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("series")
                 header(AUTHORIZATION, bearerToken)
@@ -509,7 +509,7 @@ interface BrowseApiImpl : BrowseApi {
         limit: Int,
         offset: Int,
     ): BrowseWorksResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("work")
                 header(AUTHORIZATION, bearerToken)

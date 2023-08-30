@@ -92,10 +92,10 @@ interface SearchApi {
 }
 
 interface SearchApiImpl : SearchApi {
-    val client: HttpClient
+    val httpClient: HttpClient
 
     override suspend fun queryAreas(query: String, limit: Int, offset: Int): SearchAreasResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("area")
                 parameter("query", query)
@@ -106,7 +106,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryArtists(query: String, limit: Int, offset: Int): SearchArtistsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("artist")
                 parameter("query", query)
@@ -117,7 +117,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryEvents(query: String, limit: Int, offset: Int): SearchEventsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("event")
                 parameter("query", query)
@@ -128,7 +128,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryInstruments(query: String, limit: Int, offset: Int): SearchInstrumentsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("instrument")
                 parameter("query", query)
@@ -139,7 +139,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryLabels(query: String, limit: Int, offset: Int): SearchLabelsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("label")
                 parameter("query", query)
@@ -150,7 +150,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryPlaces(query: String, limit: Int, offset: Int): SearchPlacesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("place")
                 parameter("query", query)
@@ -161,7 +161,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryRecordings(query: String, limit: Int, offset: Int): SearchRecordingsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("recording")
                 parameter("query", query)
@@ -172,7 +172,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryReleases(query: String, limit: Int, offset: Int): SearchReleasesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release")
                 parameter("query", query)
@@ -183,7 +183,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryReleaseGroups(query: String, limit: Int, offset: Int): SearchReleaseGroupsResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("release-group")
                 parameter("query", query)
@@ -194,7 +194,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun querySeries(query: String, limit: Int, offset: Int): SearchSeriesResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("series")
                 parameter("query", query)
@@ -205,7 +205,7 @@ interface SearchApiImpl : SearchApi {
     }
 
     override suspend fun queryWorks(query: String, limit: Int, offset: Int): SearchWorksResponse {
-        return client.get {
+        return httpClient.get {
             url {
                 appendPathSegments("work")
                 parameter("query", query)

@@ -10,8 +10,8 @@ import io.ktor.http.userAgent
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
-private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
+internal const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
+internal const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
 
 interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi {
     companion object {
@@ -58,30 +58,12 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi {
             }
 
             return MusicBrainzApiImpl(
-                client = client,
+                httpClient = client,
             )
         }
     }
 }
 
 class MusicBrainzApiImpl(
-    override val client: HttpClient,
-) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, MusicBrainzApi {
-    override suspend fun uploadToCollection(
-        collectionId: String,
-        resourceUriPlural: String,
-        mbids: String,
-        client: String,
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteFromCollection(
-        collectionId: String,
-        resourceUriPlural: String,
-        mbids: String,
-        client: String,
-    ) {
-        TODO("Not yet implemented")
-    }
-}
+    override val httpClient: HttpClient,
+) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzApi
