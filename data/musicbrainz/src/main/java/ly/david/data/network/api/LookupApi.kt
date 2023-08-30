@@ -1,5 +1,10 @@
 package ly.david.data.network.api
 
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.http.appendPathSegments
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
@@ -12,9 +17,6 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 private const val AREA_REL = "area-rels"
 private const val ARTIST_REL = "artist-rels"
@@ -69,11 +71,10 @@ interface LookupApi {
 
     // TODO: lookup with all rels might be a bit too much, especially since there's no pagination
     //  It takes 10s to retrieve 7.6MB of data for the city of New York, with 19381 relationships...
-    @GET("area/{areaId}")
     suspend fun lookupArea(
-        @Path("areaId") areaId: String,
+        areaId: String,
 
-        @Query("inc") include: String? = URL_REL,
+        include: String? = URL_REL,
 
         // TODO: Separate tab: artists, events, labels, releases, recordings, places, works
         //  we might be able to do paged browse requests for these
@@ -83,73 +84,174 @@ interface LookupApi {
         //  it isn't enough to get the data on this page: https://musicbrainz.org/area/74e50e58-5deb-4b99-93a2-decbb365c07f/places
     ): AreaMusicBrainzModel
 
-    @GET("artist/{artistId}")
     suspend fun lookupArtist(
-        @Path("artistId") artistId: String,
-        @Query("inc") include: String? = URL_REL,
+        artistId: String,
+        include: String? = URL_REL,
     ): ArtistMusicBrainzModel
 
-    @GET("event/{eventId}")
     suspend fun lookupEvent(
-        @Path("eventId") eventId: String,
-        @Query("inc") include: String? = URL_REL,
+        eventId: String,
+        include: String? = URL_REL,
     ): EventMusicBrainzModel
 
-    @GET("genre/{genreId}")
     suspend fun lookupGenre(
-        @Path("genreId") genreId: String,
-        @Query("inc") include: String? = null,
+        genreId: String,
+        include: String? = null,
     ): GenreMusicBrainzModel
 
-    @GET("instrument/{instrumentId}")
     suspend fun lookupInstrument(
-        @Path("instrumentId") instrumentId: String,
-        @Query("inc") include: String = "artist-rels+$URL_REL+area-rels+instrument-rels+genre-rels+label-rels",
+        instrumentId: String,
+        include: String = "artist-rels+$URL_REL+area-rels+instrument-rels+genre-rels+label-rels",
     ): InstrumentMusicBrainzModel
 
-    @GET("label/{labelId}")
     suspend fun lookupLabel(
-        @Path("labelId") labelId: String,
-        @Query("inc") include: String = "artist-rels+label-rels+$URL_REL",
+        labelId: String,
+        include: String = "artist-rels+label-rels+$URL_REL",
     ): LabelMusicBrainzModel
 
-    @GET("place/{placeId}")
     suspend fun lookupPlace(
-        @Path("placeId") placeId: String,
-        @Query("inc") include: String? = URL_REL,
+        placeId: String,
+        include: String? = URL_REL,
     ): PlaceMusicBrainzModel
 
-    @GET("recording/{recordingId}")
     suspend fun lookupRecording(
-        @Path("recordingId") recordingId: String,
-        @Query("inc") include: String = "artist-credits+$URL_REL",
+        recordingId: String,
+        include: String = "artist-credits+$URL_REL",
     ): RecordingMusicBrainzModel
 
-    @GET("release/{releaseId}")
     suspend fun lookupRelease(
-        @Path("releaseId") releaseId: String,
-        @Query("inc") include: String = "artist-credits" +
+        releaseId: String,
+        include: String = "artist-credits" +
             "+labels" + // gives us labels (alternatively, we can get them from rels)
             "+recordings" + // gives us tracks
             "+release-groups" + // gives us types
             "+$URL_REL",
     ): ReleaseMusicBrainzModel
 
-    @GET("release-group/{releaseGroupId}")
     suspend fun lookupReleaseGroup(
-        @Path("releaseGroupId") releaseGroupId: String,
-        @Query("inc") include: String = "artists+$URL_REL", // "releases+artists+media"
+        releaseGroupId: String,
+        include: String = "artists+$URL_REL", // "releases+artists+media"
     ): ReleaseGroupMusicBrainzModel
 
-    @GET("series/{seriesId}")
     suspend fun lookupSeries(
-        @Path("seriesId") seriesId: String,
-        @Query("inc") include: String? = URL_REL,
+        seriesId: String,
+        include: String? = URL_REL,
     ): SeriesMusicBrainzModel
 
-    @GET("work/{workId}")
     suspend fun lookupWork(
-        @Path("workId") workId: String,
-        @Query("inc") include: String? = URL_REL,
+        workId: String,
+        include: String? = URL_REL,
     ): WorkMusicBrainzModel
+}
+
+interface LookupApiImpl: LookupApi {
+    val client: HttpClient
+
+    override suspend fun lookupArea(areaId: String, include: String?): AreaMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("area", areaId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("artist", artistId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("event", eventId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupGenre(genreId: String, include: String?): GenreMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("genre", genreId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("instrument", instrumentId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("label", labelId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("place", placeId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("recording", recordingId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("release", releaseId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("release-group", releaseGroupId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("series", seriesId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
+        return client.get {
+            url {
+                appendPathSegments("work", workId)
+                parameter("inc", include)
+            }
+        }.body()
+    }
 }
