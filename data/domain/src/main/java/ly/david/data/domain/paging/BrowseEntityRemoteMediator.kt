@@ -4,12 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import java.io.IOException
 import kotlinx.coroutines.delay
+import ly.david.data.network.RecoverableNetworkException
 import ly.david.data.network.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.network.api.SEARCH_BROWSE_LIMIT
 import ly.david.data.room.RoomModel
-import retrofit2.HttpException
 
 /**
  * Generic RemoteMediator for loading remote data into [RoomModel].
@@ -72,9 +71,7 @@ class BrowseEntityRemoteMediator<RM : RoomModel>(
 
             // Assuming all Browse uses this limit.
             MediatorResult.Success(endOfPaginationReached = browseEntity(nextOffset) < SEARCH_BROWSE_LIMIT)
-        } catch (ex: HttpException) {
-            MediatorResult.Error(ex)
-        } catch (ex: IOException) {
+        } catch (ex: RecoverableNetworkException) {
             MediatorResult.Error(ex)
         }
     }

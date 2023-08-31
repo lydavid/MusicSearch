@@ -21,6 +21,5 @@ const val STARTING_OFFSET = 0
 const val SEARCH_BROWSE_LIMIT = 100
 
 // region Internal
-internal const val USER_INFO = "userinfo"
 
 // endregion

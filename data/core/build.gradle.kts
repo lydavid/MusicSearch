@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-//    implementation(libs.moshi.kotlin)
-
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
     implementation(libs.room.common)

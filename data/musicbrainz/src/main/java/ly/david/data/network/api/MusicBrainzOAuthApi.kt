@@ -6,6 +6,8 @@ import io.ktor.client.request.forms.submitForm
 import io.ktor.client.request.get
 import io.ktor.http.parameters
 
+internal const val USER_INFO = "userinfo"
+
 interface MusicBrainzAuthApi {
 
     suspend fun getUserInfo(): UserInfo
