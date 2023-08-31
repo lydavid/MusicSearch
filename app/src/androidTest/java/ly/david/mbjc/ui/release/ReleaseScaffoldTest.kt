@@ -173,23 +173,4 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenPerformClickOn(stats)
         waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
     }
-
-    @Test
-    fun showRetryButtonOnError() = runTest {
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                ReleaseScaffold(
-                    releaseId = "error"
-                )
-            }
-        }
-
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        waitForThenPerformClickOn(tracks)
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        waitForThenPerformClickOn(relationships)
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-    }
 }

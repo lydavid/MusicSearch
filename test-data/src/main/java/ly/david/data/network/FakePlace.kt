@@ -1,6 +1,6 @@
 package ly.david.data.network
 
-import ly.david.data.CoordinatesUiModel
+import ly.david.data.CoordinatesMusicBrainzModel
 import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
 import ly.david.data.network.api.SearchPlacesResponse
@@ -31,7 +31,7 @@ val fakePlaceWithAllData = PlaceMusicBrainzModel(
         ended = true
     ),
     area = ontario,
-    coordinates = CoordinatesUiModel(
+    coordinates = CoordinatesMusicBrainzModel(
         longitude = 123.123,
         latitude = 123.123
     ),

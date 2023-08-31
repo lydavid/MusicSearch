@@ -3,7 +3,6 @@ package ly.david.mbjc.ui.place
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -11,12 +10,12 @@ import ly.david.data.domain.place.PlaceRepository
 import ly.david.data.domain.place.PlaceScaffoldModel
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.network.RecoverableNetworkException
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
-import retrofit2.HttpException
 import timber.log.Timber
 
 @HiltViewModel
@@ -55,10 +54,7 @@ internal class PlaceScaffoldViewModel @Inject constructor(
                         }
                         place.value = eventListItemModel
                         isError.value = false
-                    } catch (ex: HttpException) {
-                        Timber.e(ex)
-                        isError.value = true
-                    } catch (ex: IOException) {
+                    } catch (ex: RecoverableNetworkException) {
                         Timber.e(ex)
                         isError.value = true
                     }

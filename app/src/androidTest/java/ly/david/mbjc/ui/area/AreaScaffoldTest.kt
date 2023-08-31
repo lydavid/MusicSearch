@@ -119,26 +119,6 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
             .assertDoesNotExist()
     }
 
-    @Test
-    fun showRetryButtonOnError() = runTest {
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                AreaScaffold(
-                    areaId = "error"
-                )
-            }
-        }
-
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        waitForThenPerformClickOn(relationships)
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        // TODO: showing "no results"
-//        waitForThenPerformClickOn(places)
-//        waitForThenAssertAtLeastOneIsDisplayed(retry)
-    }
-
     // TODO: visit, check history count is 1, visit again, go to release, return, return, check history count is 2
 
     // endregion

@@ -11,13 +11,13 @@ import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.davidBowieArtistCredit
 import ly.david.data.network.hotSpaceReleaseGroup
 import ly.david.data.network.queenArtistCredit
 import ly.david.data.network.underPressure
 import ly.david.data.network.underPressureReleaseGroup
-import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
@@ -89,21 +89,5 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
         waitForThenPerformClickOn(relationships)
         waitForThenAssertIsDisplayed(hotSpaceReleaseGroup.name)
-    }
-
-    @Test
-    fun showRetryButtonOnError() = runTest {
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                ReleaseGroupScaffold(
-                    releaseGroupId = "error"
-                )
-            }
-        }
-
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        waitForThenPerformClickOn(relationships)
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 }

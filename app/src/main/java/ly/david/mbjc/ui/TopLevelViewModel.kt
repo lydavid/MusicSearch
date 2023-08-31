@@ -10,7 +10,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,6 +25,7 @@ import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.network.RecoverableNetworkException
 import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.network.api.MusicBrainzOAuthInfo
 import ly.david.data.network.resourceUriPlural
@@ -42,7 +42,6 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
-import retrofit2.HttpException
 import timber.log.Timber
 
 class MusicBrainzLoginContract(
@@ -140,15 +139,11 @@ internal class TopLevelViewModel @Inject constructor(
                     resourceUriPlural = entity.value.resourceUriPlural,
                     mbids = entityId.value
                 )
-            } catch (ex: HttpException) {
-                return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> RemoteResult(
-                        message = "Failed to add to ${collection.name}. Login has expired.",
-                        actionLabel = "Login"
-                    )
-
-                    else -> RemoteResult("Failed to add to ${collection.name}.")
-                }
+            } catch (ex: RecoverableNetworkException) {
+                RemoteResult(
+                    message = "Failed to add to ${collection.name}. Login has expired. $ex",
+                    actionLabel = "Login"
+                )
             }
         }
 
@@ -186,15 +181,11 @@ internal class TopLevelViewModel @Inject constructor(
                     resourceUriPlural = collection.entity.resourceUriPlural,
                     mbids = entityId
                 )
-            } catch (ex: HttpException) {
-                return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> RemoteResult(
-                        message = "Failed to delete from remote collection ${collection.name}. Login has expired.",
-                        actionLabel = "Login"
-                    )
-
-                    else -> RemoteResult("Failed to delete from ${collection.name}.")
-                }
+            } catch (ex: RecoverableNetworkException) {
+                RemoteResult(
+                    message = "Failed to delete from remote collection ${collection.name}. Login has expired. $ex",
+                    actionLabel = "Login"
+                )
             }
         }
 

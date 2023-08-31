@@ -17,11 +17,9 @@ kotlinx-coroutines = "1.7.1"
 ktor = "2.3.3"
 ksp = "1.9.0-1.0.13"
 mockk = "1.13.7"
-moshi = "1.15.0"
 okhttp = "4.11.0"
 paging = "3.2.0"
 paparazzi = "1.3.1"
-retrofit = "2.9.0"
 room = "2.5.2"
 
 
@@ -76,13 +74,10 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 okhttp-tls = { group = "com.squareup.okhttp3", name = "okhttp-tls", version.ref = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 robolectric = { group = "org.robolectric", name = "robolectric", version = "4.10.3" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -110,7 +105,6 @@ ktor-android = [
     "ktor-client-okhttp",
     "ktor-serialization-kotlinx-json",
 ]
-retrofit = ["retrofit", "retrofit-converter-moshi"]
 
 
 [plugins]

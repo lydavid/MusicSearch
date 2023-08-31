@@ -41,11 +41,13 @@ data class CoordinatesMusicBrainzModel(
 /**
  * Turns [Coordinates] to this format: 40.76688°N, 73.98905°W
  */
-fun CoordinatesUiModel.formatForDisplay(): String? {
-    if (longitude == null || latitude == null) return null
+fun Coordinates.formatForDisplay(): String? {
+    val lat = latitude
+    val long = longitude
+    if (lat == null || long == null) return null
 
-    val lat = if (latitude < 0) "${abs(latitude)}°S" else "$latitude°N"
-    val long = if (longitude < 0) "${abs(longitude)}°W" else "$longitude°E"
+    val latitudeString = if (lat < 0) "${abs(lat)}°S" else "$lat°N"
+    val longitudeString = if (long < 0) "${abs(long)}°W" else "$long°E"
 
-    return "$lat, $long"
+    return "$latitudeString, $longitudeString"
 }

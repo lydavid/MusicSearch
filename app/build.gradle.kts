@@ -122,8 +122,6 @@ dependencies {
     testImplementation(libs.bundles.kotlinx.coroutines)
     androidTestImplementation(libs.bundles.kotlinx.coroutines)
 
-    implementation(libs.bundles.retrofit)
-
     androidTestImplementation(libs.room.testing)
 
     androidTestImplementation(libs.okhttp.mockwebserver)
