@@ -63,8 +63,11 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            val accessToken = musicBrainzAuthState.getAccessToken() ?: return@loadTokens null
-                            val refreshToken = musicBrainzAuthState.getRefreshToken() ?: return@loadTokens null
+                            val accessToken = musicBrainzAuthState.getAccessToken()
+                            if (accessToken.isNullOrEmpty()) return@loadTokens null
+                            val refreshToken = musicBrainzAuthState.getRefreshToken()
+                            if (refreshToken.isNullOrEmpty()) return@loadTokens null
+
                             BearerTokens(accessToken, refreshToken)
                         }
                         refreshTokens {

@@ -140,9 +140,11 @@ internal class TopLevelViewModel @Inject constructor(
                     mbids = entityId.value
                 )
             } catch (ex: RecoverableNetworkException) {
-                RemoteResult(
-                    message = "Failed to add to ${collection.name}. Login has expired. $ex",
-                    actionLabel = "Login"
+                val userFacingError = "Failed to add to ${collection.name}. Login has expired."
+                Timber.e("$userFacingError $ex")
+                return RemoteResult(
+                    message = userFacingError,
+                    actionLabel = "Login",
                 )
             }
         }
@@ -182,9 +184,11 @@ internal class TopLevelViewModel @Inject constructor(
                     mbids = entityId
                 )
             } catch (ex: RecoverableNetworkException) {
-                RemoteResult(
-                    message = "Failed to delete from remote collection ${collection.name}. Login has expired. $ex",
-                    actionLabel = "Login"
+                val userFacingError = "Failed to delete from remote collection ${collection.name}. Login has expired."
+                Timber.e("$userFacingError $ex")
+                return RemoteResult(
+                    message = userFacingError,
+                    actionLabel = "Login",
                 )
             }
         }
