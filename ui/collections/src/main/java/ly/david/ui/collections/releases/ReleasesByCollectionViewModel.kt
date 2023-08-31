@@ -4,8 +4,6 @@ import androidx.paging.PagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.api.BrowseReleasesResponse
@@ -25,7 +23,6 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     releaseDao: ReleaseDao,
     pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
-    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,
     releaseDao = releaseDao,
@@ -34,7 +31,6 @@ internal class ReleasesByCollectionViewModel @Inject constructor(
 
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
         return musicBrainzApi.browseReleasesByCollection(
-            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )

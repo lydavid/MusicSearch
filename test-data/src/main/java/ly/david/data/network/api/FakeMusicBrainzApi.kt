@@ -98,7 +98,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
 
     // region Browse
     override suspend fun browseAreasByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -107,7 +106,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseArtistsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -125,7 +123,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseEventsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -138,7 +135,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseInstrumentsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -147,7 +143,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseLabelsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -160,7 +155,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browsePlacesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -169,7 +163,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseRecordingsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -194,7 +187,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseReleasesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -237,7 +229,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseReleaseGroupsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -247,7 +238,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseSeriesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -256,7 +246,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseWorksByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,

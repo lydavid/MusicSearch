@@ -5,8 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.listitem.toPlaceListItemModel
-import ly.david.data.network.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse
@@ -27,7 +25,6 @@ internal class PlacesByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     private val placeDao: PlaceDao,
     pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
-    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzEntity.PLACE,
     relationDao = relationDao,
@@ -36,7 +33,6 @@ internal class PlacesByCollectionViewModel @Inject constructor(
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowsePlacesResponse {
         return musicBrainzApi.browsePlacesByCollection(
-            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )

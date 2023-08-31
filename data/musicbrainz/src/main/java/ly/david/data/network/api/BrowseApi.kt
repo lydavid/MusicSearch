@@ -3,12 +3,10 @@ package ly.david.data.network.api
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.AUTHORIZATION
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.CollectionMusicBrainzModel
@@ -34,14 +32,12 @@ internal const val LABELS = "labels"
 interface BrowseApi {
 
     suspend fun browseAreasByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseAreasResponse
 
     suspend fun browseArtistsByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -55,7 +51,6 @@ interface BrowseApi {
     ): BrowseCollectionsResponse
 
     suspend fun browseEventsByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -68,14 +63,12 @@ interface BrowseApi {
     ): BrowseEventsResponse
 
     suspend fun browseInstrumentsByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseInstrumentsResponse
 
     suspend fun browseLabelsByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -88,14 +81,12 @@ interface BrowseApi {
     ): BrowsePlacesResponse
 
     suspend fun browsePlacesByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowsePlacesResponse
 
     suspend fun browseRecordingsByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -120,7 +111,6 @@ interface BrowseApi {
     ): BrowseReleasesResponse
 
     suspend fun browseReleasesByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -153,7 +143,6 @@ interface BrowseApi {
     ): BrowseReleaseGroupsResponse
 
     suspend fun browseReleaseGroupsByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -161,14 +150,12 @@ interface BrowseApi {
     ): BrowseReleaseGroupsResponse
 
     suspend fun browseSeriesByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
     ): BrowseSeriesResponse
 
     suspend fun browseWorksByCollection(
-        bearerToken: String? = null,
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
@@ -179,7 +166,6 @@ interface BrowseApiImpl : BrowseApi {
     val httpClient: HttpClient
 
     override suspend fun browseAreasByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -187,7 +173,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("area")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -196,7 +181,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseArtistsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -204,7 +188,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("artist")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -230,7 +213,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseEventsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -238,7 +220,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("event")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -262,7 +243,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseInstrumentsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -270,7 +250,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("instrument")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -279,7 +258,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseLabelsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -287,7 +265,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("label")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -311,7 +288,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browsePlacesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -319,7 +295,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("place")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -328,7 +303,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseRecordingsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -336,7 +310,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("recording")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -390,7 +363,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseReleasesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -398,7 +370,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -469,7 +440,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseReleaseGroupsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -478,7 +448,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("release-group")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -487,7 +456,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseSeriesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -495,7 +463,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("series")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
@@ -504,7 +471,6 @@ interface BrowseApiImpl : BrowseApi {
     }
 
     override suspend fun browseWorksByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -512,7 +478,6 @@ interface BrowseApiImpl : BrowseApi {
         return httpClient.get {
             url {
                 appendPathSegments("work")
-                header(AUTHORIZATION, bearerToken)
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
