@@ -2,6 +2,9 @@ package ly.david.data.network.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -9,13 +12,16 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.userAgent
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import ly.david.data.network.MusicBrainzAuthState
 
-internal const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
-internal const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
+private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
+private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
 
-interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi {
+interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzAuthApi {
     companion object {
-        fun create(): MusicBrainzApi {
+        fun create(
+            musicBrainzAuthState: MusicBrainzAuthState,
+        ): MusicBrainzApi {
             val client = HttpClient(Android) {
                 defaultRequest {
                     userAgent(USER_AGENT_VALUE)
@@ -32,29 +38,25 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi {
                         }
                     )
                 }
-//                install(Auth) {
-//                    bearer {
-//                        loadTokens {
-//                            val accessToken = spotifyOAuth.getAccessToken() ?: return@loadTokens null
-//                            BearerTokens(accessToken, "")
-//                        }
-//                        refreshTokens {
-//                            val newAccessToken = spotifyAuthApi.getAccessToken(
-//                                clientId = clientId,
-//                                clientSecret = clientSecret,
-//                            )
-//                            spotifyOAuth.saveAccessToken(
-//                                accessToken = newAccessToken.accessToken,
-//                            )
-//
-//                            val accessToken = spotifyOAuth.getAccessToken() ?: return@refreshTokens null
-//                            BearerTokens(accessToken, "")
-//                        }
+                install(Auth) {
+                    bearer {
+                        loadTokens {
+                            val accessToken = musicBrainzAuthState.getAccessToken() ?: return@loadTokens null
+                            val refreshToken = musicBrainzAuthState.getRefreshToken() ?: return@loadTokens null
+                            BearerTokens(accessToken, refreshToken)
+                        }
+                        refreshTokens {
+                            // TODO: handle refresh
+                            val accessToken = musicBrainzAuthState.getAccessToken() ?: return@refreshTokens null
+                            val refreshToken = musicBrainzAuthState.getRefreshToken() ?: return@refreshTokens null
+                            BearerTokens(accessToken, refreshToken)
+                        }
 //                        sendWithoutRequest { request ->
-//                            request.url.host == HOST
+//                            // TODO: handle collection browse
+//                            request.url.pathSegments.contains(USER_INFO)
 //                        }
-//                    }
-//                }
+                    }
+                }
             }
 
             return MusicBrainzApiImpl(
@@ -66,4 +68,4 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi {
 
 class MusicBrainzApiImpl(
     override val httpClient: HttpClient,
-) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzApi
+) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzAuthApiImpl, MusicBrainzApi

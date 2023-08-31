@@ -3,6 +3,7 @@ package ly.david.data.musicbrainz
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import ly.david.data.AUTHORIZATION
+import ly.david.data.network.MusicBrainzAuthState
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response

@@ -8,7 +8,7 @@ import javax.inject.Singleton
 import ly.david.data.BuildConfig
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
-import ly.david.data.spotify.api.auth.SpotifyOAuth
+import ly.david.data.spotify.api.auth.SpotifyAuthState
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -23,14 +23,14 @@ object SpotifyApiModule {
     @Singleton
     @Provides
     fun provideSpotifyApi(
-        spotifyOAuth: SpotifyOAuth,
+        spotifyAuthState: SpotifyAuthState,
         spotifyAuthApi: SpotifyAuthApi,
     ): SpotifyApi {
         return SpotifyApi.create(
             clientId = BuildConfig.SPOTIFY_CLIENT_ID,
             clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
             spotifyAuthApi = spotifyAuthApi,
-            spotifyOAuth = spotifyOAuth,
+            spotifyAuthState = spotifyAuthState,
         )
     }
 }

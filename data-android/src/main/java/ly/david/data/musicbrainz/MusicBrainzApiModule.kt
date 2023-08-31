@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApi
+import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.api.MusicBrainzApi
-import ly.david.data.network.api.MusicBrainzAuthApi
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -19,9 +19,7 @@ object MusicBrainzApiModule {
 
     @Singleton
     @Provides
-    fun provideMusicBrainzApi(): MusicBrainzApi = MusicBrainzApi.create()
-
-    @Singleton
-    @Provides
-    fun provideMusicBrainzAuthApi(): MusicBrainzAuthApi = MusicBrainzAuthApi.create()
+    fun provideMusicBrainzApi(
+        musicBrainzAuthState: MusicBrainzAuthState,
+    ): MusicBrainzApi = MusicBrainzApi.create(musicBrainzAuthState)
 }

@@ -334,4 +334,14 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         TODO("Not yet implemented")
     }
     // endregion
+
+    // region OAuth
+    override suspend fun getUserInfo(): UserInfo {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun logout(token: String, clientId: String, clientSecret: String) {
+        TODO("Not yet implemented")
+    }
+    // endregion
 }

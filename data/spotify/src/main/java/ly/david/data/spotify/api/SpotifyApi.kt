@@ -14,7 +14,7 @@ import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
-import ly.david.data.spotify.api.auth.SpotifyOAuth
+import ly.david.data.spotify.api.auth.SpotifyAuthState
 
 private const val HOST = "api.spotify.com"
 private const val BASE_URL = "https://$HOST/v1/"
@@ -27,7 +27,7 @@ interface SpotifyApi {
             clientId: String,
             clientSecret: String,
             spotifyAuthApi: SpotifyAuthApi,
-            spotifyOAuth: SpotifyOAuth,
+            spotifyAuthState: SpotifyAuthState,
         ): SpotifyApi {
             val client = HttpClient(Android) {
                 install(Logging) {
@@ -43,7 +43,7 @@ interface SpotifyApi {
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            val accessToken = spotifyOAuth.getAccessToken() ?: return@loadTokens null
+                            val accessToken = spotifyAuthState.getAccessToken() ?: return@loadTokens null
                             BearerTokens(accessToken, "")
                         }
                         refreshTokens {
@@ -51,11 +51,11 @@ interface SpotifyApi {
                                 clientId = clientId,
                                 clientSecret = clientSecret,
                             )
-                            spotifyOAuth.saveAccessToken(
+                            spotifyAuthState.saveAccessToken(
                                 accessToken = newAccessToken.accessToken,
                             )
 
-                            val accessToken = spotifyOAuth.getAccessToken() ?: return@refreshTokens null
+                            val accessToken = spotifyAuthState.getAccessToken() ?: return@refreshTokens null
                             BearerTokens(accessToken, "")
                         }
                         sendWithoutRequest { request ->

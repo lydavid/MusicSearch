@@ -24,10 +24,9 @@ import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.MusicBrainzApi
-import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.api.MusicBrainzOAuthInfo
 import ly.david.data.network.resourceUriPlural
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
@@ -80,7 +79,6 @@ internal class TopLevelViewModel @Inject constructor(
     private val musicBrainzApi: MusicBrainzApi,
 
     private val musicBrainzAuthState: MusicBrainzAuthState,
-    private val musicBrainzAuthApi: MusicBrainzAuthApi,
     private val authRequest: AuthorizationRequest,
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication,
@@ -216,10 +214,13 @@ internal class TopLevelViewModel @Inject constructor(
             viewModelScope.launch {
                 val authState = AuthState()
                 authState.update(response, exception)
-                musicBrainzAuthState.setAuthState(authState)
+                musicBrainzAuthState.saveTokens(
+                    accessToken = authState.accessToken.orEmpty(),
+                    refreshToken = authState.refreshToken.orEmpty(),
+                )
 
                 try {
-                    val username = musicBrainzAuthApi.getUserInfo().username ?: return@launch
+                    val username = musicBrainzApi.getUserInfo().username ?: return@launch
                     musicBrainzAuthState.setUsername(username)
                 } catch (ex: Exception) {
                     // TODO: snackbar
@@ -231,10 +232,11 @@ internal class TopLevelViewModel @Inject constructor(
 
     fun logout() {
         viewModelScope.launch {
-            val authState = musicBrainzAuthState.getAuthState() ?: return@launch
+            val refreshToken = musicBrainzAuthState.getRefreshToken()
+            if (refreshToken.isNullOrEmpty()) return@launch
             try {
-                musicBrainzAuthApi.logout(
-                    token = authState.refreshToken.orEmpty(),
+                musicBrainzApi.logout(
+                    token = refreshToken,
                     clientId = musicBrainzOAuthInfo.clientId,
                     clientSecret = musicBrainzOAuthInfo.clientSecret
                 )
@@ -242,7 +244,7 @@ internal class TopLevelViewModel @Inject constructor(
                 // TODO: snackbar
                 Timber.e("$ex")
             } finally {
-                musicBrainzAuthState.setAuthState(null)
+                musicBrainzAuthState.saveTokens("", "")
                 musicBrainzAuthState.setUsername("")
             }
         }

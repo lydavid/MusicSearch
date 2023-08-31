@@ -1,6 +1,6 @@
 package ly.david.data.spotify.api.auth
 
-interface SpotifyOAuth {
+interface SpotifyAuthState {
     fun saveAccessToken(accessToken: String)
     suspend fun getAccessToken(): String?
 }

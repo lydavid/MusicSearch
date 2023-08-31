@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
-import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity

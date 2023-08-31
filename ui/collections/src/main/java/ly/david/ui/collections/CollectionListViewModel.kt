@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.network.api.MusicBrainzApi
