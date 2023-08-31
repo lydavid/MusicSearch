@@ -106,11 +106,7 @@ dependencies {
     kaptTest(libs.hilt.android.compiler)
     testImplementation(libs.hilt.android.testing)
 
-//    implementation(libs.moshi.kotlin)
-
     implementation(libs.okhttp.logging.interceptor)
-
-    implementation(libs.bundles.retrofit)
 
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)

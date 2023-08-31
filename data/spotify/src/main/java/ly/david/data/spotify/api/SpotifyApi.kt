@@ -30,6 +30,8 @@ interface SpotifyApi {
             spotifyAuthState: SpotifyAuthState,
         ): SpotifyApi {
             val client = HttpClient(Android) {
+                expectSuccess = true
+
                 install(Logging) {
                     level = LogLevel.ALL
                 }

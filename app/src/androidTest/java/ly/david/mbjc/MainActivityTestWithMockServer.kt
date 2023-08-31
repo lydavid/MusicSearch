@@ -11,6 +11,7 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Before
 
+// TODO: we seem to be using this just so that we can simulate returning 404
 internal open class MainActivityTestWithMockServer : MainActivityTest() {
 
     @Inject

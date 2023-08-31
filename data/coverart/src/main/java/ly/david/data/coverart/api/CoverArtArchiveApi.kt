@@ -33,6 +33,8 @@ interface CoverArtArchiveApi {
     companion object {
         fun create(): CoverArtArchiveApi {
             val client = HttpClient(Android) {
+                expectSuccess = true
+
                 install(Logging) {
                     level = LogLevel.ALL
                 }

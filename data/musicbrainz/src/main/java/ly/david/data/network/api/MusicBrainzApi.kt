@@ -11,6 +11,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.userAgent
@@ -21,6 +22,8 @@ import ly.david.data.network.RecoverableNetworkException
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
+private const val ACCEPT = "Accept"
+private const val ACCEPT_VALUE = "application/json"
 
 interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzAuthApi {
     companion object {
@@ -41,10 +44,10 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                         }
                     }
                 }
-
                 defaultRequest {
-                    userAgent(USER_AGENT_VALUE)
                     url(MUSIC_BRAINZ_API_BASE_URL)
+                    userAgent(USER_AGENT_VALUE)
+                    header(ACCEPT, ACCEPT_VALUE)
                 }
                 install(Logging) {
                     level = LogLevel.ALL
