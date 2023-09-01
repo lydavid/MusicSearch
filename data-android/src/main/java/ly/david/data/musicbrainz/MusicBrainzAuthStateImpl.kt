@@ -28,6 +28,13 @@ class MusicBrainzAuthStateImpl @Inject constructor(
         return preferences[accessTokenPreference]
     }
 
+    override val accessToken: Flow<String?>
+        get() = preferencesDataStore.data
+            .map {
+                it[accessTokenPreference].orEmpty()
+            }
+            .distinctUntilChanged()
+
     override suspend fun getRefreshToken(): String? {
         val preferences = preferencesDataStore.data.first()
         return preferences[refreshTokenPreference]

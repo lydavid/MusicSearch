@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MusicBrainzAuthState {
     suspend fun getAccessToken(): String?
+    val accessToken: Flow<String?>
     suspend fun getRefreshToken(): String?
     fun saveTokens(accessToken: String, refreshToken: String)
 
