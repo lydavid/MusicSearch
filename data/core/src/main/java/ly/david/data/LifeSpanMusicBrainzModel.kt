@@ -32,15 +32,21 @@ data class LifeSpanUiModel(
 ) : ILifeSpan
 
 fun LifeSpanRoomModel.toLifeSpanUiModel() = LifeSpanUiModel(
-    begin = begin, end = end, ended = ended
+    begin = begin,
+    end = end,
+    ended = ended
 )
 
 fun LifeSpanMusicBrainzModel.toLifeSpanRoomModel() = LifeSpanRoomModel(
-    begin = begin, end = end, ended = ended
+    begin = begin,
+    end = end,
+    ended = ended
 )
 
 fun LifeSpanMusicBrainzModel.toLifeSpanUiModel() = LifeSpanUiModel(
-    begin = begin, end = end, ended = ended
+    begin = begin,
+    end = end,
+    ended = ended
 )
 
 fun ILifeSpan?.getLifeSpanForDisplay(): String {

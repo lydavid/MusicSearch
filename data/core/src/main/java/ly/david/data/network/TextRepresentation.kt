@@ -18,17 +18,17 @@ interface TextRepresentation {
 data class TextRepresentationMusicBrainzModel(
     override val script: String? = null,
     override val language: String? = null,
-): TextRepresentation
+) : TextRepresentation
 
 data class TextRepresentationRoomModel(
     override val script: String?,
     override val language: String?,
-): TextRepresentation
+) : TextRepresentation
 
 data class TextRepresentationUiModel(
     override val script: String?,
     override val language: String?,
-): TextRepresentation
+) : TextRepresentation
 
 fun TextRepresentationMusicBrainzModel.toTextRepresentationRoomModel() = TextRepresentationRoomModel(
     script = script,

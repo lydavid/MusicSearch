@@ -77,8 +77,9 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                             val refreshToken = musicBrainzAuthState.getRefreshToken() ?: return@refreshTokens null
                             BearerTokens(accessToken, refreshToken)
                         }
+                        // TODO: handle collection browse, one way to do it is to split up the
+                        //  api that requires auth and just return true here
 //                        sendWithoutRequest { request ->
-//                            // TODO: handle collection browse, one way to do it is to split up the api that requires auth and just return true here
 //                            request.url.pathSegments.contains(USER_INFO)
 //                        }
                     }

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import kotlinx.serialization.Serializable
 
 interface CoverArtArchive {
-//    @SerialName("darkened") val darkened: Boolean = false,
+    //    @SerialName("darkened") val darkened: Boolean = false,
 //    @SerialName("artwork") val artwork: Boolean = false,
 //    @SerialName("back") val back: Boolean = false,
 //    @SerialName("front") val front: Boolean = false,
@@ -13,17 +13,17 @@ interface CoverArtArchive {
 
 data class CoverArtArchiveUiModel(
     override val count: Int = 0,
-): CoverArtArchive
+) : CoverArtArchive
 
 data class CoverArtArchiveRoomModel(
     @ColumnInfo(name = "cover_art_count")
     override val count: Int = 0,
-): CoverArtArchive
+) : CoverArtArchive
 
 @Serializable
 data class CoverArtArchiveMusicBrainzModel(
     override val count: Int = 0,
-): CoverArtArchive
+) : CoverArtArchive
 
 fun CoverArtArchiveMusicBrainzModel.toCoverArtArchiveRoomModel() = CoverArtArchiveRoomModel(
     count = count,

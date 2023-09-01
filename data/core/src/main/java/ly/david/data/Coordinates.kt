@@ -15,7 +15,7 @@ interface Coordinates {
 data class CoordinatesRoomModel(
     override val longitude: Double?,
     override val latitude: Double?,
-): Coordinates
+) : Coordinates
 
 fun CoordinatesRoomModel.toCoordinatesUiModel() = CoordinatesUiModel(
     longitude = longitude,
@@ -30,13 +30,13 @@ fun CoordinatesMusicBrainzModel.toCoordinatesRoomModel() = CoordinatesRoomModel(
 data class CoordinatesUiModel(
     override val longitude: Double?,
     override val latitude: Double?,
-): Coordinates
+) : Coordinates
 
 @Serializable
 data class CoordinatesMusicBrainzModel(
     override val longitude: Double? = null,
     override val latitude: Double? = null,
-): Coordinates
+) : Coordinates
 
 /**
  * Turns [Coordinates] to this format: 40.76688°N, 73.98905°W

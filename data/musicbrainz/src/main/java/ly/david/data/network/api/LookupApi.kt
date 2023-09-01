@@ -144,7 +144,7 @@ interface LookupApi {
     ): WorkMusicBrainzModel
 }
 
-interface LookupApiImpl: LookupApi {
+interface LookupApiImpl : LookupApi {
     val httpClient: HttpClient
 
     override suspend fun lookupArea(areaId: String, include: String?): AreaMusicBrainzModel {

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty

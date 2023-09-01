@@ -5,7 +5,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.CoordinatesRoomModel
-import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.LifeSpanRoomModel
 import ly.david.data.Place
 import ly.david.data.network.PlaceMusicBrainzModel

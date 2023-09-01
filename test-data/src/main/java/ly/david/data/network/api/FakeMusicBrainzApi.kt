@@ -292,7 +292,8 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
-        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId } ?: throw RecoverableNetworkException(message = "")
+        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId }
+            ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
