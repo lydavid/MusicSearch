@@ -3,33 +3,30 @@ package ly.david.data
 import kotlinx.serialization.Serializable
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 
-interface ILifeSpan {
+interface LifeSpan {
     val begin: String?
     val end: String?
     val ended: Boolean?
 }
 
-/**
- * Used by both network and persistence models.
- */
 @Serializable
 data class LifeSpanMusicBrainzModel(
     override val begin: String? = null,
     override val end: String? = null,
     override val ended: Boolean? = null,
-) : ILifeSpan
+) : LifeSpan
 
 data class LifeSpanRoomModel(
     override val begin: String?,
     override val end: String?,
     override val ended: Boolean?,
-) : ILifeSpan
+) : LifeSpan
 
 data class LifeSpanUiModel(
     override val begin: String? = null,
     override val end: String? = null,
     override val ended: Boolean? = null,
-) : ILifeSpan
+) : LifeSpan
 
 fun LifeSpanRoomModel.toLifeSpanUiModel() = LifeSpanUiModel(
     begin = begin,
@@ -49,7 +46,7 @@ fun LifeSpanMusicBrainzModel.toLifeSpanUiModel() = LifeSpanUiModel(
     ended = ended
 )
 
-fun ILifeSpan?.getLifeSpanForDisplay(): String {
+fun LifeSpan?.getLifeSpanForDisplay(): String {
     if (this == null) return ""
     val begin = begin.orEmpty()
     val end = if (begin == end) {

@@ -3,10 +3,6 @@ package ly.david.data
 import kotlin.math.abs
 import kotlinx.serialization.Serializable
 
-/**
- * Used by both network and persistence models.
- * Because it's embedded, all of its fields should be nullable.
- */
 interface Coordinates {
     val longitude: Double?
     val latitude: Double?

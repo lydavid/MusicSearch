@@ -7,5 +7,5 @@ interface Event : NameWithDisambiguation {
     val type: String?
     val time: String?
     val cancelled: Boolean?
-    val lifeSpan: ILifeSpan?
+    val lifeSpan: LifeSpan?
 }

@@ -6,7 +6,7 @@ interface Area : NameWithDisambiguation {
     val sortName: String
     override val disambiguation: String?
     val type: String?
-    val lifeSpan: ILifeSpan?
+    val lifeSpan: LifeSpan?
 
     // val isoCodes: List<String>?
 }

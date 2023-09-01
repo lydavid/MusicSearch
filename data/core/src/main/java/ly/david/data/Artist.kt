@@ -14,5 +14,5 @@ interface Artist : NameWithDisambiguation {
     val gender: String?
     val countryCode: String?
 
-    val lifeSpan: ILifeSpan?
+    val lifeSpan: LifeSpan?
 }

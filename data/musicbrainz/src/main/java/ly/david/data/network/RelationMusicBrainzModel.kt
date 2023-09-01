@@ -2,7 +2,7 @@ package ly.david.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.ILifeSpan
+import ly.david.data.LifeSpan
 
 @Serializable
 data class RelationMusicBrainzModel(
@@ -41,7 +41,7 @@ data class RelationMusicBrainzModel(
     @SerialName("series") val series: SeriesMusicBrainzModel? = null,
     @SerialName("work") val work: WorkMusicBrainzModel? = null,
     @SerialName("url") val url: UrlMusicBrainzModel? = null,
-) : ILifeSpan
+) : LifeSpan
 
 enum class Direction {
     @SerialName("backward")
