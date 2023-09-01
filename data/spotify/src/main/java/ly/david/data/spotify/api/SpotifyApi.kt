@@ -53,11 +53,12 @@ interface SpotifyApi {
                                 clientId = clientId,
                                 clientSecret = clientSecret,
                             )
+
+                            val accessToken = newAccessToken.accessToken
                             spotifyAuthState.saveAccessToken(
-                                accessToken = newAccessToken.accessToken,
+                                accessToken = accessToken,
                             )
 
-                            val accessToken = spotifyAuthState.getAccessToken() ?: return@refreshTokens null
                             BearerTokens(accessToken, "")
                         }
                         sendWithoutRequest { true }
