@@ -1,9 +1,10 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.Artist
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.room.artist.ArtistRoomModel
+import ly.david.data.toLifeSpanUiModel
 
 data class ArtistListItemModel(
     override val id: String,
@@ -13,7 +14,7 @@ data class ArtistListItemModel(
     override val type: String? = null,
     override val gender: String? = null,
     override val countryCode: String? = null,
-    override val lifeSpan: LifeSpan? = null,
+    override val lifeSpan: LifeSpanUiModel? = null,
 ) : ListItemModel(), Artist
 
 fun ArtistMusicBrainzModel.toArtistListItemModel() =
@@ -25,7 +26,7 @@ fun ArtistMusicBrainzModel.toArtistListItemModel() =
         type = type,
         gender = gender,
         countryCode = countryCode,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan?.toLifeSpanUiModel()
     )
 
 fun ArtistRoomModel.toArtistListItemModel() =
@@ -37,5 +38,5 @@ fun ArtistRoomModel.toArtistListItemModel() =
         type = type,
         gender = gender,
         countryCode = countryCode,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan?.toLifeSpanUiModel()
     )

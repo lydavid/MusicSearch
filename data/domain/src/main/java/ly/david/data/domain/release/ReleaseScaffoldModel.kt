@@ -13,8 +13,10 @@ import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.listitem.toReleaseGroupListItemModel
 import ly.david.data.getFormatsForDisplay
 import ly.david.data.getTracksForDisplay
-import ly.david.data.network.CoverArtArchive
-import ly.david.data.network.TextRepresentation
+import ly.david.data.network.CoverArtArchiveUiModel
+import ly.david.data.network.TextRepresentationUiModel
+import ly.david.data.network.toCoverArtArchiveUiModel
+import ly.david.data.network.toTextRepresentationUiModel
 import ly.david.data.room.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
@@ -31,8 +33,8 @@ data class ReleaseScaffoldModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
-    override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
-    override val textRepresentation: TextRepresentation? = null,
+    override val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
+    override val textRepresentation: TextRepresentationUiModel? = null,
     val imageUrl: String? = null,
 
     val formattedFormats: String? = null,
@@ -62,8 +64,8 @@ internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
     packagingId = release.packagingId,
     asin = release.asin,
     quality = release.quality,
-    coverArtArchive = release.coverArtArchive,
-    textRepresentation = release.textRepresentation,
+    coverArtArchive = release.coverArtArchive.toCoverArtArchiveUiModel(),
+    textRepresentation = release.textRepresentation?.toTextRepresentationUiModel(),
     formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     imageUrl = largeUrl,

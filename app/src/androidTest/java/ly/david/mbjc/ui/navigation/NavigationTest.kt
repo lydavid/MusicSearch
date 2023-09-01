@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
@@ -21,14 +21,12 @@ import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class NavigationTest : MainActivityTestWithMockServer(), StringReferences {
+internal class NavigationTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 
     @Before
-    override fun setupApp() {
-        super.setupApp()
-
+    fun setupApp() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

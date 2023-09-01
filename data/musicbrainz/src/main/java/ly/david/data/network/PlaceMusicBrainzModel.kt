@@ -1,20 +1,22 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
-import ly.david.data.Coordinates
-import ly.david.data.LifeSpan
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import ly.david.data.CoordinatesMusicBrainzModel
+import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.Place
 
+@Serializable
 data class PlaceMusicBrainzModel(
-    @Json(name = "id") override val id: String,
-    @Json(name = "name") override val name: String,
-    @Json(name = "disambiguation") override val disambiguation: String? = null,
-    @Json(name = "address") override val address: String = "",
-    @Json(name = "type") override val type: String? = null,
-    @Json(name = "type-id") val typeId: String? = null,
-    @Json(name = "coordinates") override val coordinates: Coordinates? = null,
-    @Json(name = "life-span") override val lifeSpan: LifeSpan? = null,
+    @SerialName("id") override val id: String,
+    @SerialName("name") override val name: String,
+    @SerialName("disambiguation") override val disambiguation: String? = null,
+    @SerialName("address") override val address: String = "",
+    @SerialName("type") override val type: String? = null,
+    @SerialName("type-id") val typeId: String? = null,
+    @SerialName("coordinates") override val coordinates: CoordinatesMusicBrainzModel? = null,
+    @SerialName("life-span") override val lifeSpan: LifeSpanMusicBrainzModel? = null,
 
-    @Json(name = "area") val area: AreaMusicBrainzModel? = null,
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("area") val area: AreaMusicBrainzModel? = null,
+    @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Place

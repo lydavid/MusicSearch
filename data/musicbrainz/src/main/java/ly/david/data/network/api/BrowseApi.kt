@@ -1,7 +1,12 @@
 package ly.david.data.network.api
 
-import com.squareup.moshi.Json
-import ly.david.data.AUTHORIZATION
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
+import io.ktor.http.appendPathSegments
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.CollectionMusicBrainzModel
@@ -15,9 +20,6 @@ import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.WorkMusicBrainzModel
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
 
 internal const val LABELS = "labels"
 
@@ -29,167 +31,459 @@ internal const val LABELS = "labels"
  */
 interface BrowseApi {
 
-    @GET("area")
     suspend fun browseAreasByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseAreasResponse
 
-    @GET("artist")
     suspend fun browseArtistsByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseArtistsResponse
 
-    @GET("collection")
     suspend fun browseCollectionsByUser(
-        @Query("editor") username: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-        @Query("inc") include: String? = null,
+        username: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String? = null,
     ): BrowseCollectionsResponse
 
-    @GET("event")
     suspend fun browseEventsByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseEventsResponse
 
-    @GET("event")
     suspend fun browseEventsByPlace(
-        @Query("place") placeId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        placeId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseEventsResponse
 
-    @GET("instrument")
     suspend fun browseInstrumentsByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseInstrumentsResponse
 
-    @GET("label")
     suspend fun browseLabelsByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseLabelsResponse
 
-    @GET("place")
     suspend fun browsePlacesByArea(
-        @Query("area") areaId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        areaId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowsePlacesResponse
 
-    @GET("place")
     suspend fun browsePlacesByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowsePlacesResponse
 
-    @GET("recording")
     suspend fun browseRecordingsByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseRecordingsResponse
 
-    @GET("recording")
     suspend fun browseRecordingsByWork(
-        @Query("work") workId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        workId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseRecordingsResponse
 
-    @GET("release")
     suspend fun browseReleasesByArea(
-        @Query("area") areaId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        areaId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseReleasesResponse
 
-    @GET("release")
     suspend fun browseReleasesByArtist(
-        @Query("artist") artistId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        artistId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseReleasesResponse
 
-    @GET("release")
     suspend fun browseReleasesByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseReleasesResponse
 
-    @GET("release")
     suspend fun browseReleasesByLabel(
-        @Query("label") labelId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = LABELS,
+        labelId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String = LABELS,
     ): BrowseReleasesResponse
 
-    @GET("release")
     suspend fun browseReleasesByRecording(
-        @Query("recording") recordingId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        recordingId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseReleasesResponse
 
-    @GET("release")
     suspend fun browseReleasesByReleaseGroup(
-        @Query("release-group") releaseGroupId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        releaseGroupId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseReleasesResponse
 
-    @GET("release-group")
     suspend fun browseReleaseGroupsByArtist(
-        @Query("artist") artistId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = "artist-credits",
+        artistId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String = "artist-credits",
     ): BrowseReleaseGroupsResponse
 
-    @GET("release-group")
     suspend fun browseReleaseGroupsByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
-        @Query("inc") include: String = "artist-credits",
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
+        include: String = "artist-credits",
     ): BrowseReleaseGroupsResponse
 
-    @GET("series")
     suspend fun browseSeriesByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseSeriesResponse
 
-    @GET("work")
     suspend fun browseWorksByCollection(
-        @Header(AUTHORIZATION) bearerToken: String? = null,
-        @Query("collection") collectionId: String,
-        @Query("limit") limit: Int = SEARCH_BROWSE_LIMIT,
-        @Query("offset") offset: Int = 0,
+        collectionId: String,
+        limit: Int = SEARCH_BROWSE_LIMIT,
+        offset: Int = 0,
     ): BrowseWorksResponse
+}
+
+interface BrowseApiImpl : BrowseApi {
+    val httpClient: HttpClient
+
+    override suspend fun browseAreasByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseAreasResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("area")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseArtistsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseArtistsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("artist")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseCollectionsByUser(
+        username: String,
+        limit: Int,
+        offset: Int,
+        include: String?,
+    ): BrowseCollectionsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("collection")
+                parameter("editor", username)
+                parameter("limit", limit)
+                parameter("offset", offset)
+                parameter("inc", include)
+            }
+        }.body()
+    }
+
+    override suspend fun browseEventsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseEventsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("event")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseEventsByPlace(
+        placeId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseEventsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("event")
+                parameter("place", placeId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseInstrumentsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseInstrumentsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("instrument")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseLabelsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseLabelsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("label")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browsePlacesByArea(
+        areaId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowsePlacesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("place")
+                parameter("area", areaId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browsePlacesByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowsePlacesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("place")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseRecordingsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseRecordingsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("recording")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseRecordingsByWork(
+        workId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseRecordingsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("recording")
+                parameter("work", workId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleasesByArea(
+        areaId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseReleasesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release")
+                parameter("area", areaId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleasesByArtist(
+        artistId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseReleasesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release")
+                parameter("artist", artistId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleasesByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseReleasesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleasesByLabel(
+        labelId: String,
+        limit: Int,
+        offset: Int,
+        include: String,
+    ): BrowseReleasesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release")
+                parameter("label", labelId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleasesByRecording(
+        recordingId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseReleasesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release")
+                parameter("recording", recordingId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleasesByReleaseGroup(
+        releaseGroupId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseReleasesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release")
+                parameter("release-group", releaseGroupId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleaseGroupsByArtist(
+        artistId: String,
+        limit: Int,
+        offset: Int,
+        include: String,
+    ): BrowseReleaseGroupsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release-group")
+                parameter("artist", artistId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseReleaseGroupsByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+        include: String,
+    ): BrowseReleaseGroupsResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("release-group")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseSeriesByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseSeriesResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("series")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
+
+    override suspend fun browseWorksByCollection(
+        collectionId: String,
+        limit: Int,
+        offset: Int,
+    ): BrowseWorksResponse {
+        return httpClient.get {
+            url {
+                appendPathSegments("work")
+                parameter("collection", collectionId)
+                parameter("limit", limit)
+                parameter("offset", offset)
+            }
+        }.body()
+    }
 }
 
 /**
@@ -201,74 +495,86 @@ interface Browsable<MM : MusicBrainzModel> {
     val musicBrainzModels: List<MM>
 }
 
+@Serializable
 data class BrowseAreasResponse(
-    @Json(name = "area-count") override val count: Int,
-    @Json(name = "area-offset") override val offset: Int,
-    @Json(name = "areas") override val musicBrainzModels: List<AreaMusicBrainzModel>,
+    @SerialName("area-count") override val count: Int,
+    @SerialName("area-offset") override val offset: Int,
+    @SerialName("areas") override val musicBrainzModels: List<AreaMusicBrainzModel>,
 ) : Browsable<AreaMusicBrainzModel>
 
+@Serializable
 data class BrowseArtistsResponse(
-    @Json(name = "artist-count") override val count: Int,
-    @Json(name = "artist-offset") override val offset: Int,
-    @Json(name = "artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>,
+    @SerialName("artist-count") override val count: Int,
+    @SerialName("artist-offset") override val offset: Int,
+    @SerialName("artists") override val musicBrainzModels: List<ArtistMusicBrainzModel>,
 ) : Browsable<ArtistMusicBrainzModel>
 
+@Serializable
 data class BrowseCollectionsResponse(
-    @Json(name = "collection-count") override val count: Int,
-    @Json(name = "collection-offset") override val offset: Int,
-    @Json(name = "collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
+    @SerialName("collection-count") override val count: Int,
+    @SerialName("collection-offset") override val offset: Int,
+    @SerialName("collections") override val musicBrainzModels: List<CollectionMusicBrainzModel>,
 ) : Browsable<CollectionMusicBrainzModel>
 
+@Serializable
 data class BrowseEventsResponse(
-    @Json(name = "event-count") override val count: Int,
-    @Json(name = "event-offset") override val offset: Int,
-    @Json(name = "events") override val musicBrainzModels: List<EventMusicBrainzModel>,
+    @SerialName("event-count") override val count: Int,
+    @SerialName("event-offset") override val offset: Int,
+    @SerialName("events") override val musicBrainzModels: List<EventMusicBrainzModel>,
 ) : Browsable<EventMusicBrainzModel>
 
+@Serializable
 data class BrowseInstrumentsResponse(
-    @Json(name = "instrument-count") override val count: Int,
-    @Json(name = "instrument-offset") override val offset: Int,
-    @Json(name = "instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>,
+    @SerialName("instrument-count") override val count: Int,
+    @SerialName("instrument-offset") override val offset: Int,
+    @SerialName("instruments") override val musicBrainzModels: List<InstrumentMusicBrainzModel>,
 ) : Browsable<InstrumentMusicBrainzModel>
 
+@Serializable
 data class BrowseLabelsResponse(
-    @Json(name = "label-count") override val count: Int,
-    @Json(name = "label-offset") override val offset: Int,
-    @Json(name = "labels") override val musicBrainzModels: List<LabelMusicBrainzModel>,
+    @SerialName("label-count") override val count: Int,
+    @SerialName("label-offset") override val offset: Int,
+    @SerialName("labels") override val musicBrainzModels: List<LabelMusicBrainzModel>,
 ) : Browsable<LabelMusicBrainzModel>
 
+@Serializable
 data class BrowsePlacesResponse(
-    @Json(name = "place-count") override val count: Int,
-    @Json(name = "place-offset") override val offset: Int,
-    @Json(name = "places") override val musicBrainzModels: List<PlaceMusicBrainzModel>,
+    @SerialName("place-count") override val count: Int,
+    @SerialName("place-offset") override val offset: Int,
+    @SerialName("places") override val musicBrainzModels: List<PlaceMusicBrainzModel>,
 ) : Browsable<PlaceMusicBrainzModel>
 
+@Serializable
 data class BrowseRecordingsResponse(
-    @Json(name = "recording-count") override val count: Int,
-    @Json(name = "recording-offset") override val offset: Int,
-    @Json(name = "recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>,
+    @SerialName("recording-count") override val count: Int,
+    @SerialName("recording-offset") override val offset: Int,
+    @SerialName("recordings") override val musicBrainzModels: List<RecordingMusicBrainzModel>,
 ) : Browsable<RecordingMusicBrainzModel>
 
+@Serializable
 data class BrowseReleasesResponse(
-    @Json(name = "release-count") override val count: Int,
-    @Json(name = "release-offset") override val offset: Int,
-    @Json(name = "releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>,
+    @SerialName("release-count") override val count: Int,
+    @SerialName("release-offset") override val offset: Int,
+    @SerialName("releases") override val musicBrainzModels: List<ReleaseMusicBrainzModel>,
 ) : Browsable<ReleaseMusicBrainzModel>
 
+@Serializable
 data class BrowseReleaseGroupsResponse(
-    @Json(name = "release-group-count") override val count: Int,
-    @Json(name = "release-group-offset") override val offset: Int,
-    @Json(name = "release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
+    @SerialName("release-group-count") override val count: Int,
+    @SerialName("release-group-offset") override val offset: Int,
+    @SerialName("release-groups") override val musicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
 ) : Browsable<ReleaseGroupMusicBrainzModel>
 
+@Serializable
 data class BrowseSeriesResponse(
-    @Json(name = "series-count") override val count: Int,
-    @Json(name = "series-offset") override val offset: Int,
-    @Json(name = "series") override val musicBrainzModels: List<SeriesMusicBrainzModel>,
+    @SerialName("series-count") override val count: Int,
+    @SerialName("series-offset") override val offset: Int,
+    @SerialName("series") override val musicBrainzModels: List<SeriesMusicBrainzModel>,
 ) : Browsable<SeriesMusicBrainzModel>
 
+@Serializable
 data class BrowseWorksResponse(
-    @Json(name = "work-count") override val count: Int,
-    @Json(name = "work-offset") override val offset: Int,
-    @Json(name = "works") override val musicBrainzModels: List<WorkMusicBrainzModel>,
+    @SerialName("work-count") override val count: Int,
+    @SerialName("work-offset") override val offset: Int,
+    @SerialName("works") override val musicBrainzModels: List<WorkMusicBrainzModel>,
 ) : Browsable<WorkMusicBrainzModel>

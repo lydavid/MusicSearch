@@ -9,14 +9,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ly.david.data.common.ApplicationScope
-import ly.david.data.spotify.api.auth.SpotifyOAuth
+import ly.david.data.spotify.api.auth.SpotifyAuthState
 
 private val accessTokenPreference = stringPreferencesKey("SPOTIFY_ACCESS_TOKEN_KEY")
 
-class SpotifyOAuthImpl @Inject constructor(
+class SpotifyAuthStateImpl @Inject constructor(
     private val preferencesDataStore: DataStore<Preferences>,
     @ApplicationScope private val coroutineScope: CoroutineScope,
-) : SpotifyOAuth {
+) : SpotifyAuthState {
 
     override fun saveAccessToken(accessToken: String) {
         coroutineScope.launch {

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNull
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.EventListItemModel
@@ -76,7 +76,7 @@ internal class EventPreviewParameterProvider : PreviewParameterProvider<EventLis
             disambiguation = "“Where It’s At: The Rolling Stone State Of The Union”, " +
                 "a Rolling Stone Magazine 30th anniversary special",
             type = null,
-            lifeSpan = LifeSpan(
+            lifeSpan = LifeSpanUiModel(
                 begin = "1998-01-22",
                 end = "1998-01-22",
                 ended = true

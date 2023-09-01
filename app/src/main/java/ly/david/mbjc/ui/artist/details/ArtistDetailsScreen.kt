@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.network.MusicBrainzEntity
@@ -111,7 +111,7 @@ private fun Preview() {
                     id = "b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d",
                     name = "The Beatles",
                     type = "Group",
-                    lifeSpan = LifeSpan(
+                    lifeSpan = LifeSpanUiModel(
                         begin = "1960",
                         end = "1970-04-10",
                         ended = true

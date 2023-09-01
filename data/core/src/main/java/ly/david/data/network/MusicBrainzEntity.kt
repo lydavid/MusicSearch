@@ -1,6 +1,7 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 const val RESOURCE_AREA = "area"
 const val RESOURCE_ARTIST = "artist"
@@ -35,52 +36,53 @@ private const val PLURAL_RESOURCE_URL = "urls"
 /**
  * These are entities available for lookup requests.
  */
+@Serializable
 enum class MusicBrainzEntity {
-    @Json(name = "area")
+    @SerialName("area")
     AREA,
 
-    @Json(name = "artist")
+    @SerialName("artist")
     ARTIST,
 
     // Non-core
-    @Json(name = "collection")
+    @SerialName("collection")
     COLLECTION,
 
-    @Json(name = "event")
+    @SerialName("event")
     EVENT,
 
     // Not searchable, but lookupable
-    @Json(name = "genre")
+    @SerialName("genre")
     GENRE,
 
-    @Json(name = "instrument")
+    @SerialName("instrument")
     INSTRUMENT,
 
-    @Json(name = "label")
+    @SerialName("label")
     LABEL,
 
-    @Json(name = "place")
+    @SerialName("place")
     PLACE,
 
-    @Json(name = "recording")
+    @SerialName("recording")
     RECORDING,
 
-    @Json(name = "release")
+    @SerialName("release")
     RELEASE,
 
     // Note that target-type uses release_group, while uri uses release-group.
     // For our internal resource, we will use release-group.
-    @Json(name = "release_group")
+    @SerialName("release_group")
     RELEASE_GROUP,
 
-    @Json(name = "series")
+    @SerialName("series")
     SERIES,
 
-    @Json(name = "work")
+    @SerialName("work")
     WORK,
 
     // Not searchable, but lookupable
-    @Json(name = "url")
+    @SerialName("url")
     URL,
 
     // Other searchable: annotation, tag, cd stub, editor, documentation

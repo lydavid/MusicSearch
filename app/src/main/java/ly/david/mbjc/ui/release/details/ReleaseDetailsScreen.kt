@@ -21,7 +21,7 @@ import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.getDisplayTypes
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.TextRepresentation
+import ly.david.data.network.TextRepresentationUiModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
@@ -215,7 +215,7 @@ private fun Preview() {
                     packaging = "Box",
                     asin = "B12341234",
                     quality = "normal",
-                    textRepresentation = TextRepresentation(
+                    textRepresentation = TextRepresentationUiModel(
                         script = "Latn",
                         language = "eng"
                     ),

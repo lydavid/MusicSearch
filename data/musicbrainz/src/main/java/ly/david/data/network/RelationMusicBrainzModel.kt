@@ -1,51 +1,53 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
-import ly.david.data.ILifeSpan
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import ly.david.data.LifeSpan
 
+@Serializable
 data class RelationMusicBrainzModel(
 
     // As long as type is unique, we can match its name, rather than type-id, since its name is more accessible to us
     //  though we have to search up its forward/reverse link phrase anyways, which gives us its type-id.
     //  Maybe we should just use that for future proofing.
-    @Json(name = "type") val type: String,
-    @Json(name = "type-id") val typeId: String,
+    @SerialName("type") val type: String,
+    @SerialName("type-id") val typeId: String,
 
     // TODO: we should order with backward relations first
-    @Json(name = "direction") val direction: Direction,
+    @SerialName("direction") val direction: Direction,
 
-    @Json(name = "target-type") val targetType: MusicBrainzEntity?,
+    @SerialName("target-type") val targetType: MusicBrainzEntity? = null,
 
     // prefer this credit over object's name if it exists
-    @Json(name = "target-credit") val targetCredit: String? = null,
+    @SerialName("target-credit") val targetCredit: String? = null,
 
-    @Json(name = "attributes") val attributes: List<String>? = null, // strings, task
-    @Json(name = "attribute-values") val attributeValues: AttributeValue? = null, // "director & organizer"
+    @SerialName("attributes") val attributes: List<String>? = null, // strings, task
+    @SerialName("attribute-values") val attributeValues: AttributeValue? = null, // "director & organizer"
 
-    @Json(name = "begin") override val begin: String? = null,
-    @Json(name = "end") override val end: String? = null,
-    @Json(name = "ended") override val ended: Boolean? = null,
+    @SerialName("begin") override val begin: String? = null,
+    @SerialName("end") override val end: String? = null,
+    @SerialName("ended") override val ended: Boolean? = null,
 
-    @Json(name = "area") val area: AreaMusicBrainzModel? = null,
-    @Json(name = "artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
-    @Json(name = "event") val event: EventMusicBrainzModel? = null,
-    @Json(name = "genre") val genre: GenreMusicBrainzModel? = null,
-    @Json(name = "instrument") val instrument: InstrumentMusicBrainzModel? = null,
-    @Json(name = "label") val label: LabelMusicBrainzModel? = null,
-    @Json(name = "place") val place: PlaceMusicBrainzModel? = null,
-    @Json(name = "recording") val recording: RecordingMusicBrainzModel? = null,
-    @Json(name = "release") val release: ReleaseMusicBrainzModel? = null,
-    @Json(name = "release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
-    @Json(name = "series") val series: SeriesMusicBrainzModel? = null,
-    @Json(name = "work") val work: WorkMusicBrainzModel? = null,
-    @Json(name = "url") val url: UrlMusicBrainzModel? = null,
-) : ILifeSpan
+    @SerialName("area") val area: AreaMusicBrainzModel? = null,
+    @SerialName("artist") val artist: ArtistMusicBrainzModel? = null, // could be composer, arranger, etc
+    @SerialName("event") val event: EventMusicBrainzModel? = null,
+    @SerialName("genre") val genre: GenreMusicBrainzModel? = null,
+    @SerialName("instrument") val instrument: InstrumentMusicBrainzModel? = null,
+    @SerialName("label") val label: LabelMusicBrainzModel? = null,
+    @SerialName("place") val place: PlaceMusicBrainzModel? = null,
+    @SerialName("recording") val recording: RecordingMusicBrainzModel? = null,
+    @SerialName("release") val release: ReleaseMusicBrainzModel? = null,
+    @SerialName("release_group") val releaseGroup: ReleaseGroupMusicBrainzModel? = null,
+    @SerialName("series") val series: SeriesMusicBrainzModel? = null,
+    @SerialName("work") val work: WorkMusicBrainzModel? = null,
+    @SerialName("url") val url: UrlMusicBrainzModel? = null,
+) : LifeSpan
 
 enum class Direction {
-    @Json(name = "backward")
+    @SerialName("backward")
     BACKWARD,
 
-    @Json(name = "forward")
+    @SerialName("forward")
     FORWARD,
 }
 
@@ -53,14 +55,15 @@ enum class Direction {
 // TODO: add the rest of relationship attributes
 //  there isn't actually that many of them
 //  https://musicbrainz.org/relationship-attributes
+@Serializable
 data class AttributeValue(
 
     /**
      * https://musicbrainz.org/relationship/68330a36-44cf-4fa2-84e8-533c6fe3fc23
      */
-    @Json(name = "task")
+    @SerialName("task")
     val task: String? = null,
 
-    @Json(name = "number")
+    @SerialName("number")
     val number: String? = null,
 )

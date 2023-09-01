@@ -2,8 +2,6 @@ package ly.david.ui.collections.releasegroups
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
@@ -22,7 +20,6 @@ internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
     private val relationDao: RelationDao,
     releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
-    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : ReleaseGroupsByEntityViewModel(
     relationDao = relationDao,
     releaseGroupDao = releaseGroupDao,
@@ -31,7 +28,6 @@ internal class ReleaseGroupsByCollectionViewModel @Inject constructor(
 
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
         return musicBrainzApi.browseReleaseGroupsByCollection(
-            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )

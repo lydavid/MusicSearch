@@ -8,5 +8,5 @@ eg. `@ColumnInfo(name = "type_id") val typeId: String`
 
 For api fields, we obviously have to use whatever they named it.
 
-eg. `@Json(name = "type-id") val typeId: String`
+eg. `@SerialName("type-id") val typeId: String`
 

@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.area.AreaScaffoldModel
 import ly.david.data.network.MusicBrainzEntity
@@ -75,7 +75,7 @@ internal fun PreviewAreaDetailsScreen() {
                     id = "88f49821-05a3-3bbc-a24b-bbd6b918c07b",
                     name = "Czechoslovakia",
                     type = "Country",
-                    lifeSpan = LifeSpan(
+                    lifeSpan = LifeSpanUiModel(
                         begin = "1918-10-28",
                         end = "1992-12-31",
                         ended = true

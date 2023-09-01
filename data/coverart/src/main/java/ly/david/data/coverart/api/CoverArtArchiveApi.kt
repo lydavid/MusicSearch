@@ -2,7 +2,7 @@ package ly.david.data.coverart.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -31,8 +31,12 @@ interface CoverArtArchiveApi {
     suspend fun getReleaseGroupCoverArts(releaseGroupId: String): CoverArtsResponse
 
     companion object {
-        fun create(): CoverArtArchiveApi {
-            val client = HttpClient(Android) {
+        fun create(
+            engine: HttpClientEngine,
+        ): CoverArtArchiveApi {
+            val client = HttpClient(engine) {
+                expectSuccess = true
+
                 install(Logging) {
                     level = LogLevel.ALL
                 }

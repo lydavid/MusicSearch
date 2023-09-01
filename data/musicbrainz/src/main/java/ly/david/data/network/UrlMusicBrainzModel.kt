@@ -1,15 +1,17 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.Identifiable
 
+@Serializable
 data class UrlMusicBrainzModel(
 
     // Don't plan to store locally
-    @Json(name = "id") override val id: String,
+    @SerialName("id") override val id: String,
 
     /**
      * The url itself.
      */
-    @Json(name = "resource") val resource: String,
+    @SerialName("resource") val resource: String,
 ) : Identifiable

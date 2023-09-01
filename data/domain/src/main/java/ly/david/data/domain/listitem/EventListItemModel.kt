@@ -1,9 +1,10 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.Event
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.room.event.EventRoomModel
+import ly.david.data.toLifeSpanUiModel
 
 data class EventListItemModel(
     override val id: String,
@@ -12,7 +13,7 @@ data class EventListItemModel(
     override val type: String? = null,
     override val time: String? = null,
     override val cancelled: Boolean? = null,
-    override val lifeSpan: LifeSpan? = null,
+    override val lifeSpan: LifeSpanUiModel? = null,
 ) : Event, ListItemModel()
 
 fun EventMusicBrainzModel.toEventListItemModel() =
@@ -23,7 +24,7 @@ fun EventMusicBrainzModel.toEventListItemModel() =
         type = type,
         time = time,
         cancelled = cancelled,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan?.toLifeSpanUiModel()
     )
 
 fun EventRoomModel.toEventListItemModel() =
@@ -34,5 +35,5 @@ fun EventRoomModel.toEventListItemModel() =
         type = type,
         time = time,
         cancelled = cancelled,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan?.toLifeSpanUiModel()
     )

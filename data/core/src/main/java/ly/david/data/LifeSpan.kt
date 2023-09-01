@@ -1,36 +1,52 @@
 package ly.david.data
 
-import androidx.room.ColumnInfo
-import com.squareup.moshi.Json
+import kotlinx.serialization.Serializable
 import ly.david.data.common.transformThisIfNotNullOrEmpty
 
-interface ILifeSpan {
+interface LifeSpan {
     val begin: String?
     val end: String?
     val ended: Boolean?
 }
 
-/**
- * Used by both network and persistence models.
- */
-data class LifeSpan(
-    @ColumnInfo(name = "begin")
-    @Json(name = "begin")
+@Serializable
+data class LifeSpanMusicBrainzModel(
     override val begin: String? = null,
-
-    @ColumnInfo(name = "end")
-    @Json(name = "end")
     override val end: String? = null,
-
-    /**
-     * Despite SQL saying non-null, this could actually be null.
-     */
-    @ColumnInfo(name = "ended")
-    @Json(name = "ended")
     override val ended: Boolean? = null,
-) : ILifeSpan
+) : LifeSpan
 
-fun ILifeSpan?.getLifeSpanForDisplay(): String {
+data class LifeSpanRoomModel(
+    override val begin: String?,
+    override val end: String?,
+    override val ended: Boolean?,
+) : LifeSpan
+
+data class LifeSpanUiModel(
+    override val begin: String? = null,
+    override val end: String? = null,
+    override val ended: Boolean? = null,
+) : LifeSpan
+
+fun LifeSpanRoomModel.toLifeSpanUiModel() = LifeSpanUiModel(
+    begin = begin,
+    end = end,
+    ended = ended
+)
+
+fun LifeSpanMusicBrainzModel.toLifeSpanRoomModel() = LifeSpanRoomModel(
+    begin = begin,
+    end = end,
+    ended = ended
+)
+
+fun LifeSpanMusicBrainzModel.toLifeSpanUiModel() = LifeSpanUiModel(
+    begin = begin,
+    end = end,
+    ended = ended
+)
+
+fun LifeSpan?.getLifeSpanForDisplay(): String {
     if (this == null) return ""
     val begin = begin.orEmpty()
     val end = if (begin == end) {

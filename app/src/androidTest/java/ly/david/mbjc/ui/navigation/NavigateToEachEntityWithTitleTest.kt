@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toFakeMusicBrainzModel
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -20,8 +20,9 @@ import org.junit.runners.Parameterized
 
 @HiltAndroidTest
 @RunWith(Parameterized::class)
-internal class NavigateToEachEntityWithTitleTest(private val entity: MusicBrainzEntity) :
-    MainActivityTestWithMockServer() {
+internal class NavigateToEachEntityWithTitleTest(
+    private val entity: MusicBrainzEntity,
+) : MainActivityTest() {
 
     companion object {
         @JvmStatic
@@ -36,9 +37,7 @@ internal class NavigateToEachEntityWithTitleTest(private val entity: MusicBrainz
     private lateinit var navController: NavHostController
 
     @Before
-    override fun setupApp() {
-        super.setupApp()
-
+    fun setupApp() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

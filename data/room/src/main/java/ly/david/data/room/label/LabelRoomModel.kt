@@ -5,10 +5,11 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.Label
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanRoomModel
 import ly.david.data.network.LabelInfo
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.room.RoomModel
+import ly.david.data.toLifeSpanRoomModel
 
 @Entity(tableName = "label")
 data class LabelRoomModel(
@@ -18,7 +19,7 @@ data class LabelRoomModel(
     @ColumnInfo(name = "type") override val type: String? = null,
     @ColumnInfo(name = "type_id") val typeId: String? = null,
     @ColumnInfo(name = "label_code") override val labelCode: Int? = null,
-    @Embedded val lifeSpan: LifeSpan? = null,
+    @Embedded val lifeSpan: LifeSpanRoomModel? = null,
 ) : RoomModel, Label
 
 fun LabelMusicBrainzModel.toLabelRoomModel() =
@@ -29,7 +30,7 @@ fun LabelMusicBrainzModel.toLabelRoomModel() =
         type = type,
         typeId = typeId,
         labelCode = labelCode,
-        lifeSpan = lifeSpan
+        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
     )
 
 fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
@@ -45,7 +46,7 @@ fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
                 type = label.type,
                 typeId = label.typeId,
                 labelCode = label.labelCode,
-                lifeSpan = label.lifeSpan
+                lifeSpan = label.lifeSpan?.toLifeSpanRoomModel(),
             )
         }
     }
