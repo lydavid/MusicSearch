@@ -2,7 +2,7 @@ package ly.david.data.spotify.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
@@ -16,20 +16,20 @@ import kotlinx.serialization.json.Json
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
 import ly.david.data.spotify.api.auth.SpotifyAuthState
 
-private const val HOST = "api.spotify.com"
-private const val BASE_URL = "https://$HOST/v1/"
+private const val BASE_URL = "https://api.spotify.com/v1/"
 private const val ARTISTS = "${BASE_URL}artists"
 
 interface SpotifyApi {
 
     companion object {
         fun create(
+            engine: HttpClientEngine,
             clientId: String,
             clientSecret: String,
             spotifyAuthApi: SpotifyAuthApi,
             spotifyAuthState: SpotifyAuthState,
         ): SpotifyApi {
-            val client = HttpClient(Android) {
+            val client = HttpClient(engine) {
                 expectSuccess = true
 
                 install(Logging) {
@@ -60,9 +60,7 @@ interface SpotifyApi {
                             val accessToken = spotifyAuthState.getAccessToken() ?: return@refreshTokens null
                             BearerTokens(accessToken, "")
                         }
-                        sendWithoutRequest { request ->
-                            request.url.host == HOST
-                        }
+                        sendWithoutRequest { true }
                     }
                 }
             }

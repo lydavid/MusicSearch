@@ -2,7 +2,7 @@ package ly.david.data.spotify.api.auth
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -17,22 +17,24 @@ private const val CLIENT_CREDENTIALS = "client_credentials"
 interface SpotifyAuthApi {
 
     companion object {
-        private val client = HttpClient(Android) {
-            expectSuccess = true
+        fun create(
+            engine: HttpClientEngine,
+        ): SpotifyAuthApi {
+            val client = HttpClient(engine) {
+                expectSuccess = true
 
-            install(Logging) {
-                level = LogLevel.ALL
+                install(Logging) {
+                    level = LogLevel.ALL
+                }
+                install(ContentNegotiation) {
+                    json(
+                        Json {
+                            ignoreUnknownKeys = true
+                        }
+                    )
+                }
             }
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                    }
-                )
-            }
-        }
 
-        fun create(): SpotifyAuthApi {
             return SpotifyAuthApiImpl(
                 client = client
             )

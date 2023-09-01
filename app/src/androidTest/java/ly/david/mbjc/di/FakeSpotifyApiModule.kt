@@ -8,6 +8,8 @@ import javax.inject.Singleton
 import ly.david.data.network.api.FakeSpotifyApi
 import ly.david.data.spotify.SpotifyApiModule
 import ly.david.data.spotify.api.SpotifyApi
+import ly.david.data.spotify.api.auth.SpotifyAccessToken
+import ly.david.data.spotify.api.auth.SpotifyAuthApi
 
 @Module
 @TestInstallIn(
@@ -15,6 +17,20 @@ import ly.david.data.spotify.api.SpotifyApi
     replaces = [SpotifyApiModule::class]
 )
 object FakeSpotifyApiModule {
+
+    @Singleton
+    @Provides
+    fun provideSpotifyAuthApi(): SpotifyAuthApi {
+        return object : SpotifyAuthApi {
+            override suspend fun getAccessToken(
+                clientId: String,
+                clientSecret: String,
+                grantType: String,
+            ): SpotifyAccessToken {
+                TODO("Not yet implemented")
+            }
+        }
+    }
 
     @Singleton
     @Provides

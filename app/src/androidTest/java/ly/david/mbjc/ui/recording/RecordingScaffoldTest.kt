@@ -11,23 +11,29 @@ import androidx.compose.ui.test.performClick
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.network.davidBowie
 import ly.david.data.network.davidBowieArtistCredit
 import ly.david.data.network.queenArtistCredit
 import ly.david.data.network.underPressure
 import ly.david.data.network.underPressureRecording
-import ly.david.data.domain.recordng.RecordingRepository
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class RecordingScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var recordingRepository: RecordingRepository
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+    }
 
     private fun setRecording(recordingMusicBrainzModel: RecordingMusicBrainzModel) {
         composeTestRule.activity.setContent {

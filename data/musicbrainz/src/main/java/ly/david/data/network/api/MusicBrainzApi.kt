@@ -1,7 +1,7 @@
 package ly.david.data.network.api
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.auth.Auth
@@ -25,12 +25,13 @@ private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/Mu
 private const val ACCEPT = "Accept"
 private const val ACCEPT_VALUE = "application/json"
 
-interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzAuthApi {
+interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzUserApi {
     companion object {
         fun create(
+            engine: HttpClientEngine,
             musicBrainzAuthState: MusicBrainzAuthState,
         ): MusicBrainzApi {
-            val client = HttpClient(Android) {
+            val client = HttpClient(engine) {
                 expectSuccess = true
 
                 HttpResponseValidator {
@@ -77,7 +78,7 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                             BearerTokens(accessToken, refreshToken)
                         }
 //                        sendWithoutRequest { request ->
-//                            // TODO: handle collection browse
+//                            // TODO: handle collection browse, one way to do it is to split up the api that requires auth and just return true here
 //                            request.url.pathSegments.contains(USER_INFO)
 //                        }
                     }
@@ -93,4 +94,4 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
 
 class MusicBrainzApiImpl(
     override val httpClient: HttpClient,
-) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzAuthApiImpl, MusicBrainzApi
+) : SearchApiImpl, BrowseApiImpl, LookupApiImpl, CollectionApiImpl, MusicBrainzUserApiImpl, MusicBrainzApi

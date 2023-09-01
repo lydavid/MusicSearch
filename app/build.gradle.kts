@@ -124,9 +124,6 @@ dependencies {
 
     androidTestImplementation(libs.room.testing)
 
-    androidTestImplementation(libs.okhttp.mockwebserver)
-    androidTestImplementation(libs.okhttp.tls)
-
     implementation(libs.timber)
 
     androidTestImplementation(libs.androidx.test.junit)

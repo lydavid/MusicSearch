@@ -106,6 +106,9 @@ dependencies {
     kaptTest(libs.hilt.android.compiler)
     testImplementation(libs.hilt.android.testing)
 
+    implementation(platform(libs.ktor.bom))
+    implementation(libs.bundles.ktor.android)
+
     implementation(libs.okhttp.logging.interceptor)
 
     implementation(libs.room.runtime)

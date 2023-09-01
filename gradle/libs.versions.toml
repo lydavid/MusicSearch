@@ -66,7 +66,6 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
-ktor-client-android = { module = "io.ktor:ktor-client-android" }
 ktor-client-auth = { module = "io.ktor:ktor-client-auth" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
 ktor-client-core = { module = "io.ktor:ktor-client-core" }
@@ -74,8 +73,6 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
-okhttp-tls = { group = "com.squareup.okhttp3", name = "okhttp-tls", version.ref = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
 robolectric = { group = "org.robolectric", name = "robolectric", version = "4.10.3" }
@@ -97,7 +94,6 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-android", "kotlinx-coroutines-test"]
 ktor-android = [
-    "ktor-client-android",
     "ktor-client-auth",
     "ktor-client-content-negotiation",
     "ktor-client-core",

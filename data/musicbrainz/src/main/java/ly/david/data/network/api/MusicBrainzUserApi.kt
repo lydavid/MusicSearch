@@ -8,7 +8,7 @@ import io.ktor.http.parameters
 
 internal const val USER_INFO = "userinfo"
 
-interface MusicBrainzAuthApi {
+interface MusicBrainzUserApi {
 
     suspend fun getUserInfo(): UserInfo
 
@@ -19,7 +19,7 @@ interface MusicBrainzAuthApi {
     )
 }
 
-interface MusicBrainzAuthApiImpl : MusicBrainzAuthApi {
+interface MusicBrainzUserApiImpl : MusicBrainzUserApi {
     val httpClient: HttpClient
 
     override suspend fun getUserInfo(): UserInfo {

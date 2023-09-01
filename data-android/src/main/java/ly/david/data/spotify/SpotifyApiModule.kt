@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.ktor.client.engine.HttpClientEngine
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
 import ly.david.data.spotify.api.SpotifyApi
@@ -16,17 +17,21 @@ object SpotifyApiModule {
 
     @Singleton
     @Provides
-    fun provideSpotifyAuthApi(): SpotifyAuthApi {
-        return SpotifyAuthApi.create()
+    fun provideSpotifyAuthApi(
+        engine: HttpClientEngine,
+    ): SpotifyAuthApi {
+        return SpotifyAuthApi.create(engine)
     }
 
     @Singleton
     @Provides
     fun provideSpotifyApi(
+        engine: HttpClientEngine,
         spotifyAuthState: SpotifyAuthState,
         spotifyAuthApi: SpotifyAuthApi,
     ): SpotifyApi {
         return SpotifyApi.create(
+            engine = engine,
             clientId = BuildConfig.SPOTIFY_CLIENT_ID,
             clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
             spotifyAuthApi = spotifyAuthApi,

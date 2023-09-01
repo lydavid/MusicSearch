@@ -11,9 +11,6 @@ import ly.david.data.network.api.FakeCoverArtArchiveApi
 import ly.david.data.network.api.FakeMusicBrainzApi
 import ly.david.data.network.api.MusicBrainzApi
 
-internal const val TEST_PORT = 8080
-private const val TEST_BASE_URL = "https://localhost:$TEST_PORT"
-
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
