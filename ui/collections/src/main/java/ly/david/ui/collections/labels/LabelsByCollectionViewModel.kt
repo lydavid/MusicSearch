@@ -5,8 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.musicbrainz.getBearerToken
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseLabelsResponse
@@ -27,7 +25,6 @@ internal class LabelsByCollectionViewModel @Inject constructor(
     private val labelDao: LabelDao,
     private val relationDao: RelationDao,
     pagedList: PagedList<LabelRoomModel, LabelListItemModel>,
-    private val musicBrainzAuthState: MusicBrainzAuthState,
 ) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,
     relationDao = relationDao,
@@ -36,7 +33,6 @@ internal class LabelsByCollectionViewModel @Inject constructor(
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseLabelsResponse {
         return musicBrainzApi.browseLabelsByCollection(
-            bearerToken = musicBrainzAuthState.getBearerToken(),
             collectionId = entityId,
             offset = offset
         )

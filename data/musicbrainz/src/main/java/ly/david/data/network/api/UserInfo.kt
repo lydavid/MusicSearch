@@ -1,8 +1,10 @@
 package ly.david.data.network.api
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserInfo(
-    @Json(name = "sub")
+    @SerialName("sub")
     val username: String? = null,
 )

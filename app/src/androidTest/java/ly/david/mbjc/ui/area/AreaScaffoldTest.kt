@@ -14,19 +14,18 @@ import androidx.compose.ui.test.performTextInput
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.area.AreaRepository
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.canada
 import ly.david.data.network.fakePlace
 import ly.david.data.network.ontario
 import ly.david.data.network.toronto
 import ly.david.data.network.underPressure
-import ly.david.data.room.area.AreaDao
-import ly.david.data.room.area.toAreaRoomModel
-import ly.david.data.room.relation.RelationDao
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 /**
@@ -36,13 +35,15 @@ import org.junit.Test
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
 @HiltAndroidTest
-internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
-    lateinit var relationDao: RelationDao
+    lateinit var areaRepository: AreaRepository
 
-    @Inject
-    lateinit var areaDao: AreaDao
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+    }
 
     private fun setArea(areaMusicBrainzModel: AreaMusicBrainzModel) {
         composeTestRule.activity.setContent {
@@ -62,8 +63,8 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
 
     @Test
     fun repeatVisit() = runTest {
+        areaRepository.lookupArea(ontario.id)
         setArea(ontario)
-        areaDao.insert(ontario.toAreaRoomModel())
 
         assertFieldsDisplayed()
     }
@@ -117,26 +118,6 @@ internal class AreaScaffoldTest : MainActivityTestWithMockServer(), StringRefere
         composeTestRule
             .onNode(hasText(releases).and(hasNoClickAction()))
             .assertDoesNotExist()
-    }
-
-    @Test
-    fun showRetryButtonOnError() = runTest {
-        composeTestRule.activity.setContent {
-            PreviewTheme {
-                AreaScaffold(
-                    areaId = "error"
-                )
-            }
-        }
-
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        waitForThenPerformClickOn(relationships)
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
-
-        // TODO: showing "no results"
-//        waitForThenPerformClickOn(places)
-//        waitForThenAssertAtLeastOneIsDisplayed(retry)
     }
 
     // TODO: visit, check history count is 1, visit again, go to release, return, return, check history count is 2

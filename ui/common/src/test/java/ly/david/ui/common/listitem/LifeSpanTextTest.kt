@@ -1,7 +1,7 @@
 package ly.david.ui.common.listitem
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -13,7 +13,7 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
     fun beginAndEnd() {
         snapshot {
             LifeSpanText(
-                lifeSpan = LifeSpan(
+                lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
                     end = "2022-12-16"
                 )
@@ -25,7 +25,7 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
     fun sameBeginAndEnd() {
         snapshot {
             LifeSpanText(
-                lifeSpan = LifeSpan(
+                lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
                     end = "2022-12-15"
                 )
@@ -37,7 +37,7 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
     fun beginOnly() {
         snapshot {
             LifeSpanText(
-                lifeSpan = LifeSpan(
+                lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
                     end = null
                 )
@@ -49,7 +49,7 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
     fun endOnly() {
         snapshot {
             LifeSpanText(
-                lifeSpan = LifeSpan(
+                lifeSpan = LifeSpanUiModel(
                     begin = null,
                     end = "2022-12-15"
                 )

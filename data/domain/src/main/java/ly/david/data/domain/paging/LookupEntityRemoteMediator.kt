@@ -4,9 +4,8 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import java.io.IOException
+import ly.david.data.network.RecoverableNetworkException
 import ly.david.data.room.RoomModel
-import retrofit2.HttpException
 
 /**
  * When using [LoadType.REFRESH], [hasEntityBeenStored] does not need to be checked.
@@ -42,9 +41,7 @@ class LookupEntityRemoteMediator<RM : RoomModel>(
             }
 
             MediatorResult.Success(endOfPaginationReached = true)
-        } catch (ex: HttpException) {
-            MediatorResult.Error(ex)
-        } catch (ex: IOException) {
+        } catch (ex: RecoverableNetworkException) {
             MediatorResult.Error(ex)
         }
     }

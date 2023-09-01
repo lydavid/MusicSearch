@@ -1,20 +1,46 @@
 package ly.david.data.network
 
-import androidx.room.ColumnInfo
-import com.squareup.moshi.Json
+import kotlinx.serialization.Serializable
 
-data class TextRepresentation(
+interface TextRepresentation {
     /**
      * See: https://en.wikipedia.org/wiki/ISO_15924
      */
-    @ColumnInfo(name = "script")
-    @Json(name = "script")
-    val script: String? = null,
+    val script: String?
 
     /**
      * See: https://en.wikipedia.org/wiki/ISO_639-3
      */
-    @ColumnInfo(name = "language")
-    @Json(name = "language")
-    val language: String? = null,
+    val language: String?
+}
+
+@Serializable
+data class TextRepresentationMusicBrainzModel(
+    override val script: String? = null,
+    override val language: String? = null,
+) : TextRepresentation
+
+data class TextRepresentationRoomModel(
+    override val script: String?,
+    override val language: String?,
+) : TextRepresentation
+
+data class TextRepresentationUiModel(
+    override val script: String?,
+    override val language: String?,
+) : TextRepresentation
+
+fun TextRepresentationMusicBrainzModel.toTextRepresentationRoomModel() = TextRepresentationRoomModel(
+    script = script,
+    language = language,
+)
+
+fun TextRepresentationRoomModel.toTextRepresentationUiModel() = TextRepresentationUiModel(
+    script = script,
+    language = language,
+)
+
+fun TextRepresentationMusicBrainzModel.toTextRepresentationUiModel() = TextRepresentationUiModel(
+    script = script,
+    language = language,
 )

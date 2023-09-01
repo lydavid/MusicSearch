@@ -1,32 +1,35 @@
 package ly.david.data.network
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ly.david.data.Work
 import ly.david.data.WorkAttribute
 
+@Serializable
 data class WorkMusicBrainzModel(
-    @Json(name = "id") override val id: String,
-    @Json(name = "title") override val name: String,
-    @Json(name = "disambiguation") override val disambiguation: String? = null,
-    @Json(name = "type") override val type: String? = null,
-    @Json(name = "type-id") val typeId: String? = null,
+    @SerialName("id") override val id: String,
+    @SerialName("title") override val name: String,
+    @SerialName("disambiguation") override val disambiguation: String? = null,
+    @SerialName("type") override val type: String? = null,
+    @SerialName("type-id") val typeId: String? = null,
 
     /**
      * This is null when languages is empty.
      */
-    @Json(name = "language") override val language: String? = null,
-//    @Json(name = "languages") override val languages: List<String>? = null,
+    @SerialName("language") override val language: String? = null,
+//    @SerialName("languages") override val languages: List<String>? = null,
 
-    @Json(name = "iswcs") override val iswcs: List<String>? = null,
+    @SerialName("iswcs") override val iswcs: List<String>? = null,
 
-    @Json(name = "attributes") val attributes: List<WorkAttributeMusicBrainzModel>? = null,
+    @SerialName("attributes") val attributes: List<WorkAttributeMusicBrainzModel>? = null,
 
     // search API returns relations without target-type
-    @Json(name = "relations") val relations: List<RelationMusicBrainzModel>? = null,
+    @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Work
 
+@Serializable
 data class WorkAttributeMusicBrainzModel(
-    @Json(name = "type") override val type: String,
-    @Json(name = "type-id") override val typeId: String,
-    @Json(name = "value") override val value: String,
+    @SerialName("type") override val type: String,
+    @SerialName("type-id") override val typeId: String,
+    @SerialName("value") override val value: String,
 ) : WorkAttribute

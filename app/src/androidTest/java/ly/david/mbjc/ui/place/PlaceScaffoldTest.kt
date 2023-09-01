@@ -6,12 +6,12 @@ import androidx.compose.ui.test.hasText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.place.PlaceRepository
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.fakeEvent
 import ly.david.data.network.fakePlaceWithAllData
-import ly.david.data.domain.place.PlaceRepository
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme

@@ -6,22 +6,28 @@ import androidx.compose.ui.test.hasText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.label.LabelRepository
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.elektra
 import ly.david.data.network.elektraMusicGroup
 import ly.david.data.network.underPressure
-import ly.david.data.domain.label.LabelRepository
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class LabelScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class LabelScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var labelRepository: LabelRepository
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+    }
 
     private fun setLabel(labelMusicBrainzModel: LabelMusicBrainzModel) {
         composeTestRule.activity.setContent {

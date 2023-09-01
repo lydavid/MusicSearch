@@ -6,21 +6,27 @@ import androidx.compose.ui.test.hasText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.series.SeriesRepository
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.SeriesMusicBrainzModel
 import ly.david.data.network.fakeInstrument
 import ly.david.data.network.fakeSeries
-import ly.david.data.domain.series.SeriesRepository
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 
 @HiltAndroidTest
-internal class SeriesScaffoldTest : MainActivityTestWithMockServer(), StringReferences {
+internal class SeriesScaffoldTest : MainActivityTest(), StringReferences {
 
     @Inject
     lateinit var seriesRepository: SeriesRepository
+
+    @Before
+    fun setupApp() {
+        hiltRule.inject()
+    }
 
     private fun setSeries(seriesMusicBrainzModel: SeriesMusicBrainzModel) {
         composeTestRule.activity.setContent {

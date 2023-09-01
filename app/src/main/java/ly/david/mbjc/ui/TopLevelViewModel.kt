@@ -10,7 +10,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,10 +23,10 @@ import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.network.RecoverableNetworkException
 import ly.david.data.network.api.MusicBrainzApi
-import ly.david.data.network.api.MusicBrainzAuthApi
 import ly.david.data.network.api.MusicBrainzOAuthInfo
 import ly.david.data.network.resourceUriPlural
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
@@ -43,7 +42,6 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
-import retrofit2.HttpException
 import timber.log.Timber
 
 class MusicBrainzLoginContract(
@@ -80,7 +78,6 @@ internal class TopLevelViewModel @Inject constructor(
     private val musicBrainzApi: MusicBrainzApi,
 
     private val musicBrainzAuthState: MusicBrainzAuthState,
-    private val musicBrainzAuthApi: MusicBrainzAuthApi,
     private val authRequest: AuthorizationRequest,
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication,
@@ -142,15 +139,13 @@ internal class TopLevelViewModel @Inject constructor(
                     resourceUriPlural = entity.value.resourceUriPlural,
                     mbids = entityId.value
                 )
-            } catch (ex: HttpException) {
-                return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> RemoteResult(
-                        message = "Failed to add to ${collection.name}. Login has expired.",
-                        actionLabel = "Login"
-                    )
-
-                    else -> RemoteResult("Failed to add to ${collection.name}.")
-                }
+            } catch (ex: RecoverableNetworkException) {
+                val userFacingError = "Failed to add to ${collection.name}. Login has expired."
+                Timber.e("$userFacingError $ex")
+                return RemoteResult(
+                    message = userFacingError,
+                    actionLabel = "Login",
+                )
             }
         }
 
@@ -188,15 +183,13 @@ internal class TopLevelViewModel @Inject constructor(
                     resourceUriPlural = collection.entity.resourceUriPlural,
                     mbids = entityId
                 )
-            } catch (ex: HttpException) {
-                return when (ex.code()) {
-                    HTTP_UNAUTHORIZED -> RemoteResult(
-                        message = "Failed to delete from remote collection ${collection.name}. Login has expired.",
-                        actionLabel = "Login"
-                    )
-
-                    else -> RemoteResult("Failed to delete from ${collection.name}.")
-                }
+            } catch (ex: RecoverableNetworkException) {
+                val userFacingError = "Failed to delete from remote collection ${collection.name}. Login has expired."
+                Timber.e("$userFacingError $ex")
+                return RemoteResult(
+                    message = userFacingError,
+                    actionLabel = "Login",
+                )
             }
         }
 
@@ -216,10 +209,13 @@ internal class TopLevelViewModel @Inject constructor(
             viewModelScope.launch {
                 val authState = AuthState()
                 authState.update(response, exception)
-                musicBrainzAuthState.setAuthState(authState)
+                musicBrainzAuthState.saveTokens(
+                    accessToken = authState.accessToken.orEmpty(),
+                    refreshToken = authState.refreshToken.orEmpty(),
+                )
 
                 try {
-                    val username = musicBrainzAuthApi.getUserInfo().username ?: return@launch
+                    val username = musicBrainzApi.getUserInfo().username ?: return@launch
                     musicBrainzAuthState.setUsername(username)
                 } catch (ex: Exception) {
                     // TODO: snackbar
@@ -231,10 +227,11 @@ internal class TopLevelViewModel @Inject constructor(
 
     fun logout() {
         viewModelScope.launch {
-            val authState = musicBrainzAuthState.getAuthState() ?: return@launch
+            val refreshToken = musicBrainzAuthState.getRefreshToken()
+            if (refreshToken.isNullOrEmpty()) return@launch
             try {
-                musicBrainzAuthApi.logout(
-                    token = authState.refreshToken.orEmpty(),
+                musicBrainzApi.logout(
+                    token = refreshToken,
                     clientId = musicBrainzOAuthInfo.clientId,
                     clientSecret = musicBrainzOAuthInfo.clientSecret
                 )
@@ -242,7 +239,7 @@ internal class TopLevelViewModel @Inject constructor(
                 // TODO: snackbar
                 Timber.e("$ex")
             } finally {
-                musicBrainzAuthState.setAuthState(null)
+                musicBrainzAuthState.saveTokens("", "")
                 musicBrainzAuthState.setUsername("")
             }
         }

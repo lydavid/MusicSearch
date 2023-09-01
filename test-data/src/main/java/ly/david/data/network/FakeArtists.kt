@@ -1,6 +1,6 @@
 package ly.david.data.network
 
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanMusicBrainzModel
 import ly.david.data.network.api.BrowseArtistsResponse
 import ly.david.data.network.api.SearchArtistsResponse
 
@@ -34,7 +34,7 @@ val davidBowie = ArtistMusicBrainzModel(
     name = "David Bowie",
     type = "Person",
     gender = "Male",
-    lifeSpan = LifeSpan(
+    lifeSpan = LifeSpanMusicBrainzModel(
         begin = "1947-01-08",
         end = "2016-01-10",
         ended = true

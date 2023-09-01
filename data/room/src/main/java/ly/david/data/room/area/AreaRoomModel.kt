@@ -5,9 +5,10 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.Area
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanRoomModel
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.room.RoomModel
+import ly.david.data.toLifeSpanRoomModel
 
 @Entity(tableName = "area")
 data class AreaRoomModel(
@@ -17,7 +18,7 @@ data class AreaRoomModel(
     @ColumnInfo(name = "disambiguation") override val disambiguation: String? = null,
     @ColumnInfo(name = "type") override val type: String? = null,
     @ColumnInfo(name = "type_id") val typeId: String? = null,
-    @Embedded override val lifeSpan: LifeSpan? = null,
+    @Embedded override val lifeSpan: LifeSpanRoomModel? = null,
 ) : RoomModel, Area
 
 fun AreaMusicBrainzModel.toAreaRoomModel() =
@@ -28,5 +29,5 @@ fun AreaMusicBrainzModel.toAreaRoomModel() =
         disambiguation = disambiguation,
         type = type,
         typeId = typeId,
-        lifeSpan = lifeSpan,
+        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
     )

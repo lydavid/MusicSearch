@@ -10,11 +10,6 @@ import ly.david.data.musicbrainz.MusicBrainzApiModule
 import ly.david.data.network.api.FakeCoverArtArchiveApi
 import ly.david.data.network.api.FakeMusicBrainzApi
 import ly.david.data.network.api.MusicBrainzApi
-import ly.david.data.network.api.MusicBrainzAuthApi
-import retrofit2.Retrofit
-
-internal const val TEST_PORT = 8080
-private const val TEST_BASE_URL = "https://localhost:$TEST_PORT"
 
 @Module
 @TestInstallIn(
@@ -30,16 +25,4 @@ internal object FakeMusicBrainzApiModule {
     @Singleton
     @Provides
     fun provideMusicBrainzApi(): MusicBrainzApi = FakeMusicBrainzApi()
-
-    @Singleton
-    @Provides
-    fun provideMusicBrainzAuthApi(
-        builder: Retrofit.Builder
-    ): MusicBrainzAuthApi {
-        val retrofit = builder
-            .baseUrl(TEST_BASE_URL)
-            .build()
-
-        return retrofit.create(MusicBrainzAuthApi::class.java)
-    }
 }

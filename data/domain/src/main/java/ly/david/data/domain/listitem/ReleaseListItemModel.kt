@@ -4,9 +4,11 @@ import ly.david.data.Release
 import ly.david.data.getDisplayNames
 import ly.david.data.getFormatsForDisplay
 import ly.david.data.getTracksForDisplay
-import ly.david.data.network.CoverArtArchive
+import ly.david.data.network.CoverArtArchiveUiModel
 import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.TextRepresentation
+import ly.david.data.network.TextRepresentationUiModel
+import ly.david.data.network.toCoverArtArchiveUiModel
+import ly.david.data.network.toTextRepresentationUiModel
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.data.room.release.ReleaseForListItem
 
@@ -24,8 +26,8 @@ data class ReleaseListItemModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
-    override val coverArtArchive: CoverArtArchive = CoverArtArchive(),
-    override val textRepresentation: TextRepresentation? = null,
+    override val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
+    override val textRepresentation: TextRepresentationUiModel? = null,
     val imageUrl: String? = null,
 
     val formattedFormats: String? = null,
@@ -46,8 +48,8 @@ fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     countryCode = countryCode,
     packaging = packaging,
     packagingId = packagingId,
-    coverArtArchive = coverArtArchive,
-    textRepresentation = textRepresentation,
+    coverArtArchive = coverArtArchive.toCoverArtArchiveUiModel(),
+    textRepresentation = textRepresentation?.toTextRepresentationUiModel(),
     asin = asin,
     quality = quality,
     imageUrl = null,
@@ -67,8 +69,8 @@ fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
     packagingId = release.packagingId,
     asin = release.asin,
     quality = release.quality,
-    coverArtArchive = release.coverArtArchive,
-    textRepresentation = release.textRepresentation,
+    coverArtArchive = release.coverArtArchive.toCoverArtArchiveUiModel(),
+    textRepresentation = release.textRepresentation?.toTextRepresentationUiModel(),
     formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     imageUrl = thumbnailUrl,

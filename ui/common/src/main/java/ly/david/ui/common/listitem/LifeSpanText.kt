@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.ui.common.R
 import ly.david.ui.common.text.TextWithHeadingRes
@@ -15,7 +15,7 @@ import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 fun LifeSpanText(
-    lifeSpan: LifeSpan?,
+    lifeSpan: LifeSpanUiModel?,
     modifier: Modifier = Modifier,
     beginHeadingRes: Int = R.string.start_date,
     endHeadingRes: Int = R.string.end_date,
@@ -52,25 +52,25 @@ fun LifeSpanText(
     }
 }
 
-internal class LifeSpanPreviewParameterProvider : PreviewParameterProvider<LifeSpan> {
-    override val values: Sequence<LifeSpan> = sequenceOf(
-        LifeSpan(
+internal class LifeSpanPreviewParameterProvider : PreviewParameterProvider<LifeSpanUiModel> {
+    override val values: Sequence<LifeSpanUiModel> = sequenceOf(
+        LifeSpanUiModel(
             begin = "2022-12-15",
             end = "2022-12-16"
         ),
-        LifeSpan(
+        LifeSpanUiModel(
             begin = "2022-12-15",
             end = "2022-12-15"
         ),
-        LifeSpan(
+        LifeSpanUiModel(
             begin = "2022-12-15",
             end = null
         ),
-        LifeSpan(
+        LifeSpanUiModel(
             begin = null,
             end = "2022-12-15"
         ),
-        LifeSpan(
+        LifeSpanUiModel(
             begin = null,
             end = null
         ),
@@ -80,7 +80,7 @@ internal class LifeSpanPreviewParameterProvider : PreviewParameterProvider<LifeS
 @DefaultPreviews
 @Composable
 private fun Preview(
-    @PreviewParameter(LifeSpanPreviewParameterProvider::class) lifeSpan: LifeSpan,
+    @PreviewParameter(LifeSpanPreviewParameterProvider::class) lifeSpan: LifeSpanUiModel,
 ) {
     PreviewTheme {
         Surface {

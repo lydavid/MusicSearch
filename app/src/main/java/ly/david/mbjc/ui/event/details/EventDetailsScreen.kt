@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ly.david.data.LifeSpan
+import ly.david.data.LifeSpanUiModel
 import ly.david.data.common.ifNotNullOrEmpty
 import ly.david.data.domain.event.EventScaffoldModel
 import ly.david.data.network.MusicBrainzEntity
@@ -99,7 +99,7 @@ private fun Preview() {
                     type = "Festival",
                     time = "13:00",
                     cancelled = true,
-                    lifeSpan = LifeSpan(
+                    lifeSpan = LifeSpanUiModel(
                         begin = "2022-01-01",
                         end = "2022-12-10",
                         ended = true

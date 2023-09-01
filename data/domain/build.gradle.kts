@@ -10,7 +10,6 @@ dependencies {
 
     implementation(libs.androidx.paging.common)
     implementation(libs.dagger)
-    implementation(libs.bundles.retrofit)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)

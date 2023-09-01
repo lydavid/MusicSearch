@@ -1,6 +1,5 @@
 package ly.david.data.network.api
 
-import java.io.IOException
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.network.EventMusicBrainzModel
@@ -9,6 +8,7 @@ import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
+import ly.david.data.network.RecoverableNetworkException
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel
@@ -98,7 +98,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
 
     // region Browse
     override suspend fun browseAreasByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -107,7 +106,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseArtistsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -125,7 +123,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseEventsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -138,7 +135,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseInstrumentsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -147,7 +143,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseLabelsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -160,7 +155,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browsePlacesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -169,7 +163,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseRecordingsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -194,7 +187,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseReleasesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -237,7 +229,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseReleaseGroupsByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -247,7 +238,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseSeriesByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -256,7 +246,6 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
 
     override suspend fun browseWorksByCollection(
-        bearerToken: String?,
         collectionId: String,
         limit: Int,
         offset: Int,
@@ -267,51 +256,52 @@ class FakeMusicBrainzApi : MusicBrainzApi {
 
     // region Lookup
     override suspend fun lookupArea(areaId: String, include: String?): AreaMusicBrainzModel {
-        return fakeAreas.firstOrNull { it.id == areaId } ?: throw IOException()
+        return fakeAreas.firstOrNull { it.id == areaId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupArtist(artistId: String, include: String?): ArtistMusicBrainzModel {
-        return fakeArtists.firstOrNull { it.id == artistId } ?: throw IOException()
+        return fakeArtists.firstOrNull { it.id == artistId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupEvent(eventId: String, include: String?): EventMusicBrainzModel {
-        return fakeEvents.firstOrNull { it.id == eventId } ?: throw IOException()
+        return fakeEvents.firstOrNull { it.id == eventId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupGenre(genreId: String, include: String?): GenreMusicBrainzModel {
-        return fakeGenres.firstOrNull { it.id == genreId } ?: throw IOException()
+        return fakeGenres.firstOrNull { it.id == genreId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupInstrument(instrumentId: String, include: String): InstrumentMusicBrainzModel {
-        return fakeInstruments.firstOrNull { it.id == instrumentId } ?: throw IOException()
+        return fakeInstruments.firstOrNull { it.id == instrumentId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupLabel(labelId: String, include: String): LabelMusicBrainzModel {
-        return fakeLabels.firstOrNull { it.id == labelId } ?: throw IOException()
+        return fakeLabels.firstOrNull { it.id == labelId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupPlace(placeId: String, include: String?): PlaceMusicBrainzModel {
-        return fakePlaces.firstOrNull { it.id == placeId } ?: throw IOException()
+        return fakePlaces.firstOrNull { it.id == placeId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupRecording(recordingId: String, include: String): RecordingMusicBrainzModel {
-        return fakeRecordings.firstOrNull { it.id == recordingId } ?: throw IOException()
+        return fakeRecordings.firstOrNull { it.id == recordingId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupRelease(releaseId: String, include: String): ReleaseMusicBrainzModel {
-        return fakeReleases.firstOrNull { it.id == releaseId } ?: throw IOException()
+        return fakeReleases.firstOrNull { it.id == releaseId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String, include: String): ReleaseGroupMusicBrainzModel {
-        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId } ?: throw IOException()
+        return fakeReleaseGroups.firstOrNull { it.id == releaseGroupId }
+            ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupSeries(seriesId: String, include: String?): SeriesMusicBrainzModel {
-        return fakeSeriesList.firstOrNull { it.id == seriesId } ?: throw IOException()
+        return fakeSeriesList.firstOrNull { it.id == seriesId } ?: throw RecoverableNetworkException(message = "")
     }
 
     override suspend fun lookupWork(workId: String, include: String?): WorkMusicBrainzModel {
-        return fakeWorks.firstOrNull { it.id == workId } ?: throw IOException()
+        return fakeWorks.firstOrNull { it.id == workId } ?: throw RecoverableNetworkException(message = "")
     }
     // endregion
 
@@ -331,6 +321,16 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         mbids: String,
         client: String,
     ) {
+        TODO("Not yet implemented")
+    }
+    // endregion
+
+    // region User
+    override suspend fun getUserInfo(): UserInfo {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun logout(token: String, clientId: String, clientSecret: String) {
         TODO("Not yet implemented")
     }
     // endregion

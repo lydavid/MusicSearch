@@ -18,7 +18,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized::class)
 internal class LookupEachEntityErrorTest(
     private val entity: MusicBrainzEntity
-) : MainActivityTestWithMockServer(), StringReferences {
+) : MainActivityTest(), StringReferences {
 
     companion object {
         @JvmStatic
@@ -33,9 +33,7 @@ internal class LookupEachEntityErrorTest(
     private lateinit var navController: NavHostController
 
     @Before
-    override fun setupApp() {
-        super.setupApp()
-
+    fun setupApp() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

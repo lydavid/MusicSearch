@@ -24,7 +24,7 @@ import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
 import ly.david.data.network.toFakeMusicBrainzModel
 import ly.david.data.network.underPressureReleaseGroup
-import ly.david.mbjc.MainActivityTestWithMockServer
+import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
@@ -37,14 +37,12 @@ import org.junit.runner.RunWith
  */
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-internal class SearchMusicBrainzScreenTest : MainActivityTestWithMockServer(), StringReferences {
+internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 
     @Before
-    override fun setupApp() {
-        super.setupApp()
-
+    fun setupApp() {
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

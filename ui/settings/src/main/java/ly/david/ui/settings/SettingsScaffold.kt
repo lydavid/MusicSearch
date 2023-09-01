@@ -45,14 +45,13 @@ fun SettingsScaffold(
         val context = LocalContext.current
 
         val username by viewModel.musicBrainzAuthState.username.collectAsState(initial = "")
-        val authState by viewModel.musicBrainzAuthState.authStateFlow.collectAsState(initial = null)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
 
         SettingsScreen(
             modifier = Modifier.padding(innerPadding),
             username = username,
-            showLogin = authState == null,
+            showLogin = username.isEmpty(),
             onLoginClick = onLoginClick,
             onLogoutClick = onLogoutClick,
             onDestinationClick = onDestinationClick,
