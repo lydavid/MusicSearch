@@ -115,6 +115,9 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           mappingFile: app/build/outputs/mapping/release/mapping.txt
 
+      - name: Merge with origin in case changes have been pushed since job start
+        run: git merge -X ours origin/beta
+
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
