@@ -5,8 +5,12 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
+import ly.david.data.coverart.api.CoverArtArchiveApi
+import ly.david.data.network.NetworkModule
+import ly.david.data.network.api.FakeCoverArtArchiveApi
+import ly.david.data.network.api.FakeMusicBrainzApi
 import ly.david.data.network.api.FakeSpotifyApi
-import ly.david.data.spotify.SpotifyApiModule
+import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAccessToken
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
@@ -14,9 +18,17 @@ import ly.david.data.spotify.api.auth.SpotifyAuthApi
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [SpotifyApiModule::class]
+    replaces = [NetworkModule::class]
 )
-object FakeSpotifyApiModule {
+object FakeNetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideCoverArtArchiveApi(): CoverArtArchiveApi = FakeCoverArtArchiveApi()
+
+    @Singleton
+    @Provides
+    fun provideMusicBrainzApi(): MusicBrainzApi = FakeMusicBrainzApi()
 
     @Singleton
     @Provides
