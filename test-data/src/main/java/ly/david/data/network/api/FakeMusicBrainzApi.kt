@@ -325,7 +325,7 @@ class FakeMusicBrainzApi : MusicBrainzApi {
     }
     // endregion
 
-    // region OAuth
+    // region User
     override suspend fun getUserInfo(): UserInfo {
         TODO("Not yet implemented")
     }

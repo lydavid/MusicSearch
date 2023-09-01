@@ -5,7 +5,7 @@ import org.junit.Test
 
 internal class LifeSpanTest {
 
-    private var lifeSpan: LifeSpanMusicBrainzModel? = null
+    private var lifeSpan: LifeSpanUiModel? = null
 
     @Test
     fun `null lifespan`() {
@@ -15,38 +15,38 @@ internal class LifeSpanTest {
 
     @Test
     fun `lifespan, null begin and end`() {
-        lifeSpan = LifeSpanMusicBrainzModel()
+        lifeSpan = LifeSpanUiModel()
         Assert.assertEquals("", lifeSpan.getLifeSpanForDisplay())
     }
 
     @Test
     fun `lifespan, empty begin and end`() {
-        lifeSpan = LifeSpanMusicBrainzModel(begin = "", end = "")
+        lifeSpan = LifeSpanUiModel(begin = "", end = "")
         Assert.assertEquals("", lifeSpan.getLifeSpanForDisplay())
     }
 
     @Test
     fun `lifespan begin, null end`() {
-        lifeSpan = LifeSpanMusicBrainzModel(begin = "2020-10-10", end = null)
+        lifeSpan = LifeSpanUiModel(begin = "2020-10-10", end = null)
         Assert.assertEquals("2020-10-10", lifeSpan.getLifeSpanForDisplay())
     }
 
     @Test
     fun `lifespan begin, and end`() {
-        lifeSpan = LifeSpanMusicBrainzModel(begin = "1957-03", end = "1970-04-10")
+        lifeSpan = LifeSpanUiModel(begin = "1957-03", end = "1970-04-10")
         Assert.assertEquals("1957-03 to 1970-04-10", lifeSpan.getLifeSpanForDisplay())
     }
 
     @Test
     fun `lifespan same begin, and end`() {
-        lifeSpan = LifeSpanMusicBrainzModel(begin = "1957-03", end = "1957-03")
+        lifeSpan = LifeSpanUiModel(begin = "1957-03", end = "1957-03")
         Assert.assertEquals("1957-03", lifeSpan.getLifeSpanForDisplay())
     }
 
     // Is valid?
     @Test
     fun `lifespan end, no begin`() {
-        lifeSpan = LifeSpanMusicBrainzModel(begin = null, end = "2021")
+        lifeSpan = LifeSpanUiModel(begin = null, end = "2021")
         Assert.assertEquals(" to 2021", lifeSpan.getLifeSpanForDisplay())
     }
 }
