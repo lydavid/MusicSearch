@@ -28,11 +28,8 @@ interface CoverArtArchiveApi {
         fun create(
             httpClient: HttpClient,
         ): CoverArtArchiveApi {
-            val extendedClient = httpClient.config {
-
-            }
             return CoverArtArchiveApiImpl(
-                client = extendedClient
+                client = httpClient
             )
         }
     }
