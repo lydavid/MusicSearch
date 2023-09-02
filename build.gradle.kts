@@ -15,7 +15,7 @@ plugins {
 
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)
-    alias(libs.plugins.modulegraph)
+    alias(libs.plugins.module.dependency.graph)
 }
 
 subprojects {
@@ -43,9 +43,4 @@ subprojects {
             }
         }
     }
-}
-
-moduleGraphConfig {
-    readmePath.set(file("$projectDir/README.md").absolutePath)
-    heading.set("## Dependency Diagram")
 }

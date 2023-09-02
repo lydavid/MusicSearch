@@ -21,11 +21,13 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Regenerate module graph
-        run: ./gradlew createModuleGraph
+        run: ./gradlew graphModules \
+          -PautoOpenGraph=false \
+          -PgraphOutputFormat=svg \
+          -PgraphOutputFilePath=$(pwd)/assets/module_dependency_graph.svg
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
-          commit_message: 'chore: update module graph [skip ci]'
-          file_pattern: 'README.md'
+          commit_message: 'chore: update module dependency graph [skip ci]'
           commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>

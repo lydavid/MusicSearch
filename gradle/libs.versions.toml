@@ -116,5 +116,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-modulegraph = { id = "dev.iurysouza.modulegraph", version = "0.4.0" }
+module-dependency-graph = { id = "com.savvasdalkitsis.module-dependency-graph", version = "0.10" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
