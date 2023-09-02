@@ -9,7 +9,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.Destination
-import ly.david.data.network.lookupHistory
+import ly.david.data.test.lookupHistory
 import ly.david.data.room.MusicSearchDatabase
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.mbjc.MainActivityTest

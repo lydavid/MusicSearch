@@ -10,8 +10,8 @@ import ly.david.data.domain.place.PlaceRepository
 import ly.david.data.formatForDisplay
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.PlaceMusicBrainzModel
-import ly.david.data.network.fakeEvent
-import ly.david.data.network.fakePlaceWithAllData
+import ly.david.data.test.fakeEvent
+import ly.david.data.test.fakePlaceWithAllData
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme

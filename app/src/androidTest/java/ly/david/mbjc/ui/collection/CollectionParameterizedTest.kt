@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.collectableEntities
-import ly.david.data.network.toFakeMusicBrainzModel
+import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest

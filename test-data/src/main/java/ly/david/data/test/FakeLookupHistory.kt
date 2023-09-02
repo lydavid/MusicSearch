@@ -1,5 +1,6 @@
-package ly.david.data.network
+package ly.david.data.test
 
+import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryRoomModel
 
 val lookupHistory = LookupHistoryRoomModel(

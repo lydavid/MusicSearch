@@ -4,7 +4,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.HiltTest
-import ly.david.data.network.fakeReleaseGroupWithArtistCredits
+import ly.david.data.test.fakeReleaseGroupWithArtistCredits
 import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
 import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 import org.hamcrest.CoreMatchers.`is`

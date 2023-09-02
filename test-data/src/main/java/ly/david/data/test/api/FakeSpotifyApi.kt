@@ -1,4 +1,4 @@
-package ly.david.data.network.api
+package ly.david.data.test.api
 
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.SpotifyArtist

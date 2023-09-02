@@ -5,9 +5,9 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.listitem.toListItemModel
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.api.FakeMusicBrainzApi
+import ly.david.data.test.api.FakeMusicBrainzApi
 import ly.david.data.network.searchableEntities
-import ly.david.data.network.toFakeMusicBrainzModel
+import ly.david.data.test.toFakeMusicBrainzModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.data"
+    namespace = "ly.david.data.test"
 }
 
 dependencies {

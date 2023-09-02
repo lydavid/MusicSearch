@@ -16,11 +16,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.area.AreaRepository
 import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.network.canada
-import ly.david.data.network.fakePlace
-import ly.david.data.network.ontario
-import ly.david.data.network.toronto
-import ly.david.data.network.underPressure
+import ly.david.data.test.canada
+import ly.david.data.test.fakePlace
+import ly.david.data.test.ontario
+import ly.david.data.test.toronto
+import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag

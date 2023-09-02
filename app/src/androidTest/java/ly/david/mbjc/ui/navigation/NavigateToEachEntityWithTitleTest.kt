@@ -9,7 +9,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import ly.david.data.network.MusicBrainzEntity
 import ly.david.data.network.resourceUri
-import ly.david.data.network.toFakeMusicBrainzModel
+import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme

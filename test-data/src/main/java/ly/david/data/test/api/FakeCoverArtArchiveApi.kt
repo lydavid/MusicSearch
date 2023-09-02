@@ -1,4 +1,4 @@
-package ly.david.data.network.api
+package ly.david.data.test.api
 
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.CoverArtUrls

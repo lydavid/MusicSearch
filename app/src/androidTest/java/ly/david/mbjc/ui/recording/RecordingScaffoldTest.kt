@@ -13,11 +13,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.network.davidBowie
-import ly.david.data.network.davidBowieArtistCredit
-import ly.david.data.network.queenArtistCredit
-import ly.david.data.network.underPressure
-import ly.david.data.network.underPressureRecording
+import ly.david.data.test.davidBowie
+import ly.david.data.test.davidBowieArtistCredit
+import ly.david.data.test.queenArtistCredit
+import ly.david.data.test.underPressure
+import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme

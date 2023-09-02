@@ -9,9 +9,9 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.label.LabelRepository
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.LabelMusicBrainzModel
-import ly.david.data.network.elektra
-import ly.david.data.network.elektraMusicGroup
-import ly.david.data.network.underPressure
+import ly.david.data.test.elektra
+import ly.david.data.test.elektraMusicGroup
+import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme

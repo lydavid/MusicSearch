@@ -8,11 +8,11 @@ import androidx.compose.ui.test.onNodeWithText
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
+import ly.david.data.domain.work.WorkRepository
 import ly.david.data.getNameWithDisambiguation
 import ly.david.data.network.WorkMusicBrainzModel
-import ly.david.data.network.fakeWorkWithAllData
-import ly.david.data.network.underPressureRecording
-import ly.david.data.domain.work.WorkRepository
+import ly.david.data.test.fakeWorkWithAllData
+import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
