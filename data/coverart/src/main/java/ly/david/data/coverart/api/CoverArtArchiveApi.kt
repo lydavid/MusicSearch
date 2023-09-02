@@ -2,14 +2,8 @@ package ly.david.data.coverart.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
 
 private const val BASE_URL = "https://coverartarchive.org"
 private const val RELEASE = "$BASE_URL/release"
@@ -32,26 +26,10 @@ interface CoverArtArchiveApi {
 
     companion object {
         fun create(
-            engine: HttpClientEngine,
+            httpClient: HttpClient,
         ): CoverArtArchiveApi {
-            val client = HttpClient(engine) {
-                expectSuccess = true
-
-                install(Logging) {
-                    level = LogLevel.ALL
-                }
-                install(ContentNegotiation) {
-                    json(
-                        Json {
-                            ignoreUnknownKeys = true
-                            isLenient = true
-                        }
-                    )
-                }
-            }
-
             return CoverArtArchiveApiImpl(
-                client = client
+                client = httpClient
             )
         }
     }
