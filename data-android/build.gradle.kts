@@ -116,6 +116,8 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
 
+    implementation(libs.timber)
+
     testImplementation(libs.androidx.test.junit)
     testImplementation(libs.junit)
     testImplementation(libs.bundles.kotlinx.coroutines)

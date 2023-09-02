@@ -8,7 +8,11 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
@@ -20,6 +24,7 @@ import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
 import ly.david.data.spotify.api.auth.SpotifyAuthState
+import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -34,13 +39,23 @@ object NetworkModule {
                     handleRecoverableException(exception)
                 }
             }
+
+            install(Logging) {
+                level = LogLevel.HEADERS
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Timber.d(message)
+                    }
+                }
+                sanitizeHeader { header -> header == HttpHeaders.Authorization }
+            }
         }
     }
 
     private suspend fun handleRecoverableException(exception: Throwable) {
         when (exception) {
             is NoTransformationFoundException -> {
-                // TODO: should be logged
+                Timber.e(exception)
                 throw RecoverableNetworkException("Requested json but got xml")
             }
 
