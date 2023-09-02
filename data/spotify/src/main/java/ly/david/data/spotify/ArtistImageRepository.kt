@@ -1,7 +1,6 @@
 package ly.david.data.spotify
 
 import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.core.image.ImageUrlSaver
@@ -39,9 +38,6 @@ class ArtistImageRepository @Inject constructor(
             largeUrl
         } catch (ex: ClientRequestException) {
             // Just log, don't offer retry for these, cause it won't be successful
-            ""
-        } catch (ex: ServerResponseException) {
-            // TODO: should offer retry
             ""
         }
     }

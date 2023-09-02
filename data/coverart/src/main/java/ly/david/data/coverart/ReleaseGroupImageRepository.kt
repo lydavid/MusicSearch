@@ -1,7 +1,6 @@
 package ly.david.data.coverart
 
 import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
 import javax.inject.Inject
 import ly.david.data.core.image.ImageUrlSaver
@@ -49,9 +48,6 @@ class ReleaseGroupImageRepository @Inject constructor(
             } else {
                 // TODO: log
             }
-            ""
-        } catch (ex: ServerResponseException) {
-            // TODO: should offer retry
             ""
         }
     }

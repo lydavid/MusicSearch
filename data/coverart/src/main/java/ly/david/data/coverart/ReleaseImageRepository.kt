@@ -1,13 +1,12 @@
 package ly.david.data.coverart
 
 import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
-import io.ktor.http.HttpStatusCode.Companion.NotFound
+import io.ktor.http.HttpStatusCode
 import javax.inject.Inject
+import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
-import ly.david.data.core.image.ImageUrlSaver
 
 /**
  * Logic to retrieve release cover art path.
@@ -40,7 +39,7 @@ class ReleaseImageRepository @Inject constructor(
             )
             return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: ClientRequestException) {
-            if (ex.response.status == NotFound) {
+            if (ex.response.status == HttpStatusCode.NotFound) {
                 imageUrlSaver.saveUrl(
                     mbid = releaseId,
                     thumbnailUrl = "",
@@ -49,9 +48,6 @@ class ReleaseImageRepository @Inject constructor(
             } else {
                 // TODO: log
             }
-            ""
-        } catch (ex: ServerResponseException) {
-            // TODO: should offer retry
             ""
         }
     }
