@@ -23,8 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.resourceUri
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

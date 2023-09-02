@@ -1,6 +1,6 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Track
+import ly.david.data.core.Track
 import ly.david.data.room.release.tracks.TrackForListItem
 
 data class TrackListItemModel(

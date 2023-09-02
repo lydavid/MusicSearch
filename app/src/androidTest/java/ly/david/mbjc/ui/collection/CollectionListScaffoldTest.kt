@@ -17,8 +17,8 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.resourceUri
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest

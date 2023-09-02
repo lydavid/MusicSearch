@@ -14,7 +14,7 @@ import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.Header
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.SearchHistoryListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler

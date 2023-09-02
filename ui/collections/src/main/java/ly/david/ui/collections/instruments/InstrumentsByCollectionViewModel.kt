@@ -6,7 +6,7 @@ import javax.inject.Inject
 import ly.david.data.domain.listitem.InstrumentListItemModel
 import ly.david.data.domain.listitem.toInstrumentListItemModel
 import ly.david.data.network.InstrumentMusicBrainzModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.network.api.BrowseInstrumentsResponse
 import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityDao

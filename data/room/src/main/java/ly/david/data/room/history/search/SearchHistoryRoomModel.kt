@@ -3,8 +3,8 @@ package ly.david.data.room.history.search
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import java.util.Date
-import ly.david.data.Identifiable
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.Identifiable
+import ly.david.data.core.network.MusicBrainzEntity
 
 /**
  * Record of what the user has recently searched.

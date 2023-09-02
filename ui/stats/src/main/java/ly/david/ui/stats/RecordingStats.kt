@@ -1,6 +1,6 @@
 package ly.david.ui.stats
 
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationDao
 
 /**

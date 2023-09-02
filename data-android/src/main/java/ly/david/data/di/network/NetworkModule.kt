@@ -8,7 +8,7 @@ import io.ktor.client.HttpClient
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
 import ly.david.data.coverart.api.CoverArtArchiveApi
-import ly.david.data.network.ApiHttpClient
+import ly.david.data.core.network.ApiHttpClient
 import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi

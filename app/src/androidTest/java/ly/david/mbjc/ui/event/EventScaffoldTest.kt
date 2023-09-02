@@ -7,7 +7,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.event.EventRepository
-import ly.david.data.getNameWithDisambiguation
+import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.mbjc.MainActivityTest

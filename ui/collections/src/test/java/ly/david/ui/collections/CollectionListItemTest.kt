@@ -3,7 +3,7 @@ package ly.david.ui.collections
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.data.domain.listitem.CollectionListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

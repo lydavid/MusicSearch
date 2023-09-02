@@ -1,10 +1,10 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Artist
-import ly.david.data.LifeSpanUiModel
+import ly.david.data.core.Artist
+import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.room.artist.ArtistRoomModel
-import ly.david.data.toLifeSpanUiModel
+import ly.david.data.core.toLifeSpanUiModel
 
 data class ArtistListItemModel(
     override val id: String,

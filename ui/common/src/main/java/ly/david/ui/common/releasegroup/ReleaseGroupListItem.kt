@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.ifNotNull
-import ly.david.data.common.ifNotNullOrEmpty
+import ly.david.data.core.common.ifNotNull
+import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.getIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

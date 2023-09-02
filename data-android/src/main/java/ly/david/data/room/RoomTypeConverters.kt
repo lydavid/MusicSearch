@@ -2,8 +2,8 @@ package ly.david.data.room
 
 import androidx.room.TypeConverter
 import java.util.Date
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.resourceUri
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
 
 // Just need to make sure possible values cannot include this delimiter
 private const val DELIMITER = ","

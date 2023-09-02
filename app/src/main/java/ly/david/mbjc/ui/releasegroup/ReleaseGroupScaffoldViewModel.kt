@@ -9,10 +9,10 @@ import kotlinx.coroutines.launch
 import ly.david.data.coverart.ReleaseGroupImageRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
-import ly.david.data.getDisplayNames
-import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.RecoverableNetworkException
+import ly.david.data.core.getDisplayNames
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel

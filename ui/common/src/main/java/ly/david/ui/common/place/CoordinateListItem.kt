@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.data.CoordinatesUiModel
+import ly.david.data.core.CoordinatesUiModel
 import ly.david.data.common.showMap
-import ly.david.data.formatForDisplay
+import ly.david.data.core.formatForDisplay
 import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

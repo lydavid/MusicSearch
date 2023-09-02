@@ -1,6 +1,6 @@
 package ly.david.data.room.history
 
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 
 interface RecordLookupHistory {
     val lookupHistoryDao: LookupHistoryDao

@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.getNameWithDisambiguation
+import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.network.GenreMusicBrainzModel
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.RecoverableNetworkException
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory

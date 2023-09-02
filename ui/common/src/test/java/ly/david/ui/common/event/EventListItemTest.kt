@@ -1,7 +1,7 @@
 package ly.david.ui.common.event
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.LifeSpanUiModel
+import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.Test

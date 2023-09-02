@@ -20,8 +20,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.resourceUri
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest

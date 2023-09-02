@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.domain.listitem.CollectionListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.collections.areas.AreasByCollectionScreen
 import ly.david.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.ui.collections.events.EventsByCollectionScreen

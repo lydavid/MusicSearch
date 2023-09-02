@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ly.david.data.AppInfo
+import ly.david.data.core.AppInfo
 import ly.david.data.BuildConfig
 import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
 import ly.david.data.network.api.MusicBrainzOAuthInfo

@@ -1,7 +1,7 @@
 package ly.david.data.room.relation
 
 import androidx.room.ColumnInfo
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 
 /**
  * Maps from [RelationRoomModel].

@@ -4,12 +4,12 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.Release
-import ly.david.data.network.CoverArtArchiveRoomModel
+import ly.david.data.core.Release
+import ly.david.data.core.network.CoverArtArchiveRoomModel
 import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.TextRepresentationRoomModel
-import ly.david.data.network.toCoverArtArchiveRoomModel
-import ly.david.data.network.toTextRepresentationRoomModel
+import ly.david.data.core.network.TextRepresentationRoomModel
+import ly.david.data.core.network.toCoverArtArchiveRoomModel
+import ly.david.data.core.network.toTextRepresentationRoomModel
 import ly.david.data.room.RoomModel
 
 @Entity(

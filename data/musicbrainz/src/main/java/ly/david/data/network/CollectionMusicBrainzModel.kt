@@ -2,6 +2,7 @@ package ly.david.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.data.core.network.MusicBrainzEntity
 
 @Serializable
 data class CollectionMusicBrainzModel(

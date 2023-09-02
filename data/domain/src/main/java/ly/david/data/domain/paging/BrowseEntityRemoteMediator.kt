@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kotlinx.coroutines.delay
-import ly.david.data.network.RecoverableNetworkException
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.network.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.network.api.SEARCH_BROWSE_LIMIT
 import ly.david.data.room.RoomModel

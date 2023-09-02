@@ -20,8 +20,8 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.artist.ArtistRepository
-import ly.david.data.getDisplayNames
-import ly.david.data.getNameWithDisambiguation
+import ly.david.data.core.getDisplayNames
+import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.network.ArtistMusicBrainzModel
 import ly.david.data.test.bandAid
 import ly.david.data.test.carlosAlomar

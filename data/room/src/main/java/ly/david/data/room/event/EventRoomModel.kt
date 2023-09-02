@@ -4,11 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.Event
-import ly.david.data.LifeSpanRoomModel
+import ly.david.data.core.Event
+import ly.david.data.core.LifeSpanRoomModel
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.toLifeSpanRoomModel
+import ly.david.data.core.toLifeSpanRoomModel
 
 @Entity(tableName = "event")
 data class EventRoomModel(

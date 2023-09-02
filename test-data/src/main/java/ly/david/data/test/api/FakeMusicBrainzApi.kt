@@ -8,7 +8,7 @@ import ly.david.data.network.InstrumentMusicBrainzModel
 import ly.david.data.network.LabelMusicBrainzModel
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.network.RecoverableNetworkException
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.ReleaseMusicBrainzModel
 import ly.david.data.network.SeriesMusicBrainzModel

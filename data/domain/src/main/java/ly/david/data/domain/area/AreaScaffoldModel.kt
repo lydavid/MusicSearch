@@ -1,11 +1,11 @@
 package ly.david.data.domain.area
 
-import ly.david.data.Area
-import ly.david.data.LifeSpanUiModel
+import ly.david.data.core.Area
+import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.area.AreaWithAllData
-import ly.david.data.toLifeSpanUiModel
+import ly.david.data.core.toLifeSpanUiModel
 
 data class AreaScaffoldModel(
     override val id: String,

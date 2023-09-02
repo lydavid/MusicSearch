@@ -3,7 +3,7 @@ package ly.david.ui.common.releasegroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.network.api.BrowseReleaseGroupsResponse
 import ly.david.data.room.relation.BrowseEntityCount

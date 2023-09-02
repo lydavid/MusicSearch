@@ -32,8 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.collectableEntities
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.collectableEntities
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews

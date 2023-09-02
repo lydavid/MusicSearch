@@ -1,9 +1,9 @@
 package ly.david.data.test
 
-import ly.david.data.CoordinatesMusicBrainzModel
-import ly.david.data.LifeSpanMusicBrainzModel
+import ly.david.data.core.CoordinatesMusicBrainzModel
+import ly.david.data.core.LifeSpanMusicBrainzModel
 import ly.david.data.network.Direction
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.network.RelationMusicBrainzModel
 import ly.david.data.network.api.BrowsePlacesResponse

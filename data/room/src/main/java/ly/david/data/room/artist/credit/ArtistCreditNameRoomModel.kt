@@ -3,7 +3,7 @@ package ly.david.data.room.artist.credit
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.ArtistCreditName
+import ly.david.data.core.ArtistCreditName
 import ly.david.data.network.ArtistCreditMusicBrainzModel
 
 /**

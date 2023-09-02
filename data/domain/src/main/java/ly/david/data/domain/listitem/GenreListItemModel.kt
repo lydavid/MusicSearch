@@ -1,6 +1,6 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Genre
+import ly.david.data.core.Genre
 import ly.david.data.network.GenreMusicBrainzModel
 
 data class GenreListItemModel(

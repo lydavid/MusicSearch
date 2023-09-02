@@ -1,6 +1,6 @@
 package ly.david.data.domain.recordng
 
-import ly.david.data.Recording
+import ly.david.data.core.Recording
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModels

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ly.david.data.AppInfo
+import ly.david.data.core.AppInfo
 import ly.david.mbjc.BuildConfig
 
 @InstallIn(SingletonComponent::class)

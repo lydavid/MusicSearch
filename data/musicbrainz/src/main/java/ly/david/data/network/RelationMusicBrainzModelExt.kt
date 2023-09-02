@@ -1,6 +1,6 @@
 package ly.david.data.network
 
-import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 
 /**
  * Some [RelationMusicBrainzModel.attributes] such as "strings" does not have

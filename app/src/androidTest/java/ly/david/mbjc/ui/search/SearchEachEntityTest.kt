@@ -16,9 +16,9 @@ import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.testing.HiltAndroidTest
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.resourceUri
-import ly.david.data.network.searchableEntities
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
+import ly.david.data.core.network.searchableEntities
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences

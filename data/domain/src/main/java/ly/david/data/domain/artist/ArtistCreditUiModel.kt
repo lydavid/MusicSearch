@@ -1,6 +1,6 @@
 package ly.david.data.domain.artist
 
-import ly.david.data.ArtistCreditName
+import ly.david.data.core.ArtistCreditName
 import ly.david.data.network.ArtistCreditMusicBrainzModel
 import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
 

@@ -2,8 +2,10 @@ package ly.david.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.NameWithDisambiguation
-import ly.david.data.Release
+import ly.david.data.core.NameWithDisambiguation
+import ly.david.data.core.Release
+import ly.david.data.core.network.CoverArtArchiveMusicBrainzModel
+import ly.david.data.core.network.TextRepresentationMusicBrainzModel
 
 @Serializable
 data class ReleaseMusicBrainzModel(

@@ -1,11 +1,11 @@
 package ly.david.data.domain.artist
 
-import ly.david.data.Artist
-import ly.david.data.LifeSpanUiModel
+import ly.david.data.core.Artist
+import ly.david.data.core.LifeSpanUiModel
+import ly.david.data.core.toLifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.artist.ArtistWithAllData
-import ly.david.data.toLifeSpanUiModel
 
 data class ArtistScaffoldModel(
     override val id: String,

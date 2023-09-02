@@ -1,10 +1,10 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Event
-import ly.david.data.LifeSpanUiModel
+import ly.david.data.core.Event
+import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.network.EventMusicBrainzModel
 import ly.david.data.room.event.EventRoomModel
-import ly.david.data.toLifeSpanUiModel
+import ly.david.data.core.toLifeSpanUiModel
 
 data class EventListItemModel(
     override val id: String,

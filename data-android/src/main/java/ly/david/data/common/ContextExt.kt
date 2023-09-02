@@ -3,10 +3,10 @@ package ly.david.data.common
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import ly.david.data.Coordinates
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.Coordinates
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
-import ly.david.data.network.resourceUri
+import ly.david.data.core.network.resourceUri
 
 /**
  * Launches web browser for MusicBrainz's page for [entity] with [musicBrainzId].

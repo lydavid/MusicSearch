@@ -4,7 +4,7 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.image.ImageUrlSaver
+import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.getLargeImageUrl
 import ly.david.data.spotify.api.getThumbnailImageUrl

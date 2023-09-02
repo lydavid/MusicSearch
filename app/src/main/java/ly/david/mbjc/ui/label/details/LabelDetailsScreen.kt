@@ -7,10 +7,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import ly.david.data.common.ifNotNull
-import ly.david.data.common.ifNotNullOrEmpty
+import ly.david.data.core.common.ifNotNull
+import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.domain.label.LabelScaffoldModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader

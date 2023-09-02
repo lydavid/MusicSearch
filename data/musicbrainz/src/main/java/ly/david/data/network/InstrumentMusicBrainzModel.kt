@@ -2,7 +2,7 @@ package ly.david.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.Instrument
+import ly.david.data.core.Instrument
 
 @Serializable
 data class InstrumentMusicBrainzModel(

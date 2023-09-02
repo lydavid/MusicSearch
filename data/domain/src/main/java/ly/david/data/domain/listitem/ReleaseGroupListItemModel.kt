@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.ReleaseGroup
-import ly.david.data.getDisplayNames
+import ly.david.data.core.ReleaseGroup
+import ly.david.data.core.getDisplayNames
 import ly.david.data.network.ReleaseGroupMusicBrainzModel
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.data.room.releasegroup.ReleaseGroupRoomModel

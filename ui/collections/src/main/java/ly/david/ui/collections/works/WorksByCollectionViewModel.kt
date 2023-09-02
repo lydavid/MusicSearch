@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.WorkListItemModel
 import ly.david.data.domain.listitem.toWorkListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.network.WorkMusicBrainzModel
 import ly.david.data.network.api.BrowseWorksResponse
 import ly.david.data.network.api.MusicBrainzApi

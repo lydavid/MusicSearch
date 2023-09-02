@@ -1,19 +1,19 @@
 package ly.david.data.domain
 
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.RESOURCE_AREA
-import ly.david.data.network.RESOURCE_ARTIST
-import ly.david.data.network.RESOURCE_EVENT
-import ly.david.data.network.RESOURCE_GENRE
-import ly.david.data.network.RESOURCE_INSTRUMENT
-import ly.david.data.network.RESOURCE_LABEL
-import ly.david.data.network.RESOURCE_PLACE
-import ly.david.data.network.RESOURCE_RECORDING
-import ly.david.data.network.RESOURCE_RELEASE
-import ly.david.data.network.RESOURCE_RELEASE_GROUP
-import ly.david.data.network.RESOURCE_SERIES
-import ly.david.data.network.RESOURCE_URL
-import ly.david.data.network.RESOURCE_WORK
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.RESOURCE_AREA
+import ly.david.data.core.network.RESOURCE_ARTIST
+import ly.david.data.core.network.RESOURCE_EVENT
+import ly.david.data.core.network.RESOURCE_GENRE
+import ly.david.data.core.network.RESOURCE_INSTRUMENT
+import ly.david.data.core.network.RESOURCE_LABEL
+import ly.david.data.core.network.RESOURCE_PLACE
+import ly.david.data.core.network.RESOURCE_RECORDING
+import ly.david.data.core.network.RESOURCE_RELEASE
+import ly.david.data.core.network.RESOURCE_RELEASE_GROUP
+import ly.david.data.core.network.RESOURCE_SERIES
+import ly.david.data.core.network.RESOURCE_URL
+import ly.david.data.core.network.RESOURCE_WORK
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"

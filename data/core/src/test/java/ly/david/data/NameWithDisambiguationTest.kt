@@ -2,6 +2,8 @@ package ly.david.data
 
 import io.mockk.every
 import io.mockk.mockk
+import ly.david.data.core.NameWithDisambiguation
+import ly.david.data.core.getNameWithDisambiguation
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

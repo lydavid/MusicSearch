@@ -1,6 +1,6 @@
 package ly.david.data.domain.work
 
-import ly.david.data.WorkAttribute
+import ly.david.data.core.WorkAttribute
 import ly.david.data.network.WorkAttributeMusicBrainzModel
 import ly.david.data.room.work.WorkAttributeRoomModel
 

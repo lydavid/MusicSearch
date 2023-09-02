@@ -2,9 +2,9 @@ package ly.david.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.CoordinatesMusicBrainzModel
-import ly.david.data.LifeSpanMusicBrainzModel
-import ly.david.data.Place
+import ly.david.data.core.CoordinatesMusicBrainzModel
+import ly.david.data.core.LifeSpanMusicBrainzModel
+import ly.david.data.core.Place
 
 @Serializable
 data class PlaceMusicBrainzModel(

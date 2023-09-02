@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.common.ifNotNullOrEmpty
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.spotify.SpotifyMetadata
 import ly.david.ui.common.R
 import ly.david.ui.common.component.ClickableItem

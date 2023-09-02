@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.domain.listitem.EventListItemModel
-import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)

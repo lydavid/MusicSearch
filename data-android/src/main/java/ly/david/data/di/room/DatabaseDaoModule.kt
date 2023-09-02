@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ly.david.data.image.ImageUrlSaver
+import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.room.MusicSearchDatabase
 
 @Module

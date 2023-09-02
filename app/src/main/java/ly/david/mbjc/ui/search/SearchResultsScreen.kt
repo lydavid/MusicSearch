@@ -26,8 +26,8 @@ import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.domain.listitem.SeriesListItemModel
 import ly.david.data.domain.listitem.WorkListItemModel
-import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistListItem

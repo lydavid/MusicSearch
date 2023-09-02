@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
 import java.util.Date
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.history.LookupHistoryForListItem
 
 data class LookupHistoryListItemModel(

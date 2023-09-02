@@ -15,11 +15,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.common.ifNotNullOrEmpty
-import ly.david.data.common.toFlagEmoji
-import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.core.common.ifNotNullOrEmpty
+import ly.david.data.core.common.toFlagEmoji
+import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.ui.common.getIcon
 import ly.david.ui.core.preview.DefaultPreviews

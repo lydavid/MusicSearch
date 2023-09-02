@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Relation
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.Relation
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationRoomModel
 
 /**

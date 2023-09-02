@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import ly.david.data.common.getDateFormatted
+import ly.david.data.core.common.getDateFormatted
 import ly.david.data.domain.history.HistorySortOption
 import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.ListItemModel

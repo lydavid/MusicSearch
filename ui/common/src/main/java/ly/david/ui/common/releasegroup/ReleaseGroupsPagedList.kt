@@ -22,7 +22,7 @@ import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.toReleaseGroupListItemModel
 import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.getDisplayTypes
+import ly.david.data.core.getDisplayTypes
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList

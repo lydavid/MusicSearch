@@ -4,13 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.CoordinatesRoomModel
-import ly.david.data.LifeSpanRoomModel
-import ly.david.data.Place
+import ly.david.data.core.CoordinatesRoomModel
+import ly.david.data.core.LifeSpanRoomModel
+import ly.david.data.core.Place
 import ly.david.data.network.PlaceMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.toCoordinatesRoomModel
-import ly.david.data.toLifeSpanRoomModel
+import ly.david.data.core.toCoordinatesRoomModel
+import ly.david.data.core.toLifeSpanRoomModel
 
 @Entity(tableName = "place")
 data class PlaceRoomModel(

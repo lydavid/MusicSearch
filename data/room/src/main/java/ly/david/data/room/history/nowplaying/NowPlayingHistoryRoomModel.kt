@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
-import ly.david.data.Identifiable
+import ly.david.data.core.Identifiable
 
 /**
  * Records notifications from Pixel's Now Playing.

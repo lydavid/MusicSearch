@@ -1,6 +1,6 @@
 package ly.david.data.domain.instrument
 
-import ly.david.data.Instrument
+import ly.david.data.core.Instrument
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.instrument.InstrumentWithAllData

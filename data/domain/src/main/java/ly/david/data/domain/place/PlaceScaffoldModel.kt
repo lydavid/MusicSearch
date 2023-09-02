@@ -1,15 +1,15 @@
 package ly.david.data.domain.place
 
-import ly.david.data.CoordinatesUiModel
-import ly.david.data.LifeSpanUiModel
-import ly.david.data.Place
+import ly.david.data.core.CoordinatesUiModel
+import ly.david.data.core.LifeSpanUiModel
+import ly.david.data.core.Place
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.place.PlaceWithAllData
-import ly.david.data.toCoordinatesUiModel
-import ly.david.data.toLifeSpanUiModel
+import ly.david.data.core.toCoordinatesUiModel
+import ly.david.data.core.toLifeSpanUiModel
 
 data class PlaceScaffoldModel(
     override val id: String,

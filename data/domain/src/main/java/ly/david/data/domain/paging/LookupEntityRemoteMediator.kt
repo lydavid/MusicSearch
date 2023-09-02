@@ -4,7 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import ly.david.data.network.RecoverableNetworkException
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.room.RoomModel
 
 /**

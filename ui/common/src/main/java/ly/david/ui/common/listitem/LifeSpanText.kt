@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import ly.david.data.LifeSpanUiModel
-import ly.david.data.common.ifNotNullOrEmpty
+import ly.david.data.core.LifeSpanUiModel
+import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.ui.common.R
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.core.preview.DefaultPreviews

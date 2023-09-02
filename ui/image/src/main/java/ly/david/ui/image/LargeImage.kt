@@ -21,7 +21,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
-import ly.david.data.common.useHttps
+import ly.david.data.core.common.useHttps
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 

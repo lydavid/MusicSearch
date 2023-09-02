@@ -7,7 +7,7 @@ import javax.inject.Inject
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
-import ly.david.data.image.ImageUrlSaver
+import ly.david.data.core.image.ImageUrlSaver
 
 /**
  * Logic to retrieve release cover art path.

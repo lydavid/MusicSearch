@@ -16,8 +16,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.userAgent
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.network.MusicBrainzAuthState
-import ly.david.data.network.RecoverableNetworkException
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"

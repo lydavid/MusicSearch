@@ -4,10 +4,10 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
 import javax.inject.Inject
+import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
-import ly.david.data.image.ImageUrlSaver
 
 /**
  * Logic to retrieve release group cover art path.

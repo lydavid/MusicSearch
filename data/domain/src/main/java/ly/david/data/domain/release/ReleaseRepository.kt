@@ -2,7 +2,7 @@ package ly.david.data.domain.release
 
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.AreaType
+import ly.david.data.core.AreaType
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.network.RelationMusicBrainzModel

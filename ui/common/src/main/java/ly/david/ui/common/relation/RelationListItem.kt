@@ -19,8 +19,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
 import ly.david.data.domain.listitem.RelationListItemModel
-import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzEntity
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

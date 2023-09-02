@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.domain.area.AreaRepository
 import ly.david.data.domain.area.AreaScaffoldModel
-import ly.david.data.getNameWithDisambiguation
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.RecoverableNetworkException
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
-import ly.david.data.showReleases
+import ly.david.data.core.showReleases
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList

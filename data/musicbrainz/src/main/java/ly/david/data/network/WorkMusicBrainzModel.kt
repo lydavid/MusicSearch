@@ -2,8 +2,8 @@ package ly.david.data.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.Work
-import ly.david.data.WorkAttribute
+import ly.david.data.core.Work
+import ly.david.data.core.WorkAttribute
 
 @Serializable
 data class WorkMusicBrainzModel(

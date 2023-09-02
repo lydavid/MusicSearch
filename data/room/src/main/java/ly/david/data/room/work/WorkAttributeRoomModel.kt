@@ -3,7 +3,7 @@ package ly.david.data.room.work
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.WorkAttribute
+import ly.david.data.core.WorkAttribute
 import ly.david.data.network.WorkAttributeMusicBrainzModel
 
 @Entity(

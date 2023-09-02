@@ -3,7 +3,7 @@ package ly.david.data.room.artist.credit
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ly.david.data.getDisplayNames
+import ly.david.data.core.getDisplayNames
 import ly.david.data.network.ArtistCreditMusicBrainzModel
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 

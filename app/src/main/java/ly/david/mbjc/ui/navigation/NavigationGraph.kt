@@ -14,12 +14,12 @@ import androidx.navigation.navDeepLink
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import ly.david.data.common.transformThisIfNotNullOrEmpty
+import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.Destination
 import ly.david.data.domain.toLookupDestination
-import ly.david.data.network.MusicBrainzEntity
-import ly.david.data.network.resourceUri
-import ly.david.data.network.toMusicBrainzEntity
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
+import ly.david.data.core.network.toMusicBrainzEntity
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold

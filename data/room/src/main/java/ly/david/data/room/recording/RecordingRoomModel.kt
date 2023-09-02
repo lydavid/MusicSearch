@@ -3,7 +3,7 @@ package ly.david.data.room.recording
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.Recording
+import ly.david.data.core.Recording
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.room.RoomModel
 

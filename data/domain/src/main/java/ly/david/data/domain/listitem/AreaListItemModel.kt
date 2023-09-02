@@ -1,11 +1,11 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Area
-import ly.david.data.LifeSpanUiModel
+import ly.david.data.core.Area
+import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.network.AreaMusicBrainzModel
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.release.AreaWithReleaseDate
-import ly.david.data.toLifeSpanUiModel
+import ly.david.data.core.toLifeSpanUiModel
 
 data class AreaListItemModel(
     override val id: String,

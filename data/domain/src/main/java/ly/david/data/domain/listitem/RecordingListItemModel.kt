@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.Recording
-import ly.david.data.getDisplayNames
+import ly.david.data.core.Recording
+import ly.david.data.core.getDisplayNames
 import ly.david.data.network.RecordingMusicBrainzModel
 import ly.david.data.room.recording.RecordingForListItem
 

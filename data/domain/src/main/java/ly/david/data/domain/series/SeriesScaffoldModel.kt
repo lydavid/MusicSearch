@@ -1,6 +1,6 @@
 package ly.david.data.domain.series
 
-import ly.david.data.Series
+import ly.david.data.core.Series
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.series.SeriesWithAllData

@@ -1,6 +1,6 @@
 package ly.david.data.domain.work
 
-import ly.david.data.Work
+import ly.david.data.core.Work
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.work.WorkWithAllData

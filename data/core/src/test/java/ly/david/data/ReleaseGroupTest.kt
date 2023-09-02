@@ -2,7 +2,9 @@ package ly.david.data
 
 import io.mockk.every
 import io.mockk.mockk
-import ly.david.data.network.NO_TYPE
+import ly.david.data.core.ReleaseGroupTypes
+import ly.david.data.core.getDisplayTypes
+import ly.david.data.core.network.NO_TYPE
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
