@@ -4,6 +4,7 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
 import javax.inject.Inject
 import ly.david.data.core.image.ImageUrlSaver
+import ly.david.data.core.logging.Logger
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
@@ -14,6 +15,7 @@ import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
 class ReleaseGroupImageRepository @Inject constructor(
     private val coverArtArchiveApi: CoverArtArchiveApi,
     private val imageUrlSaver: ImageUrlSaver,
+    private val logger: Logger,
 ) {
 
     /**
@@ -46,7 +48,7 @@ class ReleaseGroupImageRepository @Inject constructor(
                     largeUrl = ""
                 )
             } else {
-                // TODO: log
+                logger.e(ex)
             }
             ""
         }

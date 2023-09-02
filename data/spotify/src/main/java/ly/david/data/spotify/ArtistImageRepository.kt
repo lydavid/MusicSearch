@@ -4,6 +4,7 @@ import io.ktor.client.plugins.ClientRequestException
 import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.core.image.ImageUrlSaver
+import ly.david.data.core.logging.Logger
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.getLargeImageUrl
 import ly.david.data.spotify.api.getThumbnailImageUrl
@@ -15,6 +16,7 @@ import ly.david.data.spotify.api.getThumbnailImageUrl
 class ArtistImageRepository @Inject constructor(
     private val spotifyApi: SpotifyApi,
     private val imageUrlSaver: ImageUrlSaver,
+    private val logger: Logger,
 ) {
 
     /**
@@ -37,7 +39,7 @@ class ArtistImageRepository @Inject constructor(
             )
             largeUrl
         } catch (ex: ClientRequestException) {
-            // Just log, don't offer retry for these, cause it won't be successful
+            logger.e(ex)
             ""
         }
     }
