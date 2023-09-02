@@ -389,6 +389,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("label", labelId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -435,6 +436,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("artist", artistId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -451,6 +453,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
