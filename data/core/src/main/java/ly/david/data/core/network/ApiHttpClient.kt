@@ -6,11 +6,21 @@ import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import okhttp3.Cache
 
 object ApiHttpClient {
-    fun configAndCreate(block: HttpClientConfig<*>.() -> Unit): HttpClient {
+    fun configAndCreate(
+        cache: Cache,
+        block: HttpClientConfig<*>.() -> Unit,
+    ): HttpClient {
         return HttpClient(OkHttp) {
             expectSuccess = true
+
+            engine {
+                config {
+                    cache(cache)
+                }
+            }
 
             install(ContentNegotiation) {
                 json(

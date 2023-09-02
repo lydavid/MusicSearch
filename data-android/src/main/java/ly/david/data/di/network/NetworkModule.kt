@@ -1,8 +1,10 @@
 package ly.david.data.di.network
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.call.NoTransformationFoundException
@@ -14,6 +16,7 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
+import java.io.File
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
 import ly.david.data.core.network.ApiHttpClient
@@ -24,6 +27,7 @@ import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
 import ly.david.data.spotify.api.auth.SpotifyAuthState
+import okhttp3.Cache
 import timber.log.Timber
 
 @Module
@@ -32,8 +36,15 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): HttpClient {
-        return ApiHttpClient.configAndCreate {
+    fun provideHttpClient(
+        @ApplicationContext context: Context,
+    ): HttpClient {
+        return ApiHttpClient.configAndCreate(
+            cache = Cache(
+                directory = File(context.cacheDir, "ktor_okhttp_cache"),
+                maxSize = 50 * 1024 * 1024,
+            )
+        ) {
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { exception, _ ->
                     handleRecoverableException(exception)
