@@ -1,10 +1,11 @@
-package ly.david.data.room
+package ly.david.data.di.room
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ly.david.data.image.ImageUrlSaver
+import ly.david.data.room.MusicSearchDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)

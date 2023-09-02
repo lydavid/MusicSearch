@@ -7,11 +7,11 @@ import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import ly.david.data.coroutines.CoroutinesDispatchersModule
-import ly.david.data.coroutines.DefaultDispatcher
-import ly.david.data.coroutines.IoDispatcher
-import ly.david.data.coroutines.MainDispatcher
-import ly.david.data.coroutines.MainImmediateDispatcher
+import ly.david.data.di.coroutines.CoroutinesDispatchersModule
+import ly.david.data.di.coroutines.DefaultDispatcher
+import ly.david.data.di.coroutines.IoDispatcher
+import ly.david.data.di.coroutines.MainDispatcher
+import ly.david.data.di.coroutines.MainImmediateDispatcher
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Module

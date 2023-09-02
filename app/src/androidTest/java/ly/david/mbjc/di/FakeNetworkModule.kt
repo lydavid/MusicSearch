@@ -6,7 +6,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApi
-import ly.david.data.network.NetworkModule
+import ly.david.data.di.network.NetworkModule
 import ly.david.data.network.api.FakeCoverArtArchiveApi
 import ly.david.data.network.api.FakeMusicBrainzApi
 import ly.david.data.network.api.FakeSpotifyApi

@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ly.david.data.common.ApplicationScope
+import ly.david.data.di.ApplicationScope
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryRoomModel
 

@@ -1,4 +1,4 @@
-package ly.david.data.room
+package ly.david.data.di.room
 
 import android.content.Context
 import androidx.room.Room
@@ -9,6 +9,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.room.Migrations.MIGRATION_7_8
+import ly.david.data.room.MusicSearchDatabase
+import ly.david.data.room.MusicSearchRoomDatabase
 
 private const val DATABASE_NAME = "mbjc.db"
 

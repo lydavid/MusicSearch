@@ -1,4 +1,4 @@
-package ly.david.data.common
+package ly.david.data.di
 
 import javax.inject.Qualifier
 

@@ -1,4 +1,4 @@
-package ly.david.data.musicbrainz
+package ly.david.data.di.auth
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.data.common.ApplicationScope
+import ly.david.data.di.ApplicationScope
 import ly.david.data.network.MusicBrainzAuthState
 
 private val accessTokenPreference = stringPreferencesKey("MUSICBRAINZ_ACCESS_TOKEN")

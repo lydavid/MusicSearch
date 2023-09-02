@@ -18,8 +18,8 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.data.coroutines.IoDispatcher
-import ly.david.data.preferences.PreferencesDataStoreModule
+import ly.david.data.di.coroutines.IoDispatcher
+import ly.david.data.di.preferences.PreferencesDataStoreModule
 
 private const val TEST_SETTINGS_KEY = "test_settings"
 

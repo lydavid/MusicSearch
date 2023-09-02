@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.data.common.ApplicationScope
+import ly.david.data.di.ApplicationScope
 import ly.david.data.domain.history.HistorySortOption
 import ly.david.ui.common.R
 

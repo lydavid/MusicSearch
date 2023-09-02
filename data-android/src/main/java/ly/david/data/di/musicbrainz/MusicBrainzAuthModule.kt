@@ -1,4 +1,4 @@
-package ly.david.data.musicbrainz
+package ly.david.data.di.musicbrainz
 
 import android.content.Context
 import android.net.Uri

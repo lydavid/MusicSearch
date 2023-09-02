@@ -1,4 +1,4 @@
-package ly.david.data.preferences
+package ly.david.data.di.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.data.coroutines.IoDispatcher
+import ly.david.data.di.coroutines.IoDispatcher
 
 private const val SETTINGS_KEY = "settings"
 

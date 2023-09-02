@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
-import ly.david.data.room.DatabaseModule
+import ly.david.data.di.room.DatabaseModule
 import ly.david.data.room.MusicSearchDatabase
 import ly.david.data.room.MusicSearchRoomDatabase
 

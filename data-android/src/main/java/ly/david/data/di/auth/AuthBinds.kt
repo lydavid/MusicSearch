@@ -1,4 +1,4 @@
-package ly.david.data.auth
+package ly.david.data.di.auth
 
 import dagger.Binds
 import dagger.Module
@@ -6,8 +6,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import ly.david.data.network.MusicBrainzAuthState
-import ly.david.data.musicbrainz.MusicBrainzAuthStateImpl
-import ly.david.data.spotify.SpotifyAuthStateImpl
 import ly.david.data.spotify.api.auth.SpotifyAuthState
 
 @InstallIn(SingletonComponent::class)
