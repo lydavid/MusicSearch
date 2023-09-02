@@ -5,10 +5,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
+import io.ktor.client.call.NoTransformationFoundException
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
-import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.core.network.ApiHttpClient
+import ly.david.data.core.network.RecoverableNetworkException
+import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.network.MusicBrainzAuthState
 import ly.david.data.network.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi
@@ -22,7 +28,30 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideHttpClient(): HttpClient {
-        return ApiHttpClient.create()
+        return ApiHttpClient.configAndCreate {
+            HttpResponseValidator {
+                handleResponseExceptionWithRequest { exception, _ ->
+                    handleRecoverableException(exception)
+                }
+            }
+        }
+    }
+
+    private suspend fun handleRecoverableException(exception: Throwable) {
+        when (exception) {
+            is NoTransformationFoundException -> {
+                // TODO: should be logged
+                throw RecoverableNetworkException("Requested json but got xml")
+            }
+
+            is ClientRequestException -> {
+                val exceptionResponse = exception.response
+                if (exceptionResponse.status == HttpStatusCode.Unauthorized) {
+                    val exceptionResponseText = exceptionResponse.bodyAsText()
+                    throw RecoverableNetworkException(exceptionResponseText)
+                }
+            }
+        }
     }
 
     @Singleton
@@ -38,10 +67,12 @@ object NetworkModule {
     fun provideMusicBrainzApi(
         httpClient: HttpClient,
         musicBrainzAuthState: MusicBrainzAuthState,
-    ): MusicBrainzApi = MusicBrainzApi.create(
-        httpClient = httpClient,
-        musicBrainzAuthState = musicBrainzAuthState,
-    )
+    ): MusicBrainzApi {
+        return MusicBrainzApi.create(
+            httpClient = httpClient,
+            musicBrainzAuthState = musicBrainzAuthState,
+        )
+    }
 
     @Singleton
     @Provides
