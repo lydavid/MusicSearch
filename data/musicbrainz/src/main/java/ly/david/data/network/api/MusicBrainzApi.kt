@@ -1,7 +1,6 @@
 package ly.david.data.network.api
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.auth.Auth
@@ -28,12 +27,10 @@ private const val ACCEPT_VALUE = "application/json"
 interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, MusicBrainzUserApi {
     companion object {
         fun create(
-            engine: HttpClientEngine,
+            httpClient: HttpClient,
             musicBrainzAuthState: MusicBrainzAuthState,
         ): MusicBrainzApi {
-            val client = HttpClient(engine) {
-                expectSuccess = true
-
+            val extendedClient = httpClient.config {
                 HttpResponseValidator {
                     handleResponseExceptionWithRequest { exception, _ ->
                         val clientException =
@@ -87,7 +84,7 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
             }
 
             return MusicBrainzApiImpl(
-                httpClient = client,
+                httpClient = extendedClient,
             )
         }
     }
