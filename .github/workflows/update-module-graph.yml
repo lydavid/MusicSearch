@@ -20,6 +20,8 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
+      - run: sudo apt install graphviz
+
       - name: Regenerate module graph
         run: |
           ./gradlew graphModules \
