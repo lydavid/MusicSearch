@@ -21,10 +21,11 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Regenerate module graph
-        run: ./gradlew graphModules \
-          -PautoOpenGraph=false \
-          -PgraphOutputFormat=svg \
-          -PgraphOutputFilePath=$(pwd)/assets/module_dependency_graph.svg
+        run: |
+          ./gradlew graphModules \
+            -PautoOpenGraph=false \
+            -PgraphOutputFormat=svg \
+            -PgraphOutputFilePath=$(pwd)/assets/module_dependency_graph.svg
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
