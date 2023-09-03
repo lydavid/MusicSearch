@@ -15,7 +15,7 @@ interface SpotifyAuthApi {
             httpClient: HttpClient,
         ): SpotifyAuthApi {
             return SpotifyAuthApiImpl(
-                client = httpClient
+                httpClient = httpClient,
             )
         }
     }
@@ -28,14 +28,14 @@ interface SpotifyAuthApi {
 }
 
 class SpotifyAuthApiImpl(
-    private val client: HttpClient,
+    private val httpClient: HttpClient,
 ) : SpotifyAuthApi {
     override suspend fun getAccessToken(
         clientId: String,
         clientSecret: String,
         grantType: String,
     ): SpotifyAccessToken {
-        return client.submitForm(
+        return httpClient.submitForm(
             url = SPOTIFY_AUTH,
             formParameters = parameters {
                 append("client_id", clientId)

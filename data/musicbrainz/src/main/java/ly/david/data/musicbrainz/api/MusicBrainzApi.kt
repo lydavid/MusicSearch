@@ -18,6 +18,8 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
     companion object {
         fun create(
             httpClient: HttpClient,
+            musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+            musicBrainzOAuthApi: MusicBrainzOAuthApi,
             musicBrainzAuthState: MusicBrainzAuthState,
         ): MusicBrainzApi {
             val extendedClient = httpClient.config {
@@ -36,19 +38,47 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                             val refreshToken = musicBrainzAuthState.getRefreshToken()
                             if (refreshToken.isNullOrEmpty()) return@loadTokens null
 
-                            BearerTokens(accessToken, refreshToken)
+                            val newAccessTokenResponse = musicBrainzOAuthApi.getAccessToken(
+                                clientId = musicBrainzOAuthInfo.clientId,
+                                clientSecret = musicBrainzOAuthInfo.clientSecret,
+                                grantType = REFRESH_TOKEN,
+                                refreshToken = refreshToken,
+                            )
+                            val newAccessToken = newAccessTokenResponse.accessToken
+                            val newRefreshToken = newAccessTokenResponse.refreshToken
+
+                            musicBrainzAuthState.saveTokens(
+                                newAccessToken,
+                                newRefreshToken
+                            )
+
+                            BearerTokens(newAccessToken, newRefreshToken)
                         }
+                        // TODO: this block is never executed unlike for spotify
                         refreshTokens {
-                            // TODO: handle refresh
-                            val accessToken = musicBrainzAuthState.getAccessToken() ?: return@refreshTokens null
                             val refreshToken = musicBrainzAuthState.getRefreshToken() ?: return@refreshTokens null
-                            BearerTokens(accessToken, refreshToken)
+
+                            val newAccessTokenResponse = musicBrainzOAuthApi.getAccessToken(
+                                clientId = musicBrainzOAuthInfo.clientId,
+                                clientSecret = musicBrainzOAuthInfo.clientSecret,
+                                grantType = REFRESH_TOKEN,
+                                refreshToken = refreshToken,
+                            )
+                            val newAccessToken = newAccessTokenResponse.accessToken
+                            val newRefreshToken = newAccessTokenResponse.refreshToken
+
+                            musicBrainzAuthState.saveTokens(
+                                newAccessToken,
+                                newRefreshToken
+                            )
+
+                            BearerTokens(newAccessToken, newRefreshToken)
                         }
                         // TODO: handle collection browse, one way to do it is to split up the
                         //  api that requires auth and just return true here
-//                        sendWithoutRequest { request ->
-//                            request.url.pathSegments.contains(USER_INFO)
-//                        }
+                        sendWithoutRequest { request ->
+                            request.url.pathSegments.contains(USER_INFO)
+                        }
                     }
                 }
             }

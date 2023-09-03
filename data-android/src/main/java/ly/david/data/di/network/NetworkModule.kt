@@ -25,6 +25,8 @@ import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.MusicBrainzOAuthApi
+import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
 import ly.david.data.spotify.api.auth.SpotifyAuthState
@@ -96,12 +98,27 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideMusicBrainzOAuthApi(
+        httpClient: HttpClient,
+    ): MusicBrainzOAuthApi {
+        return MusicBrainzOAuthApi.create(
+            httpClient = httpClient,
+        )
+    }
+
+    // TODO: pass repository instead of all these params
+    @Singleton
+    @Provides
     fun provideMusicBrainzApi(
         httpClient: HttpClient,
+        musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
+        musicBrainzOAuthApi: MusicBrainzOAuthApi,
         musicBrainzAuthState: MusicBrainzAuthState,
     ): MusicBrainzApi {
         return MusicBrainzApi.create(
             httpClient = httpClient,
+            musicBrainzOAuthInfo = musicBrainzOAuthInfo,
+            musicBrainzOAuthApi = musicBrainzOAuthApi,
             musicBrainzAuthState = musicBrainzAuthState,
         )
     }
