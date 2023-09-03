@@ -1,12 +1,12 @@
 package ly.david.data.test
 
 import ly.david.data.core.AreaType
-import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.network.Direction
+import ly.david.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.data.musicbrainz.Direction
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.api.BrowseAreasResponse
-import ly.david.data.network.api.SearchAreasResponse
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseAreasResponse
+import ly.david.data.musicbrainz.api.SearchAreasResponse
 
 val canada = AreaMusicBrainzModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",

@@ -10,7 +10,7 @@ import ly.david.data.di.network.NetworkModule
 import ly.david.data.test.api.FakeCoverArtArchiveApi
 import ly.david.data.test.api.FakeMusicBrainzApi
 import ly.david.data.test.api.FakeSpotifyApi
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAccessToken
 import ly.david.data.spotify.api.auth.SpotifyAuthApi

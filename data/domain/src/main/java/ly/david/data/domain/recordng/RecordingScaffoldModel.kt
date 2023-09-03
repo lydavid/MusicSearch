@@ -6,7 +6,7 @@ import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModels
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.network.RecordingMusicBrainzModel
+import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.room.recording.RecordingWithAllData
 
 data class RecordingScaffoldModel(

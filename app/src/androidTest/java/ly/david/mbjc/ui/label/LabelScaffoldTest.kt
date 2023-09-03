@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.label.LabelRepository
 import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.network.LabelMusicBrainzModel
+import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.test.elektra
 import ly.david.data.test.elektraMusicGroup
 import ly.david.data.test.underPressure

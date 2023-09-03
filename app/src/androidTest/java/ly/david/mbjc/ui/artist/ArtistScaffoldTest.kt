@@ -22,7 +22,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.core.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.network.ArtistMusicBrainzModel
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.test.bandAid
 import ly.david.data.test.carlosAlomar
 import ly.david.data.test.davidBowie

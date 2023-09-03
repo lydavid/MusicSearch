@@ -23,11 +23,11 @@ import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.network.MusicBrainzAuthState
+import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.RecoverableNetworkException
-import ly.david.data.network.api.MusicBrainzApi
-import ly.david.data.network.api.MusicBrainzOAuthInfo
+import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
 import ly.david.data.core.network.resourceUriPlural
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.room.collection.CollectionDao

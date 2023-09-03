@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import ly.david.data.network.MusicBrainzAuthState
+import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.spotify.api.auth.SpotifyAuthState
 
 @InstallIn(SingletonComponent::class)

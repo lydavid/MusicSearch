@@ -3,7 +3,7 @@ package ly.david.data.domain.listitem
 import ly.david.data.core.Coordinates
 import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.core.Place
-import ly.david.data.network.PlaceMusicBrainzModel
+import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.room.place.PlaceRoomModel
 import ly.david.data.core.toLifeSpanUiModel
 

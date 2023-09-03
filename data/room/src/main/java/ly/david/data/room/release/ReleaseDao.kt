@@ -3,7 +3,7 @@ package ly.david.data.room.release
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.room.BaseDao
 import ly.david.data.room.artist.credit.ArtistCreditDao
 

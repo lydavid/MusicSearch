@@ -5,9 +5,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.api.BrowseReleasesResponse
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseReleasesResponse
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.label.releases.toReleaseLabels
 import ly.david.data.room.relation.RelationDao

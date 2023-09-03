@@ -3,9 +3,9 @@ package ly.david.data.room.collection
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.network.CollectionMusicBrainzModel
+import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.getCount
+import ly.david.data.musicbrainz.getCount
 import ly.david.data.room.RoomModel
 
 @Entity(

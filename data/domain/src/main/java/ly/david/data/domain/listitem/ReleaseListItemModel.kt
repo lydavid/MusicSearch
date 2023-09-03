@@ -5,7 +5,7 @@ import ly.david.data.core.getDisplayNames
 import ly.david.data.core.getFormatsForDisplay
 import ly.david.data.core.getTracksForDisplay
 import ly.david.data.core.network.CoverArtArchiveUiModel
-import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.core.network.TextRepresentationUiModel
 import ly.david.data.core.network.toCoverArtArchiveUiModel
 import ly.david.data.core.network.toTextRepresentationUiModel

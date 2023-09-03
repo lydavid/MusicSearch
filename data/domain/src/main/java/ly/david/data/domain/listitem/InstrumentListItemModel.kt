@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Instrument
-import ly.david.data.network.InstrumentMusicBrainzModel
+import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.room.instrument.InstrumentRoomModel
 
 data class InstrumentListItemModel(

@@ -5,10 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
-import ly.david.data.network.AreaMusicBrainzModel
+import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.api.BrowseAreasResponse
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.BrowseAreasResponse
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.toAreaRoomModel

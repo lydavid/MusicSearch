@@ -9,9 +9,9 @@ import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.data.core.getDisplayNames
 import ly.david.data.core.getLifeSpanForDisplay
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.getFormattedAttributesForDisplay
-import ly.david.data.network.getHeader
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.getFormattedAttributesForDisplay
+import ly.david.data.musicbrainz.getHeader
 import ly.david.data.room.RoomModel
 
 // TODO: [low priority] recording/a53c97d7-5501-443b-baa3-cb282fc64275 returns "The Sound Factory West" twice.

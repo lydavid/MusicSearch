@@ -1,14 +1,14 @@
 package ly.david.data.test
 
 import ly.david.data.core.LifeSpanMusicBrainzModel
-import ly.david.data.network.ArtistCreditMusicBrainzModel
-import ly.david.data.network.ArtistMusicBrainzModel
-import ly.david.data.network.Direction
+import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
+import ly.david.data.musicbrainz.Direction
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.UrlMusicBrainzModel
-import ly.david.data.network.api.BrowseArtistsResponse
-import ly.david.data.network.api.SearchArtistsResponse
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.UrlMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseArtistsResponse
+import ly.david.data.musicbrainz.api.SearchArtistsResponse
 
 val bandAid = ArtistMusicBrainzModel(
     id = "0ecaa896-58fa-4dca-b53d-8da7bc5f59c5",

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.di.ApplicationScope
-import ly.david.data.network.MusicBrainzAuthState
+import ly.david.data.musicbrainz.MusicBrainzAuthState
 
 private val accessTokenPreference = stringPreferencesKey("MUSICBRAINZ_ACCESS_TOKEN")
 private val refreshTokenPreference = stringPreferencesKey("MUSICBRAINZ_REFRESH_TOKEN")

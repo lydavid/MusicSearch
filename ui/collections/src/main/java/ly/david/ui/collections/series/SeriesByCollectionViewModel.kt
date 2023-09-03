@@ -6,9 +6,9 @@ import javax.inject.Inject
 import ly.david.data.domain.listitem.SeriesListItemModel
 import ly.david.data.domain.listitem.toSeriesListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.SeriesMusicBrainzModel
-import ly.david.data.network.api.BrowseSeriesResponse
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.SeriesMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseSeriesResponse
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RelationDao

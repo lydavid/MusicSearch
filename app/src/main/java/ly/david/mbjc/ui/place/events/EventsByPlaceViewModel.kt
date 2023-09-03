@@ -5,10 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.domain.listitem.toEventListItemModel
-import ly.david.data.network.EventMusicBrainzModel
+import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.api.BrowseEventsResponse
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.BrowseEventsResponse
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.event.EventDao
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.event.toEventRoomModel

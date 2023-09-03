@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import ly.david.data.core.Medium
-import ly.david.data.network.MediumMusicBrainzModel
+import ly.david.data.musicbrainz.MediumMusicBrainzModel
 import ly.david.data.room.release.ReleaseRoomModel
 
 @Entity(

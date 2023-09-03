@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.data.network.Direction
+import ly.david.data.musicbrainz.Direction
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.api.BrowseRecordingsResponse
-import ly.david.data.network.api.SearchRecordingsResponse
+import ly.david.data.musicbrainz.RecordingMusicBrainzModel
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
+import ly.david.data.musicbrainz.api.SearchRecordingsResponse
 
 val underPressureRecording = RecordingMusicBrainzModel(
     id = "32c7e292-14f1-4080-bddf-ef852e0a4c59",

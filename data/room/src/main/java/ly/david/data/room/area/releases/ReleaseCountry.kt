@@ -3,7 +3,7 @@ package ly.david.data.room.area.releases
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.room.release.ReleaseRoomModel
 
 // MB has a country_area table between this and area.

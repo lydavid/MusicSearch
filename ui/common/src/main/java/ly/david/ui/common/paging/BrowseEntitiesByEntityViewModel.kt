@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.MusicBrainzModel
-import ly.david.data.network.api.Browsable
+import ly.david.data.musicbrainz.MusicBrainzModel
+import ly.david.data.musicbrainz.api.Browsable
 import ly.david.data.room.RoomModel
 import ly.david.data.room.relation.BrowseEntityCount
 import ly.david.data.room.relation.RelationDao

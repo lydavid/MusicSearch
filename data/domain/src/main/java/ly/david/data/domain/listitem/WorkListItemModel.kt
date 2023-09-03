@@ -3,7 +3,7 @@ package ly.david.data.domain.listitem
 import ly.david.data.core.Work
 import ly.david.data.domain.work.WorkAttributeUiModel
 import ly.david.data.domain.work.toWorkAttributeUiModel
-import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.room.work.WorkRoomModel
 
 // TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name

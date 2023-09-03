@@ -21,11 +21,11 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.release.ReleaseRepository
-import ly.david.data.network.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.test.davidBowieArtistCredit
 import ly.david.data.test.elektraMusicGroup
 import ly.david.data.test.fakeReleaseEvent
-import ly.david.data.network.getHeader
+import ly.david.data.musicbrainz.getHeader
 import ly.david.data.test.queenArtistCredit
 import ly.david.data.test.soulBrotherTrack
 import ly.david.data.test.underPressure

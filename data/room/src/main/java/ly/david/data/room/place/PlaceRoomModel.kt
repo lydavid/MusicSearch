@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import ly.david.data.core.CoordinatesRoomModel
 import ly.david.data.core.LifeSpanRoomModel
 import ly.david.data.core.Place
-import ly.david.data.network.PlaceMusicBrainzModel
+import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.room.RoomModel
 import ly.david.data.core.toCoordinatesRoomModel
 import ly.david.data.core.toLifeSpanRoomModel

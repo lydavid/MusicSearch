@@ -1,19 +1,19 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Identifiable
-import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.network.ArtistMusicBrainzModel
-import ly.david.data.network.EventMusicBrainzModel
-import ly.david.data.network.GenreMusicBrainzModel
-import ly.david.data.network.InstrumentMusicBrainzModel
-import ly.david.data.network.LabelMusicBrainzModel
-import ly.david.data.network.MusicBrainzModel
-import ly.david.data.network.PlaceMusicBrainzModel
-import ly.david.data.network.RecordingMusicBrainzModel
-import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.SeriesMusicBrainzModel
-import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
+import ly.david.data.musicbrainz.EventMusicBrainzModel
+import ly.david.data.musicbrainz.GenreMusicBrainzModel
+import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
+import ly.david.data.musicbrainz.LabelMusicBrainzModel
+import ly.david.data.musicbrainz.MusicBrainzModel
+import ly.david.data.musicbrainz.PlaceMusicBrainzModel
+import ly.david.data.musicbrainz.RecordingMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.SeriesMusicBrainzModel
+import ly.david.data.musicbrainz.WorkMusicBrainzModel
 
 /**
  * Data that can be displayed in lists should extend this.

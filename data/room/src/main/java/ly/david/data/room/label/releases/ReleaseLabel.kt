@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import ly.david.data.network.LabelInfo
+import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.release.ReleaseRoomModel
 

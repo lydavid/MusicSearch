@@ -1,8 +1,8 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Label
-import ly.david.data.network.LabelInfo
-import ly.david.data.network.LabelMusicBrainzModel
+import ly.david.data.musicbrainz.LabelInfo
+import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.release.LabelWithCatalog
 

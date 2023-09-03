@@ -2,7 +2,7 @@ package ly.david.data.domain.relation
 
 import javax.inject.Inject
 import javax.inject.Singleton
-import ly.david.data.network.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.room.relation.HasUrls
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.relation.RelationRoomModel

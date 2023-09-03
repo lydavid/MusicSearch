@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Work
-import ly.david.data.network.WorkMusicBrainzModel
+import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.room.RoomModel
 
 @Entity(tableName = "work")

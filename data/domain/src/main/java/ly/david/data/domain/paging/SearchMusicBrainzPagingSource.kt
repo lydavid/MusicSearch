@@ -7,11 +7,11 @@ import kotlinx.coroutines.delay
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.toListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.MusicBrainzModel
+import ly.david.data.musicbrainz.MusicBrainzModel
 import ly.david.data.core.network.RecoverableNetworkException
-import ly.david.data.network.api.DELAY_PAGED_API_CALLS_MS
-import ly.david.data.network.api.STARTING_OFFSET
-import ly.david.data.network.api.SearchApi
+import ly.david.data.musicbrainz.api.DELAY_PAGED_API_CALLS_MS
+import ly.david.data.musicbrainz.api.STARTING_OFFSET
+import ly.david.data.musicbrainz.api.SearchApi
 
 /**
  * This is not a [RemoteMediator] compared to [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].

@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Genre
-import ly.david.data.network.GenreMusicBrainzModel
+import ly.david.data.musicbrainz.GenreMusicBrainzModel
 
 data class GenreListItemModel(
     override val id: String,

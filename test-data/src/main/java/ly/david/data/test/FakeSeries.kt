@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.data.network.Direction
+import ly.david.data.musicbrainz.Direction
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.SeriesMusicBrainzModel
-import ly.david.data.network.api.BrowseSeriesResponse
-import ly.david.data.network.api.SearchSeriesResponse
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.SeriesMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseSeriesResponse
+import ly.david.data.musicbrainz.api.SearchSeriesResponse
 
 val fakeSeries = SeriesMusicBrainzModel(
     id = "series1",

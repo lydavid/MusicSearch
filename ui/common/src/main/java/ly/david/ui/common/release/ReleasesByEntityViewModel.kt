@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.domain.listitem.toReleaseListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.api.BrowseReleasesResponse
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.room.relation.BrowseEntityCount
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.release.ReleaseDao

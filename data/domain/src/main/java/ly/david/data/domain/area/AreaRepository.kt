@@ -4,10 +4,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
-import ly.david.data.network.AreaMusicBrainzModel
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.toAreaRoomModel

@@ -29,7 +29,7 @@ import ly.david.data.domain.listitem.toSearchHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.history.search.SearchHistoryDao
 import ly.david.data.room.history.search.SearchHistoryRoomModel
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty

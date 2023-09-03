@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import ly.david.data.core.ArtistCreditName
-import ly.david.data.network.ArtistCreditMusicBrainzModel
+import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
 
 /**
  * Represents a single name in an [ArtistCredit].

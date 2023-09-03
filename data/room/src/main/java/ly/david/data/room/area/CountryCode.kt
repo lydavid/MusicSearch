@@ -3,7 +3,7 @@ package ly.david.data.room.area
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.network.AreaMusicBrainzModel
+import ly.david.data.musicbrainz.AreaMusicBrainzModel
 
 /**
  * Represents a [country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).

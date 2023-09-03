@@ -9,8 +9,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ly.david.data.core.AppInfo
 import ly.david.data.BuildConfig
-import ly.david.data.network.api.MUSIC_BRAINZ_BASE_URL
-import ly.david.data.network.api.MusicBrainzOAuthInfo
+import ly.david.data.musicbrainz.api.MUSIC_BRAINZ_BASE_URL
+import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration

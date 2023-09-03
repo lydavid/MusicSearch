@@ -1,12 +1,12 @@
 package ly.david.data.test
 
-import ly.david.data.network.Direction
-import ly.david.data.network.LabelInfo
-import ly.david.data.network.LabelMusicBrainzModel
+import ly.david.data.musicbrainz.Direction
+import ly.david.data.musicbrainz.LabelInfo
+import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.api.BrowseLabelsResponse
-import ly.david.data.network.api.SearchLabelsResponse
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseLabelsResponse
+import ly.david.data.musicbrainz.api.SearchLabelsResponse
 
 val elektraMusicGroup = LabelMusicBrainzModel(
     id = "c85c94c0-f83b-42f5-bac0-6b89720de387",

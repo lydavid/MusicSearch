@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.series.SeriesRepository
 import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.network.SeriesMusicBrainzModel
+import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.test.fakeInstrument
 import ly.david.data.test.fakeSeries
 import ly.david.mbjc.MainActivityTest

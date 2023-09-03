@@ -7,10 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ly.david.data.network.MusicBrainzAuthState
+import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.api.CollectionApi.Companion.USER_COLLECTIONS
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.api.CollectionApi.Companion.USER_COLLECTIONS
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.collection.toCollectionRoomModel

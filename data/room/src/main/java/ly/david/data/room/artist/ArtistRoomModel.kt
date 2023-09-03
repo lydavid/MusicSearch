@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Artist
 import ly.david.data.core.LifeSpanRoomModel
-import ly.david.data.network.ArtistMusicBrainzModel
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.room.RoomModel
 import ly.david.data.core.toLifeSpanRoomModel
 

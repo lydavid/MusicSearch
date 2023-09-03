@@ -2,7 +2,7 @@ package ly.david.data.domain.listitem
 
 import ly.david.data.core.Artist
 import ly.david.data.core.LifeSpanUiModel
-import ly.david.data.network.ArtistMusicBrainzModel
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.room.artist.ArtistRoomModel
 import ly.david.data.core.toLifeSpanUiModel
 

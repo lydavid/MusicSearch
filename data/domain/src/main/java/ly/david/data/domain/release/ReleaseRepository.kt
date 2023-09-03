@@ -5,10 +5,10 @@ import javax.inject.Singleton
 import ly.david.data.core.AreaType
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
-import ly.david.data.network.RelationMusicBrainzModel
-import ly.david.data.network.ReleaseMusicBrainzModel
-import ly.david.data.network.api.LookupApi
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.api.LookupApi
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.releases.ReleaseCountryDao

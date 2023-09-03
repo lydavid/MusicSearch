@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Instrument
-import ly.david.data.network.InstrumentMusicBrainzModel
+import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.room.RoomModel
 
 @Entity(tableName = "instrument")

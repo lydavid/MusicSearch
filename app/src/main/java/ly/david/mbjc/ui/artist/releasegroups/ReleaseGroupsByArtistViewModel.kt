@@ -3,9 +3,9 @@ package ly.david.mbjc.ui.artist.releasegroups
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.network.ReleaseGroupMusicBrainzModel
-import ly.david.data.network.api.BrowseReleaseGroupsResponse
-import ly.david.data.network.api.MusicBrainzApi
+import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
+import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
+import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.relation.RelationDao

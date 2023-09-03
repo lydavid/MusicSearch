@@ -12,7 +12,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
-import ly.david.data.network.ReleaseGroupMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.test.davidBowieArtistCredit
 import ly.david.data.test.hotSpaceReleaseGroup
 import ly.david.data.test.queenArtistCredit
