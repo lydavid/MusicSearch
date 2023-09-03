@@ -1,7 +1,7 @@
 plugins {
     id("ly.david.android.library")
     id("ly.david.android.compose")
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
 
@@ -28,7 +28,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
     testImplementation(libs.coil.compose)

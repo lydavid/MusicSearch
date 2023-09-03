@@ -1,7 +1,6 @@
 plugins {
     id("ly.david.android.library")
     id("ly.david.android.compose")
-    id("kotlin-kapt")
     alias(libs.plugins.paparazzi)
 }
 

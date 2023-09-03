@@ -2,7 +2,6 @@ import java.util.Properties
 
 plugins {
     id("ly.david.android.library")
-    id("kotlin-kapt")
     alias(libs.plugins.ksp)
 }
 
@@ -102,8 +101,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
-    kaptTest(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
+    kspTest(libs.hilt.android.compiler)
     testImplementation(libs.hilt.android.testing)
 
     implementation(platform(libs.ktor.bom))

@@ -4,8 +4,8 @@ import java.util.Properties
 plugins {
     id("ly.david.android.application")
     id("ly.david.android.compose")
-    id("kotlin-kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
 
@@ -113,8 +113,8 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
+    kspAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.hilt.android.testing)
 
     testImplementation(libs.junit)
