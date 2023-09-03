@@ -1,12 +1,12 @@
 package ly.david.data.musicbrainz.api
 
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
-import io.ktor.http.userAgent
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
@@ -23,8 +23,10 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
             val extendedClient = httpClient.config {
                 defaultRequest {
                     url(MUSIC_BRAINZ_API_BASE_URL)
-                    userAgent(USER_AGENT_VALUE)
                     header(ACCEPT, ACCEPT_VALUE)
+                }
+                install(UserAgent) {
+                    agent = USER_AGENT_VALUE
                 }
                 install(Auth) {
                     bearer {
