@@ -7,5 +7,5 @@ android {
 }
 
 dependencies {
-    api(projects.data)
+    implementation(projects.data)
 }
