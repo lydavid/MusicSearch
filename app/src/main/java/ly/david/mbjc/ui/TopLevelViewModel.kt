@@ -1,8 +1,5 @@
 package ly.david.mbjc.ui
 
-import android.content.Context
-import android.content.Intent
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -19,16 +16,16 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.RecoverableNetworkException
+import ly.david.data.core.network.resourceUriPlural
 import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
-import ly.david.data.core.network.resourceUriPlural
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionEntityDao
@@ -37,36 +34,11 @@ import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
-import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
 import timber.log.Timber
-
-class MusicBrainzLoginContract(
-    private val authService: AuthorizationService,
-    private val authRequest: AuthorizationRequest,
-) : ActivityResultContract<Unit, MusicBrainzLoginContract.Result>() {
-
-    data class Result(
-        val response: AuthorizationResponse?,
-        val exception: AuthorizationException?,
-    )
-
-    override fun createIntent(context: Context, input: Unit): Intent {
-        return authService.getAuthorizationRequestIntent(authRequest)
-    }
-
-    override fun parseResult(resultCode: Int, intent: Intent?): Result {
-        val response = intent?.run { AuthorizationResponse.fromIntent(intent) }
-        val exception = AuthorizationException.fromIntent(intent)
-        return Result(
-            response = response,
-            exception = exception
-        )
-    }
-}
 
 @HiltViewModel
 internal class TopLevelViewModel @Inject constructor(
