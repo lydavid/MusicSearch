@@ -3,7 +3,6 @@ package ly.david.data.musicbrainz
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.data.core.Artist
-import ly.david.data.core.LifeSpanMusicBrainzModel
 
 @Serializable
 data class ArtistMusicBrainzModel(

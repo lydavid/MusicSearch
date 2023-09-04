@@ -5,10 +5,10 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Area
-import ly.david.data.core.LifeSpanRoomModel
+import ly.david.data.room.LifeSpanRoomModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.core.toLifeSpanRoomModel
+import ly.david.data.room.toLifeSpanRoomModel
 
 @Entity(tableName = "area")
 data class AreaRoomModel(

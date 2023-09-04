@@ -1,11 +1,11 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Coordinates
-import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.core.Place
+import ly.david.data.domain.LifeSpanUiModel
+import ly.david.data.domain.toLifeSpanUiModel
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.room.place.PlaceRoomModel
-import ly.david.data.core.toLifeSpanUiModel
 
 data class PlaceListItemModel(
     override val id: String,

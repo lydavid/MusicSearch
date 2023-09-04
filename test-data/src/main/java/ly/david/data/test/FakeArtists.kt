@@ -1,10 +1,10 @@
 package ly.david.data.test
 
-import ly.david.data.core.LifeSpanMusicBrainzModel
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.Direction
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.musicbrainz.LifeSpanMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.UrlMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseArtistsResponse

@@ -1,8 +1,8 @@
 package ly.david.data.domain.artist
 
 import ly.david.data.core.Artist
-import ly.david.data.core.LifeSpanUiModel
-import ly.david.data.core.toLifeSpanUiModel
+import ly.david.data.domain.LifeSpanUiModel
+import ly.david.data.domain.toLifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.artist.ArtistWithAllData

@@ -1,11 +1,11 @@
 package ly.david.data.domain.event
 
 import ly.david.data.core.Event
-import ly.david.data.core.LifeSpanUiModel
+import ly.david.data.domain.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
+import ly.david.data.domain.toLifeSpanUiModel
 import ly.david.data.room.event.EventWithAllData
-import ly.david.data.core.toLifeSpanUiModel
 
 data class EventScaffoldModel(
     override val id: String,

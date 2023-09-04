@@ -9,7 +9,7 @@ import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.room.place.PlaceWithAllData
 import ly.david.data.core.toCoordinatesUiModel
-import ly.david.data.core.toLifeSpanUiModel
+import ly.david.data.domain.toLifeSpanUiModel
 
 data class PlaceScaffoldModel(
     override val id: String,
