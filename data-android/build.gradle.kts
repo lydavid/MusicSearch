@@ -104,7 +104,7 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     kspTest(libs.hilt.android.compiler)
     testImplementation(libs.hilt.android.testing)
-
+    implementation(libs.kotlinx.datetime)
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
 
