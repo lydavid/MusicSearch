@@ -1,8 +1,8 @@
-package ly.david.data.domain
+package ly.david.data.domain.common
 
 import ly.david.data.core.LifeSpan
 import ly.david.data.musicbrainz.LifeSpanMusicBrainzModel
-import ly.david.data.room.LifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 
 data class LifeSpanUiModel(
     override val begin: String? = null,

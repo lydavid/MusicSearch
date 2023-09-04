@@ -1,10 +1,10 @@
 package ly.david.data.domain.event
 
 import ly.david.data.core.Event
-import ly.david.data.domain.LifeSpanUiModel
+import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.toLifeSpanUiModel
+import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.room.event.EventWithAllData
 
 data class EventScaffoldModel(

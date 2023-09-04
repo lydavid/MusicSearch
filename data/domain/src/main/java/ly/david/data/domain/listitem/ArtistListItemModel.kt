@@ -1,8 +1,8 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Artist
-import ly.david.data.domain.LifeSpanUiModel
-import ly.david.data.domain.toLifeSpanUiModel
+import ly.david.data.domain.common.LifeSpanUiModel
+import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.room.artist.ArtistRoomModel
 

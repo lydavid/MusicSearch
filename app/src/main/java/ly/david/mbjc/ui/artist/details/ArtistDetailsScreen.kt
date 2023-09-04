@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.LifeSpanUiModel
+import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText

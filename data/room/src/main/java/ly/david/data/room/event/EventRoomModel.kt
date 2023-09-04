@@ -5,10 +5,10 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Event
-import ly.david.data.room.LifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.toLifeSpanRoomModel
+import ly.david.data.room.common.toLifeSpanRoomModel
 
 @Entity(tableName = "event")
 data class EventRoomModel(

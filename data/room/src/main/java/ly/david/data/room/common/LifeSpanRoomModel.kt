@@ -1,4 +1,4 @@
-package ly.david.data.room
+package ly.david.data.room.common
 
 import ly.david.data.core.LifeSpan
 import ly.david.data.musicbrainz.LifeSpanMusicBrainzModel

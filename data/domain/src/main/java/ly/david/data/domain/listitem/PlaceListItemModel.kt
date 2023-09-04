@@ -2,8 +2,8 @@ package ly.david.data.domain.listitem
 
 import ly.david.data.core.Coordinates
 import ly.david.data.core.Place
-import ly.david.data.domain.LifeSpanUiModel
-import ly.david.data.domain.toLifeSpanUiModel
+import ly.david.data.domain.common.LifeSpanUiModel
+import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.room.place.PlaceRoomModel
 

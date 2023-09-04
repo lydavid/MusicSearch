@@ -6,9 +6,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Place
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
-import ly.david.data.room.LifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.toLifeSpanRoomModel
+import ly.david.data.room.common.toLifeSpanRoomModel
 
 @Entity(tableName = "place")
 data class PlaceRoomModel(

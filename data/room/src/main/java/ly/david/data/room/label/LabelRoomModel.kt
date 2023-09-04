@@ -5,11 +5,11 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Label
-import ly.david.data.room.LifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.toLifeSpanRoomModel
+import ly.david.data.room.common.toLifeSpanRoomModel
 
 @Entity(tableName = "label")
 data class LabelRoomModel(

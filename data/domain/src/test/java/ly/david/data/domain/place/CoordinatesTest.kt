@@ -1,7 +1,5 @@
-package ly.david.data
+package ly.david.data.domain.place
 
-import ly.david.data.core.CoordinatesUiModel
-import ly.david.data.core.formatForDisplay
 import org.junit.Assert
 import org.junit.Test
 

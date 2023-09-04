@@ -15,7 +15,7 @@ import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.core.getLifeSpanForDisplay
-import ly.david.data.domain.LifeSpanUiModel
+import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
