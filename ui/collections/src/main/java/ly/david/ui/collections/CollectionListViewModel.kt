@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -25,7 +25,7 @@ class CollectionListViewModel @Inject constructor(
     val appPreferences: AppPreferences,
     private val pagedList: CollectionPagedList,
     private val musicBrainzApi: MusicBrainzApi,
-    private val musicBrainzAuthState: MusicBrainzAuthState,
+    private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val collectionDao: CollectionDao,
     private val relationDao: RelationDao,
 ) : ViewModel(),
@@ -40,7 +40,7 @@ class CollectionListViewModel @Inject constructor(
     fun getUsernameThenLoadCollections() {
         viewModelScope.launch {
             // Hack: We're using username in place of a UUID
-            musicBrainzAuthState.username.collectLatest { username ->
+            musicBrainzAuthStore.username.collectLatest { username ->
                 if (username.isEmpty()) {
                     // This id lets the rest of the functions know to avoid network requests
                     loadPagedEntities(ONLY_GIVE_ME_LOCAL_COLLECTIONS)

@@ -5,17 +5,17 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import ly.david.data.musicbrainz.MusicBrainzAuthState
-import ly.david.data.spotify.api.auth.SpotifyAuthState
+import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
+import ly.david.data.spotify.api.auth.SpotifyAuthStore
 
 @InstallIn(SingletonComponent::class)
 @Module
 internal abstract class AuthBinds {
     @Singleton
     @Binds
-    abstract fun provideMusicBrainzAuthState(bind: MusicBrainzAuthStateImpl): MusicBrainzAuthState
+    abstract fun provideMusicBrainzAuthStore(bind: MusicBrainzAuthStoreImpl): MusicBrainzAuthStore
 
     @Singleton
     @Binds
-    abstract fun provideSpotifyOAuth(bind: SpotifyAuthStateImpl): SpotifyAuthState
+    abstract fun provideSpotifyAuthStore(bind: SpotifyAuthStoreImpl): SpotifyAuthStore
 }

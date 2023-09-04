@@ -44,8 +44,8 @@ fun SettingsScaffold(
 
         val context = LocalContext.current
 
-        val username by viewModel.musicBrainzAuthState.username.collectAsState(initial = "")
-        val accessToken by viewModel.musicBrainzAuthState.accessToken.collectAsState(initial = null)
+        val username by viewModel.musicBrainzAuthStore.username.collectAsState(initial = "")
+        val accessToken by viewModel.musicBrainzAuthStore.accessToken.collectAsState(initial = null)
         val theme by viewModel.appPreferences.theme.collectAsState(initial = AppPreferences.Theme.SYSTEM)
         val useMaterialYou by viewModel.appPreferences.useMaterialYou.collectAsState(initial = true)
 

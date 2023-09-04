@@ -7,7 +7,7 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
-import ly.david.data.musicbrainz.MusicBrainzAuthState
+import ly.david.data.musicbrainz.auth.MusicBrainzAuthRepository
 
 private const val MUSIC_BRAINZ_API_BASE_URL = "$MUSIC_BRAINZ_BASE_URL/ws/2/"
 private const val USER_AGENT_VALUE = "MusicSearch (https://github.com/lydavid/MusicSearch)"
@@ -18,9 +18,7 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
     companion object {
         fun create(
             httpClient: HttpClient,
-            musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
-            musicBrainzOAuthApi: MusicBrainzOAuthApi,
-            musicBrainzAuthState: MusicBrainzAuthState,
+            musicBrainzAuthRepository: MusicBrainzAuthRepository,
         ): MusicBrainzApi {
             val extendedClient = httpClient.config {
                 defaultRequest {
@@ -33,46 +31,15 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            val accessToken = musicBrainzAuthState.getAccessToken()
-                            if (accessToken.isNullOrEmpty()) return@loadTokens null
-                            val refreshToken = musicBrainzAuthState.getRefreshToken()
-                            if (refreshToken.isNullOrEmpty()) return@loadTokens null
-
-                            val newAccessTokenResponse = musicBrainzOAuthApi.getAccessToken(
-                                clientId = musicBrainzOAuthInfo.clientId,
-                                clientSecret = musicBrainzOAuthInfo.clientSecret,
-                                grantType = REFRESH_TOKEN,
-                                refreshToken = refreshToken,
-                            )
-                            val newAccessToken = newAccessTokenResponse.accessToken
-                            val newRefreshToken = newAccessTokenResponse.refreshToken
-
-                            musicBrainzAuthState.saveTokens(
-                                newAccessToken,
-                                newRefreshToken
-                            )
-
-                            BearerTokens(newAccessToken, newRefreshToken)
+                            musicBrainzAuthRepository.getAuthState()?.let {
+                                BearerTokens(it, "")
+                            }
                         }
                         // TODO: this block is never executed unlike for spotify
                         refreshTokens {
-                            val refreshToken = musicBrainzAuthState.getRefreshToken() ?: return@refreshTokens null
-
-                            val newAccessTokenResponse = musicBrainzOAuthApi.getAccessToken(
-                                clientId = musicBrainzOAuthInfo.clientId,
-                                clientSecret = musicBrainzOAuthInfo.clientSecret,
-                                grantType = REFRESH_TOKEN,
-                                refreshToken = refreshToken,
-                            )
-                            val newAccessToken = newAccessTokenResponse.accessToken
-                            val newRefreshToken = newAccessTokenResponse.refreshToken
-
-                            musicBrainzAuthState.saveTokens(
-                                newAccessToken,
-                                newRefreshToken
-                            )
-
-                            BearerTokens(newAccessToken, newRefreshToken)
+                            musicBrainzAuthRepository.getAuthState()?.let {
+                                BearerTokens(it, "")
+                            }
                         }
                         // TODO: handle collection browse, one way to do it is to split up the
                         //  api that requires auth and just return true here

@@ -4,15 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.submitForm
 import io.ktor.http.parameters
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-// TODO: could be generic and reuse for mb and spotify
-@Serializable
-data class MusicBrainzOAuthAccessToken(
-    @SerialName("access_token") val accessToken: String,
-    @SerialName("refresh_token") val refreshToken: String,
-)
+import ly.david.data.musicbrainz.auth.MusicBrainzOAuthResponse
 
 internal const val REFRESH_TOKEN = "refresh_token"
 
@@ -33,7 +25,7 @@ interface MusicBrainzOAuthApi {
         clientSecret: String,
         grantType: String,
         refreshToken: String,
-    ): MusicBrainzOAuthAccessToken
+    ): MusicBrainzOAuthResponse
 }
 
 class MusicBrainzOAuthApiImpl(
@@ -44,7 +36,7 @@ class MusicBrainzOAuthApiImpl(
         clientSecret: String,
         grantType: String,
         refreshToken: String,
-    ): MusicBrainzOAuthAccessToken {
+    ): MusicBrainzOAuthResponse {
         return httpClient.submitForm(
             url = "$MUSIC_BRAINZ_BASE_URL/oauth2/token",
             formParameters = parameters {

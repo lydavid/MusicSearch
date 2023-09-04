@@ -23,13 +23,12 @@ import ly.david.data.BuildConfig
 import ly.david.data.common.network.ApiHttpClient
 import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.coverart.api.CoverArtArchiveApi
-import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.api.MusicBrainzOAuthApi
-import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
+import ly.david.data.musicbrainz.auth.MusicBrainzAuthRepository
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
-import ly.david.data.spotify.api.auth.SpotifyAuthState
+import ly.david.data.spotify.api.auth.SpotifyAuthStore
 import okhttp3.Cache
 import timber.log.Timber
 
@@ -106,20 +105,15 @@ object NetworkModule {
         )
     }
 
-    // TODO: pass repository instead of all these params
     @Singleton
     @Provides
     fun provideMusicBrainzApi(
         httpClient: HttpClient,
-        musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
-        musicBrainzOAuthApi: MusicBrainzOAuthApi,
-        musicBrainzAuthState: MusicBrainzAuthState,
+        musicBrainzAuthRepository: MusicBrainzAuthRepository,
     ): MusicBrainzApi {
         return MusicBrainzApi.create(
             httpClient = httpClient,
-            musicBrainzOAuthInfo = musicBrainzOAuthInfo,
-            musicBrainzOAuthApi = musicBrainzOAuthApi,
-            musicBrainzAuthState = musicBrainzAuthState,
+            musicBrainzAuthRepository = musicBrainzAuthRepository,
         )
     }
 
@@ -137,7 +131,7 @@ object NetworkModule {
     @Provides
     fun provideSpotifyApi(
         httpClient: HttpClient,
-        spotifyAuthState: SpotifyAuthState,
+        spotifyAuthStore: SpotifyAuthStore,
         spotifyAuthApi: SpotifyAuthApi,
     ): SpotifyApi {
         return SpotifyApi.create(
@@ -145,7 +139,7 @@ object NetworkModule {
             clientId = BuildConfig.SPOTIFY_CLIENT_ID,
             clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
             spotifyAuthApi = spotifyAuthApi,
-            spotifyAuthState = spotifyAuthState,
+            spotifyAuthStore = spotifyAuthStore,
         )
     }
 }

@@ -16,16 +16,16 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUriPlural
 import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
+import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
+import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionEntityDao
@@ -49,7 +49,7 @@ internal class TopLevelViewModel @Inject constructor(
     private val collectionEntityDao: CollectionEntityDao,
     private val musicBrainzApi: MusicBrainzApi,
 
-    private val musicBrainzAuthState: MusicBrainzAuthState,
+    private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val authRequest: AuthorizationRequest,
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication,
@@ -181,14 +181,14 @@ internal class TopLevelViewModel @Inject constructor(
             viewModelScope.launch {
                 val authState = AuthState()
                 authState.update(response, exception)
-                musicBrainzAuthState.saveTokens(
+                musicBrainzAuthStore.saveTokens(
                     accessToken = authState.accessToken.orEmpty(),
                     refreshToken = authState.refreshToken.orEmpty(),
                 )
 
                 try {
                     val username = musicBrainzApi.getUserInfo().username ?: return@launch
-                    musicBrainzAuthState.setUsername(username)
+                    musicBrainzAuthStore.setUsername(username)
                 } catch (ex: Exception) {
                     // TODO: snackbar
                     Timber.e("$ex")
@@ -199,7 +199,7 @@ internal class TopLevelViewModel @Inject constructor(
 
     fun logout() {
         viewModelScope.launch {
-            val refreshToken = musicBrainzAuthState.getRefreshToken()
+            val refreshToken = musicBrainzAuthStore.getRefreshToken()
             if (refreshToken.isNullOrEmpty()) return@launch
             try {
                 musicBrainzApi.logout(
@@ -211,8 +211,8 @@ internal class TopLevelViewModel @Inject constructor(
                 // TODO: snackbar
                 Timber.e("$ex")
             } finally {
-                musicBrainzAuthState.saveTokens("", "")
-                musicBrainzAuthState.setUsername("")
+                musicBrainzAuthStore.saveTokens("", "")
+                musicBrainzAuthStore.setUsername("")
             }
         }
     }

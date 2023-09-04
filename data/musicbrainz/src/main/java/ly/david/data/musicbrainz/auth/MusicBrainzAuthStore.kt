@@ -1,8 +1,8 @@
-package ly.david.data.musicbrainz
+package ly.david.data.musicbrainz.auth
 
 import kotlinx.coroutines.flow.Flow
 
-interface MusicBrainzAuthState {
+interface MusicBrainzAuthStore {
     suspend fun getAccessToken(): String?
     val accessToken: Flow<String?>
     suspend fun getRefreshToken(): String?

@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import ly.david.data.core.AppInfo
 import ly.david.data.BuildConfig
 import ly.david.data.musicbrainz.api.MUSIC_BRAINZ_BASE_URL
-import ly.david.data.musicbrainz.api.MusicBrainzOAuthInfo
+import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration

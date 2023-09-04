@@ -7,13 +7,13 @@ import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.di.network.NetworkModule
+import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.data.spotify.api.SpotifyApi
+import ly.david.data.spotify.api.auth.SpotifyAuthApi
+import ly.david.data.spotify.api.auth.SpotifyOAuthClientCredentialsResponse
 import ly.david.data.test.api.FakeCoverArtArchiveApi
 import ly.david.data.test.api.FakeMusicBrainzApi
 import ly.david.data.test.api.FakeSpotifyApi
-import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.spotify.api.SpotifyApi
-import ly.david.data.spotify.api.auth.SpotifyAccessToken
-import ly.david.data.spotify.api.auth.SpotifyAuthApi
 
 @Module
 @TestInstallIn(
@@ -38,7 +38,7 @@ object FakeNetworkModule {
                 clientId: String,
                 clientSecret: String,
                 grantType: String,
-            ): SpotifyAccessToken {
+            ): SpotifyOAuthClientCredentialsResponse {
                 TODO("Not yet implemented")
             }
         }

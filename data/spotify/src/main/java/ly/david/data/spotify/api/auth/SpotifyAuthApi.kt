@@ -24,7 +24,7 @@ interface SpotifyAuthApi {
         clientId: String,
         clientSecret: String,
         grantType: String = CLIENT_CREDENTIALS,
-    ): SpotifyAccessToken
+    ): SpotifyOAuthClientCredentialsResponse
 }
 
 class SpotifyAuthApiImpl(
@@ -34,7 +34,7 @@ class SpotifyAuthApiImpl(
         clientId: String,
         clientSecret: String,
         grantType: String,
-    ): SpotifyAccessToken {
+    ): SpotifyOAuthClientCredentialsResponse {
         return httpClient.submitForm(
             url = SPOTIFY_AUTH,
             formParameters = parameters {

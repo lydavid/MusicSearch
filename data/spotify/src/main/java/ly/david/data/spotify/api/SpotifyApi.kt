@@ -8,7 +8,7 @@ import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
 import ly.david.data.spotify.api.auth.SpotifyAuthApi
-import ly.david.data.spotify.api.auth.SpotifyAuthState
+import ly.david.data.spotify.api.auth.SpotifyAuthStore
 
 private const val BASE_URL = "https://api.spotify.com/v1/"
 private const val ARTISTS = "${BASE_URL}artists"
@@ -21,23 +21,25 @@ interface SpotifyApi {
             clientId: String,
             clientSecret: String,
             spotifyAuthApi: SpotifyAuthApi,
-            spotifyAuthState: SpotifyAuthState,
+            spotifyAuthStore: SpotifyAuthStore,
         ): SpotifyApi {
             val extendedClient = httpClient.config {
                 install(Auth) {
                     bearer {
                         loadTokens {
-                            val accessToken = spotifyAuthState.getAccessToken() ?: return@loadTokens null
+                            val accessToken = spotifyAuthStore.getAccessToken()
+                            if (accessToken.isNullOrEmpty()) return@loadTokens null
+
                             BearerTokens(accessToken, "")
                         }
                         refreshTokens {
-                            val newAccessToken = spotifyAuthApi.getAccessToken(
+                            val response = spotifyAuthApi.getAccessToken(
                                 clientId = clientId,
                                 clientSecret = clientSecret,
                             )
 
-                            val accessToken = newAccessToken.accessToken
-                            spotifyAuthState.saveAccessToken(
+                            val accessToken = response.accessToken
+                            spotifyAuthStore.saveAccessToken(
                                 accessToken = accessToken,
                             )
 
