@@ -116,13 +116,7 @@ private fun SpotifySearchLinks(
 internal fun PreviewSpotifyScreenEmpty() {
     PreviewTheme {
         Surface {
-            SpotifyScreen(
-                metadata = SpotifyMetadata(
-                    artistName = "Artist",
-                    albumName = "Album",
-                    trackName = "Track",
-                )
-            )
+            SpotifyScreen(metadata = SpotifyMetadata())
         }
     }
 }
@@ -132,7 +126,13 @@ internal fun PreviewSpotifyScreenEmpty() {
 internal fun PreviewSpotifyScreenWithData() {
     PreviewTheme {
         Surface {
-            SpotifyScreen(metadata = SpotifyMetadata())
+            SpotifyScreen(
+                metadata = SpotifyMetadata(
+                    artistName = "Artist",
+                    albumName = "Album",
+                    trackName = "Track",
+                )
+            )
         }
     }
 }
