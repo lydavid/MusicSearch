@@ -9,10 +9,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.domain.artist.ArtistScaffoldModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.LifeSpanUiModel
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText

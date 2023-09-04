@@ -1,38 +1,11 @@
 package ly.david.data.core
 
 import kotlin.math.abs
-import kotlinx.serialization.Serializable
 
 interface Coordinates {
     val longitude: Double?
     val latitude: Double?
 }
-
-data class CoordinatesRoomModel(
-    override val longitude: Double?,
-    override val latitude: Double?,
-) : Coordinates
-
-fun CoordinatesRoomModel.toCoordinatesUiModel() = CoordinatesUiModel(
-    longitude = longitude,
-    latitude = latitude
-)
-
-fun CoordinatesMusicBrainzModel.toCoordinatesRoomModel() = CoordinatesRoomModel(
-    longitude = longitude,
-    latitude = latitude
-)
-
-data class CoordinatesUiModel(
-    override val longitude: Double?,
-    override val latitude: Double?,
-) : Coordinates
-
-@Serializable
-data class CoordinatesMusicBrainzModel(
-    override val longitude: Double? = null,
-    override val latitude: Double? = null,
-) : Coordinates
 
 /**
  * Turns [Coordinates] to this format: 40.76688°N, 73.98905°W

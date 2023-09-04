@@ -1,6 +1,6 @@
 package ly.david.data.test
 
-import ly.david.data.core.CoordinatesMusicBrainzModel
+import ly.david.data.musicbrainz.CoordinatesMusicBrainzModel
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.Direction
 import ly.david.data.musicbrainz.LifeSpanMusicBrainzModel

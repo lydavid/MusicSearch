@@ -14,10 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ly.david.data.core.LifeSpanUiModel
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.domain.event.EventScaffoldModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.LifeSpanUiModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
