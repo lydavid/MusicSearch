@@ -1,7 +1,5 @@
 package ly.david.data.core
 
-import ly.david.data.core.network.CoverArtArchive
-
 /**
  * Defines common properties between domain, network and persistence model.
  */

@@ -4,7 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.data.core.NameWithDisambiguation
 import ly.david.data.core.Release
-import ly.david.data.core.network.CoverArtArchiveMusicBrainzModel
 
 @Serializable
 data class ReleaseMusicBrainzModel(
