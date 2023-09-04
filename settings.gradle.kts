@@ -37,6 +37,7 @@ include(
     ":data-android",
     ":data",
     ":data:core",
+    ":data:common:network",
     ":data:coverart",
     ":data:domain",
     ":data:spotify",
@@ -52,6 +53,6 @@ include(
     ":ui:test:image",
     ":ui:test:screenshot",
     ":ui:settings",
-    ":ui:spotify"
+    ":ui:spotify",
+    ":ui:stats",
 )
-include(":ui:stats")

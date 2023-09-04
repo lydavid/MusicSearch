@@ -21,7 +21,7 @@ import ly.david.data.domain.release.ReleaseScaffoldModel
 import ly.david.data.core.getDisplayTypes
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.TextRepresentationUiModel
+import ly.david.data.domain.release.TextRepresentationUiModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem

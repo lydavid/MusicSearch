@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 import ly.david.data.core.NameWithDisambiguation
 import ly.david.data.core.Release
 import ly.david.data.core.network.CoverArtArchiveMusicBrainzModel
-import ly.david.data.core.network.TextRepresentationMusicBrainzModel
 
 @Serializable
 data class ReleaseMusicBrainzModel(

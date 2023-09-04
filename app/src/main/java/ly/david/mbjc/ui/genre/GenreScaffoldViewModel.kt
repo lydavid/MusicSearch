@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.musicbrainz.GenreMusicBrainzModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.RecoverableNetworkException
+import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory

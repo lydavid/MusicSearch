@@ -20,8 +20,8 @@ import io.ktor.http.HttpStatusCode
 import java.io.File
 import javax.inject.Singleton
 import ly.david.data.BuildConfig
-import ly.david.data.core.network.ApiHttpClient
-import ly.david.data.core.network.RecoverableNetworkException
+import ly.david.data.common.network.ApiHttpClient
+import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.MusicBrainzAuthState
 import ly.david.data.musicbrainz.api.MusicBrainzApi

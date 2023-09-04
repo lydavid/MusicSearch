@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(projects.data.core)
+    implementation(projects.data.common.network)
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
 

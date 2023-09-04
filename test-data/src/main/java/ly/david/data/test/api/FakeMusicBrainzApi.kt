@@ -1,5 +1,6 @@
 package ly.david.data.test.api
 
+import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
@@ -8,7 +9,6 @@ import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.data.core.network.RecoverableNetworkException
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel

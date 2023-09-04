@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(projects.data.core)
+    implementation(projects.data.common.network)
     implementation(projects.data.coverart)
     implementation(projects.data.musicbrainz)
     implementation(projects.data.room)

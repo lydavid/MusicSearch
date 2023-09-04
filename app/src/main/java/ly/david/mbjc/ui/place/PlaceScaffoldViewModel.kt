@@ -10,7 +10,7 @@ import ly.david.data.domain.place.PlaceRepository
 import ly.david.data.domain.place.PlaceScaffoldModel
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.RecoverableNetworkException
+import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel

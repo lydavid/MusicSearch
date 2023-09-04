@@ -1,6 +1,10 @@
 package ly.david.data.domain.release
 
 import ly.david.data.core.Release
+import ly.david.data.core.getFormatsForDisplay
+import ly.david.data.core.getTracksForDisplay
+import ly.david.data.core.network.CoverArtArchiveUiModel
+import ly.david.data.core.network.toCoverArtArchiveUiModel
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
@@ -11,12 +15,6 @@ import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.listitem.toReleaseGroupListItemModel
-import ly.david.data.core.getFormatsForDisplay
-import ly.david.data.core.getTracksForDisplay
-import ly.david.data.core.network.CoverArtArchiveUiModel
-import ly.david.data.core.network.TextRepresentationUiModel
-import ly.david.data.core.network.toCoverArtArchiveUiModel
-import ly.david.data.core.network.toTextRepresentationUiModel
 import ly.david.data.room.release.ReleaseWithAllData
 
 data class ReleaseScaffoldModel(
