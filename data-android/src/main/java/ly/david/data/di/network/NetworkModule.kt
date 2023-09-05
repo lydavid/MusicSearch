@@ -27,8 +27,8 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.api.MusicBrainzOAuthApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthRepository
 import ly.david.data.spotify.api.SpotifyApi
-import ly.david.data.spotify.api.auth.SpotifyAuthApi
 import ly.david.data.spotify.api.auth.SpotifyAuthStore
+import ly.david.data.spotify.api.auth.SpotifyOAuthApi
 import okhttp3.Cache
 import timber.log.Timber
 
@@ -119,10 +119,10 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideSpotifyAuthApi(
+    fun provideSpotifyOAuthApi(
         httpClient: HttpClient,
-    ): SpotifyAuthApi {
-        return SpotifyAuthApi.create(
+    ): SpotifyOAuthApi {
+        return SpotifyOAuthApi.create(
             httpClient = httpClient,
         )
     }
@@ -132,13 +132,13 @@ object NetworkModule {
     fun provideSpotifyApi(
         httpClient: HttpClient,
         spotifyAuthStore: SpotifyAuthStore,
-        spotifyAuthApi: SpotifyAuthApi,
+        spotifyOAuthApi: SpotifyOAuthApi,
     ): SpotifyApi {
         return SpotifyApi.create(
             httpClient = httpClient,
             clientId = BuildConfig.SPOTIFY_CLIENT_ID,
             clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
-            spotifyAuthApi = spotifyAuthApi,
+            spotifyOAuthApi = spotifyOAuthApi,
             spotifyAuthStore = spotifyAuthStore,
         )
     }

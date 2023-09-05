@@ -9,7 +9,7 @@ import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.di.network.NetworkModule
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.spotify.api.SpotifyApi
-import ly.david.data.spotify.api.auth.SpotifyAuthApi
+import ly.david.data.spotify.api.auth.SpotifyOAuthApi
 import ly.david.data.spotify.api.auth.SpotifyOAuthClientCredentialsResponse
 import ly.david.data.test.api.FakeCoverArtArchiveApi
 import ly.david.data.test.api.FakeMusicBrainzApi
@@ -32,8 +32,8 @@ object FakeNetworkModule {
 
     @Singleton
     @Provides
-    fun provideSpotifyAuthApi(): SpotifyAuthApi {
-        return object : SpotifyAuthApi {
+    fun provideSpotifyAuthApi(): SpotifyOAuthApi {
+        return object : SpotifyOAuthApi {
             override suspend fun getAccessToken(
                 clientId: String,
                 clientSecret: String,

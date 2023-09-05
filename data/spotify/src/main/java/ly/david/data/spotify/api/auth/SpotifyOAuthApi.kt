@@ -8,13 +8,13 @@ import io.ktor.http.parameters
 private const val SPOTIFY_AUTH = "https://accounts.spotify.com/api/token"
 private const val CLIENT_CREDENTIALS = "client_credentials"
 
-interface SpotifyAuthApi {
+interface SpotifyOAuthApi {
 
     companion object {
         fun create(
             httpClient: HttpClient,
-        ): SpotifyAuthApi {
-            return SpotifyAuthApiImpl(
+        ): SpotifyOAuthApi {
+            return SpotifyOAuthApiImpl(
                 httpClient = httpClient,
             )
         }
@@ -27,9 +27,9 @@ interface SpotifyAuthApi {
     ): SpotifyOAuthClientCredentialsResponse
 }
 
-class SpotifyAuthApiImpl(
+class SpotifyOAuthApiImpl(
     private val httpClient: HttpClient,
-) : SpotifyAuthApi {
+) : SpotifyOAuthApi {
     override suspend fun getAccessToken(
         clientId: String,
         clientSecret: String,

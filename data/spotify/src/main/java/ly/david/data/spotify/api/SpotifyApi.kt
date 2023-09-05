@@ -7,7 +7,7 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
-import ly.david.data.spotify.api.auth.SpotifyAuthApi
+import ly.david.data.spotify.api.auth.SpotifyOAuthApi
 import ly.david.data.spotify.api.auth.SpotifyAuthStore
 
 private const val BASE_URL = "https://api.spotify.com/v1/"
@@ -20,7 +20,7 @@ interface SpotifyApi {
             httpClient: HttpClient,
             clientId: String,
             clientSecret: String,
-            spotifyAuthApi: SpotifyAuthApi,
+            spotifyOAuthApi: SpotifyOAuthApi,
             spotifyAuthStore: SpotifyAuthStore,
         ): SpotifyApi {
             val extendedClient = httpClient.config {
@@ -33,7 +33,7 @@ interface SpotifyApi {
                             BearerTokens(accessToken, "")
                         }
                         refreshTokens {
-                            val response = spotifyAuthApi.getAccessToken(
+                            val response = spotifyOAuthApi.getAccessToken(
                                 clientId = clientId,
                                 clientSecret = clientSecret,
                             )
