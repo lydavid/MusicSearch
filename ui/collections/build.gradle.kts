@@ -8,13 +8,6 @@ plugins {
 
 android {
     namespace = "ly.david.ui.collection"
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-            consumerProguardFiles("consumer-rules.pro")
-        }
-    }
 }
 
 dependencies {
