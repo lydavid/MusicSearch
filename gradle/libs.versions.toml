@@ -7,6 +7,7 @@ compose-compiler = "1.5.3"
 compose-foundation = "1.5.1"
 compose-material = "1.5.0"
 compose-material3 = "1.1.1"
+compose-multiplatform = "1.5.0"
 compose-ui = "1.5.1"
 detekt = "1.23.1"
 hilt = "2.48"
@@ -86,7 +87,9 @@ room-testing = { group = "androidx.room", name = "room-testing", version.ref = "
 test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version = "1.12" }
 timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }
 
+# build-logic libraries
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+compose-gradlePlugin = { group = "org.jetbrains.compose", name = "compose-gradle-plugin", version.ref = "compose-multiplatform" }
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
@@ -110,6 +113,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.21.0" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
 google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

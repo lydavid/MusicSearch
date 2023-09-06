@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     compileOnly(libs.android.gradlePlugin)
+    compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.detekt.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
@@ -22,6 +23,10 @@ gradlePlugin {
         register("androidCompose") {
             id = "ly.david.android.compose"
             implementationClass = "ly.david.convention.plugin.AndroidComposeConventionPlugin"
+        }
+        register("composeMultiplatform") {
+            id = "ly.david.musicsearch.compose.multiplatform"
+            implementationClass = "ly.david.convention.plugin.ComposeMultiplatformConventionPlugin"
         }
         register("kotlinJvm") {
             id = "ly.david.kotlin"
