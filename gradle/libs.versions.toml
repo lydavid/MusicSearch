@@ -17,6 +17,7 @@ kotlin = "1.9.10"
 kotlinx-coroutines = "1.7.1"
 ktor = "2.3.4"
 ksp = "1.9.10-1.0.13"
+leakcanaryAndroid = "2.12"
 mockk = "1.13.7"
 okhttp = "4.11.0"
 paging = "3.2.1"
@@ -74,6 +75,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }

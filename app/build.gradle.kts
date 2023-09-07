@@ -104,6 +104,7 @@ dependencies {
     implementation(libs.timber)
 
     debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.leakcanary.android)
 
     testImplementation(projects.testData)
     testImplementation(libs.junit)
@@ -122,10 +123,4 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     kspAndroidTest(libs.hilt.android.compiler)
-
-    implementation(libs.timber)
-
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.arch.core.testing)
 }
