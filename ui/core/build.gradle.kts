@@ -2,7 +2,6 @@ plugins {
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     id("ly.david.android.library")
-    id("com.android.library")
 }
 
 kotlin {
@@ -14,17 +13,11 @@ kotlin {
                 implementation(compose.preview)
             }
         }
-
-        val androidMain by getting {
-            dependencies {
-                implementation(compose.uiTooling)
-            }
-        }
-
-        val jvmMain by getting {
-            
-        }
     }
+}
+
+dependencies {
+    debugImplementation(compose.uiTooling)
 }
 
 android {
