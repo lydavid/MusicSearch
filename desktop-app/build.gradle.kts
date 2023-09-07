@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.compose") version "1.5.1"
+    id("ly.david.musicsearch.compose.multiplatform")
     application
 }
 
@@ -8,14 +8,10 @@ group = "ly.david.musicsearch"
 version = "1.0-SNAPSHOT"
 
 dependencies {
+    implementation(projects.ui.core)
     implementation(compose.desktop.currentOs)
 }
 
 application {
     mainClass.set("MainKt")
-}
-
-compose {
-    kotlinCompilerPlugin.set("1.5.0")
-    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.10")
 }

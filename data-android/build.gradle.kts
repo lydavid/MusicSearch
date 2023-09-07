@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("ly.david.android.library")
+    kotlin("android")
     alias(libs.plugins.ksp)
 }
 

@@ -1,5 +1,6 @@
 plugins {
     id("ly.david.android.library")
+    kotlin("android")
 }
 
 android {

@@ -1,5 +1,6 @@
 plugins {
     id("ly.david.android.library")
+    kotlin("android")
     id("ly.david.android.compose")
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.ksp)
