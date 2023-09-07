@@ -81,48 +81,47 @@ dependencies {
     implementation(projects.ui.settings)
     implementation(projects.ui.spotify)
     implementation(projects.ui.stats)
-    testImplementation(projects.testData)
-    androidTestImplementation(projects.testData)
-
     implementation(libs.accompanist.pager)
-
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
-
     implementation(libs.appauth)
-
     implementation(libs.coil.base)
     implementation(libs.coil.compose)
-    androidTestImplementation(libs.coil.test)
-
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
-    androidTestImplementation(libs.compose.ui.test)
-    debugImplementation(libs.compose.ui.tooling)
-
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-    kspAndroidTest(libs.hilt.android.compiler)
-    androidTestImplementation(libs.hilt.android.testing)
+    implementation(libs.timber)
 
+    debugImplementation(libs.compose.ui.tooling)
+
+    testImplementation(projects.testData)
     testImplementation(libs.junit)
-
     testImplementation(libs.bundles.kotlinx.coroutines)
-    androidTestImplementation(libs.bundles.kotlinx.coroutines)
 
+    androidTestImplementation(projects.testData)
+    androidTestImplementation(libs.coil.test)
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.bundles.kotlinx.coroutines)
     androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.arch.core.testing)
+
+    ksp(libs.hilt.android.compiler)
+
+    kspAndroidTest(libs.hilt.android.compiler)
 
     implementation(libs.timber)
 
