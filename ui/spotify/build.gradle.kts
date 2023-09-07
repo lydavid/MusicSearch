@@ -1,6 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("ly.david.android.library")
+    kotlin("android")
     id("ly.david.android.compose")
     alias(libs.plugins.paparazzi)
 }

@@ -13,7 +13,10 @@ fun main() = application {
         title = "MusicSearch"
     ) {
         Row {
-            Text("Hello world!")
+            Text(
+                "Hello world!",
+//                style = TextStyles.getHeaderTextStyle()
+            )
         }
     }
 }

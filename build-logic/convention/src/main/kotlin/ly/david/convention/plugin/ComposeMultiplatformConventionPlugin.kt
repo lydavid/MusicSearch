@@ -11,11 +11,10 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("org.jetbrains.compose")
-
-                compose {
-                    kotlinCompilerPlugin.set(libs.findVersion("compose-multiplatform").get().toString())
-                    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.10")
-                }
+            }
+            compose {
+                kotlinCompilerPlugin.set(libs.findVersion("compose-multiplatform").get().toString())
+                kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.10")
             }
         }
     }

@@ -32,5 +32,9 @@ gradlePlugin {
             id = "ly.david.kotlin"
             implementationClass = "ly.david.convention.plugin.KotlinJvmConventionPlugin"
         }
+        register("kotlinMultiplatform") {
+            id = "ly.david.musicsearch.kotlin.multiplatform"
+            implementationClass = "ly.david.convention.plugin.KotlinMultiplatformConventionPlugin"
+        }
     }
 }
