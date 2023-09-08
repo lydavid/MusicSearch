@@ -46,3 +46,9 @@ subprojects {
         }
     }
 }
+
+tasks.register("testKotlinModules") {
+    description = "Run unit tests on kotlin (non-Android) modules"
+    group = "verification"
+    dependsOn(subprojects.filter { it.plugins.hasPlugin("ly.david.kotlin") }.map { "${it.path}:test" })
+}

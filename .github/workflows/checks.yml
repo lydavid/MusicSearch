@@ -21,40 +21,8 @@ jobs:
       - name: Detekt code smells
         run: ./gradlew detekt
 
-      - name: Unit test :data:core
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:core:test
-
-      - name: Unit test :data:common:network
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:common:network:test
-
-      - name: Unit test :data:coverart
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:coverart:test
-
-      - name: Unit test :data:domain
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:domain:test
-
-      - name: Unit test data:musicbrainz
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:musicbrainz:test
-
-      - name: Unit test :data:room
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:room:test
-
-      - name: Unit test data:spotify
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: data:spotify:test
+      - name: Unit test all kotlin modules
+        run: ./gradlew testKotlinModules
 
       - name: Verify screenshot tests
         run: ./gradlew verifyPaparazziDebug
