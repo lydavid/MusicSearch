@@ -18,8 +18,12 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup
 
-      - name: Detekt code smells
+      - name: Detekt non-KMP code smells
         run: ./gradlew detekt
+
+      # https://github.com/detekt/detekt/issues/3665
+      - name: Detekt KMP code smells
+        run: ./gradlew detektMetadataMain
 
       - name: Unit test all kotlin modules
         run: ./gradlew testKotlinModules
