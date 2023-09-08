@@ -16,10 +16,15 @@ internal val LightColorScheme = lightColorScheme(
 
 @Composable
 fun BaseTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    materialYou: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colorScheme = AppColorScheme(),
+        colorScheme = appColorScheme(
+            darkTheme = darkTheme,
+            materialYou = materialYou
+        ),
         content = content
     )
 }

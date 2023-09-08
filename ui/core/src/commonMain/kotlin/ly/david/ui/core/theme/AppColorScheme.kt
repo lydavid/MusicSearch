@@ -5,7 +5,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 
 @Composable
-internal expect fun AppColorScheme(
+internal expect fun appColorScheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     materialYou: Boolean = true,
 ): ColorScheme

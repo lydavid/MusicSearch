@@ -8,6 +8,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.settings.AppPreferences
+import ly.david.ui.settings.useDarkTheme
+import ly.david.ui.settings.useMaterialYou
 
 @AndroidEntryPoint
 internal class MainActivity : ComponentActivity() {
@@ -22,6 +24,8 @@ internal class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             BaseTheme(
+                darkTheme = appPreferences.useDarkTheme(),
+                materialYou = appPreferences.useMaterialYou(),
                 content = {
                     TopLevelScaffold(navController)
                 }

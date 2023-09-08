@@ -4,7 +4,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 
 @Composable
-internal actual fun AppColorScheme(
+internal actual fun appColorScheme(
     darkTheme: Boolean,
     materialYou: Boolean,
 ): ColorScheme {

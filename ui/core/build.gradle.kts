@@ -1,7 +1,8 @@
 plugins {
+    // Note that the order matters, because kotlin.multiplatform checks for existence of ly.david.android.library
+    id("ly.david.android.library")
     id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
-    id("ly.david.android.library")
 }
 
 kotlin {
@@ -14,10 +15,6 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
 }
 
 android {
