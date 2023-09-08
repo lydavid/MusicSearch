@@ -28,6 +28,9 @@ jobs:
       - name: Unit test all kotlin modules
         run: ./gradlew testKotlinModules
 
+      - name: Unit test all KMP modules
+        run: ./gradlew testKotlinMultiplatformModules
+
       - name: Verify screenshot tests
         run: ./gradlew verifyPaparazziDebug
 

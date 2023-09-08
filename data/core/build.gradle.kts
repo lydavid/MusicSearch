@@ -1,12 +1,21 @@
 plugins {
-    id("ly.david.kotlin")
+    id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
 }
 
-dependencies {
-    implementation(platform(libs.ktor.bom))
-    implementation(libs.bundles.ktor.android)
-    implementation(libs.room.common)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(libs.bundles.ktor.android)
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.junit)
+                implementation(libs.mockk)
+            }
+        }
+    }
 }
