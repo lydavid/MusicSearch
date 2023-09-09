@@ -19,6 +19,7 @@ fun Project.configureDetekt() {
     }
 
     detekt {
+        autoCorrect = true
         buildUponDefaultConfig = true
         allRules = false
         parallel = true
