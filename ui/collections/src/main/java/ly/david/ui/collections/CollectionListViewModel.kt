@@ -3,25 +3,24 @@ package ly.david.ui.collections
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.collection.toCollectionRoomModel
 import ly.david.data.room.relation.BrowseEntityCount
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.settings.AppPreferences
+import org.koin.android.annotation.KoinViewModel
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
 
-@HiltViewModel
-class CollectionListViewModel @Inject constructor(
+@KoinViewModel
+class CollectionListViewModel(
     val appPreferences: AppPreferences,
     private val pagedList: CollectionPagedList,
     private val musicBrainzApi: MusicBrainzApi,

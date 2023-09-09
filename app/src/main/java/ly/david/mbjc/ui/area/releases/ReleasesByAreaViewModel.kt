@@ -1,10 +1,8 @@
 package ly.david.mbjc.ui.area.releases
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -15,9 +13,10 @@ import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
 import ly.david.ui.common.paging.PagedList
 import ly.david.ui.common.release.ReleasesByEntityViewModel
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class ReleasesByAreaViewModel @Inject constructor(
+@KoinViewModel
+internal class ReleasesByAreaViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseCountryDao: ReleaseCountryDao,
     private val relationDao: RelationDao,

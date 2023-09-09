@@ -1,13 +1,12 @@
 package ly.david.mbjc.ui.series.stats
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.stats.RelationsStats
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class SeriesStatsViewModel @Inject constructor(
+@KoinViewModel
+internal class SeriesStatsViewModel(
     override val relationDao: RelationDao,
 ) : ViewModel(),
     RelationsStats

@@ -1,19 +1,18 @@
-package ly.david.data.spotify
+package ly.david.data.spotify.di
 
 import io.ktor.client.plugins.ClientRequestException
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.core.logging.Logger
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.getLargeImageUrl
 import ly.david.data.spotify.api.getThumbnailImageUrl
+import org.koin.core.annotation.Single
 
 /**
  * Logic to retrieve release cover art path.
  */
-@Singleton
-class ArtistImageRepository @Inject constructor(
+@Single
+class ArtistImageRepository(
     private val spotifyApi: SpotifyApi,
     private val imageUrlSaver: ImageUrlSaver,
     private val logger: Logger,

@@ -23,16 +23,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
@@ -47,6 +46,7 @@ import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * The top-level screen for an area.
@@ -62,7 +62,7 @@ internal fun AreaScaffold(
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
     showMoreInfoInReleaseListItem: Boolean = true,
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
-    viewModel: AreaScaffoldViewModel = hiltViewModel(),
+    viewModel: AreaScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.AREA
     val snackbarHostState = remember { SnackbarHostState() }

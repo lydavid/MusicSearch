@@ -1,7 +1,5 @@
 package ly.david.data.domain.area
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
@@ -11,9 +9,10 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.toAreaRoomModel
+import org.koin.core.annotation.Single
 
-@Singleton
-class AreaRepository @Inject constructor(
+@Single
+class AreaRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val areaDao: AreaDao,
     private val relationRepository: RelationRepository,

@@ -7,19 +7,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
 import ly.david.ui.stats.StatsScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun ArtistStatsScreen(
     artistId: String,
     tabs: List<Tab>,
     modifier: Modifier = Modifier,
-    viewModel: ArtistStatsViewModel = hiltViewModel(),
+    viewModel: ArtistStatsViewModel = koinViewModel(),
 ) {
     var totalRemoteReleaseGroups: Int? by remember { mutableStateOf(null) }
     var totalLocalReleaseGroups by remember { mutableStateOf(0) }

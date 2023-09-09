@@ -25,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -46,6 +45,7 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * The top-level screen for a release.
@@ -59,7 +59,7 @@ internal fun ReleaseScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: ReleaseScaffoldViewModel = hiltViewModel(),
+    viewModel: ReleaseScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.RELEASE
     val scope = rememberCoroutineScope()

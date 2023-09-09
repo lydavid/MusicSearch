@@ -2,22 +2,21 @@ package ly.david.mbjc.ui.genre
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.musicbrainz.GenreMusicBrainzModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.musicbrainz.GenreMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
+import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 
-@HiltViewModel
-internal class GenreScaffoldViewModel @Inject constructor(
+@KoinViewModel
+internal class GenreScaffoldViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(),

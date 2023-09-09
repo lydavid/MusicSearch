@@ -1,12 +1,11 @@
 package ly.david.ui.settings
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class SettingsViewModel @Inject constructor(
+@KoinViewModel
+class SettingsViewModel(
     val appPreferences: AppPreferences,
     val musicBrainzAuthStore: MusicBrainzAuthStore,
 ) : ViewModel()

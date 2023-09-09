@@ -1,12 +1,11 @@
 package ly.david.ui.common.release
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.coverart.ReleaseImageRepository
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class ReleasesListViewModel @Inject constructor(
+@KoinViewModel
+class ReleasesListViewModel(
     private val releaseImageRepository: ReleaseImageRepository,
 ) : ViewModel() {
     suspend fun getReleaseCoverArtUrlFromNetwork(

@@ -21,7 +21,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,13 +38,14 @@ import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.history.DeleteHistoryDelegate
+import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TopLevelScaffold(
     navController: NavHostController,
-    viewModel: TopLevelViewModel = hiltViewModel(),
+    viewModel: TopLevelViewModel = koinViewModel(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -58,7 +58,12 @@ internal fun TopLevelScaffold(
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
     val bottomSheetState = rememberModalBottomSheetState()
     var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
-    val collections: LazyPagingItems<CollectionListItemModel> = rememberFlowWithLifecycleStarted(viewModel.collections)
+    val collections: LazyPagingItems<CollectionListItemModel> =
+//        MutableStateFlow(
+//        PagingData.from(
+//            listOf<CollectionListItemModel>()
+//        )).collectAsLazyPagingItems()
+        rememberFlowWithLifecycleStarted(viewModel.collections)
         .collectAsLazyPagingItems()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()

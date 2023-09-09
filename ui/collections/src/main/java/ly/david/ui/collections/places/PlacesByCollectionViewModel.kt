@@ -1,11 +1,9 @@
 package ly.david.ui.collections.places
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.domain.listitem.toPlaceListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -17,9 +15,10 @@ import ly.david.data.room.place.toPlaceRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class PlacesByCollectionViewModel @Inject constructor(
+@KoinViewModel
+internal class PlacesByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,

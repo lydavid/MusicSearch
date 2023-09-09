@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.ui.common.R
@@ -35,6 +34,7 @@ import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * Displays a list of all of your collections.
@@ -45,7 +45,7 @@ fun CollectionListScaffold(
     modifier: Modifier = Modifier,
     onCollectionClick: (id: String, isRemote: Boolean) -> Unit = { _, _ -> },
     onCreateCollectionClick: () -> Unit = {},
-    viewModel: CollectionListViewModel = hiltViewModel(),
+    viewModel: CollectionListViewModel = koinViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 

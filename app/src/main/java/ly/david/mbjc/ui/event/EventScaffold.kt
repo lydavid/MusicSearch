@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
@@ -37,6 +36,7 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * The top-level screen for an event.
@@ -52,7 +52,7 @@ internal fun EventScaffold(
     onBack: () -> Unit = {},
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onAddToCollectionMenuClick: (entity: MusicBrainzEntity, id: String) -> Unit = { _, _ -> },
-    viewModel: EventScaffoldViewModel = hiltViewModel(),
+    viewModel: EventScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.EVENT
     val scope = rememberCoroutineScope()

@@ -49,6 +49,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        ksp {
+            arg("KOIN_CONFIG_CHECK","true")
+        }
     }
 
     buildTypes {
@@ -101,6 +105,10 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.annotations)
+    implementation(libs.koin.core)
     implementation(libs.timber)
 
     debugImplementation(libs.compose.ui.tooling)
@@ -108,6 +116,7 @@ dependencies {
 
     testImplementation(projects.testData)
     testImplementation(libs.junit)
+    testImplementation(libs.koin.test)
     testImplementation(libs.bundles.kotlinx.coroutines)
 
     androidTestImplementation(projects.testData)
@@ -121,6 +130,7 @@ dependencies {
     androidTestImplementation(libs.androidx.arch.core.testing)
 
     ksp(libs.hilt.android.compiler)
+    ksp(libs.koin.ksp.compiler)
 
     kspAndroidTest(libs.hilt.android.compiler)
 }

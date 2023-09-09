@@ -23,16 +23,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
@@ -47,6 +46,7 @@ import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -61,7 +61,7 @@ internal fun ArtistScaffold(
     onShowMoreInfoInReleaseListItemChange: (Boolean) -> Unit = {},
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
-    viewModel: ArtistScaffoldViewModel = hiltViewModel(),
+    viewModel: ArtistScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.ARTIST
     val scope = rememberCoroutineScope()

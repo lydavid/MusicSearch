@@ -8,8 +8,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,9 +29,10 @@ import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.MediumRoomModel
 import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.release.tracks.TrackForListItem
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class TracksByReleaseViewModel @Inject constructor(
+@KoinViewModel
+internal class TracksByReleaseViewModel(
     private val repository: ReleaseRepository,
     private val releaseDao: ReleaseDao,
     private val mediumDao: MediumDao,

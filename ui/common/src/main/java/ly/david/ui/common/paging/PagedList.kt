@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import androidx.paging.map
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +26,8 @@ import ly.david.data.room.RoomModel
  * Meant to be implemented by a ViewModel through delegation.
  * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
-class PagedList<RM : RoomModel, LI : ListItemModel> @Inject constructor() : IPagedList<LI> {
+//@Single
+class PagedList<RM : RoomModel, LI : ListItemModel> : IPagedList<LI> {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")

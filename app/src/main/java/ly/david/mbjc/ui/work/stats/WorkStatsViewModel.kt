@@ -1,15 +1,14 @@
 package ly.david.mbjc.ui.work.stats
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.work.recordings.RecordingWorkDao
 import ly.david.ui.stats.RecordingStats
 import ly.david.ui.stats.RelationsStats
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class WorkStatsViewModel @Inject constructor(
+@KoinViewModel
+internal class WorkStatsViewModel(
     override val relationDao: RelationDao,
     private val recordingWorkDao: RecordingWorkDao,
 ) : ViewModel(),

@@ -1,13 +1,12 @@
 package ly.david.data.musicbrainz.auth
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.datetime.Clock
 import ly.david.data.musicbrainz.api.MusicBrainzOAuthApi
 import ly.david.data.musicbrainz.api.REFRESH_TOKEN
+import org.koin.core.annotation.Single
 
-@Singleton
-class MusicBrainzAuthRepository @Inject constructor(
+@Single
+class MusicBrainzAuthRepository(
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val musicBrainzOAuthApi: MusicBrainzOAuthApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,

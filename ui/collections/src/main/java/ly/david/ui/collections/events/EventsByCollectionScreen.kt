@@ -6,16 +6,16 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -27,7 +27,7 @@ internal fun EventsByCollectionScreen(
     modifier: Modifier = Modifier,
     onEventClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
-    viewModel: EventsByCollectionViewModel = hiltViewModel(),
+    viewModel: EventsByCollectionViewModel = koinViewModel(),
 ) {
     val entity = MusicBrainzEntity.EVENT
     val lazyListState = rememberLazyListState()

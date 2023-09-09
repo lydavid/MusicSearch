@@ -8,18 +8,18 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
+import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
 @Composable
@@ -31,7 +31,7 @@ fun ReleasesListScreen(
     showMoreInfo: Boolean = true,
     onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
-    viewModel: ReleasesListViewModel = hiltViewModel(),
+    viewModel: ReleasesListViewModel = koinViewModel(),
 ) {
     ReleasesListScreenInternal(
         lazyPagingItems = lazyPagingItems,

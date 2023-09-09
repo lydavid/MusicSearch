@@ -7,8 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +19,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.EndOfList
 import ly.david.data.domain.listitem.Header
 import ly.david.data.domain.listitem.ListItemModel
@@ -28,16 +27,16 @@ import ly.david.data.domain.listitem.SearchHistoryListItemModel
 import ly.david.data.domain.listitem.toSearchHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.history.search.SearchHistoryDao
 import ly.david.data.room.history.search.SearchHistoryRoomModel
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
+import org.koin.android.annotation.KoinViewModel
 
 private const val SEARCH_DELAY_MS = 500L
 
-@HiltViewModel
-internal class SearchViewModel @Inject constructor(
+@KoinViewModel
+internal class SearchViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val searchHistoryDao: SearchHistoryDao,
 ) : ViewModel() {

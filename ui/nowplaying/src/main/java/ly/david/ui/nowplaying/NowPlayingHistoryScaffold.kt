@@ -14,22 +14,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.core.common.toDate
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NowPlayingHistoryScaffold(
@@ -49,7 +49,7 @@ internal fun NowPlayingHistoryScaffoldInternal(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
-    viewModel: NowPlayingViewModel = hiltViewModel(),
+    viewModel: NowPlayingViewModel = koinViewModel(),
 ) {
     var filterText by rememberSaveable { mutableStateOf("") }
     val lazyPagingItems = rememberFlowWithLifecycleStarted(viewModel.nowPlayingHistory)

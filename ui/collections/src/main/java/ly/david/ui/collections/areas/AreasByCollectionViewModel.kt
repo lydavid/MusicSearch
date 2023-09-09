@@ -1,12 +1,10 @@
 package ly.david.ui.collections.areas
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.AreaDao
@@ -17,9 +15,10 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.paging.PagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class AreasByCollectionViewModel @Inject constructor(
+@KoinViewModel
+internal class AreasByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,

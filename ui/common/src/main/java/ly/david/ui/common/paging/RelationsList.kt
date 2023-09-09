@@ -6,7 +6,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +24,7 @@ import ly.david.data.room.relation.HasRelations
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.relation.RelationRoomModel
 import ly.david.data.room.relation.toRelationRoomModel
+import org.koin.core.annotation.Single
 
 /**
  * A [ViewModel] implements this for [pagedRelations].
@@ -59,7 +59,8 @@ interface IRelationsList {
  *
  * The ViewModel should should assign [scope] and [repository] in its init block.
  */
-class RelationsList @Inject constructor(
+@Single
+class RelationsList(
     private val relationDao: RelationDao,
 ) : IRelationsList {
 

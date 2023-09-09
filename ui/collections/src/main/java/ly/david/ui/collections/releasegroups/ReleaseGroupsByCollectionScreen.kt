@@ -5,13 +5,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun ReleaseGroupsByCollectionScreen(
@@ -23,7 +23,7 @@ internal fun ReleaseGroupsByCollectionScreen(
     modifier: Modifier = Modifier,
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: (entityId: String, name: String) -> Unit = { _, _ -> },
-    viewModel: ReleaseGroupsByCollectionViewModel = hiltViewModel(),
+    viewModel: ReleaseGroupsByCollectionViewModel = koinViewModel(),
 ) {
     val lazyListState = rememberLazyListState()
     val lazyPagingItems: LazyPagingItems<ListItemModel> =

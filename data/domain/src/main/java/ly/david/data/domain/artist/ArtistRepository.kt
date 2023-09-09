@@ -1,7 +1,5 @@
 package ly.david.data.domain.artist
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
@@ -9,9 +7,10 @@ import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.artist.ArtistDao
 import ly.david.data.room.artist.toArtistRoomModel
+import org.koin.core.annotation.Single
 
-@Singleton
-class ArtistRepository @Inject constructor(
+@Single
+class ArtistRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistDao: ArtistDao,
     private val relationRepository: RelationRepository,

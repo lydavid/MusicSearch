@@ -18,9 +18,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.hilt.navigation.compose.hiltViewModel
-import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.ui.collections.areas.AreasByCollectionScreen
 import ly.david.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.ui.collections.events.EventsByCollectionScreen
@@ -39,6 +38,7 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import org.koin.androidx.compose.koinViewModel
 
 /**
  * A single MusicBrainz collection.
@@ -58,7 +58,7 @@ fun CollectionScaffold(
     sortReleaseGroupListItems: Boolean = false,
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
-    viewModel: CollectionViewModel = hiltViewModel(),
+    viewModel: CollectionViewModel = koinViewModel(),
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }

@@ -8,7 +8,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -22,6 +21,7 @@ import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.release.TrackListItem
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun TracksByReleaseScreen(
@@ -33,7 +33,7 @@ internal fun TracksByReleaseScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onRecordingClick: (String, String) -> Unit = { _, _ -> },
     onPagedTracksFlowChange: (Flow<PagingData<ListItemModel>>) -> Unit = {},
-    viewModel: TracksByReleaseViewModel = hiltViewModel(),
+    viewModel: TracksByReleaseViewModel = koinViewModel(),
 ) {
     LaunchedEffect(key1 = Unit) {
         viewModel.loadTracks(releaseId)

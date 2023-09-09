@@ -1,16 +1,15 @@
 package ly.david.data.domain.recordng
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.recording.RecordingDao
+import org.koin.core.annotation.Single
 
-@Singleton
-class RecordingRepository @Inject constructor(
+@Single
+class RecordingRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val recordingDao: RecordingDao,
     private val relationRepository: RelationRepository,

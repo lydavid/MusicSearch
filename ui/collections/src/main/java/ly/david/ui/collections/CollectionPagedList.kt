@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import androidx.paging.map
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -50,7 +49,7 @@ interface BrowseCollectionUseCase<RM : RoomModel> : StoreEntityUseCase {
     fun getLinkedEntitiesPagingSource(viewState: ICollectionPagedList.ViewModelState): PagingSource<Int, RM>
 }
 
-class CollectionPagedList @Inject constructor() : ICollectionPagedList {
+class CollectionPagedList : ICollectionPagedList {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
