@@ -8,7 +8,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.bundles.ktor.android)
+                implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
         val commonTest by getting {
