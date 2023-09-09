@@ -6,4 +6,4 @@ import ly.david.ui.common.paging.PagedList
 import org.koin.core.annotation.Factory
 
 @Factory
-class LabelsPagedList: PagedList<LabelRoomModel, LabelListItemModel>()
+class LabelsPagedList : PagedList<LabelRoomModel, LabelListItemModel>()
