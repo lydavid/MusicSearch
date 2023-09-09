@@ -14,7 +14,7 @@ import ly.david.data.room.work.WorkDao
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.toWorkRoomModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.work.WorksPagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class WorksByCollectionViewModel(
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<WorkRoomModel, WorkListItemModel>,
+    pagedList: WorksPagedList,
 ) : BrowseEntitiesByEntityViewModel<WorkRoomModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
     byEntity = MusicBrainzEntity.WORK,
     relationDao = relationDao,

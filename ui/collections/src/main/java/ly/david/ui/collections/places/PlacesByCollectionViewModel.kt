@@ -14,7 +14,7 @@ import ly.david.data.room.place.PlaceRoomModel
 import ly.david.data.room.place.toPlaceRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.place.PlacesPagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class PlacesByCollectionViewModel(
     private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     private val placeDao: PlaceDao,
-    pagedList: PagedList<PlaceRoomModel, PlaceListItemModel>,
+    pagedList: PlacesPagedList,
 ) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzEntity.PLACE,
     relationDao = relationDao,

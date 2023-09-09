@@ -14,7 +14,7 @@ import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.work.recordings.RecordingWork
 import ly.david.data.room.work.recordings.RecordingWorkDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class RecordingsByWorkViewModel(
     private val recordingWorkDao: RecordingWorkDao,
     private val relationDao: RelationDao,
     private val recordingDao: RecordingDao,
-    pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
+    pagedList: RecordingsPagedList,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     relationDao = relationDao,

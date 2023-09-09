@@ -13,8 +13,8 @@ import ly.david.data.room.artist.toArtistRoomModel
 import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RelationDao
+import ly.david.ui.common.artist.ArtistsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class ArtistsByCollectionViewModel(
     private val collectionEntityDao: CollectionEntityDao,
     private val artistDao: ArtistDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<ArtistRoomModel, ArtistListItemModel>,
+    pagedList: ArtistsPagedList,
 ) : BrowseEntitiesByEntityViewModel<ArtistRoomModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
     byEntity = MusicBrainzEntity.ARTIST,
     relationDao = relationDao,

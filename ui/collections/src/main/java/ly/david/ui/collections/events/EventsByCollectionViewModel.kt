@@ -13,8 +13,8 @@ import ly.david.data.room.event.EventDao
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.event.toEventRoomModel
 import ly.david.data.room.relation.RelationDao
+import ly.david.ui.common.event.EventsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class EventsByCollectionViewModel(
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<EventRoomModel, EventListItemModel>,
+    pagedList: EventsPagedList,
 ) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
     relationDao = relationDao,

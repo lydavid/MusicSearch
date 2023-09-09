@@ -13,8 +13,8 @@ import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.toLabelRoomModel
 import ly.david.data.room.relation.RelationDao
+import ly.david.ui.common.label.LabelsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class LabelsByCollectionViewModel(
     private val collectionEntityDao: CollectionEntityDao,
     private val labelDao: LabelDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<LabelRoomModel, LabelListItemModel>,
+    pagedList: LabelsPagedList,
 ) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,
     relationDao = relationDao,

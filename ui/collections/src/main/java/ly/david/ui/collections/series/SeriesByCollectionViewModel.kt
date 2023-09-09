@@ -14,7 +14,7 @@ import ly.david.data.room.series.SeriesDao
 import ly.david.data.room.series.SeriesRoomModel
 import ly.david.data.room.series.toSeriesRoomModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.series.SeriesPagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -23,7 +23,7 @@ internal class SeriesByCollectionViewModel(
     private val collectionEntityDao: CollectionEntityDao,
     private val seriesDao: SeriesDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<SeriesRoomModel, SeriesListItemModel>,
+    pagedList: SeriesPagedList,
 ) : BrowseEntitiesByEntityViewModel<SeriesRoomModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
     byEntity = MusicBrainzEntity.SERIES,
     relationDao = relationDao,

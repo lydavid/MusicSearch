@@ -20,7 +20,7 @@ import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.common.paging.IPagedList
-import org.koin.core.annotation.Single
+import org.koin.core.annotation.Factory
 
 interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
     data class ViewModelState(
@@ -43,7 +43,7 @@ interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
     }
 }
 
-@Single
+@Factory
 class CollectionPagedList : ICollectionPagedList {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
