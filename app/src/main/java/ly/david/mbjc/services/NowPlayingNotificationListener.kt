@@ -11,7 +11,6 @@ import org.koin.android.ext.android.inject
 private const val ANDROID_SYSTEM_INTELLIGENCE_PACKAGE_NAME = "com.google.android.as"
 private const val ANDROID_TITLE_KEY = "android.title"
 
-//@AndroidEntryPoint
 class NowPlayingNotificationListener : NotificationListenerService() {
 
     private val coroutineScope: CoroutineScope by inject()

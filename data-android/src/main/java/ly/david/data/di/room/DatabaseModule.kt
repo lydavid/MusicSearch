@@ -8,19 +8,6 @@ import org.koin.dsl.module
 
 private const val DATABASE_NAME = "mbjc.db"
 
-//@Module
-//@InstallIn(SingletonComponent::class)
-//object DatabaseModule {
-//    @Singleton
-//    @Provides
-//    fun provideDatabase(@ApplicationContext context: Context): MusicSearchDatabase {
-//        return Room.databaseBuilder(context, MusicSearchRoomDatabase::class.java, DATABASE_NAME)
-//            .addMigrations(MIGRATION_7_8)
-//            .fallbackToDestructiveMigration()
-//            .build()
-//    }
-//}
-
 val databaseModule = module {
     single<MusicSearchDatabase> {
         Room.databaseBuilder(get(), MusicSearchRoomDatabase::class.java, DATABASE_NAME)

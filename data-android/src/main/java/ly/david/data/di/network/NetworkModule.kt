@@ -1,7 +1,6 @@
 package ly.david.data.di.network
 
 import android.content.Context
-import io.ktor.client.HttpClient
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpRequestRetry
@@ -25,118 +24,6 @@ import okhttp3.Cache
 import org.koin.dsl.module
 import timber.log.Timber
 
-//@Module
-//@InstallIn(SingletonComponent::class)
-//object NetworkModule {
-//
-//    @Singleton
-//    @Provides
-//    fun provideHttpClient(
-//        @ApplicationContext context: Context,
-//    ): HttpClient {
-//        return ApiHttpClient.configAndCreate(
-//            cache = Cache(
-//                directory = File(context.cacheDir, "ktor_okhttp_cache"),
-//                maxSize = 50 * 1024 * 1024,
-//            )
-//        ) {
-//            HttpResponseValidator {
-//                handleResponseExceptionWithRequest { exception, _ ->
-//                    handleRecoverableException(exception)
-//                }
-//            }
-//
-//            install(Logging) {
-//                level = LogLevel.HEADERS
-//                logger = object : Logger {
-//                    override fun log(message: String) {
-//                        Timber.d(message)
-//                    }
-//                }
-//                sanitizeHeader { header -> header == HttpHeaders.Authorization }
-//            }
-//
-//            install(HttpRequestRetry) {
-//                retryOnExceptionOrServerErrors(maxRetries = 3)
-//                exponentialDelay()
-//            }
-//        }
-//    }
-//
-//    private suspend fun handleRecoverableException(exception: Throwable) {
-//        when (exception) {
-//            is NoTransformationFoundException -> {
-//                Timber.e(exception)
-//                throw RecoverableNetworkException("Requested json but got xml")
-//            }
-//
-//            is ClientRequestException -> {
-//                val exceptionResponse = exception.response
-//                if (exceptionResponse.status == HttpStatusCode.Unauthorized) {
-//                    val exceptionResponseText = exceptionResponse.bodyAsText()
-//                    throw RecoverableNetworkException(exceptionResponseText)
-//                }
-//            }
-//        }
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideCoverArtArchiveApi(
-//        httpClient: HttpClient,
-//    ): CoverArtArchiveApi = CoverArtArchiveApi.create(
-//        httpClient = httpClient,
-//    )
-//
-//    @Singleton
-//    @Provides
-//    fun provideMusicBrainzOAuthApi(
-//        httpClient: HttpClient,
-//    ): MusicBrainzOAuthApi {
-//        return MusicBrainzOAuthApi.create(
-//            httpClient = httpClient,
-//        )
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideMusicBrainzApi(
-//        httpClient: HttpClient,
-//        musicBrainzAuthRepository: MusicBrainzAuthRepository,
-//    ): MusicBrainzApi {
-//        return MusicBrainzApi.create(
-//            httpClient = httpClient,
-//            musicBrainzAuthRepository = musicBrainzAuthRepository,
-//        )
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideSpotifyOAuthApi(
-//        httpClient: HttpClient,
-//    ): SpotifyOAuthApi {
-//        return SpotifyOAuthApi.create(
-//            httpClient = httpClient,
-//        )
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideSpotifyApi(
-//        httpClient: HttpClient,
-//        spotifyAuthStore: SpotifyAuthStore,
-//        spotifyOAuthApi: SpotifyOAuthApi,
-//    ): SpotifyApi {
-//        return SpotifyApi.create(
-//            httpClient = httpClient,
-//            clientId = BuildConfig.SPOTIFY_CLIENT_ID,
-//            clientSecret = BuildConfig.SPOTIFY_CLIENT_SECRET,
-//            spotifyOAuthApi = spotifyOAuthApi,
-//            spotifyAuthStore = spotifyAuthStore,
-//        )
-//    }
-//}
-
 private suspend fun handleRecoverableException(exception: Throwable) {
     when (exception) {
         is NoTransformationFoundException -> {
@@ -156,7 +43,7 @@ private suspend fun handleRecoverableException(exception: Throwable) {
 
 val networkModule = module {
 
-    single<HttpClient> {
+    single {
         ApiHttpClient.configAndCreate(
             cache = Cache(
                 directory = File(get<Context>().cacheDir, "ktor_okhttp_cache"),
@@ -185,8 +72,6 @@ val networkModule = module {
             }
         }
     }
-
-
 
     single {
         CoverArtArchiveApi.create(

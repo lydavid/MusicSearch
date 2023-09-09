@@ -24,7 +24,6 @@ private val usernamePreference = stringPreferencesKey("MUSICBRAINZ_USERNAME")
 @Single(binds = [MusicBrainzAuthStore::class])
 class MusicBrainzAuthStoreImpl(
     private val preferencesDataStore: DataStore<Preferences>,
-    // TODO: @ApplicationScope?
     private val coroutineScope: CoroutineScope,
 ) : MusicBrainzAuthStore {
 

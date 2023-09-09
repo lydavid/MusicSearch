@@ -59,12 +59,8 @@ internal fun TopLevelScaffold(
     val bottomSheetState = rememberModalBottomSheetState()
     var showCreateCollectionDialog by rememberSaveable { mutableStateOf(false) }
     val collections: LazyPagingItems<CollectionListItemModel> =
-//        MutableStateFlow(
-//        PagingData.from(
-//            listOf<CollectionListItemModel>()
-//        )).collectAsLazyPagingItems()
         rememberFlowWithLifecycleStarted(viewModel.collections)
-        .collectAsLazyPagingItems()
+            .collectAsLazyPagingItems()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: Destination.LOOKUP.route

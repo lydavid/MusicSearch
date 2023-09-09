@@ -23,6 +23,7 @@ import ly.david.data.room.RoomModel
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.common.paging.IPagedList
 import ly.david.ui.common.paging.StoreEntityUseCase
+import org.koin.core.annotation.Single
 
 interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
     data class ViewModelState(
@@ -49,6 +50,7 @@ interface BrowseCollectionUseCase<RM : RoomModel> : StoreEntityUseCase {
     fun getLinkedEntitiesPagingSource(viewState: ICollectionPagedList.ViewModelState): PagingSource<Int, RM>
 }
 
+@Single
 class CollectionPagedList : ICollectionPagedList {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")

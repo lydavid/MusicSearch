@@ -16,8 +16,6 @@ import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
 import org.koin.android.annotation.KoinViewModel
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Module
 import timber.log.Timber
 
 @KoinViewModel
