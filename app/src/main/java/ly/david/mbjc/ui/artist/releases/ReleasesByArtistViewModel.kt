@@ -11,8 +11,8 @@ import ly.david.data.room.artist.releases.ArtistReleaseDao
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
-import ly.david.ui.common.paging.PagedList
 import ly.david.ui.common.release.ReleasesByEntityViewModel
+import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -21,7 +21,7 @@ internal class ReleasesByArtistViewModel(
     private val artistReleaseDao: ArtistReleaseDao,
     private val relationDao: RelationDao,
     releaseDao: ReleaseDao,
-    pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
+    pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,
     releaseDao = releaseDao,

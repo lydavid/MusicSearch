@@ -25,6 +25,7 @@ import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList
+import org.koin.core.annotation.Single
 
 /**
  * Generic implementation for handling paged release groups.
@@ -33,6 +34,7 @@ import ly.david.ui.common.paging.SortablePagedList
  *
  * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
+@Single
 class ReleaseGroupsPagedList : SortablePagedList<ListItemModel> {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")

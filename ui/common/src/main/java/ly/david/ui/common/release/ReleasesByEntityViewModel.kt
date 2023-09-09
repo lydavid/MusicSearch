@@ -2,9 +2,9 @@ package ly.david.ui.common.release
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.domain.listitem.toReleaseListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.room.relation.BrowseEntityCount
@@ -14,12 +14,11 @@ import ly.david.data.room.release.ReleaseForListItem
 import ly.david.data.room.release.toRoomModel
 import ly.david.ui.common.paging.BrowseEntityUseCase
 import ly.david.ui.common.paging.IPagedList
-import ly.david.ui.common.paging.PagedList
 
 abstract class ReleasesByEntityViewModel(
     private val relationDao: RelationDao,
     private val releaseDao: ReleaseDao,
-    private val pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
+    private val pagedList: ReleasesPagedList,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
     BrowseEntityUseCase<ReleaseForListItem, ReleaseListItemModel> {
