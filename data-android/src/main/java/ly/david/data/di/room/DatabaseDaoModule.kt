@@ -2,7 +2,6 @@ package ly.david.data.di.room
 
 import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.room.MusicSearchDatabase
-import ly.david.data.room.artist.ArtistDao
 import org.koin.dsl.module
 
 val databaseDaoModule = module {

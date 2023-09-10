@@ -4,16 +4,18 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import ly.david.data.di.coroutines.MusicSearchDispatchers
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryRoomModel
 import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 private const val ANDROID_SYSTEM_INTELLIGENCE_PACKAGE_NAME = "com.google.android.as"
 private const val ANDROID_TITLE_KEY = "android.title"
 
 class NowPlayingNotificationListener : NotificationListenerService() {
 
-    private val coroutineScope: CoroutineScope by inject()
+    private val coroutineScope: CoroutineScope by inject(named(MusicSearchDispatchers.IO))
     private val nowPlayingHistoryDao: NowPlayingHistoryDao by inject()
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {

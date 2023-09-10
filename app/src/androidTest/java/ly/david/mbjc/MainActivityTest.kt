@@ -23,7 +23,6 @@ import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
-import ly.david.mbjc.di.testCoroutinesScopesModule
 import ly.david.mbjc.di.testDatabaseModule
 import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testNetworkModule
@@ -42,15 +41,16 @@ val testAndroidAppModule = module {
     includes(
         ViewModelsModule().module,
         appDataModule,
+//        testDispatcherModule,
         testCoroutineDispatchersModule,
-//        coroutinesScopesModule,
-        testCoroutinesScopesModule,
+        coroutinesScopesModule,
+//        testCoroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,
         testNetworkModule,
         testPreferencesDataStoreModule,
-        databaseDaoModule,
         testDatabaseModule,
+        databaseDaoModule,
         testImageModule,
         CoverArtDataModule().module,
         DomainDataModule().module,
