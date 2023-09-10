@@ -10,8 +10,6 @@ compose-material3 = "1.1.1"
 compose-multiplatform = "1.5.1"
 compose-ui = "1.5.1"
 detekt = "1.23.1"
-hilt = "2.48"
-hilt-navigation = "1.0.0"
 junit = "4.13.2"
 koin = "3.4.3"
 koinAnnotations = "1.2.2"
@@ -57,16 +55,11 @@ compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compos
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui" }
 compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-ui" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui" }
-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "hilt" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version = "0.2.1" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.2.3" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-android-test = { module = "io.insert-koin:koin-android-test", version.ref = "koin" }
@@ -128,7 +121,6 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
 google-services = { id = "com.google.gms.google-services", version = "4.3.15" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
