@@ -15,7 +15,7 @@ private const val ANDROID_TITLE_KEY = "android.title"
 
 class NowPlayingNotificationListener : NotificationListenerService() {
 
-    private val coroutineScope: CoroutineScope by inject(named(MusicSearchDispatchers.IO))
+    private val coroutineScope: CoroutineScope by inject()
     private val nowPlayingHistoryDao: NowPlayingHistoryDao by inject()
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
