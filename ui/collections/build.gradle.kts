@@ -3,7 +3,6 @@ plugins {
     kotlin("android")
     id("ly.david.android.compose")
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
     alias(libs.plugins.paparazzi)
 }
 
@@ -34,10 +33,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
-
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
 

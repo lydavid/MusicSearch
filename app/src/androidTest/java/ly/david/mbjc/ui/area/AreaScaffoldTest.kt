@@ -11,8 +11,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.area.AreaRepository
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
@@ -27,6 +25,8 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 /**
  * This class should test anything in [AreaScaffold] that we would otherwise have to QA manually.
@@ -34,15 +34,12 @@ import org.junit.Test
  * However, try to refrain from testing the details of constituent composables such as its cards.
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
-@HiltAndroidTest
-internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
+internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var areaRepository: AreaRepository
+    private val areaRepository: AreaRepository by inject()
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
     }
 
     private fun setArea(areaMusicBrainzModel: AreaMusicBrainzModel) {

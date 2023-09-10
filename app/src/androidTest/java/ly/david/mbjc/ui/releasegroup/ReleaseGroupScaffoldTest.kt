@@ -8,8 +8,6 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
@@ -21,19 +19,13 @@ import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
+internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var releaseGroupRepository: ReleaseGroupRepository
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-    }
+    private val releaseGroupRepository: ReleaseGroupRepository by inject()
 
     private fun setReleaseGroup(releaseGroupMusicBrainzModel: ReleaseGroupMusicBrainzModel) {
         composeTestRule.activity.setContent {

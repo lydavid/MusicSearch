@@ -113,13 +113,14 @@ dependencies {
     testImplementation(libs.bundles.kotlinx.coroutines)
 
     androidTestImplementation(projects.testData)
-    androidTestImplementation(libs.coil.test)
-    androidTestImplementation(libs.compose.ui.test)
-    androidTestImplementation(libs.bundles.kotlinx.coroutines)
-    androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.arch.core.testing)
+    androidTestImplementation(libs.bundles.kotlinx.coroutines)
+    androidTestImplementation(libs.coil.test)
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.koin.android.test)
+    androidTestImplementation(libs.room.testing)
 
     ksp(libs.koin.ksp.compiler)
 }

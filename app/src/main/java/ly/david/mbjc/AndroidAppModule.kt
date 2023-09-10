@@ -2,6 +2,7 @@ package ly.david.mbjc
 
 import ly.david.data.coverart.CoverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
+import ly.david.data.di.coroutines.coroutineDispatchersModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
@@ -26,6 +27,7 @@ val androidAppModule = module {
     includes(
         ViewModelsModule().module,
         appDataModule,
+        coroutineDispatchersModule,
         coroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,

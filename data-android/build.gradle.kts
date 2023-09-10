@@ -100,11 +100,6 @@ dependencies {
 
     implementation(libs.appauth)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-    kspTest(libs.hilt.android.compiler)
-    testImplementation(libs.hilt.android.testing)
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.datetime)

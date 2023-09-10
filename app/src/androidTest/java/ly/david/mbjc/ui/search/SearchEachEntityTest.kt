@@ -15,7 +15,6 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.testing.HiltAndroidTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
 import ly.david.data.core.network.searchableEntities
@@ -29,15 +28,15 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.koin.test.KoinTest
 
 /**
  * Test interacting with each [searchableEntities] from [SearchScreen].
  */
-@HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class SearchEachEntityTest(
-    private val entity: MusicBrainzEntity
-) : MainActivityTest(), StringReferences {
+    private val entity: MusicBrainzEntity,
+) : MainActivityTest(), StringReferences, KoinTest {
 
     companion object {
         @JvmStatic
@@ -51,8 +50,6 @@ internal class SearchEachEntityTest(
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
-
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

@@ -12,7 +12,6 @@ dependencies {
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
     implementation(libs.androidx.paging.common)
-    implementation(libs.dagger)
 
     ksp(libs.koin.ksp.compiler)
 

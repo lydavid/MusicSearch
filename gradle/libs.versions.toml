@@ -69,6 +69,7 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-android-test = { module = "io.insert-koin:koin-android-test", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCompose" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }

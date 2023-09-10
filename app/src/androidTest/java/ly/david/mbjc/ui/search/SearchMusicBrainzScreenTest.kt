@@ -17,7 +17,6 @@ import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import dagger.hilt.android.testing.HiltAndroidTest
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
@@ -31,13 +30,13 @@ import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.test.KoinTest
 
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachEntityTest].
  */
-@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {
+internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences, KoinTest {
 
     private lateinit var navController: NavHostController
 

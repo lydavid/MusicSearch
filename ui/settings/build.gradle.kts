@@ -43,10 +43,6 @@ dependencies {
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-
     testRuntimeOnly(libs.bundles.kotlinx.coroutines)
 
     testImplementation(libs.test.parameter.injector)

@@ -41,12 +41,6 @@ dependencies {
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-    kspAndroidTest(libs.hilt.android.compiler)
-    androidTestImplementation(libs.hilt.android.testing)
-
     implementation(libs.timber)
 
     testImplementation(libs.bundles.kotlinx.coroutines)

@@ -16,16 +16,14 @@ import androidx.compose.ui.test.swipeDown
 import androidx.compose.ui.test.swipeUp
 import coil.Coil
 import coil.ImageLoaderFactory
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.release.ReleaseRepository
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.data.musicbrainz.getHeader
 import ly.david.data.test.davidBowieArtistCredit
 import ly.david.data.test.elektraMusicGroup
 import ly.david.data.test.fakeReleaseEvent
-import ly.david.data.musicbrainz.getHeader
 import ly.david.data.test.queenArtistCredit
 import ly.david.data.test.soulBrotherTrack
 import ly.david.data.test.underPressure
@@ -40,19 +38,16 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.image.LargeImageTestTag
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
+internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var releaseRepository: ReleaseRepository
-
-    @Inject
-    lateinit var imageLoaderFactory: ImageLoaderFactory
+    private val releaseRepository: ReleaseRepository by inject()
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
         Coil.setImageLoader(imageLoaderFactory)
     }
 

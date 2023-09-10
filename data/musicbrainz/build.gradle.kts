@@ -6,7 +6,6 @@ plugins {
 
 dependencies {
     implementation(projects.data.core)
-    implementation(libs.dagger)
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
     implementation(libs.koin.core)

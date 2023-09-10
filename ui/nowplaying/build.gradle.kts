@@ -27,10 +27,6 @@ dependencies {
     implementation(libs.compose.ui.preview)
     debugImplementation(libs.compose.ui.tooling)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
