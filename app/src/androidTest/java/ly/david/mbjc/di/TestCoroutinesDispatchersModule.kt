@@ -24,11 +24,3 @@ val testCoroutineDispatchersModule = module {
         get<TestDispatcher>()
     }
 }
-
-//val testCoroutinesScopesModule = module {
-//    single<CoroutineScope> {
-//        createTestCoroutineScope(TestCoroutineDispatcher())
-//////        TestCoroutineScope()
-//////        CoroutineScope(SupervisorJob() + get<CoroutineDispatcher>(named(MusicSearchDispatchers.Default)))
-//    }
-//}
