@@ -16,5 +16,6 @@ dependencies {
     ksp(libs.koin.ksp.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.koin.test)
     testImplementation(libs.mockk)
 }

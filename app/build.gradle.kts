@@ -4,7 +4,6 @@ import java.util.Properties
 plugins {
     id("ly.david.android.application")
     id("ly.david.android.compose")
-    alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
@@ -48,10 +47,6 @@ android {
         testInstrumentationRunner = "ly.david.mbjc.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
-        }
-
-        ksp {
-            arg("KOIN_CONFIG_CHECK", "true")
         }
     }
 
@@ -103,8 +98,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.annotations)
@@ -122,15 +115,11 @@ dependencies {
     androidTestImplementation(projects.testData)
     androidTestImplementation(libs.coil.test)
     androidTestImplementation(libs.compose.ui.test)
-    androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.bundles.kotlinx.coroutines)
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.arch.core.testing)
 
-    ksp(libs.hilt.android.compiler)
     ksp(libs.koin.ksp.compiler)
-
-    kspAndroidTest(libs.hilt.android.compiler)
 }

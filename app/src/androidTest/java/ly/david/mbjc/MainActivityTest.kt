@@ -12,13 +12,12 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import dagger.hilt.android.testing.HiltAndroidRule
 import ly.david.mbjc.ui.MainActivity
 import org.junit.Rule
 
 internal abstract class MainActivityTest {
-    @get:Rule(order = 0)
-    val hiltRule: HiltAndroidRule by lazy { HiltAndroidRule(this) }
+//    @get:Rule(order = 0)
+//    val hiltRule: HiltAndroidRule by lazy { HiltAndroidRule(this) }
 
     @get:Rule(order = 1)
     var instantTaskExecutorRule = InstantTaskExecutorRule()
