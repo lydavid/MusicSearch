@@ -25,7 +25,7 @@ val databaseDaoModule = module {
         get<MusicSearchDatabase>().getReleaseReleaseGroupDao()
     }
 
-    single {
+    factory {
         get<MusicSearchDatabase>().getReleaseDao()
     }
 
@@ -117,7 +117,7 @@ val databaseDaoModule = module {
         get<MusicSearchDatabase>().getCollectionEntityDao()
     }
 
-    single<ImageUrlSaver> {
+    factory<ImageUrlSaver> {
         get<MusicSearchDatabase>().getMbidImageDao()
     }
 }

@@ -66,10 +66,14 @@ val testAndroidAppModule = module {
 }
 
 internal abstract class MainActivityTest {
+
+    // TODO: when using this rule, we're still using the real database
 //    @get:Rule(order = 0)
-//    val koinTestRule = KoinTestRule(
-//        modules = listOf(testAndroidAppModule)
-//    )
+//    val koinTestRule by lazy {
+//        KoinTestRule(
+//            modules = listOf(testAndroidAppModule)
+//        )
+//    }
 
     @get:Rule(order = 1)
     var instantTaskExecutorRule = InstantTaskExecutorRule()

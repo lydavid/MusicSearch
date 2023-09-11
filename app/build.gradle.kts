@@ -119,8 +119,9 @@ dependencies {
     androidTestImplementation(libs.bundles.kotlinx.coroutines)
     androidTestImplementation(libs.coil.test)
     androidTestImplementation(libs.compose.ui.test)
-    androidTestImplementation(libs.koin.android.test)
+    androidTestImplementation(libs.koin.test)
     androidTestImplementation(libs.room.testing)
 
     ksp(libs.koin.ksp.compiler)
+    kspAndroidTest(libs.koin.ksp.compiler)
 }

@@ -2,6 +2,7 @@ package ly.david.mbjc.ui.area
 
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onAllNodesWithText
@@ -38,10 +39,6 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest
 
     private val areaRepository: AreaRepository by inject()
 
-    @Before
-    fun setupApp() {
-    }
-
     private fun setArea(areaMusicBrainzModel: AreaMusicBrainzModel) {
         composeTestRule.activity.setContent {
             PreviewTheme {
@@ -67,9 +64,18 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest
     }
 
     private fun assertFieldsDisplayed() {
-        waitForThenAssertIsDisplayed(ontario.name)
-        waitForThenPerformClickOn(places)
-        waitForThenAssertIsDisplayed(fakePlace.name)
+        composeTestRule
+            .onNodeWithText(ontario.name)
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText(places)
+            .performClick()
+        composeTestRule
+            .onNodeWithText(fakePlace.name)
+            .assertIsDisplayed()
+//        waitForThenAssertIsDisplayed(ontario.name)
+//        waitForThenPerformClickOn(places)
+//        waitForThenAssertIsDisplayed(fakePlace.name)
     }
 
     @Test
