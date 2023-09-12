@@ -20,6 +20,7 @@ import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.room.databaseDaoModule
 import ly.david.data.domain.DomainDataModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
+import ly.david.data.room.MusicSearchRoomDatabase
 import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
@@ -36,6 +37,8 @@ import ly.david.ui.settings.SettingsUiModule
 import org.junit.Rule
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 val testAndroidAppModule = module {
     includes(
@@ -65,21 +68,25 @@ val testAndroidAppModule = module {
     )
 }
 
-internal abstract class MainActivityTest {
+internal abstract class MainActivityTest : KoinTest {
 
-    // TODO: when using this rule, we're still using the real database
-//    @get:Rule(order = 0)
-//    val koinTestRule = KoinTestRule(
-//        modules = listOf(testAndroidAppModule)
-//    )
+    private val database: MusicSearchRoomDatabase by inject()
 
-    @get:Rule(order = 1)
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    @get:Rule(order = 0)
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces
-    @get:Rule(order = 2)
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
+
+    @get:Rule(order = 2)
+    val musicSearchRoomDatabaseTestRule = MusicSearchRoomDatabaseTestRule(database)
+
+//    @After
+//    fun tearDown() {
+//        database.clearAllTables()
+//    }
 
     @OptIn(ExperimentalTestApi::class)
     fun waitForNodeToShow(matcher: SemanticsMatcher) {
