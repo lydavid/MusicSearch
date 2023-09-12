@@ -10,13 +10,13 @@ import org.koin.core.module.Module
 
 class KoinTestRule(
 //    private val context: Context,
-    private val modules: List<Module>,
+//    private val modules: List<Module>,
 ) : TestWatcher() {
     override fun starting(description: Description) {
         startKoin {
             androidContext(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext)
 //            androidContext(context)
-            modules(modules)
+            modules(testAndroidAppModule)
         }
     }
 

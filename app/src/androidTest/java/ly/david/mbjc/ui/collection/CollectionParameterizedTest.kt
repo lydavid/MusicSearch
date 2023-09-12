@@ -11,10 +11,13 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.Coil
+import coil.ImageLoaderFactory
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.collectableEntities
+import ly.david.data.room.MusicSearchRoomDatabase
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.test.toFakeMusicBrainzModel
@@ -26,6 +29,7 @@ import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,18 +53,25 @@ internal class CollectionParameterizedTest(
         }
     }
 
-    private lateinit var navController: NavHostController
-
+    private val database: MusicSearchRoomDatabase by inject()
     private val collectionDao: CollectionDao by inject()
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
+    private lateinit var navController: NavHostController
 
     @Before
     fun setupApp() {
+        Coil.setImageLoader(imageLoaderFactory)
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {
                 TopLevelScaffold(navController)
             }
         }
+    }
+
+    @After
+    fun tearDown() {
+        database.clearAllTables()
     }
 
     @Test
