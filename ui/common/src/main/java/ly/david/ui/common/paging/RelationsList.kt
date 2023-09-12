@@ -24,7 +24,7 @@ import ly.david.data.room.relation.HasRelations
 import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.relation.RelationRoomModel
 import ly.david.data.room.relation.toRelationRoomModel
-import org.koin.core.annotation.Single
+import org.koin.core.annotation.Factory
 
 /**
  * A [ViewModel] implements this for [pagedRelations].
@@ -59,7 +59,7 @@ interface IRelationsList {
  *
  * The ViewModel should should assign [scope] and [repository] in its init block.
  */
-@Single
+@Factory
 class RelationsList(
     private val relationDao: RelationDao,
 ) : IRelationsList {

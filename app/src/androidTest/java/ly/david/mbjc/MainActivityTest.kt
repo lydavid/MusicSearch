@@ -73,15 +73,15 @@ internal abstract class MainActivityTest : KoinTest {
     private val database: MusicSearchRoomDatabase by inject()
 
     @get:Rule(order = 0)
+    val musicSearchRoomDatabaseTestRule = MusicSearchRoomDatabaseTestRule(database)
+
+    @get:Rule(order = 1)
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces
-    @get:Rule(order = 1)
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
-
     @get:Rule(order = 2)
-    val musicSearchRoomDatabaseTestRule = MusicSearchRoomDatabaseTestRule(database)
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
 
 //    @After
 //    fun tearDown() {
