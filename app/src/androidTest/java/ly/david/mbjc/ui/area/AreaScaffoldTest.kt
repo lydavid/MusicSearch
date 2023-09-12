@@ -24,7 +24,6 @@ import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -73,9 +72,6 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest
         composeTestRule
             .onNodeWithText(fakePlace.name)
             .assertIsDisplayed()
-//        waitForThenAssertIsDisplayed(ontario.name)
-//        waitForThenPerformClickOn(places)
-//        waitForThenAssertIsDisplayed(fakePlace.name)
     }
 
     @Test

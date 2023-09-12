@@ -20,7 +20,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized::class)
 internal class NavigateToEachEntityWithTitleTest(
     private val entity: MusicBrainzEntity,
-) : MainActivityTest() { // TODO: kointest?
+) : MainActivityTest() {
 
     companion object {
         @JvmStatic

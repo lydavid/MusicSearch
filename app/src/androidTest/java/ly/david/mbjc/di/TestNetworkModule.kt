@@ -10,9 +10,6 @@ import ly.david.data.test.api.FakeMusicBrainzApi
 import ly.david.data.test.api.FakeSpotifyApi
 import org.koin.dsl.module
 
-// TODO: these are test modules, while what they provide are fakes
-//  fake module doesn't make that much sense cause they are real modules but for tests
-
 val testNetworkModule = module {
     single<CoverArtArchiveApi> {
         FakeCoverArtArchiveApi()
