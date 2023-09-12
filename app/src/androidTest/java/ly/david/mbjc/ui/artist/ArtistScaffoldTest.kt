@@ -15,13 +15,11 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import coil.Coil
 import coil.ImageLoaderFactory
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.core.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.test.bandAid
 import ly.david.data.test.carlosAlomar
@@ -36,19 +34,16 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
+internal class ArtistScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var artistRepository: ArtistRepository
-
-    @Inject
-    lateinit var imageLoaderFactory: ImageLoaderFactory
+    private val artistRepository: ArtistRepository by inject()
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
         Coil.setImageLoader(imageLoaderFactory)
     }
 

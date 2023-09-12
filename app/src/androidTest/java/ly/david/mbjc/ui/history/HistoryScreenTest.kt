@@ -5,32 +5,29 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.Destination
-import ly.david.data.test.lookupHistory
 import ly.david.data.room.MusicSearchDatabase
 import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class HistoryScreenTest : MainActivityTest(), StringReferences {
+internal class HistoryScreenTest : MainActivityTest(), StringReferences, KoinTest {
 
     private lateinit var navController: NavHostController
 
-    @Inject
-    lateinit var db: MusicSearchDatabase
+    private val db: MusicSearchDatabase by inject()
     private lateinit var lookupHistoryDao: LookupHistoryDao
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
         lookupHistoryDao = db.getLookupHistoryDao()
 
         composeTestRule.activity.setContent {

@@ -1,7 +1,5 @@
 package ly.david.mbjc.ui.artist.releasegroups
 
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
@@ -12,9 +10,10 @@ import ly.david.data.room.relation.RelationDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class ReleaseGroupsByArtistViewModel @Inject constructor(
+@KoinViewModel
+internal class ReleaseGroupsByArtistViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val relationDao: RelationDao,

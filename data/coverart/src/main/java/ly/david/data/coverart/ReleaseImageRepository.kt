@@ -2,17 +2,18 @@ package ly.david.data.coverart
 
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
-import javax.inject.Inject
 import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.core.logging.Logger
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl
+import org.koin.core.annotation.Single
 
 /**
  * Logic to retrieve release cover art path.
  */
-class ReleaseImageRepository @Inject constructor(
+@Single
+class ReleaseImageRepository(
     private val coverArtArchiveApi: CoverArtArchiveApi,
     private val imageUrlSaver: ImageUrlSaver,
     private val logger: Logger,

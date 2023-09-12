@@ -8,18 +8,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.room.relation.RelationTypeCount
+import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
 import ly.david.ui.stats.StatsScreen
-import ly.david.ui.common.topappbar.Tab
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun WorkGroupStatsScreen(
     workId: String,
     modifier: Modifier = Modifier,
     tabs: List<Tab>,
-    viewModel: WorkStatsViewModel = hiltViewModel(),
+    viewModel: WorkStatsViewModel = koinViewModel(),
 ) {
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }

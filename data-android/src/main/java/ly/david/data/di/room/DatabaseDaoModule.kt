@@ -1,99 +1,123 @@
 package ly.david.data.di.room
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.room.MusicSearchDatabase
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal object DatabaseDaoModule {
-    @Provides
-    fun provideArtistDao(db: MusicSearchDatabase) = db.getArtistDao()
+val databaseDaoModule = module {
+    factory {
+        get<MusicSearchDatabase>().getArtistDao()
+    }
 
-    @Provides
-    fun provideArtistReleaseDao(db: MusicSearchDatabase) = db.getArtistReleaseDao()
+    factory {
+        get<MusicSearchDatabase>().getArtistReleaseDao()
+    }
 
-    @Provides
-    fun provideArtistReleaseGroupDao(db: MusicSearchDatabase) = db.getArtistReleaseGroupDao()
+    factory {
+        get<MusicSearchDatabase>().getArtistReleaseGroupDao()
+    }
 
-    @Provides
-    fun provideReleaseGroupDao(db: MusicSearchDatabase) = db.getReleaseGroupDao()
+    factory {
+        get<MusicSearchDatabase>().getReleaseGroupDao()
+    }
 
-    @Provides
-    fun provideReleaseReleaseGroupDao(db: MusicSearchDatabase) = db.getReleaseReleaseGroupDao()
+    factory {
+        get<MusicSearchDatabase>().getReleaseReleaseGroupDao()
+    }
 
-    @Provides
-    fun provideReleaseDao(db: MusicSearchDatabase) = db.getReleaseDao()
+    factory {
+        get<MusicSearchDatabase>().getReleaseDao()
+    }
 
-    @Provides
-    fun provideMediumDao(db: MusicSearchDatabase) = db.getMediumDao()
+    factory {
+        get<MusicSearchDatabase>().getMediumDao()
+    }
 
-    @Provides
-    fun provideTrackDao(db: MusicSearchDatabase) = db.getTrackDao()
+    factory {
+        get<MusicSearchDatabase>().getTrackDao()
+    }
 
-    @Provides
-    fun provideRecordingDao(db: MusicSearchDatabase) = db.getRecordingDao()
+    factory {
+        get<MusicSearchDatabase>().getRecordingDao()
+    }
 
-    @Provides
-    fun provideRecordingReleaseDao(db: MusicSearchDatabase) = db.getRecordingReleaseDao()
+    factory {
+        get<MusicSearchDatabase>().getRecordingReleaseDao()
+    }
 
-    @Provides
-    fun provideWorkDao(db: MusicSearchDatabase) = db.getWorkDao()
+    factory {
+        get<MusicSearchDatabase>().getWorkDao()
+    }
 
-    @Provides
-    fun provideRecordingWorkDao(db: MusicSearchDatabase) = db.getRecordingWorkDao()
+    factory {
+        get<MusicSearchDatabase>().getRecordingWorkDao()
+    }
 
-    @Provides
-    fun provideAreaDao(db: MusicSearchDatabase) = db.getAreaDao()
+    factory {
+        get<MusicSearchDatabase>().getAreaDao()
+    }
 
-    @Provides
-    fun provideAreaPlaceDao(db: MusicSearchDatabase) = db.getAreaPlaceDao()
+    factory {
+        get<MusicSearchDatabase>().getAreaPlaceDao()
+    }
 
-    @Provides
-    fun provideEventPlaceDao(db: MusicSearchDatabase) = db.getEventPlaceDao()
+    factory {
+        get<MusicSearchDatabase>().getEventPlaceDao()
+    }
 
-    @Provides
-    fun provideReleaseCountryDao(db: MusicSearchDatabase) = db.getReleaseCountryDao()
+    factory {
+        get<MusicSearchDatabase>().getReleaseCountryDao()
+    }
 
-    @Provides
-    fun providePlaceDao(db: MusicSearchDatabase) = db.getPlaceDao()
+    factory {
+        get<MusicSearchDatabase>().getPlaceDao()
+    }
 
-    @Provides
-    fun provideInstrumentDao(db: MusicSearchDatabase) = db.getInstrumentDao()
+    factory {
+        get<MusicSearchDatabase>().getInstrumentDao()
+    }
 
-    @Provides
-    fun provideLabelDao(db: MusicSearchDatabase) = db.getLabelDao()
+    factory {
+        get<MusicSearchDatabase>().getLabelDao()
+    }
 
-    @Provides
-    fun provideReleaseLabelDao(db: MusicSearchDatabase) = db.getReleaseLabelDao()
+    factory {
+        get<MusicSearchDatabase>().getReleaseLabelDao()
+    }
 
-    @Provides
-    fun provideEventDao(db: MusicSearchDatabase) = db.getEventDao()
+    factory {
+        get<MusicSearchDatabase>().getEventDao()
+    }
 
-    @Provides
-    fun provideSeriesDao(db: MusicSearchDatabase) = db.getSeriesDao()
+    factory {
+        get<MusicSearchDatabase>().getSeriesDao()
+    }
 
-    @Provides
-    fun provideRelationDao(db: MusicSearchDatabase) = db.getRelationDao()
+    factory {
+        get<MusicSearchDatabase>().getRelationDao()
+    }
 
-    @Provides
-    fun provideLookupHistoryDao(db: MusicSearchDatabase) = db.getLookupHistoryDao()
+    factory {
+        get<MusicSearchDatabase>().getLookupHistoryDao()
+    }
 
-    @Provides
-    fun provideSearchHistoryDao(db: MusicSearchDatabase) = db.getSearchHistoryDao()
+    factory {
+        get<MusicSearchDatabase>().getSearchHistoryDao()
+    }
 
-    @Provides
-    fun provideNowPlayingHistoryDao(db: MusicSearchDatabase) = db.getNowPlayingHistoryDao()
+    factory {
+        get<MusicSearchDatabase>().getNowPlayingHistoryDao()
+    }
 
-    @Provides
-    fun provideCollectionDao(db: MusicSearchDatabase) = db.getCollectionDao()
+    factory {
+        get<MusicSearchDatabase>().getCollectionDao()
+    }
 
-    @Provides
-    fun provideCollectionEntityDao(db: MusicSearchDatabase) = db.getCollectionEntityDao()
+    factory {
+        get<MusicSearchDatabase>().getCollectionEntityDao()
+    }
 
-    @Provides
-    fun provideImageUrlSaver(db: MusicSearchDatabase): ImageUrlSaver = db.getMbidImageDao()
+    factory<ImageUrlSaver> {
+        get<MusicSearchDatabase>().getMbidImageDao()
+    }
 }

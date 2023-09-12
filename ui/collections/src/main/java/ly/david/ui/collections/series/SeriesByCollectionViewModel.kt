@@ -1,11 +1,9 @@
 package ly.david.ui.collections.series
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.SeriesListItemModel
 import ly.david.data.domain.listitem.toSeriesListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -16,15 +14,16 @@ import ly.david.data.room.series.SeriesDao
 import ly.david.data.room.series.SeriesRoomModel
 import ly.david.data.room.series.toSeriesRoomModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.series.SeriesPagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class SeriesByCollectionViewModel @Inject constructor(
+@KoinViewModel
+internal class SeriesByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val seriesDao: SeriesDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<SeriesRoomModel, SeriesListItemModel>,
+    pagedList: SeriesPagedList,
 ) : BrowseEntitiesByEntityViewModel<SeriesRoomModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
     byEntity = MusicBrainzEntity.SERIES,
     relationDao = relationDao,

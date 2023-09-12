@@ -4,15 +4,15 @@ import android.app.Application
 import coil.Coil
 import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
-@HiltAndroidApp
 internal class MusicSearchApplication : Application() {
 
-    @Inject
-    lateinit var imageLoaderFactory: ImageLoaderFactory
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -21,6 +21,12 @@ internal class MusicSearchApplication : Application() {
             Timber.plant(Timber.DebugTree())
         } else {
             Timber.plant(CrashlyticsTree(FirebaseCrashlytics.getInstance()))
+        }
+
+        startKoin {
+            androidLogger()
+            androidContext(this@MusicSearchApplication)
+            modules(androidAppModule)
         }
 
         Coil.setImageLoader(imageLoaderFactory)

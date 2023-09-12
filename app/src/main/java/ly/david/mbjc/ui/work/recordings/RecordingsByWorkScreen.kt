@@ -6,13 +6,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.ui.common.recording.RecordingsListScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun RecordingsByWorkScreen(
@@ -24,7 +24,7 @@ internal fun RecordingsByWorkScreen(
     onRecordingClick: (entity: MusicBrainzEntity, String, String) -> Unit,
     onPagedRecordingsFlowChange: (Flow<PagingData<RecordingListItemModel>>) -> Unit,
     filterText: String,
-    viewModel: RecordingsByWorkViewModel = hiltViewModel(),
+    viewModel: RecordingsByWorkViewModel = koinViewModel(),
 ) {
     LaunchedEffect(key1 = workId) {
         viewModel.loadPagedEntities(workId)

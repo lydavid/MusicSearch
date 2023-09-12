@@ -6,9 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.UUID
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,10 +36,11 @@ import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
+import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 
-@HiltViewModel
-internal class TopLevelViewModel @Inject constructor(
+@KoinViewModel
+internal class TopLevelViewModel(
     val appPreferences: AppPreferences,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 

@@ -4,7 +4,6 @@ import java.util.Properties
 plugins {
     id("ly.david.android.application")
     id("ly.david.android.compose")
-    alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.paparazzi)
 }
@@ -99,8 +98,10 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.annotations)
+    implementation(libs.koin.core)
     implementation(libs.timber)
 
     debugImplementation(libs.compose.ui.tooling)
@@ -108,19 +109,19 @@ dependencies {
 
     testImplementation(projects.testData)
     testImplementation(libs.junit)
+    testImplementation(libs.koin.test)
     testImplementation(libs.bundles.kotlinx.coroutines)
 
     androidTestImplementation(projects.testData)
-    androidTestImplementation(libs.coil.test)
-    androidTestImplementation(libs.compose.ui.test)
-    androidTestImplementation(libs.hilt.android.testing)
-    androidTestImplementation(libs.bundles.kotlinx.coroutines)
-    androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.arch.core.testing)
+    androidTestImplementation(libs.bundles.kotlinx.coroutines)
+    androidTestImplementation(libs.coil.test)
+    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation(libs.koin.test)
+    androidTestImplementation(libs.room.testing)
 
-    ksp(libs.hilt.android.compiler)
-
-    kspAndroidTest(libs.hilt.android.compiler)
+    ksp(libs.koin.ksp.compiler)
+    kspAndroidTest(libs.koin.ksp.compiler)
 }

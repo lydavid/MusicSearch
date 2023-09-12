@@ -7,8 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,9 +27,10 @@ import ly.david.data.domain.listitem.toLookupHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.room.history.LookupHistoryForListItem
 import ly.david.ui.settings.AppPreferences
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class HistoryViewModel @Inject constructor(
+@KoinViewModel
+class HistoryViewModel(
     private val appPreferences: AppPreferences,
     private val lookupHistoryRepository: LookupHistoryRepository,
 ) : ViewModel() {

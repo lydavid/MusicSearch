@@ -100,26 +100,24 @@ dependencies {
 
     implementation(libs.appauth)
 
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-    kspTest(libs.hilt.android.compiler)
-    testImplementation(libs.hilt.android.testing)
+    implementation(libs.koin.annotations)
+    implementation(libs.koin.core)
     implementation(libs.kotlinx.datetime)
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
 
     implementation(libs.okhttp.logging.interceptor)
-
     implementation(libs.room.runtime)
-    ksp(libs.room.compiler)
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
-
     implementation(libs.timber)
+
+    ksp(libs.koin.ksp.compiler)
+    ksp(libs.room.compiler)
 
     testImplementation(libs.androidx.test.junit)
     testImplementation(libs.junit)
+    testImplementation(libs.koin.test)
     testImplementation(libs.bundles.kotlinx.coroutines)
     testImplementation(libs.robolectric)
 }

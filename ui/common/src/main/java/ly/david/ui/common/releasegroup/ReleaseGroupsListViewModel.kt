@@ -1,12 +1,11 @@
 package ly.david.ui.common.releasegroup
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.coverart.ReleaseGroupImageRepository
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class ReleaseGroupsListViewModel @Inject constructor(
+@KoinViewModel
+class ReleaseGroupsListViewModel(
     private val releaseGroupImageRepository: ReleaseGroupImageRepository,
 ) : ViewModel() {
     suspend fun getReleaseGroupCoverArtUrlFromNetwork(

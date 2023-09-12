@@ -4,18 +4,18 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import ly.david.data.di.ApplicationScope
 import ly.david.data.spotify.api.auth.SpotifyAuthStore
+import org.koin.core.annotation.Single
 
 private val accessTokenPreference = stringPreferencesKey("SPOTIFY_ACCESS_TOKEN_KEY")
 
-class SpotifyAuthStoreImpl @Inject constructor(
+@Single(binds = [SpotifyAuthStore::class])
+class SpotifyAuthStoreImpl(
     private val preferencesDataStore: DataStore<Preferences>,
-    @ApplicationScope private val coroutineScope: CoroutineScope,
+    private val coroutineScope: CoroutineScope,
 ) : SpotifyAuthStore {
 
     override fun saveAccessToken(accessToken: String) {

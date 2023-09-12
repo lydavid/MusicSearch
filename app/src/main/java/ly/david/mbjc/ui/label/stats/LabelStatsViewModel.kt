@@ -1,15 +1,14 @@
 package ly.david.mbjc.ui.label.stats
 
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.stats.RelationsStats
 import ly.david.ui.stats.ReleasesStats
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-class LabelStatsViewModel @Inject constructor(
+@KoinViewModel
+class LabelStatsViewModel(
     override val relationDao: RelationDao,
     private val releaseLabelDao: ReleaseLabelDao,
 ) : ViewModel(),

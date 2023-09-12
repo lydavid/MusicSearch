@@ -5,13 +5,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.PlaceListItemModel
 import ly.david.ui.common.place.PlacesListScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun PlacesByAreaScreen(
@@ -23,7 +23,7 @@ internal fun PlacesByAreaScreen(
     modifier: Modifier = Modifier,
     onPlaceClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onPagedPlacesFlowChange: (Flow<PagingData<PlaceListItemModel>>) -> Unit = {},
-    viewModel: PlacesByAreaViewModel = hiltViewModel(),
+    viewModel: PlacesByAreaViewModel = koinViewModel(),
 ) {
     LaunchedEffect(key1 = areaId) {
         viewModel.loadPagedEntities(areaId)

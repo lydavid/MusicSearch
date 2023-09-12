@@ -17,16 +17,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.common.lookupInBrowser
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
-import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
+import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
+import org.koin.androidx.compose.koinViewModel
 
 // TODO: genre browsing isn't supported by API
 //  lookup only returns its name so there's not much for us to display ATM
@@ -37,7 +37,7 @@ internal fun GenreScaffold(
     modifier: Modifier = Modifier,
     titleWithDisambiguation: String? = null,
     onBack: () -> Unit = {},
-    viewModel: GenreScaffoldViewModel = hiltViewModel(),
+    viewModel: GenreScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.GENRE
     val context = LocalContext.current

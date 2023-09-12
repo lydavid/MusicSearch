@@ -3,10 +3,8 @@ package ly.david.ui.collections
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import androidx.paging.map
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -20,10 +18,9 @@ import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.RoomModel
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.common.paging.IPagedList
-import ly.david.ui.common.paging.StoreEntityUseCase
+import org.koin.core.annotation.Factory
 
 interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
     data class ViewModelState(
@@ -46,11 +43,8 @@ interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
     }
 }
 
-interface BrowseCollectionUseCase<RM : RoomModel> : StoreEntityUseCase {
-    fun getLinkedEntitiesPagingSource(viewState: ICollectionPagedList.ViewModelState): PagingSource<Int, RM>
-}
-
-class CollectionPagedList @Inject constructor() : ICollectionPagedList {
+@Factory
+class CollectionPagedList : ICollectionPagedList {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")

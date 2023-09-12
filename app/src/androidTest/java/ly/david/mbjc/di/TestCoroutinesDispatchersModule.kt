@@ -1,38 +1,26 @@
 package ly.david.mbjc.di
 
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import ly.david.data.di.coroutines.CoroutinesDispatchersModule
-import ly.david.data.di.coroutines.DefaultDispatcher
-import ly.david.data.di.coroutines.IoDispatcher
-import ly.david.data.di.coroutines.MainDispatcher
-import ly.david.data.di.coroutines.MainImmediateDispatcher
+import ly.david.data.di.coroutines.MusicSearchDispatchers
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@Module
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [CoroutinesDispatchersModule::class]
-)
-internal object TestCoroutinesDispatchersModule {
-    @DefaultDispatcher
-    @Provides
-    fun providesDefaultDispatcher(): CoroutineDispatcher = UnconfinedTestDispatcher()
+val testDispatcherModule = module {
+    single {
+        UnconfinedTestDispatcher()
+    }
+}
 
-    @IoDispatcher
-    @Provides
-    fun providesIoDispatcher(): CoroutineDispatcher = UnconfinedTestDispatcher()
-
-    @MainDispatcher
-    @Provides
-    fun providesMainDispatcher(): CoroutineDispatcher = UnconfinedTestDispatcher()
-
-    @MainImmediateDispatcher
-    @Provides
-    fun providesMainImmediateDispatcher(): CoroutineDispatcher = UnconfinedTestDispatcher()
+val testCoroutineDispatchersModule = module {
+    includes(testDispatcherModule)
+    factory<CoroutineDispatcher>(named(MusicSearchDispatchers.Default)) {
+        get<TestDispatcher>()
+    }
+    factory<CoroutineDispatcher>(named(MusicSearchDispatchers.IO)) {
+        get<TestDispatcher>()
+    }
 }

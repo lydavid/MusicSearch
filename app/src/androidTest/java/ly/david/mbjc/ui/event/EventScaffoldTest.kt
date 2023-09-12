@@ -3,29 +3,21 @@ package ly.david.mbjc.ui.event
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.event.EventRepository
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.domain.event.EventRepository
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class EventScaffoldTest : MainActivityTest(), StringReferences {
+internal class EventScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var eventRepository: EventRepository
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-    }
+    private val eventRepository: EventRepository by inject()
 
     private fun setEvent(eventMusicBrainzModel: EventMusicBrainzModel) {
         composeTestRule.activity.setContent {

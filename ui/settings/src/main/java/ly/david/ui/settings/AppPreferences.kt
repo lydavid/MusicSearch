@@ -6,15 +6,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.data.di.ApplicationScope
 import ly.david.data.domain.history.HistorySortOption
 import ly.david.ui.common.R
+import org.koin.core.annotation.Single
 
 interface AppPreferences {
 
@@ -68,9 +67,10 @@ private const val SHOW_REMOTE_COLLECTIONS = "showRemoteCollections"
 private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
     booleanPreferencesKey(SHOW_REMOTE_COLLECTIONS)
 
-class AppPreferencesImpl @Inject constructor(
+@Single(binds = [AppPreferences::class])
+class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
-    @ApplicationScope private val coroutineScope: CoroutineScope,
+    private val coroutineScope: CoroutineScope,
 ) : AppPreferences {
 
     override val theme: Flow<AppPreferences.Theme>

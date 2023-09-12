@@ -1,7 +1,5 @@
 package ly.david.data.domain.series
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
@@ -9,9 +7,10 @@ import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.series.SeriesDao
 import ly.david.data.room.series.toSeriesRoomModel
+import org.koin.core.annotation.Single
 
-@Singleton
-class SeriesRepository @Inject constructor(
+@Single
+class SeriesRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val seriesDao: SeriesDao,
     private val relationRepository: RelationRepository,

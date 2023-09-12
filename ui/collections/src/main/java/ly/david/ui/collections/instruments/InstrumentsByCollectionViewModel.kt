@@ -1,12 +1,10 @@
 package ly.david.ui.collections.instruments
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.InstrumentListItemModel
 import ly.david.data.domain.listitem.toInstrumentListItemModel
 import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityDao
@@ -15,16 +13,17 @@ import ly.david.data.room.instrument.InstrumentDao
 import ly.david.data.room.instrument.InstrumentRoomModel
 import ly.david.data.room.instrument.toInstrumentRoomModel
 import ly.david.data.room.relation.RelationDao
+import ly.david.ui.common.instrument.InstrumentsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class InstrumentsByCollectionViewModel @Inject constructor(
+@KoinViewModel
+internal class InstrumentsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val instrumentDao: InstrumentDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<InstrumentRoomModel, InstrumentListItemModel>,
+    pagedList: InstrumentsPagedList,
 ) : BrowseEntitiesByEntityViewModel<InstrumentRoomModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
     byEntity = MusicBrainzEntity.INSTRUMENT,
     relationDao = relationDao,

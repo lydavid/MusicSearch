@@ -7,18 +7,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import ly.david.data.room.relation.RelationTypeCount
+import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
 import ly.david.ui.stats.StatsScreen
-import ly.david.ui.common.topappbar.Tab
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun EventStatsScreen(
     modifier: Modifier = Modifier,
     eventId: String,
     tabs: List<Tab>,
-    viewModel: EventStatsViewModel = hiltViewModel(),
+    viewModel: EventStatsViewModel = koinViewModel(),
 ) {
     var totalRelations: Int? by remember { mutableStateOf(null) }
     var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }

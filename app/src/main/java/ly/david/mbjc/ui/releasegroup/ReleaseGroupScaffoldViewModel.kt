@@ -2,26 +2,25 @@ package ly.david.mbjc.ui.releasegroup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.coverart.ReleaseGroupImageRepository
-import ly.david.data.domain.releasegroup.ReleaseGroupRepository
-import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
+import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.data.coverart.ReleaseGroupImageRepository
+import ly.david.data.domain.releasegroup.ReleaseGroupRepository
+import ly.david.data.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
+import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 
-@HiltViewModel
-internal class ReleaseGroupScaffoldViewModel @Inject constructor(
+@KoinViewModel
+internal class ReleaseGroupScaffoldViewModel(
     private val repository: ReleaseGroupRepository,
     override val lookupHistoryDao: LookupHistoryDao,
     private val relationsList: RelationsList,

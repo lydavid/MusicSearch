@@ -12,16 +12,21 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import dagger.hilt.android.testing.HiltAndroidRule
+import ly.david.data.room.MusicSearchRoomDatabase
 import ly.david.mbjc.ui.MainActivity
 import org.junit.Rule
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-internal abstract class MainActivityTest {
+internal abstract class MainActivityTest : KoinTest {
+
+    private val database: MusicSearchRoomDatabase by inject()
+
     @get:Rule(order = 0)
-    val hiltRule: HiltAndroidRule by lazy { HiltAndroidRule(this) }
+    val musicSearchRoomDatabaseTestRule = MusicSearchRoomDatabaseTestRule(database)
 
     @get:Rule(order = 1)
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces

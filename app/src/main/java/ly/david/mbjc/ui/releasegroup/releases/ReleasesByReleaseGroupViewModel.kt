@@ -1,9 +1,6 @@
 package ly.david.mbjc.ui.releasegroup.releases
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
@@ -13,15 +10,16 @@ import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
-import ly.david.ui.common.paging.PagedList
 import ly.david.ui.common.release.ReleasesByEntityViewModel
+import ly.david.ui.common.release.ReleasesPagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class ReleasesByReleaseGroupViewModel @Inject constructor(
+@KoinViewModel
+internal class ReleasesByReleaseGroupViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<ReleaseForListItem, ReleaseListItemModel>,
+    pagedList: ReleasesPagedList,
     releaseDao: ReleaseDao,
 ) : ReleasesByEntityViewModel(
     relationDao = relationDao,

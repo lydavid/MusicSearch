@@ -2,24 +2,23 @@ package ly.david.mbjc.ui.work
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ly.david.data.domain.work.WorkRepository
-import ly.david.data.domain.work.WorkScaffoldModel
+import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.data.domain.work.WorkRepository
+import ly.david.data.domain.work.WorkScaffoldModel
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
+import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
 
-@HiltViewModel
-internal class WorkScaffoldViewModel @Inject constructor(
+@KoinViewModel
+internal class WorkScaffoldViewModel(
     private val repository: WorkRepository,
     private val relationsList: RelationsList,
     override val lookupHistoryDao: LookupHistoryDao,

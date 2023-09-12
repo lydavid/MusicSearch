@@ -1,11 +1,9 @@
 package ly.david.ui.collections.recordings
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -16,15 +14,16 @@ import ly.david.data.room.recording.RecordingForListItem
 import ly.david.data.room.recording.toRoomModel
 import ly.david.data.room.relation.RelationDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.recording.RecordingsPagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class RecordingsByCollectionViewModel @Inject constructor(
+@KoinViewModel
+internal class RecordingsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val relationDao: RelationDao,
     private val recordingDao: RecordingDao,
-    pagedList: PagedList<RecordingForListItem, RecordingListItemModel>,
+    pagedList: RecordingsPagedList,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     relationDao = relationDao,

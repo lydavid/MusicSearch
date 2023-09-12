@@ -1,11 +1,10 @@
 package ly.david.data.domain.history
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.room.history.LookupHistoryDao
+import org.koin.core.annotation.Single
 
-@Singleton
-class LookupHistoryRepository @Inject constructor(
+@Single
+class LookupHistoryRepository(
     private val lookupHistoryDao: LookupHistoryDao,
 ) {
     fun getAllLookupHistory(query: String, sortOption: HistorySortOption) =

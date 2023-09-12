@@ -8,8 +8,6 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
@@ -21,19 +19,13 @@ import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
+internal class RecordingScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var recordingRepository: RecordingRepository
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-    }
+    private val recordingRepository: RecordingRepository by inject()
 
     private fun setRecording(recordingMusicBrainzModel: RecordingMusicBrainzModel) {
         composeTestRule.activity.setContent {

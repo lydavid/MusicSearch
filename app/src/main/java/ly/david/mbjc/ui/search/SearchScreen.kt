@@ -23,16 +23,16 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.searchableEntities
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun SearchScreen(
@@ -41,7 +41,7 @@ internal fun SearchScreen(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,
     initialEntity: MusicBrainzEntity? = null,
-    viewModel: SearchViewModel = hiltViewModel(),
+    viewModel: SearchViewModel = koinViewModel(),
 ) {
     val searchResults: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.searchResults)

@@ -3,7 +3,6 @@ package ly.david.mbjc
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.TopLevelScaffold
@@ -14,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
-@HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class LookupEachEntityErrorTest(
     private val entity: MusicBrainzEntity

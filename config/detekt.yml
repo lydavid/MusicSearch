@@ -5,7 +5,7 @@ complexity:
     ignoreDefaultParameters: true
     ignoreAnnotated:
       - "Composable"
-      - "HiltViewModel"
+      - "KoinViewModel"
       - "Query"
   LongMethod:
     ignoreAnnotated:

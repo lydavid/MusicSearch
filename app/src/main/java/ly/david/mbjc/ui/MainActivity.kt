@@ -4,18 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import ly.david.ui.core.theme.BaseTheme
 import ly.david.ui.settings.AppPreferences
 import ly.david.ui.settings.useDarkTheme
 import ly.david.ui.settings.useMaterialYou
+import org.koin.android.ext.android.inject
 
-@AndroidEntryPoint
 internal class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var appPreferences: AppPreferences
+    private val appPreferences: AppPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

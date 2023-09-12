@@ -5,30 +5,22 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.work.WorkRepository
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.domain.work.WorkRepository
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.test.fakeWorkWithAllData
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
-import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-@HiltAndroidTest
-internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
+internal class WorkScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
-    @Inject
-    lateinit var repository: WorkRepository
-
-    @Before
-    fun setupApp() {
-        hiltRule.inject()
-    }
+    private val repository: WorkRepository by inject()
 
     private fun setWork(workMusicBrainzModel: WorkMusicBrainzModel) {
         composeTestRule.activity.setContent {

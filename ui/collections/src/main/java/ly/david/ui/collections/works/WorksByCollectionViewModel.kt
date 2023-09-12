@@ -1,11 +1,9 @@
 package ly.david.ui.collections.works
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.WorkListItemModel
 import ly.david.data.domain.listitem.toWorkListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -16,15 +14,16 @@ import ly.david.data.room.work.WorkDao
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.toWorkRoomModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import ly.david.ui.common.work.WorksPagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class WorksByCollectionViewModel @Inject constructor(
+@KoinViewModel
+internal class WorksByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val workDao: WorkDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<WorkRoomModel, WorkListItemModel>,
+    pagedList: WorksPagedList,
 ) : BrowseEntitiesByEntityViewModel<WorkRoomModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
     byEntity = MusicBrainzEntity.WORK,
     relationDao = relationDao,

@@ -11,36 +11,37 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
+import coil.Coil
+import coil.ImageLoaderFactory
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.collectableEntities
-import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
+import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 /**
  * Tests interacting with [CollectionListScaffold] and [CollectionScaffold].
  */
-@HiltAndroidTest
 @RunWith(Parameterized::class)
 internal class CollectionParameterizedTest(
-    private val entity: MusicBrainzEntity
-) : MainActivityTest(), StringReferences {
+    private val entity: MusicBrainzEntity,
+) : MainActivityTest(), StringReferences, KoinTest {
 
     companion object {
         @JvmStatic
@@ -50,15 +51,13 @@ internal class CollectionParameterizedTest(
         }
     }
 
+    private val collectionDao: CollectionDao by inject()
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
     private lateinit var navController: NavHostController
-
-    @Inject
-    lateinit var collectionDao: CollectionDao
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
-
+        Coil.setImageLoader(imageLoaderFactory)
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

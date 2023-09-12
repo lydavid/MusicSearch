@@ -1,36 +1,56 @@
 package ly.david.data.room.artist
 
+import android.content.Context
 import androidx.paging.PagingSource
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
+import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
-import ly.david.data.HiltTest
+import ly.david.data.di.room.databaseDaoModule
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
+import ly.david.data.room.testDatabaseModule
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import org.robolectric.RobolectricTestRunner
 
-@HiltAndroidTest
-internal class ArtistReleaseGroupDaoTest : HiltTest() {
+@RunWith(RobolectricTestRunner::class)
+internal class ArtistReleaseGroupDaoTest : KoinTest {
 
-    @Inject
-    lateinit var artistDao: ArtistDao
-
-    @Inject
-    lateinit var artistReleaseGroupDao: ArtistReleaseGroupDao
-
-    @Inject
-    lateinit var releaseGroupDao: ReleaseGroupDao
+    private val artistDao: ArtistDao by inject()
+    private val artistReleaseGroupDao: ArtistReleaseGroupDao by inject()
+    private val releaseGroupDao: ReleaseGroupDao by inject()
 
     @Before
     fun setUp() {
-        hiltRule.inject()
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        startKoin {
+            modules(
+                databaseDaoModule,
+                testDatabaseModule,
+                module {
+                    single<Context> {
+                        context
+                    }
+                }
+            )
+        }
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     @Test

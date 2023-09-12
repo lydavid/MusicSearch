@@ -1,12 +1,10 @@
 package ly.david.mbjc.ui.place.events
 
 import androidx.paging.PagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.EventListItemModel
 import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.event.EventDao
@@ -15,16 +13,17 @@ import ly.david.data.room.event.toEventRoomModel
 import ly.david.data.room.place.events.EventPlace
 import ly.david.data.room.place.events.EventPlaceDao
 import ly.david.data.room.relation.RelationDao
+import ly.david.ui.common.event.EventsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import ly.david.ui.common.paging.PagedList
+import org.koin.android.annotation.KoinViewModel
 
-@HiltViewModel
-internal class EventsByPlaceViewModel @Inject constructor(
+@KoinViewModel
+internal class EventsByPlaceViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val eventPlaceDao: EventPlaceDao,
     private val eventDao: EventDao,
     private val relationDao: RelationDao,
-    pagedList: PagedList<EventRoomModel, EventListItemModel>,
+    pagedList: EventsPagedList,
 ) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
     relationDao = relationDao,

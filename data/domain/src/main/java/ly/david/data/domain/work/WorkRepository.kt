@@ -1,7 +1,5 @@
 package ly.david.data.domain.work
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
@@ -10,9 +8,10 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.work.WorkDao
 import ly.david.data.room.work.toWorkAttributeRoomModel
 import ly.david.data.room.work.toWorkRoomModel
+import org.koin.core.annotation.Single
 
-@Singleton
-class WorkRepository @Inject constructor(
+@Single
+class WorkRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val workDao: WorkDao,
     private val relationRepository: RelationRepository,

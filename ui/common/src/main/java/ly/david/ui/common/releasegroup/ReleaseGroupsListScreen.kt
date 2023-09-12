@@ -6,16 +6,16 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
+import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
-import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
+import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -27,7 +27,7 @@ fun ReleaseGroupsListScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onReleaseGroupClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onDeleteFromCollection: ((entityId: String, name: String) -> Unit)? = null,
-    viewModel: ReleaseGroupsListViewModel = hiltViewModel(),
+    viewModel: ReleaseGroupsListViewModel = koinViewModel(),
 ) {
     PagingLoadingAndErrorHandler(
         modifier = modifier,

@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.MainActivityTest
@@ -19,9 +18,9 @@ import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
 
-@HiltAndroidTest
-internal class NavigationTest : MainActivityTest(), StringReferences {
+internal class NavigationTest : MainActivityTest(), StringReferences, KoinTest {
 
     private lateinit var navController: NavHostController
 

@@ -13,8 +13,6 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
@@ -29,22 +27,20 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 /**
  * Tests [CollectionListScaffold]-specific features.
  */
-@HiltAndroidTest
-internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences {
+internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
 
     private lateinit var navController: NavHostController
 
-    @Inject
-    lateinit var collectionDao: CollectionDao
+    private val collectionDao: CollectionDao by inject()
 
     @Before
     fun setupApp() {
-        hiltRule.inject()
-
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

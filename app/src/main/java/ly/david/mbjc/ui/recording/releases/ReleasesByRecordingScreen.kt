@@ -5,13 +5,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.ui.common.release.ReleasesListScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun ReleasesByRecordingScreen(
@@ -24,7 +24,7 @@ internal fun ReleasesByRecordingScreen(
     modifier: Modifier = Modifier,
     onReleaseClick: (entity: MusicBrainzEntity, String, String) -> Unit = { _, _, _ -> },
     onPagedReleasesFlowChange: (Flow<PagingData<ReleaseListItemModel>>) -> Unit = {},
-    viewModel: ReleasesByRecordingViewModel = hiltViewModel(),
+    viewModel: ReleasesByRecordingViewModel = koinViewModel(),
 ) {
     LaunchedEffect(key1 = recordingId) {
         viewModel.loadPagedEntities(recordingId)

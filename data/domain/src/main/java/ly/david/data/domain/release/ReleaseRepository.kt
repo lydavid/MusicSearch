@@ -1,7 +1,5 @@
 package ly.david.data.domain.release
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import ly.david.data.core.AreaType
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
@@ -25,9 +23,10 @@ import ly.david.data.room.release.tracks.toMediumRoomModel
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
+import org.koin.core.annotation.Single
 
-@Singleton
-class ReleaseRepository @Inject constructor(
+@Single
+class ReleaseRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
