@@ -65,3 +65,11 @@ tasks.register("testKotlinMultiplatformModules") {
             .map { "${it.path}:jvmTest" }
     )
 }
+
+tasks.register("listKMPModules") {
+    subprojects
+        .filter { it.plugins.hasPlugin("ly.david.musicsearch.kotlin.multiplatform") }
+        .forEach {
+            println(it.path)
+        }
+}
