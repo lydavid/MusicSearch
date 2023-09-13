@@ -9,10 +9,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.data.core)
-                implementation(project.dependencies.platform(libs.ktor.bom))
-                implementation(libs.bundles.ktor.android)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
         val commonTest by getting {
