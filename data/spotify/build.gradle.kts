@@ -1,18 +1,31 @@
 plugins {
-    id("ly.david.kotlin")
+    id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
 }
 
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.data.core)
+                implementation(libs.koin.annotations)
+                implementation(libs.koin.core)
+                implementation(project.dependencies.platform(libs.ktor.bom))
+                implementation(libs.ktor.client.auth)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.serialization.kotlinx.json)
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.junit)
+                implementation(libs.mockk)
+            }
+        }
+    }
+}
+
 dependencies {
-    implementation(projects.data.core)
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
-    implementation(platform(libs.ktor.bom))
-    implementation(libs.bundles.ktor.android)
-
-    ksp(libs.koin.ksp.compiler)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
+    add("kspJvm", libs.koin.ksp.compiler)
 }
