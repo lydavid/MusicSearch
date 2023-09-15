@@ -4,6 +4,8 @@ import android.app.Application
 import coil.Coil
 import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import ly.david.musicsearch.data.database.dao.event.EventDao
+import lydavidmusicsearchdatadatabase.Event
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -13,6 +15,7 @@ import timber.log.Timber
 internal class MusicSearchApplication : Application() {
 
     private val imageLoaderFactory: ImageLoaderFactory by inject()
+    private val eventDao: EventDao by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -27,6 +30,16 @@ internal class MusicSearchApplication : Application() {
             androidLogger()
             androidContext(this@MusicSearchApplication)
             modules(androidAppModule)
+        }
+
+        try {
+            eventDao.insert(
+                Event("z", "hello", "", "", "", "", false)
+            )
+            val e=eventDao.getEvent("e")
+            Timber.d("${e.name}")
+        } catch (ex: Throwable) {
+            Timber.e("oof")
         }
 
         Coil.setImageLoader(imageLoaderFactory)

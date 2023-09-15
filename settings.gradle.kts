@@ -41,6 +41,7 @@ include(
     ":data:core",
     ":data:common:network",
     ":data:coverart",
+    ":data:database",
     ":data:domain",
     ":data:spotify",
     ":data:room",

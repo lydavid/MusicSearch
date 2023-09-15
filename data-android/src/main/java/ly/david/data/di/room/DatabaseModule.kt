@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 private const val DATABASE_NAME = "mbjc.db"
 
-val databaseModule = module {
+val roomDatabaseModule = module {
     single<MusicSearchDatabase> {
         Room.databaseBuilder(get(), MusicSearchRoomDatabase::class.java, DATABASE_NAME)
             .addMigrations(MIGRATION_7_8)

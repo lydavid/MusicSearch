@@ -71,6 +71,7 @@ android {
 
 dependencies {
     implementation(projects.dataAndroid)
+    implementation(projects.data.database)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.collections)
