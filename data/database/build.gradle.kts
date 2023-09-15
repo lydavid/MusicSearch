@@ -1,7 +1,7 @@
 plugins {
     id("ly.david.android.library")
     id("ly.david.musicsearch.kotlin.multiplatform")
-    id("app.cash.sqldelight")
+    alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
 }
 
@@ -22,12 +22,12 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("app.cash.sqldelight:android-driver:2.0.0")
+                implementation(libs.sqldelight.android.driver)
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("app.cash.sqldelight:sqlite-driver:2.0.0")
+                implementation(libs.sqldelight.sqlite.driver)
             }
         }
     }
@@ -51,7 +51,7 @@ dependencies {
 
 // region Workaround
 //  from https://github.com/google/ksp/issues/567#issuecomment-1510477456
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
     if(name != "kspCommonMainKotlinMetadata") {
         dependsOn("kspCommonMainKotlinMetadata")
     }

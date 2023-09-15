@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.paparazzi) apply false
-    id("app.cash.sqldelight") version "2.0.0" apply false
+    alias(libs.plugins.sqldelight) apply false
 
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.dependency.analysis)

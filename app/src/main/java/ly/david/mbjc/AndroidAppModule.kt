@@ -14,7 +14,7 @@ import ly.david.data.domain.DomainDataModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.mbjc.di.appDataModule
-import ly.david.musicsearch.data.database.dao.event.DatabaseDaoModule
+import ly.david.musicsearch.data.database.dao.DatabaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.ui.collections.CollectionUiModule
