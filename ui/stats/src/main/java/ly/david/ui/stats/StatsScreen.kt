@@ -4,6 +4,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
@@ -17,7 +19,7 @@ import ly.david.ui.core.theme.PreviewTheme
  */
 @Composable
 fun StatsScreen(
-    tabs: List<Tab>,
+    tabs: ImmutableList<Tab>,
     stats: Stats,
     modifier: Modifier = Modifier,
 ) {
@@ -84,11 +86,11 @@ internal fun PreviewStatsScreen() {
     PreviewTheme {
         Surface {
             StatsScreen(
-                tabs = listOf(Tab.RELATIONSHIPS, Tab.RELEASE_GROUPS, Tab.RELEASES, Tab.PLACES),
+                tabs = persistentListOf(Tab.RELATIONSHIPS, Tab.RELEASE_GROUPS, Tab.RELEASES, Tab.PLACES),
                 stats = Stats(
                     totalRemoteReleaseGroups = 280,
                     totalLocalReleaseGroups = 279,
-                    releaseGroupTypeCounts = listOf(
+                    releaseGroupTypeCounts = persistentListOf(
                         ReleaseGroupTypeCount(primaryType = "Album", count = 13),
                         ReleaseGroupTypeCount(
                             primaryType = "Album",
@@ -97,7 +99,7 @@ internal fun PreviewStatsScreen() {
                         ),
                     ),
                     totalRelations = 696,
-                    relationTypeCounts = listOf(
+                    relationTypeCounts = persistentListOf(
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.ARTIST, count = 17),
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.RECORDING, count = 397),
                     ),

@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.topappbar.Tab
@@ -17,7 +19,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun ArtistStatsScreen(
     artistId: String,
-    tabs: List<Tab>,
+    tabs: ImmutableList<Tab>,
     modifier: Modifier = Modifier,
     viewModel: ArtistStatsViewModel = koinViewModel(),
 ) {
@@ -45,11 +47,11 @@ internal fun ArtistStatsScreen(
         stats = Stats(
             totalRemoteReleaseGroups = totalRemoteReleaseGroups,
             totalLocalReleaseGroups = totalLocalReleaseGroups,
-            releaseGroupTypeCounts = releaseGroupTypeCounts,
+            releaseGroupTypeCounts = releaseGroupTypeCounts.toImmutableList(),
             totalRemoteReleases = totalRemoteReleases,
             totalLocalReleases = totalLocalReleases,
             totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts
+            relationTypeCounts = relationTypeCounts.toImmutableList()
         )
     )
 }

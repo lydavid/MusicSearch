@@ -8,6 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
@@ -18,7 +20,7 @@ import org.koin.androidx.compose.koinViewModel
 internal fun ReleaseGroupStatsScreen(
     releaseGroupId: String,
     modifier: Modifier = Modifier,
-    tabs: List<Tab>,
+    tabs: ImmutableList<Tab>,
     viewModel: ReleaseGroupStatsViewModel = koinViewModel(),
 ) {
     var totalRemote: Int? by rememberSaveable { mutableStateOf(0) }
@@ -42,7 +44,7 @@ internal fun ReleaseGroupStatsScreen(
             totalRemoteReleases = totalRemote,
             totalLocalReleases = totalLocal,
             totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts
+            relationTypeCounts = relationTypeCounts.toImmutableList()
         )
     )
 }

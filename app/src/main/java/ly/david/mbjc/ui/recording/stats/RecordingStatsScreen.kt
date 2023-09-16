@@ -8,17 +8,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.room.relation.RelationTypeCount
+import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
 import ly.david.ui.stats.StatsScreen
-import ly.david.ui.common.topappbar.Tab
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun RecordingStatsScreen(
     recordingId: String,
     modifier: Modifier = Modifier,
-    tabs: List<Tab>,
+    tabs: ImmutableList<Tab>,
     viewModel: RecordingStatsViewModel = koinViewModel(),
 ) {
     var totalRemote: Int? by rememberSaveable { mutableStateOf(0) }
@@ -40,7 +42,7 @@ internal fun RecordingStatsScreen(
         tabs = tabs,
         stats = Stats(
             totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts,
+            relationTypeCounts = relationTypeCounts.toImmutableList(),
             totalRemoteReleases = totalRemote,
             totalLocalReleases = totalLocal
         )

@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
+    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
 
     debugImplementation(libs.compose.ui.tooling)

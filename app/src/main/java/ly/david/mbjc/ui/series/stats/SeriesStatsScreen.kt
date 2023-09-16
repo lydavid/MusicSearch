@@ -8,6 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
@@ -18,7 +20,7 @@ import org.koin.androidx.compose.koinViewModel
 internal fun SeriesStatsScreen(
     seriesId: String,
     modifier: Modifier = Modifier,
-    tabs: List<Tab>,
+    tabs: ImmutableList<Tab>,
     viewModel: SeriesStatsViewModel = koinViewModel(),
 ) {
     var totalRelations: Int? by rememberSaveable { mutableStateOf(null) }
@@ -34,7 +36,7 @@ internal fun SeriesStatsScreen(
         tabs = tabs,
         stats = Stats(
             totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts
+            relationTypeCounts = relationTypeCounts.toImmutableList()
         )
     )
 }

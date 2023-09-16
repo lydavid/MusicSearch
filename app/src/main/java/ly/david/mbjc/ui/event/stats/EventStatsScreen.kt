@@ -7,7 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ly.david.data.room.relation.RelationTypeCount
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
 import ly.david.ui.stats.StatsScreen
@@ -17,7 +18,7 @@ import org.koin.androidx.compose.koinViewModel
 internal fun EventStatsScreen(
     modifier: Modifier = Modifier,
     eventId: String,
-    tabs: List<Tab>,
+    tabs: ImmutableList<Tab>,
     viewModel: EventStatsViewModel = koinViewModel(),
 ) {
     var totalRelations: Int? by remember { mutableStateOf(null) }
@@ -33,7 +34,7 @@ internal fun EventStatsScreen(
         tabs = tabs,
         stats = Stats(
             totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts,
+            relationTypeCounts = relationTypeCounts.toImmutableList(),
         )
     )
 }
