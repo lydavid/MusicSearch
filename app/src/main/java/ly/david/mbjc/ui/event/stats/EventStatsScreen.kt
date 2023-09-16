@@ -5,7 +5,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.stats.Stats
 import ly.david.ui.stats.StatsScreen
@@ -18,15 +17,11 @@ internal fun EventStatsScreen(
     tabs: ImmutableList<Tab>,
     viewModel: EventStatsViewModel = koinViewModel(),
 ) {
-    val totalRelations by viewModel.getNumberOfRelationsByEntity(eventId).collectAsState()
-    val relationTypeCounts by viewModel.getCountOfEachRelationshipType(eventId).collectAsState()
+    val stats by viewModel.getStats(entityId = eventId).collectAsState(Stats())
 
     StatsScreen(
         modifier = modifier,
         tabs = tabs,
-        stats = Stats(
-            totalRelations = totalRelations,
-            relationTypeCounts = relationTypeCounts.toImmutableList(),
-        )
+        stats = stats,
     )
 }

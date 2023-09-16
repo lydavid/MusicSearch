@@ -1,31 +1,27 @@
 package ly.david.mbjc.ui.event.stats
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.data.domain.relation.RelationRepository
-import ly.david.data.room.relation.RelationTypeCount
+import ly.david.ui.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class EventStatsViewModel(
     private val relationRepository: RelationRepository,
 ) : ViewModel() {
-    fun getNumberOfRelationsByEntity(entityId: String): StateFlow<Int?> =
-        relationRepository.getNumberOfRelationsByEntity(entityId)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = null,
-            )
 
-    fun getCountOfEachRelationshipType(entityId: String): StateFlow<List<RelationTypeCount>> =
+    fun getStats(entityId: String): Flow<Stats> = combine(
+        relationRepository.getNumberOfRelationsByEntity(entityId),
         relationRepository.getCountOfEachRelationshipType(entityId)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = listOf(),
-            )
+    ) { numberOfRelationsByEntity, countOfEachRelationshipType ->
+        Stats(
+            totalRelations = numberOfRelationsByEntity,
+            relationTypeCounts = countOfEachRelationshipType.toImmutableList(),
+        )
+    }
+        .distinctUntilChanged()
 }
