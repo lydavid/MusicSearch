@@ -16,10 +16,10 @@ class RelationRepository(
     private val entityHasUrlsDao: EntityHasUrlsDao,
     private val relationDao: RelationDao,
 ) {
-    suspend fun hasUrlsBeenSavedFor(entityId: String): Boolean =
+    fun hasUrlsBeenSavedFor(entityId: String): Boolean =
         entityHasUrlsDao.hasUrls(entityId)
 
-    suspend fun insertAllUrlRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+    fun insertAllUrlRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
         insertRelations(entityId, relationMusicBrainzModels)
         entityHasUrlsDao.markEntityHasUrls(entityId)
     }

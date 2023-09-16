@@ -6,7 +6,7 @@ CREATE TABLE mb_entity_has_relations (
 );
 
 insert:
-INSERT INTO mb_entity_has_relations (
+INSERT OR REPLACE INTO mb_entity_has_relations (
   entity_id,
   has_relations
 )

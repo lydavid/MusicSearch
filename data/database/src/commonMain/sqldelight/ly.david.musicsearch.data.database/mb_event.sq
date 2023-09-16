@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS mb_event (
 );
 
 insert:
-INSERT INTO mb_event
+INSERT OR REPLACE INTO mb_event
 VALUES ?;
 
 getEvent:

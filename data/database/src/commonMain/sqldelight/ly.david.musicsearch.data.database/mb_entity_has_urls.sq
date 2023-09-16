@@ -6,7 +6,7 @@ CREATE TABLE mb_entity_has_urls (
 );
 
 insert:
-INSERT INTO mb_entity_has_urls (
+INSERT OR REPLACE INTO mb_entity_has_urls (
   entity_id,
   has_urls
 )
