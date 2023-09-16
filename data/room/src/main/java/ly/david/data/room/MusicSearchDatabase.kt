@@ -8,7 +8,7 @@ import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.artist.releases.ArtistReleaseDao
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionEntityDao
-import ly.david.data.room.event.LegacyEventDao
+import ly.david.data.room.event.RoomEventDao
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 import ly.david.data.room.history.search.SearchHistoryDao
@@ -20,7 +20,7 @@ import ly.david.data.room.place.PlaceDao
 import ly.david.data.room.place.events.EventPlaceDao
 import ly.david.data.room.recording.RecordingDao
 import ly.david.data.room.recording.releases.RecordingReleaseDao
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
@@ -59,10 +59,10 @@ interface MusicSearchDatabase {
     fun getLabelDao(): LabelDao
     fun getReleaseLabelDao(): ReleaseLabelDao
 
-    fun getEventDao(): LegacyEventDao
+    fun getEventDao(): RoomEventDao
     fun getSeriesDao(): SeriesDao
 
-    fun getRelationDao(): RelationDao
+    fun getRelationDao(): RoomRelationDao
     fun getLookupHistoryDao(): LookupHistoryDao
     fun getSearchHistoryDao(): SearchHistoryDao
     fun getNowPlayingHistoryDao(): NowPlayingHistoryDao

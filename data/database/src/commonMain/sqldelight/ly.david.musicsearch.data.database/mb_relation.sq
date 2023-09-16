@@ -1,0 +1,62 @@
+import kotlin.Int;
+import ly.david.data.core.network.MusicBrainzEntity;
+
+CREATE TABLE IF NOT EXISTS mb_relation (
+  `entity_id` TEXT NOT NULL,
+  `linked_entity_id` TEXT NOT NULL,
+  `linked_entity` TEXT AS MusicBrainzEntity NOT NULL,
+  `order` INTEGER AS Int NOT NULL,
+  `label` TEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  `disambiguation` TEXT,
+  `attributes` TEXT,
+  `additional_info` TEXT
+);
+
+CREATE INDEX IF NOT EXISTS relation_pk ON mb_relation (entity_id, linked_entity_id, `order`);
+
+insert:
+INSERT INTO mb_relation (
+  `entity_id`,
+  `linked_entity_id`,
+  `linked_entity`,
+  `order`,
+  `label`,
+  `name`,
+  `disambiguation`,
+  `attributes`,
+  `additional_info`
+)
+VALUES (
+  :`entity_id`,
+  :`linked_entity_id`,
+  :`linked_entity`,
+  :`order`,
+  :`label`,
+  :`name`,
+  :`disambiguation`,
+  :`attributes`,
+  :`additional_info`
+);
+
+insertEntity:
+INSERT INTO mb_relation
+VALUES ?;
+
+countEntityRelationshipsExcludingUrls:
+SELECT count(*) FROM mb_relation
+WHERE entity_id = :entityId AND linked_entity != "url" AND
+(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+attributes LIKE :query OR additional_info LIKE :query);
+
+getEntityRelationshipsExcludingUrls:
+SELECT * FROM mb_relation
+WHERE entity_id = :entityId AND linked_entity != "url" AND
+(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+attributes LIKE :query OR additional_info LIKE :query)
+ORDER BY linked_entity, label, `order`
+LIMIT :limit OFFSET :offset;
+
+deleteRelationshipsExcludingUrlsByEntity:
+DELETE FROM mb_relation
+WHERE entity_id = :entityId AND linked_entity != "url";

@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
+    implementation(projects.data.database) // TODO: remove dependency
     testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 

@@ -24,6 +24,7 @@ leakcanaryAndroid = "2.12"
 mockk = "1.13.7"
 okhttp = "4.11.0"
 paging = "3.2.1"
+pagingMultiplatform = "3.1.1-0.3.1"
 paparazzi = "1.3.1"
 room = "2.5.2"
 sqldelight = "2.0.0"
@@ -82,6 +83,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "pagingMultiplatform" }
 paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
 robolectric = { group = "org.robolectric", name = "robolectric", version = "4.10.3" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "room" }
@@ -91,6 +93,8 @@ room-paging = { group = "androidx.room", name = "room-paging", version.ref = "ro
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
+sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-extensions", version.ref = "sqldelight" }
+sqldelight-primitive = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
 test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version = "1.12" }
 timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }

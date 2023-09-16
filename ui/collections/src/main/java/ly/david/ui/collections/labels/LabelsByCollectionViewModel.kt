@@ -12,7 +12,7 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.toLabelRoomModel
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.common.label.LabelsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
@@ -22,7 +22,7 @@ internal class LabelsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val labelDao: LabelDao,
-    private val relationDao: RelationDao,
+    private val relationDao: RoomRelationDao,
     pagedList: LabelsPagedList,
 ) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,

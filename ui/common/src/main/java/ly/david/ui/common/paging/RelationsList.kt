@@ -20,10 +20,8 @@ import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.relation.HasRelations
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.relation.RelationRoomModel
-import ly.david.data.room.relation.toRelationRoomModel
+import ly.david.data.domain.relation.RelationRepository
+import lydavidmusicsearchdatadatabase.Mb_relation
 import org.koin.core.annotation.Factory
 
 /**
@@ -48,8 +46,6 @@ interface IRelationsList {
     }
 
     suspend fun hasRelationsBeenStored(): Boolean
-
-    suspend fun markEntityHasRelations()
 }
 
 /**
@@ -57,11 +53,11 @@ interface IRelationsList {
  *
  * Meant to be injected into a [ViewModel]'s constructor.
  *
- * The ViewModel should should assign [scope] and [repository] in its init block.
+ * The ViewModel should should assign [scope] and [relationsListRepository] in its init block.
  */
 @Factory
 class RelationsList(
-    private val relationDao: RelationDao,
+    private val relationRepository: RelationRepository,
 ) : IRelationsList {
 
     data class State(
@@ -76,7 +72,7 @@ class RelationsList(
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var repository: RelationsListRepository
+    lateinit var relationsListRepository: RelationsListRepository
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     override val pagedRelations: Flow<PagingData<RelationListItemModel>> by lazy {
@@ -94,13 +90,13 @@ class RelationsList(
                         }
                     ),
                     pagingSourceFactory = {
-                        relationDao.getEntityRelationships(
+                        relationRepository.getEntityRelationships(
                             entityId = entityId,
-                            query = "%$query%",
+                            query = query,
                         )
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map(RelationRoomModel::toRelationListItemModel)
+                    pagingData.map(Mb_relation::toRelationListItemModel)
                 }
             }
             .distinctUntilChanged()
@@ -113,41 +109,25 @@ class RelationsList(
      * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
      */
     override suspend fun hasRelationsBeenStored(): Boolean =
-        relationDao.hasRelations(entityId.value)?.hasRelations == true
+        relationRepository.hasRelationsBeenSavedFor(entityId.value)
 
     /**
      * This is responsible for making a lookup request for this resource's relationships,
-     * then storing them into Room.
+     * then storing them into our database.
      *
      * Unlike browse requests, this is expected to only be called once.
      */
     private suspend fun lookupRelationsAndStore(entityId: String, forceRefresh: Boolean) {
         if (!forceRefresh) return
 
-        val relations = mutableListOf<RelationRoomModel>()
-        repository.lookupRelationsFromNetwork(entityId)?.forEachIndexed { index, relationMusicBrainzModel ->
-            relationMusicBrainzModel.toRelationRoomModel(
-                entityId = entityId,
-                order = index
-            )?.let { relationRoomModel ->
-                relations.add(relationRoomModel)
-            }
-        }
-        relationDao.insertAll(relations)
-
-        markEntityHasRelations()
-    }
-
-    override suspend fun markEntityHasRelations() {
-        relationDao.markEntityHasRelations(
-            hasRelations = HasRelations(
-                entityId = entityId.value,
-                hasRelations = true
-            )
+        val relations = relationsListRepository.lookupRelationsFromNetwork(entityId)
+        relationRepository.insertAllRelations(
+            entityId = entityId,
+            relationMusicBrainzModels = relations,
         )
     }
 
     private suspend fun deleteLocalRelations(entityId: String) {
-        relationDao.deleteRelationshipsByEntity(entityId)
+        relationRepository.deleteEntityRelationships(entityId)
     }
 }

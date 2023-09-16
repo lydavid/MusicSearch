@@ -36,7 +36,7 @@ internal class PlaceScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.repository = repository
+        relationsList.relationsListRepository = repository
     }
 
     fun loadDataForTab(

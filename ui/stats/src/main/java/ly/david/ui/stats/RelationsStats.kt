@@ -1,12 +1,12 @@
 package ly.david.ui.stats
 
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 
 /**
  * Stats about relations.
  */
 interface RelationsStats {
-    val relationDao: RelationDao
+    val relationDao: RoomRelationDao
 
     suspend fun getNumberOfRelationsByEntity(entityId: String) =
         relationDao.getNumberOfRelationsByEntity(entityId)

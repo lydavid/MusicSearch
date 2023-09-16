@@ -13,7 +13,7 @@ import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.data.room.collection.toCollectionRoomModel
 import ly.david.data.room.relation.BrowseEntityCount
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.settings.AppPreferences
 import org.koin.android.annotation.KoinViewModel
 
@@ -26,7 +26,7 @@ class CollectionListViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val collectionDao: CollectionDao,
-    private val relationDao: RelationDao,
+    private val relationDao: RoomRelationDao,
 ) : ViewModel(),
     ICollectionPagedList by pagedList,
     BrowseCollectionUseCase<CollectionWithEntities> {

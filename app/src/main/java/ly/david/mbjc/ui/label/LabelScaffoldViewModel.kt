@@ -36,7 +36,7 @@ internal class LabelScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.repository = repository
+        relationsList.relationsListRepository = repository
     }
 
     fun loadDataForTab(

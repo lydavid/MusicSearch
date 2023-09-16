@@ -7,14 +7,14 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.room.relation.BrowseEntityCount
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList
 
 abstract class ReleaseGroupsByEntityViewModel(
-    private val relationDao: RelationDao,
+    private val relationDao: RoomRelationDao,
     private val releaseGroupDao: ReleaseGroupDao,
     private val releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ViewModel(),

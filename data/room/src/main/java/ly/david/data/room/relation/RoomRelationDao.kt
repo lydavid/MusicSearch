@@ -10,7 +10,7 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class RelationDao : BaseDao<RelationRoomModel>() {
+abstract class RoomRelationDao : BaseDao<RelationRoomModel>() {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun markEntityHasRelations(hasRelations: HasRelations): Long

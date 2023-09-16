@@ -4,7 +4,7 @@ import android.app.Application
 import coil.Coil
 import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import ly.david.musicsearch.data.database.dao.event.EventDao
+import ly.david.musicsearch.data.database.dao.EventDao
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

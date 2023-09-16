@@ -30,7 +30,7 @@ internal fun EventWithAllData.toEventScaffoldModel() =
         urls = urls.map { it.relation.toRelationListItemModel() },
     )
 
-//internal fun lydavidmusicsearchdatadatabase.Event.toEventScaffoldModel() =
+//internal fun Mb_event.toEventScaffoldModel() =
 //    EventScaffoldModel(
 //        id = event.id,
 //        name = event.name,

@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.MusicBrainzModel
 import ly.david.data.musicbrainz.api.Browsable
 import ly.david.data.room.RoomModel
 import ly.david.data.room.relation.BrowseEntityCount
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 
 abstract class BrowseEntitiesByEntityViewModel<
     RM : RoomModel,
@@ -17,7 +17,7 @@ abstract class BrowseEntitiesByEntityViewModel<
     B : Browsable<MB>,
     >(
     private val byEntity: MusicBrainzEntity,
-    private val relationDao: RelationDao,
+    private val relationDao: RoomRelationDao,
     private val pagedList: PagedList<RM, LI>,
 ) : ViewModel(),
     IPagedList<LI> by pagedList,

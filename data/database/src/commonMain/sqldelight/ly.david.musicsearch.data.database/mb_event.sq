@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS event (
+CREATE TABLE IF NOT EXISTS mb_event (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   disambiguation TEXT,
@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS event (
 );
 
 insert:
-INSERT INTO event(id, name, disambiguation, type, type_id, time, cancelled, begin, end, ended)
-VALUES (?, ?,?, ?, ?, ?, ?, ? , ?, ?);
+INSERT INTO mb_event
+VALUES ?;
 
 getEvent:
-SELECT * FROM event WHERE id = ?;
+SELECT * FROM mb_event WHERE id = ?;

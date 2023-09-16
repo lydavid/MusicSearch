@@ -12,7 +12,7 @@ import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.toAreaRoomModel
 import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.common.area.AreasPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
@@ -22,7 +22,7 @@ internal class AreasByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,
-    private val relationDao: RelationDao,
+    private val relationDao: RoomRelationDao,
     pagedList: AreasPagedList,
 ) : BrowseEntitiesByEntityViewModel<AreaRoomModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
     byEntity = MusicBrainzEntity.AREA,

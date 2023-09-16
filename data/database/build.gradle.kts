@@ -10,9 +10,12 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.data.core)
+                implementation(projects.data.common.network)
                 implementation(projects.data.musicbrainz)
-//                implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
+                implementation(libs.paging.common)
+                implementation(libs.sqldelight.paging)
+                implementation(libs.sqldelight.primitive)
             }
         }
         val commonTest by getting {

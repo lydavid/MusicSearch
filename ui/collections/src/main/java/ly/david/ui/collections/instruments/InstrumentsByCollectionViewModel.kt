@@ -12,7 +12,7 @@ import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.instrument.InstrumentDao
 import ly.david.data.room.instrument.InstrumentRoomModel
 import ly.david.data.room.instrument.toInstrumentRoomModel
-import ly.david.data.room.relation.RelationDao
+import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.common.instrument.InstrumentsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
@@ -22,7 +22,7 @@ internal class InstrumentsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val instrumentDao: InstrumentDao,
-    private val relationDao: RelationDao,
+    private val relationDao: RoomRelationDao,
     pagedList: InstrumentsPagedList,
 ) : BrowseEntitiesByEntityViewModel<InstrumentRoomModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
     byEntity = MusicBrainzEntity.INSTRUMENT,
