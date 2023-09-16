@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.paging.PagingSource
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
-import ly.david.data.di.room.databaseDaoModule
+import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
@@ -37,7 +37,7 @@ internal class ArtistReleaseGroupDaoTest : KoinTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         startKoin {
             modules(
-                databaseDaoModule,
+                roomDatabaseDaoModule,
                 testDatabaseModule,
                 module {
                     single<Context> {

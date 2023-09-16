@@ -5,14 +5,14 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.event.EventDao
+import ly.david.data.room.event.LegacyEventDao
 import ly.david.data.room.event.toEventRoomModel
 import org.koin.core.annotation.Single
 
 @Single
 class EventRepository(
     private val musicBrainzApi: MusicBrainzApi,
-    private val eventDao: EventDao,
+    private val eventDao: LegacyEventDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 

@@ -7,12 +7,15 @@ CREATE TABLE IF NOT EXISTS event (
   type TEXT,
   type_id TEXT,
   time TEXT,
-  cancelled INTEGER AS Boolean
+  cancelled INTEGER AS Boolean,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean
 );
 
 insert:
-INSERT INTO event(id, name, disambiguation, type, type_id, time, cancelled)
-VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO event(id, name, disambiguation, type, type_id, time, cancelled, begin, end, ended)
+VALUES (?, ?,?, ?, ?, ?, ?, ? , ?, ?);
 
 getEvent:
 SELECT * FROM event WHERE id = ?;

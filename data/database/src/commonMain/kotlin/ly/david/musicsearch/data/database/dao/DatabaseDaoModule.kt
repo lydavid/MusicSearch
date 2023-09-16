@@ -1,8 +1,13 @@
 package ly.david.musicsearch.data.database.dao
 
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Module
+import ly.david.musicsearch.data.database.dao.event.EventDao
+import org.koin.dsl.module
 
-@Module
-@ComponentScan
-class DatabaseDaoModule
+//@Module
+//@ComponentScan
+//class DatabaseDaoModule
+
+val databaseDaoModule = module {
+// TODO: confirm whether singleton is correct
+    single { EventDao(get()) }
+}

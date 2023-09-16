@@ -3,7 +3,7 @@ package ly.david.data.room.releasegroup
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
-import ly.david.data.di.room.databaseDaoModule
+import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.test.fakeReleaseGroupWithArtistCredits
 import ly.david.data.room.artist.credit.ArtistCreditNameRoomModel
 import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
@@ -31,7 +31,7 @@ internal class ReleaseGroupDaoTest : KoinTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         startKoin {
             modules(
-                databaseDaoModule,
+                roomDatabaseDaoModule,
                 testDatabaseModule,
                 module {
                     single<Context> {

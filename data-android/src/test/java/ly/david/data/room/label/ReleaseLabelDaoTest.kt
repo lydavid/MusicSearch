@@ -3,7 +3,7 @@ package ly.david.data.room.label
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
-import ly.david.data.di.room.databaseDaoModule
+import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.room.label.releases.ReleaseLabel
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.release.ReleaseDao
@@ -34,7 +34,7 @@ internal class ReleaseLabelDaoTest : KoinTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         startKoin {
             modules(
-                databaseDaoModule,
+                roomDatabaseDaoModule,
                 testDatabaseModule,
                 module {
                     single<Context> {

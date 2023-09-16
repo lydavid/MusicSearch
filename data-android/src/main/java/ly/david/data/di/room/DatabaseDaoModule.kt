@@ -4,7 +4,7 @@ import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.room.MusicSearchDatabase
 import org.koin.dsl.module
 
-val databaseDaoModule = module {
+val roomDatabaseDaoModule = module {
     factory {
         get<MusicSearchDatabase>().getArtistDao()
     }

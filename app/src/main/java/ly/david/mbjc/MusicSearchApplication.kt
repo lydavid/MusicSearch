@@ -5,7 +5,6 @@ import coil.Coil
 import coil.ImageLoaderFactory
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import ly.david.musicsearch.data.database.dao.event.EventDao
-import lydavidmusicsearchdatadatabase.Event
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -33,9 +32,9 @@ internal class MusicSearchApplication : Application() {
         }
 
         try {
-            eventDao.insert(
-                Event("z", "hello", "", "", "", "", false)
-            )
+//            eventDao.insert(
+//                Event("z", "hello", "", "", "", "", false)
+//            )
             val e=eventDao.getEvent("e")
             Timber.d("${e.name}")
         } catch (ex: Throwable) {

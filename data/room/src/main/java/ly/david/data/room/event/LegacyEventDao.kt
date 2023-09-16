@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class EventDao : BaseDao<EventRoomModel>() {
+abstract class LegacyEventDao : BaseDao<EventRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM event WHERE id = :eventId")

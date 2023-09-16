@@ -5,7 +5,7 @@ import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
-import ly.david.data.di.room.databaseDaoModule
+import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.domain.DomainDataModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
@@ -36,7 +36,7 @@ val testAndroidAppModule = module {
         coroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,
-        databaseDaoModule,
+        roomDatabaseDaoModule,
         CoverArtDataModule().module,
         DomainDataModule().module,
         MusicBrainzDataModule().module,

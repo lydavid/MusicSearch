@@ -7,7 +7,7 @@ import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.event.EventDao
+import ly.david.data.room.event.LegacyEventDao
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.event.toEventRoomModel
 import ly.david.data.room.place.events.EventPlace
@@ -21,7 +21,7 @@ import org.koin.android.annotation.KoinViewModel
 internal class EventsByPlaceViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val eventPlaceDao: EventPlaceDao,
-    private val eventDao: EventDao,
+    private val eventDao: LegacyEventDao,
     private val relationDao: RelationDao,
     pagedList: EventsPagedList,
 ) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(

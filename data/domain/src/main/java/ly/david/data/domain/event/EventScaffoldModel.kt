@@ -2,9 +2,9 @@ package ly.david.data.domain.event
 
 import ly.david.data.core.Event
 import ly.david.data.domain.common.LifeSpanUiModel
+import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.room.event.EventWithAllData
 
 data class EventScaffoldModel(
@@ -29,3 +29,15 @@ internal fun EventWithAllData.toEventScaffoldModel() =
         lifeSpan = event.lifeSpan?.toLifeSpanUiModel(),
         urls = urls.map { it.relation.toRelationListItemModel() },
     )
+
+//internal fun lydavidmusicsearchdatadatabase.Event.toEventScaffoldModel() =
+//    EventScaffoldModel(
+//        id = event.id,
+//        name = event.name,
+//        disambiguation = event.disambiguation,
+//        type = event.type,
+//        time = event.time,
+//        cancelled = event.cancelled,
+//        lifeSpan = event.lifeSpan?.toLifeSpanUiModel(),
+//        urls = urls.map { it.relation.toRelationListItemModel() },
+//    )

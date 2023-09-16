@@ -8,7 +8,7 @@ import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.artist.releases.ArtistReleaseDao
 import ly.david.data.room.collection.CollectionDao
 import ly.david.data.room.collection.CollectionEntityDao
-import ly.david.data.room.event.EventDao
+import ly.david.data.room.event.LegacyEventDao
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 import ly.david.data.room.history.search.SearchHistoryDao
@@ -59,7 +59,7 @@ interface MusicSearchDatabase {
     fun getLabelDao(): LabelDao
     fun getReleaseLabelDao(): ReleaseLabelDao
 
-    fun getEventDao(): EventDao
+    fun getEventDao(): LegacyEventDao
     fun getSeriesDao(): SeriesDao
 
     fun getRelationDao(): RelationDao

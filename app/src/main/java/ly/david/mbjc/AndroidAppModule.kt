@@ -8,13 +8,13 @@ import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.network.networkModule
 import ly.david.data.di.preferences.preferencesDataStoreModule
-import ly.david.data.di.room.databaseDaoModule
+import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.di.room.roomDatabaseModule
 import ly.david.data.domain.DomainDataModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.mbjc.di.appDataModule
-import ly.david.musicsearch.data.database.dao.DatabaseDaoModule
+import ly.david.musicsearch.data.database.dao.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.ui.collections.CollectionUiModule
@@ -36,7 +36,7 @@ val androidAppModule = module {
         musicBrainzAuthModule,
         networkModule,
         preferencesDataStoreModule,
-        databaseDaoModule,
+        roomDatabaseDaoModule,
         roomDatabaseModule,
         imageModule,
         CoverArtDataModule().module,
@@ -52,6 +52,6 @@ val androidAppModule = module {
 
         databaseDriverModule,
         databaseModule,
-        DatabaseDaoModule().module,
+        databaseDaoModule,
     )
 }
