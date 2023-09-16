@@ -2,6 +2,7 @@ package ly.david.data.domain.relation
 
 import app.cash.paging.PagingSource
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.room.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
@@ -68,4 +69,15 @@ class RelationRepository(
     ) {
         relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
     }
+
+    fun getNumberOfRelationsByEntity(entityId: String): Int =
+        relationDao.getNumberOfRelationsByEntity(entityId).toInt()
+
+    fun getCountOfEachRelationshipType(entityId: String): List<RelationTypeCount> =
+        relationDao.getCountOfEachRelationshipType(entityId).map {
+            RelationTypeCount(
+                linkedEntity = it.linked_entity,
+                count = it.entity_count.toInt(),
+            )
+        }
 }

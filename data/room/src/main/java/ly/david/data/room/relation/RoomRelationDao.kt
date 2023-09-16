@@ -1,6 +1,5 @@
 package ly.david.data.room.relation
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,67 +10,6 @@ import ly.david.data.room.BaseDao
 
 @Dao
 abstract class RoomRelationDao : BaseDao<RelationRoomModel>() {
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun markEntityHasRelations(hasRelations: HasRelations): Long
-
-    @Query("SELECT * FROM has_relations WHERE entity_id = :entityId")
-    abstract suspend fun hasRelations(entityId: String): HasRelations?
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun markEntityHasUrls(hasUrls: HasUrls): Long
-
-    @Query("SELECT * FROM has_urls WHERE entity_id = :entityId")
-    abstract suspend fun hasUrls(entityId: String): HasUrls?
-
-    // TODO: we're excluding urls from everywhere, but not showing urls in non-artist details
-    @Transaction
-    @Query(
-        """
-            SELECT *
-            FROM relation
-            WHERE entity_id = :entityId AND linked_entity != "url" AND
-            (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
-            attributes LIKE :query OR additional_info LIKE :query)
-            ORDER BY linked_entity, label, `order`
-        """
-    )
-    abstract fun getEntityRelationships(
-        entityId: String,
-        query: String = "%%",
-    ): PagingSource<Int, RelationRoomModel>
-
-    @Transaction
-    @Query(
-        """
-            SELECT *
-            FROM relation
-            WHERE entity_id = :entityId AND linked_entity = "url" AND
-            (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
-            attributes LIKE :query OR additional_info LIKE :query)
-            ORDER BY linked_entity, label, `order`
-        """
-    )
-    abstract fun getEntityUrls(
-        entityId: String,
-        query: String = "%%",
-    ): PagingSource<Int, RelationRoomModel>
-
-    @Query(
-        """
-        DELETE FROM relation 
-        WHERE entity_id = :entityId AND linked_entity != "url"
-        """
-    )
-    abstract suspend fun deleteRelationshipsByEntity(entityId: String)
-
-    @Query(
-        """
-        DELETE FROM relation 
-        WHERE entity_id = :entityId AND linked_entity == "url"
-        """
-    )
-    abstract suspend fun deleteUrlsByEntity(entityId: String)
 
     // region Relationship stats
     /**
