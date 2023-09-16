@@ -5,11 +5,13 @@ import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Mb_event
 
 class EventDao(
-    private val database: Database,
+    database: Database,
 ) {
+    private val transacter = database.mb_eventQueries
+
     fun insert(event: EventMusicBrainzModel) {
         event.run {
-            database.mb_eventQueries.insert(
+            transacter.insert(
                 Mb_event(
                     id = id,
                     name = name,
@@ -26,7 +28,7 @@ class EventDao(
         }
     }
 
-    fun getEvent(eventId: String): Mb_event {
-        return database.mb_eventQueries.getEvent(eventId).executeAsOne()
+    fun getEvent(eventId: String): Mb_event? {
+        return transacter.getEvent(eventId).executeAsOneOrNull()
     }
 }

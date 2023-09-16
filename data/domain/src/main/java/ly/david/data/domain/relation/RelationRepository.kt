@@ -47,7 +47,7 @@ class RelationRepository(
         )
     }
 
-    fun getEntityRelationships(
+    fun getEntityRelationshipsExcludingUrls(
         entityId: String,
         query: String,
     ): PagingSource<Int, Mb_relation> {
@@ -56,6 +56,12 @@ class RelationRepository(
             query = "%$query%",
         )
     }
+
+    fun getEntityUrlRelationships(
+        entityId: String,
+    ) = relationDao.getEntityUrlRelationships(
+        entityId = entityId,
+    )
 
     fun deleteEntityRelationships(
         entityId: String,

@@ -90,7 +90,7 @@ class RelationsList(
                         }
                     ),
                     pagingSourceFactory = {
-                        relationRepository.getEntityRelationships(
+                        relationRepository.getEntityRelationshipsExcludingUrls(
                             entityId = entityId,
                             query = query,
                         )

@@ -17,7 +17,7 @@ import lydavidmusicsearchdatadatabase.Mb_relation
 
 // TODO: can we add annotations without ksp, will it be slow?
 class RelationDao(
-    private val database: Database,
+    database: Database,
 //    private val dispatcher: CoroutineDispatcher,
 ) {
     private val transacter = database.mb_relationQueries
@@ -53,6 +53,15 @@ class RelationDao(
                 offset = offset,
             )
         }
+    }
+
+    fun getEntityUrlRelationships(
+        entityId: String,
+    ): List<Mb_relation> {
+        return transacter.getEntityUrlRelationships(
+            entityId = entityId,
+            query = "%%", // TODO: either filter here or with Kotlin like before
+        ).executeAsList()
     }
 
     fun deleteRelationshipsExcludingUrlsByEntity(

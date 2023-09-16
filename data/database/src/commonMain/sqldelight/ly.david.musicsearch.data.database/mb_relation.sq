@@ -57,6 +57,15 @@ attributes LIKE :query OR additional_info LIKE :query)
 ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
+getEntityUrlRelationships:
+SELECT * FROM mb_relation
+WHERE entity_id = :entityId AND linked_entity = "url" AND
+(name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
+attributes LIKE :query OR additional_info LIKE :query)
+ORDER BY linked_entity, label, `order`;
+
+
+
 deleteRelationshipsExcludingUrlsByEntity:
 DELETE FROM mb_relation
 WHERE entity_id = :entityId AND linked_entity != "url";
