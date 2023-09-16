@@ -1,11 +1,8 @@
 package ly.david.mbjc.ui.event.stats
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -21,13 +18,8 @@ internal fun EventStatsScreen(
     tabs: ImmutableList<Tab>,
     viewModel: EventStatsViewModel = koinViewModel(),
 ) {
-    var totalRelations: Int? by remember { mutableStateOf(null) }
-    var relationTypeCounts by remember { mutableStateOf(listOf<RelationTypeCount>()) }
-
-    LaunchedEffect(Unit) {
-        totalRelations = viewModel.getNumberOfRelationsByEntity(eventId)
-        relationTypeCounts = viewModel.getCountOfEachRelationshipType(eventId)
-    }
+    val totalRelations by viewModel.getNumberOfRelationsByEntity(eventId).collectAsState()
+    val relationTypeCounts by viewModel.getCountOfEachRelationshipType(eventId).collectAsState()
 
     StatsScreen(
         modifier = modifier,

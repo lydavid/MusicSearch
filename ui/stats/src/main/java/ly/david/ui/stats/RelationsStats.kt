@@ -2,6 +2,7 @@ package ly.david.ui.stats
 
 import ly.david.data.room.relation.RoomRelationDao
 
+// TODO: remove in favor of relationrepository
 /**
  * Stats about relations.
  */

@@ -1,12 +1,15 @@
 package ly.david.data.domain.relation
 
 import app.cash.paging.PagingSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.room.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
+import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 import lydavidmusicsearchdatadatabase.Mb_relation
 import org.koin.core.annotation.Single
 
@@ -70,14 +73,25 @@ class RelationRepository(
         relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
     }
 
-    fun getNumberOfRelationsByEntity(entityId: String): Int =
-        relationDao.getNumberOfRelationsByEntity(entityId).toInt()
+    fun getNumberOfRelationsByEntity(entityId: String): Flow<Int> =
+        relationDao.getNumberOfRelationsByEntity(entityId)
+            .map { it.toInt() }
 
-    fun getCountOfEachRelationshipType(entityId: String): List<RelationTypeCount> =
+    fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
         relationDao.getCountOfEachRelationshipType(entityId).map {
-            RelationTypeCount(
-                linkedEntity = it.linked_entity,
-                count = it.entity_count.toInt(),
-            )
+            it.map { countOfEachRelationshipType: CountOfEachRelationshipType ->
+                RelationTypeCount(
+                    linkedEntity = countOfEachRelationshipType.linked_entity,
+                    count = countOfEachRelationshipType.entity_count.toInt(),
+                )
+            }
         }
+}
+
+class RelationStatsUseCase(
+    private val relationRepository: RelationRepository,
+) {
+    operator fun invoke() {
+
+    }
 }
