@@ -26,7 +26,7 @@ class LabelRepository(
         val labelMusicBrainzModel = musicBrainzApi.lookupLabel(labelId)
         labelDao.withTransaction {
             labelDao.insert(labelMusicBrainzModel.toLabelRoomModel())
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = labelId,
                 relationMusicBrainzModels = labelMusicBrainzModel.relations,
             )

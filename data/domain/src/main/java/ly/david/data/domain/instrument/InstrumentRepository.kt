@@ -26,7 +26,7 @@ class InstrumentRepository(
         val instrumentMusicBrainzModel = musicBrainzApi.lookupInstrument(instrumentId)
         instrumentDao.withTransaction {
             instrumentDao.insert(instrumentMusicBrainzModel.toInstrumentRoomModel())
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = instrumentId,
                 relationMusicBrainzModels = instrumentMusicBrainzModel.relations,
             )

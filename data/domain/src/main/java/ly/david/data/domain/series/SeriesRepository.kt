@@ -26,7 +26,7 @@ class SeriesRepository(
         val seriesMusicBrainzModel = musicBrainzApi.lookupSeries(seriesId)
         seriesDao.withTransaction {
             seriesDao.insert(seriesMusicBrainzModel.toSeriesRoomModel())
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = seriesId,
                 relationMusicBrainzModels = seriesMusicBrainzModel.relations,
             )

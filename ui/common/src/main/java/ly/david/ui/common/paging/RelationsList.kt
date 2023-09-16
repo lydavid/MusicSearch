@@ -121,7 +121,7 @@ class RelationsList(
         if (!forceRefresh) return
 
         val relations = relationsListRepository.lookupRelationsFromNetwork(entityId)
-        relationRepository.insertAllRelations(
+        relationRepository.insertAllRelationsExcludingUrls(
             entityId = entityId,
             relationMusicBrainzModels = relations,
         )

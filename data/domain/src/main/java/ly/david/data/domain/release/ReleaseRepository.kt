@@ -108,7 +108,7 @@ class ReleaseRepository(
             )
             releaseCountryDao.insertAll(release.getReleaseCountries())
 
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = release.id,
                 relationMusicBrainzModels = release.relations,
             )

@@ -41,7 +41,7 @@ class PlaceRepository(
                     )
                 )
             }
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = placeId,
                 relationMusicBrainzModels = placeMusicBrainzModel.relations,
             )

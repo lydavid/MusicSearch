@@ -40,7 +40,7 @@ class AreaRepository(
             areaDao.insert(area.toAreaRoomModel())
             areaDao.insertAllCountryCodes(area.getAreaCountryCodes())
 
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = area.id,
                 relationMusicBrainzModels = area.relations,
             )

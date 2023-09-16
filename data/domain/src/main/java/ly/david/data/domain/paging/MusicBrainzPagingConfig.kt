@@ -1,6 +1,6 @@
 package ly.david.data.domain.paging
 
-import androidx.paging.PagingConfig
+import app.cash.paging.PagingConfig
 import ly.david.data.musicbrainz.api.SEARCH_BROWSE_LIMIT
 
 object MusicBrainzPagingConfig {

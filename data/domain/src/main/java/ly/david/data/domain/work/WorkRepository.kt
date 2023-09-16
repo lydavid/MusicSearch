@@ -32,7 +32,7 @@ class WorkRepository(
             workDao.insertAllAttributes(
                 workMusicBrainzModel.attributes?.map { it.toWorkAttributeRoomModel(workId) }.orEmpty()
             )
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = workId,
                 relationMusicBrainzModels = workMusicBrainzModel.relations,
             )

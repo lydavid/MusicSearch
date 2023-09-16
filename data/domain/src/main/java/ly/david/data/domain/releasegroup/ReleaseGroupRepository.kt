@@ -25,7 +25,7 @@ class ReleaseGroupRepository(
         val releaseGroupMusicBrainzModel = musicBrainzApi.lookupReleaseGroup(releaseGroupId)
         releaseGroupDao.withTransaction {
             releaseGroupDao.insertReleaseGroupWithArtistCredits(releaseGroupMusicBrainzModel)
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = releaseGroupId,
                 relationMusicBrainzModels = releaseGroupMusicBrainzModel.relations,
             )

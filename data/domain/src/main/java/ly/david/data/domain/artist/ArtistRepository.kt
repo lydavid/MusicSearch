@@ -28,7 +28,7 @@ class ArtistRepository(
         )
         artistDao.withTransaction {
             artistDao.insert(artistMusicBrainzModel.toArtistRoomModel())
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = artistId,
                 relationMusicBrainzModels = artistMusicBrainzModel.relations,
             )

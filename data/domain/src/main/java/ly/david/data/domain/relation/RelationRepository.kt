@@ -1,6 +1,6 @@
 package ly.david.data.domain.relation
 
-import androidx.paging.PagingSource
+import app.cash.paging.PagingSource
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
@@ -18,7 +18,17 @@ class RelationRepository(
     suspend fun hasUrlsBeenSavedFor(entityId: String): Boolean =
         entityHasUrlsDao.hasUrls(entityId)
 
-    suspend fun insertAllRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+    suspend fun insertAllUrlRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+        insertRelations(entityId, relationMusicBrainzModels)
+        entityHasUrlsDao.markEntityHasUrls(entityId)
+    }
+
+    fun insertAllRelationsExcludingUrls(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+        insertRelations(entityId, relationMusicBrainzModels)
+        entityHasRelationsDao.markEntityHasRelationsStored(entityId)
+    }
+
+    private fun insertRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
         val relationRoomModels = mutableListOf<Mb_relation>()
         relationMusicBrainzModels?.forEachIndexed { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationDatabaseModel(
@@ -29,8 +39,6 @@ class RelationRepository(
             }
         }
         relationDao.insertAll(relationRoomModels)
-        entityHasRelationsDao.markEntityHasRelationsStored(entityId)
-        entityHasUrlsDao.markEntityHasUrls(entityId)
     }
 
     fun hasRelationsBeenSavedFor(entityId: String): Boolean {
@@ -39,7 +47,6 @@ class RelationRepository(
         )
     }
 
-    // TODO: kmp paging
     fun getEntityRelationships(
         entityId: String,
         query: String,

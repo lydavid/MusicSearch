@@ -28,7 +28,7 @@ class RecordingRepository(
         val recordingMusicBrainzModel = musicBrainzApi.lookupRecording(recordingId)
         recordingDao.withTransaction {
             recordingDao.insertRecordingWithArtistCredits(recordingMusicBrainzModel)
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = recordingId,
                 relationMusicBrainzModels = recordingMusicBrainzModel.relations,
             )

@@ -1,9 +1,9 @@
 package ly.david.data.domain.paging
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadType
-import androidx.paging.PagingState
-import androidx.paging.RemoteMediator
+import app.cash.paging.ExperimentalPagingApi
+import app.cash.paging.LoadType
+import app.cash.paging.PagingState
+import app.cash.paging.RemoteMediator
 import ly.david.data.common.network.RecoverableNetworkException
 
 /**

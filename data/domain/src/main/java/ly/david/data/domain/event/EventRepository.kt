@@ -29,7 +29,7 @@ class EventRepository(
         roomEventDao.withTransaction {
             eventDao.insert(eventMusicBrainzModel)
             roomEventDao.insert(eventMusicBrainzModel.toEventRoomModel())
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = eventId,
                 relationMusicBrainzModels = eventMusicBrainzModel.relations,
             )
