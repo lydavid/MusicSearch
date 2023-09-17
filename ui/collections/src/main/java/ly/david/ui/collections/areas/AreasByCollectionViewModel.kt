@@ -7,8 +7,8 @@ import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.relation.RoomRelationDao
 import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.ui.common.area.AreasPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
@@ -20,11 +20,11 @@ internal class AreasByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: AreasPagedList,
 ) : BrowseEntitiesByEntityViewModel<Area, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
     byEntity = MusicBrainzEntity.AREA,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -45,7 +45,7 @@ internal class AreasByCollectionViewModel(
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.deleteAllFromCollection(entityId)
-        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
     }
 
     override fun getLinkedEntitiesPagingSource(

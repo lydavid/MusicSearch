@@ -12,7 +12,7 @@ import ly.david.data.room.artist.ArtistRoomModel
 import ly.david.data.room.artist.toArtistRoomModel
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.RoomCollectionEntityDao
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.artist.ArtistsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
@@ -22,11 +22,11 @@ internal class ArtistsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: RoomCollectionEntityDao,
     private val artistDao: ArtistDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: ArtistsPagedList,
 ) : BrowseEntitiesByEntityViewModel<ArtistRoomModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
     byEntity = MusicBrainzEntity.ARTIST,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -52,7 +52,7 @@ internal class ArtistsByCollectionViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.ARTIST)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.ARTIST)
         }
     }
 

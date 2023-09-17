@@ -5,11 +5,11 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -18,11 +18,11 @@ import org.koin.android.annotation.KoinViewModel
 internal class ReleasesByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: RoomCollectionEntityDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     releaseDao: ReleaseDao,
     pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     releaseDao = releaseDao,
     pagedList = pagedList,
 ) {
@@ -51,7 +51,7 @@ internal class ReleasesByCollectionViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
 

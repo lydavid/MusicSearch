@@ -7,12 +7,12 @@ import ly.david.data.domain.listitem.toRecordingListItemModel
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.recording.RecordingDao
 import ly.david.data.room.recording.RecordingForListItem
 import ly.david.data.room.recording.toRoomModel
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -21,12 +21,12 @@ import org.koin.android.annotation.KoinViewModel
 internal class RecordingsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: RoomCollectionEntityDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -55,7 +55,7 @@ internal class RecordingsByCollectionViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
         }
     }
 

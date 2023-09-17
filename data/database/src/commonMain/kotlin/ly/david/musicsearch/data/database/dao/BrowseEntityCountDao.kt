@@ -10,9 +10,7 @@ class BrowseEntityCountDao(
     private val transacter = database.browse_entity_countQueries
 
     fun insert(browseEntityCount: Browse_entity_count) {
-        transacter.insert(
-            browseEntityCount
-        )
+        transacter.insert(browseEntityCount)
     }
 
     fun getBrowseEntityCount(

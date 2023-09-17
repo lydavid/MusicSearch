@@ -6,8 +6,8 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.musicbrainz.MusicBrainzModel
 import ly.david.data.musicbrainz.api.Browsable
-import ly.david.data.room.relation.BrowseEntityCount
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class BrowseEntitiesByEntityViewModel<
     RM : Any,
@@ -16,7 +16,7 @@ abstract class BrowseEntitiesByEntityViewModel<
     B : Browsable<MB>,
     >(
     private val byEntity: MusicBrainzEntity,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     private val pagedList: PagedList<RM, LI>,
 ) : ViewModel(),
     IPagedList<LI> by pagedList,
@@ -38,16 +38,16 @@ abstract class BrowseEntitiesByEntityViewModel<
         val response = browseEntitiesByEntity(entityId, nextOffset)
 
         if (response.offset == 0) {
-            relationDao.insertBrowseEntityCount(
-                browseEntityCount = BrowseEntityCount(
-                    entityId = entityId,
-                    browseEntity = byEntity,
-                    localCount = response.musicBrainzModels.size,
-                    remoteCount = response.count
+            browseEntityCountDao.insert(
+                browseEntityCount = Browse_entity_count(
+                    entity_id = entityId,
+                    browse_entity = byEntity,
+                    local_count = response.musicBrainzModels.size,
+                    remote_count = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForEntity(entityId, byEntity, response.musicBrainzModels.size)
+            browseEntityCountDao.incrementLocalCountForEntity(entityId, byEntity, response.musicBrainzModels.size)
         }
 
         val musicBrainzModels = response.musicBrainzModels
@@ -57,8 +57,8 @@ abstract class BrowseEntitiesByEntityViewModel<
     }
 
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        relationDao.getBrowseEntityCount(entityId, byEntity)?.remoteCount
+        browseEntityCountDao.getBrowseEntityCount(entityId, byEntity)?.remote_count
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
-        relationDao.getBrowseEntityCount(entityId, byEntity)?.localCount ?: 0
+        browseEntityCountDao.getBrowseEntityCount(entityId, byEntity)?.local_count ?: 0
 }

@@ -7,12 +7,12 @@ import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.toLabelRoomModel
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.label.LabelsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
@@ -22,11 +22,11 @@ internal class LabelsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: RoomCollectionEntityDao,
     private val labelDao: LabelDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: LabelsPagedList,
 ) : BrowseEntitiesByEntityViewModel<LabelRoomModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -52,7 +52,7 @@ internal class LabelsByCollectionViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 

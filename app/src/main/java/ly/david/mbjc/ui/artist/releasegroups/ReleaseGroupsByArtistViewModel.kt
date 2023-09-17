@@ -6,8 +6,8 @@ import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
-import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -16,11 +16,11 @@ import org.koin.android.annotation.KoinViewModel
 internal class ReleaseGroupsByArtistViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ReleaseGroupsByEntityViewModel(
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     releaseGroupDao = releaseGroupDao,
     releaseGroupsPagedList = releaseGroupsPagedList,
 ) {
@@ -48,7 +48,7 @@ internal class ReleaseGroupsByArtistViewModel(
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
-        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
+        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
     }
 
     override fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean) =

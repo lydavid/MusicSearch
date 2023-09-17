@@ -7,12 +7,12 @@ import ly.david.data.domain.listitem.toInstrumentListItemModel
 import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.instrument.InstrumentDao
 import ly.david.data.room.instrument.InstrumentRoomModel
 import ly.david.data.room.instrument.toInstrumentRoomModel
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.instrument.InstrumentsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import org.koin.android.annotation.KoinViewModel
@@ -22,11 +22,11 @@ internal class InstrumentsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: RoomCollectionEntityDao,
     private val instrumentDao: InstrumentDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: InstrumentsPagedList,
 ) : BrowseEntitiesByEntityViewModel<InstrumentRoomModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
     byEntity = MusicBrainzEntity.INSTRUMENT,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -52,7 +52,7 @@ internal class InstrumentsByCollectionViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 

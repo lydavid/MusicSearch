@@ -7,9 +7,9 @@ import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.data.room.area.releases.ReleaseCountryDao
-import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -18,11 +18,11 @@ import org.koin.android.annotation.KoinViewModel
 internal class ReleasesByAreaViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     releaseDao: ReleaseDao,
     pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     releaseDao = releaseDao,
     pagedList = pagedList,
 ) {
@@ -53,7 +53,7 @@ internal class ReleasesByAreaViewModel(
         releaseCountryDao.withTransaction {
             releaseCountryDao.deleteReleasesByCountry(entityId)
             releaseCountryDao.deleteArtistReleaseLinks(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
 

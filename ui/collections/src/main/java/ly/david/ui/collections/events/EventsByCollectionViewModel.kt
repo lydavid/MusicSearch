@@ -7,7 +7,7 @@ import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.ui.common.event.EventsPagedList
@@ -20,11 +20,11 @@ internal class EventsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val eventDao: EventDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: EventsPagedList,
 ) : BrowseEntitiesByEntityViewModel<Event, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -45,7 +45,7 @@ internal class EventsByCollectionViewModel(
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.deleteAllFromCollection(entityId)
-        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
+        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
     }
 
     override fun getLinkedEntitiesPagingSource(

@@ -10,9 +10,9 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.recording.RecordingDao
 import ly.david.data.room.recording.RecordingForListItem
 import ly.david.data.room.recording.toRoomModel
-import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.work.recordings.RecordingWork
 import ly.david.data.room.work.recordings.RecordingWorkDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -21,12 +21,12 @@ import org.koin.android.annotation.KoinViewModel
 internal class RecordingsByWorkViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val recordingWorkDao: RecordingWorkDao,
-    private val relationDao: RoomRelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList
 ) {
 
@@ -54,7 +54,7 @@ internal class RecordingsByWorkViewModel(
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         recordingWorkDao.deleteRecordingsByWork(entityId)
-        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
     }
 
     override fun getLinkedEntitiesPagingSource(
