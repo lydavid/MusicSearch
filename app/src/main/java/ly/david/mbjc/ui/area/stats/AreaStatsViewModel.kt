@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.area.stats
 
 import androidx.lifecycle.ViewModel
-import ly.david.data.room.area.places.AreaPlaceDao
+import ly.david.data.room.area.places.RoomAreaPlaceDao
 import ly.david.data.room.area.releases.ReleaseCountryDao
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.stats.PlacesStats
@@ -13,7 +13,7 @@ import org.koin.android.annotation.KoinViewModel
 class AreaStatsViewModel(
     override val relationDao: RoomRelationDao,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val areaPlaceDao: AreaPlaceDao,
+    private val areaPlaceDao: RoomAreaPlaceDao,
 ) : ViewModel(),
     RelationsStats,
     ReleasesStats,

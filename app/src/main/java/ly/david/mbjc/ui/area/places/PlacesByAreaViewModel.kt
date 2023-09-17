@@ -7,8 +7,8 @@ import ly.david.data.domain.listitem.toPlaceListItemModel
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.places.AreaPlace
-import ly.david.data.room.area.places.AreaPlaceDao
+import ly.david.data.room.area.places.RoomAreaPlace
+import ly.david.data.room.area.places.RoomAreaPlaceDao
 import ly.david.data.room.place.PlaceDao
 import ly.david.data.room.place.PlaceRoomModel
 import ly.david.data.room.place.toPlaceRoomModel
@@ -20,7 +20,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class PlacesByAreaViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val areaPlaceDao: AreaPlaceDao,
+    private val areaPlaceDao: RoomAreaPlaceDao,
     private val relationDao: RoomRelationDao,
     private val placeDao: PlaceDao,
     pagedList: PlacesPagedList,
@@ -41,7 +41,7 @@ internal class PlacesByAreaViewModel(
         placeDao.insertAll(musicBrainzModels.map { it.toPlaceRoomModel() })
         areaPlaceDao.insertAll(
             musicBrainzModels.map { place ->
-                AreaPlace(
+                RoomAreaPlace(
                     areaId = entityId,
                     placeId = place.id
                 )

@@ -6,8 +6,9 @@ import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.place.PlaceWithAllData
-import ly.david.data.domain.common.toLifeSpanUiModel
+import lydavidmusicsearchdatadatabase.Mb_area
+import lydavidmusicsearchdatadatabase.Mb_place
+import lydavidmusicsearchdatadatabase.Mb_relation
 
 data class PlaceScaffoldModel(
     override val id: String,
@@ -21,14 +22,24 @@ data class PlaceScaffoldModel(
     val urls: List<RelationListItemModel> = listOf(),
 ) : Place
 
-internal fun PlaceWithAllData.toPlaceScaffoldModel() = PlaceScaffoldModel(
-    id = place.id,
-    name = place.name,
-    disambiguation = place.disambiguation,
-    address = place.address,
-    type = place.type,
-    coordinates = place.coordinates?.toCoordinatesUiModel(),
-    lifeSpan = place.lifeSpan?.toLifeSpanUiModel(),
+internal fun Mb_place.toPlaceScaffoldModel(
+    area: Mb_area?,
+    urls: List<Mb_relation>,
+) = PlaceScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    address = address,
+    type = type,
+    coordinates = CoordinatesUiModel(
+        longitude = longitude,
+        latitude = latitude,
+    ),
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
     area = area?.toAreaListItemModel(),
-    urls = urls.map { it.relation.toRelationListItemModel() },
+    urls = urls.map { it.toRelationListItemModel() },
 )

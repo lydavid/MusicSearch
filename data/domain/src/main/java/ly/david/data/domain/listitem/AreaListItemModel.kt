@@ -6,6 +6,7 @@ import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.release.AreaWithReleaseDate
+import lydavidmusicsearchdatadatabase.Mb_area
 
 data class AreaListItemModel(
     override val id: String,
@@ -36,6 +37,19 @@ fun AreaRoomModel.toAreaListItemModel() = AreaListItemModel(
     disambiguation = disambiguation,
     type = type,
     lifeSpan = lifeSpan?.toLifeSpanUiModel(),
+)
+
+fun Mb_area.toAreaListItemModel() = AreaListItemModel(
+    id = id,
+    name = name,
+    sortName = sort_name,
+    disambiguation = disambiguation,
+    type = type,
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
 )
 
 fun AreaWithReleaseDate.toAreaListItemModel() = AreaListItemModel(

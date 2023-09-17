@@ -1,0 +1,22 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS mb_place (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  address TEXT NOT NULL,
+  type TEXT,
+  type_id TEXT,
+  longitude REAL,
+  latitude REAL,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean
+);
+
+insert:
+INSERT OR REPLACE INTO mb_place
+VALUES ?;
+
+getPlace:
+SELECT * FROM mb_place WHERE id = ?;

@@ -1,0 +1,25 @@
+CREATE TABLE mb_area_place (
+  area_id TEXT NOT NULL,
+  place_id TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS area_place_pk ON mb_area_place (area_id, place_id);
+
+insert:
+INSERT OR REPLACE INTO mb_area_place
+VALUES ?;
+
+getAreaByPlace:
+SELECT a.* FROM mb_area a
+INNER JOIN mb_area_place ap ON a.id = ap.area_id
+WHERE ap.place_id = :placeId
+LIMIT 1;
+
+deletePlacesByArea:
+DELETE FROM mb_place WHERE id IN (
+  SELECT p.id
+  FROM mb_place p
+  INNER JOIN mb_area_place ap ON p.id = ap.place_id
+  INNER JOIN mb_area a ON a.id = ap.area_id
+  WHERE a.id = :areaId
+);

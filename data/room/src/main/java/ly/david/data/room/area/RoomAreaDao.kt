@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class AreaDao : BaseDao<AreaRoomModel>() {
+abstract class RoomAreaDao : BaseDao<AreaRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM area WHERE id = :areaId")

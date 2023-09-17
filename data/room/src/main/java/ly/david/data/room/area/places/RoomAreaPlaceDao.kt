@@ -8,7 +8,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.place.PlaceRoomModel
 
 @Dao
-abstract class AreaPlaceDao : BaseDao<AreaPlace>() {
+abstract class RoomAreaPlaceDao : BaseDao<RoomAreaPlace>() {
 
     companion object {
         private const val PLACES_BY_AREA = """

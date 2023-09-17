@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.CountryCode
-import ly.david.data.room.area.places.AreaPlace
+import ly.david.data.room.area.places.RoomAreaPlace
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.data.room.artist.ArtistRoomModel
 import ly.david.data.room.artist.UrlRelation
@@ -72,7 +72,7 @@ const val DATABASE_VERSION = 16
         HasUrls::class,
         BrowseEntityCount::class,
 
-        AreaPlace::class,
+        RoomAreaPlace::class,
         ArtistRelease::class,
         EventPlace::class,
         ArtistReleaseGroup::class,

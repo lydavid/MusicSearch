@@ -7,7 +7,7 @@ import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.AreaDao
+import ly.david.data.room.area.RoomAreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.releases.ReleaseCountryDao
 import ly.david.data.room.area.releases.getReleaseCountries
@@ -34,7 +34,7 @@ class ReleaseRepository(
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val releaseCountryDao: ReleaseCountryDao,
-    private val areaDao: AreaDao,
+    private val areaDao: RoomAreaDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,

@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import ly.david.data.room.area.AreaRoomModel
-import ly.david.data.room.area.places.AreaPlace
+import ly.david.data.room.area.places.RoomAreaPlace
 import ly.david.data.room.artist.UrlRelation
 
 data class PlaceWithAllData(
@@ -15,7 +15,7 @@ data class PlaceWithAllData(
         parentColumn = "id",
         entityColumn = "id",
         associateBy = Junction(
-            value = AreaPlace::class,
+            value = RoomAreaPlace::class,
             parentColumn = "place_id",
             entityColumn = "area_id"
         )

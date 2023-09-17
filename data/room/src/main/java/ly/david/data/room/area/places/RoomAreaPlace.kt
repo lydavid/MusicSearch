@@ -13,7 +13,7 @@ import ly.david.data.room.place.PlaceRoomModel
     primaryKeys = ["area_id", "place_id"],
     indices = [Index(value = ["place_id"])]
 )
-data class AreaPlace(
+data class RoomAreaPlace(
     @ColumnInfo(name = "area_id")
     val areaId: String,
 

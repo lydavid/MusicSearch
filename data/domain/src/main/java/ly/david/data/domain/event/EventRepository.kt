@@ -6,7 +6,6 @@ import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.EventDao
-import lydavidmusicsearchdatadatabase.Mb_relation
 import org.koin.core.annotation.Single
 
 @Single
@@ -18,7 +17,7 @@ class EventRepository(
 
     suspend fun lookupEvent(eventId: String): EventScaffoldModel {
         val event = eventDao.getEvent(eventId)
-        val urlRelations: List<Mb_relation> = relationRepository.getEntityUrlRelationships(entityId = eventId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(eventId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(eventId)
         if (event != null && hasUrlsBeenSavedForEntity) {
             return event.toEventScaffoldModel(urlRelations)

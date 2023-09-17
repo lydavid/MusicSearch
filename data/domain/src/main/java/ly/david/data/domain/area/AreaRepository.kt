@@ -6,7 +6,7 @@ import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.AreaDao
+import ly.david.data.room.area.RoomAreaDao
 import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.toAreaRoomModel
 import org.koin.core.annotation.Single
@@ -14,7 +14,7 @@ import org.koin.core.annotation.Single
 @Single
 class AreaRepository(
     private val musicBrainzApi: MusicBrainzApi,
-    private val areaDao: AreaDao,
+    private val areaDao: RoomAreaDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 

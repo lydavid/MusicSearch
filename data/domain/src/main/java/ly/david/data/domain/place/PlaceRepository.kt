@@ -5,12 +5,9 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.AreaDao
-import ly.david.data.room.area.places.AreaPlace
-import ly.david.data.room.area.places.AreaPlaceDao
-import ly.david.data.room.area.toAreaRoomModel
-import ly.david.data.room.place.PlaceDao
-import ly.david.data.room.place.toPlaceRoomModel
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.AreaPlaceDao
+import ly.david.musicsearch.data.database.dao.PlaceDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -23,29 +20,27 @@ class PlaceRepository(
 ) : RelationsListRepository {
 
     suspend fun lookupPlace(placeId: String): PlaceScaffoldModel {
-        val placeWithAllData = placeDao.getPlace(placeId)
+        val place = placeDao.getPlace(placeId)
+        val area = areaPlaceDao.getAreaByPlace(placeId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(placeId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(placeId)
-        if (placeWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return placeWithAllData.toPlaceScaffoldModel()
+        if (place != null && hasUrlsBeenSavedForEntity) {
+            return place.toPlaceScaffoldModel(area, urlRelations)
         }
 
         val placeMusicBrainzModel = musicBrainzApi.lookupPlace(placeId)
-        areaDao.withTransaction {
-            placeDao.insert(placeMusicBrainzModel.toPlaceRoomModel())
-            placeMusicBrainzModel.area?.let { area ->
-                areaDao.insert(area.toAreaRoomModel())
-                areaPlaceDao.insert(
-                    AreaPlace(
-                        areaId = area.id,
-                        placeId = placeId
-                    )
-                )
-            }
-            relationRepository.insertAllUrlRelations(
-                entityId = placeId,
-                relationMusicBrainzModels = placeMusicBrainzModel.relations,
+        placeDao.insert(placeMusicBrainzModel)
+        placeMusicBrainzModel.area?.let { areaMusicBrainzModel ->
+            areaDao.insert(areaMusicBrainzModel)
+            areaPlaceDao.insert(
+                areaId = areaMusicBrainzModel.id,
+                placeId = placeId,
             )
         }
+        relationRepository.insertAllUrlRelations(
+            entityId = placeId,
+            relationMusicBrainzModels = placeMusicBrainzModel.relations,
+        )
         return lookupPlace(placeId)
     }
 
