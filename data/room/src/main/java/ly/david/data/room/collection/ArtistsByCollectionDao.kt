@@ -38,27 +38,6 @@ interface ArtistsByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM artist WHERE id IN (
-        $SELECT_ARTIST_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteArtistsByCollection(collectionId: String)
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $ARTISTS_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfArtistsByCollection(collectionId: String): Int
-
     @Transaction
     @Query(
         """

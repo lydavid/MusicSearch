@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
-import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
 
 interface ReleaseGroupsByCollectionDao {
 
@@ -38,15 +37,6 @@ interface ReleaseGroupsByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM release_group WHERE id IN (
-        $SELECT_RELEASE_GROUPS_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteReleaseGroupsByCollection(collectionId: String)
-
     @Transaction
     @Query(
         """
@@ -63,25 +53,4 @@ interface ReleaseGroupsByCollectionDao {
         query: String = "%%",
         sorted: Boolean = false,
     ): PagingSource<Int, ReleaseGroupForListItem>
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $RELEASE_GROUPS_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfReleaseGroupsByCollection(collectionId: String): Int
-
-    @Query(
-        """
-        SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) as count
-        $RELEASE_GROUPS_BY_COLLECTION
-        GROUP BY rg.primary_type, rg.secondary_types
-    """
-    )
-    suspend fun getCountOfEachAlbumType(collectionId: String): List<ReleaseGroupTypeCount>
 }

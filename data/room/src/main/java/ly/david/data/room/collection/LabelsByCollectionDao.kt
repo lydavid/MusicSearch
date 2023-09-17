@@ -33,27 +33,6 @@ interface LabelsByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM label WHERE id IN (
-        $SELECT_LABEL_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteLabelsByCollection(collectionId: String)
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $LABELS_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfLabelsByCollection(collectionId: String): Int
-
     @Transaction
     @Query(
         """

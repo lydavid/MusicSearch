@@ -33,27 +33,6 @@ interface InstrumentsByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM instrument WHERE id IN (
-        $SELECT_INSTRUMENT_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteInstrumentsByCollection(collectionId: String)
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $INSTRUMENTS_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfInstrumentsByCollection(collectionId: String): Int
-
     @Transaction
     @Query(
         """

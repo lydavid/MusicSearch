@@ -33,27 +33,6 @@ interface SeriesByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM series WHERE id IN (
-        $SELECT_SERIES_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteSeriesByCollection(collectionId: String)
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $SERIES_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfSeriesByCollection(collectionId: String): Int
-
     @Transaction
     @Query(
         """

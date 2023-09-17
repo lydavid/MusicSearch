@@ -40,27 +40,6 @@ interface RecordingsByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM recording WHERE id IN (
-        $SELECT_RECORDINGS_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteRecordingsByCollection(collectionId: String)
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $RECORDINGS_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfRecordingsByCollection(collectionId: String): Int
-
     @Transaction
     @Query(
         """

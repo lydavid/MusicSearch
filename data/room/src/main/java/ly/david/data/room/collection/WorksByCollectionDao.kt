@@ -33,27 +33,6 @@ interface WorksByCollectionDao {
         """
     }
 
-    @Query(
-        """
-        DELETE FROM work WHERE id IN (
-        $SELECT_WORK_ID_BY_COLLECTION
-        )
-        """
-    )
-    suspend fun deleteWorksByCollection(collectionId: String)
-
-    @Query(
-        """
-        SELECT IFNULL(
-            (SELECT COUNT(*)
-            $WORKS_BY_COLLECTION
-            ),
-            0
-        ) AS count
-    """
-    )
-    suspend fun getNumberOfWorksByCollection(collectionId: String): Int
-
     @Transaction
     @Query(
         """
