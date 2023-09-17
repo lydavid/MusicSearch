@@ -4,6 +4,7 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import ly.david.musicsearch.data.database.Database
+import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Collection_entity
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Place
@@ -47,6 +48,25 @@ class CollectionEntityDao(
         transacter.deleteFromCollection(
             collectionId = collectionId,
             collectableId = collectableId,
+        )
+    }
+
+    fun getAreasByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, Area> = QueryPagingSource(
+        countQuery = transacter.getNumberOfAreasByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getAreasByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
         )
     }
 

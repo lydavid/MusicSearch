@@ -37,9 +37,13 @@ class CollectionDao(
         }
     }
 
-    fun getCollection(id: String): Collection =
-        transacter.getCollection(id).executeAsOne()
+    fun getCollection(id: String): Collection? =
+        transacter.getCollection(id).executeAsOneOrNull()
 
+    // TODO: rather than return just the collections, and have a separate query to get all entity links for that collection
+    //  return all entity_links together with their collection
+    //  or rather collection, but together with their entity_link ids
+    //  For this use case, we can actually just aggregate the entity_links, cause we just want a count
     fun getAllCollections(
         showLocal: Boolean = true,
         showRemote: Boolean = true,

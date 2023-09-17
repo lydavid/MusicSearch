@@ -27,6 +27,14 @@ class AreaDao(
         }
     }
 
+    fun insertAll(areas: List<AreaMusicBrainzModel>) {
+        transacter.transaction {
+            areas.forEach { area ->
+                insert(area)
+            }
+        }
+    }
+
     fun getArea(areaId: String): Area? {
         return transacter.getArea(areaId).executeAsOneOrNull()
     }

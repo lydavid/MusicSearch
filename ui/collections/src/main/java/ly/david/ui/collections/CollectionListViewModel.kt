@@ -9,13 +9,11 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
-import ly.david.data.room.collection.CollectionWithEntities
-import ly.david.data.room.collection.RoomCollectionDao
-import ly.david.data.room.collection.toCollectionRoomModel
-import ly.david.data.room.relation.RoomRelationDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.settings.AppPreferences
 import lydavidmusicsearchdatadatabase.Browse_entity_count
+import lydavidmusicsearchdatadatabase.Collection
 import org.koin.android.annotation.KoinViewModel
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
@@ -26,12 +24,11 @@ class CollectionListViewModel(
     private val pagedList: CollectionPagedList,
     private val musicBrainzApi: MusicBrainzApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
-    private val collectionDao: RoomCollectionDao,
+    private val collectionDao: CollectionDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    private val relationDao: RoomRelationDao,
 ) : ViewModel(),
     ICollectionPagedList by pagedList,
-    BrowseCollectionUseCase<CollectionWithEntities> {
+    BrowseCollectionUseCase<Collection> {
 
     init {
         pagedList.scope = viewModelScope
@@ -89,7 +86,7 @@ class CollectionListViewModel(
         }
 
         val collectionMusicBrainzModels = response.musicBrainzModels
-        collectionDao.insertAll(collectionMusicBrainzModels.map { it.toCollectionRoomModel() })
+        collectionDao.insertAll(collectionMusicBrainzModels)
 
         return collectionMusicBrainzModels.size
     }
@@ -115,7 +112,7 @@ class CollectionListViewModel(
 
     override fun getLinkedEntitiesPagingSource(
         viewState: ICollectionPagedList.ViewModelState,
-    ): PagingSource<Int, CollectionWithEntities> =
+    ): PagingSource<Int, Collection> =
         collectionDao.getAllCollections(
             showLocal = viewState.showLocal,
             showRemote = viewState.showRemote,

@@ -18,8 +18,8 @@ import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
 import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.collection.CollectionWithEntities
 import ly.david.ui.common.paging.IPagedList
+import lydavidmusicsearchdatadatabase.Collection
 import org.koin.core.annotation.Factory
 
 interface ICollectionPagedList : IPagedList<CollectionListItemModel> {
@@ -62,9 +62,9 @@ class CollectionPagedList : ICollectionPagedList {
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseCollectionUseCase<CollectionWithEntities>
+    lateinit var useCase: BrowseCollectionUseCase<Collection>
 
-    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<CollectionWithEntities>(
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<Collection>(
         getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
@@ -82,7 +82,7 @@ class CollectionPagedList : ICollectionPagedList {
                     remoteMediator = getRemoteMediator(state.entityId).takeIf { state.isRemote },
                     pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(state) }
                 ).flow.map { pagingData ->
-                    pagingData.map(CollectionWithEntities::toCollectionListItemModel)
+                    pagingData.map(Collection::toCollectionListItemModel)
                 }
             }
             .distinctUntilChanged()

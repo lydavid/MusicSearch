@@ -25,6 +25,43 @@ DELETE FROM collection_entity
 WHERE id = :collectionId
 AND entity_id = :collectableId;
 
+
+-- areas by collection
+
+getNumberOfAreasByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM area a
+    INNER JOIN collection_entity ce ON a.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      a.name LIKE :query OR
+      a.disambiguation LIKE :query OR
+      a.sort_name LIKE :query OR
+      a.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getAreasByCollection:
+SELECT a.*
+FROM area a
+INNER JOIN collection_entity ce ON a.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId
+AND (
+  a.name LIKE :query OR
+  a.disambiguation LIKE :query OR
+  a.sort_name LIKE :query OR
+  a.type LIKE :query
+)
+ORDER BY a.begin, a.end, a.name
+LIMIT :limit OFFSET :offset;
+
+
 -- events by collection
 
 getNumberOfEventsByCollection:
@@ -35,7 +72,11 @@ SELECT IFNULL(
     INNER JOIN collection_entity ce ON e.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
     WHERE c.id = :collectionId
-    AND (e.name LIKE :query OR e.disambiguation LIKE :query OR e.type LIKE :query)
+    AND (
+      e.name LIKE :query OR
+      e.disambiguation LIKE :query OR
+      e.type LIKE :query
+    )
   ),
   0
 ) AS count;
@@ -46,9 +87,14 @@ FROM event e
 INNER JOIN collection_entity ce ON e.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId
-AND (e.name LIKE :query OR e.disambiguation LIKE :query OR e.type LIKE :query)
+AND (
+  e.name LIKE :query OR
+  e.disambiguation LIKE :query OR
+  e.type LIKE :query
+)
 ORDER BY e.begin, e.end, e.name
 LIMIT :limit OFFSET :offset;
+
 
 -- places by collection
 
@@ -60,7 +106,12 @@ SELECT IFNULL(
     INNER JOIN collection_entity ce ON p.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
     WHERE c.id = :collectionId
-    AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+    AND (
+      p.name LIKE :query OR
+      p.disambiguation LIKE :query OR
+      p.address LIKE :query OR
+      p.type LIKE :query
+    )
   ),
   0
 ) AS count;
@@ -71,6 +122,11 @@ FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
 WHERE c.id = :collectionId
-AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+AND (
+  p.name LIKE :query OR
+  p.disambiguation LIKE :query OR
+  p.address LIKE :query OR
+  p.type LIKE :query
+)
 ORDER BY p.name, p.address
 LIMIT :limit OFFSET :offset;

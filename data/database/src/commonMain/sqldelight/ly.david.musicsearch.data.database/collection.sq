@@ -9,7 +9,7 @@ CREATE TABLE collection (
   entity TEXT AS MusicBrainzEntity NOT NULL,
   type TEXT,
   type_id TEXT,
-  entity_count INTEGER AS Int
+  entity_count INTEGER AS Int NOT NULL
 );
 
 insert:
