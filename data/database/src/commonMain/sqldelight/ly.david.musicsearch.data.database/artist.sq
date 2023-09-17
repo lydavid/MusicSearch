@@ -1,0 +1,22 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS artist (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  sort_name TEXT NOT NULL,
+  disambiguation TEXT,
+  type TEXT,
+  type_id TEXT,
+  gender TEXT,
+  country_code TEXT,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean
+);
+
+insert:
+INSERT OR REPLACE INTO artist
+VALUES ?;
+
+getArtist:
+SELECT * FROM artist WHERE id = ?;

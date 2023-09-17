@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class ArtistDao : BaseDao<ArtistRoomModel>() {
+abstract class RoomArtistDao : BaseDao<ArtistRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM artist WHERE id = :artistId")

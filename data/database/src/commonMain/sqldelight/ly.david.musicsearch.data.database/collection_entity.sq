@@ -62,6 +62,46 @@ ORDER BY a.begin, a.end, a.name
 LIMIT :limit OFFSET :offset;
 
 
+-- areas by collection
+
+getNumberOfArtistsByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM artist a
+    INNER JOIN collection_entity ce ON a.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      a.name LIKE :query OR
+      a.disambiguation LIKE :query OR
+      a.sort_name LIKE :query OR
+      a.type LIKE :query OR
+      a.gender LIKE :query OR
+      a.country_code LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getArtistsByCollection:
+SELECT a.*
+FROM artist a
+INNER JOIN collection_entity ce ON a.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId
+AND (
+  a.name LIKE :query OR
+  a.disambiguation LIKE :query OR
+  a.sort_name LIKE :query OR
+  a.type LIKE :query OR
+  a.gender LIKE :query OR
+  a.country_code LIKE :query
+)
+ORDER BY a.begin, a.end, a.name
+LIMIT :limit OFFSET :offset;
+
+
 -- events by collection
 
 getNumberOfEventsByCollection:

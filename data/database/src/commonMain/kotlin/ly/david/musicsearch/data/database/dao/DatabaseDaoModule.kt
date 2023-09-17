@@ -4,6 +4,7 @@ import org.koin.dsl.module
 
 val databaseDaoModule = module {
     single { AreaDao(get()) }
+    single { ArtistDao(get()) }
     single { AreaPlaceDao(get()) }
     single { BrowseEntityCountDao(get()) }
     single { CollectionDao(get()) }

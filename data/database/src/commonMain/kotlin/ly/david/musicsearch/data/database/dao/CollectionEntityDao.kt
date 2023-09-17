@@ -5,6 +5,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Area
+import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Collection_entity
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Place
@@ -63,6 +64,25 @@ class CollectionEntityDao(
         context = Dispatchers.IO,
     ) { limit, offset ->
         transacter.getAreasByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
+        )
+    }
+
+    fun getArtistsByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, Artist> = QueryPagingSource(
+        countQuery = transacter.getNumberOfArtistsByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getArtistsByCollection(
             collectionId = collectionId,
             query = query,
             limit = limit,

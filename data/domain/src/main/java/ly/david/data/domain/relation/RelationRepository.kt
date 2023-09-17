@@ -87,11 +87,3 @@ class RelationRepository(
             }
         }
 }
-
-class RelationStatsUseCase(
-    private val relationRepository: RelationRepository,
-) {
-    operator fun invoke() {
-
-    }
-}

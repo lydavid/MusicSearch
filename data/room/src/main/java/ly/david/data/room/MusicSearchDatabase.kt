@@ -3,7 +3,7 @@ package ly.david.data.room
 import ly.david.data.room.area.RoomAreaDao
 import ly.david.data.room.area.places.RoomAreaPlaceDao
 import ly.david.data.room.area.releases.ReleaseCountryDao
-import ly.david.data.room.artist.ArtistDao
+import ly.david.data.room.artist.RoomArtistDao
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.artist.releases.ArtistReleaseDao
 import ly.david.data.room.collection.RoomCollectionDao
@@ -31,7 +31,7 @@ import ly.david.data.room.work.WorkDao
 import ly.david.data.room.work.recordings.RecordingWorkDao
 
 interface MusicSearchDatabase {
-    fun getArtistDao(): ArtistDao
+    fun getArtistDao(): RoomArtistDao
     fun getArtistReleaseDao(): ArtistReleaseDao
     fun getArtistReleaseGroupDao(): ArtistReleaseGroupDao
     fun getReleaseGroupDao(): ReleaseGroupDao

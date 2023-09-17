@@ -29,7 +29,6 @@ class PlaceDao(
         }
     }
 
-
     fun insertAll(places: List<PlaceMusicBrainzModel>) {
         transacter.transaction {
             places.forEach { place ->

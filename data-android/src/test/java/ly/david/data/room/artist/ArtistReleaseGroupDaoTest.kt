@@ -28,7 +28,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 internal class ArtistReleaseGroupDaoTest : KoinTest {
 
-    private val artistDao: ArtistDao by inject()
+    private val artistDao: RoomArtistDao by inject()
     private val artistReleaseGroupDao: ArtistReleaseGroupDao by inject()
     private val releaseGroupDao: ReleaseGroupDao by inject()
 
