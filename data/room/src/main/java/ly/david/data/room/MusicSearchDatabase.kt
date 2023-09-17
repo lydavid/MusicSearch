@@ -6,8 +6,8 @@ import ly.david.data.room.area.releases.ReleaseCountryDao
 import ly.david.data.room.artist.ArtistDao
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
 import ly.david.data.room.artist.releases.ArtistReleaseDao
-import ly.david.data.room.collection.CollectionDao
-import ly.david.data.room.collection.CollectionEntityDao
+import ly.david.data.room.collection.RoomCollectionDao
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.event.RoomEventDao
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
@@ -16,7 +16,7 @@ import ly.david.data.room.image.MbidImageDao
 import ly.david.data.room.instrument.InstrumentDao
 import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
-import ly.david.data.room.place.PlaceDao
+import ly.david.data.room.place.RoomPlaceDao
 import ly.david.data.room.place.events.RoomEventPlaceDao
 import ly.david.data.room.recording.RecordingDao
 import ly.david.data.room.recording.releases.RecordingReleaseDao
@@ -52,7 +52,7 @@ interface MusicSearchDatabase {
     fun getEventPlaceDao(): RoomEventPlaceDao
     fun getReleaseCountryDao(): ReleaseCountryDao
 
-    fun getPlaceDao(): PlaceDao
+    fun getPlaceDao(): RoomPlaceDao
 
     fun getInstrumentDao(): InstrumentDao
 
@@ -67,8 +67,8 @@ interface MusicSearchDatabase {
     fun getSearchHistoryDao(): SearchHistoryDao
     fun getNowPlayingHistoryDao(): NowPlayingHistoryDao
 
-    fun getCollectionDao(): CollectionDao
-    fun getCollectionEntityDao(): CollectionEntityDao
+    fun getCollectionDao(): RoomCollectionDao
+    fun getCollectionEntityDao(): RoomCollectionEntityDao
 
     fun getMbidImageDao(): MbidImageDao
 }

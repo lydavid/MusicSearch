@@ -7,24 +7,22 @@ import ly.david.data.domain.listitem.toPlaceListItemModel
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.places.RoomAreaPlace
-import ly.david.data.room.area.places.RoomAreaPlaceDao
-import ly.david.data.room.place.PlaceDao
-import ly.david.data.room.place.PlaceRoomModel
-import ly.david.data.room.place.toPlaceRoomModel
 import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.AreaPlaceDao
+import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.place.PlacesPagedList
+import lydavidmusicsearchdatadatabase.Place
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class PlacesByAreaViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val areaPlaceDao: RoomAreaPlaceDao,
+    private val areaPlaceDao: AreaPlaceDao,
     private val relationDao: RoomRelationDao,
     private val placeDao: PlaceDao,
     pagedList: PlacesPagedList,
-) : BrowseEntitiesByEntityViewModel<PlaceRoomModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
+) : BrowseEntitiesByEntityViewModel<Place, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzEntity.PLACE,
     relationDao = relationDao,
     pagedList = pagedList,
@@ -38,14 +36,10 @@ internal class PlacesByAreaViewModel(
     }
 
     override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<PlaceMusicBrainzModel>) {
-        placeDao.insertAll(musicBrainzModels.map { it.toPlaceRoomModel() })
-        areaPlaceDao.insertAll(
-            musicBrainzModels.map { place ->
-                RoomAreaPlace(
-                    areaId = entityId,
-                    placeId = place.id
-                )
-            }
+        placeDao.insertAll(musicBrainzModels)
+        areaPlaceDao.linkAreaWithPlaces(
+            areaId = entityId,
+            musicBrainzModels.map { place -> place.id },
         )
     }
 
@@ -57,19 +51,13 @@ internal class PlacesByAreaViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, PlaceRoomModel> = when {
-        query.isEmpty() -> {
-            areaPlaceDao.getPlacesByArea(entityId)
-        }
-        else -> {
-            areaPlaceDao.getPlacesByAreaFiltered(
-                areaId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, Place> =
+        areaPlaceDao.getPlacesByArea(
+            areaId = entityId,
+            query = "%$query%",
+        )
 
-    override fun transformRoomToListItemModel(roomModel: PlaceRoomModel): PlaceListItemModel {
+    override fun transformRoomToListItemModel(roomModel: Place): PlaceListItemModel {
         return roomModel.toPlaceListItemModel()
     }
 }

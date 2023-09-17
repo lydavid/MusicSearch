@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.CollectionListItemModel
 import ly.david.data.domain.listitem.toCollectionListItemModel
-import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.collection.RoomCollectionDao
 import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.RecordLookupHistory
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class CollectionViewModel(
-    private val collectionDao: CollectionDao,
+    private val collectionDao: RoomCollectionDao,
     override val lookupHistoryDao: LookupHistoryDao,
 ) : ViewModel(),
     RecordLookupHistory {

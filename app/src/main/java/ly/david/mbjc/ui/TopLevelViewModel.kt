@@ -25,11 +25,11 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.data.room.collection.CollectionDao
-import ly.david.data.room.collection.CollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.room.collection.CollectionWithEntities
+import ly.david.data.room.collection.RoomCollectionDao
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationRequest
@@ -44,8 +44,8 @@ internal class TopLevelViewModel(
     val appPreferences: AppPreferences,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 
-    private val collectionDao: CollectionDao,
-    private val collectionEntityDao: CollectionEntityDao,
+    private val collectionDao: RoomCollectionDao,
+    private val collectionEntityDao: RoomCollectionEntityDao,
     private val musicBrainzApi: MusicBrainzApi,
 
     private val musicBrainzAuthStore: MusicBrainzAuthStore,

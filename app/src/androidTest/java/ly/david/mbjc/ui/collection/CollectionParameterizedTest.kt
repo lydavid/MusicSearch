@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.collectableEntities
-import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.collection.RoomCollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
@@ -51,7 +51,7 @@ internal class CollectionParameterizedTest(
         }
     }
 
-    private val collectionDao: CollectionDao by inject()
+    private val collectionDao: RoomCollectionDao by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
     private lateinit var navController: NavHostController
 

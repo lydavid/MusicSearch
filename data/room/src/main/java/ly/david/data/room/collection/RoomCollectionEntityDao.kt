@@ -5,7 +5,7 @@ import androidx.room.Query
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class CollectionEntityDao :
+abstract class RoomCollectionEntityDao :
     BaseDao<CollectionEntityRoomModel>(),
     AreasByCollectionDao,
     ArtistsByCollectionDao,

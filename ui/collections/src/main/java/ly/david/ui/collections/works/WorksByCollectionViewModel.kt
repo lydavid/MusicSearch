@@ -7,7 +7,7 @@ import ly.david.data.domain.listitem.toWorkListItemModel
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.CollectionEntityDao
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.work.WorkDao
@@ -20,7 +20,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class WorksByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val collectionEntityDao: CollectionEntityDao,
+    private val collectionEntityDao: RoomCollectionEntityDao,
     private val workDao: WorkDao,
     private val relationDao: RoomRelationDao,
     pagedList: WorksPagedList,

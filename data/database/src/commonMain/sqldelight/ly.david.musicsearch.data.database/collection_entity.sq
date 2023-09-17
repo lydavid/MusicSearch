@@ -1,0 +1,76 @@
+CREATE TABLE collection_entity (
+  id TEXT NOT NULL,
+  entity_id TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS collection_entity_pk ON collection_entity (id, entity_id);
+
+-- TODO: fk, cascade delete
+
+insert:
+INSERT OR REPLACE INTO collection_entity
+VALUES ?;
+
+getEntitiesFromCollection:
+SELECT ce.*
+FROM collection_entity ce
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId;
+
+deleteAllFromCollection:
+DELETE FROM collection_entity WHERE id = :collectionId;
+
+deleteFromCollection:
+DELETE FROM collection_entity
+WHERE id = :collectionId
+AND entity_id = :collectableId;
+
+-- events by collection
+
+getNumberOfEventsByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM event e
+    INNER JOIN collection_entity ce ON e.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (e.name LIKE :query OR e.disambiguation LIKE :query OR e.type LIKE :query)
+  ),
+  0
+) AS count;
+
+getEventsByCollection:
+SELECT e.*
+FROM event e
+INNER JOIN collection_entity ce ON e.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId
+AND (e.name LIKE :query OR e.disambiguation LIKE :query OR e.type LIKE :query)
+ORDER BY e.begin, e.end, e.name
+LIMIT :limit OFFSET :offset;
+
+-- places by collection
+
+getNumberOfPlacesByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM place p
+    INNER JOIN collection_entity ce ON p.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+  ),
+  0
+) AS count;
+
+getPlacesByCollection:
+SELECT p.*
+FROM place p
+INNER JOIN collection_entity ce ON p.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId
+AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+ORDER BY p.name, p.address
+LIMIT :limit OFFSET :offset;

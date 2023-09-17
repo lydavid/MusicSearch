@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class PlaceDao : BaseDao<PlaceRoomModel>() {
+abstract class RoomPlaceDao : BaseDao<PlaceRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM place WHERE id = :placeId")

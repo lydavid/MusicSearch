@@ -24,7 +24,7 @@ import ly.david.data.room.RoomModel
  *  Expects back the number of returned entities.
  */
 @OptIn(ExperimentalPagingApi::class)
-class BrowseEntityRemoteMediator<RM : RoomModel>(
+class BrowseEntityRemoteMediator<RM : Any>(
     private val getRemoteEntityCount: suspend () -> Int?,
     private val getLocalEntityCount: suspend () -> Int,
     private val deleteLocalEntity: suspend () -> Unit,

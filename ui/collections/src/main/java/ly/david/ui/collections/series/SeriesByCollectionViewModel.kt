@@ -7,7 +7,7 @@ import ly.david.data.domain.listitem.toSeriesListItemModel
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.CollectionEntityDao
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.series.SeriesDao
@@ -20,7 +20,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class SeriesByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val collectionEntityDao: CollectionEntityDao,
+    private val collectionEntityDao: RoomCollectionEntityDao,
     private val seriesDao: SeriesDao,
     private val relationDao: RoomRelationDao,
     pagedList: SeriesPagedList,

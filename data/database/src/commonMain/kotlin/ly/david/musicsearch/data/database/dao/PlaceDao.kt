@@ -29,6 +29,15 @@ class PlaceDao(
         }
     }
 
+
+    fun insertAll(places: List<PlaceMusicBrainzModel>) {
+        transacter.transaction {
+            places.forEach { place ->
+                insert(place)
+            }
+        }
+    }
+
     fun getPlace(placeId: String): Place? {
         return transacter.getPlace(placeId).executeAsOneOrNull()
     }

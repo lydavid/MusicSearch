@@ -26,7 +26,7 @@ import ly.david.data.room.RoomModel
  * Meant to be implemented by a ViewModel through delegation.
  * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
-abstract class PagedList<RM : RoomModel, LI : ListItemModel> : IPagedList<LI> {
+abstract class PagedList<RM : Any, LI : ListItemModel> : IPagedList<LI> {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")

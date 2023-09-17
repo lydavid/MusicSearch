@@ -4,7 +4,7 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.CollectionEntityDao
+import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
@@ -15,7 +15,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class ReleaseGroupsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val collectionEntityDao: CollectionEntityDao,
+    private val collectionEntityDao: RoomCollectionEntityDao,
     private val relationDao: RoomRelationDao,
     releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,

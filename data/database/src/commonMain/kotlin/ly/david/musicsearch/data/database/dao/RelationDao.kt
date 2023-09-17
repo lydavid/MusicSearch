@@ -31,22 +31,20 @@ class RelationDao(
     fun getEntityRelationshipsExcludingUrls(
         entityId: String,
         query: String = "%%",
-    ): PagingSource<Int, Mb_relation> {
-        return QueryPagingSource(
-            countQuery = transacter.countEntityRelationshipsExcludingUrls(
-                entityId = entityId,
-                query = query,
-            ),
-            transacter = transacter,
-            context = Dispatchers.IO, // TODO: inject so we can swap out
-        ) { limit, offset ->
-            transacter.getEntityRelationshipsExcludingUrls(
-                entityId = entityId,
-                query = query,
-                limit = limit,
-                offset = offset,
-            )
-        }
+    ): PagingSource<Int, Mb_relation> = QueryPagingSource(
+        countQuery = transacter.countEntityRelationshipsExcludingUrls(
+            entityId = entityId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO, // TODO: inject so we can swap out
+    ) { limit, offset ->
+        transacter.getEntityRelationshipsExcludingUrls(
+            entityId = entityId,
+            query = query,
+            limit = limit,
+            offset = offset,
+        )
     }
 
     fun getEntityUrlRelationships(

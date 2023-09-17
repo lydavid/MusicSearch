@@ -9,11 +9,34 @@ insert:
 INSERT OR REPLACE INTO event_place
 VALUES ?;
 
--- deleteEventsByPlace:
--- DELETE FROM event WHERE id IN (
---   SELECT e.*
---   FROM event e
---   INNER JOIN event_place ep ON e.id = ep.event_id
---   INNER JOIN place p ON p.id = ep.place_id
---   WHERE p.id = :placeId
--- );
+deleteEventsByPlace:
+DELETE FROM event WHERE id IN (
+  SELECT e.id
+  FROM event e
+  INNER JOIN event_place ep ON e.id = ep.event_id
+  INNER JOIN place p ON p.id = ep.place_id
+  WHERE p.id = :placeId
+);
+
+getNumberOfEventsByPlace:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM event e
+    INNER JOIN event_place ep ON e.id = ep.event_id
+    INNER JOIN place p ON p.id = ep.place_id
+    WHERE p.id = :placeId
+    AND (e.name LIKE :query OR e.disambiguation LIKE :query OR e.type LIKE :query)
+  ),
+  0
+) AS count;
+
+getEventsByPlace:
+SELECT e.*
+FROM event e
+INNER JOIN event_place ep ON e.id = ep.event_id
+INNER JOIN place p ON p.id = ep.place_id
+WHERE p.id = :placeId
+AND (e.name LIKE :query OR e.disambiguation LIKE :query OR e.type LIKE :query)
+ORDER BY e.begin, e.end, e.name
+LIMIT :limit OFFSET :offset;

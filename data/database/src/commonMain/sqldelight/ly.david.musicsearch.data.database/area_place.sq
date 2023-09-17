@@ -15,6 +15,9 @@ INNER JOIN area_place ap ON a.id = ap.area_id
 WHERE ap.place_id = :placeId
 LIMIT 1;
 
+
+-- places by area
+
 deletePlacesByArea:
 DELETE FROM place WHERE id IN (
   SELECT p.id
@@ -23,3 +26,26 @@ DELETE FROM place WHERE id IN (
   INNER JOIN area a ON a.id = ap.area_id
   WHERE a.id = :areaId
 );
+
+getNumberOfPlacesByArea:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM place p
+    INNER JOIN area_place ap ON p.id = ap.place_id
+    INNER JOIN area a ON a.id = ap.area_id
+    WHERE a.id = :areaId
+    AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+  ),
+  0
+) AS count;
+
+getPlacesByArea:
+SELECT p.*
+FROM place p
+INNER JOIN area_place ap ON p.id = ap.place_id
+INNER JOIN area a ON a.id = ap.area_id
+WHERE a.id = :areaId
+AND (p.name LIKE :query OR p.disambiguation LIKE :query OR p.type LIKE :query)
+ORDER BY p.name, p.address
+LIMIT :limit OFFSET :offset;

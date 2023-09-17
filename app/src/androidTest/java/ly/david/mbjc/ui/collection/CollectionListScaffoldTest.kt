@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
-import ly.david.data.room.collection.CollectionDao
+import ly.david.data.room.collection.RoomCollectionDao
 import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -37,7 +37,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
 
     private lateinit var navController: NavHostController
 
-    private val collectionDao: CollectionDao by inject()
+    private val collectionDao: RoomCollectionDao by inject()
 
     @Before
     fun setupApp() {

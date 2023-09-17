@@ -28,6 +28,14 @@ class EventDao(
         }
     }
 
+    fun insertAll(events: List<EventMusicBrainzModel>) {
+        transacter.transaction {
+            events.forEach { event ->
+                insert(event)
+            }
+        }
+    }
+
     fun getEvent(eventId: String): Event? {
         return transacter.getEvent(eventId).executeAsOneOrNull()
     }
