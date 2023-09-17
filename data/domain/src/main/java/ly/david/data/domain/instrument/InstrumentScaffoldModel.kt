@@ -1,9 +1,9 @@
 package ly.david.data.domain.instrument
 
-import ly.david.data.core.Instrument
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.instrument.InstrumentWithAllData
+import lydavidmusicsearchdatadatabase.Instrument
+import lydavidmusicsearchdatadatabase.Mb_relation
 
 data class InstrumentScaffoldModel(
     override val id: String,
@@ -12,14 +12,14 @@ data class InstrumentScaffoldModel(
     override val description: String? = null,
     override val type: String? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Instrument
+) : ly.david.data.core.Instrument
 
-internal fun InstrumentWithAllData.toInstrumentListItemModel() =
+internal fun Instrument.toInstrumentListItemModel(urls: List<Mb_relation>) =
     InstrumentScaffoldModel(
-        id = instrument.id,
-        name = instrument.name,
-        disambiguation = instrument.disambiguation,
-        description = instrument.description,
-        type = instrument.type,
-        urls = urls.map { it.relation.toRelationListItemModel() },
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        description = description,
+        type = type,
+        urls = urls.map { it.toRelationListItemModel() },
     )

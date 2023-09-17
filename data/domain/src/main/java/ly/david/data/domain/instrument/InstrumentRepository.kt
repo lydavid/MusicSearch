@@ -5,32 +5,30 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.instrument.RoomInstrumentDao
-import ly.david.data.room.instrument.toInstrumentRoomModel
+import ly.david.musicsearch.data.database.dao.InstrumentDao
 import org.koin.core.annotation.Single
 
 @Single
 class InstrumentRepository(
     private val musicBrainzApi: MusicBrainzApi,
-    private val instrumentDao: RoomInstrumentDao,
+    private val instrumentDao: InstrumentDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupInstrument(instrumentId: String): InstrumentScaffoldModel {
-        val instrumentWithAllData = instrumentDao.getInstrument(instrumentId)
+        val instrument = instrumentDao.getInstrument(instrumentId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(instrumentId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)
-        if (instrumentWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return instrumentWithAllData.toInstrumentListItemModel()
+        if (instrument != null && hasUrlsBeenSavedForEntity) {
+            return instrument.toInstrumentListItemModel(urlRelations)
         }
 
         val instrumentMusicBrainzModel = musicBrainzApi.lookupInstrument(instrumentId)
-        instrumentDao.withTransaction {
-            instrumentDao.insert(instrumentMusicBrainzModel.toInstrumentRoomModel())
-            relationRepository.insertAllUrlRelations(
-                entityId = instrumentId,
-                relationMusicBrainzModels = instrumentMusicBrainzModel.relations,
-            )
-        }
+        instrumentDao.insert(instrumentMusicBrainzModel)
+        relationRepository.insertAllUrlRelations(
+            entityId = instrumentId,
+            relationMusicBrainzModels = instrumentMusicBrainzModel.relations,
+        )
         return lookupInstrument(instrumentId)
     }
 

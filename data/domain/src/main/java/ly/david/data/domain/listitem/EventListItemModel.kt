@@ -3,7 +3,6 @@ package ly.david.data.domain.listitem
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
-import ly.david.data.room.event.EventRoomModel
 import lydavidmusicsearchdatadatabase.Event
 
 data class EventListItemModel(
@@ -40,15 +39,4 @@ fun Event.toEventListItemModel() =
             end = end,
             ended = ended,
         ),
-    )
-
-fun EventRoomModel.toEventListItemModel() =
-    EventListItemModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        time = time,
-        cancelled = cancelled,
-        lifeSpan = lifeSpan?.toLifeSpanUiModel()
     )

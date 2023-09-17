@@ -13,7 +13,6 @@ import ly.david.data.room.history.LookupHistoryDao
 import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 import ly.david.data.room.history.search.SearchHistoryDao
 import ly.david.data.room.image.MbidImageDao
-import ly.david.data.room.instrument.RoomInstrumentDao
 import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.place.RoomPlaceDao
@@ -53,8 +52,6 @@ interface MusicSearchDatabase {
     fun getReleaseCountryDao(): ReleaseCountryDao
 
     fun getPlaceDao(): RoomPlaceDao
-
-    fun getInstrumentDao(): RoomInstrumentDao
 
     fun getLabelDao(): LabelDao
     fun getReleaseLabelDao(): ReleaseLabelDao
