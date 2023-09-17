@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class InstrumentDao : BaseDao<InstrumentRoomModel>() {
+abstract class RoomInstrumentDao : BaseDao<InstrumentRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM instrument WHERE id = :instrumentId")

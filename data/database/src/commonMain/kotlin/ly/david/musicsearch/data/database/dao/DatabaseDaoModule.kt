@@ -13,6 +13,7 @@ val databaseDaoModule = module {
     single { EntityHasUrlsDao(get()) }
     single { EventDao(get()) }
     single { EventPlaceDao(get()) }
+    single { InstrumentDao(get()) }
     single { PlaceDao(get()) }
     single { RelationDao(get()) }
 }

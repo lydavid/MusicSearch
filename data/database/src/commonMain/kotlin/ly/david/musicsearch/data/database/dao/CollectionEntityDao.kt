@@ -8,6 +8,7 @@ import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Collection_entity
 import lydavidmusicsearchdatadatabase.Event
+import lydavidmusicsearchdatadatabase.Instrument
 import lydavidmusicsearchdatadatabase.Place
 
 class CollectionEntityDao(
@@ -102,6 +103,25 @@ class CollectionEntityDao(
         context = Dispatchers.IO,
     ) { limit, offset ->
         transacter.getEventsByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
+        )
+    }
+
+    fun getInstrumentsByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, Instrument> = QueryPagingSource(
+        countQuery = transacter.getNumberOfInstrumentsByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getInstrumentsByCollection(
             collectionId = collectionId,
             query = query,
             limit = limit,

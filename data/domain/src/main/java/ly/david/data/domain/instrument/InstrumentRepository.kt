@@ -5,14 +5,14 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.instrument.InstrumentDao
+import ly.david.data.room.instrument.RoomInstrumentDao
 import ly.david.data.room.instrument.toInstrumentRoomModel
 import org.koin.core.annotation.Single
 
 @Single
 class InstrumentRepository(
     private val musicBrainzApi: MusicBrainzApi,
-    private val instrumentDao: InstrumentDao,
+    private val instrumentDao: RoomInstrumentDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
