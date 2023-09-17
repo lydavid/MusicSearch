@@ -1,14 +1,13 @@
 package ly.david.data.domain.place
 
-import ly.david.data.core.Place
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Mb_area
-import lydavidmusicsearchdatadatabase.Mb_place
+import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Place
 
 data class PlaceScaffoldModel(
     override val id: String,
@@ -20,10 +19,10 @@ data class PlaceScaffoldModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val area: AreaListItemModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Place
+) : ly.david.data.core.Place
 
-internal fun Mb_place.toPlaceScaffoldModel(
-    area: Mb_area?,
+internal fun Place.toPlaceScaffoldModel(
+    area: Area?,
     urls: List<Mb_relation>,
 ) = PlaceScaffoldModel(
     id = id,

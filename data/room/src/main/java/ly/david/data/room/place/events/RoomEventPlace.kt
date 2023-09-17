@@ -11,7 +11,7 @@ import ly.david.data.room.place.PlaceRoomModel
     tableName = "event_place",
     primaryKeys = ["event_id", "place_id"],
 )
-data class EventPlace(
+data class RoomEventPlace(
     @ColumnInfo(name = "event_id")
     val eventId: String,
 

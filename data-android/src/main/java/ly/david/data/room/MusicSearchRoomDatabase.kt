@@ -27,7 +27,7 @@ import ly.david.data.room.instrument.InstrumentRoomModel
 import ly.david.data.room.label.LabelRoomModel
 import ly.david.data.room.label.releases.ReleaseLabel
 import ly.david.data.room.place.PlaceRoomModel
-import ly.david.data.room.place.events.EventPlace
+import ly.david.data.room.place.events.RoomEventPlace
 import ly.david.data.room.recording.RecordingRoomModel
 import ly.david.data.room.recording.releases.RecordingRelease
 import ly.david.data.room.relation.BrowseEntityCount
@@ -74,7 +74,7 @@ const val DATABASE_VERSION = 16
 
         RoomAreaPlace::class,
         ArtistRelease::class,
-        EventPlace::class,
+        RoomEventPlace::class,
         ArtistReleaseGroup::class,
         RecordingWork::class,
         ReleaseCountry::class,

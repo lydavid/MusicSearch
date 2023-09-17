@@ -1,0 +1,19 @@
+CREATE TABLE event_place (
+  event_id TEXT NOT NULL,
+  place_id TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS event_place_pk ON event_place (event_id, place_id);
+
+insert:
+INSERT OR REPLACE INTO event_place
+VALUES ?;
+
+-- deleteEventsByPlace:
+-- DELETE FROM event WHERE id IN (
+--   SELECT e.*
+--   FROM event e
+--   INNER JOIN event_place ep ON e.id = ep.event_id
+--   INNER JOIN place p ON p.id = ep.place_id
+--   WHERE p.id = :placeId
+-- );

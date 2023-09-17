@@ -2,17 +2,17 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Mb_place
+import lydavidmusicsearchdatadatabase.Place
 
 class PlaceDao(
     database: Database,
 ) {
-    private val transacter = database.mb_placeQueries
+    private val transacter = database.placeQueries
 
     fun insert(place: PlaceMusicBrainzModel) {
         place.run {
             transacter.insert(
-                Mb_place(
+                Place(
                     id = id,
                     name = name,
                     disambiguation = disambiguation,
@@ -29,7 +29,7 @@ class PlaceDao(
         }
     }
 
-    fun getPlace(placeId: String): Mb_place? {
+    fun getPlace(placeId: String): Place? {
         return transacter.getPlace(placeId).executeAsOneOrNull()
     }
 }

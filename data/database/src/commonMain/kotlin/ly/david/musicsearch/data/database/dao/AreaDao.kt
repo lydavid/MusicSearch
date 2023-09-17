@@ -2,17 +2,17 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Mb_area
+import lydavidmusicsearchdatadatabase.Area
 
 class AreaDao(
     database: Database,
 ) {
-    private val transacter = database.mb_areaQueries
+    private val transacter = database.areaQueries
 
     fun insert(area: AreaMusicBrainzModel) {
         area.run {
             transacter.insert(
-                Mb_area(
+                Area(
                     id = id,
                     name = name,
                     sort_name = sortName,
@@ -27,7 +27,7 @@ class AreaDao(
         }
     }
 
-    fun getArea(areaId: String): Mb_area? {
+    fun getArea(areaId: String): Area? {
         return transacter.getArea(areaId).executeAsOneOrNull()
     }
 }

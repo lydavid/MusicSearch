@@ -17,7 +17,7 @@ import ly.david.data.room.instrument.InstrumentDao
 import ly.david.data.room.label.LabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.place.PlaceDao
-import ly.david.data.room.place.events.EventPlaceDao
+import ly.david.data.room.place.events.RoomEventPlaceDao
 import ly.david.data.room.recording.RecordingDao
 import ly.david.data.room.recording.releases.RecordingReleaseDao
 import ly.david.data.room.relation.RoomRelationDao
@@ -49,7 +49,7 @@ interface MusicSearchDatabase {
 
     fun getAreaDao(): RoomAreaDao
     fun getAreaPlaceDao(): RoomAreaPlaceDao
-    fun getEventPlaceDao(): EventPlaceDao
+    fun getEventPlaceDao(): RoomEventPlaceDao
     fun getReleaseCountryDao(): ReleaseCountryDao
 
     fun getPlaceDao(): PlaceDao

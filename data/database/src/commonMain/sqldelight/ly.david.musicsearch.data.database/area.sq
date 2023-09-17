@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS mb_area (
+CREATE TABLE IF NOT EXISTS area (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   sort_name TEXT NOT NULL,
@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS mb_area (
 );
 
 insert:
-INSERT OR REPLACE INTO mb_area
+INSERT OR REPLACE INTO area
 VALUES ?;
 
 getArea:
-SELECT * FROM mb_area WHERE id = ?;
+SELECT * FROM area WHERE id = ?;

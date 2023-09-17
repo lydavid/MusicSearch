@@ -8,7 +8,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.event.EventRoomModel
 
 @Dao
-abstract class EventPlaceDao : BaseDao<EventPlace>() {
+abstract class RoomEventPlaceDao : BaseDao<RoomEventPlace>() {
 
     companion object {
         private const val EVENTS_BY_PLACE = """

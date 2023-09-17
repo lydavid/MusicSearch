@@ -1,12 +1,11 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Area
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.release.AreaWithReleaseDate
-import lydavidmusicsearchdatadatabase.Mb_area
+import lydavidmusicsearchdatadatabase.Area
 
 data class AreaListItemModel(
     override val id: String,
@@ -17,7 +16,7 @@ data class AreaListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val countryCodes: List<String>? = null,
     val date: String? = null,
-) : Area, ListItemModel()
+) : ly.david.data.core.Area, ListItemModel()
 
 internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = AreaListItemModel(
     id = id,
@@ -39,7 +38,7 @@ fun AreaRoomModel.toAreaListItemModel() = AreaListItemModel(
     lifeSpan = lifeSpan?.toLifeSpanUiModel(),
 )
 
-fun Mb_area.toAreaListItemModel() = AreaListItemModel(
+fun Area.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,
     sortName = sort_name,

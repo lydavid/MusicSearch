@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS mb_place (
+CREATE TABLE IF NOT EXISTS place (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,
   disambiguation TEXT,
@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS mb_place (
 );
 
 insert:
-INSERT OR REPLACE INTO mb_place
+INSERT OR REPLACE INTO place
 VALUES ?;
 
 getPlace:
-SELECT * FROM mb_place WHERE id = ?;
+SELECT * FROM place WHERE id = ?;

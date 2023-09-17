@@ -10,8 +10,8 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.event.RoomEventDao
 import ly.david.data.room.event.EventRoomModel
 import ly.david.data.room.event.toEventRoomModel
-import ly.david.data.room.place.events.EventPlace
-import ly.david.data.room.place.events.EventPlaceDao
+import ly.david.data.room.place.events.RoomEventPlace
+import ly.david.data.room.place.events.RoomEventPlaceDao
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.common.event.EventsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
@@ -20,7 +20,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class EventsByPlaceViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val eventPlaceDao: EventPlaceDao,
+    private val eventPlaceDao: RoomEventPlaceDao,
     private val eventDao: RoomEventDao,
     private val relationDao: RoomRelationDao,
     pagedList: EventsPagedList,
@@ -41,7 +41,7 @@ internal class EventsByPlaceViewModel(
         eventDao.insertAll(musicBrainzModels.map { it.toEventRoomModel() })
         eventPlaceDao.insertAll(
             musicBrainzModels.map { event ->
-                EventPlace(
+                RoomEventPlace(
                     eventId = event.id,
                     placeId = entityId
                 )

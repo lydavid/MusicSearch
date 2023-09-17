@@ -1,10 +1,9 @@
 package ly.david.data.domain.event
 
-import ly.david.data.core.Event
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Mb_event
+import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Mb_relation
 
 data class EventScaffoldModel(
@@ -16,9 +15,9 @@ data class EventScaffoldModel(
     override val cancelled: Boolean? = null,
     override val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Event
+) : ly.david.data.core.Event
 
-internal fun Mb_event.toEventScaffoldModel(urls: List<Mb_relation>) =
+internal fun Event.toEventScaffoldModel(urls: List<Mb_relation>) =
     EventScaffoldModel(
         id = id,
         name = name,
