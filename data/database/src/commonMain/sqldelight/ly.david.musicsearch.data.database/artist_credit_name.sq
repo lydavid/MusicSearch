@@ -1,0 +1,19 @@
+import kotlin.Int;
+
+CREATE TABLE IF NOT EXISTS `artist_credit_name` (
+  `artist_credit_id` INTEGER NOT NULL,
+  `position` INTEGER AS Int NOT NULL,
+  `artist_id` TEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  `join_phrase` TEXT,
+
+  PRIMARY KEY(`artist_credit_id`, `position`),
+
+  FOREIGN KEY(`artist_credit_id`) REFERENCES `artist_credit`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+insert:
+INSERT OR IGNORE INTO artist_credit_name
+VALUES ?;

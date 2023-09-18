@@ -9,7 +9,7 @@ import ly.david.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.collection.CollectionEntityRoomModel
 import ly.david.data.room.collection.RoomCollectionEntityDao
-import ly.david.data.room.work.WorkDao
+import ly.david.data.room.work.RoomWorkDao
 import ly.david.data.room.work.WorkRoomModel
 import ly.david.data.room.work.toWorkRoomModel
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
@@ -21,7 +21,7 @@ import org.koin.android.annotation.KoinViewModel
 internal class WorksByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: RoomCollectionEntityDao,
-    private val workDao: WorkDao,
+    private val workDao: RoomWorkDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: WorksPagedList,
 ) : BrowseEntitiesByEntityViewModel<WorkRoomModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(

@@ -11,8 +11,8 @@ import ly.david.data.room.RoomModel
 data class RecordingRoomModel(
     @PrimaryKey @ColumnInfo(name = "id") override val id: String,
     @ColumnInfo(name = "title") override val name: String,
-    @ColumnInfo(name = "first_release_date") override val firstReleaseDate: String? = null,
     @ColumnInfo(name = "disambiguation") override val disambiguation: String = "",
+    @ColumnInfo(name = "first_release_date") override val firstReleaseDate: String? = null,
     @ColumnInfo(name = "length") override val length: Int? = null,
     @ColumnInfo(name = "video") override val video: Boolean = false,
     @ColumnInfo(name = "isrcs") val isrcs: List<String>? = null,

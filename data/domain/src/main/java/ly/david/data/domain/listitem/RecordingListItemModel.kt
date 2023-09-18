@@ -1,6 +1,7 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Recording
+import ly.david.data.core.RecordingWithArtistCredits
 import ly.david.data.core.getDisplayNames
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.room.recording.RecordingForListItem
@@ -35,4 +36,14 @@ fun RecordingForListItem.toRecordingListItemModel() = RecordingListItemModel(
     length = recording.length,
     video = recording.video,
     formattedArtistCredits = artistCreditNames
+)
+
+fun RecordingWithArtistCredits.toRecordingListItemModel() = RecordingListItemModel(
+    id = id,
+    name = name,
+    firstReleaseDate = firstReleaseDate,
+    disambiguation = disambiguation,
+    length = length,
+    video = video ?: false,
+    formattedArtistCredits = name
 )

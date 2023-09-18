@@ -17,7 +17,7 @@ import ly.david.data.room.label.RoomLabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.place.RoomPlaceDao
 import ly.david.data.room.place.events.RoomEventPlaceDao
-import ly.david.data.room.recording.RecordingDao
+import ly.david.data.room.recording.RoomRecordingDao
 import ly.david.data.room.recording.releases.RecordingReleaseDao
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.release.ReleaseDao
@@ -26,8 +26,8 @@ import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
 import ly.david.data.room.series.SeriesDao
-import ly.david.data.room.work.WorkDao
-import ly.david.data.room.work.recordings.RecordingWorkDao
+import ly.david.data.room.work.RoomWorkDao
+import ly.david.data.room.work.recordings.RoomRecordingWorkDao
 
 interface MusicSearchDatabase {
     fun getArtistDao(): RoomArtistDao
@@ -40,11 +40,11 @@ interface MusicSearchDatabase {
     fun getMediumDao(): MediumDao
     fun getTrackDao(): TrackDao
 
-    fun getRecordingDao(): RecordingDao
+    fun getRecordingDao(): RoomRecordingDao
     fun getRecordingReleaseDao(): RecordingReleaseDao
 
-    fun getWorkDao(): WorkDao
-    fun getRecordingWorkDao(): RecordingWorkDao
+    fun getWorkDao(): RoomWorkDao
+    fun getRecordingWorkDao(): RoomRecordingWorkDao
 
     fun getAreaDao(): RoomAreaDao
     fun getAreaPlaceDao(): RoomAreaPlaceDao

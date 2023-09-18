@@ -8,7 +8,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class WorkDao : BaseDao<WorkRoomModel>() {
+abstract class RoomWorkDao : BaseDao<WorkRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM work WHERE id = :workId")

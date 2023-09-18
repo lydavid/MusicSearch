@@ -1,13 +1,12 @@
 package ly.david.data.domain.recordng
 
-import ly.david.data.core.Recording
 import ly.david.data.domain.artist.ArtistCreditUiModel
-import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModels
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.data.room.recording.RecordingWithAllData
+import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Recording
 
 data class RecordingScaffoldModel(
     override val id: String,
@@ -19,20 +18,22 @@ data class RecordingScaffoldModel(
     val isrcs: List<String>? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
-) : Recording
+) : ly.david.data.core.Recording
 
-internal fun RecordingWithAllData.toRecordingScaffoldModel() = RecordingScaffoldModel(
-    id = recording.id,
-    name = recording.name,
-    firstReleaseDate = recording.firstReleaseDate,
-    disambiguation = recording.disambiguation,
-    length = recording.length,
-    video = recording.video,
-    isrcs = recording.isrcs,
-    artistCredits = artistCreditNamesWithEntities.map {
-        it.artistCreditNameRoomModel.toArtistCreditUiModel()
-    },
-    urls = urls.map { it.relation.toRelationListItemModel() },
+internal fun Recording.toRecordingScaffoldModel(
+    urls: List<Mb_relation>,
+) = RecordingScaffoldModel(
+    id = id,
+    name = name,
+    firstReleaseDate = first_release_date,
+    disambiguation = disambiguation,
+    length = length,
+    video = video,
+    isrcs = isrcs,
+//    artistCredits = artistCreditNamesWithEntities.map {
+//        it.artistCreditNameRoomModel.toArtistCreditUiModel()
+//    },
+    urls = urls.map { it.toRelationListItemModel() },
 )
 
 internal fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(

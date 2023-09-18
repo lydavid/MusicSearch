@@ -5,34 +5,42 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.recording.RecordingDao
+import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
 import org.koin.core.annotation.Single
 
 @Single
 class RecordingRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val recordingDao: RecordingDao,
+    private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
-        val recordingWithAllData = recordingDao.getRecording(recordingId)
+        val recording = recordingDao.getRecording(recordingId)
+        // TODO: get from dao
+        val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>
+        val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(recordingId)
-        if (recordingWithAllData != null &&
-            recordingWithAllData.artistCreditNamesWithEntities.isNotEmpty() &&
+        if (recording != null &&
+//            recording.artistCreditNamesWithEntities.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
-            return recordingWithAllData.toRecordingScaffoldModel()
+            return recording.toRecordingScaffoldModel(listOf())
         }
 
         val recordingMusicBrainzModel = musicBrainzApi.lookupRecording(recordingId)
-        recordingDao.withTransaction {
-            recordingDao.insertRecordingWithArtistCredits(recordingMusicBrainzModel)
-            relationRepository.insertAllUrlRelations(
-                entityId = recordingId,
-                relationMusicBrainzModels = recordingMusicBrainzModel.relations,
-            )
-        }
+        recordingDao.insert(recordingMusicBrainzModel)
+        artistCreditDao.insertArtistCredits(
+            entityId = recordingId,
+            artistCredits = recordingMusicBrainzModel.artistCredits,
+        )
+        relationRepository.insertAllUrlRelations(
+            entityId = recordingId,
+            relationMusicBrainzModels = recordingMusicBrainzModel.relations,
+        )
         return lookupRecording(recordingId)
     }
 

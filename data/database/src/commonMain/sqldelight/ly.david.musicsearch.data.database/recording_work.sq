@@ -1,0 +1,56 @@
+CREATE TABLE recording_work (
+  recording_id TEXT NOT NULL,
+  work_id TEXT NOT NULL,
+
+  PRIMARY KEY (recording_id, work_id)
+);
+
+insert:
+INSERT OR REPLACE INTO recording_work
+VALUES ?;
+
+deleteRecordingsByWork:
+DELETE FROM recording WHERE id IN (
+  SELECT e.id
+  FROM recording e
+  INNER JOIN recording_work ep ON e.id = ep.recording_id
+  INNER JOIN work p ON p.id = ep.work_id
+  WHERE p.id = :workId
+);
+
+getNumberOfRecordingsByWork:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM recording r
+    INNER JOIN recording_work rw ON r.id = rw.recording_id
+    INNER JOIN work w ON w.id = rw.work_id
+    LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE w.id = :workId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.first_release_date LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getRecordingsByWork:
+SELECT r.*, ac.name
+FROM recording r
+INNER JOIN recording_work rw ON r.id = rw.recording_id
+INNER JOIN work w ON w.id = rw.work_id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+WHERE w.id = :workId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.first_release_date LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY r.first_release_date, r.name
+LIMIT :limit OFFSET :offset;

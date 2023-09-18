@@ -5,7 +5,8 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.work.WorkDao
+import ly.david.data.room.work.RoomWorkDao
+import ly.david.data.room.work.WorkWithAllData
 import ly.david.data.room.work.toWorkAttributeRoomModel
 import ly.david.data.room.work.toWorkRoomModel
 import org.koin.core.annotation.Single
@@ -13,14 +14,14 @@ import org.koin.core.annotation.Single
 @Single
 class WorkRepository(
     private val musicBrainzApi: MusicBrainzApi,
-    private val workDao: WorkDao,
+    private val workDao: RoomWorkDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupWork(
         workId: String,
     ): WorkScaffoldModel {
-        val workWithAllData = workDao.getWork(workId)
+        val workWithAllData: WorkWithAllData? = workDao.getWork(workId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(workId)
         if (workWithAllData != null && hasUrlsBeenSavedForEntity) {
             return workWithAllData.toWorkScaffoldModel()

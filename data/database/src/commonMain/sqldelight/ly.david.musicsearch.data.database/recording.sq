@@ -1,0 +1,21 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import kotlin.String;
+import kotlinx.collections.immutable.ImmutableList;
+
+CREATE TABLE IF NOT EXISTS recording (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT NOT NULL,
+  first_release_date TEXT,
+  length INTEGER AS Int,
+  video INTEGER AS Boolean NOT NULL,
+  isrcs TEXT AS ImmutableList<String>
+);
+
+insert:
+INSERT OR REPLACE INTO recording
+VALUES ?;
+
+getRecording:
+SELECT * FROM recording WHERE id = ?;

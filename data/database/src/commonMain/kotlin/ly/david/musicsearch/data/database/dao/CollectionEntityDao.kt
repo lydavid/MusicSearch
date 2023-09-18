@@ -3,7 +3,9 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import ly.david.data.core.RecordingWithArtistCredits
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToRecordingWithArtistCredits
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Collection_entity
@@ -165,6 +167,26 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+        )
+    }
+
+    fun getRecordingsByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, RecordingWithArtistCredits> = QueryPagingSource(
+        countQuery = transacter.getNumberOfRecordingsByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getRecordingsByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
+            mapper = ::mapToRecordingWithArtistCredits,
         )
     }
 }

@@ -1,18 +1,16 @@
 package ly.david.mbjc.ui.work.recordings
 
 import androidx.paging.PagingSource
+import ly.david.data.core.RecordingWithArtistCredits
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.recording.RecordingDao
-import ly.david.data.room.recording.RecordingForListItem
-import ly.david.data.room.recording.toRoomModel
-import ly.david.data.room.work.recordings.RecordingWork
-import ly.david.data.room.work.recordings.RecordingWorkDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.database.dao.RecordingWorkDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -24,7 +22,7 @@ internal class RecordingsByWorkViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
-) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
+) : BrowseEntitiesByEntityViewModel<RecordingWithArtistCredits, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList
@@ -41,14 +39,10 @@ internal class RecordingsByWorkViewModel(
         entityId: String,
         musicBrainzModels: List<RecordingMusicBrainzModel>,
     ) {
-        recordingDao.insertAll(musicBrainzModels.map { it.toRoomModel() })
+        recordingDao.insertAll(musicBrainzModels)
         recordingWorkDao.insertAll(
-            musicBrainzModels.map { recording ->
-                RecordingWork(
-                    recordingId = recording.id,
-                    workId = entityId
-                )
-            }
+            workId = entityId,
+            recordingIds = musicBrainzModels.map { recording -> recording.id },
         )
     }
 
@@ -60,19 +54,13 @@ internal class RecordingsByWorkViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, RecordingForListItem> = when {
-        query.isEmpty() -> {
-            recordingWorkDao.getRecordingsByWork(entityId)
-        }
-        else -> {
-            recordingWorkDao.getRecordingsByWorkFiltered(
-                workId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, RecordingWithArtistCredits> =
+        recordingWorkDao.getRecordingsByWork(
+            workId = entityId,
+            query = "%$query%"
+        )
 
-    override fun transformRoomToListItemModel(roomModel: RecordingForListItem): RecordingListItemModel {
+    override fun transformRoomToListItemModel(roomModel: RecordingWithArtistCredits): RecordingListItemModel {
         return roomModel.toRecordingListItemModel()
     }
 }

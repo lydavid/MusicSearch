@@ -4,6 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.DatabaseView
 import androidx.room.Embedded
 
+// TODO: continue using a view or no?
+//  may not need this if we're querying for this separately
+//  cause rec/rel/rg joins with artist_credit to get its name
+//  whereas this will give us the artist_credit_name.artist_id
 @DatabaseView(
     value = """
     SELECT acr.entity_id, acn.*
