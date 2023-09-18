@@ -9,4 +9,4 @@ data class RecordingWithArtistCredits(
     override val video: Boolean?,
     val isrcs: List<String>? = null,
     val formattedArtistCreditNames: String,
-): Recording
+) : Recording

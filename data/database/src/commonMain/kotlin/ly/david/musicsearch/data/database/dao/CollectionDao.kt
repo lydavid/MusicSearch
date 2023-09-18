@@ -71,5 +71,4 @@ class CollectionDao(
     }
 
     // TODO: handle 1-to-many mapping in kotlin in repository
-
 }

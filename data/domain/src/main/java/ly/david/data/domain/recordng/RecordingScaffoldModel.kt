@@ -1,6 +1,7 @@
 package ly.david.data.domain.recordng
 
 import ly.david.data.domain.artist.ArtistCreditUiModel
+import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
@@ -31,11 +32,9 @@ internal fun Recording.toRecordingScaffoldModel(
     video = video,
     isrcs = isrcs,
     artistCredits = artistCreditNames.map { artistCreditName ->
-        ArtistCreditUiModel(
-            artistId = artistCreditName.artist_id,
-            name = artistCreditName.name,
-            joinPhrase = artistCreditName.join_phrase,
-        )
+        artistCreditName.toArtistCreditUiModel()
     },
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls.map { url ->
+        url.toRelationListItemModel()
+    },
 )
