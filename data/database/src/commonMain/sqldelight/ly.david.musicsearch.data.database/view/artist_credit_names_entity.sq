@@ -1,5 +1,0 @@
-CREATE VIEW artist_credit_names_entity AS
-SELECT acr.entity_id, acn.*
-FROM artist_credit_entity acr
-INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id;

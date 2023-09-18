@@ -1,10 +1,9 @@
 package ly.david.data.domain.recordng
 
 import ly.david.data.domain.artist.ArtistCreditUiModel
-import ly.david.data.domain.artist.toArtistCreditUiModels
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.musicbrainz.RecordingMusicBrainzModel
+import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Mb_relation
 import lydavidmusicsearchdatadatabase.Recording
 
@@ -21,6 +20,7 @@ data class RecordingScaffoldModel(
 ) : ly.david.data.core.Recording
 
 internal fun Recording.toRecordingScaffoldModel(
+    artistCreditNames: List<Artist_credit_name>,
     urls: List<Mb_relation>,
 ) = RecordingScaffoldModel(
     id = id,
@@ -30,19 +30,12 @@ internal fun Recording.toRecordingScaffoldModel(
     length = length,
     video = video,
     isrcs = isrcs,
-//    artistCredits = artistCreditNamesWithEntities.map {
-//        it.artistCreditNameRoomModel.toArtistCreditUiModel()
-//    },
+    artistCredits = artistCreditNames.map { artistCreditName ->
+        ArtistCreditUiModel(
+            artistId = artistCreditName.artist_id,
+            name = artistCreditName.name,
+            joinPhrase = artistCreditName.join_phrase,
+        )
+    },
     urls = urls.map { it.toRelationListItemModel() },
-)
-
-internal fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(
-    id = id,
-    name = name,
-    firstReleaseDate = firstReleaseDate,
-    disambiguation = disambiguation,
-    length = length,
-    video = video ?: false,
-    isrcs = isrcs,
-    artistCredits = artistCredits.toArtistCreditUiModels()
 )

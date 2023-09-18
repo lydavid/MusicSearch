@@ -17,3 +17,11 @@ CREATE TABLE IF NOT EXISTS `artist_credit_name` (
 insert:
 INSERT OR IGNORE INTO artist_credit_name
 VALUES ?;
+
+getArtistCreditNamesForEntity:
+SELECT acn.*
+FROM artist_credit_entity ace
+INNER JOIN artist_credit ac ON ac.id = ace.artist_credit_id
+INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id
+WHERE ace.entity_id = :entityId
+ORDER BY acn.position;

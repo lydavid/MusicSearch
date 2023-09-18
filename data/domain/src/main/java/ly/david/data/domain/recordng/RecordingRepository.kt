@@ -5,7 +5,6 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.artist.credit.ArtistCreditNamesWithEntity
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import org.koin.core.annotation.Single
@@ -20,15 +19,17 @@ class RecordingRepository(
 
     suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
         val recording = recordingDao.getRecording(recordingId)
-        // TODO: get from dao
-        val artistCreditNamesWithEntities: List<ArtistCreditNamesWithEntity>
+        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(recordingId)
         val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(recordingId)
         if (recording != null &&
-//            recording.artistCreditNamesWithEntities.isNotEmpty() &&
+            artistCreditNames.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
-            return recording.toRecordingScaffoldModel(listOf())
+            return recording.toRecordingScaffoldModel(
+                artistCreditNames = artistCreditNames,
+                urls = urlRelations,
+            )
         }
 
         val recordingMusicBrainzModel = musicBrainzApi.lookupRecording(recordingId)

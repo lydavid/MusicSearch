@@ -36,6 +36,11 @@ class ArtistCreditDao(
         }
     }
 
+    fun getArtistCreditNamesForEntity(
+        entityId: String,
+    ): List<Artist_credit_name> =
+        artistCreditNameQueries.getArtistCreditNamesForEntity(entityId).executeAsList()
+
     private fun insertArtistCredit(name: String): Long {
         artistCreditQueries.insert(
             id = 0,
