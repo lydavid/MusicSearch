@@ -5,6 +5,7 @@ import app.cash.sqldelight.db.SqlDriver
 import ly.david.musicsearch.data.database.adapter.MusicBrainzEntityStringColumnAdapter
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 import lydavidmusicsearchdatadatabase.Collection
+import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Mb_relation
 
 fun createDatabase(driver: SqlDriver): Database {
@@ -22,6 +23,9 @@ fun createDatabase(driver: SqlDriver): Database {
         collectionAdapter = Collection.Adapter(
             entity_countAdapter = IntColumnAdapter,
             entityAdapter = MusicBrainzEntityStringColumnAdapter,
+        ),
+        labelAdapter = Label.Adapter(
+            label_codeAdapter = IntColumnAdapter,
         )
     )
 }

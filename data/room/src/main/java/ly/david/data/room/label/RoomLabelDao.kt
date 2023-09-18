@@ -6,7 +6,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class LabelDao : BaseDao<LabelRoomModel>() {
+abstract class RoomLabelDao : BaseDao<LabelRoomModel>() {
 
     @Transaction
     @Query("SELECT * FROM label WHERE id = :labelId")

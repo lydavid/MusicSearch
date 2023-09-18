@@ -1,5 +1,3 @@
-import kotlin.Boolean;
-
 CREATE TABLE IF NOT EXISTS instrument (
   id TEXT PRIMARY KEY NOT NULL,
   name TEXT NOT NULL,

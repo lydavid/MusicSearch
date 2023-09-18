@@ -14,6 +14,7 @@ val databaseDaoModule = module {
     single { EventDao(get()) }
     single { EventPlaceDao(get()) }
     single { InstrumentDao(get()) }
+    single { LabelDao(get()) }
     single { PlaceDao(get()) }
     single { RelationDao(get()) }
 }

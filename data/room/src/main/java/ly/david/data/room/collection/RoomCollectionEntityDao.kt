@@ -7,7 +7,6 @@ import ly.david.data.room.BaseDao
 @Dao
 abstract class RoomCollectionEntityDao :
     BaseDao<CollectionEntityRoomModel>(),
-    LabelsByCollectionDao,
     RecordingsByCollectionDao,
     ReleasesByCollectionDao,
     ReleaseGroupsByCollectionDao,

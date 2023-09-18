@@ -27,7 +27,7 @@ internal class ReleaseLabelDaoTest : KoinTest {
 
     private val releaseLabelDao: ReleaseLabelDao by inject()
     private val releaseDao: ReleaseDao by inject()
-    private val labelDao: LabelDao by inject()
+    private val labelDao: RoomLabelDao by inject()
 
     @Before
     fun setUp() {

@@ -12,7 +12,7 @@ import ly.david.data.room.area.getAreaCountryCodes
 import ly.david.data.room.area.releases.ReleaseCountryDao
 import ly.david.data.room.area.releases.getReleaseCountries
 import ly.david.data.room.area.toAreaRoomModel
-import ly.david.data.room.label.LabelDao
+import ly.david.data.room.label.RoomLabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.label.releases.toReleaseLabels
 import ly.david.data.room.label.toRoomModels
@@ -35,7 +35,7 @@ class ReleaseRepository(
     private val trackDao: TrackDao,
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: RoomAreaDao,
-    private val labelDao: LabelDao,
+    private val labelDao: RoomLabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {

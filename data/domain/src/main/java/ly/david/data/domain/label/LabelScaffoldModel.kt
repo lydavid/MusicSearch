@@ -1,9 +1,9 @@
 package ly.david.data.domain.label
 
-import ly.david.data.core.Label
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.label.LabelWithAllData
+import lydavidmusicsearchdatadatabase.Label
+import lydavidmusicsearchdatadatabase.Mb_relation
 
 data class LabelScaffoldModel(
     override val id: String,
@@ -12,14 +12,15 @@ data class LabelScaffoldModel(
     override val type: String? = null,
     override val labelCode: Int? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Label
+) : ly.david.data.core.Label
 
-internal fun LabelWithAllData.toLabelScaffoldModel() =
-    LabelScaffoldModel(
-        id = label.id,
-        name = label.name,
-        disambiguation = label.disambiguation,
-        type = label.type,
-        labelCode = label.labelCode,
-        urls = urls.map { it.relation.toRelationListItemModel() },
-    )
+internal fun Label.toLabelScaffoldModel(
+    urls: List<Mb_relation>,
+) = LabelScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    labelCode = label_code,
+    urls = urls.map { it.toRelationListItemModel() },
+)
