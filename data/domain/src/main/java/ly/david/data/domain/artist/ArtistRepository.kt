@@ -5,6 +5,7 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.data.room.artist.ArtistWithAllData
 import ly.david.data.room.artist.RoomArtistDao
 import ly.david.data.room.artist.toArtistRoomModel
 import org.koin.core.annotation.Single
@@ -17,7 +18,7 @@ class ArtistRepository(
 ) : RelationsListRepository {
 
     suspend fun lookupArtist(artistId: String): ArtistScaffoldModel {
-        val artistWithAllData = artistDao.getArtist(artistId)
+        val artistWithAllData: ArtistWithAllData? = artistDao.getArtist(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
         if (artistWithAllData != null && hasUrlsBeenSavedForEntity) {
             return artistWithAllData.toArtistScaffoldModel()

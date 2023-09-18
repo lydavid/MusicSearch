@@ -15,3 +15,8 @@ insert:
 INSERT OR IGNORE INTO work_attribute
 VALUES ?;
 
+getWorkAttributesForWork:
+SELECT work_attribute.*
+FROM work_attribute
+INNER JOIN work ON work_attribute.work_id = work.id
+WHERE work.id = :workId;

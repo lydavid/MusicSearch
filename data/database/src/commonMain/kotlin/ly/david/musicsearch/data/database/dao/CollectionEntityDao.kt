@@ -13,11 +13,12 @@ import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Instrument
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Place
+import lydavidmusicsearchdatadatabase.Work
 
 class CollectionEntityDao(
     database: Database,
-) {
-    private val transacter = database.collection_entityQueries
+) : EntityDao {
+    override val transacter = database.collection_entityQueries
 
     fun insert(
         collectionId: String,
@@ -187,6 +188,25 @@ class CollectionEntityDao(
             limit = limit,
             offset = offset,
             mapper = ::mapToRecordingWithArtistCredits,
+        )
+    }
+
+    fun getWorksByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, Work> = QueryPagingSource(
+        countQuery = transacter.getNumberOfWorksByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getWorksByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
         )
     }
 }

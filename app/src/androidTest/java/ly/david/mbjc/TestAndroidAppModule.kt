@@ -15,7 +15,7 @@ import ly.david.mbjc.di.testDatabaseModule
 import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testNetworkModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
-import ly.david.musicsearch.data.database.dao.databaseDaoModule
+import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.ui.collections.CollectionUiModule

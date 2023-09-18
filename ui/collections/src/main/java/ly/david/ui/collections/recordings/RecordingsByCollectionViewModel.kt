@@ -31,7 +31,7 @@ internal class RecordingsByCollectionViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
         return musicBrainzApi.browseRecordingsByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -39,16 +39,20 @@ internal class RecordingsByCollectionViewModel(
         entityId: String,
         musicBrainzModels: List<RecordingMusicBrainzModel>,
     ) {
-        recordingDao.insertAll(musicBrainzModels)
-        collectionEntityDao.insertAll(
-            entityId,
-            musicBrainzModels.map { recording -> recording.id },
-        )
+        collectionEntityDao.withTransaction {
+            recordingDao.insertAll(musicBrainzModels)
+            collectionEntityDao.insertAll(
+                collectionId = entityId,
+                entityIds = musicBrainzModels.map { recording -> recording.id },
+            )
+        }
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        collectionEntityDao.deleteAllFromCollection(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(
@@ -57,7 +61,7 @@ internal class RecordingsByCollectionViewModel(
     ): PagingSource<Int, RecordingWithArtistCredits> =
         collectionEntityDao.getRecordingsByCollection(
             collectionId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     override fun transformRoomToListItemModel(roomModel: RecordingWithArtistCredits): RecordingListItemModel {

@@ -31,10 +31,6 @@ internal fun Recording.toRecordingScaffoldModel(
     length = length,
     video = video,
     isrcs = isrcs,
-    artistCredits = artistCreditNames.map { artistCreditName ->
-        artistCreditName.toArtistCreditUiModel()
-    },
-    urls = urls.map { url ->
-        url.toRelationListItemModel()
-    },
+    artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+    urls = urls.map { it.toRelationListItemModel() },
 )

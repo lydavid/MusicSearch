@@ -1,9 +1,10 @@
 package ly.david.data.domain.work
 
-import ly.david.data.core.Work
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.work.WorkWithAllData
+import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Work
+import lydavidmusicsearchdatadatabase.Work_attribute
 
 data class WorkScaffoldModel(
     override val id: String,
@@ -14,16 +15,18 @@ data class WorkScaffoldModel(
     override val iswcs: List<String>? = null,
     val attributes: List<WorkAttributeUiModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
-) : Work
+) : ly.david.data.core.Work
 
-internal fun WorkWithAllData.toWorkScaffoldModel() =
-    WorkScaffoldModel(
-        id = work.id,
-        name = work.name,
-        disambiguation = work.disambiguation,
-        type = work.type,
-        language = work.language,
-        iswcs = work.iswcs,
-        attributes = attributes.map { it.toWorkAttributeUiModel() },
-        urls = urls.map { it.relation.toRelationListItemModel() },
-    )
+internal fun Work.toWorkScaffoldModel(
+    workAttributes: List<Work_attribute>,
+    urls: List<Mb_relation>,
+) = WorkScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    language = language,
+    iswcs = iswcs,
+    attributes = workAttributes.map { it.toWorkAttributeUiModel() },
+    urls = urls.map { it.toRelationListItemModel() },
+)
