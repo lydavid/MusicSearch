@@ -32,6 +32,9 @@ fun Project.configureDetekt() {
     }
 
     tasks.withType<Detekt>().configureEach {
+        exclude {
+            it.file.absolutePath.contains("generated")
+        }
         reports {
             // observe findings in your browser with structure and code snippets
             html.required.set(true)
