@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS instrument (
 );
 
 insert:
-INSERT OR REPLACE INTO instrument
+INSERT OR IGNORE INTO instrument
 VALUES ?;
 
 getInstrument:

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS area (
 );
 
 insert:
-INSERT OR REPLACE INTO area
+INSERT OR IGNORE INTO area
 VALUES ?;
 
 getArea:

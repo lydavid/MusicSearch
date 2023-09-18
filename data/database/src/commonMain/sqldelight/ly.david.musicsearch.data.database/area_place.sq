@@ -6,7 +6,7 @@ CREATE TABLE area_place (
 CREATE INDEX IF NOT EXISTS area_place_pk ON area_place (area_id, place_id);
 
 insert:
-INSERT OR REPLACE INTO area_place
+INSERT OR IGNORE INTO area_place
 VALUES ?;
 
 getAreaByPlace:

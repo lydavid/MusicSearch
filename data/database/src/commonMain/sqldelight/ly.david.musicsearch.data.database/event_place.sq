@@ -6,7 +6,7 @@ CREATE TABLE event_place (
 CREATE INDEX IF NOT EXISTS event_place_pk ON event_place (event_id, place_id);
 
 insert:
-INSERT OR REPLACE INTO event_place
+INSERT OR IGNORE INTO event_place
 VALUES ?;
 
 deleteEventsByPlace:

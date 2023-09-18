@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS label (
 );
 
 insert:
-INSERT OR REPLACE INTO label
+INSERT OR IGNORE INTO label
 VALUES ?;
 
 getLabel:

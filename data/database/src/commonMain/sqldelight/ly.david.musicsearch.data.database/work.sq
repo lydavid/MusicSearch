@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS work (
 );
 
 insert:
-INSERT OR REPLACE INTO work
+INSERT OR IGNORE INTO work
 VALUES ?;
 
 getWork:

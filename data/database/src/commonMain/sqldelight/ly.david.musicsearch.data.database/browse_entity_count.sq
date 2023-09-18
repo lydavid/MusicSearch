@@ -28,7 +28,7 @@ CREATE TABLE browse_entity_count (
 CREATE INDEX IF NOT EXISTS browse_entity_count_pk ON browse_entity_count (entity_id, browse_entity);
 
 insert:
-INSERT OR REPLACE INTO browse_entity_count
+INSERT OR IGNORE INTO browse_entity_count
 VALUES ?;
 
 getBrowseEntityCount:

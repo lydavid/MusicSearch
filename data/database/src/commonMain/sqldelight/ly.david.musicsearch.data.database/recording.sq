@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS recording (
 );
 
 insert:
-INSERT OR REPLACE INTO recording
+INSERT OR IGNORE INTO recording
 VALUES ?;
 
 getRecording:

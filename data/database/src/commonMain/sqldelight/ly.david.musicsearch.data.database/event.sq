@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS event (
 );
 
 insert:
-INSERT OR REPLACE INTO event
+INSERT OR IGNORE INTO event
 VALUES ?;
 
 getEvent:

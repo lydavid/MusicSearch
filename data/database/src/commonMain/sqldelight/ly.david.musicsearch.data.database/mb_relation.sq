@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS mb_relation (
 CREATE INDEX IF NOT EXISTS relation_pk ON mb_relation (entity_id, linked_entity_id, `order`);
 
 insert:
-INSERT OR REPLACE INTO mb_relation (
+INSERT OR IGNORE INTO mb_relation (
   `entity_id`,
   `linked_entity_id`,
   `linked_entity`,
@@ -40,7 +40,7 @@ VALUES (
 );
 
 insertEntity:
-INSERT OR REPLACE INTO mb_relation
+INSERT OR IGNORE INTO mb_relation
 VALUES ?;
 
 countEntityRelationshipsExcludingUrls:

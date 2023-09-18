@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS artist (
 );
 
 insert:
-INSERT OR REPLACE INTO artist
+INSERT OR IGNORE INTO artist
 VALUES ?;
 
 getArtist:

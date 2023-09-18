@@ -6,7 +6,7 @@ CREATE TABLE recording_work (
 );
 
 insert:
-INSERT OR REPLACE INTO recording_work
+INSERT OR IGNORE INTO recording_work
 VALUES ?;
 
 deleteRecordingsByWork:

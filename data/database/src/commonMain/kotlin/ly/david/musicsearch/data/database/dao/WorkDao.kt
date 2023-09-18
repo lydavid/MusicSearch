@@ -4,11 +4,12 @@ import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Work
+import lydavidmusicsearchdatadatabase.WorkQueries
 
 class WorkDao(
     database: Database,
-) {
-    private val transacter = database.workQueries
+) : EntityDao {
+    override val transacter: WorkQueries = database.workQueries
 
     fun insert(work: WorkMusicBrainzModel) {
         work.run {
