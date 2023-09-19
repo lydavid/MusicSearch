@@ -5,8 +5,7 @@ import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.series.SeriesDao
-import ly.david.data.room.series.toSeriesRoomModel
+import ly.david.musicsearch.data.database.dao.SeriesDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -17,15 +16,18 @@ class SeriesRepository(
 ) : RelationsListRepository {
 
     suspend fun lookupSeries(seriesId: String): SeriesScaffoldModel {
-        val seriesWithAllData = seriesDao.getSeries(seriesId)
+        val series = seriesDao.getSeries(seriesId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(seriesId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(seriesId)
-        if (seriesWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return seriesWithAllData.toSeriesScaffoldModel()
+        if (series != null && hasUrlsBeenSavedForEntity) {
+            return series.toSeriesScaffoldModel(
+                urls = urlRelations,
+            )
         }
 
         val seriesMusicBrainzModel = musicBrainzApi.lookupSeries(seriesId)
         seriesDao.withTransaction {
-            seriesDao.insert(seriesMusicBrainzModel.toSeriesRoomModel())
+            seriesDao.insert(seriesMusicBrainzModel)
             relationRepository.insertAllUrlRelations(
                 entityId = seriesId,
                 relationMusicBrainzModels = seriesMusicBrainzModel.relations,

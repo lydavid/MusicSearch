@@ -284,6 +284,38 @@ ORDER BY r.first_release_date, r.name
 LIMIT :limit OFFSET :offset;
 
 
+-- series by collection
+
+getNumberOfSeriesByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM series s
+    INNER JOIN collection_entity ce ON s.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    WHERE c.id = :collectionId
+    AND (
+      s.name LIKE :query
+      OR s.disambiguation LIKE :query
+      OR s.type LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getSeriesByCollection:
+SELECT s.*
+FROM series s
+INNER JOIN collection_entity ce ON s.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+WHERE c.id = :collectionId
+AND (
+  s.name LIKE :query
+  OR s.disambiguation LIKE :query
+  OR s.type LIKE :query
+)
+LIMIT :limit OFFSET :offset;
+
 
 -- works by collection
 

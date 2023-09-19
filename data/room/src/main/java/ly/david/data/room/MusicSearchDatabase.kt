@@ -24,7 +24,6 @@ import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
-import ly.david.data.room.series.SeriesDao
 import ly.david.data.room.work.recordings.RoomRecordingWorkDao
 
 interface MusicSearchDatabase {
@@ -53,7 +52,6 @@ interface MusicSearchDatabase {
     fun getReleaseLabelDao(): ReleaseLabelDao
 
     fun getEventDao(): RoomEventDao
-    fun getSeriesDao(): SeriesDao
 
     fun getRelationDao(): RoomRelationDao
     fun getLookupHistoryDao(): LookupHistoryDao

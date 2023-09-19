@@ -13,6 +13,7 @@ import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Instrument
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Place
+import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.Work
 
 class CollectionEntityDao(
@@ -188,6 +189,25 @@ class CollectionEntityDao(
             limit = limit,
             offset = offset,
             mapper = ::mapToRecordingWithArtistCredits,
+        )
+    }
+
+    fun getSeriesByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, Series> = QueryPagingSource(
+        countQuery = transacter.getNumberOfSeriesByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getSeriesByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
         )
     }
 

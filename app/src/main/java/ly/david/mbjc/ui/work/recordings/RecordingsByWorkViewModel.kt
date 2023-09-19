@@ -31,7 +31,7 @@ internal class RecordingsByWorkViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
         return musicBrainzApi.browseRecordingsByWork(
             workId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -39,16 +39,20 @@ internal class RecordingsByWorkViewModel(
         entityId: String,
         musicBrainzModels: List<RecordingMusicBrainzModel>,
     ) {
-        recordingDao.insertAll(musicBrainzModels)
-        recordingWorkDao.insertAll(
-            workId = entityId,
-            recordingIds = musicBrainzModels.map { recording -> recording.id },
-        )
+        recordingWorkDao.withTransaction {
+            recordingDao.insertAll(musicBrainzModels)
+            recordingWorkDao.insertAll(
+                workId = entityId,
+                recordingIds = musicBrainzModels.map { recording -> recording.id },
+            )
+        }
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        recordingWorkDao.deleteRecordingsByWork(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+        recordingWorkDao.withTransaction {
+            recordingWorkDao.deleteRecordingsByWork(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(
@@ -57,7 +61,7 @@ internal class RecordingsByWorkViewModel(
     ): PagingSource<Int, RecordingWithArtistCredits> =
         recordingWorkDao.getRecordingsByWork(
             workId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     override fun transformRoomToListItemModel(roomModel: RecordingWithArtistCredits): RecordingListItemModel {

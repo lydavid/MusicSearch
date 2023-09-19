@@ -7,11 +7,12 @@ import ly.david.data.core.RecordingWithArtistCredits
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingWithArtistCredits
 import lydavidmusicsearchdatadatabase.Recording_work
+import lydavidmusicsearchdatadatabase.Recording_workQueries
 
 class RecordingWorkDao(
     database: Database,
-) {
-    private val transacter = database.recording_workQueries
+) : EntityDao {
+    override val transacter: Recording_workQueries = database.recording_workQueries
 
     fun insert(
         recordingId: String,

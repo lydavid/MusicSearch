@@ -16,6 +16,7 @@ import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import org.koin.dsl.module
@@ -37,6 +38,7 @@ val databaseDaoModule = module {
     single { PlaceDao(get()) }
     single { RecordingDao(get()) }
     single { RelationDao(get()) }
+    single { SeriesDao(get()) }
     single { WorkDao(get()) }
     single { WorkAttributeDao(get()) }
 }
