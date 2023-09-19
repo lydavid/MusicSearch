@@ -17,18 +17,19 @@ data class EventScaffoldModel(
     val urls: List<RelationListItemModel> = listOf(),
 ) : ly.david.data.core.Event
 
-internal fun Event.toEventScaffoldModel(urls: List<Mb_relation>) =
-    EventScaffoldModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        time = time,
-        cancelled = cancelled,
-        lifeSpan = LifeSpanUiModel(
-            begin = begin,
-            end = end,
-            ended = ended,
-        ),
-        urls = urls.map { it.toRelationListItemModel() },
-    )
+internal fun Event.toEventScaffoldModel(
+    urls: List<Mb_relation>,
+) = EventScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    time = time,
+    cancelled = cancelled,
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
+    urls = urls.map { it.toRelationListItemModel() },
+)

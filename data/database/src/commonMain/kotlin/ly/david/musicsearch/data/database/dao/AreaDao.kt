@@ -3,11 +3,12 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Area
+import lydavidmusicsearchdatadatabase.AreaQueries
 
 class AreaDao(
     database: Database,
-) {
-    private val transacter = database.areaQueries
+) : EntityDao {
+    override val transacter: AreaQueries = database.areaQueries
 
     fun insert(area: AreaMusicBrainzModel) {
         area.run {
