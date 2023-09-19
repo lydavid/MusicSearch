@@ -83,7 +83,7 @@ jobs:
 
       - name: Publish build to Google Play's production track
         id: publish_play_store
-        uses: r0adkll/upload-google-play@v1.1.1
+        uses: r0adkll/upload-google-play@v1.1.2
         with:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: io.github.lydavid.musicsearch
