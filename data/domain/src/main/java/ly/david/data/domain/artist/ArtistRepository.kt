@@ -1,34 +1,37 @@
 package ly.david.data.domain.artist
 
+import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.artist.ArtistWithAllData
-import ly.david.data.room.artist.RoomArtistDao
-import ly.david.data.room.artist.toArtistRoomModel
+import ly.david.musicsearch.data.database.dao.ArtistDao
 import org.koin.core.annotation.Single
 
 @Single
 class ArtistRepository(
     private val musicBrainzApi: MusicBrainzApi,
-    private val artistDao: RoomArtistDao,
+    private val artistDao: ArtistDao,
+    private val imageUrlDao: ImageUrlDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupArtist(artistId: String): ArtistScaffoldModel {
-        val artistWithAllData: ArtistWithAllData? = artistDao.getArtist(artistId)
+        val artist = artistDao.getArtist(artistId)
+        val largeImageUrl = imageUrlDao.getLargeUrlForEntity(artistId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
-        if (artistWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return artistWithAllData.toArtistScaffoldModel()
+        if (artist != null && hasUrlsBeenSavedForEntity) {
+            return artist.toArtistScaffoldModel(
+                imageUrl = largeImageUrl,
+                urls = urlRelations,
+            )
         }
 
-        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(
-            artistId = artistId,
-        )
+        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(artistId)
         artistDao.withTransaction {
-            artistDao.insert(artistMusicBrainzModel.toArtistRoomModel())
+            artistDao.insert(artistMusicBrainzModel)
             relationRepository.insertAllUrlRelations(
                 entityId = artistId,
                 relationMusicBrainzModels = artistMusicBrainzModel.relations,

@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database
 
+import ly.david.data.core.image.ImageUrlDao
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -14,6 +15,7 @@ import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.MbidImageDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingWorkDao
@@ -38,6 +40,7 @@ val databaseDaoModule = module {
     single { EventPlaceDao(get()) }
     single { InstrumentDao(get()) }
     single { LabelDao(get()) }
+    single<ImageUrlDao> { MbidImageDao(get()) }
     single { PlaceDao(get()) }
     single { RecordingDao(get()) }
     single { RecordingWorkDao(get()) }

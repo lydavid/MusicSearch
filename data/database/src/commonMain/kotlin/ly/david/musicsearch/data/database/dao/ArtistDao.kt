@@ -6,8 +6,8 @@ import lydavidmusicsearchdatadatabase.Artist
 
 class ArtistDao(
     database: Database,
-) {
-    private val transacter = database.artistQueries
+) : EntityDao {
+    override val transacter = database.artistQueries
 
     fun insert(artist: ArtistMusicBrainzModel) {
         artist.run {

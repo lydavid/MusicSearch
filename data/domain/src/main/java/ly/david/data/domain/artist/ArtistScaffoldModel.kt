@@ -1,11 +1,10 @@
 package ly.david.data.domain.artist
 
-import ly.david.data.core.Artist
 import ly.david.data.domain.common.LifeSpanUiModel
-import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.artist.ArtistWithAllData
+import lydavidmusicsearchdatadatabase.Artist
+import lydavidmusicsearchdatadatabase.Mb_relation
 
 data class ArtistScaffoldModel(
     override val id: String,
@@ -18,18 +17,24 @@ data class ArtistScaffoldModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
     val imageUrl: String? = null,
-) : Artist
+) : ly.david.data.core.Artist
 
-internal fun ArtistWithAllData.toArtistScaffoldModel() =
-    ArtistScaffoldModel(
-        id = artist.id,
-        name = artist.name,
-        sortName = artist.sortName,
-        disambiguation = artist.disambiguation,
-        type = artist.type,
-        gender = artist.gender,
-        countryCode = artist.countryCode,
-        lifeSpan = artist.lifeSpan?.toLifeSpanUiModel(),
-        urls = urls.map { it.relation.toRelationListItemModel() },
-        imageUrl = largeUrl
-    )
+internal fun Artist.toArtistScaffoldModel(
+    imageUrl: String?,
+    urls: List<Mb_relation>,
+) = ArtistScaffoldModel(
+    id = id,
+    name = name,
+    sortName = sort_name,
+    disambiguation = disambiguation,
+    type = type,
+    gender = gender,
+    countryCode = country_code,
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
+    urls = urls.map { it.toRelationListItemModel() },
+    imageUrl = imageUrl
+)

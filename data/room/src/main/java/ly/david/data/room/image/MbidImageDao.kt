@@ -1,13 +1,12 @@
 package ly.david.data.room.image
 
 import androidx.room.Dao
-import ly.david.data.core.image.ImageUrlSaver
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class MbidImageDao : BaseDao<MbidImage>(), ImageUrlSaver {
+abstract class MbidImageDao : BaseDao<MbidImage>() {
 
-    override suspend fun saveUrl(mbid: String, thumbnailUrl: String, largeUrl: String) {
+    suspend fun saveUrl(mbid: String, thumbnailUrl: String, largeUrl: String) {
         insert(
             MbidImage(
                 mbid = mbid,

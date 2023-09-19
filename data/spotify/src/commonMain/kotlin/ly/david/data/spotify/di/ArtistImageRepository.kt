@@ -1,7 +1,7 @@
 package ly.david.data.spotify.di
 
 import io.ktor.client.plugins.ClientRequestException
-import ly.david.data.core.image.ImageUrlSaver
+import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.core.logging.Logger
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.getLargeImageUrl
@@ -14,7 +14,7 @@ import org.koin.core.annotation.Single
 @Single
 class ArtistImageRepository(
     private val spotifyApi: SpotifyApi,
-    private val imageUrlSaver: ImageUrlSaver,
+    private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
 ) {
 
@@ -31,7 +31,7 @@ class ArtistImageRepository(
             val spotifyArtist = spotifyApi.getArtist(spotifyArtistId)
             val thumbnailUrl = spotifyArtist.getThumbnailImageUrl()
             val largeUrl = spotifyArtist.getLargeImageUrl()
-            imageUrlSaver.saveUrl(
+            imageUrlDao.saveUrl(
                 mbid = artistMbid,
                 thumbnailUrl = thumbnailUrl,
                 largeUrl = largeUrl

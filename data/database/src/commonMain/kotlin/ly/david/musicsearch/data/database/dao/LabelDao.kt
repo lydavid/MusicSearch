@@ -6,8 +6,8 @@ import lydavidmusicsearchdatadatabase.Label
 
 class LabelDao(
     database: Database,
-) {
-    private val transacter = database.labelQueries
+) : EntityDao {
+    override val transacter = database.labelQueries
 
     fun insert(label: LabelMusicBrainzModel) {
         label.run {

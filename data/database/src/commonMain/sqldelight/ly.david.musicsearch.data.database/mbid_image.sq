@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS mbid_image (
+  `mbid` TEXT PRIMARY KEY NOT NULL,
+  `thumbnail_url` TEXT NOT NULL,
+  `large_url` TEXT NOT NULL
+);
+
+insert:
+INSERT OR IGNORE INTO mbid_image
+VALUES ?;
+
+getThumbnailUrl:
+SELECT thumbnail_url
+FROM mbid_image
+WHERE mbid = :mbid;
+
+getLargeUrl:
+SELECT large_url
+FROM mbid_image
+WHERE mbid = :mbid;
