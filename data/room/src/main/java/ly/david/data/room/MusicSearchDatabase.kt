@@ -1,7 +1,6 @@
 package ly.david.data.room
 
 import ly.david.data.room.area.RoomAreaDao
-import ly.david.data.room.area.places.RoomAreaPlaceDao
 import ly.david.data.room.area.releases.ReleaseCountryDao
 import ly.david.data.room.artist.RoomArtistDao
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
@@ -16,7 +15,6 @@ import ly.david.data.room.image.MbidImageDao
 import ly.david.data.room.label.RoomLabelDao
 import ly.david.data.room.label.releases.ReleaseLabelDao
 import ly.david.data.room.place.RoomPlaceDao
-import ly.david.data.room.place.events.RoomEventPlaceDao
 import ly.david.data.room.recording.releases.RecordingReleaseDao
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.release.ReleaseDao
@@ -24,7 +22,6 @@ import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.releasegroup.ReleaseGroupDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
-import ly.david.data.room.work.recordings.RoomRecordingWorkDao
 
 interface MusicSearchDatabase {
     fun getArtistDao(): RoomArtistDao
@@ -39,11 +36,7 @@ interface MusicSearchDatabase {
 
     fun getRecordingReleaseDao(): RecordingReleaseDao
 
-    fun getRecordingWorkDao(): RoomRecordingWorkDao
-
     fun getAreaDao(): RoomAreaDao
-    fun getAreaPlaceDao(): RoomAreaPlaceDao
-    fun getEventPlaceDao(): RoomEventPlaceDao
     fun getReleaseCountryDao(): ReleaseCountryDao
 
     fun getPlaceDao(): RoomPlaceDao

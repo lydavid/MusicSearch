@@ -2,17 +2,11 @@ package ly.david.data.domain.place
 
 import kotlin.math.abs
 import ly.david.data.core.Coordinates
-import ly.david.data.room.place.CoordinatesRoomModel
 
 data class CoordinatesUiModel(
     override val longitude: Double?,
     override val latitude: Double?,
 ) : Coordinates
-
-fun CoordinatesRoomModel.toCoordinatesUiModel() = CoordinatesUiModel(
-    longitude = longitude,
-    latitude = latitude
-)
 
 /**
  * Turns [Coordinates] to this format: 40.76688°N, 73.98905°W

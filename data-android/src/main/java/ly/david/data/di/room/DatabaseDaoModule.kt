@@ -42,19 +42,7 @@ val roomDatabaseDaoModule = module {
     }
 
     factory {
-        get<MusicSearchDatabase>().getRecordingWorkDao()
-    }
-
-    factory {
         get<MusicSearchDatabase>().getAreaDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getAreaPlaceDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getEventPlaceDao()
     }
 
     factory {

@@ -5,7 +5,7 @@ import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.domain.place.CoordinatesUiModel
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
-import ly.david.data.room.place.PlaceRoomModel
+import lydavidmusicsearchdatadatabase.Place
 
 data class PlaceListItemModel(
     override val id: String,
@@ -32,7 +32,7 @@ internal fun PlaceMusicBrainzModel.toPlaceListItemModel() =
         area = area?.toAreaListItemModel()
     )
 
-fun lydavidmusicsearchdatadatabase.Place.toPlaceListItemModel() = PlaceListItemModel(
+fun Place.toPlaceListItemModel() = PlaceListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
@@ -47,16 +47,5 @@ fun lydavidmusicsearchdatadatabase.Place.toPlaceListItemModel() = PlaceListItemM
         end = end,
         ended = ended,
     ),
-    area = null
-)
-
-fun PlaceRoomModel.toPlaceListItemModel() = PlaceListItemModel(
-    id = id,
-    name = name,
-    disambiguation = disambiguation,
-    address = address,
-    type = type,
-    coordinates = coordinates,
-    lifeSpan = lifeSpan?.toLifeSpanUiModel(),
     area = null
 )

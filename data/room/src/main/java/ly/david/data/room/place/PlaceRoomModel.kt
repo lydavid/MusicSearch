@@ -5,10 +5,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Place
-import ly.david.data.musicbrainz.PlaceMusicBrainzModel
-import ly.david.data.room.common.LifeSpanRoomModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.common.toLifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 
 @Entity(tableName = "place")
 data class PlaceRoomModel(
@@ -21,15 +19,3 @@ data class PlaceRoomModel(
     @Embedded override val coordinates: CoordinatesRoomModel?,
     @Embedded override val lifeSpan: LifeSpanRoomModel?,
 ) : RoomModel, Place
-
-fun PlaceMusicBrainzModel.toPlaceRoomModel() =
-    PlaceRoomModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        address = address,
-        type = type,
-        typeId = typeId,
-        coordinates = coordinates?.toCoordinatesRoomModel(),
-        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
-    )

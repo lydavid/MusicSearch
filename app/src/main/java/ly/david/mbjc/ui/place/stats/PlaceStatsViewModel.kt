@@ -1,8 +1,8 @@
 package ly.david.mbjc.ui.place.stats
 
 import androidx.lifecycle.ViewModel
-import ly.david.data.room.place.events.RoomEventPlaceDao
 import ly.david.data.room.relation.RoomRelationDao
+import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.ui.stats.EventStats
 import ly.david.ui.stats.RelationsStats
 import org.koin.android.annotation.KoinViewModel
@@ -10,7 +10,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class PlaceStatsViewModel(
     override val relationDao: RoomRelationDao,
-    private val eventPlaceDao: RoomEventPlaceDao,
+    private val eventPlaceDao: EventPlaceDao,
 ) : ViewModel(),
     RelationsStats,
     EventStats {

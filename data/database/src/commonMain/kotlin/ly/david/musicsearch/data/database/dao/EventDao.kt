@@ -6,8 +6,8 @@ import lydavidmusicsearchdatadatabase.Event
 
 class EventDao(
     database: Database,
-) {
-    private val transacter = database.eventQueries
+) : EntityDao {
+    override val transacter = database.eventQueries
 
     fun insert(event: EventMusicBrainzModel) {
         event.run {
