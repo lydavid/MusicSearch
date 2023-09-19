@@ -7,8 +7,8 @@ import lydavidmusicsearchdatadatabase.Recording
 
 class RecordingDao(
     database: Database,
-) {
-    private val transacter = database.recordingQueries
+) : EntityDao {
+    override val transacter = database.recordingQueries
 
     fun insert(recording: RecordingMusicBrainzModel) {
         recording.run {

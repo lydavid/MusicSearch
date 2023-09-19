@@ -5,7 +5,9 @@ import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.releasegroup.ReleaseGroupWithAllData
+import lydavidmusicsearchdatadatabase.Artist_credit_name
+import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Release_group
 
 data class ReleaseGroupScaffoldModel(
     override val id: String,
@@ -19,18 +21,18 @@ data class ReleaseGroupScaffoldModel(
     val urls: List<RelationListItemModel> = listOf(),
 ) : ReleaseGroup
 
-internal fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroupScaffoldModel {
-    return ReleaseGroupScaffoldModel(
-        id = releaseGroup.id,
-        name = releaseGroup.name,
-        firstReleaseDate = releaseGroup.firstReleaseDate,
-        disambiguation = releaseGroup.disambiguation,
-        primaryType = releaseGroup.primaryType,
-        secondaryTypes = releaseGroup.secondaryTypes,
-        artistCredits = artistCreditNamesWithEntities.map {
-            it.artistCreditNameRoomModel.toArtistCreditUiModel()
-        },
-        imageUrl = largeUrl,
-        urls = urls.map { it.relation.toRelationListItemModel() },
-    )
-}
+internal fun Release_group.toReleaseGroupScaffoldModel(
+    artistCreditNames: List<Artist_credit_name>,
+    imageUrl: String?,
+    urls: List<Mb_relation>,
+) = ReleaseGroupScaffoldModel(
+    id = id,
+    name = name,
+    firstReleaseDate = first_release_date,
+    disambiguation = disambiguation,
+    primaryType = primary_type,
+    secondaryTypes = secondary_types,
+    artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+    imageUrl = imageUrl,
+    urls = urls.map { it.toRelationListItemModel() },
+)

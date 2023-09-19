@@ -20,6 +20,7 @@ import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingWorkDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
@@ -45,6 +46,7 @@ val databaseDaoModule = module {
     single { RecordingDao(get()) }
     single { RecordingWorkDao(get()) }
     single { RelationDao(get()) }
+    single { ReleaseGroupDao(get()) }
     single { SeriesDao(get()) }
     single { WorkAttributeDao(get()) }
     single { WorkDao(get()) }

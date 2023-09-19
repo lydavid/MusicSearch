@@ -6,7 +6,7 @@ import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.RoomReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
@@ -17,7 +17,7 @@ internal class ReleaseGroupsByArtistViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    releaseGroupDao: ReleaseGroupDao,
+    releaseGroupDao: RoomReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ReleaseGroupsByEntityViewModel(
     browseEntityCountDao = browseEntityCountDao,

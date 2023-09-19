@@ -1,5 +1,5 @@
 import kotlin.String;
-import kotlinx.collections.immutable.ImmutableList;
+import kotlin.collections.List;
 
 CREATE TABLE IF NOT EXISTS work (
   id TEXT PRIMARY KEY NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS work (
   type TEXT,
   type_id TEXT,
   language TEXT,
-  iswcs TEXT AS ImmutableList<String>
+  iswcs TEXT AS List<String>
 );
 
 insert:

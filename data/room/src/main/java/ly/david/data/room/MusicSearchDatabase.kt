@@ -20,14 +20,14 @@ import ly.david.data.room.relation.RoomRelationDao
 import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.RoomReleaseGroupDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
 
 interface MusicSearchDatabase {
     fun getArtistDao(): RoomArtistDao
     fun getArtistReleaseDao(): ArtistReleaseDao
     fun getArtistReleaseGroupDao(): ArtistReleaseGroupDao
-    fun getReleaseGroupDao(): ReleaseGroupDao
+    fun getReleaseGroupDao(): RoomReleaseGroupDao
     fun getReleaseReleaseGroupDao(): ReleaseReleaseGroupDao
 
     fun getReleaseDao(): ReleaseDao

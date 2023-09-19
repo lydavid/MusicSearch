@@ -1,7 +1,7 @@
 import kotlin.Boolean;
 import kotlin.Int;
 import kotlin.String;
-import kotlinx.collections.immutable.ImmutableList;
+import kotlin.collections.List;
 
 CREATE TABLE IF NOT EXISTS recording (
   id TEXT PRIMARY KEY NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS recording (
   first_release_date TEXT,
   length INTEGER AS Int,
   video INTEGER AS Boolean NOT NULL,
-  isrcs TEXT AS ImmutableList<String>
+  isrcs TEXT AS List<String>
 );
 
 insert:

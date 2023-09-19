@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.database.mapper
 
-import kotlinx.collections.immutable.ImmutableList
 import ly.david.data.core.RecordingWithArtistCredits
 
 internal fun mapToRecordingWithArtistCredits(
@@ -10,7 +9,7 @@ internal fun mapToRecordingWithArtistCredits(
     firstReleaseDate: String?,
     length: Int?,
     video: Boolean,
-    isrcs: ImmutableList<String>?,
+    isrcs: List<String>?,
     formattedArtistCreditNames: String?,
 ) = RecordingWithArtistCredits(
     id = id,

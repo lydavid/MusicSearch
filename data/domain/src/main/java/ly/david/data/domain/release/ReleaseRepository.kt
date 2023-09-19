@@ -20,7 +20,7 @@ import ly.david.data.room.release.ReleaseDao
 import ly.david.data.room.release.tracks.MediumDao
 import ly.david.data.room.release.tracks.TrackDao
 import ly.david.data.room.release.tracks.toMediumRoomModel
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.RoomReleaseGroupDao
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
 import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
 import org.koin.core.annotation.Single
@@ -30,7 +30,7 @@ class ReleaseRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
-    private val releaseGroupDao: ReleaseGroupDao,
+    private val releaseGroupDao: RoomReleaseGroupDao,
     private val mediumDao: MediumDao,
     private val trackDao: TrackDao,
     private val releaseCountryDao: ReleaseCountryDao,

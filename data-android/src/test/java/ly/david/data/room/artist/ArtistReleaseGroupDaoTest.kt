@@ -7,7 +7,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.data.room.releasegroup.RoomReleaseGroupDao
 import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.room.testDatabaseModule
@@ -30,7 +30,7 @@ internal class ArtistReleaseGroupDaoTest : KoinTest {
 
     private val artistDao: RoomArtistDao by inject()
     private val artistReleaseGroupDao: ArtistReleaseGroupDao by inject()
-    private val releaseGroupDao: ReleaseGroupDao by inject()
+    private val releaseGroupDao: RoomReleaseGroupDao by inject()
 
     @Before
     fun setUp() {

@@ -1,0 +1,20 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+CREATE TABLE IF NOT EXISTS release_group (
+  `id` TEXT PRIMARY KEY NOT NULL,
+  `name` TEXT NOT NULL,
+  `first_release_date` TEXT NOT NULL,
+  `disambiguation` TEXT NOT NULL,
+  `primary_type` TEXT,
+  `primary_type_id` TEXT,
+  `secondary_types` TEXT AS List<String>,
+  `secondary_type_ids` TEXT AS List<String>
+);
+
+insert:
+INSERT OR IGNORE INTO release_group
+VALUES ?;
+
+getReleaseGroup:
+SELECT * FROM release_group WHERE id = ?;

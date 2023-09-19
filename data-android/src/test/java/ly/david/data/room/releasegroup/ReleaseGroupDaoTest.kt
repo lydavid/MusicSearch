@@ -24,7 +24,7 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 internal class ReleaseGroupDaoTest : KoinTest {
 
-    private val releaseGroupDao: ReleaseGroupDao by inject()
+    private val releaseGroupDao: RoomReleaseGroupDao by inject()
 
     @Before
     fun setUp() {
