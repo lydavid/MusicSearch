@@ -4,10 +4,9 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
-import ly.david.data.room.releasegroup.RoomReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -17,7 +16,7 @@ internal class ReleaseGroupsByArtistViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    releaseGroupDao: RoomReleaseGroupDao,
+    releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ReleaseGroupsByEntityViewModel(
     browseEntityCountDao = browseEntityCountDao,
@@ -37,12 +36,8 @@ internal class ReleaseGroupsByArtistViewModel(
         releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     ) {
         artistReleaseGroupDao.insertAll(
-            releaseGroupMusicBrainzModels.map { releaseGroup ->
-                ArtistReleaseGroup(
-                    artistId = entityId,
-                    releaseGroupId = releaseGroup.id
-                )
-            }
+            artistId = entityId,
+            releaseGroupIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
         )
     }
 

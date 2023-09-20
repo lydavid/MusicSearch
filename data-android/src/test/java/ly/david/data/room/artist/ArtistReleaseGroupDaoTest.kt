@@ -6,9 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
 import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
+import ly.david.data.room.artist.releasegroups.RoomArtistReleaseGroupDao
 import ly.david.data.room.releasegroup.RoomReleaseGroupDao
-import ly.david.data.room.releasegroup.ReleaseGroupForListItem
+import ly.david.data.room.releasegroup.RoomReleaseGroupForListItem
 import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 import ly.david.data.room.testDatabaseModule
 import org.hamcrest.CoreMatchers.`is`
@@ -29,7 +29,7 @@ import org.robolectric.RobolectricTestRunner
 internal class ArtistReleaseGroupDaoTest : KoinTest {
 
     private val artistDao: RoomArtistDao by inject()
-    private val artistReleaseGroupDao: ArtistReleaseGroupDao by inject()
+    private val artistReleaseGroupDao: RoomArtistReleaseGroupDao by inject()
     private val releaseGroupDao: RoomReleaseGroupDao by inject()
 
     @Before
@@ -375,11 +375,11 @@ internal class ArtistReleaseGroupDaoTest : KoinTest {
 
     // TODO: generic
     private suspend fun getReleaseGroupsFromPagingSource(
-        pagingSource: PagingSource<Int, ReleaseGroupForListItem>,
-    ): List<ReleaseGroupForListItem> {
-        val loadResult: PagingSource.LoadResult<Int, ReleaseGroupForListItem> = pagingSource.load(
+        pagingSource: PagingSource<Int, RoomReleaseGroupForListItem>,
+    ): List<RoomReleaseGroupForListItem> {
+        val loadResult: PagingSource.LoadResult<Int, RoomReleaseGroupForListItem> = pagingSource.load(
             PagingSource.LoadParams.Refresh(key = null, loadSize = 10, placeholdersEnabled = false)
         )
-        return (loadResult as PagingSource.LoadResult.Page<Int, ReleaseGroupForListItem>).data
+        return (loadResult as PagingSource.LoadResult.Page<Int, RoomReleaseGroupForListItem>).data
     }
 }

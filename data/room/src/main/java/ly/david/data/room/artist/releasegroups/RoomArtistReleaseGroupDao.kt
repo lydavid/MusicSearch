@@ -5,11 +5,11 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.room.BaseDao
-import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.releasegroup.RoomReleaseGroupForListItem
 
 @Dao
-abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
+abstract class RoomArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
 
     companion object {
         private const val RELEASE_GROUPS_BY_ARTIST = """
@@ -66,7 +66,7 @@ abstract class ArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
         artistId: String,
         query: String = "%%",
         sorted: Boolean = false,
-    ): PagingSource<Int, ReleaseGroupForListItem>
+    ): PagingSource<Int, RoomReleaseGroupForListItem>
 
     @Query(
         """

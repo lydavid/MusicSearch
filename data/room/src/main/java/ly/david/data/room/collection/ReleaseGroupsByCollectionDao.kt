@@ -3,7 +3,7 @@ package ly.david.data.room.collection
 import androidx.paging.PagingSource
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.room.releasegroup.ReleaseGroupForListItem
+import ly.david.data.room.releasegroup.RoomReleaseGroupForListItem
 
 interface ReleaseGroupsByCollectionDao {
 
@@ -52,5 +52,5 @@ interface ReleaseGroupsByCollectionDao {
         collectionId: String,
         query: String = "%%",
         sorted: Boolean = false,
-    ): PagingSource<Int, ReleaseGroupForListItem>
+    ): PagingSource<Int, RoomReleaseGroupForListItem>
 }

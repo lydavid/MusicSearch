@@ -5,6 +5,7 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.ArtistDao
+import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
@@ -31,6 +32,7 @@ val databaseDaoModule = module {
     single { AreaPlaceDao(get()) }
     single { ArtistCreditDao(get(), get()) }
     single { ArtistDao(get()) }
+    single { ArtistReleaseGroupDao(get()) }
     single { BrowseEntityCountDao(get()) }
     single { CollectionDao(get()) }
     single { CollectionEntityDao(get()) }

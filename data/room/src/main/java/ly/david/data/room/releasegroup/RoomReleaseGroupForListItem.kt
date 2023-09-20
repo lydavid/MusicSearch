@@ -6,7 +6,7 @@ import androidx.room.Relation
 import ly.david.data.room.RoomModel
 import ly.david.data.room.image.MbidImage
 
-data class ReleaseGroupForListItem(
+data class RoomReleaseGroupForListItem(
     @Embedded
     val releaseGroup: ReleaseGroupRoomModel,
 

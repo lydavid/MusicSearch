@@ -1,6 +1,6 @@
 package ly.david.ui.common.paging
 
-import androidx.paging.PagingSource
+import app.cash.paging.PagingSource
 import ly.david.data.domain.listitem.ListItemModel
 
 interface StoreEntityUseCase {

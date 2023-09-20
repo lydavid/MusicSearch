@@ -64,7 +64,7 @@ ORDER BY a.begin, a.end, a.name
 LIMIT :limit OFFSET :offset;
 
 
--- areas by collection
+-- aritsts by collection
 
 getNumberOfArtistsByCollection:
 SELECT IFNULL(
@@ -281,6 +281,53 @@ AND (
   OR ac.name LIKE :query
 )
 ORDER BY r.first_release_date, r.name
+LIMIT :limit OFFSET :offset;
+
+
+-- release groups by collection
+
+getNumberOfReleaseGroupsByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM release_group rg
+    INNER JOIN collection_entity ce ON rg.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    LEFT JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE c.id = :collectionId
+    AND (
+      rg.name LIKE :query
+      OR rg.disambiguation LIKE :query
+      OR rg.first_release_date LIKE :query
+      OR rg.primary_type LIKE :query
+      OR rg.secondary_types LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getReleaseGroupsByCollection:
+SELECT rg.*, ac.name AS artist_credits
+FROM release_group rg
+INNER JOIN collection_entity ce ON rg.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+WHERE c.id = :collectionId
+AND (
+  rg.name LIKE :query
+  OR rg.disambiguation LIKE :query
+  OR rg.first_release_date LIKE :query
+  OR rg.primary_type LIKE :query
+  OR rg.secondary_types LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY
+  CASE WHEN :sorted THEN rg.primary_type ELSE ce.rowid END,
+  CASE WHEN :sorted THEN rg.secondary_types END,
+  CASE WHEN :sorted THEN rg.first_release_date END
 LIMIT :limit OFFSET :offset;
 
 
