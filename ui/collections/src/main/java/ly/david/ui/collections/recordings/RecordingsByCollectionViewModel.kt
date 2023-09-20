@@ -1,7 +1,7 @@
 package ly.david.ui.collections.recordings
 
 import androidx.paging.PagingSource
-import ly.david.data.core.RecordingWithArtistCredits
+import ly.david.data.core.RecordingForListItem
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
@@ -22,7 +22,7 @@ internal class RecordingsByCollectionViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
-) : BrowseEntitiesByEntityViewModel<RecordingWithArtistCredits, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
+) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -58,13 +58,13 @@ internal class RecordingsByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, RecordingWithArtistCredits> =
+    ): PagingSource<Int, RecordingForListItem> =
         collectionEntityDao.getRecordingsByCollection(
             collectionId = entityId,
             query = "%$query%",
         )
 
-    override fun transformRoomToListItemModel(roomModel: RecordingWithArtistCredits): RecordingListItemModel {
+    override fun transformRoomToListItemModel(roomModel: RecordingForListItem): RecordingListItemModel {
         return roomModel.toRecordingListItemModel()
     }
 }

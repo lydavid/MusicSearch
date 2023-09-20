@@ -33,15 +33,13 @@ class RecordingRepository(
         }
 
         val recordingMusicBrainzModel = musicBrainzApi.lookupRecording(recordingId)
-        recordingDao.insert(recordingMusicBrainzModel)
-        artistCreditDao.insertArtistCredits(
-            entityId = recordingId,
-            artistCredits = recordingMusicBrainzModel.artistCredits,
-        )
-        relationRepository.insertAllUrlRelations(
-            entityId = recordingId,
-            relationMusicBrainzModels = recordingMusicBrainzModel.relations,
-        )
+        recordingDao.withTransaction {
+            recordingDao.insert(recordingMusicBrainzModel)
+            relationRepository.insertAllUrlRelations(
+                entityId = recordingId,
+                relationMusicBrainzModels = recordingMusicBrainzModel.relations,
+            )
+        }
         return lookupRecording(recordingId)
     }
 

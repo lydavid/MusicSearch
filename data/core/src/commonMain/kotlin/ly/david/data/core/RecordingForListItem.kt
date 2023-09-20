@@ -1,6 +1,6 @@
 package ly.david.data.core
 
-data class RecordingWithArtistCredits(
+data class RecordingForListItem(
     override val id: String,
     override val name: String,
     override val firstReleaseDate: String?,

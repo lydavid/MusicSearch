@@ -3,11 +3,11 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
-import ly.david.data.core.RecordingWithArtistCredits
+import ly.david.data.core.RecordingForListItem
 import ly.david.data.core.ReleaseGroupForListItem
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.mapToRecordingWithArtistCredits
-import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupWithArtistCredits
+import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
+import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Collection_entity
@@ -177,7 +177,7 @@ class CollectionEntityDao(
     fun getRecordingsByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, RecordingWithArtistCredits> = QueryPagingSource(
+    ): PagingSource<Int, RecordingForListItem> = QueryPagingSource(
         countQuery = transacter.getNumberOfRecordingsByCollection(
             collectionId = collectionId,
             query = query,
@@ -190,7 +190,7 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
-            mapper = ::mapToRecordingWithArtistCredits,
+            mapper = ::mapToRecordingForListItem,
         )
     }
 
@@ -212,7 +212,7 @@ class CollectionEntityDao(
             sorted = sorted,
             limit = limit,
             offset = offset,
-            mapper = ::mapToReleaseGroupWithArtistCredits,
+            mapper = ::mapToReleaseGroupForListItem,
         )
     }
 

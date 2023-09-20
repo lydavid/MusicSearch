@@ -16,7 +16,7 @@ class ArtistCreditDao(
     private val artistCreditNameQueries = database.artist_credit_nameQueries
     private val artistCreditEntityQueries = database.artist_credit_entityQueries
 
-    fun insertArtistCredits(
+    internal fun insertArtistCredits(
         entityId: String,
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
     ) {

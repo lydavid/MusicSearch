@@ -21,6 +21,7 @@ import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 
+internal const val ARTIST_CREDITS = "artist-credits"
 internal const val LABELS = "labels"
 
 /**
@@ -90,63 +91,70 @@ interface BrowseApi {
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseRecordingsResponse
 
     suspend fun browseRecordingsByWork(
         workId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseRecordingsResponse
 
     suspend fun browseReleasesByArea(
         areaId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseReleasesResponse
 
     suspend fun browseReleasesByArtist(
         artistId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseReleasesResponse
 
     suspend fun browseReleasesByCollection(
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseReleasesResponse
 
     suspend fun browseReleasesByLabel(
         labelId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = LABELS,
+        include: String = "$ARTIST_CREDITS+$LABELS",
     ): BrowseReleasesResponse
 
     suspend fun browseReleasesByRecording(
         recordingId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseReleasesResponse
 
     suspend fun browseReleasesByReleaseGroup(
         releaseGroupId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
+        include: String = ARTIST_CREDITS,
     ): BrowseReleasesResponse
 
     suspend fun browseReleaseGroupsByArtist(
         artistId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = "artist-credits",
+        include: String = ARTIST_CREDITS,
     ): BrowseReleaseGroupsResponse
 
     suspend fun browseReleaseGroupsByCollection(
         collectionId: String,
         limit: Int = SEARCH_BROWSE_LIMIT,
         offset: Int = 0,
-        include: String = "artist-credits",
+        include: String = ARTIST_CREDITS,
     ): BrowseReleaseGroupsResponse
 
     suspend fun browseSeriesByCollection(
@@ -306,6 +314,7 @@ interface BrowseApiImpl : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseRecordingsResponse {
         return httpClient.get {
             url {
@@ -313,6 +322,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -321,6 +331,7 @@ interface BrowseApiImpl : BrowseApi {
         workId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseRecordingsResponse {
         return httpClient.get {
             url {
@@ -328,6 +339,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("work", workId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -336,6 +348,7 @@ interface BrowseApiImpl : BrowseApi {
         areaId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return httpClient.get {
             url {
@@ -343,6 +356,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("area", areaId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -351,6 +365,7 @@ interface BrowseApiImpl : BrowseApi {
         artistId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return httpClient.get {
             url {
@@ -358,6 +373,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("artist", artistId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -366,6 +382,7 @@ interface BrowseApiImpl : BrowseApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return httpClient.get {
             url {
@@ -373,6 +390,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("collection", collectionId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -398,6 +416,7 @@ interface BrowseApiImpl : BrowseApi {
         recordingId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return httpClient.get {
             url {
@@ -405,6 +424,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("recording", recordingId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }
@@ -413,6 +433,7 @@ interface BrowseApiImpl : BrowseApi {
         releaseGroupId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return httpClient.get {
             url {
@@ -420,6 +441,7 @@ interface BrowseApiImpl : BrowseApi {
                 parameter("release-group", releaseGroupId)
                 parameter("limit", limit)
                 parameter("offset", offset)
+                parameter("inc", include)
             }
         }.body()
     }

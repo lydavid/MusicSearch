@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.data.core.RecordingWithArtistCredits
+import ly.david.data.core.RecordingForListItem
 
-internal fun mapToRecordingWithArtistCredits(
+internal fun mapToRecordingForListItem(
     id: String,
     name: String,
     disambiguation: String,
@@ -11,7 +11,7 @@ internal fun mapToRecordingWithArtistCredits(
     video: Boolean,
     isrcs: List<String>?,
     formattedArtistCreditNames: String?,
-) = RecordingWithArtistCredits(
+) = RecordingForListItem(
     id = id,
     name = name,
     disambiguation = disambiguation,

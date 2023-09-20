@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
-import ly.david.data.core.RecordingWithArtistCredits
+import ly.david.data.core.RecordingForListItem
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.mapToRecordingWithArtistCredits
+import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
 import lydavidmusicsearchdatadatabase.Recording_work
 import lydavidmusicsearchdatadatabase.Recording_workQueries
 
@@ -53,7 +53,7 @@ class RecordingWorkDao(
     fun getRecordingsByWork(
         workId: String,
         query: String,
-    ): PagingSource<Int, RecordingWithArtistCredits> = QueryPagingSource(
+    ): PagingSource<Int, RecordingForListItem> = QueryPagingSource(
         countQuery = transacter.getNumberOfRecordingsByWork(
             workId = workId,
             query = query,
@@ -66,7 +66,7 @@ class RecordingWorkDao(
             query = query,
             limit = limit,
             offset = offset,
-            mapper = ::mapToRecordingWithArtistCredits,
+            mapper = ::mapToRecordingForListItem,
         )
     }
 }

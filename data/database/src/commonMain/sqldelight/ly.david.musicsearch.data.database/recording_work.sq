@@ -39,7 +39,7 @@ SELECT IFNULL(
 ) AS count;
 
 getRecordingsByWork:
-SELECT r.*, ac.name
+SELECT r.*, ac.name AS artist_credits
 FROM recording r
 INNER JOIN recording_work rw ON r.id = rw.recording_id
 INNER JOIN work w ON w.id = rw.work_id

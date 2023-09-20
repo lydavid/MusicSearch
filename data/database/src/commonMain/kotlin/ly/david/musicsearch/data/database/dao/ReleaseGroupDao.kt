@@ -6,6 +6,7 @@ import lydavidmusicsearchdatadatabase.Release_group
 
 class ReleaseGroupDao(
     database: Database,
+    private val artistCreditDao: ArtistCreditDao,
 ) : EntityDao {
     override val transacter = database.release_groupQueries
 
@@ -22,6 +23,10 @@ class ReleaseGroupDao(
                     secondary_types = secondaryTypes,
                     secondary_type_ids = secondaryTypeIds,
                 )
+            )
+            artistCreditDao.insertArtistCredits(
+                entityId = releaseGroup.id,
+                artistCredits = artistCredits,
             )
         }
     }

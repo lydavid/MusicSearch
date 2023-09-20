@@ -7,6 +7,7 @@ import lydavidmusicsearchdatadatabase.Recording
 
 class RecordingDao(
     database: Database,
+    private val artistCreditDao: ArtistCreditDao,
 ) : EntityDao {
     override val transacter = database.recordingQueries
 
@@ -22,6 +23,10 @@ class RecordingDao(
                     video = video ?: false,
                     isrcs = isrcs?.toImmutableList(),
                 )
+            )
+            artistCreditDao.insertArtistCredits(
+                entityId = recording.id,
+                artistCredits = artistCredits,
             )
         }
     }

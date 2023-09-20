@@ -28,28 +28,28 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
-    single { AreaDao(get()) }
-    single { AreaPlaceDao(get()) }
-    single { ArtistCreditDao(get(), get()) }
-    single { ArtistDao(get()) }
-    single { ArtistReleaseGroupDao(get()) }
-    single { BrowseEntityCountDao(get()) }
-    single { CollectionDao(get()) }
-    single { CollectionEntityDao(get()) }
-    single { CountryCodeDao(get()) }
-    single { EntityHasRelationsDao(get()) }
-    single { EntityHasUrlsDao(get()) }
-    single { EventDao(get()) }
-    single { EventPlaceDao(get()) }
-    single { InstrumentDao(get()) }
-    single { LabelDao(get()) }
-    single<ImageUrlDao> { MbidImageDao(get()) }
-    single { PlaceDao(get()) }
-    single { RecordingDao(get()) }
-    single { RecordingWorkDao(get()) }
-    single { RelationDao(get()) }
-    single { ReleaseGroupDao(get()) }
-    single { SeriesDao(get()) }
-    single { WorkAttributeDao(get()) }
-    single { WorkDao(get()) }
+    factory { AreaDao(get()) }
+    factory { AreaPlaceDao(get()) }
+    factory { ArtistCreditDao(get(), get()) }
+    factory { ArtistDao(get()) }
+    factory { ArtistReleaseGroupDao(get()) }
+    factory { BrowseEntityCountDao(get()) }
+    factory { CollectionDao(get()) }
+    factory { CollectionEntityDao(get()) }
+    factory { CountryCodeDao(get()) }
+    factory { EntityHasRelationsDao(get()) }
+    factory { EntityHasUrlsDao(get()) }
+    factory { EventDao(get()) }
+    factory { EventPlaceDao(get()) }
+    factory { InstrumentDao(get()) }
+    factory { LabelDao(get()) }
+    factory<ImageUrlDao> { MbidImageDao(get()) }
+    factory { PlaceDao(get()) }
+    factory { RecordingDao(get(), get()) }
+    factory { RecordingWorkDao(get()) }
+    factory { RelationDao(get()) }
+    factory { ReleaseGroupDao(get(), get()) }
+    factory { SeriesDao(get()) }
+    factory { WorkAttributeDao(get()) }
+    factory { WorkDao(get()) }
 }

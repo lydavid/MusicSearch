@@ -5,7 +5,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import ly.david.data.core.ReleaseGroupForListItem
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupWithArtistCredits
+import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
 import lydavidmusicsearchdatadatabase.Artist_release_group
 
 class ArtistReleaseGroupDao(
@@ -67,7 +67,7 @@ class ArtistReleaseGroupDao(
             sorted = sorted,
             limit = limit,
             offset = offset,
-            mapper = ::mapToReleaseGroupWithArtistCredits,
+            mapper = ::mapToReleaseGroupForListItem,
         )
     }
 }
