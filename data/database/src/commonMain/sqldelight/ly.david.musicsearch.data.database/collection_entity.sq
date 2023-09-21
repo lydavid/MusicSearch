@@ -253,8 +253,8 @@ SELECT IFNULL(
     FROM recording r
     INNER JOIN collection_entity ce ON r.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
-    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     WHERE c.id = :collectionId
     AND (
       r.name LIKE :query
@@ -271,8 +271,8 @@ SELECT r.*, ac.name AS artist_credits
 FROM recording r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
-LEFT JOIN artist_credit_entity acr ON acr.entity_id = r.id
-LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 WHERE c.id = :collectionId
 AND (
   r.name LIKE :query
@@ -293,8 +293,8 @@ SELECT IFNULL(
     FROM release_group rg
     INNER JOIN collection_entity ce ON rg.id = ce.entity_id
     INNER JOIN collection c ON c.id = ce.id
-    LEFT JOIN artist_credit_entity acr ON acr.entity_id = rg.id
-    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     WHERE c.id = :collectionId
     AND (
       rg.name LIKE :query
