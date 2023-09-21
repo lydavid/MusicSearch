@@ -41,12 +41,13 @@ SELECT IFNULL(
 ) AS count;
 
 getReleaseGroupsByArtist:
-SELECT rg.*, ac.name AS artist_credits
+SELECT rg.*, ac.name AS artist_credits, mi.thumbnail_url
 FROM release_group rg
 INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
 INNER JOIN artist a ON a.id = arg.artist_id
-LEFT JOIN artist_credit_entity acr ON acr.entity_id = rg.id
-LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = rg.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = rg.id
 WHERE a.id = :artistId
 AND (
   rg.name LIKE :query

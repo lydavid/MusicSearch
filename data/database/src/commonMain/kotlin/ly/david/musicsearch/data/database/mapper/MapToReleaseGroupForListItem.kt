@@ -12,6 +12,7 @@ internal fun mapToReleaseGroupForListItem(
     secondaryTypes: List<String>?,
     secondaryTypeIds: List<String>?,
     formattedArtistCreditNames: String?,
+    thumbnailUrl: String?,
 ) = ReleaseGroupForListItem(
     id = id,
     name = name,
@@ -20,5 +21,5 @@ internal fun mapToReleaseGroupForListItem(
     primaryType = primaryType,
     secondaryTypes = secondaryTypes,
     formattedArtistCreditNames = formattedArtistCreditNames.orEmpty(),
-    thumbnailUrl = "", // TODO:
+    thumbnailUrl = thumbnailUrl,
 )

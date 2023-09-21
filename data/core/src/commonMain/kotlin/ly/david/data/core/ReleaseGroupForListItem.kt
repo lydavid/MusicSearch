@@ -8,5 +8,5 @@ data class ReleaseGroupForListItem(
     override val primaryType: String?,
     override val secondaryTypes: List<String>?,
     val formattedArtistCreditNames: String,
-    val thumbnailUrl: String,
+    val thumbnailUrl: String?,
 ) : ReleaseGroup
