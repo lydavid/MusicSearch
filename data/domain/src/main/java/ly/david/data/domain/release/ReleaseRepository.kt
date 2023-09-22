@@ -52,7 +52,6 @@ class ReleaseRepository(
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (release != null &&
             artistCreditNames.isNotEmpty() &&
-//            release.formatTrackCounts.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema

@@ -97,11 +97,7 @@ internal class TracksByReleaseViewModel(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    // TODO: this allows us to fetch tracks if we previously only had the release
-    //  try
-    private suspend fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
-//        val roomRelease = releaseDao.getReleaseWithFormatTrackCounts(releaseId)
-//        return !roomRelease?.formatTrackCounts.isNullOrEmpty()
+    private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
         // TODO: right now the details tab is coupled with this tracks list tab
         return releaseDao.getRelease(releaseId) != null
     }
