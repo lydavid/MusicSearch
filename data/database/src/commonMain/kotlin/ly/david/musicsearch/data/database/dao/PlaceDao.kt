@@ -6,8 +6,8 @@ import lydavidmusicsearchdatadatabase.Place
 
 class PlaceDao(
     database: Database,
-) {
-    private val transacter = database.placeQueries
+) : EntityDao {
+    override val transacter = database.placeQueries
 
     fun insert(place: PlaceMusicBrainzModel) {
         place.run {

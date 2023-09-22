@@ -3,7 +3,6 @@ package ly.david.data.domain.listitem
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.data.room.release.AreaWithReleaseDate
 import lydavidmusicsearchdatadatabase.Area
 
 data class AreaListItemModel(
@@ -39,15 +38,4 @@ fun Area.toAreaListItemModel() = AreaListItemModel(
         end = end,
         ended = ended,
     ),
-)
-
-fun AreaWithReleaseDate.toAreaListItemModel() = AreaListItemModel(
-    id = area.id,
-    name = area.name,
-    sortName = area.sortName,
-    disambiguation = area.disambiguation,
-    type = area.type,
-    lifeSpan = area.lifeSpan?.toLifeSpanUiModel(),
-    countryCodes = countryCodes.map { it.code },
-    date = releaseCountry.date
 )

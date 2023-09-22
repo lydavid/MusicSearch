@@ -16,10 +16,10 @@ class WorkAttributeDao(
 
     fun insertAttributesForWork(
         workId: String,
-        workAttributes: List<WorkAttributeMusicBrainzModel>,
+        workAttributes: List<WorkAttributeMusicBrainzModel>?,
     ) {
         withTransaction {
-            workAttributes.forEach { workAttribute ->
+            workAttributes?.forEach { workAttribute ->
                 insert(
                     Work_attribute(
                         work_id = workId,

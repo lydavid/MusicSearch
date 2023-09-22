@@ -6,8 +6,8 @@ import lydavidmusicsearchdatadatabase.Instrument
 
 class InstrumentDao(
     database: Database,
-) {
-    private val transacter = database.instrumentQueries
+) : EntityDao {
+    override val transacter = database.instrumentQueries
 
     fun insert(instrument: InstrumentMusicBrainzModel) {
         instrument.run {

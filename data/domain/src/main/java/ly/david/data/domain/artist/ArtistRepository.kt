@@ -3,6 +3,7 @@ package ly.david.data.domain.artist
 import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -30,14 +31,18 @@ class ArtistRepository(
         }
 
         val artistMusicBrainzModel = musicBrainzApi.lookupArtist(artistId)
+        cache(artistMusicBrainzModel)
+        return lookupArtist(artistId)
+    }
+
+    private fun cache(artist: ArtistMusicBrainzModel) {
         artistDao.withTransaction {
-            artistDao.insert(artistMusicBrainzModel)
+            artistDao.insert(artist)
             relationRepository.insertAllUrlRelations(
-                entityId = artistId,
-                relationMusicBrainzModels = artistMusicBrainzModel.relations,
+                entityId = artist.id,
+                relationMusicBrainzModels = artist.relations,
             )
         }
-        return lookupArtist(artistId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

@@ -45,10 +45,6 @@ class ReleaseGroupRepository(
     private fun cache(releaseGroup: ReleaseGroupMusicBrainzModel) {
         releaseGroupDao.withTransaction {
             releaseGroupDao.insert(releaseGroup)
-//            artistCreditDao.insertArtistCredits(
-//                entityId = releaseGroup.id,
-//                artistCredits = releaseGroup.artistCredits,
-//            )
             relationRepository.insertAllUrlRelations(
                 entityId = releaseGroup.id,
                 relationMusicBrainzModels = releaseGroup.relations,

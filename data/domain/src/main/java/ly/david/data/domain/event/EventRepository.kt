@@ -2,6 +2,7 @@ package ly.david.data.domain.event
 
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -24,12 +25,18 @@ class EventRepository(
         }
 
         val eventMusicBrainzModel = musicBrainzApi.lookupEvent(eventId)
-        eventDao.insert(eventMusicBrainzModel)
-        relationRepository.insertAllUrlRelations(
-            entityId = eventId,
-            relationMusicBrainzModels = eventMusicBrainzModel.relations,
-        )
+        cache(eventMusicBrainzModel)
         return lookupEvent(eventId)
+    }
+
+    private fun cache(event: EventMusicBrainzModel) {
+        eventDao.withTransaction {
+            eventDao.insert(event)
+            relationRepository.insertAllUrlRelations(
+                entityId = event.id,
+                relationMusicBrainzModels = event.relations,
+            )
+        }
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

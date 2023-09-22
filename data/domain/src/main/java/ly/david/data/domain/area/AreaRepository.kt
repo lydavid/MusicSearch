@@ -36,11 +36,11 @@ class AreaRepository(
         }
 
         val areaMusicBrainzModel = musicBrainzApi.lookupArea(areaId)
-        insertAllModels(areaMusicBrainzModel)
+        cache(areaMusicBrainzModel)
         return lookupArea(areaId)
     }
 
-    private fun insertAllModels(area: AreaMusicBrainzModel) {
+    private fun cache(area: AreaMusicBrainzModel) {
         areaDao.withTransaction {
             areaDao.insert(area)
             countryCodeDao.insertCountryCodesForArea(

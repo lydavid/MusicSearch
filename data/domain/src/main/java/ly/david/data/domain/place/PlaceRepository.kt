@@ -2,6 +2,7 @@ package ly.david.data.domain.place
 
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -29,19 +30,25 @@ class PlaceRepository(
         }
 
         val placeMusicBrainzModel = musicBrainzApi.lookupPlace(placeId)
-        placeDao.insert(placeMusicBrainzModel)
-        placeMusicBrainzModel.area?.let { areaMusicBrainzModel ->
-            areaDao.insert(areaMusicBrainzModel)
-            areaPlaceDao.insert(
-                areaId = areaMusicBrainzModel.id,
-                placeId = placeId,
+        cache(placeMusicBrainzModel)
+        return lookupPlace(placeId)
+    }
+
+    private fun cache(place: PlaceMusicBrainzModel) {
+        placeDao.withTransaction {
+            placeDao.insert(place)
+            place.area?.let { areaMusicBrainzModel ->
+                areaDao.insert(areaMusicBrainzModel)
+                areaPlaceDao.insert(
+                    areaId = areaMusicBrainzModel.id,
+                    placeId = place.id,
+                )
+            }
+            relationRepository.insertAllUrlRelations(
+                entityId = place.id,
+                relationMusicBrainzModels = place.relations,
             )
         }
-        relationRepository.insertAllUrlRelations(
-            entityId = placeId,
-            relationMusicBrainzModels = placeMusicBrainzModel.relations,
-        )
-        return lookupPlace(placeId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

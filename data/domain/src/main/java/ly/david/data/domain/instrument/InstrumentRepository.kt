@@ -2,6 +2,7 @@ package ly.david.data.domain.instrument
 
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -24,12 +25,18 @@ class InstrumentRepository(
         }
 
         val instrumentMusicBrainzModel = musicBrainzApi.lookupInstrument(instrumentId)
-        instrumentDao.insert(instrumentMusicBrainzModel)
-        relationRepository.insertAllUrlRelations(
-            entityId = instrumentId,
-            relationMusicBrainzModels = instrumentMusicBrainzModel.relations,
-        )
+        cache(instrumentMusicBrainzModel)
         return lookupInstrument(instrumentId)
+    }
+
+    private fun cache(instrument: InstrumentMusicBrainzModel) {
+        instrumentDao.withTransaction {
+            instrumentDao.insert(instrument)
+            relationRepository.insertAllUrlRelations(
+                entityId = instrument.id,
+                relationMusicBrainzModels = instrument.relations,
+            )
+        }
     }
 
     // TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them

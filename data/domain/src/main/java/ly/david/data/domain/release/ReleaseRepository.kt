@@ -82,10 +82,6 @@ class ReleaseRepository(
 //                )
             }
             releaseDao.insert(release)
-//            artistCreditDao.insertArtistCredits(
-//                entityId = release.id,
-//                artistCredits = release.artistCredits,
-//            )
 
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.

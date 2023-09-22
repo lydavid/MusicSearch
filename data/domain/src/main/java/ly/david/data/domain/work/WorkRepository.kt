@@ -3,6 +3,7 @@ package ly.david.data.domain.work
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
@@ -32,18 +33,22 @@ class WorkRepository(
         }
 
         val workMusicBrainzModel = musicBrainzApi.lookupWork(workId = workId)
+        cache(workMusicBrainzModel)
+        return lookupWork(workId)
+    }
+
+    private fun cache(work: WorkMusicBrainzModel) {
         workDao.withTransaction {
-            workDao.insert(workMusicBrainzModel)
+            workDao.insert(work)
             workAttributeDao.insertAttributesForWork(
-                workId = workId,
-                workMusicBrainzModel.attributes.orEmpty()
+                workId = work.id,
+                work.attributes,
             )
             relationRepository.insertAllUrlRelations(
-                entityId = workId,
-                relationMusicBrainzModels = workMusicBrainzModel.relations,
+                entityId = work.id,
+                relationMusicBrainzModels = work.relations,
             )
         }
-        return lookupWork(workId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

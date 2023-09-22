@@ -3,6 +3,7 @@ package ly.david.data.domain.series
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.SeriesDao
@@ -26,14 +27,18 @@ class SeriesRepository(
         }
 
         val seriesMusicBrainzModel = musicBrainzApi.lookupSeries(seriesId)
+        cache(seriesMusicBrainzModel)
+        return lookupSeries(seriesId)
+    }
+
+    private fun cache(series: SeriesMusicBrainzModel) {
         seriesDao.withTransaction {
-            seriesDao.insert(seriesMusicBrainzModel)
+            seriesDao.insert(series)
             relationRepository.insertAllUrlRelations(
-                entityId = seriesId,
-                relationMusicBrainzModels = seriesMusicBrainzModel.relations,
+                entityId = series.id,
+                relationMusicBrainzModels = series.relations,
             )
         }
-        return lookupSeries(seriesId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

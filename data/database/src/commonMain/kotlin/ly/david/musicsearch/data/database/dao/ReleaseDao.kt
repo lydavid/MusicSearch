@@ -44,13 +44,10 @@ class ReleaseDao(
                 entityId = id,
                 artistCredits = artistCredits,
             )
-
-            // TODO: we don't want paged releases to insert these
-            //  well, the paged releases shouldn't even have these in their mb models, so it should be fine
-//            mediumDao.insertAll(
-//                releaseId = id,
-//                media = media,
-//            )
+            mediumDao.insertAll(
+                releaseId = id,
+                media = media,
+            )
         }
     }
 

@@ -41,10 +41,6 @@ class RecordingRepository(
     private fun cache(recording: RecordingMusicBrainzModel) {
         recordingDao.withTransaction {
             recordingDao.insert(recording)
-//            artistCreditDao.insertArtistCredits(
-//                entityId = recording.id,
-//                artistCredits = recording.artistCredits,
-//            )
             relationRepository.insertAllUrlRelations(
                 entityId = recording.id,
                 relationMusicBrainzModels = recording.relations,
