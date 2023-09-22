@@ -50,5 +50,5 @@ abstract class RoomTrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
     abstract fun getTracksByRelease(
         releaseId: String,
         query: String = "%%",
-    ): PagingSource<Int, TrackForListItem>
+    ): PagingSource<Int, RoomTrackForListItem>
 }

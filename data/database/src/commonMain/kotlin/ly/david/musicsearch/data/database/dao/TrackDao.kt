@@ -1,7 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.paging.PagingSource
+import app.cash.sqldelight.paging3.QueryPagingSource
+import kotlinx.coroutines.Dispatchers
+import ly.david.data.core.TrackForListItem
 import ly.david.data.musicbrainz.TrackMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.mapper.mapToTrackForListItem
 import lydavidmusicsearchdatadatabase.Track
 
 class TrackDao(
@@ -47,6 +52,35 @@ class TrackDao(
         }
     }
 
-//    fun getTrack(trackId: String): Track_group? =
-//        transacter.getTrack(trackId).executeAsOneOrNull()
+    // TODO: unused atm cause we delete the release to cascade delete its media/tracks
+    //  should be used once we decouple that
+    fun deleteTracksByRelease(releaseId: String) {
+        transacter.deleteTracksByRelease(releaseId)
+    }
+
+    fun getNumberOfTracksByRelease(releaseId: String): Int =
+        transacter.getNumberOfTracksByRelease(
+            releaseId = releaseId,
+            query = "%%",
+        ).executeAsOne().toInt()
+
+    fun getTracksByRelease(
+        releaseId: String,
+        query: String,
+    ): PagingSource<Int, TrackForListItem> = QueryPagingSource(
+        countQuery = transacter.getNumberOfTracksByRelease(
+            releaseId = releaseId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getTracksByRelease(
+            releaseId = releaseId,
+            query = query,
+            limit = limit,
+            offset = offset,
+            mapper = ::mapToTrackForListItem,
+        )
+    }
 }

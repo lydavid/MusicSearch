@@ -10,7 +10,7 @@ internal fun mapToRecordingForListItem(
     length: Int?,
     video: Boolean,
     isrcs: List<String>?,
-    formattedArtistCreditNames: String?,
+    formattedArtistCreditNames: String,
 ) = RecordingForListItem(
     id = id,
     name = name,
@@ -19,5 +19,5 @@ internal fun mapToRecordingForListItem(
     length = length,
     isrcs = isrcs,
     video = video,
-    formattedArtistCreditNames = formattedArtistCreditNames.orEmpty()
+    formattedArtistCreditNames = formattedArtistCreditNames,
 )

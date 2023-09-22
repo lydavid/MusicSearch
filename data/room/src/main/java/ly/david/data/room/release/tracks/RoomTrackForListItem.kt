@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import ly.david.data.room.RoomModel
 
-data class TrackForListItem(
+data class RoomTrackForListItem(
     @Embedded
     val track: TrackRoomModel,
 

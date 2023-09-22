@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.MediumMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
+import lydavidmusicsearchdatadatabase.Medium
 
 class MediumDao(
     database: Database,
@@ -46,6 +47,6 @@ class MediumDao(
         return transacter.lastInsertRowId().executeAsOne()
     }
 
-//    fun getMedium(mediumId: String): Medium_group? =
-//        transacter.getMedium(mediumId).executeAsOneOrNull()
+    fun getMediumForTrack(trackId: String): Medium? =
+        transacter.getMediumForTrack(trackId).executeAsOneOrNull()
 }

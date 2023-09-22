@@ -3,11 +3,11 @@ import kotlin.Int;
 CREATE TABLE IF NOT EXISTS track (
   `id` TEXT PRIMARY KEY NOT NULL,
   `medium_id` INTEGER NOT NULL,
+  `recording_id` TEXT NOT NULL,
   `position` INTEGER AS Int NOT NULL,
   `number` TEXT NOT NULL,
   `title` TEXT NOT NULL,
   `length` INTEGER AS Int,
-  `recording_id` TEXT NOT NULL,
 
   FOREIGN KEY(`medium_id`) REFERENCES `medium`(`id`)
   ON UPDATE CASCADE
@@ -18,6 +18,15 @@ insert:
 INSERT OR IGNORE INTO track
 VALUES ?;
 
+deleteTracksByRelease:
+DELETE FROM track WHERE id IN (
+  SELECT t.id
+  FROM track t
+  INNER JOIN medium m ON t.medium_id = m.id
+  INNER JOIN release r ON m.release_id = r.id
+  WHERE r.id = :releaseId
+);
+
 getNumberOfTracksByRelease:
 SELECT IFNULL(
   (
@@ -25,8 +34,8 @@ SELECT IFNULL(
     FROM track t
     INNER JOIN medium m ON t.medium_id = m.id
     INNER JOIN release r ON m.release_id = r.id
-    LEFT JOIN artist_credit_entity acr ON acr.entity_id = t.id
-    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = t.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
     WHERE r.id = :releaseId
     AND (
       t.title LIKE :query
@@ -42,8 +51,8 @@ SELECT t.*, ac.name AS artist_credits
 FROM track t
 INNER JOIN medium m ON t.medium_id = m.id
 INNER JOIN release r ON m.release_id = r.id
-LEFT JOIN artist_credit_entity acr ON acr.entity_id = t.id
-LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = t.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 WHERE r.id = :releaseId
 AND (
   t.title LIKE :query

@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Track
-import ly.david.data.room.release.tracks.TrackForListItem
+import ly.david.data.core.TrackForListItem
 
 data class TrackListItemModel(
     override val id: String,
@@ -11,18 +11,17 @@ data class TrackListItemModel(
     override val length: Int? = null,
     val mediumId: Long = 0,
     val recordingId: String = "",
-
     val formattedArtistCredits: String? = null,
 ) : ListItemModel(), Track
 
 fun TrackForListItem.toTrackListItemModel() =
     TrackListItemModel(
-        id = track.id,
-        position = track.position,
-        number = track.number,
-        title = track.title,
-        length = track.length,
-        mediumId = track.mediumId,
-        recordingId = track.recordingId,
-        formattedArtistCredits = artistCreditNames
+        id = id,
+        position = position,
+        number = number,
+        title = title,
+        length = length,
+        mediumId = mediumId,
+        recordingId = recordingId,
+        formattedArtistCredits = formattedArtistCreditNames,
     )

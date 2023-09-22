@@ -1,6 +1,6 @@
 import kotlin.Int;
 
-CREATE TABLE IF NOT EXISTS release (
+CREATE TABLE IF NOT EXISTS `release` (
   `id` TEXT PRIMARY KEY NOT NULL,
   `name` TEXT NOT NULL,
   `disambiguation` TEXT NOT NULL,
@@ -19,8 +19,11 @@ CREATE TABLE IF NOT EXISTS release (
 );
 
 insert:
-INSERT OR IGNORE INTO release
+INSERT OR IGNORE INTO `release`
 VALUES ?;
 
+deleteRelease:
+DELETE FROM `release` WHERE id = :releaseId;
+
 getRelease:
-SELECT * FROM release WHERE id = ?;
+SELECT * FROM `release` WHERE id = ?;

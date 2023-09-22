@@ -13,18 +13,6 @@ class ArtistReleaseGroupDao(
 ) : EntityDao {
     override val transacter = database.artist_release_groupQueries
 
-    fun insert(
-        artistId: String,
-        releaseGroupId: String,
-    ) {
-        transacter.insert(
-            Artist_release_group(
-                artist_id = artistId,
-                release_group_id = releaseGroupId,
-            )
-        )
-    }
-
     fun insertAll(
         artistId: String,
         releaseGroupIds: List<String>,
@@ -37,6 +25,18 @@ class ArtistReleaseGroupDao(
                 )
             }
         }
+    }
+
+    private fun insert(
+        artistId: String,
+        releaseGroupId: String,
+    ) {
+        transacter.insert(
+            Artist_release_group(
+                artist_id = artistId,
+                release_group_id = releaseGroupId,
+            )
+        )
     }
 
     fun deleteReleaseGroupsByArtist(artistId: String) {

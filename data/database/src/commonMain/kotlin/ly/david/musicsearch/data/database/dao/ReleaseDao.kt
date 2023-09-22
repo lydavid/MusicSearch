@@ -51,6 +51,10 @@ class ReleaseDao(
         }
     }
 
+    fun delete(releaseId: String) {
+        transacter.deleteRelease(releaseId)
+    }
+
     fun getRelease(releaseId: String): Release? =
         transacter.getRelease(releaseId).executeAsOneOrNull()
 }
