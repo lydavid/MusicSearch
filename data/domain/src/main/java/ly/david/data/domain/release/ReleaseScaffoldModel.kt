@@ -1,19 +1,15 @@
 package ly.david.data.domain.release
 
-import ly.david.data.core.Release
-import ly.david.data.core.getFormatsForDisplay
-import ly.david.data.core.getTracksForDisplay
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
-import ly.david.data.domain.listitem.toAreaListItemModel
-import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.listitem.toReleaseGroupListItemModel
-import ly.david.data.room.release.ReleaseWithAllData
+import lydavidmusicsearchdatadatabase.Artist_credit_name
+import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Release
 
 data class ReleaseScaffoldModel(
     override val id: String,
@@ -45,33 +41,35 @@ data class ReleaseScaffoldModel(
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
-) : Release
+) : ly.david.data.core.Release
 
-internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
-    id = release.id,
-    name = release.name,
-    disambiguation = release.disambiguation,
-    date = release.date,
-    barcode = release.barcode,
-    status = release.status,
-    statusId = release.statusId,
-    countryCode = release.countryCode,
-    packaging = release.packaging,
-    packagingId = release.packagingId,
-    asin = release.asin,
-    quality = release.quality,
-    coverArtArchive = release.coverArtArchive.toCoverArtArchiveUiModel(),
-    textRepresentation = release.textRepresentation?.toTextRepresentationUiModel(),
-    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
-    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-    imageUrl = largeUrl,
-    areas = areas.map { it.toAreaListItemModel() },
-    artistCredits = artistCreditNamesWithEntities.map {
-        it.artistCreditNameRoomModel.toArtistCreditUiModel()
-    },
-    releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
-    labels = labels.map { it.toLabelListItemModel() },
-    urls = urls.map { it.relation.toRelationListItemModel() },
-    releaseLength = releaseLength,
-    hasNullLength = hasNullLength
+internal fun Release.toReleaseScaffoldModel(
+    artistCreditNames: List<Artist_credit_name>,
+    imageUrl: String?,
+    urls: List<Mb_relation>,
+) = ReleaseScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    date = date,
+    barcode = barcode,
+    status = status,
+    statusId = status_id,
+    countryCode = country_code,
+    packaging = packaging,
+    packagingId = packaging_id,
+    asin = asin,
+    quality = quality,
+//    coverArtArchive = release.coverArtArchive.toCoverArtArchiveUiModel(),
+//    textRepresentation = release.textRepresentation?.toTextRepresentationUiModel(),
+//    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
+//    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
+    imageUrl = imageUrl,
+//    areas = areas.map { it.toAreaListItemModel() },
+    artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+//    releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
+//    labels = labels.map { it.toLabelListItemModel() },
+    urls = urls.map { it.toRelationListItemModel() },
+//    releaseLength = releaseLength,
+//    hasNullLength = hasNullLength
 )

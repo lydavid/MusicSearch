@@ -24,19 +24,19 @@ import ly.david.data.domain.listitem.toTrackListItemModel
 import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.release.ReleaseRepository
-import ly.david.data.room.release.ReleaseDao
-import ly.david.data.room.release.tracks.MediumDao
+import ly.david.data.room.release.RoomReleaseDao
 import ly.david.data.room.release.tracks.MediumRoomModel
-import ly.david.data.room.release.tracks.TrackDao
+import ly.david.data.room.release.tracks.RoomMediumDao
+import ly.david.data.room.release.tracks.RoomTrackDao
 import ly.david.data.room.release.tracks.TrackForListItem
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class TracksByReleaseViewModel(
     private val repository: ReleaseRepository,
-    private val releaseDao: ReleaseDao,
-    private val mediumDao: MediumDao,
-    private val trackDao: TrackDao,
+    private val releaseDao: RoomReleaseDao,
+    private val mediumDao: RoomMediumDao,
+    private val trackDao: RoomTrackDao,
 ) : ViewModel() {
 
     private data class ViewModelState(

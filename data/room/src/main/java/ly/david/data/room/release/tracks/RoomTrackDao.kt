@@ -9,7 +9,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.artist.credit.ArtistCreditDao
 
 @Dao
-abstract class TrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
+abstract class RoomTrackDao : BaseDao<TrackRoomModel>(), ArtistCreditDao {
 
     companion object {
         private const val TRACKS_IN_RELEASE = """

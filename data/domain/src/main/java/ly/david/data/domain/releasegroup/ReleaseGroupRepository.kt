@@ -4,6 +4,7 @@ import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
@@ -25,7 +26,10 @@ class ReleaseGroupRepository(
         val largeImageUrl = imageUrlDao.getLargeUrlForEntity(releaseGroupId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
-        if (releaseGroup != null && hasUrlsBeenSavedForEntity) {
+        if (releaseGroup != null &&
+            artistCreditNames.isNotEmpty() &&
+            hasUrlsBeenSavedForEntity
+        ) {
             return releaseGroup.toReleaseGroupScaffoldModel(
                 artistCreditNames = artistCreditNames,
                 imageUrl = largeImageUrl,
@@ -34,14 +38,22 @@ class ReleaseGroupRepository(
         }
 
         val releaseGroupMusicBrainzModel = musicBrainzApi.lookupReleaseGroup(releaseGroupId)
+        cache(releaseGroupMusicBrainzModel)
+        return lookupReleaseGroup(releaseGroupId)
+    }
+
+    private fun cache(releaseGroup: ReleaseGroupMusicBrainzModel) {
         releaseGroupDao.withTransaction {
-            releaseGroupDao.insert(releaseGroupMusicBrainzModel)
+            releaseGroupDao.insert(releaseGroup)
+//            artistCreditDao.insertArtistCredits(
+//                entityId = releaseGroup.id,
+//                artistCredits = releaseGroup.artistCredits,
+//            )
             relationRepository.insertAllUrlRelations(
-                entityId = releaseGroupId,
-                relationMusicBrainzModels = releaseGroupMusicBrainzModel.relations,
+                entityId = releaseGroup.id,
+                relationMusicBrainzModels = releaseGroup.relations,
             )
         }
-        return lookupReleaseGroup(releaseGroupId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

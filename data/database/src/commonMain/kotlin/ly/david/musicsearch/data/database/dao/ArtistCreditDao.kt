@@ -11,8 +11,8 @@ import lydavidmusicsearchdatadatabase.Artist_credit_name
 class ArtistCreditDao(
     database: Database,
     private val logger: Logger,
-) {
-    private val artistCreditQueries = database.artist_creditQueries
+) : EntityDao {
+    override val transacter = database.artist_creditQueries
     private val artistCreditNameQueries = database.artist_credit_nameQueries
     private val artistCreditEntityQueries = database.artist_credit_entityQueries
 
@@ -20,12 +20,14 @@ class ArtistCreditDao(
         entityId: String,
         artistCredits: List<ArtistCreditMusicBrainzModel>?,
     ) {
-        artistCreditQueries.transaction {
+        if (artistCredits.isNullOrEmpty()) return
+
+        withTransaction {
             val artistCreditName = artistCredits.getDisplayNames()
             var artistCreditId = insertArtistCredit(artistCreditName)
             logger.e(Exception("artistCreditId=$artistCreditId"))
             if (artistCreditId == INSERTION_FAILED_DUE_TO_CONFLICT) {
-                artistCreditId = artistCreditQueries.getArtistCreditByName(artistCreditName).executeAsOne().id
+                artistCreditId = transacter.getArtistCreditByName(artistCreditName).executeAsOne().id
             } else {
                 insertAllArtistCreditNames(artistCredits.toArtistCreditNames(artistCreditId))
             }
@@ -37,18 +39,13 @@ class ArtistCreditDao(
         }
     }
 
-    fun getArtistCreditNamesForEntity(
-        entityId: String,
-    ): List<Artist_credit_name> =
-        artistCreditNameQueries.getArtistCreditNamesForEntity(entityId).executeAsList()
-
     private fun insertArtistCredit(name: String): Long {
         return try {
-            artistCreditQueries.insert(
+            transacter.insert(
                 id = 0,
                 name = name,
             )
-            artistCreditQueries.lastInsertRowId().executeAsOne()
+            transacter.lastInsertRowId().executeAsOne()
         } catch (ex: Exception) {
             INSERTION_FAILED_DUE_TO_CONFLICT
         }
@@ -71,6 +68,11 @@ class ArtistCreditDao(
             )
         )
     }
+
+    fun getArtistCreditNamesForEntity(
+        entityId: String,
+    ): List<Artist_credit_name> =
+        artistCreditNameQueries.getArtistCreditNamesForEntity(entityId).executeAsList()
 }
 
 /**
@@ -80,7 +82,7 @@ class ArtistCreditDao(
  *
  * The receiver must be a list because we need its index.
  */
-internal fun List<ArtistCreditMusicBrainzModel>?.toArtistCreditNames(
+private fun List<ArtistCreditMusicBrainzModel>?.toArtistCreditNames(
     artistCreditId: Long,
 ): List<Artist_credit_name> =
     this?.mapIndexed { index, artistCredit ->

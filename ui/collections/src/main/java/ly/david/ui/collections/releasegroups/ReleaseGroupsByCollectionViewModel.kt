@@ -36,8 +36,8 @@ internal class ReleaseGroupsByCollectionViewModel(
         releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     ) {
         collectionEntityDao.insertAll(
-            entityId,
-            releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
+            collectionId = entityId,
+            entityIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
         )
     }
 

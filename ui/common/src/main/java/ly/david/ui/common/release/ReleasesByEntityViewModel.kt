@@ -7,7 +7,7 @@ import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.domain.listitem.toReleaseListItemModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.release.RoomReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
 import ly.david.data.room.release.toRoomModel
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
@@ -17,7 +17,7 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class ReleasesByEntityViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
-    private val releaseDao: ReleaseDao,
+    private val releaseDao: RoomReleaseDao,
     private val pagedList: ReleasesPagedList,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,

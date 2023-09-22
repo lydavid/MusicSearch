@@ -9,8 +9,11 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Medium
 import lydavidmusicsearchdatadatabase.Recording
+import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
+import lydavidmusicsearchdatadatabase.Track
 import lydavidmusicsearchdatadatabase.Work
 
 fun createDatabase(driver: SqlDriver): Database {
@@ -45,6 +48,17 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         workAdapter = Work.Adapter(
             iswcsAdapter = ListStringColumnAdapter,
+        ),
+        releaseAdapter = Release.Adapter(
+            cover_art_countAdapter = IntColumnAdapter,
+        ),
+        mediumAdapter = Medium.Adapter(
+            positionAdapter = IntColumnAdapter,
+            track_countAdapter = IntColumnAdapter,
+        ),
+        trackAdapter = Track.Adapter(
+            positionAdapter = IntColumnAdapter,
+            lengthAdapter = IntColumnAdapter,
         )
     )
 }

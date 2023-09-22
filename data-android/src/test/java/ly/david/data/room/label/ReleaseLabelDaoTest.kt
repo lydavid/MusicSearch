@@ -5,8 +5,8 @@ import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.test.runTest
 import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.room.label.releases.ReleaseLabel
-import ly.david.data.room.label.releases.ReleaseLabelDao
-import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.label.releases.RoomReleaseLabelDao
+import ly.david.data.room.release.RoomReleaseDao
 import ly.david.data.room.release.ReleaseRoomModel
 import ly.david.data.room.testDatabaseModule
 import org.hamcrest.CoreMatchers.`is`
@@ -25,8 +25,8 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 internal class ReleaseLabelDaoTest : KoinTest {
 
-    private val releaseLabelDao: ReleaseLabelDao by inject()
-    private val releaseDao: ReleaseDao by inject()
+    private val releaseLabelDao: RoomReleaseLabelDao by inject()
+    private val releaseDao: RoomReleaseDao by inject()
     private val labelDao: RoomLabelDao by inject()
 
     @Before

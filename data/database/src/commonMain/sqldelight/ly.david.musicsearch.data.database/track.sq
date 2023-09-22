@@ -1,0 +1,53 @@
+import kotlin.Int;
+
+CREATE TABLE IF NOT EXISTS track (
+  `id` TEXT PRIMARY KEY NOT NULL,
+  `medium_id` INTEGER NOT NULL,
+  `position` INTEGER AS Int NOT NULL,
+  `number` TEXT NOT NULL,
+  `title` TEXT NOT NULL,
+  `length` INTEGER AS Int,
+  `recording_id` TEXT NOT NULL,
+
+  FOREIGN KEY(`medium_id`) REFERENCES `medium`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+insert:
+INSERT OR IGNORE INTO track
+VALUES ?;
+
+getNumberOfTracksByRelease:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM track t
+    INNER JOIN medium m ON t.medium_id = m.id
+    INNER JOIN release r ON m.release_id = r.id
+    LEFT JOIN artist_credit_entity acr ON acr.entity_id = t.id
+    LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE r.id = :releaseId
+    AND (
+      t.title LIKE :query
+      OR t.number LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getTracksByRelease:
+SELECT t.*, ac.name AS artist_credits
+FROM track t
+INNER JOIN medium m ON t.medium_id = m.id
+INNER JOIN release r ON m.release_id = r.id
+LEFT JOIN artist_credit_entity acr ON acr.entity_id = t.id
+LEFT JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+WHERE r.id = :releaseId
+AND (
+  t.title LIKE :query
+  OR t.number LIKE :query
+  OR ac.name LIKE :query
+)
+LIMIT :limit OFFSET :offset;

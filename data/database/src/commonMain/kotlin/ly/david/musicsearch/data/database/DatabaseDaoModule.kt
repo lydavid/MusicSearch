@@ -17,12 +17,15 @@ import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.MbidImageDao
+import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingWorkDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
+import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
 import ly.david.musicsearch.data.database.dao.WorkDao
 import org.koin.dsl.module
@@ -44,12 +47,15 @@ val databaseDaoModule = module {
     factory { InstrumentDao(get()) }
     factory { LabelDao(get()) }
     factory<ImageUrlDao> { MbidImageDao(get()) }
+    factory { MediumDao(get(), get()) }
     factory { PlaceDao(get()) }
     factory { RecordingDao(get(), get()) }
     factory { RecordingWorkDao(get()) }
     factory { RelationDao(get()) }
+    factory { ReleaseDao(get(), get(), get()) }
     factory { ReleaseGroupDao(get(), get()) }
     factory { SeriesDao(get()) }
+    factory { TrackDao(get(), get()) }
     factory { WorkAttributeDao(get()) }
     factory { WorkDao(get()) }
 }

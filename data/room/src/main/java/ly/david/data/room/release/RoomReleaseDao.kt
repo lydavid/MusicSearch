@@ -8,7 +8,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.artist.credit.ArtistCreditDao
 
 @Dao
-abstract class ReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
+abstract class RoomReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
 
     @Transaction
     open suspend fun insertAllReleasesWithArtistCredits(releases: List<ReleaseMusicBrainzModel>) {

@@ -10,7 +10,7 @@ import ly.david.data.room.release.ReleaseForListItem
 // TODO: put this in release group dao? only used by ReleaseGroupRepository
 //  artist should hold release groups by artist
 @Dao
-abstract class ReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
+abstract class RoomReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
 
     companion object {
         private const val RELEASES_BY_RELEASE_GROUP = """

@@ -13,26 +13,26 @@ import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
 import ly.david.data.room.history.search.SearchHistoryDao
 import ly.david.data.room.image.MbidImageDao
 import ly.david.data.room.label.RoomLabelDao
-import ly.david.data.room.label.releases.ReleaseLabelDao
+import ly.david.data.room.label.releases.RoomReleaseLabelDao
 import ly.david.data.room.place.RoomPlaceDao
 import ly.david.data.room.recording.releases.RecordingReleaseDao
 import ly.david.data.room.relation.RoomRelationDao
-import ly.david.data.room.release.ReleaseDao
-import ly.david.data.room.release.tracks.MediumDao
-import ly.david.data.room.release.tracks.TrackDao
+import ly.david.data.room.release.RoomReleaseDao
+import ly.david.data.room.release.tracks.RoomMediumDao
+import ly.david.data.room.release.tracks.RoomTrackDao
 import ly.david.data.room.releasegroup.RoomReleaseGroupDao
-import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
+import ly.david.data.room.releasegroup.releases.RoomReleaseReleaseGroupDao
 
 interface MusicSearchDatabase {
     fun getArtistDao(): RoomArtistDao
     fun getArtistReleaseDao(): ArtistReleaseDao
     fun getArtistReleaseGroupDao(): RoomArtistReleaseGroupDao
     fun getReleaseGroupDao(): RoomReleaseGroupDao
-    fun getReleaseReleaseGroupDao(): ReleaseReleaseGroupDao
+    fun getReleaseReleaseGroupDao(): RoomReleaseReleaseGroupDao
 
-    fun getReleaseDao(): ReleaseDao
-    fun getMediumDao(): MediumDao
-    fun getTrackDao(): TrackDao
+    fun getReleaseDao(): RoomReleaseDao
+    fun getMediumDao(): RoomMediumDao
+    fun getTrackDao(): RoomTrackDao
 
     fun getRecordingReleaseDao(): RecordingReleaseDao
 
@@ -42,7 +42,7 @@ interface MusicSearchDatabase {
     fun getPlaceDao(): RoomPlaceDao
 
     fun getLabelDao(): RoomLabelDao
-    fun getReleaseLabelDao(): ReleaseLabelDao
+    fun getReleaseLabelDao(): RoomReleaseLabelDao
 
     fun getEventDao(): RoomEventDao
 

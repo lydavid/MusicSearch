@@ -7,7 +7,7 @@ import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.recording.releases.RecordingRelease
 import ly.david.data.room.recording.releases.RecordingReleaseDao
-import ly.david.data.room.release.ReleaseDao
+import ly.david.data.room.release.RoomReleaseDao
 import ly.david.data.room.release.ReleaseForListItem
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
@@ -19,7 +19,7 @@ internal class ReleasesByRecordingViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val recordingReleaseDao: RecordingReleaseDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    releaseDao: ReleaseDao,
+    releaseDao: RoomReleaseDao,
     pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
     browseEntityCountDao = browseEntityCountDao,

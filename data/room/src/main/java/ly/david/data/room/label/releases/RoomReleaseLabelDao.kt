@@ -8,7 +8,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.release.ReleaseForListItem
 
 @Dao
-abstract class ReleaseLabelDao : BaseDao<ReleaseLabel>() {
+abstract class RoomReleaseLabelDao : BaseDao<ReleaseLabel>() {
 
     companion object {
         private const val RELEASES_BY_LABEL = """
