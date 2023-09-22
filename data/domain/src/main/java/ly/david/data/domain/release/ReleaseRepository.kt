@@ -64,7 +64,6 @@ class ReleaseRepository(
             )
         }
 
-        // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApi.lookupRelease(releaseId)
         cache(releaseMusicBrainzModel)
         return lookupRelease(releaseId)
