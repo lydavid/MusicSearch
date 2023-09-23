@@ -6,9 +6,7 @@ import ly.david.data.room.BaseDao
 
 @Dao
 abstract class RoomCollectionEntityDao :
-    BaseDao<CollectionEntityRoomModel>(),
-    ReleasesByCollectionDao,
-    ReleaseGroupsByCollectionDao {
+    BaseDao<CollectionEntityRoomModel>() {
 
     @Query("DELETE FROM collection_entity WHERE id = :collectionId")
     abstract suspend fun deleteAllFromCollection(collectionId: String)
