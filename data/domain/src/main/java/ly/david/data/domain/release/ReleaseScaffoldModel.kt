@@ -25,8 +25,8 @@ data class ReleaseScaffoldModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
-    override val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
-    override val textRepresentation: TextRepresentationUiModel? = null,
+    val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
+    val textRepresentation: TextRepresentationUiModel? = null,
     val imageUrl: String? = null,
 
     val formattedFormats: String? = null,

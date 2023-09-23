@@ -2,7 +2,7 @@ package ly.david.mbjc.ui.artist.stats
 
 import androidx.lifecycle.ViewModel
 import ly.david.data.room.artist.releasegroups.RoomArtistReleaseGroupDao
-import ly.david.data.room.artist.releases.ArtistReleaseDao
+import ly.david.data.room.artist.releases.RoomArtistReleaseDao
 import ly.david.data.room.relation.RoomRelationDao
 import ly.david.ui.stats.RelationsStats
 import ly.david.ui.stats.ReleaseGroupsStats
@@ -12,7 +12,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class ArtistStatsViewModel(
     private val artistReleaseGroupDao: RoomArtistReleaseGroupDao,
-    private val artistReleaseDao: ArtistReleaseDao,
+    private val artistReleaseDao: RoomArtistReleaseDao,
     override val relationDao: RoomRelationDao,
 ) : ViewModel(),
     ReleaseGroupsStats,

@@ -8,16 +8,16 @@ interface Release : NameWithDisambiguation {
     override val name: String
     override val disambiguation: String
     val date: String?
-    val status: String?
     val barcode: String?
-    val statusId: String?
-    val countryCode: String?
-    val packaging: String?
-    val packagingId: String?
     val asin: String?
     val quality: String?
-    val coverArtArchive: CoverArtArchive
-    val textRepresentation: TextRepresentation?
+    val countryCode: String?
+    val status: String?
+    val statusId: String?
+    val packaging: String?
+    val packagingId: String?
+//    val coverArtArchive: CoverArtArchive
+//    val textRepresentation: TextRepresentation?
 //    val releaseEvents: List<ReleaseEvent>? = null,
 
 //    val media: List<Medium>? = null,

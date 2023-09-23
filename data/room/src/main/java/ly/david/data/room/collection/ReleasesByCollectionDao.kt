@@ -3,7 +3,7 @@ package ly.david.data.room.collection
 import androidx.paging.PagingSource
 import androidx.room.Query
 import androidx.room.Transaction
-import ly.david.data.room.release.ReleaseForListItem
+import ly.david.data.room.release.RoomReleaseForListItem
 
 interface ReleasesByCollectionDao {
 
@@ -45,7 +45,7 @@ interface ReleasesByCollectionDao {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    fun getReleasesByCollection(collectionId: String): PagingSource<Int, ReleaseForListItem>
+    fun getReleasesByCollection(collectionId: String): PagingSource<Int, RoomReleaseForListItem>
 
     @Transaction
     @Query(
@@ -58,5 +58,5 @@ interface ReleasesByCollectionDao {
     fun getReleasesByCollectionFiltered(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem>
+    ): PagingSource<Int, RoomReleaseForListItem>
 }

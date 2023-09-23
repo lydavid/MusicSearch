@@ -4,9 +4,11 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import ly.david.data.core.RecordingForListItem
+import ly.david.data.core.ReleaseForListItem
 import ly.david.data.core.ReleaseGroupForListItem
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
+import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Artist
@@ -191,6 +193,26 @@ class CollectionEntityDao(
             limit = limit,
             offset = offset,
             mapper = ::mapToRecordingForListItem,
+        )
+    }
+
+    fun getReleasesByCollection(
+        collectionId: String,
+        query: String,
+    ): PagingSource<Int, ReleaseForListItem> = QueryPagingSource(
+        countQuery = transacter.getNumberOfReleasesByCollection(
+            collectionId = collectionId,
+            query = query,
+        ),
+        transacter = transacter,
+        context = Dispatchers.IO,
+    ) { limit, offset ->
+        transacter.getReleasesByCollection(
+            collectionId = collectionId,
+            query = query,
+            limit = limit,
+            offset = offset,
+            mapper = ::mapToReleaseForListItem,
         )
     }
 

@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS `release` (
   `status_id` TEXT,
   `packaging` TEXT,
   `packaging_id` TEXT,
-  `cover_art_count` INTEGER AS Int NOT NULL,
   `script` TEXT,
-  `language` TEXT
+  `language` TEXT,
+  `cover_art_count` INTEGER AS Int NOT NULL
 );
 
 insert:

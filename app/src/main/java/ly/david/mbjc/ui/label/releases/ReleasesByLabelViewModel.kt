@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.label.releases.RoomReleaseLabelDao
 import ly.david.data.room.label.releases.toReleaseLabels
 import ly.david.data.room.release.RoomReleaseDao
-import ly.david.data.room.release.ReleaseForListItem
+import ly.david.data.room.release.RoomReleaseForListItem
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
@@ -56,7 +56,7 @@ internal class ReleasesByLabelViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem> = when {
+    ): PagingSource<Int, RoomReleaseForListItem> = when {
         query.isEmpty() -> {
             releaseLabelDao.getReleasesByLabel(entityId)
         }

@@ -39,9 +39,9 @@ data class ReleaseRoomModel(
     @ColumnInfo(name = "packaging_id") override val packagingId: String? = null,
 
     // TODO: might be able to remove this unless we care about the number of cover art it has
-    @Embedded override val coverArtArchive: CoverArtArchiveRoomModel = CoverArtArchiveRoomModel(),
+    @Embedded val coverArtArchive: CoverArtArchiveRoomModel = CoverArtArchiveRoomModel(),
 
-    @Embedded override val textRepresentation: TextRepresentationRoomModel? = null,
+    @Embedded val textRepresentation: TextRepresentationRoomModel? = null,
 ) : RoomModel, Release
 
 fun ReleaseMusicBrainzModel.toRoomModel() =

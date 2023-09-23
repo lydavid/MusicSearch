@@ -284,6 +284,49 @@ ORDER BY r.first_release_date, r.name
 LIMIT :limit OFFSET :offset;
 
 
+-- releases by collection
+
+getNumberOfReleasesByCollection:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM release r
+    INNER JOIN collection_entity ce ON r.id = ce.entity_id
+    INNER JOIN collection c ON c.id = ce.id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE c.id = :collectionId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.date LIKE :query
+      OR r.country_code LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByCollection:
+SELECT r.*, ac.name AS artist_credits, mi.thumbnail_url
+FROM release r
+INNER JOIN collection_entity ce ON r.id = ce.entity_id
+INNER JOIN collection c ON c.id = ce.id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = r.id
+WHERE c.id = :collectionId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;
+
+
 -- release groups by collection
 
 getNumberOfReleaseGroupsByCollection:

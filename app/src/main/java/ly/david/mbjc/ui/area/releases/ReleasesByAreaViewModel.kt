@@ -7,9 +7,9 @@ import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.data.room.area.releases.ReleaseCountryDao
-import ly.david.data.room.release.RoomReleaseDao
-import ly.david.data.room.release.ReleaseForListItem
+import ly.david.data.room.release.RoomReleaseForListItem
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -19,7 +19,7 @@ internal class ReleasesByAreaViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseCountryDao: ReleaseCountryDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    releaseDao: RoomReleaseDao,
+    releaseDao: ReleaseDao,
     pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
     browseEntityCountDao = browseEntityCountDao,
@@ -60,7 +60,7 @@ internal class ReleasesByAreaViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem> = when {
+    ): PagingSource<Int, RoomReleaseForListItem> = when {
         query.isEmpty() -> {
             releaseCountryDao.getReleasesByCountry(entityId)
         }

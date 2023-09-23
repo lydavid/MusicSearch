@@ -11,11 +11,11 @@ VALUES ?;
 
 deleteRecordingsByWork:
 DELETE FROM recording WHERE id IN (
-  SELECT e.id
-  FROM recording e
-  INNER JOIN recording_work ep ON e.id = ep.recording_id
-  INNER JOIN work p ON p.id = ep.work_id
-  WHERE p.id = :workId
+  SELECT r.id
+  FROM recording r
+  INNER JOIN recording_work rw ON r.id = rw.recording_id
+  INNER JOIN work w ON w.id = rw.work_id
+  WHERE w.id = :workId
 );
 
 getNumberOfRecordingsByWork:

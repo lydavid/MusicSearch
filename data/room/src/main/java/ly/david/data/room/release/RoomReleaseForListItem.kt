@@ -7,7 +7,7 @@ import ly.david.data.room.RoomModel
 import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.data.room.image.MbidImage
 
-data class ReleaseForListItem(
+data class RoomReleaseForListItem(
     @Embedded
     val release: ReleaseRoomModel,
 

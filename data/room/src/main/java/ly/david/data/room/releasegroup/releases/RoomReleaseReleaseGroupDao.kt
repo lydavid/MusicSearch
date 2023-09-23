@@ -5,10 +5,8 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.room.BaseDao
-import ly.david.data.room.release.ReleaseForListItem
+import ly.david.data.room.release.RoomReleaseForListItem
 
-// TODO: put this in release group dao? only used by ReleaseGroupRepository
-//  artist should hold release groups by artist
 @Dao
 abstract class RoomReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
 
@@ -79,7 +77,7 @@ abstract class RoomReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
         $ORDER_BY_DATE_AND_NAME
     """
     )
-    abstract fun getReleasesByReleaseGroup(releaseGroupId: String): PagingSource<Int, ReleaseForListItem>
+    abstract fun getReleasesByReleaseGroup(releaseGroupId: String): PagingSource<Int, RoomReleaseForListItem>
 
     @Transaction
     @Query(
@@ -92,5 +90,5 @@ abstract class RoomReleaseReleaseGroupDao : BaseDao<ReleaseReleaseGroup>() {
     abstract fun getReleasesByReleaseGroupFiltered(
         releaseGroupId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem>
+    ): PagingSource<Int, RoomReleaseForListItem>
 }

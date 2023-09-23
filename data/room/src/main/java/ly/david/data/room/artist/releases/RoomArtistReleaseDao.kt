@@ -5,10 +5,10 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import ly.david.data.room.BaseDao
-import ly.david.data.room.release.ReleaseForListItem
+import ly.david.data.room.release.RoomReleaseForListItem
 
 @Dao
-abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
+abstract class RoomArtistReleaseDao : BaseDao<ArtistRelease>() {
 
     companion object {
         private const val RELEASES_BY_ARTIST = """
@@ -78,7 +78,7 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
         $ORDER_BY_DATE_AND_TITLE
     """
     )
-    abstract fun getReleasesByArtist(artistId: String): PagingSource<Int, ReleaseForListItem>
+    abstract fun getReleasesByArtist(artistId: String): PagingSource<Int, RoomReleaseForListItem>
 
     @Transaction
     @Query(
@@ -91,5 +91,5 @@ abstract class ArtistReleaseDao : BaseDao<ArtistRelease>() {
     abstract fun getReleasesByArtistFiltered(
         artistId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem>
+    ): PagingSource<Int, RoomReleaseForListItem>
 }

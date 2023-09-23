@@ -1,0 +1,60 @@
+CREATE TABLE artist_release (
+  `artist_id` TEXT NOT NULL,
+  `release_id` TEXT NOT NULL,
+
+  PRIMARY KEY(`artist_id`, `release_id`)
+);
+
+insert:
+INSERT OR IGNORE INTO artist_release
+VALUES ?;
+
+
+deleteReleasesByArtist:
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN artist_release rrg ON r.id = rrg.release_id
+  INNER JOIN artist a ON a.id = rrg.artist_id
+  WHERE a.id = :artistId
+);
+
+getNumberOfReleasesByArtist:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM release r
+    INNER JOIN artist_release rrg ON r.id = rrg.release_id
+    INNER JOIN artist a ON a.id = rrg.artist_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE a.id = :artistId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.date LIKE :query
+      OR r.country_code LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByArtist:
+SELECT r.*, ac.name AS artist_credits, mi.thumbnail_url
+FROM release r
+INNER JOIN artist_release rrg ON r.id = rrg.release_id
+INNER JOIN artist a ON a.id = rrg.artist_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = a.id
+WHERE a.id = :artistId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;

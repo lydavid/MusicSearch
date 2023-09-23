@@ -1,0 +1,60 @@
+CREATE TABLE IF NOT EXISTS release_release_group (
+  `release_id` TEXT NOT NULL,
+  `release_group_id` TEXT NOT NULL,
+  
+  PRIMARY KEY(`release_id`, `release_group_id`)
+);
+
+insert:
+INSERT OR IGNORE INTO release_release_group
+VALUES ?;
+
+
+deleteReleasesByReleaseGroup:
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN release_release_group rrg ON r.id = rrg.release_id
+  INNER JOIN release_group rg ON rg.id = rrg.release_group_id
+  WHERE rg.id = :releaseGroupId
+);
+
+getNumberOfReleasesByReleaseGroup:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM release r
+    INNER JOIN release_release_group rrg ON r.id = rrg.release_id
+    INNER JOIN release_group rg ON rg.id = rrg.release_group_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE rg.id = :releaseGroupId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.date LIKE :query
+      OR r.country_code LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByReleaseGroup:
+SELECT r.*, ac.name AS artist_credits, mi.thumbnail_url
+FROM release r
+INNER JOIN release_release_group rrg ON r.id = rrg.release_id
+INNER JOIN release_group rg ON rg.id = rrg.release_group_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = rg.id
+WHERE rg.id = :releaseGroupId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;

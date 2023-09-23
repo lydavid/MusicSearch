@@ -2,22 +2,21 @@ package ly.david.ui.common.release
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ly.david.data.core.ReleaseForListItem
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.domain.listitem.toReleaseListItemModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.data.room.release.RoomReleaseDao
-import ly.david.data.room.release.ReleaseForListItem
-import ly.david.data.room.release.toRoomModel
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.ui.common.paging.BrowseEntityUseCase
 import ly.david.ui.common.paging.IPagedList
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class ReleasesByEntityViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
-    private val releaseDao: RoomReleaseDao,
+    private val releaseDao: ReleaseDao,
     private val pagedList: ReleasesPagedList,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
@@ -56,7 +55,7 @@ abstract class ReleasesByEntityViewModel(
         }
 
         val releaseMusicBrainzModels = response.musicBrainzModels
-        releaseDao.insertAll(releaseMusicBrainzModels.map { it.toRoomModel() })
+        releaseDao.insertAll(releaseMusicBrainzModels)
         insertAllLinkingModels(entityId, releaseMusicBrainzModels)
 
         return releaseMusicBrainzModels.size
