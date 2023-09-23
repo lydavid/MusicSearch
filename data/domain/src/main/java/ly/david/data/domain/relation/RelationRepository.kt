@@ -73,10 +73,6 @@ class RelationRepository(
         relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
     }
 
-    fun getNumberOfRelationsByEntity(entityId: String): Flow<Int> =
-        relationDao.getNumberOfRelationsByEntity(entityId)
-            .map { it.toInt() }
-
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
         relationDao.getCountOfEachRelationshipType(entityId).map {
             it.map { countOfEachRelationshipType: CountOfEachRelationshipType ->

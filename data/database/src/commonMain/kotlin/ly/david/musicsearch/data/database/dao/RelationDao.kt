@@ -3,7 +3,6 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -61,11 +60,6 @@ class RelationDao(
     ) {
         transacter.deleteRelationshipsExcludingUrlsByEntity(entityId)
     }
-
-    fun getNumberOfRelationsByEntity(entityId: String): Flow<Long> =
-        transacter.getNumberOfRelationsByEntity(entityId)
-            .asFlow()
-            .mapToOne(Dispatchers.IO)
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =
         transacter.countOfEachRelationshipType(entityId)

@@ -2,26 +2,26 @@ package ly.david.mbjc.ui.event.stats
 
 import androidx.lifecycle.ViewModel
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import ly.david.data.domain.relation.RelationRepository
+import kotlinx.coroutines.flow.mapLatest
+import ly.david.data.domain.relation.GetCountOfEachRelationshipTypeUseCase
 import ly.david.ui.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class EventStatsViewModel(
-    private val relationRepository: RelationRepository,
+    private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
 ) : ViewModel() {
 
-    fun getStats(entityId: String): Flow<Stats> = combine(
-        relationRepository.getNumberOfRelationsByEntity(entityId),
-        relationRepository.getCountOfEachRelationshipType(entityId)
-    ) { numberOfRelationsByEntity, countOfEachRelationshipType ->
-        Stats(
-            totalRelations = numberOfRelationsByEntity,
-            relationTypeCounts = countOfEachRelationshipType.toImmutableList(),
-        )
-    }
-        .distinctUntilChanged()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun getStats(entityId: String): Flow<Stats> =
+        getCountOfEachRelationshipTypeUseCase(entityId).mapLatest { relationTypeCounts ->
+            Stats(
+                totalRelations = relationTypeCounts.sumOf { it.count },
+                relationTypeCounts = relationTypeCounts.toImmutableList(),
+            )
+        }
+            .distinctUntilChanged()
 }
