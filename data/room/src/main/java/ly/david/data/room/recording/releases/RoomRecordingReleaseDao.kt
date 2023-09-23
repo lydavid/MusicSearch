@@ -8,7 +8,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.release.RoomReleaseForListItem
 
 @Dao
-abstract class RecordingReleaseDao : BaseDao<RecordingRelease>() {
+abstract class RoomRecordingReleaseDao : BaseDao<RecordingRelease>() {
 
     companion object {
         private const val RELEASES_BY_RECORDING = """

@@ -1,15 +1,14 @@
 package ly.david.mbjc.ui.recording.releases
 
 import androidx.paging.PagingSource
+import ly.david.data.core.ReleaseForListItem
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.recording.releases.RecordingRelease
-import ly.david.data.room.recording.releases.RecordingReleaseDao
-import ly.david.data.room.release.RoomReleaseDao
-import ly.david.data.room.release.RoomReleaseForListItem
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -19,7 +18,7 @@ internal class ReleasesByRecordingViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val recordingReleaseDao: RecordingReleaseDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    releaseDao: RoomReleaseDao,
+    releaseDao: ReleaseDao,
     pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
     browseEntityCountDao = browseEntityCountDao,
@@ -30,7 +29,7 @@ internal class ReleasesByRecordingViewModel(
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
         return musicBrainzApi.browseReleasesByRecording(
             recordingId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -39,19 +38,15 @@ internal class ReleasesByRecordingViewModel(
         releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
         recordingReleaseDao.insertAll(
-            releaseMusicBrainzModels.map { release ->
-                RecordingRelease(
-                    releaseId = release.id,
-                    recordingId = entityId
-                )
-            }
+            recordingId = entityId,
+            releaseIds = releaseMusicBrainzModels.map { release -> release.id },
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         recordingReleaseDao.withTransaction {
             recordingReleaseDao.deleteReleasesByRecording(entityId)
-            recordingReleaseDao.deleteRecordingReleaseLinks(entityId)
+//            recordingReleaseDao.deleteRecordingReleaseLinks(entityId)
             browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
@@ -59,15 +54,9 @@ internal class ReleasesByRecordingViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, RoomReleaseForListItem> = when {
-        query.isEmpty() -> {
-            recordingReleaseDao.getReleasesByRecording(entityId)
-        }
-        else -> {
-            recordingReleaseDao.getReleasesByRecordingFiltered(
-                recordingId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, ReleaseForListItem> =
+        recordingReleaseDao.getReleasesByRecording(
+            recordingId = entityId,
+            query = "%$query%",
+        )
 }

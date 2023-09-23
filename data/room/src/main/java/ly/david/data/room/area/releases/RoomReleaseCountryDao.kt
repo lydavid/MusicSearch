@@ -8,7 +8,7 @@ import ly.david.data.room.BaseDao
 import ly.david.data.room.release.RoomReleaseForListItem
 
 @Dao
-abstract class ReleaseCountryDao : BaseDao<ReleaseCountry>() {
+abstract class RoomReleaseCountryDao : BaseDao<ReleaseCountry>() {
 
     // TODO: one use for an intermediate country_area table
     //  is to make these more logical

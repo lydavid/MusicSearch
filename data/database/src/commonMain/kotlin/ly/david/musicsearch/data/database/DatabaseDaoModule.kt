@@ -21,10 +21,13 @@ import ly.david.musicsearch.data.database.dao.MbidImageDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
 import ly.david.musicsearch.data.database.dao.RecordingWorkDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.TrackDao
@@ -53,10 +56,13 @@ val databaseDaoModule = module {
     factory { MediumDao(get(), get()) }
     factory { PlaceDao(get()) }
     factory { RecordingDao(get(), get()) }
+    factory { RecordingReleaseDao(get()) }
     factory { RecordingWorkDao(get()) }
     factory { RelationDao(get()) }
+    factory { ReleaseCountryDao(get()) }
     factory { ReleaseDao(get(), get(), get()) }
     factory { ReleaseGroupDao(get(), get()) }
+    factory { ReleaseLabelDao(get()) }
     factory { ReleaseReleaseGroupDao(get()) }
     factory { SeriesDao(get()) }
     factory { TrackDao(get(), get()) }

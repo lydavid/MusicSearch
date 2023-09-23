@@ -1,0 +1,71 @@
+CREATE TABLE IF NOT EXISTS release_label (
+  `release_id` TEXT NOT NULL,
+  `label_id` TEXT NOT NULL,
+  `catalog_number` TEXT NOT NULL,
+
+  PRIMARY KEY(`release_id`, `label_id`, `catalog_number`),
+
+  FOREIGN KEY(`label_id`) REFERENCES `label`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE,
+
+  FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+insert:
+INSERT OR IGNORE INTO release_label
+VALUES ?;
+
+deleteReleasesByLabel:
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN release_label rl ON r.id = rl.release_id
+  INNER JOIN label l ON l.id = rl.label_id
+  WHERE l.id = :labelId
+);
+
+getNumberOfReleasesByLabel:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM (
+      SELECT DISTINCT r.*
+      FROM release r
+      INNER JOIN release_label rl ON r.id = rl.release_id
+      INNER JOIN label l ON l.id = rl.label_id
+      INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+      INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+      WHERE l.id = :labelId
+      AND (
+        r.name LIKE :query
+        OR r.disambiguation LIKE :query
+        OR r.date LIKE :query
+        OR r.country_code LIKE :query
+        OR ac.name LIKE :query
+      )
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByLabel:
+SELECT DISTINCT r.*, ac.name AS artist_credits, mi.thumbnail_url -- DISTINCT because junction table can have the same release/label with different catalog number
+FROM release r
+INNER JOIN release_label rl ON r.id = rl.release_id
+INNER JOIN label l ON l.id = rl.label_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = r.id
+WHERE l.id = :labelId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;

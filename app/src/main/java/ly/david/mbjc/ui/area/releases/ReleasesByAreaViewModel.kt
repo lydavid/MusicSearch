@@ -1,14 +1,13 @@
 package ly.david.mbjc.ui.area.releases
 
 import androidx.paging.PagingSource
+import ly.david.data.core.ReleaseForListItem
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.releases.ReleaseCountry
-import ly.david.data.room.area.releases.ReleaseCountryDao
-import ly.david.data.room.release.RoomReleaseForListItem
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
@@ -30,7 +29,7 @@ internal class ReleasesByAreaViewModel(
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
         return musicBrainzApi.browseReleasesByArea(
             areaId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -39,20 +38,15 @@ internal class ReleasesByAreaViewModel(
         releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
         releaseCountryDao.insertAll(
-            releaseMusicBrainzModels.map { release ->
-                ReleaseCountry(
-                    releaseId = release.id,
-                    countryId = entityId,
-                    date = release.date
-                )
-            }
+            areaId = entityId,
+            releases = releaseMusicBrainzModels,
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         releaseCountryDao.withTransaction {
             releaseCountryDao.deleteReleasesByCountry(entityId)
-            releaseCountryDao.deleteArtistReleaseLinks(entityId)
+//            releaseCountryDao.deleteArtistReleaseLinks(entityId)
             browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
@@ -60,15 +54,9 @@ internal class ReleasesByAreaViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, RoomReleaseForListItem> = when {
-        query.isEmpty() -> {
-            releaseCountryDao.getReleasesByCountry(entityId)
-        }
-        else -> {
-            releaseCountryDao.getReleasesByCountryFiltered(
-                areaId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, ReleaseForListItem> =
+        releaseCountryDao.getReleasesByCountry(
+            areaId = entityId,
+            query = "%$query%",
+        )
 }

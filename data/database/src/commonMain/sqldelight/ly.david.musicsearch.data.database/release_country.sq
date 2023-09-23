@@ -1,33 +1,38 @@
-CREATE TABLE IF NOT EXISTS release_release_group (
+CREATE TABLE IF NOT EXISTS release_country (
   `release_id` TEXT NOT NULL,
-  `release_group_id` TEXT NOT NULL,
+  `country_id` TEXT NOT NULL,
+  `date` TEXT,
   
-  PRIMARY KEY(`release_id`, `release_group_id`)
+  PRIMARY KEY(`release_id`, `country_id`),
+  
+  FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
 );
 
 insert:
-INSERT OR IGNORE INTO release_release_group
+INSERT OR IGNORE INTO release_country
 VALUES ?;
 
-deleteReleasesByReleaseGroup:
+deleteReleasesByCountry:
 DELETE FROM release WHERE id IN (
   SELECT r.id
   FROM release r
-  INNER JOIN release_release_group rrg ON r.id = rrg.release_id
-  INNER JOIN release_group rg ON rg.id = rrg.release_group_id
-  WHERE rg.id = :releaseGroupId
+  INNER JOIN release_country rc ON r.id = rc.release_id
+  INNER JOIN area a ON a.id = rc.country_id
+  WHERE a.id = :areaId
 );
 
-getNumberOfReleasesByReleaseGroup:
+getNumberOfReleasesByCountry:
 SELECT IFNULL(
   (
     SELECT COUNT(*)
     FROM release r
-    INNER JOIN release_release_group rrg ON r.id = rrg.release_id
-    INNER JOIN release_group rg ON rg.id = rrg.release_group_id
+    INNER JOIN release_country rc ON r.id = rc.release_id
+    INNER JOIN area a ON a.id = rc.country_id
     INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
     INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
-    WHERE rg.id = :releaseGroupId
+    WHERE a.id = :areaId
     AND (
       r.name LIKE :query
       OR r.disambiguation LIKE :query
@@ -39,15 +44,15 @@ SELECT IFNULL(
   0
 ) AS count;
 
-getReleasesByReleaseGroup:
+getReleasesByCountry:
 SELECT r.*, ac.name AS artist_credits, mi.thumbnail_url
 FROM release r
-INNER JOIN release_release_group rrg ON r.id = rrg.release_id
-INNER JOIN release_group rg ON rg.id = rrg.release_group_id
+INNER JOIN release_country rc ON r.id = rc.release_id
+INNER JOIN area a ON a.id = rc.country_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
 INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
 LEFT JOIN mbid_image mi ON mi.mbid = r.id
-WHERE rg.id = :releaseGroupId
+WHERE a.id = :areaId
 AND (
   r.name LIKE :query
   OR r.disambiguation LIKE :query

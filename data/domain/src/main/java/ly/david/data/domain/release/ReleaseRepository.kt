@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.RoomAreaDao
-import ly.david.data.room.area.releases.ReleaseCountryDao
+import ly.david.data.room.area.releases.RoomReleaseCountryDao
 import ly.david.data.room.label.RoomLabelDao
 import ly.david.data.room.label.releases.RoomReleaseLabelDao
 import ly.david.data.room.release.tracks.RoomMediumDao
@@ -29,7 +29,7 @@ class ReleaseRepository(
     private val artistCreditDao: ArtistCreditDao,
     private val mediumDao: RoomMediumDao,
     private val trackDao: RoomTrackDao,
-    private val releaseCountryDao: ReleaseCountryDao,
+    private val releaseCountryDao: RoomReleaseCountryDao,
     private val areaDao: RoomAreaDao,
     private val labelDao: RoomLabelDao,
     private val releaseLabelDao: RoomReleaseLabelDao,
