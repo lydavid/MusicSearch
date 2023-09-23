@@ -42,3 +42,7 @@ See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 ## Module Dependency Graph
 
 ![](assets/module_dependency_graph.svg)
+
+## Database schema
+
+![](assets/mbjc_db_schema.svg)
