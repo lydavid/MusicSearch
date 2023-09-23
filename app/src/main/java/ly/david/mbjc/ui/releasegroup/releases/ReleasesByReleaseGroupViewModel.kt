@@ -46,8 +46,6 @@ internal class ReleasesByReleaseGroupViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         releaseReleaseGroupDao.withTransaction {
             releaseReleaseGroupDao.deleteReleasesByReleaseGroup(entityId)
-            // TODO: do we need this?
-//            releaseReleaseGroupDao.deleteReleaseReleaseGroupLinks(entityId)
             browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }

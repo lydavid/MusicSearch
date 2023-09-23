@@ -50,7 +50,10 @@ class ReleaseLabelDao(
     }
 
     fun deleteReleasesByLabel(labelId: String) {
-        transacter.deleteReleasesByLabel(labelId)
+        withTransaction {
+            transacter.deleteReleasesByLabel(labelId)
+            transacter.deleteLabelReleaseLinks(labelId)
+        }
     }
 
     fun getNumberOfReleasesByLabel(labelId: String): Int =

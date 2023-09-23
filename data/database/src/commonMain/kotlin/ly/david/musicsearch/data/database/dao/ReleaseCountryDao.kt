@@ -49,7 +49,10 @@ class ReleaseCountryDao(
     }
 
     fun deleteReleasesByCountry(areaId: String) {
-        transacter.deleteReleasesByCountry(areaId)
+        withTransaction {
+            transacter.deleteReleasesByCountry(areaId)
+            transacter.deleteReleaseCountryLinks(areaId)
+        }
     }
 
     fun getNumberOfReleasesByCountry(areaId: String): Int =

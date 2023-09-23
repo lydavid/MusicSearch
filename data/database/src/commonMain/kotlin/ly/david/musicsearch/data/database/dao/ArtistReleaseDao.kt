@@ -40,7 +40,10 @@ class ArtistReleaseDao(
     }
 
     fun deleteReleasesByArtist(artistId: String) {
-        transacter.deleteReleasesByArtist(artistId)
+        withTransaction {
+            transacter.deleteReleasesByArtist(artistId)
+            transacter.deleteReleasesByArtist(artistId)
+        }
     }
 
     fun getNumberOfReleasesByArtist(artistId: String): Int =

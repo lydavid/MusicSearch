@@ -54,9 +54,7 @@ fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     formattedArtistCredits = artistCredits.getDisplayNames()
 )
 
-fun ReleaseForListItem.toReleaseListItemModel(
-
-) = ReleaseListItemModel(
+fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,

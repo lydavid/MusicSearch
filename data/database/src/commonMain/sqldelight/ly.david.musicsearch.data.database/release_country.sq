@@ -3,11 +3,11 @@ CREATE TABLE IF NOT EXISTS release_country (
   `country_id` TEXT NOT NULL,
   `date` TEXT,
   
-  PRIMARY KEY(`release_id`, `country_id`),
+  PRIMARY KEY(`release_id`, `country_id`)
   
-  FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
-  ON UPDATE CASCADE
-  ON DELETE CASCADE
+--   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE
 );
 
 insert:
@@ -22,6 +22,9 @@ DELETE FROM release WHERE id IN (
   INNER JOIN area a ON a.id = rc.country_id
   WHERE a.id = :areaId
 );
+
+deleteReleaseCountryLinks:
+DELETE FROM release_country WHERE country_id = :areaId;
 
 getNumberOfReleasesByCountry:
 SELECT IFNULL(

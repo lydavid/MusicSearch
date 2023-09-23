@@ -40,7 +40,10 @@ class RecordingReleaseDao(
     }
 
     fun deleteReleasesByRecording(recordingId: String) {
-        transacter.deleteReleasesByRecording(recordingId)
+        withTransaction {
+            transacter.deleteReleasesByRecording(recordingId)
+            transacter.deleteRecordingReleaseLinks(recordingId)
+        }
     }
 
     fun getNumberOfReleasesByRecording(recordingId: String): Int =

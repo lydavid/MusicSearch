@@ -40,7 +40,10 @@ class ReleaseReleaseGroupDao(
     }
 
     fun deleteReleasesByReleaseGroup(releaseGroupId: String) {
-        transacter.deleteReleasesByReleaseGroup(releaseGroupId)
+        withTransaction {
+            transacter.deleteReleasesByReleaseGroup(releaseGroupId)
+            transacter.deleteReleaseReleaseGroupLinks(releaseGroupId)
+        }
     }
 
     fun getNumberOfReleasesByReleaseGroup(releaseGroupId: String): Int =

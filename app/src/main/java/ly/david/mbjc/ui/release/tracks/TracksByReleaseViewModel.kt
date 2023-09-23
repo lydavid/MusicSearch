@@ -66,7 +66,7 @@ internal class TracksByReleaseViewModel(
                     remoteMediator = LookupEntityRemoteMediator(
                         hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
                         lookupEntity = { repository.lookupRelease(releaseId) },
-                        deleteLocalEntity = { releaseDao.delete(releaseId) }
+                        deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) }
                     ),
                     pagingSourceFactory = {
                         trackDao.getTracksByRelease(
@@ -100,5 +100,12 @@ internal class TracksByReleaseViewModel(
     private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
         // TODO: right now the details tab is coupled with this tracks list tab
         return releaseDao.getRelease(releaseId) != null
+    }
+
+    private fun deleteMediaAndTracksByRelease(releaseId: String) {
+        releaseDao.withTransaction {
+            releaseDao.delete(releaseId)
+            mediumDao.deleteMediaByRelease(releaseId)
+        }
     }
 }

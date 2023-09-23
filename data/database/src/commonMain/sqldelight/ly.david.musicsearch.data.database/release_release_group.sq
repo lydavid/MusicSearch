@@ -3,6 +3,14 @@ CREATE TABLE IF NOT EXISTS release_release_group (
   `release_group_id` TEXT NOT NULL,
   
   PRIMARY KEY(`release_id`, `release_group_id`)
+
+--   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE,
+--
+--   FOREIGN KEY(`release_group_id`) REFERENCES `release_group`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE
 );
 
 insert:
@@ -17,6 +25,9 @@ DELETE FROM release WHERE id IN (
   INNER JOIN release_group rg ON rg.id = rrg.release_group_id
   WHERE rg.id = :releaseGroupId
 );
+
+deleteReleaseReleaseGroupLinks:
+DELETE FROM release_release_group WHERE release_group_id = :releaseGroupId;
 
 getNumberOfReleasesByReleaseGroup:
 SELECT IFNULL(

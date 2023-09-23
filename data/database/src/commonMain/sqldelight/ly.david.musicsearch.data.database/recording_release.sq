@@ -1,8 +1,16 @@
 CREATE TABLE IF NOT EXISTS recording_release (
-  `release_id` TEXT NOT NULL,
   `recording_id` TEXT NOT NULL,
+  `release_id` TEXT NOT NULL,
 
-  PRIMARY KEY(`release_id`, `recording_id`)
+  PRIMARY KEY(`recording_id`, `release_id`)
+
+--   FOREIGN KEY(`recording_id`) REFERENCES `recording`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE,
+--
+--   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE
 );
 
 insert:
@@ -17,6 +25,9 @@ DELETE FROM release WHERE id IN (
   INNER JOIN recording rec ON rec.id = rr.recording_id
   WHERE rec.id = :recordingId
 );
+
+deleteRecordingReleaseLinks:
+DELETE FROM recording_release WHERE recording_id = :recordingId;
 
 getNumberOfReleasesByRecording:
 SELECT IFNULL(

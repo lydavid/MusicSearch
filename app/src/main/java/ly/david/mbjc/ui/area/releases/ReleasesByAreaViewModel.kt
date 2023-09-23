@@ -46,7 +46,6 @@ internal class ReleasesByAreaViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         releaseCountryDao.withTransaction {
             releaseCountryDao.deleteReleasesByCountry(entityId)
-//            releaseCountryDao.deleteArtistReleaseLinks(entityId)
             browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }

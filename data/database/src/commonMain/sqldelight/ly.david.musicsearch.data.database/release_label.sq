@@ -3,15 +3,15 @@ CREATE TABLE IF NOT EXISTS release_label (
   `label_id` TEXT NOT NULL,
   `catalog_number` TEXT NOT NULL,
 
-  PRIMARY KEY(`release_id`, `label_id`, `catalog_number`),
+  PRIMARY KEY(`release_id`, `label_id`, `catalog_number`)
 
-  FOREIGN KEY(`label_id`) REFERENCES `label`(`id`)
-  ON UPDATE CASCADE
-  ON DELETE CASCADE,
-
-  FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
-  ON UPDATE CASCADE
-  ON DELETE CASCADE
+--   FOREIGN KEY(`label_id`) REFERENCES `label`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE,
+--
+--   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE
 );
 
 insert:
@@ -26,6 +26,9 @@ DELETE FROM release WHERE id IN (
   INNER JOIN label l ON l.id = rl.label_id
   WHERE l.id = :labelId
 );
+
+deleteLabelReleaseLinks:
+DELETE FROM release_label WHERE label_id = :labelId;
 
 getNumberOfReleasesByLabel:
 SELECT IFNULL(

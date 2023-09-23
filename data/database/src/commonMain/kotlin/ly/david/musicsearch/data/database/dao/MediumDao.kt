@@ -49,4 +49,8 @@ class MediumDao(
 
     fun getMediumForTrack(trackId: String): Medium? =
         transacter.getMediumForTrack(trackId).executeAsOneOrNull()
+
+    fun deleteMediaByRelease(releaseId: String) {
+        transacter.deleteMediaByRelease(releaseId)
+    }
 }
