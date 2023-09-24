@@ -97,7 +97,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 9999,
                     imageUrl = imageUrl,
-                    lastAccessed = Instant.parse("2023-05-02T22:19:44.475Z"),
+                    lastAccessed = Instant.parse("2023-05-02T22:19:44Z"),
                 )
             )
         }
@@ -117,7 +117,7 @@ internal fun PreviewLookupHistoryRelease(
                     entity = MusicBrainzEntity.RELEASE,
                     id = "165f6643-2edb-4795-9abe-26bd0533e59d",
                     imageUrl = imageUrl,
-                    lastAccessed = Instant.parse("2023-05-02T22:19:44.475Z"),
+                    lastAccessed = Instant.parse("2023-05-02T22:19:44Z"),
                 )
             )
         }
@@ -137,7 +137,7 @@ internal fun PreviewLookupHistoryArtist(
                     entity = MusicBrainzEntity.ARTIST,
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                     imageUrl = imageUrl,
-                    lastAccessed = Instant.parse("2023-05-02T22:19:44.475Z"),
+                    lastAccessed = Instant.parse("2023-05-02T22:19:44Z"),
                 )
             )
         }

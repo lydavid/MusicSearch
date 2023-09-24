@@ -11,6 +11,7 @@ import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Lookup_history
 import lydavidmusicsearchdatadatabase.Medium
+import lydavidmusicsearchdatadatabase.Now_playing_history
 import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Release
@@ -66,6 +67,9 @@ fun createDatabase(driver: SqlDriver): Database {
             entityAdapter = MusicBrainzEntityStringColumnAdapter,
             number_of_visitsAdapter = IntColumnAdapter,
             last_accessedAdapter = InstantLongColumnAdapter,
+        ),
+        now_playing_historyAdapter = Now_playing_history.Adapter(
+            last_playedAdapter = InstantLongColumnAdapter,
         )
     )
 }

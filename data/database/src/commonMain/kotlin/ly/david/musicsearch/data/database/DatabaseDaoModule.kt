@@ -20,6 +20,7 @@ import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.data.database.dao.MbidImageDao
 import ly.david.musicsearch.data.database.dao.MediumDao
+import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingReleaseDao
@@ -56,6 +57,7 @@ val databaseDaoModule = module {
     factory { LookupHistoryDao(get()) }
     factory<ImageUrlDao> { MbidImageDao(get()) }
     factory { MediumDao(get(), get()) }
+    factory { NowPlayingHistoryDao(get()) }
     factory { PlaceDao(get()) }
     factory { RecordingDao(get(), get()) }
     factory { RecordingReleaseDao(get()) }

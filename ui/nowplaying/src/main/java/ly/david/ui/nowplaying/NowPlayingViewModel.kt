@@ -14,18 +14,18 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.core.common.getDateFormatted
+import ly.david.data.core.history.NowPlayingHistory
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.data.domain.listitem.toNowPlayingHistoryListItemModel
+import ly.david.data.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.history.nowplaying.NowPlayingHistoryDao
-import ly.david.data.room.history.nowplaying.NowPlayingHistoryRoomModel
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class NowPlayingViewModel(
-    private val nowPlayingHistoryDao: NowPlayingHistoryDao,
+    private val nowPlayingHistoryRepository: NowPlayingHistoryRepository,
 ) : ViewModel() {
 
     private val query = MutableStateFlow("")
@@ -40,13 +40,13 @@ internal class NowPlayingViewModel(
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
-                    nowPlayingHistoryDao.getAllNowPlayingHistory(
+                    nowPlayingHistoryRepository.getAllNowPlayingHistory(
                         query = "%$query%",
                     )
                 }
             ).flow.map { pagingData ->
                 pagingData
-                    .map(NowPlayingHistoryRoomModel::toNowPlayingHistoryListItemModel)
+                    .map(NowPlayingHistory::toNowPlayingHistoryListItemModel)
                     .insertSeparators(generator = ::generator)
             }
         }
@@ -69,7 +69,7 @@ internal class NowPlayingViewModel(
         }
     }
 
-    suspend fun delete(id: String) {
-        nowPlayingHistoryDao.delete(raw = id)
+    fun delete(id: String) {
+        nowPlayingHistoryRepository.delete(raw = id)
     }
 }

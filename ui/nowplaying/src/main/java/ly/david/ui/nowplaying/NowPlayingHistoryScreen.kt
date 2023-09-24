@@ -8,11 +8,11 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.data.core.common.toDate
+import kotlinx.datetime.Instant
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
@@ -80,13 +80,13 @@ internal fun PreviewNowPlayingHistoryScreen() {
                             id = "1",
                             title = "Title",
                             artist = "Artist",
-                            lastPlayed = "2023-07-15 11:42:20".toDate(),
+                            lastPlayed = Instant.parse("2023-07-15T11:42:20Z"),
                         ),
                         NowPlayingHistoryListItemModel(
                             id = "2",
                             title = "Another Title",
                             artist = "A different artist",
-                            lastPlayed = "2023-07-15 11:42:19".toDate(),
+                            lastPlayed = Instant.parse("2023-07-15T11:42:19Z"),
                         ),
                         ListSeparator(
                             id = "separator2",
@@ -96,7 +96,7 @@ internal fun PreviewNowPlayingHistoryScreen() {
                             id = "3",
                             title = "Yet Another Title",
                             artist = "A different artist",
-                            lastPlayed = "2023-07-15 11:42:19".toDate(),
+                            lastPlayed = Instant.parse("2023-07-15T11:42:19Z"),
                         ),
                     )
                 )

@@ -7,7 +7,7 @@ import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class NowPlayingHistoryDao : BaseDao<NowPlayingHistoryRoomModel>() {
+abstract class RoomNowPlayingHistoryDao : BaseDao<NowPlayingHistoryRoomModel>() {
 
     @Transaction
     @Query(
