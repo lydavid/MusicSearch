@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.Destination
 import ly.david.data.room.MusicSearchDatabase
-import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.room.history.RoomLookupHistoryDao
 import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
@@ -24,7 +24,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences, KoinTes
     private lateinit var navController: NavHostController
 
     private val db: MusicSearchDatabase by inject()
-    private lateinit var lookupHistoryDao: LookupHistoryDao
+    private lateinit var lookupHistoryDao: RoomLookupHistoryDao
 
     @Before
     fun setupApp() {

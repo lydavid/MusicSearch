@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.domain.artist.ArtistScaffoldModel
-import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.room.history.RecordLookupHistory
+import ly.david.data.domain.history.IncrementLookupHistoryUseCase
 import ly.david.data.spotify.di.ArtistImageRepository
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
@@ -21,12 +21,11 @@ import timber.log.Timber
 @KoinViewModel
 internal class ArtistScaffoldViewModel(
     private val repository: ArtistRepository,
-    override val lookupHistoryDao: LookupHistoryDao,
+    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
     private val relationsList: RelationsList,
     private val artistImageRepository: ArtistImageRepository,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
-    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -63,11 +62,13 @@ internal class ArtistScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        recordLookupHistory(
-                            entityId = artistId,
-                            entity = entity,
-                            summary = title.value,
-                            searchHint = artist.value?.sortName ?: ""
+                        incrementLookupHistoryUseCase(
+                            LookupHistory(
+                                mbid = artistId,
+                                title = title.value,
+                                entity = entity,
+                                searchHint = artist.value?.sortName ?: "",
+                            )
                         )
                         recordedLookup = true
                     }

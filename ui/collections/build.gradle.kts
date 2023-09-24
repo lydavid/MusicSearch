@@ -30,6 +30,7 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.tooling)
 
+    implementation(libs.kotlinx.datetime)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)

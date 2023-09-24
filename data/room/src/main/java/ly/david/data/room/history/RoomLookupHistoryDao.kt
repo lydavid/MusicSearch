@@ -4,11 +4,10 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import java.util.Date
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
+abstract class RoomLookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
 
     @Transaction
     @Query(
@@ -34,16 +33,16 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
         leastRecentlyVisited: Boolean,
         mostVisited: Boolean,
         leastVisited: Boolean,
-    ): PagingSource<Int, LookupHistoryForListItem>
+    ): PagingSource<Int, RoomLookupHistoryForListItem>
 
-    @Query(
-        """
-        SELECT * 
-        FROM lookup_history
-        WHERE mbid = :mbid
-    """
-    )
-    abstract suspend fun getLookupHistory(mbid: String): LookupHistoryRoomModel?
+//    @Query(
+//        """
+//        SELECT *
+//        FROM lookup_history
+//        WHERE mbid = :mbid
+//    """
+//    )
+//    abstract suspend fun getLookupHistory(mbid: String): LookupHistoryRoomModel?
 
     @Query(
         """
@@ -81,19 +80,19 @@ abstract class LookupHistoryDao : BaseDao<LookupHistoryRoomModel>() {
      * Insert new [LookupHistoryRoomModel] if it doesn't exist, otherwise increment its visited count
      * and its last visited timestamp.
      */
-    suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistoryRoomModel) {
-        val historyRecord = getLookupHistory(lookupHistory.id)
-        if (historyRecord == null) {
-            insert(lookupHistory)
-        } else {
-            upsert(
-                historyRecord.copy(
-                    title = lookupHistory.title,
-                    numberOfVisits = historyRecord.numberOfVisits + 1,
-                    lastAccessed = Date(),
-                    searchHint = lookupHistory.searchHint
-                )
-            )
-        }
-    }
+//    suspend fun incrementOrInsertLookupHistory(lookupHistory: LookupHistoryRoomModel) {
+//        val historyRecord = getLookupHistory(lookupHistory.id)
+//        if (historyRecord == null) {
+//            insert(lookupHistory)
+//        } else {
+//            upsert(
+//                historyRecord.copy(
+//                    title = lookupHistory.title,
+//                    numberOfVisits = historyRecord.numberOfVisits + 1,
+//                    lastAccessed = Date(),
+//                    searchHint = lookupHistory.searchHint
+//                )
+//            )
+//        }
+//    }
 }

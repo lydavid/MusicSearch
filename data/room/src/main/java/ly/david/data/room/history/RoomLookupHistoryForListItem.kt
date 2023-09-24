@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import ly.david.data.room.image.MbidImage
 
-data class LookupHistoryForListItem(
+data class RoomLookupHistoryForListItem(
     @Embedded
     val lookupHistory: LookupHistoryRoomModel,
 

@@ -17,6 +17,7 @@ import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.data.database.dao.MbidImageDao
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
@@ -52,6 +53,7 @@ val databaseDaoModule = module {
     factory { EventPlaceDao(get()) }
     factory { InstrumentDao(get()) }
     factory { LabelDao(get()) }
+    factory { LookupHistoryDao(get()) }
     factory<ImageUrlDao> { MbidImageDao(get()) }
     factory { MediumDao(get(), get()) }
     factory { PlaceDao(get()) }

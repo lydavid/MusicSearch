@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import kotlinx.datetime.Instant
 import ly.david.data.core.common.getTimeFormatted
-import ly.david.data.core.common.toDate
-import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.ui.common.getDisplayTextRes
 import ly.david.ui.common.getIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
@@ -97,7 +97,7 @@ internal fun PreviewLookupHistoryReleaseGroup(
                     id = "81d75493-78b6-4a37-b5ae-2a3918ee3756",
                     numberOfVisits = 9999,
                     imageUrl = imageUrl,
-                    lastAccessed = "2023-05-02 00:00:00".toDate(),
+                    lastAccessed = Instant.parse("2023-05-02T22:19:44.475Z"),
                 )
             )
         }
@@ -117,7 +117,7 @@ internal fun PreviewLookupHistoryRelease(
                     entity = MusicBrainzEntity.RELEASE,
                     id = "165f6643-2edb-4795-9abe-26bd0533e59d",
                     imageUrl = imageUrl,
-                    lastAccessed = "2023-05-02 00:00:00".toDate(),
+                    lastAccessed = Instant.parse("2023-05-02T22:19:44.475Z"),
                 )
             )
         }
@@ -137,7 +137,7 @@ internal fun PreviewLookupHistoryArtist(
                     entity = MusicBrainzEntity.ARTIST,
                     id = "6825ace2-3563-4ac5-8d85-c7bf1334bd2c",
                     imageUrl = imageUrl,
-                    lastAccessed = "2023-05-02 00:00:00".toDate(),
+                    lastAccessed = Instant.parse("2023-05-02T22:19:44.475Z"),
                 )
             )
         }

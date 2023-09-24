@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(libs.kotlinx.datetime)
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.serialization.kotlinx.json)
             }

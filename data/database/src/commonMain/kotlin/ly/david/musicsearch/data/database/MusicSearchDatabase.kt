@@ -2,12 +2,14 @@ package ly.david.musicsearch.data.database
 
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.db.SqlDriver
+import ly.david.musicsearch.data.database.adapter.InstantLongColumnAdapter
 import ly.david.musicsearch.data.database.adapter.ListStringColumnAdapter
 import ly.david.musicsearch.data.database.adapter.MusicBrainzEntityStringColumnAdapter
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Label
+import lydavidmusicsearchdatadatabase.Lookup_history
 import lydavidmusicsearchdatadatabase.Mb_relation
 import lydavidmusicsearchdatadatabase.Medium
 import lydavidmusicsearchdatadatabase.Recording
@@ -59,6 +61,11 @@ fun createDatabase(driver: SqlDriver): Database {
         trackAdapter = Track.Adapter(
             positionAdapter = IntColumnAdapter,
             lengthAdapter = IntColumnAdapter,
+        ),
+        lookup_historyAdapter = Lookup_history.Adapter(
+            entityAdapter = MusicBrainzEntityStringColumnAdapter,
+            number_of_visitsAdapter = IntColumnAdapter,
+            last_accessedAdapter = InstantLongColumnAdapter,
         )
     )
 }

@@ -1,0 +1,65 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import kotlinx.datetime.Instant;
+import ly.david.data.core.network.MusicBrainzEntity;
+
+CREATE TABLE IF NOT EXISTS lookup_history (
+  `mbid` TEXT PRIMARY KEY NOT NULL,
+  `title` TEXT NOT NULL,
+  `entity` TEXT AS MusicBrainzEntity NOT NULL,
+  `number_of_visits` INTEGER AS Int NOT NULL,
+  `last_accessed` INTEGER AS Instant NOT NULL,
+  `search_hint` TEXT NOT NULL,
+  `deleted` INTEGER AS Boolean NOT NULL
+);
+
+upsert {
+  UPDATE lookup_history
+  SET title = :title,
+      number_of_visits = number_of_visits + 1,
+      last_accessed = :lastAccessed,
+      search_hint = :searchHint
+  WHERE mbid = :mbid;
+
+  INSERT OR IGNORE INTO lookup_history
+  VALUES (
+    :mbid,
+    :title,
+    :entity,
+    :numberOfVisits,
+    :lastAccessed,
+    :searchHint,
+    :deleted
+  );
+}
+
+getAllLookupHistoryCount:
+SELECT COUNT(*)
+FROM lookup_history
+WHERE
+  `deleted` = 0
+ AND (
+  `title` LIKE :query
+  OR `entity` LIKE :query
+  OR `search_hint` LIKE :query
+ );
+
+getAllLookupHistory:
+SELECT lh.mbid, lh.title, lh.entity, lh.number_of_visits, lh.last_accessed, mi.thumbnail_url
+FROM lookup_history lh
+LEFT JOIN mbid_image mi ON mi.mbid = lh.mbid
+WHERE
+  `deleted` = 0
+ AND (
+  `title` LIKE :query
+  OR `entity` LIKE :query
+  OR `search_hint` LIKE :query
+ )
+ORDER BY
+  CASE WHEN :alphabetically THEN `title` END ASC,
+  CASE WHEN :alphabeticallyReverse THEN `title` END DESC,
+  CASE WHEN :recentlyVisited THEN `last_accessed` END DESC,
+  CASE WHEN :leastRecentlyVisited THEN `last_accessed` END ASC,
+  CASE WHEN :mostVisited THEN `number_of_visits` END DESC,
+  CASE WHEN :leastVisited THEN `number_of_visits` END ASC
+LIMIT :limit OFFSET :offset;

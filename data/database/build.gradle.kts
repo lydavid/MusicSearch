@@ -14,6 +14,7 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.kotlinx.datetime)
                 implementation(libs.paging.common)
                 implementation(libs.sqldelight.coroutines)
                 implementation(libs.sqldelight.paging)
