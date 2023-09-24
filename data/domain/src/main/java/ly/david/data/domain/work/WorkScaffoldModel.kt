@@ -2,7 +2,7 @@ package ly.david.data.domain.work
 
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.Work_attribute
 
@@ -19,7 +19,7 @@ data class WorkScaffoldModel(
 
 internal fun Work.toWorkScaffoldModel(
     workAttributes: List<Work_attribute>,
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = WorkScaffoldModel(
     id = id,
     name = name,

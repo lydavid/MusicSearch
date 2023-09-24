@@ -6,8 +6,8 @@ import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Area
-import lydavidmusicsearchdatadatabase.Mb_relation
 import lydavidmusicsearchdatadatabase.Place
+import lydavidmusicsearchdatadatabase.Relation
 
 data class PlaceScaffoldModel(
     override val id: String,
@@ -23,7 +23,7 @@ data class PlaceScaffoldModel(
 
 internal fun Place.toPlaceScaffoldModel(
     area: Area?,
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = PlaceScaffoldModel(
     id = id,
     name = name,

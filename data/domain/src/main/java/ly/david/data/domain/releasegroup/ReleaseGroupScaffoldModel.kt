@@ -6,7 +6,7 @@ import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Release_group
 
 data class ReleaseGroupScaffoldModel(
@@ -24,7 +24,7 @@ data class ReleaseGroupScaffoldModel(
 internal fun Release_group.toReleaseGroupScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
     imageUrl: String?,
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = ReleaseGroupScaffoldModel(
     id = id,
     name = name,

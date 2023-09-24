@@ -4,7 +4,7 @@ import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 data class ArtistScaffoldModel(
     override val id: String,
@@ -21,7 +21,7 @@ data class ArtistScaffoldModel(
 
 internal fun Artist.toArtistScaffoldModel(
     imageUrl: String?,
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = ArtistScaffoldModel(
     id = id,
     name = name,

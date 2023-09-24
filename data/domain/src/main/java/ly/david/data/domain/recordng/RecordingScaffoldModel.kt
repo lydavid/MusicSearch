@@ -5,8 +5,8 @@ import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
-import lydavidmusicsearchdatadatabase.Mb_relation
 import lydavidmusicsearchdatadatabase.Recording
+import lydavidmusicsearchdatadatabase.Relation
 
 data class RecordingScaffoldModel(
     override val id: String,
@@ -22,7 +22,7 @@ data class RecordingScaffoldModel(
 
 internal fun Recording.toRecordingScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = RecordingScaffoldModel(
     id = id,
     name = name,

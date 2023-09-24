@@ -8,18 +8,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 class RelationDao(
     database: Database,
 ) {
-    private val transacter = database.mb_relationQueries
+    private val transacter = database.relationQueries
 
-    fun insert(relation: Mb_relation) {
+    fun insert(relation: Relation) {
         transacter.insertEntity(relation)
     }
 
-    fun insertAll(relations: List<Mb_relation>) {
+    fun insertAll(relations: List<Relation>) {
         transacter.transaction {
             relations.forEach { relation ->
                 insert(relation)
@@ -30,7 +30,7 @@ class RelationDao(
     fun getEntityRelationshipsExcludingUrls(
         entityId: String,
         query: String = "%%",
-    ): PagingSource<Int, Mb_relation> = QueryPagingSource(
+    ): PagingSource<Int, Relation> = QueryPagingSource(
         countQuery = transacter.countEntityRelationshipsExcludingUrls(
             entityId = entityId,
             query = query,
@@ -48,7 +48,7 @@ class RelationDao(
 
     fun getEntityUrlRelationships(
         entityId: String,
-    ): List<Mb_relation> {
+    ): List<Relation> {
         return transacter.getEntityUrlRelationships(
             entityId = entityId,
             query = "%%", // TODO: either filter here or with Kotlin like before

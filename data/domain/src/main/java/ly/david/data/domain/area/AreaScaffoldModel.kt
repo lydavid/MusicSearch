@@ -4,7 +4,7 @@ import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Area
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 data class AreaScaffoldModel(
     override val id: String,
@@ -19,7 +19,7 @@ data class AreaScaffoldModel(
 
 internal fun Area.toAreaScaffoldModel(
     countryCodes: List<String>,
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = AreaScaffoldModel(
     id = id,
     name = name,

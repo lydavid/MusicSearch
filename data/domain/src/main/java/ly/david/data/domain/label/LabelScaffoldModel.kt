@@ -3,7 +3,7 @@ package ly.david.data.domain.label
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Label
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 data class LabelScaffoldModel(
     override val id: String,
@@ -15,7 +15,7 @@ data class LabelScaffoldModel(
 ) : ly.david.data.core.Label
 
 internal fun Label.toLabelScaffoldModel(
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = LabelScaffoldModel(
     id = id,
     name = name,

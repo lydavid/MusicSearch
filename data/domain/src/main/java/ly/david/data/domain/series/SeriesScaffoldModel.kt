@@ -2,7 +2,7 @@ package ly.david.data.domain.series
 
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Series
 
 data class SeriesScaffoldModel(
@@ -14,7 +14,7 @@ data class SeriesScaffoldModel(
 ) : ly.david.data.core.Series
 
 internal fun Series.toSeriesScaffoldModel(
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = SeriesScaffoldModel(
     id = id,
     name = name,

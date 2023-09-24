@@ -1,7 +1,7 @@
 import kotlin.Int;
 import ly.david.data.core.network.MusicBrainzEntity;
 
-CREATE TABLE IF NOT EXISTS mb_relation (
+CREATE TABLE IF NOT EXISTS relation (
   `entity_id` TEXT NOT NULL,
   `linked_entity_id` TEXT NOT NULL,
   `linked_entity` TEXT AS MusicBrainzEntity NOT NULL,
@@ -13,10 +13,10 @@ CREATE TABLE IF NOT EXISTS mb_relation (
   `additional_info` TEXT
 );
 
-CREATE INDEX IF NOT EXISTS relation_pk ON mb_relation (entity_id, linked_entity_id, `order`);
+CREATE INDEX IF NOT EXISTS relation_pk ON relation (entity_id, linked_entity_id, `order`);
 
 insert:
-INSERT OR IGNORE INTO mb_relation (
+INSERT OR IGNORE INTO relation (
   `entity_id`,
   `linked_entity_id`,
   `linked_entity`,
@@ -40,17 +40,17 @@ VALUES (
 );
 
 insertEntity:
-INSERT OR IGNORE INTO mb_relation
+INSERT OR IGNORE INTO relation
 VALUES ?;
 
 countEntityRelationshipsExcludingUrls:
-SELECT count(*) FROM mb_relation
+SELECT count(*) FROM relation
 WHERE entity_id = :entityId AND linked_entity != "url" AND
 (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
 attributes LIKE :query OR additional_info LIKE :query);
 
 getEntityRelationshipsExcludingUrls:
-SELECT * FROM mb_relation
+SELECT * FROM relation
 WHERE entity_id = :entityId AND linked_entity != "url" AND
 (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
 attributes LIKE :query OR additional_info LIKE :query)
@@ -58,18 +58,18 @@ ORDER BY linked_entity, label, `order`
 LIMIT :limit OFFSET :offset;
 
 getEntityUrlRelationships:
-SELECT * FROM mb_relation
+SELECT * FROM relation
 WHERE entity_id = :entityId AND linked_entity = "url" AND
 (name LIKE :query OR disambiguation LIKE :query OR label LIKE :query OR
 attributes LIKE :query OR additional_info LIKE :query)
 ORDER BY linked_entity, label, `order`;
 
 deleteRelationshipsExcludingUrlsByEntity:
-DELETE FROM mb_relation
+DELETE FROM relation
 WHERE entity_id = :entityId AND linked_entity != "url";
 
 countOfEachRelationshipType:
 SELECT linked_entity, count(entity_id) AS entity_count
-FROM mb_relation
+FROM relation
 WHERE entity_id = :entityId
 GROUP BY linked_entity;

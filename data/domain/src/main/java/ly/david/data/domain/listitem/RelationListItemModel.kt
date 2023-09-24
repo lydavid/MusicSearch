@@ -1,9 +1,8 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Relation
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationRoomModel
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 /**
  * @param id For reordering animation in a lazy list.
@@ -21,7 +20,7 @@ data class RelationListItemModel(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
-) : ListItemModel(), Relation
+) : ListItemModel(), ly.david.data.core.Relation
 
 fun RelationRoomModel.toRelationListItemModel() =
     RelationListItemModel(
@@ -35,7 +34,7 @@ fun RelationRoomModel.toRelationListItemModel() =
         additionalInfo = additionalInfo
     )
 
-fun Mb_relation.toRelationListItemModel() =
+fun Relation.toRelationListItemModel() =
     RelationListItemModel(
         id = "${linked_entity_id}_$order",
         linkedEntityId = linked_entity_id,

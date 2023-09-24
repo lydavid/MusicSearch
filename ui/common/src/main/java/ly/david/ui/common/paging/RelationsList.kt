@@ -21,7 +21,7 @@ import ly.david.data.domain.listitem.toRelationListItemModel
 import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.relation.RelationRepository
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 import org.koin.core.annotation.Factory
 
 /**
@@ -96,7 +96,7 @@ class RelationsList(
                         )
                     }
                 ).flow.map { pagingData ->
-                    pagingData.map(Mb_relation::toRelationListItemModel)
+                    pagingData.map(Relation::toRelationListItemModel)
                 }
             }
             .distinctUntilChanged()
@@ -127,7 +127,7 @@ class RelationsList(
         )
     }
 
-    private suspend fun deleteLocalRelations(entityId: String) {
+    private fun deleteLocalRelations(entityId: String) {
         relationRepository.deleteEntityRelationships(entityId)
     }
 }

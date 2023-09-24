@@ -9,17 +9,17 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.getFormattedAttributesForDisplay
 import ly.david.data.musicbrainz.getHeader
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 /**
- * We cannot guarantee that a [Mb_relation] will be created in the scenario that target-type points to a resource
+ * We cannot guarantee that a [Relation] will be created in the scenario that target-type points to a resource
  * but that object is null. It's possible that this is never the case, but our models are currently structured such
  * that any of them are nullable.
  */
 fun RelationMusicBrainzModel.toRelationDatabaseModel(
     entityId: String,
     order: Int,
-): Mb_relation? {
+): Relation? {
     var linkedEntityId = ""
     var linkedEntityName = ""
     var linkedEntityDisambiguation: String? = null
@@ -151,7 +151,7 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         else -> return null
     }
 
-    return Mb_relation(
+    return Relation(
         entity_id = entityId,
         linked_entity_id = linkedEntityId,
         linked_entity = linkedTargetType,

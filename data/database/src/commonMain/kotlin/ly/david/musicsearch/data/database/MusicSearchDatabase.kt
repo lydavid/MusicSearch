@@ -10,9 +10,9 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 import lydavidmusicsearchdatadatabase.Collection
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Lookup_history
-import lydavidmusicsearchdatadatabase.Mb_relation
 import lydavidmusicsearchdatadatabase.Medium
 import lydavidmusicsearchdatadatabase.Recording
+import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
 import lydavidmusicsearchdatadatabase.Track
@@ -21,7 +21,7 @@ import lydavidmusicsearchdatadatabase.Work
 fun createDatabase(driver: SqlDriver): Database {
     return Database(
         driver = driver,
-        mb_relationAdapter = Mb_relation.Adapter(
+        relationAdapter = Relation.Adapter(
             linked_entityAdapter = MusicBrainzEntityStringColumnAdapter,
             orderAdapter = IntColumnAdapter
         ),

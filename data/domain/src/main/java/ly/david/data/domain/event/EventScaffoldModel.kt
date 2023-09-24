@@ -4,7 +4,7 @@ import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Event
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 
 data class EventScaffoldModel(
     override val id: String,
@@ -18,7 +18,7 @@ data class EventScaffoldModel(
 ) : ly.david.data.core.Event
 
 internal fun Event.toEventScaffoldModel(
-    urls: List<Mb_relation>,
+    urls: List<Relation>,
 ) = EventScaffoldModel(
     id = id,
     name = name,

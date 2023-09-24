@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
-import lydavidmusicsearchdatadatabase.Mb_relation
+import lydavidmusicsearchdatadatabase.Relation
 import org.koin.core.annotation.Single
 
 @Single
@@ -33,7 +33,7 @@ class RelationRepository(
     }
 
     private fun insertRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
-        val relationRoomModels = mutableListOf<Mb_relation>()
+        val relationRoomModels = mutableListOf<Relation>()
         relationMusicBrainzModels?.forEachIndexed { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationDatabaseModel(
                 entityId = entityId,
@@ -54,7 +54,7 @@ class RelationRepository(
     fun getEntityRelationshipsExcludingUrls(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Mb_relation> {
+    ): PagingSource<Int, Relation> {
         return relationDao.getEntityRelationshipsExcludingUrls(
             entityId = entityId,
             query = "%$query%",
