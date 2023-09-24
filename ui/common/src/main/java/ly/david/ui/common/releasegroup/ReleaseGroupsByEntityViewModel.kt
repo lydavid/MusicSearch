@@ -61,8 +61,8 @@ abstract class ReleaseGroupsByEntityViewModel(
     }
 
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.remote_count
+        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.remoteCount
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int =
-        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.local_count ?: 0
+        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.localCount ?: 0
 }

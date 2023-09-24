@@ -1,8 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.data.core.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
@@ -55,11 +59,14 @@ class ReleaseCountryDao(
         }
     }
 
-    fun getNumberOfReleasesByCountry(areaId: String): Int =
+    fun getNumberOfReleasesByCountry(areaId: String): Flow<Int> =
         transacter.getNumberOfReleasesByCountry(
             areaId = areaId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(Dispatchers.IO)
+            .map { it.toInt() }
 
     fun getReleasesByCountry(
         areaId: String,

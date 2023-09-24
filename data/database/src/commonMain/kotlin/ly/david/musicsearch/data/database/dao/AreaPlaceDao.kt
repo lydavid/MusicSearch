@@ -1,8 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Area_place
@@ -47,11 +51,14 @@ class AreaPlaceDao(
         transacter.deletePlacesByArea(areaId)
     }
 
-    fun getNumberOfPlacesByArea(areaId: String): Int =
+    fun getNumberOfPlacesByArea(areaId: String): Flow<Int> =
         transacter.getNumberOfPlacesByArea(
             areaId = areaId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(Dispatchers.IO)
+            .map { it.toInt() }
 
     fun getPlacesByArea(
         areaId: String,

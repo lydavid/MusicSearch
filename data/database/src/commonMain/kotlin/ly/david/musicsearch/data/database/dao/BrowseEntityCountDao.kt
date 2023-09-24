@@ -1,5 +1,11 @@
 package ly.david.musicsearch.data.database.dao
 
+import app.cash.sqldelight.Query
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import ly.david.data.core.browse.BrowseEntityCount
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Browse_entity_count
@@ -13,14 +19,41 @@ class BrowseEntityCountDao(
         transacter.insert(browseEntityCount)
     }
 
-    fun getBrowseEntityCount(
+    private fun getBrowseEntityCountQuery(
         entityId: String,
         browseEntity: MusicBrainzEntity,
-    ): Browse_entity_count? =
+    ): Query<BrowseEntityCount> =
         transacter.getBrowseEntityCount(
             entityId = entityId,
             browseEntity = browseEntity,
+            mapper = { _, browse_entity, local_count, remote_count ->
+                BrowseEntityCount(
+                    browseEntity = browse_entity,
+                    localCount = local_count,
+                    remoteCount = remote_count,
+                )
+            }
+        )
+
+    fun getBrowseEntityCount(
+        entityId: String,
+        browseEntity: MusicBrainzEntity,
+    ): BrowseEntityCount? =
+        getBrowseEntityCountQuery(
+            entityId = entityId,
+            browseEntity = browseEntity,
         ).executeAsOneOrNull()
+
+    fun getBrowseEntityCountFlow(
+        entityId: String,
+        browseEntity: MusicBrainzEntity,
+    ): Flow<BrowseEntityCount?> =
+        getBrowseEntityCountQuery(
+            entityId = entityId,
+            browseEntity = browseEntity,
+        )
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.IO)
 
     private fun updateLocalCountForEntity(
         entityId: String,
@@ -40,7 +73,7 @@ class BrowseEntityCountDao(
         additionalOffset: Int,
     ) {
         transacter.transaction {
-            val currentOffset = getBrowseEntityCount(entityId, browseEntity)?.local_count ?: 0
+            val currentOffset = getBrowseEntityCount(entityId, browseEntity)?.localCount ?: 0
             updateLocalCountForEntity(entityId, browseEntity, currentOffset + additionalOffset)
         }
     }

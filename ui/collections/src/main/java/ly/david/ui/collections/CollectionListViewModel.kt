@@ -6,6 +6,7 @@ import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.browse.GetBrowseEntityCountUseCase
 import ly.david.data.musicbrainz.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
@@ -26,6 +27,7 @@ class CollectionListViewModel(
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val collectionDao: CollectionDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
+    private val getBrowseEntityCountUseCase: GetBrowseEntityCountUseCase,
 ) : ViewModel(),
     ICollectionPagedList by pagedList,
     BrowseCollectionUseCase<Collection> {
@@ -94,13 +96,13 @@ class CollectionListViewModel(
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        return browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.COLLECTION)?.remote_count
+        return getBrowseEntityCountUseCase(entityId, MusicBrainzEntity.COLLECTION)?.remoteCount
     }
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        return browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.COLLECTION)?.local_count ?: 0
+        return getBrowseEntityCountUseCase(entityId, MusicBrainzEntity.COLLECTION)?.localCount ?: 0
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {

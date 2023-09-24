@@ -3,6 +3,7 @@ package ly.david.data.room.relation
 import androidx.room.ColumnInfo
 import ly.david.data.core.network.MusicBrainzEntity
 
+// TODO: extract out
 /**
  * Maps from [RelationRoomModel].
  */

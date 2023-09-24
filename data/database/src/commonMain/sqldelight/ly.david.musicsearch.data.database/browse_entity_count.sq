@@ -1,8 +1,8 @@
 import kotlin.Int;
 import ly.david.data.core.network.MusicBrainzEntity;
 
--- Tracks how many [browseEntity] there are in MusicBrainz [remoteCount]
--- and how many we have collected [localCount] linked to a entity with [entityId].
+-- Tracks how many [browse_entity] there are in MusicBrainz with [remote_count]
+-- and how many we have collected with [local_count] that are linked to the entity with [entity_id].
 --
 -- Originally, we used a SQL count query to sum up the local entities.
 -- But that would mess up our browsing because we might have collected an entity via other means than browsing,

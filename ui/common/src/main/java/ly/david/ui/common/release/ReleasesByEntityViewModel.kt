@@ -62,10 +62,10 @@ abstract class ReleasesByEntityViewModel(
     }
 
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.remote_count
+        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.remoteCount
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
-        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.local_count ?: 0
+        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.localCount ?: 0
 
     override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
         return roomModel.toReleaseListItemModel()

@@ -57,8 +57,8 @@ abstract class BrowseEntitiesByEntityViewModel<
     }
 
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseEntityCount(entityId, byEntity)?.remote_count
+        browseEntityCountDao.getBrowseEntityCount(entityId, byEntity)?.remoteCount
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
-        browseEntityCountDao.getBrowseEntityCount(entityId, byEntity)?.local_count ?: 0
+        browseEntityCountDao.getBrowseEntityCount(entityId, byEntity)?.localCount ?: 0
 }
