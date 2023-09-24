@@ -216,27 +216,27 @@ internal class TopLevelViewModel(
         }
     }
 
-    suspend fun markHistoryAsDeleted(mbid: String) {
+    fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryRepository.markHistoryAsDeleted(mbid)
     }
 
-    suspend fun undoDeleteHistory(mbid: String) {
+    fun undoDeleteHistory(mbid: String) {
         lookupHistoryRepository.undoDeleteHistory(mbid)
     }
 
-    suspend fun markAllHistoryAsDeleted() {
+    fun markAllHistoryAsDeleted() {
         lookupHistoryRepository.markAllHistoryAsDeleted()
     }
 
-    suspend fun undoDeleteAllHistory() {
+    fun undoDeleteAllHistory() {
         lookupHistoryRepository.undoDeleteAllHistory()
     }
 
-    suspend fun deleteHistory(mbid: String) {
+    fun deleteHistory(mbid: String) {
         lookupHistoryRepository.deleteHistory(mbid)
     }
 
-    suspend fun deleteAllHistory() {
+    fun deleteAllHistory() {
         lookupHistoryRepository.deleteAllHistory()
     }
 }

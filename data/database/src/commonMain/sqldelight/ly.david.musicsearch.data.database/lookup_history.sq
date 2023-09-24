@@ -63,3 +63,19 @@ ORDER BY
   CASE WHEN :mostVisited THEN `number_of_visits` END DESC,
   CASE WHEN :leastVisited THEN `number_of_visits` END ASC
 LIMIT :limit OFFSET :offset;
+
+markAsDeleted:
+UPDATE lookup_history
+SET deleted = :deleted
+WHERE mbid = :mbid;
+
+markAllAsDeleted:
+UPDATE lookup_history
+SET deleted = :deleted;
+
+delete:
+DELETE FROM lookup_history
+WHERE mbid = :mbid;
+
+deleteAll:
+DELETE FROM lookup_history;

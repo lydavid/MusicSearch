@@ -23,27 +23,27 @@ class LookupHistoryRepository(
             leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
         )
 
-    suspend fun markHistoryAsDeleted(mbid: String) {
-//        lookupHistoryDao.markAsDeleted(mbid, true)
+    fun markHistoryAsDeleted(mbid: String) {
+        lookupHistoryDao.markAsDeleted(mbid, true)
     }
 
-    suspend fun undoDeleteHistory(mbid: String) {
-//        lookupHistoryDao.markAsDeleted(mbid, false)
+    fun undoDeleteHistory(mbid: String) {
+        lookupHistoryDao.markAsDeleted(mbid, false)
     }
 
-    suspend fun markAllHistoryAsDeleted() {
-//        lookupHistoryDao.markAllAsDeleted(true)
+    fun markAllHistoryAsDeleted() {
+        lookupHistoryDao.markAllAsDeleted(true)
     }
 
-    suspend fun undoDeleteAllHistory() {
-//        lookupHistoryDao.markAllAsDeleted(false)
+    fun undoDeleteAllHistory() {
+        lookupHistoryDao.markAllAsDeleted(false)
     }
 
-    suspend fun deleteHistory(mbid: String) {
-//        lookupHistoryDao.delete(mbid)
+    fun deleteHistory(mbid: String) {
+        lookupHistoryDao.delete(mbid)
     }
 
-    suspend fun deleteAllHistory() {
-//        lookupHistoryDao.deleteAll()
+    fun deleteAllHistory() {
+        lookupHistoryDao.deleteAll()
     }
 }

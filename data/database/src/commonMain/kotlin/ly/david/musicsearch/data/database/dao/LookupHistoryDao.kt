@@ -56,6 +56,25 @@ class LookupHistoryDao(
             mapper = ::mapToLookupHistoryForListItem,
         )
     }
+
+    fun markAsDeleted(mbid: String, deleted: Boolean) {
+        transacter.markAsDeleted(
+            mbid = mbid,
+            deleted = deleted,
+        )
+    }
+
+    fun markAllAsDeleted(deleted: Boolean) {
+        transacter.markAllAsDeleted(deleted)
+    }
+
+    fun delete(mbid: String) {
+        transacter.delete(mbid)
+    }
+
+    fun deleteAll() {
+        transacter.deleteAll()
+    }
 }
 
 private fun mapToLookupHistoryForListItem(
