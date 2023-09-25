@@ -10,7 +10,7 @@ import ly.david.data.room.collection.RoomCollectionEntityDao
 import ly.david.data.room.event.RoomEventDao
 import ly.david.data.room.history.RoomLookupHistoryDao
 import ly.david.data.room.history.nowplaying.RoomNowPlayingHistoryDao
-import ly.david.data.room.history.search.SearchHistoryDao
+import ly.david.data.room.history.search.RoomSearchHistoryDao
 import ly.david.data.room.image.MbidImageDao
 import ly.david.data.room.label.RoomLabelDao
 import ly.david.data.room.label.releases.RoomReleaseLabelDao
@@ -48,7 +48,7 @@ interface MusicSearchDatabase {
 
     fun getRelationDao(): RoomRelationDao
     fun getLookupHistoryDao(): RoomLookupHistoryDao
-    fun getSearchHistoryDao(): SearchHistoryDao
+    fun getSearchHistoryDao(): RoomSearchHistoryDao
     fun getNowPlayingHistoryDao(): RoomNowPlayingHistoryDao
 
     fun getCollectionDao(): RoomCollectionDao

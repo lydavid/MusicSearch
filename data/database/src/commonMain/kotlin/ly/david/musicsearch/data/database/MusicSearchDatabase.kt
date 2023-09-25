@@ -16,6 +16,7 @@ import lydavidmusicsearchdatadatabase.Recording
 import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Release
 import lydavidmusicsearchdatadatabase.Release_group
+import lydavidmusicsearchdatadatabase.Search_history
 import lydavidmusicsearchdatadatabase.Track
 import lydavidmusicsearchdatadatabase.Work
 
@@ -70,6 +71,10 @@ fun createDatabase(driver: SqlDriver): Database {
         ),
         now_playing_historyAdapter = Now_playing_history.Adapter(
             last_playedAdapter = InstantLongColumnAdapter,
+        ),
+        search_historyAdapter = Search_history.Adapter(
+            entityAdapter = MusicBrainzEntityStringColumnAdapter,
+            last_accessedAdapter = InstantLongColumnAdapter,
         )
     )
 }

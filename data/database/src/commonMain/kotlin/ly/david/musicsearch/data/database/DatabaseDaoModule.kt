@@ -31,6 +31,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.SearchHistoryDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.database.dao.WorkAttributeDao
@@ -68,6 +69,7 @@ val databaseDaoModule = module {
     factory { ReleaseGroupDao(get(), get()) }
     factory { ReleaseLabelDao(get()) }
     factory { ReleaseReleaseGroupDao(get()) }
+    factory { SearchHistoryDao(get()) }
     factory { SeriesDao(get()) }
     factory { TrackDao(get(), get()) }
     factory { WorkAttributeDao(get()) }

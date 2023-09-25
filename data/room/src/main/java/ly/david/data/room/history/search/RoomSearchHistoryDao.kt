@@ -8,7 +8,7 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.BaseDao
 
 @Dao
-abstract class SearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
+abstract class RoomSearchHistoryDao : BaseDao<SearchHistoryRoomModel>() {
 
     @Transaction
     @Query(

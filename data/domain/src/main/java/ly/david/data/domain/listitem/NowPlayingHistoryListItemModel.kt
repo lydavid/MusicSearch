@@ -20,7 +20,7 @@ fun NowPlayingHistory.toNowPlayingHistoryListItemModel(): NowPlayingHistoryListI
     val artist = substrings.lastOrNull().orEmpty().trim()
 
     return NowPlayingHistoryListItemModel(
-        id = id,
+        id = raw,
         title = title,
         artist = artist,
         lastPlayed = lastPlayed,
