@@ -1,11 +1,13 @@
 package ly.david.data.domain.release
 
+import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
+import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Relation
@@ -46,6 +48,7 @@ data class ReleaseScaffoldModel(
 internal fun Release.toReleaseScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
     imageUrl: String?,
+    labels: List<LabelWithCatalog>,
     urls: List<Relation>,
 ) = ReleaseScaffoldModel(
     id = id,
@@ -68,7 +71,7 @@ internal fun Release.toReleaseScaffoldModel(
 //    areas = areas.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
 //    releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
-//    labels = labels.map { it.toLabelListItemModel() },
+    labels = labels.map { it.toLabelListItemModel() },
     urls = urls.map { it.toRelationListItemModel() },
 //    releaseLength = releaseLength,
 //    hasNullLength = hasNullLength

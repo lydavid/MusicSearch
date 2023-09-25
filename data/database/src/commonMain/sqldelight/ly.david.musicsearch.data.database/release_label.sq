@@ -18,17 +18,21 @@ insert:
 INSERT OR IGNORE INTO release_label
 VALUES ?;
 
-deleteReleasesByLabel:
-DELETE FROM release WHERE id IN (
-  SELECT r.id
-  FROM release r
-  INNER JOIN release_label rl ON r.id = rl.release_id
-  INNER JOIN label l ON l.id = rl.label_id
-  WHERE l.id = :labelId
-);
-
 deleteLabelReleaseLinks:
 DELETE FROM release_label WHERE label_id = :labelId;
+
+
+-- labels by release
+
+getLabelsByRelease:
+SELECT l.id, l.name, l.disambiguation, l.type, l.label_code, rl.catalog_number
+FROM label l
+INNER JOIN release_label rl ON l.id = rl.label_id
+WHERE rl.release_id = :releaseId
+ORDER BY rl.catalog_number;
+
+
+-- releases by label
 
 getNumberOfReleasesByLabel:
 SELECT IFNULL(
@@ -72,3 +76,12 @@ AND (
 )
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
+
+deleteReleasesByLabel:
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN release_label rl ON r.id = rl.release_id
+  INNER JOIN label l ON l.id = rl.label_id
+  WHERE l.id = :labelId
+);

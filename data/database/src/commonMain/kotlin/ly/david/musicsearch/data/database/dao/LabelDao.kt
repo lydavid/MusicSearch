@@ -27,9 +27,9 @@ class LabelDao(
         }
     }
 
-    fun insertAll(labels: List<LabelMusicBrainzModel>) {
+    fun insertAll(labels: List<LabelMusicBrainzModel>?) {
         transacter.transaction {
-            labels.forEach { label ->
+            labels?.forEach { label ->
                 insert(label)
             }
         }

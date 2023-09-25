@@ -4,6 +4,8 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import ly.david.data.core.ReleaseForListItem
+import ly.david.data.core.label.LabelWithCatalog
+import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem
@@ -18,7 +20,7 @@ class ReleaseLabelDao(
 ) : EntityDao {
     override val transacter = database.release_labelQueries
 
-    fun insert(
+    private fun insert(
         labelId: String,
         releaseId: String,
         catalogNumber: String,
@@ -32,7 +34,56 @@ class ReleaseLabelDao(
         )
     }
 
-    fun insertAll(
+    // region labels by release
+    fun insertAllLabelLinksForRelease(
+        releaseId: String,
+        labelInfoList: List<LabelInfo>?,
+    ) {
+        transacter.transaction {
+            labelInfoList?.forEach { labelInfo ->
+                val labelId = labelInfo.label?.id ?: return@forEach
+                insert(
+                    releaseId = releaseId,
+                    labelId = labelId,
+                    catalogNumber = labelInfo.catalogNumber.orEmpty(),
+                )
+            }
+        }
+    }
+
+    fun getLabelsByRelease(
+        releaseId: String,
+    ): List<LabelWithCatalog> = transacter.getLabelsByRelease(
+        releaseId = releaseId,
+        mapper = ::mapToLabelWithCatalog,
+    ).executeAsList()
+
+    private fun mapToLabelWithCatalog(
+        id: String,
+        name: String,
+        disambiguation: String?,
+        type: String?,
+        labelCode: Int?,
+        catalogNumber: String,
+    ) = LabelWithCatalog(
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        labelCode = labelCode,
+        catalogNumber = catalogNumber
+    )
+
+    // endregion
+
+    fun getNumberOfReleasesByLabel(labelId: String): Int =
+        transacter.getNumberOfReleasesByLabel(
+            labelId = labelId,
+            query = "%%",
+        ).executeAsOne().toInt()
+
+    // region releases by label
+    fun insertAllReleaseLinksForLabel(
         labelId: String,
         releases: List<ReleaseMusicBrainzModel>,
     ) {
@@ -48,19 +99,6 @@ class ReleaseLabelDao(
             }
         }
     }
-
-    fun deleteReleasesByLabel(labelId: String) {
-        withTransaction {
-            transacter.deleteReleasesByLabel(labelId)
-            transacter.deleteLabelReleaseLinks(labelId)
-        }
-    }
-
-    fun getNumberOfReleasesByLabel(labelId: String): Int =
-        transacter.getNumberOfReleasesByLabel(
-            labelId = labelId,
-            query = "%%",
-        ).executeAsOne().toInt()
 
     fun getReleasesByLabel(
         labelId: String,
@@ -81,4 +119,12 @@ class ReleaseLabelDao(
             mapper = ::mapToReleaseForListItem,
         )
     }
+
+    fun deleteReleasesByLabel(labelId: String) {
+        withTransaction {
+            transacter.deleteReleasesByLabel(labelId)
+            transacter.deleteLabelReleaseLinks(labelId)
+        }
+    }
+    // endregion
 }

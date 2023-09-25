@@ -9,14 +9,14 @@ import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.RoomAreaDao
 import ly.david.data.room.area.releases.RoomReleaseCountryDao
-import ly.david.data.room.label.RoomLabelDao
-import ly.david.data.room.label.releases.RoomReleaseLabelDao
 import ly.david.data.room.release.tracks.RoomMediumDao
 import ly.david.data.room.release.tracks.RoomTrackDao
 import ly.david.data.room.releasegroup.releases.RoomReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -31,8 +31,8 @@ class ReleaseRepository(
     private val trackDao: RoomTrackDao,
     private val releaseCountryDao: RoomReleaseCountryDao,
     private val areaDao: RoomAreaDao,
-    private val labelDao: RoomLabelDao,
-    private val releaseLabelDao: RoomReleaseLabelDao,
+    private val labelDao: LabelDao,
+    private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
@@ -48,6 +48,7 @@ class ReleaseRepository(
         val release = releaseDao.getRelease(releaseId)
         val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseId)
         val largeImageUrl = imageUrlDao.getLargeUrlForEntity(releaseId)
+        val labels = releaseLabelDao.getLabelsByRelease(releaseId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (release != null &&
@@ -59,6 +60,7 @@ class ReleaseRepository(
             return release.toReleaseScaffoldModel(
                 artistCreditNames = artistCreditNames,
                 imageUrl = largeImageUrl,
+                labels = labels,
                 urls = urlRelations,
             )
         }
@@ -83,10 +85,11 @@ class ReleaseRepository(
 
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
-//            labelDao.insertAll(release.labelInfoList?.toRoomModels().orEmpty())
-//            releaseLabelDao.insertAll(
-//                release.labelInfoList?.toReleaseLabels(releaseId = release.id).orEmpty()
-//            )
+            labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
+            releaseLabelDao.insertAllLabelLinksForRelease(
+                releaseId = release.id,
+                labelInfoList = release.labelInfoList,
+            )
 
 //            release.media?.forEach { medium ->
 //                val mediumId = mediumDao.insert(medium.toMediumRoomModel(release.id))

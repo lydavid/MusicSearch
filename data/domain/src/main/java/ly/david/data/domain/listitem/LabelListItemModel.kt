@@ -1,8 +1,8 @@
 package ly.david.data.domain.listitem
 
+import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.data.room.release.LabelWithCatalog
 import lydavidmusicsearchdatadatabase.Label
 
 data class LabelListItemModel(
@@ -36,12 +36,12 @@ fun Label.toLabelListItemModel() =
 
 internal fun LabelWithCatalog.toLabelListItemModel() =
     LabelListItemModel(
-        id = label.id,
-        name = label.name,
-        disambiguation = label.disambiguation,
-        type = label.type,
-        labelCode = label.labelCode,
-        catalogNumber = releaseLabel.catalogNumber
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        labelCode = labelCode,
+        catalogNumber = catalogNumber,
     )
 
 fun List<LabelInfo>.toLabelListItemModels(): List<LabelListItemModel> {
