@@ -2,9 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComplexCondition:ReleaseRepository.kt$ReleaseRepository$releaseWithAllData != null &amp;&amp; releaseWithAllData.artistCreditNamesWithEntities.isNotEmpty() &amp;&amp; releaseWithAllData.formatTrackCounts.isNotEmpty() &amp;&amp; hasUrlsBeenSavedForEntity</ID>
+    <ID>ComplexCondition:ReleaseRepository.kt$ReleaseRepository$release != null &amp;&amp; releaseGroup != null &amp;&amp; artistCreditNames.isNotEmpty() &amp;&amp; hasUrlsBeenSavedForEntity</ID>
     <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
-    <ID>LongParameterList:ReleaseRepository.kt$ReleaseRepository$( private val musicBrainzApi: MusicBrainzApi, private val releaseDao: ReleaseDao, private val releaseReleaseGroupDao: ReleaseReleaseGroupDao, private val releaseGroupDao: ReleaseGroupDao, private val mediumDao: MediumDao, private val trackDao: TrackDao, private val releaseCountryDao: ReleaseCountryDao, private val areaDao: AreaDao, private val labelDao: LabelDao, private val releaseLabelDao: ReleaseLabelDao, private val relationRepository: RelationRepository, )</ID>
     <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, RM&gt;, ): MediatorResult</ID>
   </CurrentIssues>
 </SmellBaseline>
