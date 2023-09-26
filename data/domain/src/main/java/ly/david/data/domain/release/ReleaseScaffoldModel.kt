@@ -1,7 +1,11 @@
 package ly.david.data.domain.release
 
 import ly.david.data.core.area.ReleaseEvent
+import ly.david.data.core.getFormatsForDisplay
+import ly.david.data.core.getTracksForDisplay
 import ly.david.data.core.label.LabelWithCatalog
+import ly.david.data.core.release.FormatTrackCount
+import ly.david.data.core.release.ReleaseWithAllData
 import ly.david.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
@@ -13,7 +17,6 @@ import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Relation
-import lydavidmusicsearchdatadatabase.Release
 
 data class ReleaseScaffoldModel(
     override val id: String,
@@ -47,10 +50,11 @@ data class ReleaseScaffoldModel(
     val hasNullLength: Boolean = false,
 ) : ly.david.data.core.release.Release
 
-internal fun Release.toReleaseScaffoldModel(
+internal fun ReleaseWithAllData.toReleaseScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
     releaseGroup: ReleaseGroupForRelease,
     imageUrl: String?,
+    formatTrackCounts: List<FormatTrackCount>,
     labels: List<LabelWithCatalog>,
     releaseEvents: List<ReleaseEvent>,
     urls: List<Relation>,
@@ -61,27 +65,27 @@ internal fun Release.toReleaseScaffoldModel(
     date = date,
     barcode = barcode,
     status = status,
-    statusId = status_id,
-    countryCode = country_code,
+    statusId = statusId,
+    countryCode = countryCode,
     packaging = packaging,
-    packagingId = packaging_id,
+    packagingId = packagingId,
     asin = asin,
     quality = quality,
     coverArtArchive = CoverArtArchiveUiModel(
-        count = cover_art_count,
+        count = coverArtCount,
     ),
     textRepresentation = TextRepresentationUiModel(
         script = script,
         language = language,
     ),
-//    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
-//    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
+    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
+    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     imageUrl = imageUrl,
     areas = releaseEvents.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
     releaseGroup = releaseGroup,
     labels = labels.map { it.toLabelListItemModel() },
     urls = urls.map { it.toRelationListItemModel() },
-//    releaseLength = releaseLength,
-//    hasNullLength = hasNullLength
+    releaseLength = releaseLength,
+    hasNullLength = hasNullLength,
 )

@@ -52,7 +52,7 @@ abstract class RoomReleaseDao : BaseDao<ReleaseRoomModel>(), ArtistCreditDao {
         WHERE id = :releaseId
         """
     )
-    abstract suspend fun getReleaseWithAllData(releaseId: String): ReleaseWithAllData?
+    abstract suspend fun getReleaseWithAllData(releaseId: String): RoomReleaseWithAllData?
 
     /**
      * By deleting a release, all junction tables for it should cascade delete too.

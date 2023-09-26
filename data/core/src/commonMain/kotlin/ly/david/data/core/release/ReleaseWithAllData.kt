@@ -16,6 +16,9 @@ data class ReleaseWithAllData(
     val script: String?,
     val language: String?,
     val coverArtCount: Int,
-    val formattedArtistCreditNames: String,
-    val imageUrl: String?,
+    val releaseLength: Int? = null,
+    val hasNullLength: Boolean = false,
+//    val formattedArtistCreditNames: String,
+//    val imageUrl: String?,
+
 ) : Release

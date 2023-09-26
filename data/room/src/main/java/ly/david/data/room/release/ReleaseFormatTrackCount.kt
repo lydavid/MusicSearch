@@ -17,8 +17,3 @@ data class ReleaseFormatTrackCount(
     val format: String?,
     val trackCount: Int,
 )
-
-data class FormatTrackCount(
-    val format: String?,
-    val trackCount: Int,
-)

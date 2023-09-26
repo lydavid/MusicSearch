@@ -25,5 +25,30 @@ VALUES ?;
 deleteRelease:
 DELETE FROM `release` WHERE id = :releaseId;
 
-getRelease:
-SELECT * FROM `release` WHERE id = ?;
+getReleaseWithAllData:
+SELECT *,
+(
+  SELECT SUM(t.length)
+  FROM track t
+  INNER JOIN medium m ON t.medium_id = m.id
+  INNER JOIN `release` r ON m.release_id = r.id
+  WHERE r.id = :releaseId
+) AS releaseLength,
+(
+  SELECT COUNT(t.id) > 0
+  FROM track t
+  INNER JOIN medium m ON t.medium_id = m.id
+  INNER JOIN `release` r ON m.release_id = r.id
+  WHERE r.id = :releaseId
+  AND t.length IS NULL
+) AS hasNullLength
+FROM `release`
+WHERE id = :releaseId;
+
+getReleaseFormatTrackCount:
+SELECT m.format, COUNT(t.id) AS trackCount
+FROM track t
+INNER JOIN medium m ON t.medium_id = m.id
+INNER JOIN `release` r ON m.release_id = r.id
+WHERE r.id = :releaseId
+GROUP BY m.id;

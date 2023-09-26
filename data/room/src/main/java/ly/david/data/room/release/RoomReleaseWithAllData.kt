@@ -4,6 +4,7 @@ import androidx.room.DatabaseView
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import ly.david.data.core.release.FormatTrackCount
 import ly.david.data.room.RoomModel
 import ly.david.data.room.area.AreaRoomModel
 import ly.david.data.room.area.CountryCode
@@ -19,7 +20,7 @@ import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
 /**
  * Don't use this when paging releases.
  */
-data class ReleaseWithAllData(
+data class RoomReleaseWithAllData(
     @Embedded
     val release: ReleaseRoomModel,
 

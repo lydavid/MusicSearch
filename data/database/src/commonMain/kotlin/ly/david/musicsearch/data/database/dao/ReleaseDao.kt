@@ -1,5 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.data.core.release.FormatTrackCount
+import ly.david.data.core.release.ReleaseWithAllData
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release
@@ -55,6 +57,58 @@ class ReleaseDao(
         transacter.deleteRelease(releaseId)
     }
 
-    fun getRelease(releaseId: String): Release? =
-        transacter.getRelease(releaseId).executeAsOneOrNull()
+    fun getRelease(releaseId: String): ReleaseWithAllData? =
+        transacter.getReleaseWithAllData(
+            releaseId = releaseId,
+            mapper = ::mapToReleaseWithAllData,
+        ).executeAsOneOrNull()
+
+    fun getReleaseFormatTrackCount(releaseId: String): List<FormatTrackCount> =
+        transacter.getReleaseFormatTrackCount(
+            releaseId = releaseId,
+            mapper = { format, trackCount ->
+                FormatTrackCount(
+                    format = format,
+                    trackCount = trackCount.toInt(),
+                )
+            }
+        ).executeAsList()
+
+    private fun mapToReleaseWithAllData(
+        id: String,
+        name: String,
+        disambiguation: String,
+        date: String?,
+        barcode: String?,
+        asin: String?,
+        quality: String?,
+        country_code: String?,
+        status: String?,
+        status_id: String?,
+        packaging: String?,
+        packaging_id: String?,
+        script: String?,
+        language: String?,
+        cover_art_count: Int,
+        releaseLength: Double?,
+        hasNullLength: Boolean,
+    ) = ReleaseWithAllData(
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        date = date,
+        barcode = barcode,
+        asin = asin,
+        quality = quality,
+        countryCode = country_code,
+        status = status,
+        statusId = status_id,
+        packaging = packaging,
+        packagingId = packaging_id,
+        script = script,
+        language = language,
+        coverArtCount = cover_art_count,
+        releaseLength = releaseLength?.toInt(),
+        hasNullLength = hasNullLength,
+    )
 }
