@@ -1,7 +1,7 @@
 package ly.david.data.room.releasegroup
 
 import androidx.room.ColumnInfo
-import ly.david.data.core.ReleaseGroupTypes
+import ly.david.data.core.releasegroup.ReleaseGroupTypes
 
 data class ReleaseGroupTypeCount(
     @ColumnInfo(name = "primary_type")

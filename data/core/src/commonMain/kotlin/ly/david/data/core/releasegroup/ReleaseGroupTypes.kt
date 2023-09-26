@@ -1,4 +1,4 @@
-package ly.david.data.core
+package ly.david.data.core.releasegroup
 
 import ly.david.data.core.network.NO_TYPE
 

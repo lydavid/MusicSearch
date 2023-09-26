@@ -1,4 +1,4 @@
-package ly.david.data.core
+package ly.david.data.core.release
 
 data class ReleaseForListItem(
     override val id: String,

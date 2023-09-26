@@ -1,4 +1,6 @@
-package ly.david.data.core
+package ly.david.data.core.release
+
+import ly.david.data.core.NameWithDisambiguation
 
 /**
  * Defines common properties between domain, network and persistence model.

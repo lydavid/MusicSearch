@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.artist.releases
 
 import androidx.paging.PagingSource
-import ly.david.data.core.ReleaseForListItem
+import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel

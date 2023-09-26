@@ -1,6 +1,6 @@
 package ly.david.data.domain.releasegroup
 
-import ly.david.data.core.ReleaseGroup
+import ly.david.data.core.releasegroup.ReleaseGroup
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.RelationListItemModel

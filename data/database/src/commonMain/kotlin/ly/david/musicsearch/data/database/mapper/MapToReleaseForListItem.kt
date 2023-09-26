@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.data.core.ReleaseForListItem
+import ly.david.data.core.release.ReleaseForListItem
 
 internal fun mapToReleaseForListItem(
     id: String,

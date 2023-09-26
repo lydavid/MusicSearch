@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release_group
@@ -41,4 +42,19 @@ class ReleaseGroupDao(
 
     fun getReleaseGroup(releaseGroupId: String): Release_group? =
         transacter.getReleaseGroup(releaseGroupId).executeAsOneOrNull()
+
+    fun getReleaseGroupForRelease(releaseId: String): ReleaseGroupForRelease? =
+        transacter.getReleaseGroupForRelease(
+            releaseId = releaseId,
+            mapper = { id, name, firstReleaseDate, disambiguation, primaryType, _, secondaryTypes, _ ->
+                ReleaseGroupForRelease(
+                    id = id,
+                    name = name,
+                    firstReleaseDate = firstReleaseDate,
+                    disambiguation = disambiguation,
+                    primaryType = primaryType,
+                    secondaryTypes = secondaryTypes
+                )
+            }
+        ).executeAsOneOrNull()
 }

@@ -3,8 +3,8 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
-import ly.david.data.core.ReleaseForListItem
 import ly.david.data.core.label.LabelWithCatalog
+import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database

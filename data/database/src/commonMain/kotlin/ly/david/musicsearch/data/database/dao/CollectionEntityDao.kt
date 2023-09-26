@@ -4,8 +4,8 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import ly.david.data.core.RecordingForListItem
-import ly.david.data.core.ReleaseForListItem
-import ly.david.data.core.ReleaseGroupForListItem
+import ly.david.data.core.release.ReleaseForListItem
+import ly.david.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
 import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem

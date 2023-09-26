@@ -1,7 +1,7 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Release
-import ly.david.data.core.ReleaseForListItem
+import ly.david.data.core.release.Release
+import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.core.getDisplayNames
 import ly.david.data.domain.release.CoverArtArchiveUiModel
 import ly.david.data.domain.release.TextRepresentationUiModel

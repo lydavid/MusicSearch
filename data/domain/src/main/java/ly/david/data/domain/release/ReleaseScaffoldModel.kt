@@ -1,12 +1,12 @@
 package ly.david.data.domain.release
 
 import ly.david.data.core.label.LabelWithCatalog
+import ly.david.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
-import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
@@ -36,17 +36,18 @@ data class ReleaseScaffoldModel(
 
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
 
-    val releaseGroup: ReleaseGroupListItemModel? = null,
+    val releaseGroup: ReleaseGroupForRelease? = null,
     val areas: List<AreaListItemModel> = listOf(),
     val labels: List<LabelListItemModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
-) : ly.david.data.core.Release
+) : ly.david.data.core.release.Release
 
 internal fun Release.toReleaseScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
+    releaseGroup: ReleaseGroupForRelease,
     imageUrl: String?,
     labels: List<LabelWithCatalog>,
     urls: List<Relation>,
@@ -70,7 +71,7 @@ internal fun Release.toReleaseScaffoldModel(
     imageUrl = imageUrl,
 //    areas = areas.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
-//    releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
+    releaseGroup = releaseGroup,
     labels = labels.map { it.toLabelListItemModel() },
     urls = urls.map { it.toRelationListItemModel() },
 //    releaseLength = releaseLength,

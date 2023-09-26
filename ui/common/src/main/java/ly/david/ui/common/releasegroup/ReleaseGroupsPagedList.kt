@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.core.ReleaseGroupForListItem
-import ly.david.data.core.getDisplayTypes
+import ly.david.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.data.core.releasegroup.getDisplayTypes
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel

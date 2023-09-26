@@ -9,26 +9,22 @@ import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.room.area.RoomAreaDao
 import ly.david.data.room.area.releases.RoomReleaseCountryDao
-import ly.david.data.room.release.tracks.RoomMediumDao
-import ly.david.data.room.release.tracks.RoomTrackDao
-import ly.david.data.room.releasegroup.releases.RoomReleaseReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
+import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import org.koin.core.annotation.Single
 
 @Single
 class ReleaseRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseDao: ReleaseDao,
-    private val releaseReleaseGroupDao: RoomReleaseReleaseGroupDao,
+    private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
     private val imageUrlDao: ImageUrlDao,
     private val artistCreditDao: ArtistCreditDao,
-    private val mediumDao: RoomMediumDao,
-    private val trackDao: RoomTrackDao,
     private val releaseCountryDao: RoomReleaseCountryDao,
     private val areaDao: RoomAreaDao,
     private val labelDao: LabelDao,
@@ -47,11 +43,13 @@ class ReleaseRepository(
     suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
         val release = releaseDao.getRelease(releaseId)
         val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseId)
+        val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val largeImageUrl = imageUrlDao.getLargeUrlForEntity(releaseId)
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (release != null &&
+            releaseGroup != null &&
             artistCreditNames.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
@@ -59,6 +57,7 @@ class ReleaseRepository(
             // releases must have artist credits and a release group.
             return release.toReleaseScaffoldModel(
                 artistCreditNames = artistCreditNames,
+                releaseGroup = releaseGroup,
                 imageUrl = largeImageUrl,
                 labels = labels,
                 urls = urlRelations,
@@ -74,12 +73,10 @@ class ReleaseRepository(
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
                 releaseGroupDao.insert(releaseGroup)
-//                releaseReleaseGroupDao.insert(
-//                    ReleaseReleaseGroup(
-//                        releaseId = release.id,
-//                        releaseGroupId = releaseGroup.id
-//                    )
-//                )
+                releaseReleaseGroupDao.insert(
+                    releaseId = release.id,
+                    releaseGroupId = releaseGroup.id
+                )
             }
             releaseDao.insert(release)
 
@@ -90,13 +87,6 @@ class ReleaseRepository(
                 releaseId = release.id,
                 labelInfoList = release.labelInfoList,
             )
-
-//            release.media?.forEach { medium ->
-//                val mediumId = mediumDao.insert(medium.toMediumRoomModel(release.id))
-//                medium.tracks?.forEach { track ->
-//                    trackDao.insertTrackWithArtistCredits(track, mediumId)
-//                }
-//            }
 
 //            areaDao.insertAll(
 //                release.releaseEvents?.mapNotNull {
