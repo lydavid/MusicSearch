@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ly.david.data.core.Area
+import ly.david.data.core.area.Area
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.room.RoomModel
 import ly.david.data.room.common.LifeSpanRoomModel

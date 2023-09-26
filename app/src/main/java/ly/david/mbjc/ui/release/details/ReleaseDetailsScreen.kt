@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import java.util.Locale
-import ly.david.data.core.AreaType.COUNTRY
-import ly.david.data.core.AreaType.WORLDWIDE
+import ly.david.data.core.area.AreaType.COUNTRY
+import ly.david.data.core.area.AreaType.WORLDWIDE
 import ly.david.data.core.common.UNKNOWN_TIME
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.common.toDisplayTime

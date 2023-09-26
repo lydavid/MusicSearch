@@ -1,8 +1,8 @@
 package ly.david.mbjc.ui.area.releases
 
 import androidx.paging.PagingSource
-import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
@@ -37,7 +37,7 @@ internal class ReleasesByAreaViewModel(
         entityId: String,
         releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
-        releaseCountryDao.insertAll(
+        releaseCountryDao.linkReleasesByCountry(
             areaId = entityId,
             releases = releaseMusicBrainzModels,
         )

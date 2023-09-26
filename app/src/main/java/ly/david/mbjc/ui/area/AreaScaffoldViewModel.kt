@@ -8,7 +8,7 @@ import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.showReleases
+import ly.david.data.core.area.showReleases
 import ly.david.data.domain.area.AreaRepository
 import ly.david.data.domain.area.AreaScaffoldModel
 import ly.david.data.domain.history.IncrementLookupHistoryUseCase

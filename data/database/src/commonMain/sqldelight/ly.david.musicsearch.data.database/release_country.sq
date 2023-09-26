@@ -14,14 +14,20 @@ insert:
 INSERT OR IGNORE INTO release_country
 VALUES ?;
 
-deleteReleasesByCountry:
-DELETE FROM release WHERE id IN (
-  SELECT r.id
-  FROM release r
-  INNER JOIN release_country rc ON r.id = rc.release_id
-  INNER JOIN area a ON a.id = rc.country_id
-  WHERE a.id = :areaId
-);
+
+-- countries by release
+
+getCountriesByRelease:
+SELECT a.id, a.name, rc.date, cc.code
+FROM area a
+INNER JOIN release_country rc ON rc.country_id = a.id
+INNER JOIN `release` r ON r.id = rc.release_id
+LEFT JOIN country_code cc ON cc.area_id = a.id
+WHERE r.id = :releaseId
+ORDER BY a.name;
+
+
+-- releases by country
 
 deleteReleaseCountryLinks:
 DELETE FROM release_country WHERE country_id = :areaId;
@@ -65,3 +71,12 @@ AND (
 )
 ORDER BY r.date, r.name
 LIMIT :limit OFFSET :offset;
+
+deleteReleasesByCountry:
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN release_country rc ON r.id = rc.release_id
+  INNER JOIN area a ON a.id = rc.country_id
+  WHERE a.id = :areaId
+);

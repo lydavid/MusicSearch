@@ -35,7 +35,7 @@ class ReleaseLabelDao(
     }
 
     // region labels by release
-    fun insertAllLabelLinksForRelease(
+    fun linkLabelsByRelease(
         releaseId: String,
         labelInfoList: List<LabelInfo>?,
     ) {
@@ -73,7 +73,6 @@ class ReleaseLabelDao(
         labelCode = labelCode,
         catalogNumber = catalogNumber
     )
-
     // endregion
 
     fun getNumberOfReleasesByLabel(labelId: String): Int =
@@ -83,7 +82,7 @@ class ReleaseLabelDao(
         ).executeAsOne().toInt()
 
     // region releases by label
-    fun insertAllReleaseLinksForLabel(
+    fun linkReleasesByLabel(
         labelId: String,
         releases: List<ReleaseMusicBrainzModel>,
     ) {

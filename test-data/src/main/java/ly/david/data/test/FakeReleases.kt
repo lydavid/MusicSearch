@@ -4,7 +4,7 @@ import ly.david.data.musicbrainz.Direction
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.ReleaseEvent
+import ly.david.data.musicbrainz.ReleaseEventMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.SearchReleasesResponse
@@ -24,7 +24,7 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     release = underPressureRemastered
 )
 
-val fakeReleaseEvent = ReleaseEvent(
+val fakeReleaseEvent = ReleaseEventMusicBrainzModel(
     area = canada,
     date = "2022-10-29"
 )

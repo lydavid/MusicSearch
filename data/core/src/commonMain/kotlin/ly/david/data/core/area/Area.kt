@@ -1,4 +1,7 @@
-package ly.david.data.core
+package ly.david.data.core.area
+
+import ly.david.data.core.LifeSpan
+import ly.david.data.core.NameWithDisambiguation
 
 interface Area : NameWithDisambiguation {
     val id: String
@@ -20,3 +23,10 @@ object AreaType {
 
 fun Area.showReleases(): Boolean =
     type == AreaType.COUNTRY || name == AreaType.WORLDWIDE
+
+data class ReleaseEvent(
+    val id: String,
+    val name: String,
+    val date: String?,
+    val countryCode: String?,
+)

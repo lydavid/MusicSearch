@@ -1,5 +1,6 @@
 package ly.david.data.domain.release
 
+import ly.david.data.core.area.AreaType
 import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
@@ -7,10 +8,11 @@ import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.RoomAreaDao
-import ly.david.data.room.area.releases.RoomReleaseCountryDao
+import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
@@ -25,8 +27,9 @@ class ReleaseRepository(
     private val releaseGroupDao: ReleaseGroupDao,
     private val imageUrlDao: ImageUrlDao,
     private val artistCreditDao: ArtistCreditDao,
-    private val releaseCountryDao: RoomReleaseCountryDao,
-    private val areaDao: RoomAreaDao,
+    private val releaseCountryDao: ReleaseCountryDao,
+    private val areaDao: AreaDao,
+    private val countryCodeDao: CountryCodeDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
@@ -46,6 +49,7 @@ class ReleaseRepository(
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val largeImageUrl = imageUrlDao.getLargeUrlForEntity(releaseId)
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
+        val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (release != null &&
@@ -60,6 +64,7 @@ class ReleaseRepository(
                 releaseGroup = releaseGroup,
                 imageUrl = largeImageUrl,
                 labels = labels,
+                releaseEvents = releaseEvents,
                 urls = urlRelations,
             )
         }
@@ -83,24 +88,28 @@ class ReleaseRepository(
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
             labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
-            releaseLabelDao.insertAllLabelLinksForRelease(
+            releaseLabelDao.linkLabelsByRelease(
                 releaseId = release.id,
                 labelInfoList = release.labelInfoList,
             )
 
-//            areaDao.insertAll(
-//                release.releaseEvents?.mapNotNull {
-//                    // release events returns null type, but we know they are countries
-//                    // Except in the case of [Worldwide], but it will replace itself when we first visit it.
-//                    it.area?.toAreaRoomModel()?.copy(type = AreaType.COUNTRY)
-//                }.orEmpty()
-//            )
-//            areaDao.insertAllCountryCodes(
-//                release.releaseEvents?.flatMap { releaseEvent ->
-//                    releaseEvent.area?.getAreaCountryCodes().orEmpty()
-//                }.orEmpty()
-//            )
-//            releaseCountryDao.insertAll(release.getReleaseCountries())
+            areaDao.insertAll(
+                release.releaseEvents?.mapNotNull {
+                    // release events returns null type, but we know they are countries
+                    // Except in the case of [Worldwide], but it will replace itself when we first visit it.
+                    it.area?.copy(type = AreaType.COUNTRY)
+                }.orEmpty()
+            )
+            release.releaseEvents?.forEach {
+                countryCodeDao.insertCountryCodesForArea(
+                    areaId = it.area?.id ?: return@forEach,
+                    countryCodes = it.area?.countryCodes,
+                )
+            }
+            releaseCountryDao.linkCountriesByRelease(
+                releaseId = release.id,
+                releaseEvents = release.releaseEvents,
+            )
 
             relationRepository.insertAllUrlRelations(
                 entityId = release.id,

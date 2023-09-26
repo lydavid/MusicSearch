@@ -1,5 +1,6 @@
 package ly.david.data.domain.release
 
+import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.domain.artist.ArtistCreditUiModel
@@ -7,6 +8,7 @@ import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
+import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
@@ -50,6 +52,7 @@ internal fun Release.toReleaseScaffoldModel(
     releaseGroup: ReleaseGroupForRelease,
     imageUrl: String?,
     labels: List<LabelWithCatalog>,
+    releaseEvents: List<ReleaseEvent>,
     urls: List<Relation>,
 ) = ReleaseScaffoldModel(
     id = id,
@@ -64,12 +67,17 @@ internal fun Release.toReleaseScaffoldModel(
     packagingId = packaging_id,
     asin = asin,
     quality = quality,
-//    coverArtArchive = release.coverArtArchive.toCoverArtArchiveUiModel(),
-//    textRepresentation = release.textRepresentation?.toTextRepresentationUiModel(),
+    coverArtArchive = CoverArtArchiveUiModel(
+        count = cover_art_count,
+    ),
+    textRepresentation = TextRepresentationUiModel(
+        script = script,
+        language = language,
+    ),
 //    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
 //    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     imageUrl = imageUrl,
-//    areas = areas.map { it.toAreaListItemModel() },
+    areas = releaseEvents.map { it.toAreaListItemModel() },
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
     releaseGroup = releaseGroup,
     labels = labels.map { it.toLabelListItemModel() },

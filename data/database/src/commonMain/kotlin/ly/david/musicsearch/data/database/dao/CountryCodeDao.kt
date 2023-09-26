@@ -15,10 +15,10 @@ class CountryCodeDao(
 
     fun insertCountryCodesForArea(
         areaId: String,
-        countryCodes: List<String>,
+        countryCodes: List<String>?,
     ) {
         withTransaction {
-            countryCodes.forEach { countryCode ->
+            countryCodes?.forEach { countryCode ->
                 insert(
                     Country_code(
                         area_id = areaId,

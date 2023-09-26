@@ -12,15 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.core.AreaType.COUNTRY
-import ly.david.data.core.AreaType.WORLDWIDE
+import ly.david.data.core.area.AreaType.COUNTRY
+import ly.david.data.core.area.AreaType.WORLDWIDE
 import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.common.toFlagEmoji
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.core.getLifeSpanForDisplay
-import ly.david.data.core.showReleases
+import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -38,12 +37,11 @@ fun AreaListItem(
 ) {
     ListItem(
         headlineContent = {
-            // Misnomer here, but it's the same condition to show this tab and to show flags
-            val areaName = if (area.showReleases()) {
-                val flags = area.countryCodes?.joinToString { it.toFlagEmoji() }
-                flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
-            } else {
+            val flags = area.countryCodes?.joinToString { it.toFlagEmoji() }
+            val areaName = if (flags.isNullOrEmpty()) {
                 area.name
+            } else {
+                flags.transformThisIfNotNullOrEmpty { "$it " } + area.name
             }
             Text(
                 text = areaName,

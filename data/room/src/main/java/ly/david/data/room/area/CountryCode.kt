@@ -3,7 +3,6 @@ package ly.david.data.room.area
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import ly.david.data.musicbrainz.AreaMusicBrainzModel
 
 /**
  * Represents a [country code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
@@ -37,8 +36,3 @@ data class CountryCode(
     @ColumnInfo(name = "code")
     val code: String,
 )
-
-fun AreaMusicBrainzModel.getAreaCountryCodes(): List<CountryCode> =
-    countryCodes?.map { code ->
-        CountryCode(id, code)
-    }.orEmpty()

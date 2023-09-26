@@ -37,7 +37,7 @@ internal class ReleasesByLabelViewModel(
         entityId: String,
         releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
-        releaseLabelDao.insertAllReleaseLinksForLabel(
+        releaseLabelDao.linkReleasesByLabel(
             labelId = entityId,
             releases = releaseMusicBrainzModels,
         )

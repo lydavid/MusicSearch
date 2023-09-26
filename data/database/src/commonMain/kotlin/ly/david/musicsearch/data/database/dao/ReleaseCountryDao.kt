@@ -7,14 +7,16 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.core.release.ReleaseForListItem
+import ly.david.data.musicbrainz.ReleaseEventMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem
 import lydavidmusicsearchdatadatabase.Release_country
 
 /**
- * Links releases and areas that are countries.
+ * Links releases and countries (subset of areas).
  */
 class ReleaseCountryDao(
     database: Database,
@@ -35,7 +37,40 @@ class ReleaseCountryDao(
         )
     }
 
-    fun insertAll(
+    // region countries by release
+    fun linkCountriesByRelease(
+        releaseId: String,
+        releaseEvents: List<ReleaseEventMusicBrainzModel>?,
+    ) {
+        transacter.transaction {
+            releaseEvents?.forEach { releaseEvent ->
+                val areaId = releaseEvent.area?.id ?: return@forEach
+                insert(
+                    areaId = areaId,
+                    releaseId = releaseId,
+                    date = releaseEvent.date,
+                )
+            }
+        }
+    }
+
+    fun getCountriesByRelease(
+        releaseId: String,
+    ): List<ReleaseEvent> = transacter.getCountriesByRelease(
+        releaseId = releaseId,
+        mapper = { id, name, date, countryCode ->
+            ReleaseEvent(
+                id = id,
+                name = name,
+                date = date,
+                countryCode = countryCode,
+            )
+        }
+    ).executeAsList()
+    // endregion
+
+    // region releases by country
+    fun linkReleasesByCountry(
         areaId: String,
         releases: List<ReleaseMusicBrainzModel>,
     ) {
@@ -49,13 +84,6 @@ class ReleaseCountryDao(
                     )
                 }
             }
-        }
-    }
-
-    fun deleteReleasesByCountry(areaId: String) {
-        withTransaction {
-            transacter.deleteReleasesByCountry(areaId)
-            transacter.deleteReleaseCountryLinks(areaId)
         }
     }
 
@@ -87,4 +115,12 @@ class ReleaseCountryDao(
             mapper = ::mapToReleaseForListItem,
         )
     }
+
+    fun deleteReleasesByCountry(areaId: String) {
+        withTransaction {
+            transacter.deleteReleasesByCountry(areaId)
+            transacter.deleteReleaseCountryLinks(areaId)
+        }
+    }
+    // endregion
 }

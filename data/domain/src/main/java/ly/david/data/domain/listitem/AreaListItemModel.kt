@@ -1,5 +1,6 @@
 package ly.david.data.domain.listitem
 
+import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
@@ -14,7 +15,7 @@ data class AreaListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val countryCodes: List<String>? = null,
     val date: String? = null,
-) : ly.david.data.core.Area, ListItemModel()
+) : ly.david.data.core.area.Area, ListItemModel()
 
 internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = AreaListItemModel(
     id = id,
@@ -38,4 +39,11 @@ fun Area.toAreaListItemModel() = AreaListItemModel(
         end = end,
         ended = ended,
     ),
+)
+
+fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
+    id = id,
+    name = name,
+    date = date,
+    countryCodes = countryCode?.let { listOf(it) },
 )

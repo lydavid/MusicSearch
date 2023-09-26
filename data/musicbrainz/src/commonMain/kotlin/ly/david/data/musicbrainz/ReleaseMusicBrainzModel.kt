@@ -24,7 +24,7 @@ data class ReleaseMusicBrainzModel(
     @SerialName("text-representation")
     val textRepresentation: TextRepresentationMusicBrainzModel? = null,
 
-    @SerialName("release-events") val releaseEvents: List<ReleaseEvent>? = null,
+    @SerialName("release-events") val releaseEvents: List<ReleaseEventMusicBrainzModel>? = null,
 
     // Use inc=media for subqueries. inc=recordings for release lookup
     @SerialName("media") val media: List<MediumMusicBrainzModel>? = null,
@@ -42,7 +42,7 @@ data class ReleaseMusicBrainzModel(
 ) : MusicBrainzModel(), Release
 
 @Serializable
-data class ReleaseEvent(
+data class ReleaseEventMusicBrainzModel(
     @SerialName("area") val area: AreaMusicBrainzModel? = null,
     @SerialName("date") val date: String? = null,
     @SerialName("type") val type: String? = null,
