@@ -8,9 +8,7 @@ internal fun mapToReleaseGroupForListItem(
     firstReleaseDate: String,
     disambiguation: String,
     primaryType: String?,
-    primaryTypeId: String?,
     secondaryTypes: List<String>?,
-    secondaryTypeIds: List<String>?,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
 ) = ReleaseGroupForListItem(

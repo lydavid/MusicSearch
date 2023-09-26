@@ -9,4 +9,4 @@ data class LabelWithCatalog(
     override val type: String?,
     override val labelCode: Int?,
     val catalogNumber: String,
-): Label
+) : Label

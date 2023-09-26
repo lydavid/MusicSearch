@@ -41,7 +41,15 @@ SELECT IFNULL(
 ) AS count;
 
 getReleaseGroupsByArtist:
-SELECT rg.*, ac.name AS artist_credits, mi.thumbnail_url
+SELECT
+  rg.id,
+  rg.name,
+  rg.first_release_date,
+  rg.disambiguation,
+  rg.primary_type,
+  rg.secondary_types,
+  ac.name AS artist_credits,
+  mi.thumbnail_url
 FROM release_group rg
 INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
 INNER JOIN artist a ON a.id = arg.artist_id
