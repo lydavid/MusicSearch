@@ -7,6 +7,7 @@ import ly.david.data.core.RecordingForListItem
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
 import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
@@ -28,13 +29,18 @@ class CollectionEntityDao(
     fun insert(
         collectionId: String,
         entityId: String,
-    ) {
-        transacter.insert(
-            Collection_entity(
-                id = collectionId,
-                entity_id = entityId,
+    ): Long {
+        return try {
+            transacter.insertOrFail(
+                Collection_entity(
+                    id = collectionId,
+                    entity_id = entityId,
+                )
             )
-        )
+            transacter.lastInsertRowId().executeAsOne()
+        } catch (ex: Exception) {
+            INSERTION_FAILED_DUE_TO_CONFLICT
+        }
     }
 
     fun insertAll(

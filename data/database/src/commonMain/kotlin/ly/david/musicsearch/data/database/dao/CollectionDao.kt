@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.musicbrainz.getCount
 import ly.david.musicsearch.data.database.Database
@@ -13,7 +14,15 @@ class CollectionDao(
 ) {
     private val transacter = database.collectionQueries
 
-    fun insert(collection: CollectionMusicBrainzModel) {
+    fun insertLocal(collection: Collection) {
+        collection.run {
+            transacter.insert(
+                collection = collection,
+            )
+        }
+    }
+
+    fun insertRemote(collection: CollectionMusicBrainzModel) {
         collection.run {
             transacter.insert(
                 Collection(
@@ -29,26 +38,28 @@ class CollectionDao(
         }
     }
 
-    fun insertAll(collections: List<CollectionMusicBrainzModel>) {
+    fun insertAllRemote(collections: List<CollectionMusicBrainzModel>) {
         transacter.transaction {
             collections.forEach { collection ->
-                insert(collection)
+                insertRemote(collection)
             }
         }
     }
 
-    fun getCollection(id: String): Collection? =
-        transacter.getCollection(id).executeAsOneOrNull()
+    fun getCollection(id: String): Collection =
+        transacter.getCollection(id).executeAsOne()
 
     fun getAllCollections(
         showLocal: Boolean = true,
         showRemote: Boolean = true,
-        query: String,
+        query: String = "%%",
+        entity: MusicBrainzEntity? = null,
     ): PagingSource<Int, Collection> = QueryPagingSource(
         countQuery = transacter.getNumberOfCollections(
             showLocal = showLocal,
             showRemote = showRemote,
             query = query,
+            entity = entity,
         ),
         transacter = transacter,
         context = Dispatchers.IO,
@@ -59,6 +70,7 @@ class CollectionDao(
             query = query,
             limit = limit,
             offset = offset,
+            entity = entity,
         )
     }
 

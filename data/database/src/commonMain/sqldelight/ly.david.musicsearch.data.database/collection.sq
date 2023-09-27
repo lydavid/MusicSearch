@@ -27,6 +27,7 @@ SELECT IFNULL(
       SELECT id FROM collection
       WHERE is_remote AND :showRemote)
     AND name LIKE :query
+    AND (:entity = NULL OR entity = :entity)
   ),
   0
 ) AS count;
@@ -40,6 +41,7 @@ WHERE id IN
   SELECT id FROM collection
   WHERE is_remote AND :showRemote)
 AND name LIKE :query
+AND (:entity = NULL OR entity = :entity)
 LIMIT :limit OFFSET :offset;
 
 getAllCollectionsOfType:

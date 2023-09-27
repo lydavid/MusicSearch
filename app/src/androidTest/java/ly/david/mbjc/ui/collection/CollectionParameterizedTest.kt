@@ -17,13 +17,13 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.collectableEntities
-import ly.david.data.room.collection.RoomCollectionDao
-import ly.david.data.room.collection.CollectionRoomModel
+import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
+import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
@@ -51,7 +51,7 @@ internal class CollectionParameterizedTest(
         }
     }
 
-    private val collectionDao: RoomCollectionDao by inject()
+    private val collectionDao: CollectionDao by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
     private lateinit var navController: NavHostController
 
@@ -74,12 +74,15 @@ internal class CollectionParameterizedTest(
 
         val collectionName = "local $entity collection"
 
-        collectionDao.insert(
-            CollectionRoomModel(
+        collectionDao.insertLocal(
+            lydavidmusicsearchdatadatabase.Collection(
                 id = entity.name,
                 name = collectionName,
                 entity = entity,
-                isRemote = false
+                is_remote = false,
+                entity_count = 0,
+                type = null,
+                type_id = null,
             )
         )
 
@@ -156,12 +159,11 @@ internal class CollectionParameterizedTest(
 
         val name = "remote $entity collection"
 
-        collectionDao.insert(
-            CollectionRoomModel(
+        collectionDao.insertRemote(
+            CollectionMusicBrainzModel(
                 id = entity.name,
                 name = name,
                 entity = entity,
-                isRemote = true
             )
         )
 

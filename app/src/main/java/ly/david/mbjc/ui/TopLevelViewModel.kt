@@ -25,12 +25,10 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.collection.CollectionRoomModel
-import ly.david.data.room.collection.CollectionWithEntities
-import ly.david.data.room.collection.RoomCollectionDao
-import ly.david.data.room.collection.RoomCollectionEntityDao
+import ly.david.musicsearch.data.database.dao.CollectionDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.ui.settings.AppPreferences
+import lydavidmusicsearchdatadatabase.Collection
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
@@ -44,8 +42,8 @@ internal class TopLevelViewModel(
     val appPreferences: AppPreferences,
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 
-    private val collectionDao: RoomCollectionDao,
-    private val collectionEntityDao: RoomCollectionEntityDao,
+    private val collectionDao: CollectionDao,
+    private val collectionEntityDao: CollectionEntityDao,
     private val musicBrainzApi: MusicBrainzApi,
 
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
@@ -70,10 +68,10 @@ internal class TopLevelViewModel(
             Pager(
                 config = MusicBrainzPagingConfig.pagingConfig,
                 pagingSourceFactory = {
-                    collectionDao.getAllCollectionsOfType(it)
+                    collectionDao.getAllCollections(entity = it)
                 }
             ).flow.map { pagingData ->
-                pagingData.map(CollectionWithEntities::toCollectionListItemModel)
+                pagingData.map(Collection::toCollectionListItemModel)
             }
         }
             .distinctUntilChanged()
@@ -89,11 +87,15 @@ internal class TopLevelViewModel(
 
     fun createNewCollection(name: String, entity: MusicBrainzEntity) {
         viewModelScope.launch {
-            collectionDao.insert(
-                CollectionRoomModel(
+            collectionDao.insertLocal(
+                Collection(
                     id = UUID.randomUUID().toString(),
                     name = name,
-                    entity = entity
+                    entity = entity,
+                    entity_count = 1,
+                    is_remote = false,
+                    type = null,
+                    type_id = null,
                 )
             )
         }
@@ -103,7 +105,7 @@ internal class TopLevelViewModel(
         var result = RemoteResult()
 
         val collection = collectionDao.getCollection(collectionId)
-        if (collection.isRemote) {
+        if (collection.is_remote) {
             try {
                 musicBrainzApi.uploadToCollection(
                     collectionId = collectionId,
@@ -122,18 +124,16 @@ internal class TopLevelViewModel(
 
         collectionEntityDao.withTransaction {
             val insertedOneEntry = collectionEntityDao.insert(
-                CollectionEntityRoomModel(
-                    id = collectionId,
-                    entityId = entityId.value
-                )
+                collectionId = collectionId,
+                entityId = entityId.value,
             )
 
             result = if (insertedOneEntry == INSERTION_FAILED_DUE_TO_CONFLICT) {
                 RemoteResult("Already in ${collection.name}.")
             } else {
-                collectionDao.update(
-                    collection.copy(entityCount = collection.entityCount + 1)
-                )
+//                collectionDao.update(
+//                    collection.copy(entityCount = collection.entityCount + 1)
+//                )
                 RemoteResult("Added to ${collection.name}.")
             }
         }
@@ -147,7 +147,7 @@ internal class TopLevelViewModel(
         entityName: String,
     ): RemoteResult {
         val collection = collectionDao.getCollection(collectionId)
-        if (collection.isRemote) {
+        if (collection.is_remote) {
             try {
                 musicBrainzApi.deleteFromCollection(
                     collectionId = collectionId,

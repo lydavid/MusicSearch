@@ -41,7 +41,7 @@ class ArtistCreditDao(
 
     private fun insertArtistCredit(name: String): Long {
         return try {
-            transacter.insert(
+            transacter.insertOrFail(
                 id = 0,
                 name = name,
             )

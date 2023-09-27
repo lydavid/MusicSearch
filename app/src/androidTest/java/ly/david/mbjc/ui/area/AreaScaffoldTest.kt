@@ -46,6 +46,12 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest
         }
     }
 
+//    @Before
+//    fun before() {
+//        driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+//        Database.Schema.create(driver)
+//    }
+
     // region General
     @Test
     fun firstTimeVisit() = runTest {
@@ -78,9 +84,11 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest
     fun hasRelations() = runTest {
         setArea(ontario)
 
+//        composeTestRule.onRoot().printToLog("MY TAG")
         waitForThenPerformClickOn(relationships)
         // TODO: passes locally but not in CI
-//        waitForThenAssertIsDisplayed(canada.name)
+//        composeTestRule.onRoot().printToLog("MY TAG")
+        waitForThenAssertIsDisplayed(canada.name)
 //        waitForThenAssertIsDisplayed(toronto.name)
 
         composeTestRule

@@ -9,9 +9,12 @@ CREATE TABLE IF NOT EXISTS collection_entity (
   ON DELETE CASCADE
 );
 
-insert:
-INSERT OR IGNORE INTO collection_entity
+insertOrFail:
+INSERT OR FAIL INTO collection_entity
 VALUES ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid();
 
 getEntitiesFromCollection:
 SELECT ce.*

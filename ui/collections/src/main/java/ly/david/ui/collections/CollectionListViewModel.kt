@@ -88,7 +88,7 @@ class CollectionListViewModel(
         }
 
         val collectionMusicBrainzModels = response.musicBrainzModels
-        collectionDao.insertAll(collectionMusicBrainzModels)
+        collectionDao.insertAllRemote(collectionMusicBrainzModels)
 
         return collectionMusicBrainzModels.size
     }

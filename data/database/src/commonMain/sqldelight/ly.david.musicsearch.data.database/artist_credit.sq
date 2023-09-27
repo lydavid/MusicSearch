@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS artist_credit (
 
 CREATE UNIQUE INDEX IF NOT EXISTS `index_artist_credit_name` ON `artist_credit` (`name`);
 
-insert:
+insertOrFail:
 INSERT OR FAIL INTO artist_credit (
   `id`,
   `name`
@@ -14,9 +14,9 @@ VALUES (
   nullif(:id, 0),
   :name
 );
-
 lastInsertRowId:
 SELECT last_insert_rowid();
+
 
 getArtistCreditByName:
 SELECT *

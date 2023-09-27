@@ -10,24 +10,24 @@ import ly.david.data.room.BaseDao
 @Dao
 abstract class RoomCollectionDao : BaseDao<CollectionRoomModel>() {
 
-    @Transaction
-    @Query(
-        """
-        SELECT * FROM collection
-        WHERE id IN
-          (SELECT id FROM collection
-          WHERE NOT is_remote AND :showLocal
-          UNION
-          SELECT id FROM collection
-          WHERE is_remote AND :showRemote)
-        AND name LIKE :query
-        """
-    )
-    abstract fun getAllCollections(
-        showLocal: Boolean = true,
-        showRemote: Boolean = true,
-        query: String,
-    ): PagingSource<Int, CollectionWithEntities>
+//    @Transaction
+//    @Query(
+//        """
+//        SELECT * FROM collection
+//        WHERE id IN
+//          (SELECT id FROM collection
+//          WHERE NOT is_remote AND :showLocal
+//          UNION
+//          SELECT id FROM collection
+//          WHERE is_remote AND :showRemote)
+//        AND name LIKE :query
+//        """
+//    )
+//    abstract fun getAllCollections(
+//        showLocal: Boolean = true,
+//        showRemote: Boolean = true,
+//        query: String,
+//    ): PagingSource<Int, CollectionWithEntities>
 
     @Transaction
     @Query(
@@ -40,13 +40,13 @@ abstract class RoomCollectionDao : BaseDao<CollectionRoomModel>() {
     )
     abstract fun getAllCollectionsOfType(entity: MusicBrainzEntity): PagingSource<Int, CollectionWithEntities>
 
-    @Query(
-        """
-        DELETE FROM collection 
-        WHERE is_remote
-        """
-    )
-    abstract suspend fun deleteMusicBrainzCollections()
+//    @Query(
+//        """
+//        DELETE FROM collection
+//        WHERE is_remote
+//        """
+//    )
+//    abstract suspend fun deleteMusicBrainzCollections()
 
     @Query(
         """
@@ -57,13 +57,13 @@ abstract class RoomCollectionDao : BaseDao<CollectionRoomModel>() {
     )
     abstract suspend fun getCollection(id: String): CollectionRoomModel
 
-    @Transaction
-    @Query(
-        """
-        SELECT * 
-        FROM collection
-        WHERE id = :id
-    """
-    )
-    abstract suspend fun getCollectionWithEntities(id: String): CollectionWithEntities?
+//    @Transaction
+//    @Query(
+//        """
+//        SELECT *
+//        FROM collection
+//        WHERE id = :id
+//    """
+//    )
+//    abstract suspend fun getCollectionWithEntities(id: String): CollectionWithEntities?
 }
