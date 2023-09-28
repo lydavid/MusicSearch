@@ -5,7 +5,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.release.Release
-import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.room.RoomModel
 
 @Entity(
@@ -43,21 +42,3 @@ data class ReleaseRoomModel(
 
     @Embedded val textRepresentation: TextRepresentationRoomModel? = null,
 ) : RoomModel, Release
-
-fun ReleaseMusicBrainzModel.toRoomModel() =
-    ReleaseRoomModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        date = date,
-        status = status,
-        barcode = barcode,
-        statusId = statusId,
-        countryCode = countryCode,
-        packaging = packaging,
-        packagingId = packagingId,
-        asin = asin,
-        quality = quality,
-        coverArtArchive = coverArtArchive.toCoverArtArchiveRoomModel(),
-        textRepresentation = textRepresentation?.toTextRepresentationRoomModel(),
-    )

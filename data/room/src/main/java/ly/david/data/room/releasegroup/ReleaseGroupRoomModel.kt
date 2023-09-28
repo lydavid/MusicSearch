@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.releasegroup.ReleaseGroup
-import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.room.RoomModel
 
 @Entity(
@@ -20,15 +19,3 @@ data class ReleaseGroupRoomModel(
     @ColumnInfo(name = "secondary_types") override val secondaryTypes: List<String>? = null,
     @ColumnInfo(name = "secondary_type_ids") val secondaryTypeIds: List<String>? = null,
 ) : RoomModel, ReleaseGroup
-
-fun ReleaseGroupMusicBrainzModel.toRoomModel(): ReleaseGroupRoomModel =
-    ReleaseGroupRoomModel(
-        id = id,
-        name = name,
-        firstReleaseDate = firstReleaseDate,
-        disambiguation = disambiguation,
-        primaryType = primaryType,
-        primaryTypeId = primaryTypeId,
-        secondaryTypes = secondaryTypes,
-        secondaryTypeIds = secondaryTypeIds
-    )

@@ -1,12 +1,9 @@
 package ly.david.data.room.artist.releasegroups
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.Transaction
 import ly.david.data.room.BaseDao
 import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
-import ly.david.data.room.releasegroup.RoomReleaseGroupForListItem
 
 @Dao
 abstract class RoomArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
@@ -50,23 +47,6 @@ abstract class RoomArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
         """
     )
     abstract suspend fun deleteReleaseGroupsByArtist(artistId: String)
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASE_GROUPS_BY_ARTIST
-        $FILTERED
-        ORDER BY
-          CASE WHEN :sorted THEN rg.primary_type ELSE arg.rowid END,
-          CASE WHEN :sorted THEN rg.secondary_types END,
-          CASE WHEN :sorted THEN rg.first_release_date END
-    """
-    )
-    abstract fun getReleaseGroupsByArtist(
-        artistId: String,
-        query: String = "%%",
-        sorted: Boolean = false,
-    ): PagingSource<Int, RoomReleaseGroupForListItem>
 
     @Query(
         """

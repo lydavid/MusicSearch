@@ -5,10 +5,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.area.Area
-import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.room.RoomModel
 import ly.david.data.room.common.LifeSpanRoomModel
-import ly.david.data.room.common.toLifeSpanRoomModel
 
 @Entity(tableName = "area")
 data class AreaRoomModel(
@@ -20,14 +18,3 @@ data class AreaRoomModel(
     @ColumnInfo(name = "type_id") val typeId: String? = null,
     @Embedded override val lifeSpan: LifeSpanRoomModel? = null,
 ) : RoomModel, Area
-
-fun AreaMusicBrainzModel.toAreaRoomModel() =
-    AreaRoomModel(
-        id = id,
-        name = name,
-        sortName = sortName,
-        disambiguation = disambiguation,
-        type = type,
-        typeId = typeId,
-        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
-    )

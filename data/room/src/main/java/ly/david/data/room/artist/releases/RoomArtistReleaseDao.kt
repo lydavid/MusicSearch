@@ -1,11 +1,8 @@
 package ly.david.data.room.artist.releases
 
-import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.Transaction
 import ly.david.data.room.BaseDao
-import ly.david.data.room.release.RoomReleaseForListItem
 
 @Dao
 abstract class RoomArtistReleaseDao : BaseDao<ArtistRelease>() {
@@ -70,26 +67,4 @@ abstract class RoomArtistReleaseDao : BaseDao<ArtistRelease>() {
     """
     )
     abstract suspend fun getNumberOfReleasesByArtist(artistId: String): Int
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASES_BY_ARTIST
-        $ORDER_BY_DATE_AND_TITLE
-    """
-    )
-    abstract fun getReleasesByArtist(artistId: String): PagingSource<Int, RoomReleaseForListItem>
-
-    @Transaction
-    @Query(
-        """
-        $SELECT_RELEASES_BY_ARTIST
-        $FILTERED
-        $ORDER_BY_DATE_AND_TITLE
-    """
-    )
-    abstract fun getReleasesByArtistFiltered(
-        artistId: String,
-        query: String,
-    ): PagingSource<Int, RoomReleaseForListItem>
 }

@@ -5,10 +5,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Artist
-import ly.david.data.room.common.LifeSpanRoomModel
-import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.common.toLifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 
 @Entity(
     tableName = "artist"
@@ -24,15 +22,3 @@ data class ArtistRoomModel(
     @ColumnInfo(name = "country_code") override val countryCode: String? = null,
     @Embedded override val lifeSpan: LifeSpanRoomModel? = null,
 ) : RoomModel, Artist
-
-fun ArtistMusicBrainzModel.toArtistRoomModel() = ArtistRoomModel(
-    id = id,
-    name = name,
-    sortName = sortName,
-    disambiguation = disambiguation,
-    type = type,
-    typeId = typeId,
-    gender = gender,
-    countryCode = countryCode,
-    lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
-)

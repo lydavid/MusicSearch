@@ -27,16 +27,4 @@ val roomDatabaseDaoModule = module {
     factory {
         get<MusicSearchDatabase>().getRelationDao()
     }
-
-    factory {
-        get<MusicSearchDatabase>().getSearchHistoryDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getNowPlayingHistoryDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getCollectionEntityDao()
-    }
 }

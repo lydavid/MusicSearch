@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import ly.david.data.core.ArtistCreditName
-import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
 
 /**
  * Represents a single name in an [ArtistCredit].
@@ -38,23 +37,3 @@ data class ArtistCreditNameRoomModel(
     @ColumnInfo(name = "join_phrase")
     override val joinPhrase: String? = null,
 ) : ArtistCreditName
-
-/**
- * Converts artist credits to an appropriate model to store.
- *
- * We take in [artistCreditId] so that we don't duplicate [ArtistCreditNameRoomModel].
- *
- * The receiver must be a list because we need its index.
- */
-internal fun List<ArtistCreditMusicBrainzModel>?.toArtistCreditNameRoomModels(
-    artistCreditId: Long,
-): List<ArtistCreditNameRoomModel> =
-    this?.mapIndexed { index, artistCredit ->
-        ArtistCreditNameRoomModel(
-            artistCreditId = artistCreditId,
-            artistId = artistCredit.artist.id,
-            name = artistCredit.name,
-            joinPhrase = artistCredit.joinPhrase,
-            position = index
-        )
-    }.orEmpty()

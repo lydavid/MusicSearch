@@ -5,11 +5,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Label
-import ly.david.data.room.common.LifeSpanRoomModel
-import ly.david.data.musicbrainz.LabelInfo
-import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.common.toLifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 
 @Entity(tableName = "label")
 data class LabelRoomModel(
@@ -21,33 +18,3 @@ data class LabelRoomModel(
     @ColumnInfo(name = "label_code") override val labelCode: Int? = null,
     @Embedded val lifeSpan: LifeSpanRoomModel? = null,
 ) : RoomModel, Label
-
-fun LabelMusicBrainzModel.toLabelRoomModel() =
-    LabelRoomModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        typeId = typeId,
-        labelCode = labelCode,
-        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
-    )
-
-fun List<LabelInfo>.toRoomModels(): List<LabelRoomModel> {
-    return this.mapNotNull { labelInfo ->
-        val label = labelInfo.label
-        if (label == null) {
-            null
-        } else {
-            LabelRoomModel(
-                id = label.id,
-                name = label.name,
-                disambiguation = label.disambiguation,
-                type = label.type,
-                typeId = label.typeId,
-                labelCode = label.labelCode,
-                lifeSpan = label.lifeSpan?.toLifeSpanRoomModel(),
-            )
-        }
-    }
-}

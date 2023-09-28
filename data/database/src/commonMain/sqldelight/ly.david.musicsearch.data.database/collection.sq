@@ -9,6 +9,10 @@ CREATE TABLE collection (
   entity TEXT AS MusicBrainzEntity NOT NULL,
   type TEXT,
   type_id TEXT,
+
+  -- not used, but meant for remote collections where we may not have stored all of their entities,
+  -- so a COUNT(*) would be inaccurate
+  -- Maybe consider showing 99/2500 or something for remote
   entity_count INTEGER AS Int NOT NULL
 );
 
