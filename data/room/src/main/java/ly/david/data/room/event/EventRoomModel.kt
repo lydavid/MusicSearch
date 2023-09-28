@@ -5,10 +5,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ly.david.data.core.Event
-import ly.david.data.room.common.LifeSpanRoomModel
-import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.room.RoomModel
-import ly.david.data.room.common.toLifeSpanRoomModel
+import ly.david.data.room.common.LifeSpanRoomModel
 
 @Entity(tableName = "event")
 data class EventRoomModel(
@@ -21,15 +19,3 @@ data class EventRoomModel(
     @ColumnInfo(name = "cancelled") override val cancelled: Boolean? = null,
     @Embedded override val lifeSpan: LifeSpanRoomModel?,
 ) : RoomModel, Event
-
-fun EventMusicBrainzModel.toEventRoomModel() =
-    EventRoomModel(
-        id = id,
-        name = name,
-        disambiguation = disambiguation,
-        type = type,
-        typeId = typeId,
-        time = time,
-        cancelled = cancelled,
-        lifeSpan = lifeSpan?.toLifeSpanRoomModel(),
-    )

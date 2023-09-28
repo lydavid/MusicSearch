@@ -5,19 +5,11 @@ import org.koin.dsl.module
 
 val roomDatabaseDaoModule = module {
     factory {
-        get<MusicSearchDatabase>().getArtistDao()
-    }
-
-    factory {
         get<MusicSearchDatabase>().getArtistReleaseDao()
     }
 
     factory {
         get<MusicSearchDatabase>().getArtistReleaseGroupDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getReleaseGroupDao()
     }
 
     factory {
@@ -41,14 +33,6 @@ val roomDatabaseDaoModule = module {
     }
 
     factory {
-        get<MusicSearchDatabase>().getAreaDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getReleaseCountryDao()
-    }
-
-    factory {
         get<MusicSearchDatabase>().getPlaceDao()
     }
 
@@ -58,10 +42,6 @@ val roomDatabaseDaoModule = module {
 
     factory {
         get<MusicSearchDatabase>().getReleaseLabelDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getEventDao()
     }
 
     factory {
