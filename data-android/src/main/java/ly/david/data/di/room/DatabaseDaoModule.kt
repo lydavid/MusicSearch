@@ -17,27 +17,7 @@ val roomDatabaseDaoModule = module {
     }
 
     factory {
-        get<MusicSearchDatabase>().getReleaseDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getMediumDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getTrackDao()
-    }
-
-    factory {
         get<MusicSearchDatabase>().getRecordingReleaseDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getPlaceDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getLabelDao()
     }
 
     factory {
@@ -49,19 +29,11 @@ val roomDatabaseDaoModule = module {
     }
 
     factory {
-        get<MusicSearchDatabase>().getLookupHistoryDao()
-    }
-
-    factory {
         get<MusicSearchDatabase>().getSearchHistoryDao()
     }
 
     factory {
         get<MusicSearchDatabase>().getNowPlayingHistoryDao()
-    }
-
-    factory {
-        get<MusicSearchDatabase>().getCollectionDao()
     }
 
     factory {
