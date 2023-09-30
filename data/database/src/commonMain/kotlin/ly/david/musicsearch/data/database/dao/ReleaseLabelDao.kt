@@ -1,8 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.LabelInfo
@@ -75,11 +79,14 @@ class ReleaseLabelDao(
     )
     // endregion
 
-    fun getNumberOfReleasesByLabel(labelId: String): Int =
+    fun getNumberOfReleasesByLabel(labelId: String): Flow<Int> =
         transacter.getNumberOfReleasesByLabel(
             labelId = labelId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(Dispatchers.IO)
+            .map { it.toInt() }
 
     // region releases by label
     fun linkReleasesByLabel(

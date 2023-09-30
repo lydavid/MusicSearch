@@ -10,17 +10,10 @@ import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 data class Stats(
     val totalRelations: Int? = null,
     val relationTypeCounts: ImmutableList<RelationTypeCount> = persistentListOf(),
-
     val eventStats: EventStats = EventStats(),
-
     val placeStats: PlaceStats = PlaceStats(),
-
     val recordingStats: RecordingStats = RecordingStats(),
-
     val releaseStats: ReleaseStats = ReleaseStats(),
-    val totalRemoteReleases: Int? = null,
-    val totalLocalReleases: Int = 0,
-
     val releaseGroupStats: ReleaseGroupStats = ReleaseGroupStats(),
 )
 

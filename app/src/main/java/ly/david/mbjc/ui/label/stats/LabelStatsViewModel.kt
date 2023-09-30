@@ -1,20 +1,39 @@
 package ly.david.mbjc.ui.label.stats
 
 import androidx.lifecycle.ViewModel
-import ly.david.data.room.label.releases.RoomReleaseLabelDao
-import ly.david.data.room.relation.RoomRelationDao
-import ly.david.ui.stats.RelationsStats
-import ly.david.ui.stats.ReleasesStats
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.browse.GetBrowseEntityCountFlowUseCase
+import ly.david.data.domain.relation.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
+import ly.david.ui.stats.ReleaseStats
+import ly.david.ui.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class LabelStatsViewModel(
-    override val relationDao: RoomRelationDao,
-    private val releaseLabelDao: RoomReleaseLabelDao,
-) : ViewModel(),
-    ReleasesStats,
-    RelationsStats {
+    private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
+    private val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase,
+    private val releaseLabelDao: ReleaseLabelDao,
+) : ViewModel() {
 
-    override suspend fun getTotalLocalReleases(entityId: String): Int =
-        releaseLabelDao.getNumberOfReleasesByLabel(entityId)
+    fun getStats(entityId: String): Flow<Stats> =
+        combine(
+            getCountOfEachRelationshipTypeUseCase(entityId),
+            getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RELEASE),
+            releaseLabelDao.getNumberOfReleasesByLabel(entityId),
+        ) { relationTypeCounts, browseReleaseCount, localReleases ->
+            Stats(
+                totalRelations = relationTypeCounts.sumOf { it.count },
+                relationTypeCounts = relationTypeCounts.toImmutableList(),
+                releaseStats = ReleaseStats(
+                    totalRemote = browseReleaseCount?.remoteCount,
+                    totalLocal = localReleases,
+                ),
+            )
+        }
+            .distinctUntilChanged()
 }
