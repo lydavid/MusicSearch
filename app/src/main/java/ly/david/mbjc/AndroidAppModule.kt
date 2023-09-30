@@ -8,7 +8,6 @@ import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.network.networkModule
 import ly.david.data.di.preferences.preferencesDataStoreModule
-import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.di.room.roomDatabaseModule
 import ly.david.data.domain.DomainDataModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
@@ -36,7 +35,6 @@ val androidAppModule = module {
         musicBrainzAuthModule,
         networkModule,
         preferencesDataStoreModule,
-        roomDatabaseDaoModule,
         roomDatabaseModule,
         imageModule,
         CoverArtDataModule().module,

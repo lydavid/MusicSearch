@@ -5,19 +5,17 @@ import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
-import ly.david.data.di.room.roomDatabaseDaoModule
 import ly.david.data.domain.DomainDataModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
 import ly.david.mbjc.di.testDatabaseDriverModule
+import ly.david.mbjc.di.testDatabaseModule
 import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testNetworkModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
-import ly.david.mbjc.di.testRoomDatabaseModule
 import ly.david.musicsearch.data.database.databaseDaoModule
-import ly.david.musicsearch.data.database.databaseModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
 import ly.david.ui.history.HistoryUiModule
@@ -31,7 +29,6 @@ val testAndroidAppModule = module {
         testCoroutineDispatchersModule,
         testNetworkModule,
         testPreferencesDataStoreModule,
-        testRoomDatabaseModule,
         testImageModule,
 
         ViewModelsModule().module,
@@ -39,7 +36,6 @@ val testAndroidAppModule = module {
         coroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,
-        roomDatabaseDaoModule,
         CoverArtDataModule().module,
         DomainDataModule().module,
         MusicBrainzDataModule().module,
@@ -53,7 +49,7 @@ val testAndroidAppModule = module {
 
         testDatabaseDriverModule,
 //        databaseDriverModule,
-        databaseModule,
+        testDatabaseModule,
         databaseDaoModule,
     )
 }

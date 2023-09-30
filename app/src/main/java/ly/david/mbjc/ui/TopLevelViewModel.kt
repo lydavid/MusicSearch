@@ -24,7 +24,7 @@ import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import ly.david.data.room.INSERTION_FAILED_DUE_TO_CONFLICT
+import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.ui.settings.AppPreferences

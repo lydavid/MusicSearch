@@ -7,6 +7,8 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import ly.david.data.room.MusicSearchDatabase
 import ly.david.data.room.MusicSearchRoomDatabase
 import ly.david.musicsearch.data.database.Database
+import ly.david.musicsearch.data.database.createDatabase
+import org.koin.core.module.Module
 import org.koin.dsl.binds
 import org.koin.dsl.module
 
@@ -30,8 +32,14 @@ val testRoomDatabaseModule = module {
 //    }
 //}
 
+val testDatabaseModule: Module = module {
+    factory {
+        createDatabase(driver = get())
+    }
+}
+
 val testDatabaseDriverModule = module {
-    factory<SqlDriver> {
+    single<SqlDriver> {
         AndroidSqliteDriver(
             schema = Database.Schema,
             context = get(),
