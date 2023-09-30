@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.core.relation.RelationTypeCount
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.R
 import ly.david.ui.common.getDisplayTextRes

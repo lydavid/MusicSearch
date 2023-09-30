@@ -9,7 +9,6 @@ dependencies {
     implementation(projects.data.coverart)
     implementation(projects.data.database)
     implementation(projects.data.musicbrainz)
-    implementation(projects.data.room)
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.collections.immutable)

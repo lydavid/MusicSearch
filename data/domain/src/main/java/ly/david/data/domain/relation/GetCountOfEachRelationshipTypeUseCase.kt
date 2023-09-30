@@ -1,7 +1,7 @@
 package ly.david.data.domain.relation
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.core.relation.RelationTypeCount
 import org.koin.core.annotation.Single
 
 @Single

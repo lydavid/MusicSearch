@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.core.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.Tab

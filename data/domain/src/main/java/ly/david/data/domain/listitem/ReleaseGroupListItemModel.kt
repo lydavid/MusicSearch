@@ -1,10 +1,9 @@
 package ly.david.data.domain.listitem
 
+import ly.david.data.core.getDisplayNames
 import ly.david.data.core.releasegroup.ReleaseGroup
 import ly.david.data.core.releasegroup.ReleaseGroupForListItem
-import ly.david.data.core.getDisplayNames
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
-import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 
 // TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable
 //  We could extract uimodel to data-android or app
@@ -36,17 +35,6 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupList
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
         formattedArtistCredits = artistCredits.getDisplayNames(),
-    )
-}
-
-fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
-    return ReleaseGroupListItemModel(
-        id = id,
-        name = name,
-        firstReleaseDate = firstReleaseDate,
-        disambiguation = disambiguation,
-        primaryType = primaryType,
-        secondaryTypes = secondaryTypes
     )
 }
 

@@ -3,7 +3,7 @@ package ly.david.ui.stats
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.data.room.relation.RelationTypeCount
+import ly.david.data.core.relation.RelationTypeCount
 import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 
 @Stable

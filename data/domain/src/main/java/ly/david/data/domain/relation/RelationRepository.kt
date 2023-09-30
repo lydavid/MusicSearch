@@ -3,8 +3,8 @@ package ly.david.data.domain.relation
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.relation.RelationTypeCount
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.room.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao

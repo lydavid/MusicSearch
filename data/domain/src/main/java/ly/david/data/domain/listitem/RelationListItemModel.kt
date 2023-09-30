@@ -1,7 +1,6 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.room.relation.RelationRoomModel
 import lydavidmusicsearchdatadatabase.Relation
 
 /**
@@ -21,18 +20,6 @@ data class RelationListItemModel(
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
 ) : ListItemModel(), ly.david.data.core.Relation
-
-fun RelationRoomModel.toRelationListItemModel() =
-    RelationListItemModel(
-        id = "${linkedEntityId}_$order",
-        linkedEntityId = linkedEntityId,
-        linkedEntity = linkedEntity,
-        label = label,
-        name = name,
-        disambiguation = disambiguation,
-        attributes = attributes,
-        additionalInfo = additionalInfo
-    )
 
 fun Relation.toRelationListItemModel() =
     RelationListItemModel(
