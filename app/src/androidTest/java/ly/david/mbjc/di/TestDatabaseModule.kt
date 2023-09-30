@@ -6,34 +6,8 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import ly.david.musicsearch.data.database.Database
 import org.koin.dsl.module
 
-// TODO: dupe
-//val testRoomDatabaseModule = module {
-//    single {
-//        Room.inMemoryDatabaseBuilder(
-//            get(),
-//            MusicSearchRoomDatabase::class.java
-//        )
-//            .allowMainThreadQueries()
-//            .build()
-//    } binds arrayOf(MusicSearchDatabase::class, MusicSearchRoomDatabase::class)
-//}
-
-//val testDatabaseModule = module {
-//    single<QueryResult.Value<Unit>> {
-//        val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-////        createDatabase(driver)
-//        Database.Schema.create(driver)
-//    }
-//}
-
-//val testDatabaseModule: Module = module {
-//    single {
-//        createDatabase(driver = get())
-//    }
-//}
-
 val testDatabaseDriverModule = module {
-    factory<SqlDriver> {
+    single<SqlDriver> {
         AndroidSqliteDriver(
             schema = Database.Schema,
             context = get(),

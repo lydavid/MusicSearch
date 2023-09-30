@@ -30,6 +30,7 @@ val testAndroidAppModule = module {
         testNetworkModule,
         testPreferencesDataStoreModule,
         testImageModule,
+        testDatabaseDriverModule,
 
         ViewModelsModule().module,
         appDataModule,
@@ -46,10 +47,6 @@ val testAndroidAppModule = module {
         HistoryUiModule().module,
         NowPlayingUiModule().module,
         SettingsUiModule().module,
-
-        testDatabaseDriverModule,
-//        testDatabaseModule,
-//        databaseDriverModule,
         databaseModule,
         databaseDaoModule,
     )

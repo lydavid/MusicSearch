@@ -19,7 +19,7 @@ import org.koin.test.KoinTest
 internal abstract class MainActivityTest : KoinTest {
 
     @get:Rule(order = 0)
-    val databaseTestRule = DatabaseTestRule()
+    val koinTestRule = KoinTestRule()
 
     @get:Rule(order = 1)
     val instantTaskExecutorRule = InstantTaskExecutorRule()
