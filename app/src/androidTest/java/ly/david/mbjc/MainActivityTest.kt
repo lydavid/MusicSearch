@@ -13,24 +13,17 @@ import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import ly.david.mbjc.ui.MainActivity
-import ly.david.musicsearch.data.database.Database
 import org.junit.Rule
 import org.koin.test.KoinTest
-import org.koin.test.inject
 
 internal abstract class MainActivityTest : KoinTest {
 
-    private val database: Database by inject()
-
     @get:Rule(order = 0)
-    val musicSearchRoomDatabaseTestRule = MusicSearchRoomDatabaseTestRule(database)
-
-    @get:Rule(order = 1)
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces
-    @get:Rule(order = 2)
+    @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @OptIn(ExperimentalTestApi::class)

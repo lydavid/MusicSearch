@@ -27,13 +27,12 @@ import ly.david.ui.core.theme.PreviewTheme
 import lydavidmusicsearchdatadatabase.Collection
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
 /**
  * Tests [CollectionListScaffold]-specific features.
  */
-internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 

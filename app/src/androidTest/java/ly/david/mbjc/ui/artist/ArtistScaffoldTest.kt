@@ -34,10 +34,9 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
-internal class ArtistScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
 
     private val artistRepository: ArtistRepository by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()

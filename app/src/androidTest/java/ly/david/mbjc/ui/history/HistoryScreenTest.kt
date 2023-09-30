@@ -15,10 +15,9 @@ import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
-internal class HistoryScreenTest : MainActivityTest(), StringReferences, KoinTest {
+internal class HistoryScreenTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 
@@ -34,6 +33,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences, KoinTes
         }
     }
 
+    // TODO:
     @Test
     fun emptyLookupHistory() = runTest {
         composeTestRule.awaitIdle()

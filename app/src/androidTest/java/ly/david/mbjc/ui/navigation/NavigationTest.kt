@@ -18,9 +18,8 @@ import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.KoinTest
 
-internal class NavigationTest : MainActivityTest(), StringReferences, KoinTest {
+internal class NavigationTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 

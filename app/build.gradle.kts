@@ -122,7 +122,6 @@ dependencies {
     androidTestImplementation(libs.coil.test)
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(libs.koin.test)
-    androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.sqldelight.android.driver)
 
     ksp(libs.koin.ksp.compiler)

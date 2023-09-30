@@ -28,7 +28,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.koin.test.KoinTest
 
 /**
  * Test interacting with each [searchableEntities] from [SearchScreen].
@@ -36,7 +35,7 @@ import org.koin.test.KoinTest
 @RunWith(Parameterized::class)
 internal class SearchEachEntityTest(
     private val entity: MusicBrainzEntity,
-) : MainActivityTest(), StringReferences, KoinTest {
+) : MainActivityTest(), StringReferences {
 
     companion object {
         @JvmStatic
@@ -58,6 +57,7 @@ internal class SearchEachEntityTest(
         }
     }
 
+    // TODO:
     @Test
     fun searchEachEntity() {
         composeTestRule
