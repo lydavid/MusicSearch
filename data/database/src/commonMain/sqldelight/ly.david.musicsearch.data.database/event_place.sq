@@ -1,9 +1,9 @@
 CREATE TABLE event_place (
   event_id TEXT NOT NULL,
-  place_id TEXT NOT NULL
-);
+  place_id TEXT NOT NULL,
 
-CREATE INDEX IF NOT EXISTS event_place_pk ON event_place (event_id, place_id);
+  PRIMARY KEY (event_id, place_id)
+);
 
 insert:
 INSERT OR IGNORE INTO event_place

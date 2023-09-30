@@ -22,10 +22,10 @@ CREATE TABLE browse_entity_count (
   entity_id TEXT NOT NULL,
   browse_entity TEXT AS MusicBrainzEntity NOT NULL,
   local_count INTEGER AS Int NOT NULL,
-  remote_count INTEGER AS Int
-);
+  remote_count INTEGER AS Int,
 
-CREATE INDEX IF NOT EXISTS browse_entity_count_pk ON browse_entity_count (entity_id, browse_entity);
+  PRIMARY KEY (entity_id, browse_entity)
+);
 
 insert:
 INSERT OR IGNORE INTO browse_entity_count

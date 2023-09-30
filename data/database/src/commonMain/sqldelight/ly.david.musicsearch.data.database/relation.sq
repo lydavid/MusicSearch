@@ -10,10 +10,10 @@ CREATE TABLE IF NOT EXISTS relation (
   `name` TEXT NOT NULL,
   `disambiguation` TEXT,
   `attributes` TEXT,
-  `additional_info` TEXT
-);
+  `additional_info` TEXT,
 
-CREATE INDEX IF NOT EXISTS relation_pk ON relation (entity_id, linked_entity_id, `order`);
+  PRIMARY KEY (entity_id, linked_entity_id, `order`)
+);
 
 insert:
 INSERT OR IGNORE INTO relation (
