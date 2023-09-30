@@ -4,9 +4,9 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.RecordingForListItem
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
@@ -15,6 +15,7 @@ import lydavidmusicsearchdatadatabase.Recording_workQueries
 
 class RecordingWorkDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter: Recording_workQueries = database.recording_workQueries
 
@@ -54,7 +55,7 @@ class RecordingWorkDao(
             query = "%%",
         )
             .asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     fun getRecordingsByWork(
@@ -66,7 +67,7 @@ class RecordingWorkDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getRecordingsByWork(
             workId = workId,

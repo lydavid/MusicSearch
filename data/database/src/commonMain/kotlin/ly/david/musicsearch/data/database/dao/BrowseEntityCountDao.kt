@@ -3,8 +3,8 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneOrNull
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.browse.BrowseEntityCount
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
@@ -12,6 +12,7 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 class BrowseEntityCountDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
     private val transacter = database.browse_entity_countQueries
 
@@ -53,7 +54,7 @@ class BrowseEntityCountDao(
             browseEntity = browseEntity,
         )
             .asFlow()
-            .mapToOneOrNull(Dispatchers.IO)
+            .mapToOneOrNull(coroutineDispatchers.io)
 
     private fun updateLocalCountForEntity(
         entityId: String,

@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.RecordingForListItem
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.core.releasegroup.ReleaseGroupForListItem
@@ -23,6 +23,7 @@ import lydavidmusicsearchdatadatabase.Work
 
 class CollectionEntityDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.collection_entityQueries
 
@@ -77,7 +78,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getAreasByCollection(
             collectionId = collectionId,
@@ -96,7 +97,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getArtistsByCollection(
             collectionId = collectionId,
@@ -115,7 +116,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getEventsByCollection(
             collectionId = collectionId,
@@ -134,7 +135,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getInstrumentsByCollection(
             collectionId = collectionId,
@@ -153,7 +154,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getLabelsByCollection(
             collectionId = collectionId,
@@ -172,7 +173,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getPlacesByCollection(
             collectionId = collectionId,
@@ -191,7 +192,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getRecordingsByCollection(
             collectionId = collectionId,
@@ -211,7 +212,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByCollection(
             collectionId = collectionId,
@@ -232,7 +233,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleaseGroupsByCollection(
             collectionId = collectionId,
@@ -253,7 +254,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getSeriesByCollection(
             collectionId = collectionId,
@@ -272,7 +273,7 @@ class CollectionEntityDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getWorksByCollection(
             collectionId = collectionId,

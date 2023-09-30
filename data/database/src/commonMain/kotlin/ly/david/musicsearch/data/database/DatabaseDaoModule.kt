@@ -40,38 +40,38 @@ import org.koin.dsl.module
 
 val databaseDaoModule = module {
     factory { AreaDao(get()) }
-    factory { AreaPlaceDao(get()) }
+    factory { AreaPlaceDao(get(), get()) }
     factory { ArtistCreditDao(get(), get()) }
     factory { ArtistDao(get()) }
-    factory { ArtistReleaseDao(get()) }
-    factory { ArtistReleaseGroupDao(get()) }
-    factory { BrowseEntityCountDao(get()) }
-    factory { CollectionDao(get()) }
-    factory { CollectionEntityDao(get()) }
+    factory { ArtistReleaseDao(get(), get()) }
+    factory { ArtistReleaseGroupDao(get(), get()) }
+    factory { BrowseEntityCountDao(get(), get()) }
+    factory { CollectionDao(get(), get()) }
+    factory { CollectionEntityDao(get(), get()) }
     factory { CountryCodeDao(get()) }
     factory { EntityHasRelationsDao(get()) }
     factory { EntityHasUrlsDao(get()) }
     factory { EventDao(get()) }
-    factory { EventPlaceDao(get()) }
+    factory { EventPlaceDao(get(), get()) }
     factory { InstrumentDao(get()) }
     factory { LabelDao(get()) }
-    factory { LookupHistoryDao(get()) }
+    factory { LookupHistoryDao(get(), get()) }
     factory<ImageUrlDao> { MbidImageDao(get()) }
     factory { MediumDao(get(), get()) }
-    factory { NowPlayingHistoryDao(get()) }
+    factory { NowPlayingHistoryDao(get(), get()) }
     factory { PlaceDao(get()) }
     factory { RecordingDao(get(), get()) }
-    factory { RecordingReleaseDao(get()) }
-    factory { RecordingWorkDao(get()) }
-    factory { RelationDao(get()) }
-    factory { ReleaseCountryDao(get()) }
+    factory { RecordingReleaseDao(get(), get()) }
+    factory { RecordingWorkDao(get(), get()) }
+    factory { RelationDao(get(), get()) }
+    factory { ReleaseCountryDao(get(), get()) }
     factory { ReleaseDao(get(), get(), get()) }
     factory { ReleaseGroupDao(get(), get()) }
-    factory { ReleaseLabelDao(get()) }
-    factory { ReleaseReleaseGroupDao(get()) }
-    factory { SearchHistoryDao(get()) }
+    factory { ReleaseLabelDao(get(), get()) }
+    factory { ReleaseReleaseGroupDao(get(), get()) }
+    factory { SearchHistoryDao(get(), get()) }
     factory { SeriesDao(get()) }
-    factory { TrackDao(get(), get()) }
+    factory { TrackDao(get(), get(), get()) }
     factory { WorkAttributeDao(get()) }
     factory { WorkDao(get()) }
 }

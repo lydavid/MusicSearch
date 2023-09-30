@@ -18,15 +18,6 @@ insert:
 INSERT OR IGNORE INTO track
 VALUES ?;
 
-deleteTracksByRelease:
-DELETE FROM track WHERE id IN (
-  SELECT t.id
-  FROM track t
-  INNER JOIN medium m ON t.medium_id = m.id
-  INNER JOIN release r ON m.release_id = r.id
-  WHERE r.id = :releaseId
-);
-
 getNumberOfTracksByRelease:
 SELECT IFNULL(
   (

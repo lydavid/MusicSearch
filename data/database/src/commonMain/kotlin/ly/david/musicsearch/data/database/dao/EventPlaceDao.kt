@@ -4,15 +4,16 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Event_place
 
 class EventPlaceDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
     private val transacter = database.event_placeQueries
 
@@ -51,7 +52,7 @@ class EventPlaceDao(
             query = "%%",
         )
             .asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     fun getEventsByPlace(
@@ -63,7 +64,7 @@ class EventPlaceDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getEventsByPlace(
             placeId = placeId,

@@ -8,6 +8,8 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import coil.Coil
+import coil.ImageLoaderFactory
 import kotlinx.coroutines.test.runTest
 import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
@@ -19,12 +21,19 @@ import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
+import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
 
 internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
 
     private val releaseGroupRepository: ReleaseGroupRepository by inject()
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
+
+    @Before
+    fun setupApp() {
+        Coil.setImageLoader(imageLoaderFactory)
+    }
 
     private fun setReleaseGroup(releaseGroupMusicBrainzModel: ReleaseGroupMusicBrainzModel) {
         composeTestRule.activity.setContent {

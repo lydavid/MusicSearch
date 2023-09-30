@@ -4,9 +4,9 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseEventMusicBrainzModel
@@ -20,6 +20,7 @@ import lydavidmusicsearchdatadatabase.Release_country
  */
 class ReleaseCountryDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.release_countryQueries
 
@@ -93,7 +94,7 @@ class ReleaseCountryDao(
             query = "%%",
         )
             .asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     fun getReleasesByCountry(
@@ -105,7 +106,7 @@ class ReleaseCountryDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByCountry(
             areaId = areaId,

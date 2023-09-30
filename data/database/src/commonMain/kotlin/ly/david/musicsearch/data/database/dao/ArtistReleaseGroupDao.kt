@@ -5,9 +5,9 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.Database
@@ -16,6 +16,7 @@ import lydavidmusicsearchdatadatabase.Artist_release_group
 
 class ArtistReleaseGroupDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.artist_release_groupQueries
 
@@ -55,7 +56,7 @@ class ArtistReleaseGroupDao(
             query = "%%",
         )
             .asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>> =
@@ -70,7 +71,7 @@ class ArtistReleaseGroupDao(
             }
         )
             .asFlow()
-            .mapToList(Dispatchers.IO)
+            .mapToList(coroutineDispatchers.io)
 
     fun getReleaseGroupsByArtist(
         artistId: String,
@@ -82,7 +83,7 @@ class ArtistReleaseGroupDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleaseGroupsByArtist(
             artistId = artistId,

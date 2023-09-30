@@ -58,7 +58,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
         }
     }
 
-    // TODO:
+    // TODO: might be related to dispatchers
     @Test
     fun firstVisit_noLocalData() = runTest(timeout = 20.seconds) {
         setRelease(underPressure)

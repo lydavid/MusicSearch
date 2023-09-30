@@ -7,11 +7,9 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import java.util.Random
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.data.di.coroutines.MusicSearchDispatchers
-import org.koin.core.qualifier.named
+import ly.david.data.core.CoroutineDispatchers
 import org.koin.dsl.module
 
 private const val TEST_SETTINGS_KEY = "test_settings"
@@ -24,7 +22,7 @@ val testPreferencesDataStoreModule = module {
                 produceNewData = { emptyPreferences() }
             ),
             migrations = listOf(SharedPreferencesMigration(get(), TEST_SETTINGS_KEY)),
-            scope = CoroutineScope(SupervisorJob() + get<CoroutineDispatcher>(named(MusicSearchDispatchers.IO))),
+            scope = CoroutineScope(SupervisorJob() + get<CoroutineDispatchers>().io),
             produceFile = { get<Context>().preferencesDataStoreFile("${TEST_SETTINGS_KEY}_$random") }
         )
     }

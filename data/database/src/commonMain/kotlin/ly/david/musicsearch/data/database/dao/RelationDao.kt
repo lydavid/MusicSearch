@@ -4,14 +4,15 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 import lydavidmusicsearchdatadatabase.Relation
 
 class RelationDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
     private val transacter = database.relationQueries
 
@@ -36,7 +37,7 @@ class RelationDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.Unconfined, // TODO: inject so we can swap out
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getEntityRelationshipsExcludingUrls(
             entityId = entityId,
@@ -64,5 +65,5 @@ class RelationDao(
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<CountOfEachRelationshipType>> =
         transacter.countOfEachRelationshipType(entityId)
             .asFlow()
-            .mapToList(Dispatchers.IO)
+            .mapToList(coroutineDispatchers.io)
 }

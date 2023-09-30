@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.musicbrainz.getCount
@@ -11,6 +11,7 @@ import lydavidmusicsearchdatadatabase.Collection
 
 class CollectionDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
     private val transacter = database.collectionQueries
 
@@ -62,7 +63,7 @@ class CollectionDao(
             entity = entity,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getAllCollections(
             showLocal = showLocal,

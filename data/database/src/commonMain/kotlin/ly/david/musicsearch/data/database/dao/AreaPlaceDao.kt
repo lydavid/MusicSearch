@@ -4,9 +4,9 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Area_place
@@ -14,6 +14,7 @@ import lydavidmusicsearchdatadatabase.Place
 
 class AreaPlaceDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) {
     private val transacter = database.area_placeQueries
 
@@ -57,7 +58,7 @@ class AreaPlaceDao(
             query = "%%",
         )
             .asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     fun getPlacesByArea(
@@ -69,7 +70,7 @@ class AreaPlaceDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getPlacesByArea(
             areaId = areaId,

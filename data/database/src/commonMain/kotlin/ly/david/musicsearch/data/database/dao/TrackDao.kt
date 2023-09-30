@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.TrackForListItem
 import ly.david.data.musicbrainz.TrackMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
@@ -12,6 +12,7 @@ import lydavidmusicsearchdatadatabase.Track
 class TrackDao(
     database: Database,
     private val artistCreditDao: ArtistCreditDao,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.trackQueries
 
@@ -52,12 +53,6 @@ class TrackDao(
         }
     }
 
-    // TODO: unused atm cause we delete the release to cascade delete its media/tracks
-    //  should be used once we decouple that
-    fun deleteTracksByRelease(releaseId: String) {
-        transacter.deleteTracksByRelease(releaseId)
-    }
-
     fun getNumberOfTracksByRelease(releaseId: String): Int =
         transacter.getNumberOfTracksByRelease(
             releaseId = releaseId,
@@ -73,7 +68,7 @@ class TrackDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getTracksByRelease(
             releaseId = releaseId,

@@ -4,9 +4,9 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.CoroutineDispatchers
 import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.LabelInfo
@@ -21,6 +21,7 @@ import lydavidmusicsearchdatadatabase.Release_label
  */
 class ReleaseLabelDao(
     database: Database,
+    private val coroutineDispatchers: CoroutineDispatchers,
 ) : EntityDao {
     override val transacter = database.release_labelQueries
 
@@ -85,7 +86,7 @@ class ReleaseLabelDao(
             query = "%%",
         )
             .asFlow()
-            .mapToOne(Dispatchers.IO)
+            .mapToOne(coroutineDispatchers.io)
             .map { it.toInt() }
 
     // region releases by label
@@ -115,7 +116,7 @@ class ReleaseLabelDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO,
+        context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByLabel(
             labelId = labelId,
