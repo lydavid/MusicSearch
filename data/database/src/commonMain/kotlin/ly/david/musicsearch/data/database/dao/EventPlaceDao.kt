@@ -1,8 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Event_place
@@ -41,11 +45,14 @@ class EventPlaceDao(
         transacter.deleteEventsByPlace(placeId)
     }
 
-    fun getNumberOfEventsByPlace(placeId: String): Int =
+    fun getNumberOfEventsByPlace(placeId: String): Flow<Int> =
         transacter.getNumberOfEventsByPlace(
             placeId = placeId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(Dispatchers.IO)
+            .map { it.toInt() }
 
     fun getEventsByPlace(
         placeId: String,

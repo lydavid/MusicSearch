@@ -10,6 +10,8 @@ import ly.david.data.domain.browse.GetBrowseEntityCountFlowUseCase
 import ly.david.data.domain.relation.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
+import ly.david.ui.stats.PlaceStats
+import ly.david.ui.stats.ReleaseStats
 import ly.david.ui.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
@@ -32,10 +34,14 @@ class AreaStatsViewModel(
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },
                 relationTypeCounts = relationTypeCounts.toImmutableList(),
-                totalRemoteReleases = browseReleaseCount?.remoteCount,
-                totalLocalReleases = localReleases,
-                totalRemotePlaces = browsePlaceCount?.remoteCount,
-                totalLocalPlaces = localPlaces,
+                releaseStats = ReleaseStats(
+                    totalRemote = browseReleaseCount?.remoteCount,
+                    totalLocal = localReleases,
+                ),
+                placeStats = PlaceStats(
+                    totalRemote = browsePlaceCount?.remoteCount,
+                    totalLocal = localPlaces,
+                ),
             )
         }
             .distinctUntilChanged()

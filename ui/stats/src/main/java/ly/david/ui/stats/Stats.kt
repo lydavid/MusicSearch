@@ -11,32 +11,41 @@ data class Stats(
     val totalRelations: Int? = null,
     val relationTypeCounts: ImmutableList<RelationTypeCount> = persistentListOf(),
 
-    val totalRemoteEvents: Int? = null,
-    val totalLocalEvents: Int = 0,
+    val eventStats: EventStats = EventStats(),
 
-    val totalRemotePlaces: Int? = null,
-    val totalLocalPlaces: Int = 0,
+    val placeStats: PlaceStats = PlaceStats(),
 
-    val totalRemoteRecordings: Int? = null,
-    val totalLocalRecordings: Int = 0,
+    val recordingStats: RecordingStats = RecordingStats(),
 
     val releaseStats: ReleaseStats = ReleaseStats(),
     val totalRemoteReleases: Int? = null,
     val totalLocalReleases: Int = 0,
 
     val releaseGroupStats: ReleaseGroupStats = ReleaseGroupStats(),
-    val totalRemoteReleaseGroups: Int? = null,
-    val totalLocalReleaseGroups: Int = 0,
-    val releaseGroupTypeCounts: ImmutableList<RoomReleaseGroupTypeCount> = persistentListOf(),
+)
+
+data class EventStats(
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
+)
+
+data class PlaceStats(
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
+)
+
+data class RecordingStats(
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
 )
 
 data class ReleaseStats(
-    val totalRemoteReleases: Int? = null,
-    val totalLocalReleases: Int = 0,
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
 )
 
 data class ReleaseGroupStats(
-    val totalRemoteReleaseGroups: Int? = null,
-    val totalLocalReleaseGroups: Int = 0,
+    val totalRemote: Int? = null,
+    val totalLocal: Int = 0,
     val releaseGroupTypeCounts: ImmutableList<RoomReleaseGroupTypeCount> = persistentListOf(),
 )

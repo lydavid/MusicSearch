@@ -30,8 +30,8 @@ internal class ArtistStatsViewModel(
             artistReleaseDao.getNumberOfReleasesByArtist(entityId),
         ) { browseReleaseCount, localReleases ->
             ReleaseStats(
-                totalRemoteReleases = browseReleaseCount?.remoteCount,
-                totalLocalReleases = localReleases,
+                totalRemote = browseReleaseCount?.remoteCount,
+                totalLocal = localReleases,
             )
         }
 
@@ -42,8 +42,8 @@ internal class ArtistStatsViewModel(
             artistReleaseGroupDao.getCountOfEachAlbumType(entityId)
         ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->
             ReleaseGroupStats(
-                totalRemoteReleaseGroups = browseReleaseGroupCount?.remoteCount,
-                totalLocalReleaseGroups = localReleaseGroups,
+                totalRemote = browseReleaseGroupCount?.remoteCount,
+                totalLocal = localReleaseGroups,
                 releaseGroupTypeCounts = releaseGroupTypeCount.map {
                     RoomReleaseGroupTypeCount(
                         primaryType = it.primaryType,

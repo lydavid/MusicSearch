@@ -28,49 +28,55 @@ fun StatsScreen(
             when (tab) {
                 Tab.EVENTS -> {
                     addEntitiesStatsSection(
-                        totalRemote = stats.totalRemoteEvents,
-                        totalLocal = stats.totalLocalEvents,
+                        totalRemote = stats.eventStats.totalRemote,
+                        totalLocal = stats.eventStats.totalLocal,
                         headerRes = R.string.events,
                         cachedLocalOfRemoteRes = R.string.cached_events,
                     )
                 }
+
                 Tab.PLACES -> {
                     addEntitiesStatsSection(
-                        totalRemote = stats.totalRemotePlaces,
-                        totalLocal = stats.totalLocalPlaces,
+                        totalRemote = stats.placeStats.totalRemote,
+                        totalLocal = stats.placeStats.totalLocal,
                         headerRes = R.string.places,
                         cachedLocalOfRemoteRes = R.string.cached_places,
                     )
                 }
+
                 Tab.RECORDINGS -> {
                     addEntitiesStatsSection(
-                        totalRemote = stats.totalRemoteRecordings,
-                        totalLocal = stats.totalLocalRecordings,
+                        totalRemote = stats.recordingStats.totalRemote,
+                        totalLocal = stats.recordingStats.totalLocal,
                         headerRes = R.string.recordings,
                         cachedLocalOfRemoteRes = R.string.cached_recordings,
                     )
                 }
+
                 Tab.RELATIONSHIPS -> {
                     addRelationshipsSection(
                         totalRelations = stats.totalRelations,
                         relationTypeCounts = stats.relationTypeCounts,
                     )
                 }
+
                 Tab.RELEASES -> {
                     addEntitiesStatsSection(
-                        totalRemote = stats.releaseStats.totalRemoteReleases,
-                        totalLocal = stats.releaseStats.totalLocalReleases,
+                        totalRemote = stats.releaseStats.totalRemote,
+                        totalLocal = stats.releaseStats.totalLocal,
                         headerRes = R.string.releases,
                         cachedLocalOfRemoteRes = R.string.cached_releases,
                     )
                 }
+
                 Tab.RELEASE_GROUPS -> {
                     addReleaseGroupsSection(
-                        totalRemote = stats.releaseGroupStats.totalRemoteReleaseGroups,
-                        totalLocal = stats.releaseGroupStats.totalLocalReleaseGroups,
+                        totalRemote = stats.releaseGroupStats.totalRemote,
+                        totalLocal = stats.releaseGroupStats.totalLocal,
                         releaseGroupTypeCounts = stats.releaseGroupStats.releaseGroupTypeCounts,
                     )
                 }
+
                 else -> {
                     // No stats for these tabs yet.
                 }
@@ -88,23 +94,27 @@ internal fun PreviewStatsScreen() {
             StatsScreen(
                 tabs = persistentListOf(Tab.RELATIONSHIPS, Tab.RELEASE_GROUPS, Tab.RELEASES, Tab.PLACES),
                 stats = Stats(
-                    totalRemoteReleaseGroups = 280,
-                    totalLocalReleaseGroups = 279,
-                    releaseGroupTypeCounts = persistentListOf(
-                        RoomReleaseGroupTypeCount(primaryType = "Album", count = 13),
-                        RoomReleaseGroupTypeCount(
-                            primaryType = "Album",
-                            secondaryTypes = listOf("Compilation", "Demo"),
-                            count = 1
-                        ),
-                    ),
                     totalRelations = 696,
                     relationTypeCounts = persistentListOf(
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.ARTIST, count = 17),
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.RECORDING, count = 397),
                     ),
-                    totalRemoteReleases = 20,
-                    totalLocalReleases = 15
+                    releaseGroupStats = ReleaseGroupStats(
+                        totalRemote = 280,
+                        totalLocal = 279,
+                        releaseGroupTypeCounts = persistentListOf(
+                            RoomReleaseGroupTypeCount(primaryType = "Album", count = 13),
+                            RoomReleaseGroupTypeCount(
+                                primaryType = "Album",
+                                secondaryTypes = listOf("Compilation", "Demo"),
+                                count = 1
+                            ),
+                        ),
+                    ),
+                    releaseStats = ReleaseStats(
+                        totalRemote = 20,
+                        totalLocal = 15
+                    ),
                 )
             )
         }
