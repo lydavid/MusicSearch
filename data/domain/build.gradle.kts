@@ -13,7 +13,6 @@ dependencies {
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
     implementation(libs.kotlinx.collections.immutable)
-    implementation(libs.kotlinx.datetime)
     implementation(libs.paging.common)
 
     ksp(libs.koin.ksp.compiler)

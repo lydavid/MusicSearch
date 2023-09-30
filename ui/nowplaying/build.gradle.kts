@@ -31,7 +31,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
-    implementation(libs.kotlinx.datetime)
 
     testImplementation(libs.bundles.kotlinx.coroutines)
     testImplementation(libs.coil.compose)

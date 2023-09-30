@@ -102,7 +102,6 @@ dependencies {
 
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
-    implementation(libs.kotlinx.datetime)
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
 
