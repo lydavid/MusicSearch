@@ -40,6 +40,14 @@ SELECT IFNULL(
   0
 ) AS count;
 
+getCountOfEachAlbumType:
+SELECT rg.primary_type, rg.secondary_types, COUNT(rg.id) AS count
+FROM release_group rg
+INNER JOIN artist_release_group arg ON rg.id = arg.release_group_id
+INNER JOIN artist a ON a.id = arg.artist_id
+WHERE a.id = :artistId
+GROUP BY rg.primary_type, rg.secondary_types;
+
 getReleaseGroupsByArtist:
 SELECT
   rg.id,

@@ -1,31 +1,71 @@
 package ly.david.mbjc.ui.artist.stats
 
 import androidx.lifecycle.ViewModel
-import ly.david.data.room.artist.releasegroups.RoomArtistReleaseGroupDao
-import ly.david.data.room.artist.releases.RoomArtistReleaseDao
-import ly.david.data.room.relation.RoomRelationDao
-import ly.david.ui.stats.RelationsStats
-import ly.david.ui.stats.ReleaseGroupsStats
-import ly.david.ui.stats.ReleasesStats
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.browse.GetBrowseEntityCountFlowUseCase
+import ly.david.data.domain.relation.GetCountOfEachRelationshipTypeUseCase
+import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
+import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
+import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
+import ly.david.ui.stats.ReleaseGroupStats
+import ly.david.ui.stats.ReleaseStats
+import ly.david.ui.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class ArtistStatsViewModel(
-    private val artistReleaseGroupDao: RoomArtistReleaseGroupDao,
-    private val artistReleaseDao: RoomArtistReleaseDao,
-    override val relationDao: RoomRelationDao,
-) : ViewModel(),
-    ReleaseGroupsStats,
-    ReleasesStats,
-    RelationsStats {
+    private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
+    private val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase,
+    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
+    private val artistReleaseDao: ArtistReleaseDao,
+) : ViewModel() {
 
-    override suspend fun getTotalLocalReleaseGroups(entityId: String) =
-        artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId)
+    private fun releaseStats(entityId: String): Flow<ReleaseStats> =
+        combine(
+            getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RELEASE),
+            artistReleaseDao.getNumberOfReleasesByArtist(entityId),
+        ) { browseReleaseCount, localReleases ->
+            ReleaseStats(
+                totalRemoteReleases = browseReleaseCount?.remoteCount,
+                totalLocalReleases = localReleases,
+            )
+        }
 
-    override suspend fun getCountOfEachAlbumType(entityId: String) =
-        artistReleaseGroupDao.getCountOfEachAlbumType(entityId)
+    private fun releaseGroupStats(entityId: String): Flow<ReleaseGroupStats> =
+        combine(
+            getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RELEASE_GROUP),
+            artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId),
+            artistReleaseGroupDao.getCountOfEachAlbumType(entityId)
+        ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->
+            ReleaseGroupStats(
+                totalRemoteReleaseGroups = browseReleaseGroupCount?.remoteCount,
+                totalLocalReleaseGroups = localReleaseGroups,
+                releaseGroupTypeCounts = releaseGroupTypeCount.map {
+                    RoomReleaseGroupTypeCount(
+                        primaryType = it.primaryType,
+                        secondaryTypes = it.secondaryTypes,
+                        count = it.count,
+                    )
+                }.toImmutableList(),
+            )
+        }
 
-    override suspend fun getTotalLocalReleases(entityId: String): Int {
-        return artistReleaseDao.getNumberOfReleasesByArtist(entityId)
-    }
+    fun getStats(entityId: String): Flow<Stats> =
+        combine(
+            getCountOfEachRelationshipTypeUseCase(entityId),
+            releaseStats(entityId),
+            releaseGroupStats(entityId),
+        ) { relationTypeCounts, releaseStats, releaseGroupStats ->
+            Stats(
+                totalRelations = relationTypeCounts.sumOf { it.count },
+                relationTypeCounts = relationTypeCounts.toImmutableList(),
+                releaseStats = releaseStats,
+                releaseGroupStats = releaseGroupStats,
+            )
+        }
+            .distinctUntilChanged()
 }

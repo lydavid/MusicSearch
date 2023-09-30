@@ -2,7 +2,7 @@ package ly.david.ui.stats
 
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.relation.RoomRelationDao
-import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 
 /**
  * Stats about release groups.
@@ -15,5 +15,5 @@ interface ReleaseGroupsStats {
 
     suspend fun getTotalLocalReleaseGroups(entityId: String): Int
 
-    suspend fun getCountOfEachAlbumType(entityId: String): List<ReleaseGroupTypeCount>
+    suspend fun getCountOfEachAlbumType(entityId: String): List<RoomReleaseGroupTypeCount>
 }

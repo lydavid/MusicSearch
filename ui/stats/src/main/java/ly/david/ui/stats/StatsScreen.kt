@@ -8,7 +8,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.room.relation.RelationTypeCount
-import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.core.preview.DefaultPreviews
@@ -31,7 +31,7 @@ fun StatsScreen(
                         totalRemote = stats.totalRemoteEvents,
                         totalLocal = stats.totalLocalEvents,
                         headerRes = R.string.events,
-                        cachedLocalOfRemoteRes = R.string.cached_events
+                        cachedLocalOfRemoteRes = R.string.cached_events,
                     )
                 }
                 Tab.PLACES -> {
@@ -39,7 +39,7 @@ fun StatsScreen(
                         totalRemote = stats.totalRemotePlaces,
                         totalLocal = stats.totalLocalPlaces,
                         headerRes = R.string.places,
-                        cachedLocalOfRemoteRes = R.string.cached_places
+                        cachedLocalOfRemoteRes = R.string.cached_places,
                     )
                 }
                 Tab.RECORDINGS -> {
@@ -47,28 +47,28 @@ fun StatsScreen(
                         totalRemote = stats.totalRemoteRecordings,
                         totalLocal = stats.totalLocalRecordings,
                         headerRes = R.string.recordings,
-                        cachedLocalOfRemoteRes = R.string.cached_recordings
+                        cachedLocalOfRemoteRes = R.string.cached_recordings,
                     )
                 }
                 Tab.RELATIONSHIPS -> {
                     addRelationshipsSection(
                         totalRelations = stats.totalRelations,
-                        relationTypeCounts = stats.relationTypeCounts
+                        relationTypeCounts = stats.relationTypeCounts,
                     )
                 }
                 Tab.RELEASES -> {
                     addEntitiesStatsSection(
-                        totalRemote = stats.totalRemoteReleases,
-                        totalLocal = stats.totalLocalReleases,
+                        totalRemote = stats.releaseStats.totalRemoteReleases,
+                        totalLocal = stats.releaseStats.totalLocalReleases,
                         headerRes = R.string.releases,
-                        cachedLocalOfRemoteRes = R.string.cached_releases
+                        cachedLocalOfRemoteRes = R.string.cached_releases,
                     )
                 }
                 Tab.RELEASE_GROUPS -> {
                     addReleaseGroupsSection(
-                        totalRemote = stats.totalRemoteReleaseGroups,
-                        totalLocal = stats.totalLocalReleaseGroups,
-                        releaseGroupTypeCounts = stats.releaseGroupTypeCounts
+                        totalRemote = stats.releaseGroupStats.totalRemoteReleaseGroups,
+                        totalLocal = stats.releaseGroupStats.totalLocalReleaseGroups,
+                        releaseGroupTypeCounts = stats.releaseGroupStats.releaseGroupTypeCounts,
                     )
                 }
                 else -> {
@@ -91,8 +91,8 @@ internal fun PreviewStatsScreen() {
                     totalRemoteReleaseGroups = 280,
                     totalLocalReleaseGroups = 279,
                     releaseGroupTypeCounts = persistentListOf(
-                        ReleaseGroupTypeCount(primaryType = "Album", count = 13),
-                        ReleaseGroupTypeCount(
+                        RoomReleaseGroupTypeCount(primaryType = "Album", count = 13),
+                        RoomReleaseGroupTypeCount(
                             primaryType = "Album",
                             secondaryTypes = listOf("Compilation", "Demo"),
                             count = 1

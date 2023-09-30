@@ -1,9 +1,15 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
 import lydavidmusicsearchdatadatabase.Artist_release_group
@@ -43,11 +49,28 @@ class ArtistReleaseGroupDao(
         transacter.deleteReleaseGroupsByArtist(artistId)
     }
 
-    fun getNumberOfReleaseGroupsByArtist(artistId: String): Int =
+    fun getNumberOfReleaseGroupsByArtist(artistId: String): Flow<Int> =
         transacter.getNumberOfReleaseGroupsByArtist(
             artistId = artistId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(Dispatchers.IO)
+            .map { it.toInt() }
+
+    fun getCountOfEachAlbumType(artistId: String): Flow<List<ReleaseGroupTypeCount>> =
+        transacter.getCountOfEachAlbumType(
+            artistId = artistId,
+            mapper = { primaryType, secondaryTypes, count ->
+                ReleaseGroupTypeCount(
+                    primaryType = primaryType,
+                    secondaryTypes = secondaryTypes,
+                    count = count.toInt(),
+                )
+            }
+        )
+            .asFlow()
+            .mapToList(Dispatchers.IO)
 
     fun getReleaseGroupsByArtist(
         artistId: String,

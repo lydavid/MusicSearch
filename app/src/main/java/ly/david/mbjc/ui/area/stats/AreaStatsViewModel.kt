@@ -15,7 +15,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class AreaStatsViewModel(
-    val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
+    private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
     private val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase,
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaPlaceDao: AreaPlaceDao,

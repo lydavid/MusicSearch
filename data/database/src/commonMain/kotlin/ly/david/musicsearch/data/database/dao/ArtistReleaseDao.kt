@@ -1,8 +1,12 @@
 package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem
@@ -46,11 +50,14 @@ class ArtistReleaseDao(
         }
     }
 
-    fun getNumberOfReleasesByArtist(artistId: String): Int =
+    fun getNumberOfReleasesByArtist(artistId: String): Flow<Int> =
         transacter.getNumberOfReleasesByArtist(
             artistId = artistId,
             query = "%%",
-        ).executeAsOne().toInt()
+        )
+            .asFlow()
+            .mapToOne(Dispatchers.IO)
+            .map { it.toInt() }
 
     fun getReleasesByArtist(
         artistId: String,

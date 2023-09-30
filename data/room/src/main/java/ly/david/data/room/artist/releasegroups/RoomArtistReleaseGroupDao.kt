@@ -3,7 +3,7 @@ package ly.david.data.room.artist.releasegroups
 import androidx.room.Dao
 import androidx.room.Query
 import ly.david.data.room.BaseDao
-import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 
 @Dao
 abstract class RoomArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
@@ -67,5 +67,5 @@ abstract class RoomArtistReleaseGroupDao : BaseDao<ArtistReleaseGroup>() {
         GROUP BY rg.primary_type, rg.secondary_types
     """
     )
-    abstract suspend fun getCountOfEachAlbumType(artistId: String): List<ReleaseGroupTypeCount>
+    abstract suspend fun getCountOfEachAlbumType(artistId: String): List<RoomReleaseGroupTypeCount>
 }
