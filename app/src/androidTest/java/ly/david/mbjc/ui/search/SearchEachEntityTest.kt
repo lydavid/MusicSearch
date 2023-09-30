@@ -57,7 +57,6 @@ internal class SearchEachEntityTest(
         }
     }
 
-    // TODO:
     @Test
     fun searchEachEntity() {
         composeTestRule

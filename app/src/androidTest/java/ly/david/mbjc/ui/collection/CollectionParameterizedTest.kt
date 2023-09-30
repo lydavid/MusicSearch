@@ -28,7 +28,6 @@ import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -55,11 +54,9 @@ internal class CollectionParameterizedTest(
     private val collectionDao: CollectionDao by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
     private lateinit var navController: NavHostController
-//    private val testScope: Scope by lazy { getKoin() }
 
     @Before
     fun setupApp() {
-//        testScope = getKoin().getScope("test")
         Coil.setImageLoader(imageLoaderFactory)
         composeTestRule.activity.setContent {
             navController = rememberNavController()
@@ -67,11 +64,6 @@ internal class CollectionParameterizedTest(
                 TopLevelScaffold(navController)
             }
         }
-    }
-
-    @After
-    fun tearDown() {
-//        testScope.getKoin().deleteScope("test")
     }
 
     @Test
@@ -157,7 +149,6 @@ internal class CollectionParameterizedTest(
             .assertDoesNotExist()
     }
 
-    // TODO:
     // We're currently able to skirt around the need to fake auth state but inserting data ourselves
     // since the app saves remote collection's data
     @Test

@@ -19,11 +19,14 @@ import org.koin.test.KoinTest
 internal abstract class MainActivityTest : KoinTest {
 
     @get:Rule(order = 0)
+    val databaseTestRule = DatabaseTestRule()
+
+    @get:Rule(order = 1)
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     // val composeTestRule = createComposeRule() if we don't need activity
     //  great for testing individual UI pieces
-    @get:Rule(order = 1)
+    @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @OptIn(ExperimentalTestApi::class)

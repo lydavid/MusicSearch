@@ -4,9 +4,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.createDatabase
-import org.koin.core.module.Module
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 // TODO: dupe
@@ -29,13 +26,11 @@ import org.koin.dsl.module
 //    }
 //}
 
-val testDatabaseModule: Module = module {
-    scope(named("test")) {
-        scoped {
-            createDatabase(driver = get())
-        }
-    }
-}
+//val testDatabaseModule: Module = module {
+//    single {
+//        createDatabase(driver = get())
+//    }
+//}
 
 val testDatabaseDriverModule = module {
     factory<SqlDriver> {

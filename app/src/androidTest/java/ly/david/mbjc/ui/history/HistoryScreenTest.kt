@@ -33,7 +33,6 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
         }
     }
 
-    // TODO:
     @Test
     fun emptyLookupHistory() = runTest {
         composeTestRule.awaitIdle()

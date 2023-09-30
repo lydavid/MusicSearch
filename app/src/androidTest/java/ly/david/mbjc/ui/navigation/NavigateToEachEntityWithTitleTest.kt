@@ -44,6 +44,7 @@ internal class NavigateToEachEntityWithTitleTest(
         }
     }
 
+    // TODO: failing on artist/r/rg
     @Test
     fun navigateToEachEntityScreenWithCustomTitle() = runTest {
         composeTestRule.awaitIdle()

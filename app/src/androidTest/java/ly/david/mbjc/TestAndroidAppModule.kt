@@ -48,6 +48,7 @@ val testAndroidAppModule = module {
         SettingsUiModule().module,
 
         testDatabaseDriverModule,
+//        testDatabaseModule,
 //        databaseDriverModule,
         databaseModule,
         databaseDaoModule,

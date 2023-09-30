@@ -123,6 +123,7 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(libs.koin.test)
     androidTestImplementation(libs.sqldelight.android.driver)
+    androidTestImplementation(libs.test.parameter.injector)
 
     ksp(libs.koin.ksp.compiler)
     kspAndroidTest(libs.koin.ksp.compiler)

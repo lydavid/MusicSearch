@@ -36,7 +36,7 @@ class RelationDao(
             query = query,
         ),
         transacter = transacter,
-        context = Dispatchers.IO, // TODO: inject so we can swap out
+        context = Dispatchers.Unconfined, // TODO: inject so we can swap out
     ) { limit, offset ->
         transacter.getEntityRelationshipsExcludingUrls(
             entityId = entityId,
