@@ -7,10 +7,6 @@ import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 
 // TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable
 //  We could extract uimodel to data-android or app
-/**
- * Representation of a [ReleaseGroup] for our UI.
- * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
- */
 data class ReleaseGroupListItemModel(
     override val id: String,
     override val name: String,

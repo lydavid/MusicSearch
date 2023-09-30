@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.data.domain.browse.GetBrowseEntityCountFlowUseCase
 import ly.david.data.domain.relation.GetCountOfEachRelationshipTypeUseCase
-import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
 import ly.david.ui.stats.ReleaseGroupStats
@@ -45,7 +45,7 @@ internal class ArtistStatsViewModel(
                 totalRemote = browseReleaseGroupCount?.remoteCount,
                 totalLocal = localReleaseGroups,
                 releaseGroupTypeCounts = releaseGroupTypeCount.map {
-                    RoomReleaseGroupTypeCount(
+                    ReleaseGroupTypeCount(
                         primaryType = it.primaryType,
                         secondaryTypes = it.secondaryTypes,
                         count = it.count,

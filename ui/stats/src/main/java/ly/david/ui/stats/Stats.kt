@@ -4,7 +4,7 @@ import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.data.core.relation.RelationTypeCount
-import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
+import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
 
 @Stable
 data class Stats(
@@ -40,5 +40,5 @@ data class ReleaseStats(
 data class ReleaseGroupStats(
     val totalRemote: Int? = null,
     val totalLocal: Int = 0,
-    val releaseGroupTypeCounts: ImmutableList<RoomReleaseGroupTypeCount> = persistentListOf(),
+    val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount> = persistentListOf(),
 )

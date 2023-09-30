@@ -10,7 +10,7 @@ import ly.david.data.musicbrainz.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.musicbrainz.api.SEARCH_BROWSE_LIMIT
 
 /**
- * Generic RemoteMediator for loading remote data into [RoomModel].
+ * Generic RemoteMediator for loading remote data into a database, then fetching it from the database.
  *
  * When using [LoadType.REFRESH], [getRemoteEntityCount] does not need to be checked.
  * A refresh load will always call [browseEntity].

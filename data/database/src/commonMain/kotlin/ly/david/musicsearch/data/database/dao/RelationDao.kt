@@ -20,9 +20,9 @@ class RelationDao(
         transacter.insertEntity(relation)
     }
 
-    fun insertAll(relations: List<Relation>) {
+    fun insertAll(relations: List<Relation>?) {
         transacter.transaction {
-            relations.forEach { relation ->
+            relations?.forEach { relation ->
                 insert(relation)
             }
         }

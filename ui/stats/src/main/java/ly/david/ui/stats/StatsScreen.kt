@@ -8,7 +8,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.relation.RelationTypeCount
-import ly.david.data.room.releasegroup.RoomReleaseGroupTypeCount
+import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.core.preview.DefaultPreviews
@@ -103,8 +103,8 @@ internal fun PreviewStatsScreen() {
                         totalRemote = 280,
                         totalLocal = 279,
                         releaseGroupTypeCounts = persistentListOf(
-                            RoomReleaseGroupTypeCount(primaryType = "Album", count = 13),
-                            RoomReleaseGroupTypeCount(
+                            ReleaseGroupTypeCount(primaryType = "Album", count = 13),
+                            ReleaseGroupTypeCount(
                                 primaryType = "Album",
                                 secondaryTypes = listOf("Compilation", "Demo"),
                                 count = 1

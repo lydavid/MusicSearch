@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.RoomModel
 
 /**
  * Generic implementation for handling paged [RoomModel]/[ListItemModel].

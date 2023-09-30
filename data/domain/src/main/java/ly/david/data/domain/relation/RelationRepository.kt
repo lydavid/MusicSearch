@@ -33,16 +33,13 @@ class RelationRepository(
     }
 
     private fun insertRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
-        val relationRoomModels = mutableListOf<Relation>()
-        relationMusicBrainzModels?.forEachIndexed { index, relationMusicBrainzModel ->
+        val relationDatabaseModels = relationMusicBrainzModels?.mapIndexedNotNull { index, relationMusicBrainzModel ->
             relationMusicBrainzModel.toRelationDatabaseModel(
                 entityId = entityId,
                 order = index
-            )?.let { relationRoomModel ->
-                relationRoomModels.add(relationRoomModel)
-            }
+            )
         }
-        relationDao.insertAll(relationRoomModels)
+        relationDao.insertAll(relationDatabaseModels)
     }
 
     fun hasRelationsBeenSavedFor(entityId: String): Boolean {

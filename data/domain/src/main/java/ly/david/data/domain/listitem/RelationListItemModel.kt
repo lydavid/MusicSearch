@@ -5,9 +5,9 @@ import lydavidmusicsearchdatadatabase.Relation
 
 /**
  * @param id For reordering animation in a lazy list.
- *  This must have unique among all [RelationListItemModel] that may appear in the same lazy list.
- *  The most obvious choice is the primary keys from [RelationRoomModel].
- *  Since these are meant to be displayed inside a tab for a given resource with the id [RelationRoomModel.entityId],
+ *  This must be unique among all [RelationListItemModel] that may appear in the same lazy list.
+ *  The most obvious choice is the primary keys from its database table.
+ *  Since these are meant to be displayed inside a tab for a given resource with the id [Relation.entity_id],
  *  we don't have to include that.
  */
 data class RelationListItemModel(

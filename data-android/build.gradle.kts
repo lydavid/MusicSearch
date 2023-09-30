@@ -93,6 +93,7 @@ android {
 
 dependencies {
     api(projects.data)
+    implementation(projects.data.room)
     testImplementation(projects.testData)
 
     implementation(libs.androidx.datastore.preferences)
