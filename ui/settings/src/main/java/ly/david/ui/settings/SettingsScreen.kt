@@ -39,7 +39,6 @@ internal fun SettingsScreen(
     onGoToNotificationListenerSettings: () -> Unit = {},
     versionName: String = "",
     versionCode: Int = 0,
-    databaseVersion: Int = 0,
 ) {
     LazyColumn(modifier = modifier) {
         item {
@@ -120,9 +119,7 @@ internal fun SettingsScreen(
             TextWithHeading(heading = versionKey, text = "$versionName ($versionCode)")
 
             if (BuildConfig.DEBUG) {
-                DevSettingsSection(
-                    databaseVersion = databaseVersion,
-                )
+                DevSettingsSection()
             }
         }
     }
@@ -137,7 +134,6 @@ internal fun PreviewSettingsScreen() {
             SettingsScreen(
                 versionName = "1.0.0",
                 versionCode = 1,
-                databaseVersion = 1,
             )
         }
     }
@@ -152,7 +148,6 @@ internal fun PreviewSettingsScreenNotificationListenerEnable() {
                 isNotificationListenerEnabled = true,
                 versionName = "1.0.0",
                 versionCode = 1,
-                databaseVersion = 1,
             )
         }
     }

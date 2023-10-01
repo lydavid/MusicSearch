@@ -14,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.NotificationManagerCompat
 import ly.david.data.domain.Destination
-import ly.david.data.room.DATABASE_VERSION
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import org.koin.androidx.compose.koinViewModel
@@ -70,7 +69,6 @@ fun SettingsScaffold(
             },
             versionName = BuildConfig.VERSION_NAME,
             versionCode = BuildConfig.VERSION_CODE,
-            databaseVersion = DATABASE_VERSION,
         )
     }
 }
