@@ -161,6 +161,7 @@ interface LookupApiImpl : LookupApi {
             url {
                 appendPathSegments("artist", artistId)
                 parameter("inc", include)
+                parameter("fmt", "json")
             }
         }.body()
     }
