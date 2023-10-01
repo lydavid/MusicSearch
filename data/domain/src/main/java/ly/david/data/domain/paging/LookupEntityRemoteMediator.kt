@@ -11,11 +11,11 @@ import ly.david.data.common.network.RecoverableNetworkException
  * A refresh load will always call [lookupEntity] with force refresh flag.
  */
 @OptIn(ExperimentalPagingApi::class)
-class LookupEntityRemoteMediator<RM : Any>(
+class LookupEntityRemoteMediator<DM : Any>(
     private val hasEntityBeenStored: suspend () -> Boolean,
     private val lookupEntity: suspend (forceRefresh: Boolean) -> Unit,
     private val deleteLocalEntity: suspend () -> Unit,
-) : RemoteMediator<Int, RM>() {
+) : RemoteMediator<Int, DM>() {
 
     override suspend fun initialize(): InitializeAction {
         return if (hasEntityBeenStored()) {
@@ -27,7 +27,7 @@ class LookupEntityRemoteMediator<RM : Any>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RM>,
+        state: PagingState<Int, DM>,
     ): MediatorResult {
         return try {
             if (!hasEntityBeenStored()) {

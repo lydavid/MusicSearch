@@ -61,7 +61,7 @@ internal class WorksByCollectionViewModel(
             query = "%$query%",
         )
 
-    override fun transformRoomToListItemModel(roomModel: Work): WorkListItemModel {
-        return roomModel.toWorkListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Work): WorkListItemModel {
+        return databaseModel.toWorkListItemModel()
     }
 }

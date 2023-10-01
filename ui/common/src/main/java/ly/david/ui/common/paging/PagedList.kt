@@ -20,12 +20,13 @@ import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 
 /**
- * Generic implementation for handling paged [RoomModel]/[ListItemModel].
+ * Generic implementation for handling paged [ListItemModel]
+ * whose source of truth is the local database.
  *
  * Meant to be implemented by a ViewModel through delegation.
  * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
-abstract class PagedList<RM : Any, LI : ListItemModel> : IPagedList<LI> {
+abstract class PagedList<DM : Any, LI : ListItemModel> : IPagedList<LI> {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
@@ -35,9 +36,9 @@ abstract class PagedList<RM : Any, LI : ListItemModel> : IPagedList<LI> {
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseEntityUseCase<RM, LI>
+    lateinit var useCase: BrowseEntityUseCase<DM, LI>
 
-    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<RM>(
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<DM>(
         getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
@@ -57,7 +58,7 @@ abstract class PagedList<RM : Any, LI : ListItemModel> : IPagedList<LI> {
                     .flow
                     .map { pagingData ->
                         pagingData.map {
-                            useCase.transformRoomToListItemModel(it)
+                            useCase.transformDatabaseToListItemModel(it)
                         }.filter {
                             useCase.postFilter(it)
                         }

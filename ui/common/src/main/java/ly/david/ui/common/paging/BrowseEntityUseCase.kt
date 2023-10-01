@@ -10,14 +10,14 @@ interface StoreEntityUseCase {
     suspend fun deleteLinkedEntitiesByEntity(entityId: String)
 }
 
-interface BrowseEntityUseCase<RM : Any, LI : ListItemModel> : StoreEntityUseCase {
-    fun getLinkedEntitiesPagingSource(entityId: String, query: String): PagingSource<Int, RM>
-    fun transformRoomToListItemModel(roomModel: RM): LI
+interface BrowseEntityUseCase<DM : Any, LI : ListItemModel> : StoreEntityUseCase {
+    fun getLinkedEntitiesPagingSource(entityId: String, query: String): PagingSource<Int, DM>
+    fun transformDatabaseToListItemModel(databaseModel: DM): LI
     fun postFilter(listItemModel: LI): Boolean {
         return true
     }
 }
 
-interface BrowseSortableEntityUseCase<RM : Any> : StoreEntityUseCase {
-    fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean): PagingSource<Int, RM>
+interface BrowseSortableEntityUseCase<DM : Any> : StoreEntityUseCase {
+    fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean): PagingSource<Int, DM>
 }

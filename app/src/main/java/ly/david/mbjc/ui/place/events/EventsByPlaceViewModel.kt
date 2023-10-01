@@ -58,7 +58,7 @@ internal class EventsByPlaceViewModel(
             query = "%$query%"
         )
 
-    override fun transformRoomToListItemModel(roomModel: Event): EventListItemModel {
-        return roomModel.toEventListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Event): EventListItemModel {
+        return databaseModel.toEventListItemModel()
     }
 }

@@ -57,7 +57,7 @@ internal class AreasByCollectionViewModel(
             query = "%$query%"
         )
 
-    override fun transformRoomToListItemModel(roomModel: Area): AreaListItemModel {
-        return roomModel.toAreaListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Area): AreaListItemModel {
+        return databaseModel.toAreaListItemModel()
     }
 }

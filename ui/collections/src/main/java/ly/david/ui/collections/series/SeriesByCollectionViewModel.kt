@@ -61,7 +61,7 @@ internal class SeriesByCollectionViewModel(
             query = "%$query%"
         )
 
-    override fun transformRoomToListItemModel(roomModel: Series): SeriesListItemModel {
-        return roomModel.toSeriesListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Series): SeriesListItemModel {
+        return databaseModel.toSeriesListItemModel()
     }
 }

@@ -23,12 +23,12 @@ import ly.david.data.musicbrainz.api.SEARCH_BROWSE_LIMIT
  *  Expects back the number of returned entities.
  */
 @OptIn(ExperimentalPagingApi::class)
-class BrowseEntityRemoteMediator<RM : Any>(
+class BrowseEntityRemoteMediator<DM : Any>(
     private val getRemoteEntityCount: suspend () -> Int?,
     private val getLocalEntityCount: suspend () -> Int,
     private val deleteLocalEntity: suspend () -> Unit,
     private val browseEntity: suspend (offset: Int) -> Int,
-) : RemoteMediator<Int, RM>() {
+) : RemoteMediator<Int, DM>() {
 
     override suspend fun initialize(): InitializeAction {
         return if (getRemoteEntityCount() == null) {
@@ -40,7 +40,7 @@ class BrowseEntityRemoteMediator<RM : Any>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RM>,
+        state: PagingState<Int, DM>,
     ): MediatorResult {
         return try {
             val nextOffset: Int = when (loadType) {

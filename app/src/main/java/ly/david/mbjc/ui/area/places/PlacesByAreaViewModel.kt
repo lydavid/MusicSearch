@@ -57,7 +57,7 @@ internal class PlacesByAreaViewModel(
             query = "%$query%",
         )
 
-    override fun transformRoomToListItemModel(roomModel: Place): PlaceListItemModel {
-        return roomModel.toPlaceListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Place): PlaceListItemModel {
+        return databaseModel.toPlaceListItemModel()
     }
 }

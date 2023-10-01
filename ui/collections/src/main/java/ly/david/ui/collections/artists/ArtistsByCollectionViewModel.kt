@@ -57,7 +57,7 @@ internal class ArtistsByCollectionViewModel(
             query = "%$query%"
         )
 
-    override fun transformRoomToListItemModel(roomModel: Artist): ArtistListItemModel {
-        return roomModel.toArtistListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Artist): ArtistListItemModel {
+        return databaseModel.toArtistListItemModel()
     }
 }

@@ -67,7 +67,7 @@ abstract class ReleasesByEntityViewModel(
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
         browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.localCount ?: 0
 
-    override fun transformRoomToListItemModel(roomModel: ReleaseForListItem): ReleaseListItemModel {
-        return roomModel.toReleaseListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: ReleaseForListItem): ReleaseListItemModel {
+        return databaseModel.toReleaseListItemModel()
     }
 }

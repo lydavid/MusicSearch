@@ -58,7 +58,7 @@ internal class InstrumentsByCollectionViewModel(
             query = "%$query%"
         )
 
-    override fun transformRoomToListItemModel(roomModel: Instrument): InstrumentListItemModel {
-        return roomModel.toInstrumentListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Instrument): InstrumentListItemModel {
+        return databaseModel.toInstrumentListItemModel()
     }
 }

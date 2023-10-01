@@ -57,7 +57,7 @@ internal class LabelsByCollectionViewModel(
             query = "%$query%",
         )
 
-    override fun transformRoomToListItemModel(roomModel: Label): LabelListItemModel {
-        return roomModel.toLabelListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Label): LabelListItemModel {
+        return databaseModel.toLabelListItemModel()
     }
 }

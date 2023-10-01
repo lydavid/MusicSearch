@@ -10,17 +10,17 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class BrowseEntitiesByEntityViewModel<
-    RM : Any,
+    DM : Any,
     LI : ListItemModel,
     MB : MusicBrainzModel,
     B : Browsable<MB>,
     >(
     private val byEntity: MusicBrainzEntity,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    private val pagedList: PagedList<RM, LI>,
+    private val pagedList: PagedList<DM, LI>,
 ) : ViewModel(),
     IPagedList<LI> by pagedList,
-    BrowseEntityUseCase<RM, LI> {
+    BrowseEntityUseCase<DM, LI> {
 
     init {
         pagedList.scope = viewModelScope

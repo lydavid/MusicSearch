@@ -64,7 +64,7 @@ internal class RecordingsByWorkViewModel(
             query = "%$query%",
         )
 
-    override fun transformRoomToListItemModel(roomModel: RecordingForListItem): RecordingListItemModel {
-        return roomModel.toRecordingListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: RecordingForListItem): RecordingListItemModel {
+        return databaseModel.toRecordingListItemModel()
     }
 }
