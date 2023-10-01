@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS release_label (
+﻿CREATE TABLE IF NOT EXISTS release_label (
   `release_id` TEXT NOT NULL,
   `label_id` TEXT NOT NULL,
   `catalog_number` TEXT NOT NULL,
@@ -58,8 +58,9 @@ SELECT IFNULL(
   0
 ) AS count;
 
+-- DISTINCT because junction table can have the same release/label with different catalog number
 getReleasesByLabel:
-SELECT DISTINCT r.*, ac.name AS artist_credits, mi.thumbnail_url -- DISTINCT because junction table can have the same release/label with different catalog number
+SELECT DISTINCT r.*, ac.name AS artist_credits, mi.thumbnail_url
 FROM release r
 INNER JOIN release_label rl ON r.id = rl.release_id
 INNER JOIN label l ON l.id = rl.label_id
