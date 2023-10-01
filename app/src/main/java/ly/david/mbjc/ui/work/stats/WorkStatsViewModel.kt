@@ -25,13 +25,13 @@ internal class WorkStatsViewModel(
             getCountOfEachRelationshipTypeUseCase(entityId),
             getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RECORDING),
             recordingWorkDao.getNumberOfRecordingsByWork(entityId),
-        ) { relationTypeCounts, browseReleaseCount, localReleases ->
+        ) { relationTypeCounts, browseRecordingCount, localRecordings ->
             Stats(
                 totalRelations = relationTypeCounts.sumOf { it.count },
                 relationTypeCounts = relationTypeCounts.toImmutableList(),
                 recordingStats = RecordingStats(
-                    totalRemote = browseReleaseCount?.remoteCount,
-                    totalLocal = localReleases,
+                    totalRemote = browseRecordingCount?.remoteCount,
+                    totalLocal = localRecordings,
                 ),
             )
         }

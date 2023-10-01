@@ -8,11 +8,6 @@ insert:
 INSERT OR IGNORE INTO mbid_image
 VALUES ?;
 
-getThumbnailUrl:
-SELECT thumbnail_url
-FROM mbid_image
-WHERE mbid = :mbid;
-
 getLargeUrl:
 SELECT large_url
 FROM mbid_image

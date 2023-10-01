@@ -21,7 +21,4 @@ class MbidImageDao(
 
     override fun getLargeUrlForEntity(mbid: String): String? =
         transacter.getLargeUrl(mbid).executeAsOneOrNull()
-
-    override fun getThumbnailUrlForEntity(mbid: String): String? =
-        transacter.getThumbnailUrl(mbid).executeAsOneOrNull()
 }
