@@ -5,7 +5,7 @@ import ly.david.data.core.getFormatsForDisplay
 import ly.david.data.core.getTracksForDisplay
 import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.core.release.FormatTrackCount
-import ly.david.data.core.release.ReleaseWithAllData
+import ly.david.data.core.release.ReleaseForDetails
 import ly.david.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
@@ -50,7 +50,7 @@ data class ReleaseScaffoldModel(
     val hasNullLength: Boolean = false,
 ) : ly.david.data.core.release.Release
 
-internal fun ReleaseWithAllData.toReleaseScaffoldModel(
+internal fun ReleaseForDetails.toReleaseScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
     releaseGroup: ReleaseGroupForRelease,
     formatTrackCounts: List<FormatTrackCount>,

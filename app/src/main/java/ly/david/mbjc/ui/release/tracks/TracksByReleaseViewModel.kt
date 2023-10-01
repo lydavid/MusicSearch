@@ -99,7 +99,7 @@ internal class TracksByReleaseViewModel(
 
     private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
         // TODO: right now the details tab is coupled with this tracks list tab
-        return releaseDao.getRelease(releaseId) != null
+        return releaseDao.getReleaseForDetails(releaseId) != null
     }
 
     private fun deleteMediaAndTracksByRelease(releaseId: String) {

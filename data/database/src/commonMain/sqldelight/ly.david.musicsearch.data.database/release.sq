@@ -25,7 +25,7 @@ VALUES ?;
 deleteRelease:
 DELETE FROM `release` WHERE id = :releaseId;
 
-getReleaseWithAllData:
+getReleaseForDetails:
 SELECT
   `release`.*,
   mi.large_url AS imageUrl,

@@ -1,6 +1,6 @@
 package ly.david.data.core.release
 
-data class ReleaseWithAllData(
+data class ReleaseForDetails(
     override val id: String,
     override val name: String,
     override val disambiguation: String,

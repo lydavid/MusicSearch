@@ -1,6 +1,5 @@
 package ly.david.data.domain.releasegroup
 
-import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
@@ -15,24 +14,21 @@ import org.koin.core.annotation.Single
 class ReleaseGroupRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val imageUrlDao: ImageUrlDao,
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
-        val releaseGroup = releaseGroupDao.getReleaseGroup(releaseGroupId)
+        val releaseGroupForDetails = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
         val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseGroupId)
-        val largeImageUrl = imageUrlDao.getLargeUrlForEntity(releaseGroupId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
-        if (releaseGroup != null &&
+        if (releaseGroupForDetails != null &&
             artistCreditNames.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
-            return releaseGroup.toReleaseGroupScaffoldModel(
+            return releaseGroupForDetails.toReleaseGroupScaffoldModel(
                 artistCreditNames = artistCreditNames,
-                imageUrl = largeImageUrl,
                 urls = urlRelations,
             )
         }

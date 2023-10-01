@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.core.release.FormatTrackCount
-import ly.david.data.core.release.ReleaseWithAllData
+import ly.david.data.core.release.ReleaseForDetails
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release
@@ -57,13 +57,13 @@ class ReleaseDao(
         transacter.deleteRelease(releaseId)
     }
 
-    fun getRelease(releaseId: String): ReleaseWithAllData? =
-        transacter.getReleaseWithAllData(
+    fun getReleaseForDetails(releaseId: String): ReleaseForDetails? =
+        transacter.getReleaseForDetails(
             releaseId = releaseId,
-            mapper = ::mapToReleaseWithAllData,
+            mapper = ::mapToReleaseForDetails,
         ).executeAsOneOrNull()
 
-    private fun mapToReleaseWithAllData(
+    private fun mapToReleaseForDetails(
         id: String,
         name: String,
         disambiguation: String,
@@ -82,7 +82,7 @@ class ReleaseDao(
         imageUrl: String?,
         releaseLength: Double?,
         hasNullLength: Boolean,
-    ) = ReleaseWithAllData(
+    ) = ReleaseForDetails(
         id = id,
         name = name,
         disambiguation = disambiguation,

@@ -1,7 +1,6 @@
 package ly.david.data.domain.release
 
 import ly.david.data.core.area.AreaType
-import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
@@ -25,7 +24,6 @@ class ReleaseRepository(
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val imageUrlDao: ImageUrlDao,
     private val artistCreditDao: ArtistCreditDao,
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
@@ -44,7 +42,7 @@ class ReleaseRepository(
      * Looks up release and stores its data (excludes relationships).
      */
     suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
-        val release = releaseDao.getRelease(releaseId)
+        val releaseForDetails = releaseDao.getReleaseForDetails(releaseId)
         val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseId)
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
@@ -52,14 +50,14 @@ class ReleaseRepository(
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
-        if (release != null &&
+        if (releaseForDetails != null &&
             releaseGroup != null &&
             artistCreditNames.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
-            return release.toReleaseScaffoldModel(
+            return releaseForDetails.toReleaseScaffoldModel(
                 artistCreditNames = artistCreditNames,
                 releaseGroup = releaseGroup,
                 formatTrackCounts = formatTrackCounts,
