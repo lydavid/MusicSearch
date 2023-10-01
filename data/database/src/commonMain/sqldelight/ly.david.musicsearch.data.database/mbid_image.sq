@@ -7,8 +7,3 @@ CREATE TABLE IF NOT EXISTS mbid_image (
 insert:
 INSERT OR IGNORE INTO mbid_image
 VALUES ?;
-
-getLargeUrl:
-SELECT large_url
-FROM mbid_image
-WHERE mbid = :mbid;

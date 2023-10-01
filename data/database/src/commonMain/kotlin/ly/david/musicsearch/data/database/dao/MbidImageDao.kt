@@ -18,7 +18,4 @@ class MbidImageDao(
             )
         )
     }
-
-    override fun getLargeUrlForEntity(mbid: String): String? =
-        transacter.getLargeUrl(mbid).executeAsOneOrNull()
 }
