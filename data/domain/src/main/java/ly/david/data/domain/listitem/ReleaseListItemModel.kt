@@ -32,7 +32,7 @@ data class ReleaseListItemModel(
     val formattedTracks: String? = null,
     val formattedArtistCredits: String? = null,
 
-    // TODO: we only use this to show +12, so let's just subquery count
+    // TODO: we only use this to show +12, so let's just sub query count
     val releaseCountries: List<ReleaseCountry> = listOf(),
 ) : ListItemModel(), Release
 
