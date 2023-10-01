@@ -44,8 +44,10 @@ internal class ArtistsByCollectionViewModel(
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        collectionEntityDao.deleteAllFromCollection(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.ARTIST)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.ARTIST)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(

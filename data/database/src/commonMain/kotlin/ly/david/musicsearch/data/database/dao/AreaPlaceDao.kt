@@ -15,8 +15,8 @@ import lydavidmusicsearchdatadatabase.Place
 class AreaPlaceDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
-) {
-    private val transacter = database.area_placeQueries
+) : EntityDao {
+    override val transacter = database.area_placeQueries
 
     fun insert(
         areaId: String,

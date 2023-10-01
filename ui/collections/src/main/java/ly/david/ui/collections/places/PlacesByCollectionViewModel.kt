@@ -44,8 +44,10 @@ internal class PlacesByCollectionViewModel(
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        collectionEntityDao.deleteAllFromCollection(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.PLACE)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.PLACE)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(

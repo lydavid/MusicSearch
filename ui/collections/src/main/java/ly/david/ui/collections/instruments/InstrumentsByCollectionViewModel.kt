@@ -44,9 +44,10 @@ internal class InstrumentsByCollectionViewModel(
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        // TODO: repository should execute both of these in transaction
-        collectionEntityDao.deleteAllFromCollection(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+        collectionEntityDao.withTransaction {
+            collectionEntityDao.deleteAllFromCollection(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(

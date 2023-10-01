@@ -13,8 +13,8 @@ import lydavidmusicsearchdatadatabase.Browse_entity_count
 class BrowseEntityCountDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
-) {
-    private val transacter = database.browse_entity_countQueries
+) : EntityDao {
+    override val transacter = database.browse_entity_countQueries
 
     fun insert(browseEntityCount: Browse_entity_count) {
         transacter.insert(browseEntityCount)

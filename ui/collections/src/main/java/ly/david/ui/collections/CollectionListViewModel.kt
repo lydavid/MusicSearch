@@ -108,8 +108,10 @@ class CollectionListViewModel(
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return
 
-        browseEntityCountDao.deleteAllBrowseEntityCountByRemoteCollections()
-        collectionDao.deleteMusicBrainzCollections()
+        browseEntityCountDao.withTransaction {
+            browseEntityCountDao.deleteAllBrowseEntityCountByRemoteCollections()
+            collectionDao.deleteMusicBrainzCollections()
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(

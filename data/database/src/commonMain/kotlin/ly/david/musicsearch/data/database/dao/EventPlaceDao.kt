@@ -14,8 +14,8 @@ import lydavidmusicsearchdatadatabase.Event_place
 class EventPlaceDao(
     database: Database,
     private val coroutineDispatchers: CoroutineDispatchers,
-) {
-    private val transacter = database.event_placeQueries
+) : EntityDao {
+    override val transacter = database.event_placeQueries
 
     fun insert(
         eventId: String,

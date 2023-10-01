@@ -45,8 +45,10 @@ internal class EventsByPlaceViewModel(
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        eventPlaceDao.deleteEventsByPlace(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
+        eventPlaceDao.withTransaction {
+            eventPlaceDao.deleteEventsByPlace(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(

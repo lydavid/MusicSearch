@@ -42,8 +42,10 @@ internal class ReleaseGroupsByArtistViewModel(
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
-        browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
+        artistReleaseGroupDao.withTransaction {
+            artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean) =
