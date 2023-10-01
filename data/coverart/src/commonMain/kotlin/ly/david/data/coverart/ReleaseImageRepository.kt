@@ -2,7 +2,7 @@ package ly.david.data.coverart
 
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
-import ly.david.data.core.image.ImageUrlSaver
+import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.core.logging.Logger
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
@@ -15,7 +15,7 @@ import org.koin.core.annotation.Single
 @Single
 class ReleaseImageRepository(
     private val coverArtArchiveApi: CoverArtArchiveApi,
-    private val imageUrlSaver: ImageUrlSaver,
+    private val imageUrlDao: ImageUrlDao,
     private val logger: Logger,
 ) {
 
@@ -35,7 +35,7 @@ class ReleaseImageRepository(
             val coverArts = coverArtArchiveApi.getReleaseCoverArts(releaseId)
             val thumbnailUrl = coverArts.getFrontThumbnailCoverArtUrl().orEmpty()
             val largeUrl = coverArts.getFrontLargeCoverArtUrl().orEmpty()
-            imageUrlSaver.saveUrl(
+            imageUrlDao.saveUrl(
                 mbid = releaseId,
                 thumbnailUrl = thumbnailUrl.removeFileExtension(),
                 largeUrl = largeUrl.removeFileExtension()
@@ -43,7 +43,7 @@ class ReleaseImageRepository(
             return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: ClientRequestException) {
             if (ex.response.status == HttpStatusCode.NotFound) {
-                imageUrlSaver.saveUrl(
+                imageUrlDao.saveUrl(
                     mbid = releaseId,
                     thumbnailUrl = "",
                     largeUrl = ""

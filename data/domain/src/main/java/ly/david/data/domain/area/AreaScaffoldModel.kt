@@ -1,11 +1,10 @@
 package ly.david.data.domain.area
 
-import ly.david.data.core.Area
 import ly.david.data.domain.common.LifeSpanUiModel
-import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.area.AreaWithAllData
+import lydavidmusicsearchdatadatabase.Area
+import lydavidmusicsearchdatadatabase.Relation
 
 data class AreaScaffoldModel(
     override val id: String,
@@ -16,14 +15,21 @@ data class AreaScaffoldModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val countryCodes: List<String>? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Area
+) : ly.david.data.core.area.Area
 
-internal fun AreaWithAllData.toAreaScaffoldModel() = AreaScaffoldModel(
-    id = area.id,
-    name = area.name,
-    disambiguation = area.disambiguation,
-    type = area.type,
-    lifeSpan = area.lifeSpan?.toLifeSpanUiModel(),
-    countryCodes = countryCodes.map { it.code },
-    urls = urls.map { it.relation.toRelationListItemModel() },
+internal fun Area.toAreaScaffoldModel(
+    countryCodes: List<String>,
+    urls: List<Relation>,
+) = AreaScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
+    countryCodes = countryCodes,
+    urls = urls.map { it.toRelationListItemModel() },
 )

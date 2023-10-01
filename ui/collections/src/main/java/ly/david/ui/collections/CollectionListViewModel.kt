@@ -6,15 +6,15 @@ import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.browse.GetBrowseEntityCountUseCase
 import ly.david.data.musicbrainz.api.CollectionApi.Companion.USER_COLLECTIONS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
-import ly.david.data.room.collection.CollectionDao
-import ly.david.data.room.collection.CollectionWithEntities
-import ly.david.data.room.collection.toCollectionRoomModel
-import ly.david.data.room.relation.BrowseEntityCount
-import ly.david.data.room.relation.RelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.settings.AppPreferences
+import lydavidmusicsearchdatadatabase.Browse_entity_count
+import lydavidmusicsearchdatadatabase.Collection
 import org.koin.android.annotation.KoinViewModel
 
 private const val ONLY_GIVE_ME_LOCAL_COLLECTIONS = "ONLY_GIVE_ME_LOCAL_COLLECTIONS"
@@ -26,10 +26,11 @@ class CollectionListViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val collectionDao: CollectionDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
+    private val getBrowseEntityCountUseCase: GetBrowseEntityCountUseCase,
 ) : ViewModel(),
     ICollectionPagedList by pagedList,
-    BrowseCollectionUseCase<CollectionWithEntities> {
+    BrowseCollectionUseCase<Collection> {
 
     init {
         pagedList.scope = viewModelScope
@@ -70,16 +71,16 @@ class CollectionListViewModel(
         )
 
         if (response.offset == 0) {
-            relationDao.insertBrowseEntityCount(
-                browseEntityCount = BrowseEntityCount(
-                    entityId = entityId,
-                    browseEntity = MusicBrainzEntity.COLLECTION,
-                    localCount = response.musicBrainzModels.size,
-                    remoteCount = response.count
+            browseEntityCountDao.insert(
+                browseEntityCount = Browse_entity_count(
+                    entity_id = entityId,
+                    browse_entity = MusicBrainzEntity.COLLECTION,
+                    local_count = response.musicBrainzModels.size,
+                    remote_count = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForEntity(
+            browseEntityCountDao.incrementLocalCountForEntity(
                 entityId = entityId,
                 browseEntity = MusicBrainzEntity.COLLECTION,
                 additionalOffset = response.musicBrainzModels.size
@@ -87,7 +88,7 @@ class CollectionListViewModel(
         }
 
         val collectionMusicBrainzModels = response.musicBrainzModels
-        collectionDao.insertAll(collectionMusicBrainzModels.map { it.toCollectionRoomModel() })
+        collectionDao.insertAllRemote(collectionMusicBrainzModels)
 
         return collectionMusicBrainzModels.size
     }
@@ -95,27 +96,27 @@ class CollectionListViewModel(
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        return relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.COLLECTION)?.remoteCount
+        return getBrowseEntityCountUseCase(entityId, MusicBrainzEntity.COLLECTION)?.remoteCount
     }
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return 0
 
-        return relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.COLLECTION)?.localCount ?: 0
+        return getBrowseEntityCountUseCase(entityId, MusicBrainzEntity.COLLECTION)?.localCount ?: 0
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         if (entityId == ONLY_GIVE_ME_LOCAL_COLLECTIONS) return
 
-        collectionDao.withTransaction {
-            relationDao.deleteAllBrowseEntityCountByRemoteCollections()
+        browseEntityCountDao.withTransaction {
+            browseEntityCountDao.deleteAllBrowseEntityCountByRemoteCollections()
             collectionDao.deleteMusicBrainzCollections()
         }
     }
 
     override fun getLinkedEntitiesPagingSource(
         viewState: ICollectionPagedList.ViewModelState,
-    ): PagingSource<Int, CollectionWithEntities> =
+    ): PagingSource<Int, Collection> =
         collectionDao.getAllCollections(
             showLocal = viewState.showLocal,
             showRemote = viewState.showRemote,

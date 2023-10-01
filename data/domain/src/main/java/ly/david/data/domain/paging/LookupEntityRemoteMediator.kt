@@ -1,22 +1,21 @@
 package ly.david.data.domain.paging
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadType
-import androidx.paging.PagingState
-import androidx.paging.RemoteMediator
+import app.cash.paging.ExperimentalPagingApi
+import app.cash.paging.LoadType
+import app.cash.paging.PagingState
+import app.cash.paging.RemoteMediator
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.room.RoomModel
 
 /**
  * When using [LoadType.REFRESH], [hasEntityBeenStored] does not need to be checked.
  * A refresh load will always call [lookupEntity] with force refresh flag.
  */
 @OptIn(ExperimentalPagingApi::class)
-class LookupEntityRemoteMediator<RM : RoomModel>(
+class LookupEntityRemoteMediator<DM : Any>(
     private val hasEntityBeenStored: suspend () -> Boolean,
     private val lookupEntity: suspend (forceRefresh: Boolean) -> Unit,
     private val deleteLocalEntity: suspend () -> Unit,
-) : RemoteMediator<Int, RM>() {
+) : RemoteMediator<Int, DM>() {
 
     override suspend fun initialize(): InitializeAction {
         return if (hasEntityBeenStored()) {
@@ -28,7 +27,7 @@ class LookupEntityRemoteMediator<RM : RoomModel>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RM>,
+        state: PagingState<Int, DM>,
     ): MediatorResult {
         return try {
             if (!hasEntityBeenStored()) {

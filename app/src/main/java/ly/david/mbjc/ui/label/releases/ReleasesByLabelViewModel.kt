@@ -2,14 +2,13 @@ package ly.david.mbjc.ui.label.releases
 
 import androidx.paging.PagingSource
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.label.releases.ReleaseLabelDao
-import ly.david.data.room.label.releases.toReleaseLabels
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.release.ReleaseDao
-import ly.david.data.room.release.ReleaseForListItem
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -18,11 +17,11 @@ import org.koin.android.annotation.KoinViewModel
 internal class ReleasesByLabelViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseLabelDao: ReleaseLabelDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     releaseDao: ReleaseDao,
     pagedList: ReleasesPagedList,
 ) : ReleasesByEntityViewModel(
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     releaseDao = releaseDao,
     pagedList = pagedList,
 ) {
@@ -38,33 +37,25 @@ internal class ReleasesByLabelViewModel(
         entityId: String,
         releaseMusicBrainzModels: List<ReleaseMusicBrainzModel>,
     ) {
-        releaseLabelDao.insertAll(
-            releaseMusicBrainzModels.flatMap { release ->
-                release.labelInfoList?.toReleaseLabels(releaseId = release.id, labelId = entityId).orEmpty()
-            }
+        releaseLabelDao.linkReleasesByLabel(
+            labelId = entityId,
+            releases = releaseMusicBrainzModels,
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         releaseLabelDao.withTransaction {
             releaseLabelDao.deleteReleasesByLabel(entityId)
-            releaseLabelDao.deleteLabelReleaseLinks(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE)
         }
     }
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem> = when {
-        query.isEmpty() -> {
-            releaseLabelDao.getReleasesByLabel(entityId)
-        }
-        else -> {
-            releaseLabelDao.getReleasesByLabelFiltered(
-                labelId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, ReleaseForListItem> =
+        releaseLabelDao.getReleasesByLabel(
+            labelId = entityId,
+            query = "%$query%",
+        )
 }

@@ -1,0 +1,70 @@
+CREATE TABLE IF NOT EXISTS recording_release (
+  `recording_id` TEXT NOT NULL,
+  `release_id` TEXT NOT NULL,
+
+  PRIMARY KEY(`recording_id`, `release_id`)
+
+--   FOREIGN KEY(`recording_id`) REFERENCES `recording`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE,
+--
+--   FOREIGN KEY(`release_id`) REFERENCES `release`(`id`)
+--   ON UPDATE CASCADE
+--   ON DELETE CASCADE
+);
+
+insert:
+INSERT OR IGNORE INTO recording_release
+VALUES ?;
+
+deleteReleasesByRecording:
+DELETE FROM release WHERE id IN (
+  SELECT r.id
+  FROM release r
+  INNER JOIN recording_release rr ON r.id = rr.release_id
+  INNER JOIN recording rec ON rec.id = rr.recording_id
+  WHERE rec.id = :recordingId
+);
+
+deleteRecordingReleaseLinks:
+DELETE FROM recording_release WHERE recording_id = :recordingId;
+
+getNumberOfReleasesByRecording:
+SELECT IFNULL(
+  (
+    SELECT COUNT(*)
+    FROM release r
+    INNER JOIN recording_release rr ON r.id = rr.release_id
+    INNER JOIN recording rec ON rec.id = rr.recording_id
+    INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+    INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+    WHERE rec.id = :recordingId
+    AND (
+      r.name LIKE :query
+      OR r.disambiguation LIKE :query
+      OR r.date LIKE :query
+      OR r.country_code LIKE :query
+      OR ac.name LIKE :query
+    )
+  ),
+  0
+) AS count;
+
+getReleasesByRecording:
+SELECT r.*, ac.name AS artist_credits, mi.thumbnail_url
+FROM release r
+INNER JOIN recording_release rr ON r.id = rr.release_id
+INNER JOIN recording rec ON rec.id = rr.recording_id
+INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id
+INNER JOIN artist_credit ac ON ac.id = acr.artist_credit_id
+LEFT JOIN mbid_image mi ON mi.mbid = r.id
+WHERE rec.id = :recordingId
+AND (
+  r.name LIKE :query
+  OR r.disambiguation LIKE :query
+  OR r.date LIKE :query
+  OR r.country_code LIKE :query
+  OR ac.name LIKE :query
+)
+ORDER BY r.date, r.name
+LIMIT :limit OFFSET :offset;

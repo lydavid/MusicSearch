@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
@@ -240,7 +241,7 @@ internal fun ArtistScaffold(
                 ArtistTab.STATS -> {
                     ArtistStatsScreen(
                         artistId = artistId,
-                        tabs = ArtistTab.values().map { it.tab },
+                        tabs = ArtistTab.values().map { it.tab }.toImmutableList(),
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

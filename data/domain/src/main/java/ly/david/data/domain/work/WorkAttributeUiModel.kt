@@ -2,7 +2,7 @@ package ly.david.data.domain.work
 
 import ly.david.data.core.WorkAttribute
 import ly.david.data.musicbrainz.WorkAttributeMusicBrainzModel
-import ly.david.data.room.work.WorkAttributeRoomModel
+import lydavidmusicsearchdatadatabase.Work_attribute
 
 data class WorkAttributeUiModel(
     override val type: String,
@@ -17,9 +17,9 @@ internal fun WorkAttributeMusicBrainzModel.toWorkAttributeUiModel() =
         value = value
     )
 
-internal fun WorkAttributeRoomModel.toWorkAttributeUiModel() =
+internal fun Work_attribute.toWorkAttributeUiModel() =
     WorkAttributeUiModel(
         type = type,
-        typeId = typeId,
-        value = value
+        typeId = type_id,
+        value = value_,
     )

@@ -1,13 +1,13 @@
 package ly.david.data.domain.place
 
-import ly.david.data.core.Place
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.place.PlaceWithAllData
-import ly.david.data.domain.common.toLifeSpanUiModel
+import lydavidmusicsearchdatadatabase.Area
+import lydavidmusicsearchdatadatabase.Place
+import lydavidmusicsearchdatadatabase.Relation
 
 data class PlaceScaffoldModel(
     override val id: String,
@@ -19,16 +19,26 @@ data class PlaceScaffoldModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val area: AreaListItemModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Place
+) : ly.david.data.core.Place
 
-internal fun PlaceWithAllData.toPlaceScaffoldModel() = PlaceScaffoldModel(
-    id = place.id,
-    name = place.name,
-    disambiguation = place.disambiguation,
-    address = place.address,
-    type = place.type,
-    coordinates = place.coordinates?.toCoordinatesUiModel(),
-    lifeSpan = place.lifeSpan?.toLifeSpanUiModel(),
+internal fun Place.toPlaceScaffoldModel(
+    area: Area?,
+    urls: List<Relation>,
+) = PlaceScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    address = address,
+    type = type,
+    coordinates = CoordinatesUiModel(
+        longitude = longitude,
+        latitude = latitude,
+    ),
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
     area = area?.toAreaListItemModel(),
-    urls = urls.map { it.relation.toRelationListItemModel() },
+    urls = urls.map { it.toRelationListItemModel() },
 )

@@ -2,11 +2,11 @@ package ly.david.data.domain.event
 
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.event.EventDao
-import ly.david.data.room.event.toEventRoomModel
+import ly.david.musicsearch.data.database.dao.EventDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -17,21 +17,26 @@ class EventRepository(
 ) : RelationsListRepository {
 
     suspend fun lookupEvent(eventId: String): EventScaffoldModel {
-        val eventWithAllData = eventDao.getEvent(eventId)
+        val event = eventDao.getEvent(eventId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(eventId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(eventId)
-        if (eventWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return eventWithAllData.toEventScaffoldModel()
+        if (event != null && hasUrlsBeenSavedForEntity) {
+            return event.toEventScaffoldModel(urlRelations)
         }
 
         val eventMusicBrainzModel = musicBrainzApi.lookupEvent(eventId)
+        cache(eventMusicBrainzModel)
+        return lookupEvent(eventId)
+    }
+
+    private fun cache(event: EventMusicBrainzModel) {
         eventDao.withTransaction {
-            eventDao.insert(eventMusicBrainzModel.toEventRoomModel())
-            relationRepository.insertAllRelations(
-                entityId = eventId,
-                relationMusicBrainzModels = eventMusicBrainzModel.relations,
+            eventDao.insert(event)
+            relationRepository.insertAllUrlRelations(
+                entityId = event.id,
+                relationMusicBrainzModels = event.relations,
             )
         }
-        return lookupEvent(eventId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

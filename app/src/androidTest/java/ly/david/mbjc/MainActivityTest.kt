@@ -12,18 +12,14 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import ly.david.data.room.MusicSearchRoomDatabase
 import ly.david.mbjc.ui.MainActivity
 import org.junit.Rule
 import org.koin.test.KoinTest
-import org.koin.test.inject
 
 internal abstract class MainActivityTest : KoinTest {
 
-    private val database: MusicSearchRoomDatabase by inject()
-
     @get:Rule(order = 0)
-    val musicSearchRoomDatabaseTestRule = MusicSearchRoomDatabaseTestRule(database)
+    val koinTestRule = KoinTestRule()
 
     @get:Rule(order = 1)
     val instantTaskExecutorRule = InstantTaskExecutorRule()

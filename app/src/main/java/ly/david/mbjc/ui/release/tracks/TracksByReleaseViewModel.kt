@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ly.david.data.core.TrackForListItem
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
@@ -24,11 +25,9 @@ import ly.david.data.domain.listitem.toTrackListItemModel
 import ly.david.data.domain.paging.LookupEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.release.ReleaseRepository
-import ly.david.data.room.release.ReleaseDao
-import ly.david.data.room.release.tracks.MediumDao
-import ly.david.data.room.release.tracks.MediumRoomModel
-import ly.david.data.room.release.tracks.TrackDao
-import ly.david.data.room.release.tracks.TrackForListItem
+import ly.david.musicsearch.data.database.dao.MediumDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.TrackDao
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -67,7 +66,7 @@ internal class TracksByReleaseViewModel(
                     remoteMediator = LookupEntityRemoteMediator(
                         hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
                         lookupEntity = { repository.lookupRelease(releaseId) },
-                        deleteLocalEntity = { releaseDao.deleteReleaseById(releaseId) }
+                        deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) }
                     ),
                     pagingSourceFactory = {
                         trackDao.getTracksByRelease(
@@ -80,14 +79,14 @@ internal class TracksByReleaseViewModel(
                         .map(TrackForListItem::toTrackListItemModel)
                         .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
                             if (before?.mediumId != after?.mediumId && after != null) {
-                                val medium: MediumRoomModel =
+                                val medium =
                                     mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
 
                                 ListSeparator(
                                     id = "${medium.id}",
                                     text = medium.format.orEmpty() +
                                         (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
-                                        medium.title.transformThisIfNotNullOrEmpty { " ($it)" }
+                                        medium.name.transformThisIfNotNullOrEmpty { " ($it)" }
                                 )
                             } else {
                                 null
@@ -98,8 +97,15 @@ internal class TracksByReleaseViewModel(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    private suspend fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
-        val roomRelease = releaseDao.getReleaseWithFormatTrackCounts(releaseId)
-        return !roomRelease?.formatTrackCounts.isNullOrEmpty()
+    private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
+        // TODO: right now the details tab is coupled with this tracks list tab
+        return releaseDao.getReleaseForDetails(releaseId) != null
+    }
+
+    private fun deleteMediaAndTracksByRelease(releaseId: String) {
+        releaseDao.withTransaction {
+            releaseDao.delete(releaseId)
+            mediumDao.deleteMediaByRelease(releaseId)
+        }
     }
 }

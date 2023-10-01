@@ -20,10 +20,9 @@ import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
-internal class RecordingScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
 
     private val recordingRepository: RecordingRepository by inject()
 

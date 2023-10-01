@@ -4,10 +4,9 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.CollectionEntityDao
-import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -16,11 +15,11 @@ import org.koin.android.annotation.KoinViewModel
 internal class ReleaseGroupsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ReleaseGroupsByEntityViewModel(
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     releaseGroupDao = releaseGroupDao,
     releaseGroupsPagedList = releaseGroupsPagedList,
 ) {
@@ -37,19 +36,15 @@ internal class ReleaseGroupsByCollectionViewModel(
         releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     ) {
         collectionEntityDao.insertAll(
-            releaseGroupMusicBrainzModels.map { releaseGroup ->
-                CollectionEntityRoomModel(
-                    id = entityId,
-                    entityId = releaseGroup.id
-                )
-            }
+            collectionId = entityId,
+            entityIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
         }
     }
 
@@ -57,6 +52,6 @@ internal class ReleaseGroupsByCollectionViewModel(
         collectionEntityDao.getReleaseGroupsByCollection(
             collectionId = entityId,
             query = "%$query%",
-            sorted = sorted
+            sorted = sorted,
         )
 }

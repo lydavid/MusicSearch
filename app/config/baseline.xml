@@ -15,21 +15,9 @@
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
-    <ID>LongParameterList:TopLevelViewModel.kt$TopLevelViewModel$( val appPreferences: AppPreferences, private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo, private val collectionDao: CollectionDao, private val collectionEntityDao: CollectionEntityDao, private val musicBrainzApi: MusicBrainzApi, private val musicBrainzAuthStore: MusicBrainzAuthStore, private val authRequest: AuthorizationRequest, private val authService: AuthorizationService, private val clientAuth: ClientAuthentication, private val lookupHistoryRepository: LookupHistoryRepository, )</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
     <ID>MaxLineLength:RecordingsByWorkViewModel.kt$RecordingsByWorkViewModel$)</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
     <ID>TooGenericExceptionCaught:TopLevelViewModel.kt$TopLevelViewModel$ex: Exception</ID>
-    <ID>UnstableCollections:AreaStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:ArtistStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:EventStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:InstrumentStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:LabelStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:PlaceStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:RecordingStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:ReleaseGroupStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:ReleaseStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:SeriesStatsScreen.kt$List&lt;Tab&gt;</ID>
-    <ID>UnstableCollections:WorkStatsScreen.kt$List&lt;Tab&gt;</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -7,14 +7,12 @@ import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.event.EventDao
-import ly.david.data.room.event.EventRoomModel
-import ly.david.data.room.event.toEventRoomModel
-import ly.david.data.room.place.events.EventPlace
-import ly.david.data.room.place.events.EventPlaceDao
-import ly.david.data.room.relation.RelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.data.database.dao.EventPlaceDao
 import ly.david.ui.common.event.EventsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import lydavidmusicsearchdatadatabase.Event
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,11 +20,11 @@ internal class EventsByPlaceViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val eventPlaceDao: EventPlaceDao,
     private val eventDao: EventDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: EventsPagedList,
-) : BrowseEntitiesByEntityViewModel<EventRoomModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
+) : BrowseEntitiesByEntityViewModel<Event, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList
 ) {
 
@@ -38,38 +36,31 @@ internal class EventsByPlaceViewModel(
     }
 
     override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<EventMusicBrainzModel>) {
-        eventDao.insertAll(musicBrainzModels.map { it.toEventRoomModel() })
+        eventDao.insertAll(musicBrainzModels)
         eventPlaceDao.insertAll(
             musicBrainzModels.map { event ->
-                EventPlace(
-                    eventId = event.id,
-                    placeId = entityId
-                )
+                event.id to entityId
             }
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        eventPlaceDao.deleteEventsByPlace(entityId)
-        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
+        eventPlaceDao.withTransaction {
+            eventPlaceDao.deleteEventsByPlace(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.EVENT)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, EventRoomModel> = when {
-        query.isEmpty() -> {
-            eventPlaceDao.getEventsByPlace(entityId)
-        }
-        else -> {
-            eventPlaceDao.getEventsByPlaceFiltered(
-                placeId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, Event> =
+        eventPlaceDao.getEventsByPlace(
+            placeId = entityId,
+            query = "%$query%"
+        )
 
-    override fun transformRoomToListItemModel(roomModel: EventRoomModel): EventListItemModel {
-        return roomModel.toEventListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Event): EventListItemModel {
+        return databaseModel.toEventListItemModel()
     }
 }

@@ -1,6 +1,7 @@
 package ly.david.convention
 
 import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -32,12 +33,20 @@ fun Project.configureDetekt() {
     }
 
     tasks.withType<Detekt>().configureEach {
+        exclude {
+            it.file.absolutePath.contains("generated")
+        }
         reports {
             // observe findings in your browser with structure and code snippets
             html.required.set(true)
 
             // similar to the console output, contains issue signature to manually edit baseline files
             txt.required.set(true)
+        }
+    }
+    tasks.withType<DetektCreateBaselineTask>().configureEach {
+        exclude {
+            it.file.absolutePath.contains("generated")
         }
     }
 }

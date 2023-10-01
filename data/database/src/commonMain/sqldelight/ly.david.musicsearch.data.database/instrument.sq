@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS instrument (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  description TEXT,
+  type TEXT,
+  type_id TEXT
+);
+
+insert:
+INSERT OR IGNORE INTO instrument
+VALUES ?;
+
+getInstrument:
+SELECT * FROM instrument WHERE id = ?;

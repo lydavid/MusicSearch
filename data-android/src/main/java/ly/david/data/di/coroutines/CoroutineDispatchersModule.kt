@@ -1,14 +1,14 @@
 package ly.david.data.di.coroutines
 
 import kotlinx.coroutines.Dispatchers
-import org.koin.core.qualifier.named
+import ly.david.data.core.CoroutineDispatchers
 import org.koin.dsl.module
 
 val coroutineDispatchersModule = module {
-    factory(named(MusicSearchDispatchers.Default)) {
-        Dispatchers.Default
-    }
-    factory(named(MusicSearchDispatchers.IO)) {
-        Dispatchers.IO
+    factory {
+        CoroutineDispatchers(
+            default = Dispatchers.Default,
+            io = Dispatchers.IO,
+        )
     }
 }

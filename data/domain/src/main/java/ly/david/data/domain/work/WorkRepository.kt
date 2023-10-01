@@ -3,41 +3,52 @@ package ly.david.data.domain.work
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.work.WorkDao
-import ly.david.data.room.work.toWorkAttributeRoomModel
-import ly.david.data.room.work.toWorkRoomModel
+import ly.david.musicsearch.data.database.dao.WorkAttributeDao
+import ly.david.musicsearch.data.database.dao.WorkDao
 import org.koin.core.annotation.Single
 
 @Single
 class WorkRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val workDao: WorkDao,
+    private val workAttributeDao: WorkAttributeDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupWork(
         workId: String,
     ): WorkScaffoldModel {
-        val workWithAllData = workDao.getWork(workId)
+        val work = workDao.getWork(workId)
+        val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(workId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(workId)
-        if (workWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return workWithAllData.toWorkScaffoldModel()
+        if (work != null && hasUrlsBeenSavedForEntity) {
+            return work.toWorkScaffoldModel(
+                workAttributes = workAttributes,
+                urls = urlRelations,
+            )
         }
 
         val workMusicBrainzModel = musicBrainzApi.lookupWork(workId = workId)
+        cache(workMusicBrainzModel)
+        return lookupWork(workId)
+    }
+
+    private fun cache(work: WorkMusicBrainzModel) {
         workDao.withTransaction {
-            workDao.insert(workMusicBrainzModel.toWorkRoomModel())
-            workDao.insertAllAttributes(
-                workMusicBrainzModel.attributes?.map { it.toWorkAttributeRoomModel(workId) }.orEmpty()
+            workDao.insert(work)
+            workAttributeDao.insertAttributesForWork(
+                workId = work.id,
+                work.attributes,
             )
-            relationRepository.insertAllRelations(
-                entityId = workId,
-                relationMusicBrainzModels = workMusicBrainzModel.relations,
+            relationRepository.insertAllUrlRelations(
+                entityId = work.id,
+                relationMusicBrainzModels = work.relations,
             )
         }
-        return lookupWork(workId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

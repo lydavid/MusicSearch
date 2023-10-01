@@ -1,9 +1,9 @@
 package ly.david.data.domain.listitem
 
 import ly.david.data.core.Recording
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.RecordingForListItem
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.data.room.recording.RecordingForListItem
 
 data class RecordingListItemModel(
     override val id: String,
@@ -28,11 +28,11 @@ fun RecordingMusicBrainzModel.toRecordingListItemModel() = RecordingListItemMode
 )
 
 fun RecordingForListItem.toRecordingListItemModel() = RecordingListItemModel(
-    id = recording.id,
-    name = recording.name,
-    firstReleaseDate = recording.firstReleaseDate,
-    disambiguation = recording.disambiguation,
-    length = recording.length,
-    video = recording.video,
-    formattedArtistCredits = artistCreditNames
+    id = id,
+    name = name,
+    firstReleaseDate = firstReleaseDate,
+    disambiguation = disambiguation,
+    length = length,
+    video = video ?: false,
+    formattedArtistCredits = formattedArtistCreditNames,
 )

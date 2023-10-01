@@ -191,11 +191,17 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseRecordingsResponse {
         return browseRecordingsResponse
     }
 
-    override suspend fun browseRecordingsByWork(workId: String, limit: Int, offset: Int): BrowseRecordingsResponse {
+    override suspend fun browseRecordingsByWork(
+        workId: String,
+        limit: Int,
+        offset: Int,
+        include: String,
+    ): BrowseRecordingsResponse {
         return browseRecordingsResponse
     }
 
@@ -203,11 +209,17 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         areaId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
 
-    override suspend fun browseReleasesByArtist(artistId: String, limit: Int, offset: Int): BrowseReleasesResponse {
+    override suspend fun browseReleasesByArtist(
+        artistId: String,
+        limit: Int,
+        offset: Int,
+        include: String,
+    ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
 
@@ -215,6 +227,7 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         collectionId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -232,6 +245,7 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         recordingId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }
@@ -240,6 +254,7 @@ class FakeMusicBrainzApi : MusicBrainzApi {
         releaseGroupId: String,
         limit: Int,
         offset: Int,
+        include: String,
     ): BrowseReleasesResponse {
         return browseReleasesResponse
     }

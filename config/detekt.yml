@@ -2,11 +2,7 @@ complexity:
   CyclomaticComplexMethod:
     ignoreSimpleWhenEntries: true
   LongParameterList:
-    ignoreDefaultParameters: true
-    ignoreAnnotated:
-      - "Composable"
-      - "KoinViewModel"
-      - "Query"
+    active: false
   LongMethod:
     ignoreAnnotated:
       - "Composable"

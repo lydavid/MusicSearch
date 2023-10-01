@@ -1,0 +1,21 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
+CREATE TABLE IF NOT EXISTS label (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  type TEXT,
+  type_id TEXT,
+  label_code INTEGER AS Int,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean
+);
+
+insert:
+INSERT OR IGNORE INTO label
+VALUES ?;
+
+getLabel:
+SELECT * FROM label WHERE id = ?;

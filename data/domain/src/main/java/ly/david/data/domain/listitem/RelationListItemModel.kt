@@ -1,14 +1,13 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Relation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.room.relation.RelationRoomModel
+import lydavidmusicsearchdatadatabase.Relation
 
 /**
  * @param id For reordering animation in a lazy list.
- *  This must have unique among all [RelationListItemModel] that may appear in the same lazy list.
- *  The most obvious choice is the primary keys from [RelationRoomModel].
- *  Since these are meant to be displayed inside a tab for a given resource with the id [RelationRoomModel.entityId],
+ *  This must be unique among all [RelationListItemModel] that may appear in the same lazy list.
+ *  The most obvious choice is the primary keys from its database table.
+ *  Since these are meant to be displayed inside a tab for a given resource with the id [Relation.entity_id],
  *  we don't have to include that.
  */
 data class RelationListItemModel(
@@ -20,16 +19,16 @@ data class RelationListItemModel(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
-) : ListItemModel(), Relation
+) : ListItemModel(), ly.david.data.core.Relation
 
-fun RelationRoomModel.toRelationListItemModel() =
+fun Relation.toRelationListItemModel() =
     RelationListItemModel(
-        id = "${linkedEntityId}_$order",
-        linkedEntityId = linkedEntityId,
-        linkedEntity = linkedEntity,
+        id = "${linked_entity_id}_$order",
+        linkedEntityId = linked_entity_id,
+        linkedEntity = linked_entity,
         label = label,
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        additionalInfo = additionalInfo
+        additionalInfo = additional_info
     )

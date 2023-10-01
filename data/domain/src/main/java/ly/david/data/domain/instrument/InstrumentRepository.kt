@@ -2,11 +2,11 @@ package ly.david.data.domain.instrument
 
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.instrument.InstrumentDao
-import ly.david.data.room.instrument.toInstrumentRoomModel
+import ly.david.musicsearch.data.database.dao.InstrumentDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -17,21 +17,26 @@ class InstrumentRepository(
 ) : RelationsListRepository {
 
     suspend fun lookupInstrument(instrumentId: String): InstrumentScaffoldModel {
-        val instrumentWithAllData = instrumentDao.getInstrument(instrumentId)
+        val instrument = instrumentDao.getInstrument(instrumentId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(instrumentId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)
-        if (instrumentWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return instrumentWithAllData.toInstrumentListItemModel()
+        if (instrument != null && hasUrlsBeenSavedForEntity) {
+            return instrument.toInstrumentListItemModel(urlRelations)
         }
 
         val instrumentMusicBrainzModel = musicBrainzApi.lookupInstrument(instrumentId)
+        cache(instrumentMusicBrainzModel)
+        return lookupInstrument(instrumentId)
+    }
+
+    private fun cache(instrument: InstrumentMusicBrainzModel) {
         instrumentDao.withTransaction {
-            instrumentDao.insert(instrumentMusicBrainzModel.toInstrumentRoomModel())
-            relationRepository.insertAllRelations(
-                entityId = instrumentId,
-                relationMusicBrainzModels = instrumentMusicBrainzModel.relations,
+            instrumentDao.insert(instrument)
+            relationRepository.insertAllUrlRelations(
+                entityId = instrument.id,
+                relationMusicBrainzModels = instrument.relations,
             )
         }
-        return lookupInstrument(instrumentId)
     }
 
     // TODO: interestingly, MB can list artists but we can't browse or lookup artist-rels for them

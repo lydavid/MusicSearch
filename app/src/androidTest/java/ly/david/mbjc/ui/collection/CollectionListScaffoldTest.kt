@@ -17,23 +17,22 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
-import ly.david.data.room.collection.CollectionDao
-import ly.david.data.room.collection.CollectionRoomModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
+import lydavidmusicsearchdatadatabase.Collection
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
 /**
  * Tests [CollectionListScaffold]-specific features.
  */
-internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 
@@ -112,22 +111,28 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .performClick()
 
         val name1 = "should find me"
-        collectionDao.insert(
-            CollectionRoomModel(
+        collectionDao.insertLocal(
+            Collection(
                 id = "1",
                 name = name1,
                 entity = MusicBrainzEntity.AREA,
-                isRemote = false
+                is_remote = false,
+                type = null,
+                type_id = null,
+                entity_count = 0,
             )
         )
 
         val name2 = "but not me"
-        collectionDao.insert(
-            CollectionRoomModel(
+        collectionDao.insertLocal(
+            Collection(
                 id = "2",
                 name = name2,
                 entity = MusicBrainzEntity.RECORDING,
-                isRemote = false
+                is_remote = false,
+                type = null,
+                type_id = null,
+                entity_count = 0,
             )
         )
 

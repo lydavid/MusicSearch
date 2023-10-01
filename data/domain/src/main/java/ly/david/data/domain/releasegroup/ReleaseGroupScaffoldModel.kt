@@ -1,11 +1,13 @@
 package ly.david.data.domain.releasegroup
 
-import ly.david.data.core.ReleaseGroup
+import ly.david.data.core.releasegroup.ReleaseGroup
+import ly.david.data.core.releasegroup.ReleaseGroupForDetails
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.releasegroup.ReleaseGroupWithAllData
+import lydavidmusicsearchdatadatabase.Artist_credit_name
+import lydavidmusicsearchdatadatabase.Relation
 
 data class ReleaseGroupScaffoldModel(
     override val id: String,
@@ -14,23 +16,22 @@ data class ReleaseGroupScaffoldModel(
     override val disambiguation: String = "",
     override val primaryType: String? = null,
     override val secondaryTypes: List<String>? = null,
-    val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val imageUrl: String? = null,
+    val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
 ) : ReleaseGroup
 
-internal fun ReleaseGroupWithAllData.toReleaseGroupScaffoldModel(): ReleaseGroupScaffoldModel {
-    return ReleaseGroupScaffoldModel(
-        id = releaseGroup.id,
-        name = releaseGroup.name,
-        firstReleaseDate = releaseGroup.firstReleaseDate,
-        disambiguation = releaseGroup.disambiguation,
-        primaryType = releaseGroup.primaryType,
-        secondaryTypes = releaseGroup.secondaryTypes,
-        artistCredits = artistCreditNamesWithEntities.map {
-            it.artistCreditNameRoomModel.toArtistCreditUiModel()
-        },
-        imageUrl = largeUrl,
-        urls = urls.map { it.relation.toRelationListItemModel() },
-    )
-}
+internal fun ReleaseGroupForDetails.toReleaseGroupScaffoldModel(
+    artistCreditNames: List<Artist_credit_name>,
+    urls: List<Relation>,
+) = ReleaseGroupScaffoldModel(
+    id = id,
+    name = name,
+    firstReleaseDate = firstReleaseDate,
+    disambiguation = disambiguation,
+    primaryType = primaryType,
+    secondaryTypes = secondaryTypes,
+    imageUrl = imageUrl,
+    artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+    urls = urls.map { it.toRelationListItemModel() },
+)

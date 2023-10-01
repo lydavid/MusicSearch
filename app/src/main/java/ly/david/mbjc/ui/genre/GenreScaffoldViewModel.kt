@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.history.IncrementLookupHistoryUseCase
 import ly.david.data.musicbrainz.GenreMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
@@ -18,10 +18,9 @@ import timber.log.Timber
 @KoinViewModel
 internal class GenreScaffoldViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    override val lookupHistoryDao: LookupHistoryDao,
+    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
 ) : ViewModel(),
-    MusicBrainzEntityViewModel,
-    RecordLookupHistory {
+    MusicBrainzEntityViewModel {
 
     private var recordedLookup = false
     override val entity: MusicBrainzEntity = MusicBrainzEntity.GENRE
@@ -45,10 +44,12 @@ internal class GenreScaffoldViewModel(
             }
 
             if (!recordedLookup) {
-                recordLookupHistory(
-                    entityId = genreId,
-                    entity = entity,
-                    summary = title.value
+                incrementLookupHistoryUseCase(
+                    LookupHistory(
+                        mbid = genreId,
+                        title = title.value,
+                        entity = entity,
+                    )
                 )
                 recordedLookup = true
             }

@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.collectAsLazyPagingItems
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
@@ -169,7 +170,7 @@ internal fun SeriesScaffold(
                             .padding(innerPadding)
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        tabs = SeriesTab.values().map { it.tab }
+                        tabs = SeriesTab.values().map { it.tab }.toImmutableList(),
                     )
                 }
             }

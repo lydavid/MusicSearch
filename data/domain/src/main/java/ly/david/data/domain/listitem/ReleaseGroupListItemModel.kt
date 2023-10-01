@@ -1,17 +1,12 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.ReleaseGroup
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
+import ly.david.data.core.releasegroup.ReleaseGroup
+import ly.david.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
-import ly.david.data.room.releasegroup.ReleaseGroupForListItem
-import ly.david.data.room.releasegroup.ReleaseGroupRoomModel
 
 // TODO: if this is in a non-android module, we don't have access to androidx.compose.runtime.Immutable
 //  We could extract uimodel to data-android or app
-/**
- * Representation of a [ReleaseGroup] for our UI.
- * This can be mapped from [ReleaseGroupRoomModel] or [ReleaseGroupMusicBrainzModel].
- */
 data class ReleaseGroupListItemModel(
     override val id: String,
     override val name: String,
@@ -39,26 +34,15 @@ fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupList
     )
 }
 
-fun ReleaseGroupRoomModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
-    return ReleaseGroupListItemModel(
-        id = id,
-        name = name,
-        firstReleaseDate = firstReleaseDate,
-        disambiguation = disambiguation,
-        primaryType = primaryType,
-        secondaryTypes = secondaryTypes
-    )
-}
-
-fun ReleaseGroupForListItem.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
-    return ReleaseGroupListItemModel(
-        id = releaseGroup.id,
-        name = releaseGroup.name,
-        firstReleaseDate = releaseGroup.firstReleaseDate,
-        disambiguation = releaseGroup.disambiguation,
-        primaryType = releaseGroup.primaryType,
-        secondaryTypes = releaseGroup.secondaryTypes,
-        formattedArtistCredits = artistCreditNames,
-        imageUrl = thumbnailUrl
-    )
-}
+// TODO: can we just move listitemmodel to core and have dao mapper map to it?
+//  with our db as SSOT, it makes the most sense
+fun ReleaseGroupForListItem.toReleaseGroupListItemModel() = ReleaseGroupListItemModel(
+    id = id,
+    name = name,
+    firstReleaseDate = firstReleaseDate,
+    disambiguation = disambiguation,
+    primaryType = primaryType,
+    secondaryTypes = secondaryTypes,
+    formattedArtistCredits = formattedArtistCreditNames,
+    imageUrl = thumbnailUrl
+)

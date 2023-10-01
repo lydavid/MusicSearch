@@ -5,14 +5,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.coverart.ReleaseImageRepository
+import ly.david.data.domain.history.IncrementLookupHistoryUseCase
 import ly.david.data.domain.release.ReleaseRepository
 import ly.david.data.domain.release.ReleaseScaffoldModel
-import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -21,13 +21,12 @@ import timber.log.Timber
 
 @KoinViewModel
 internal class ReleaseScaffoldViewModel(
-    override val lookupHistoryDao: LookupHistoryDao,
+    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
     private val releaseImageRepository: ReleaseImageRepository,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
-    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -41,7 +40,7 @@ internal class ReleaseScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.repository = repository
+        relationsList.relationsListRepository = repository
     }
 
     fun loadDataForTab(
@@ -71,10 +70,12 @@ internal class ReleaseScaffoldViewModel(
                     // However, reloading it will not record another visit, so its title will remain empty in history.
                     // But clicking on it will update its title, so we're not fixing it right now.
                     if (!recordedLookup) {
-                        recordLookupHistory(
-                            entityId = releaseId,
-                            entity = entity,
-                            summary = title.value
+                        incrementLookupHistoryUseCase(
+                            LookupHistory(
+                                mbid = releaseId,
+                                title = title.value,
+                                entity = entity,
+                            )
                         )
                         recordedLookup = true
                     }

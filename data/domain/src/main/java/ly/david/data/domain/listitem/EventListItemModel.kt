@@ -1,10 +1,9 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Event
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
-import ly.david.data.room.event.EventRoomModel
+import lydavidmusicsearchdatadatabase.Event
 
 data class EventListItemModel(
     override val id: String,
@@ -14,7 +13,7 @@ data class EventListItemModel(
     override val time: String? = null,
     override val cancelled: Boolean? = null,
     override val lifeSpan: LifeSpanUiModel? = null,
-) : Event, ListItemModel()
+) : ly.david.data.core.Event, ListItemModel()
 
 fun EventMusicBrainzModel.toEventListItemModel() =
     EventListItemModel(
@@ -27,7 +26,7 @@ fun EventMusicBrainzModel.toEventListItemModel() =
         lifeSpan = lifeSpan?.toLifeSpanUiModel()
     )
 
-fun EventRoomModel.toEventListItemModel() =
+fun Event.toEventListItemModel() =
     EventListItemModel(
         id = id,
         name = name,
@@ -35,5 +34,9 @@ fun EventRoomModel.toEventListItemModel() =
         type = type,
         time = time,
         cancelled = cancelled,
-        lifeSpan = lifeSpan?.toLifeSpanUiModel()
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
     )

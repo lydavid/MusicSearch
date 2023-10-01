@@ -1,11 +1,10 @@
 package ly.david.data.domain.event
 
-import ly.david.data.core.Event
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.common.toLifeSpanUiModel
-import ly.david.data.room.event.EventWithAllData
+import lydavidmusicsearchdatadatabase.Event
+import lydavidmusicsearchdatadatabase.Relation
 
 data class EventScaffoldModel(
     override val id: String,
@@ -16,16 +15,21 @@ data class EventScaffoldModel(
     override val cancelled: Boolean? = null,
     override val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Event
+) : ly.david.data.core.Event
 
-internal fun EventWithAllData.toEventScaffoldModel() =
-    EventScaffoldModel(
-        id = event.id,
-        name = event.name,
-        disambiguation = event.disambiguation,
-        type = event.type,
-        time = event.time,
-        cancelled = event.cancelled,
-        lifeSpan = event.lifeSpan?.toLifeSpanUiModel(),
-        urls = urls.map { it.relation.toRelationListItemModel() },
-    )
+internal fun Event.toEventScaffoldModel(
+    urls: List<Relation>,
+) = EventScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    time = time,
+    cancelled = cancelled,
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
+    urls = urls.map { it.toRelationListItemModel() },
+)

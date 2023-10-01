@@ -7,14 +7,12 @@ import ly.david.data.domain.listitem.toSeriesListItemModel
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.CollectionEntityDao
-import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.series.SeriesDao
-import ly.david.data.room.series.SeriesRoomModel
-import ly.david.data.room.series.toSeriesRoomModel
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.SeriesDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.series.SeriesPagedList
+import lydavidmusicsearchdatadatabase.Series
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,56 +20,48 @@ internal class SeriesByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val seriesDao: SeriesDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: SeriesPagedList,
-) : BrowseEntitiesByEntityViewModel<SeriesRoomModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
+) : BrowseEntitiesByEntityViewModel<Series, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
     byEntity = MusicBrainzEntity.SERIES,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseSeriesResponse {
         return musicBrainzApi.browseSeriesByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
     override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<SeriesMusicBrainzModel>) {
-        seriesDao.insertAll(musicBrainzModels.map { it.toSeriesRoomModel() })
-        collectionEntityDao.insertAll(
-            musicBrainzModels.map { series ->
-                CollectionEntityRoomModel(
-                    id = entityId,
-                    entityId = series.id
-                )
-            }
-        )
+        collectionEntityDao.withTransaction {
+            seriesDao.insertAll(musicBrainzModels)
+            collectionEntityDao.insertAll(
+                collectionId = entityId,
+                entityIds = musicBrainzModels.map { series -> series.id },
+            )
+        }
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, SeriesRoomModel> = when {
-        query.isEmpty() -> {
-            collectionEntityDao.getSeriesByCollection(entityId)
-        }
-        else -> {
-            collectionEntityDao.getSeriesByCollectionFiltered(
-                collectionId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, Series> =
+        collectionEntityDao.getSeriesByCollection(
+            collectionId = entityId,
+            query = "%$query%"
+        )
 
-    override fun transformRoomToListItemModel(roomModel: SeriesRoomModel): SeriesListItemModel {
-        return roomModel.toSeriesListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Series): SeriesListItemModel {
+        return databaseModel.toSeriesListItemModel()
     }
 }

@@ -4,10 +4,9 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroup
-import ly.david.data.room.artist.releasegroups.ArtistReleaseGroupDao
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.ui.common.releasegroup.ReleaseGroupsByEntityViewModel
 import ly.david.ui.common.releasegroup.ReleaseGroupsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -16,11 +15,11 @@ import org.koin.android.annotation.KoinViewModel
 internal class ReleaseGroupsByArtistViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     releaseGroupDao: ReleaseGroupDao,
     releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ReleaseGroupsByEntityViewModel(
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     releaseGroupDao = releaseGroupDao,
     releaseGroupsPagedList = releaseGroupsPagedList,
 ) {
@@ -37,18 +36,16 @@ internal class ReleaseGroupsByArtistViewModel(
         releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
     ) {
         artistReleaseGroupDao.insertAll(
-            releaseGroupMusicBrainzModels.map { releaseGroup ->
-                ArtistReleaseGroup(
-                    artistId = entityId,
-                    releaseGroupId = releaseGroup.id
-                )
-            }
+            artistId = entityId,
+            releaseGroupIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
-        artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
-        relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
+        artistReleaseGroupDao.withTransaction {
+            artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RELEASE_GROUP)
+        }
     }
 
     override fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean) =

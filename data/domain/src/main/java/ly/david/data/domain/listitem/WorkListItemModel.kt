@@ -1,10 +1,9 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Work
 import ly.david.data.domain.work.WorkAttributeUiModel
 import ly.david.data.domain.work.toWorkAttributeUiModel
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
-import ly.david.data.room.work.WorkRoomModel
+import lydavidmusicsearchdatadatabase.Work
 
 // TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name
 data class WorkListItemModel(
@@ -15,7 +14,7 @@ data class WorkListItemModel(
     override val language: String? = null,
     override val iswcs: List<String>? = null,
     val attributes: List<WorkAttributeUiModel> = listOf(),
-) : Work, ListItemModel()
+) : ly.david.data.core.Work, ListItemModel()
 
 internal fun WorkMusicBrainzModel.toWorkListItemModel() =
     WorkListItemModel(
@@ -28,7 +27,7 @@ internal fun WorkMusicBrainzModel.toWorkListItemModel() =
         attributes = attributes?.map { it.toWorkAttributeUiModel() }.orEmpty()
     )
 
-fun WorkRoomModel.toWorkListItemModel() =
+fun Work.toWorkListItemModel() =
     WorkListItemModel(
         id = id,
         name = name,

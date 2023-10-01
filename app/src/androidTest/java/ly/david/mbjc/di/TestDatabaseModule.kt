@@ -1,19 +1,23 @@
 package ly.david.mbjc.di
 
-import androidx.room.Room
-import ly.david.data.room.MusicSearchDatabase
-import ly.david.data.room.MusicSearchRoomDatabase
-import org.koin.dsl.binds
+import androidx.sqlite.db.SupportSQLiteDatabase
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import ly.david.musicsearch.data.database.Database
 import org.koin.dsl.module
 
-// TODO: dupe
-val testDatabaseModule = module {
-    single {
-        Room.inMemoryDatabaseBuilder(
-            get(),
-            MusicSearchRoomDatabase::class.java
+val testDatabaseDriverModule = module {
+    single<SqlDriver> {
+        AndroidSqliteDriver(
+            schema = Database.Schema,
+            context = get(),
+            name = null,
+            callback = object : AndroidSqliteDriver.Callback(Database.Schema) {
+                override fun onOpen(db: SupportSQLiteDatabase) {
+                    super.onConfigure(db)
+                    db.setForeignKeyConstraintsEnabled(true)
+                }
+            }
         )
-            .allowMainThreadQueries()
-            .build()
-    } binds arrayOf(MusicSearchDatabase::class, MusicSearchRoomDatabase::class)
+    }
 }

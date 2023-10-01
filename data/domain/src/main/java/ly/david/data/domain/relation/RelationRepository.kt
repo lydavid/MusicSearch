@@ -1,35 +1,82 @@
 package ly.david.data.domain.relation
 
+import app.cash.paging.PagingSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import ly.david.data.core.relation.RelationTypeCount
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.room.relation.HasUrls
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.relation.RelationRoomModel
-import ly.david.data.room.relation.toRelationRoomModel
+import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
+import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
+import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
+import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
+import lydavidmusicsearchdatadatabase.Relation
 import org.koin.core.annotation.Single
 
 @Single
 class RelationRepository(
+    private val entityHasRelationsDao: EntityHasRelationsDao,
+    private val entityHasUrlsDao: EntityHasUrlsDao,
     private val relationDao: RelationDao,
 ) {
-    suspend fun hasUrlsBeenSavedFor(entityId: String): Boolean =
-        relationDao.hasUrls(entityId)?.hasUrls == true
+    fun hasUrlsBeenSavedFor(entityId: String): Boolean =
+        entityHasUrlsDao.hasUrls(entityId)
 
-    suspend fun insertAllRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
-        val relationRoomModels = mutableListOf<RelationRoomModel>()
-        relationMusicBrainzModels?.forEachIndexed { index, relationMusicBrainzModel ->
-            relationMusicBrainzModel.toRelationRoomModel(
+    fun insertAllUrlRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+        insertRelations(entityId, relationMusicBrainzModels)
+        entityHasUrlsDao.markEntityHasUrls(entityId)
+    }
+
+    fun insertAllRelationsExcludingUrls(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+        insertRelations(entityId, relationMusicBrainzModels)
+        entityHasRelationsDao.markEntityHasRelationsStored(entityId)
+    }
+
+    private fun insertRelations(entityId: String, relationMusicBrainzModels: List<RelationMusicBrainzModel>?) {
+        val relationDatabaseModels = relationMusicBrainzModels?.mapIndexedNotNull { index, relationMusicBrainzModel ->
+            relationMusicBrainzModel.toRelationDatabaseModel(
                 entityId = entityId,
                 order = index
-            )?.let { relationRoomModel ->
-                relationRoomModels.add(relationRoomModel)
-            }
-        }
-        relationDao.insertAll(relationRoomModels)
-        relationDao.markEntityHasUrls(
-            hasUrls = HasUrls(
-                entityId = entityId,
-                hasUrls = true
             )
+        }
+        relationDao.insertAll(relationDatabaseModels)
+    }
+
+    fun hasRelationsBeenSavedFor(entityId: String): Boolean {
+        return entityHasRelationsDao.hasRelationsBeenSavedFor(
+            entityId = entityId,
         )
     }
+
+    fun getEntityRelationshipsExcludingUrls(
+        entityId: String,
+        query: String,
+    ): PagingSource<Int, Relation> {
+        return relationDao.getEntityRelationshipsExcludingUrls(
+            entityId = entityId,
+            query = "%$query%",
+        )
+    }
+
+    fun getEntityUrlRelationships(
+        entityId: String,
+    ) = relationDao.getEntityUrlRelationships(
+        entityId = entityId,
+    )
+
+    fun deleteEntityRelationships(
+        entityId: String,
+    ) {
+        relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
+    }
+
+    fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
+        relationDao.getCountOfEachRelationshipType(entityId).map {
+            it.map { countOfEachRelationshipType: CountOfEachRelationshipType ->
+                RelationTypeCount(
+                    linkedEntity = countOfEachRelationshipType.linked_entity,
+                    count = countOfEachRelationshipType.entity_count.toInt(),
+                )
+            }
+        }
 }

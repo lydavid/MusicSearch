@@ -3,7 +3,7 @@ package ly.david.data.musicbrainz
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.data.core.NameWithDisambiguation
-import ly.david.data.core.Release
+import ly.david.data.core.release.Release
 
 @Serializable
 data class ReleaseMusicBrainzModel(
@@ -20,10 +20,11 @@ data class ReleaseMusicBrainzModel(
     @SerialName("asin") override val asin: String? = null,
     @SerialName("quality") override val quality: String? = null,
     @SerialName("cover-art-archive")
-    override val coverArtArchive: CoverArtArchiveMusicBrainzModel = CoverArtArchiveMusicBrainzModel(),
-    @SerialName("text-representation") override val textRepresentation: TextRepresentationMusicBrainzModel? = null,
+    val coverArtArchive: CoverArtArchiveMusicBrainzModel = CoverArtArchiveMusicBrainzModel(),
+    @SerialName("text-representation")
+    val textRepresentation: TextRepresentationMusicBrainzModel? = null,
 
-    @SerialName("release-events") val releaseEvents: List<ReleaseEvent>? = null,
+    @SerialName("release-events") val releaseEvents: List<ReleaseEventMusicBrainzModel>? = null,
 
     // Use inc=media for subqueries. inc=recordings for release lookup
     @SerialName("media") val media: List<MediumMusicBrainzModel>? = null,
@@ -41,7 +42,7 @@ data class ReleaseMusicBrainzModel(
 ) : MusicBrainzModel(), Release
 
 @Serializable
-data class ReleaseEvent(
+data class ReleaseEventMusicBrainzModel(
     @SerialName("area") val area: AreaMusicBrainzModel? = null,
     @SerialName("date") val date: String? = null,
     @SerialName("type") val type: String? = null,

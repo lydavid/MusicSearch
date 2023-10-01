@@ -1,19 +1,22 @@
 package ly.david.data.domain.release
 
-import ly.david.data.core.Release
+import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.core.getFormatsForDisplay
 import ly.david.data.core.getTracksForDisplay
+import ly.david.data.core.label.LabelWithCatalog
+import ly.david.data.core.release.FormatTrackCount
+import ly.david.data.core.release.ReleaseForDetails
+import ly.david.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
 import ly.david.data.domain.listitem.AreaListItemModel
 import ly.david.data.domain.listitem.LabelListItemModel
 import ly.david.data.domain.listitem.RelationListItemModel
-import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.listitem.toReleaseGroupListItemModel
-import ly.david.data.room.release.ReleaseWithAllData
+import lydavidmusicsearchdatadatabase.Artist_credit_name
+import lydavidmusicsearchdatadatabase.Relation
 
 data class ReleaseScaffoldModel(
     override val id: String,
@@ -29,8 +32,8 @@ data class ReleaseScaffoldModel(
     override val asin: String? = null,
     override val quality: String? = null,
 
-    override val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
-    override val textRepresentation: TextRepresentationUiModel? = null,
+    val coverArtArchive: CoverArtArchiveUiModel = CoverArtArchiveUiModel(),
+    val textRepresentation: TextRepresentationUiModel? = null,
     val imageUrl: String? = null,
 
     val formattedFormats: String? = null,
@@ -38,40 +41,50 @@ data class ReleaseScaffoldModel(
 
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
 
-    val releaseGroup: ReleaseGroupListItemModel? = null,
+    val releaseGroup: ReleaseGroupForRelease? = null,
     val areas: List<AreaListItemModel> = listOf(),
     val labels: List<LabelListItemModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
-) : Release
+) : ly.david.data.core.release.Release
 
-internal fun ReleaseWithAllData.toReleaseScaffoldModel() = ReleaseScaffoldModel(
-    id = release.id,
-    name = release.name,
-    disambiguation = release.disambiguation,
-    date = release.date,
-    barcode = release.barcode,
-    status = release.status,
-    statusId = release.statusId,
-    countryCode = release.countryCode,
-    packaging = release.packaging,
-    packagingId = release.packagingId,
-    asin = release.asin,
-    quality = release.quality,
-    coverArtArchive = release.coverArtArchive.toCoverArtArchiveUiModel(),
-    textRepresentation = release.textRepresentation?.toTextRepresentationUiModel(),
+internal fun ReleaseForDetails.toReleaseScaffoldModel(
+    artistCreditNames: List<Artist_credit_name>,
+    releaseGroup: ReleaseGroupForRelease,
+    formatTrackCounts: List<FormatTrackCount>,
+    labels: List<LabelWithCatalog>,
+    releaseEvents: List<ReleaseEvent>,
+    urls: List<Relation>,
+) = ReleaseScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    date = date,
+    barcode = barcode,
+    status = status,
+    statusId = statusId,
+    countryCode = countryCode,
+    packaging = packaging,
+    packagingId = packagingId,
+    asin = asin,
+    quality = quality,
+    coverArtArchive = CoverArtArchiveUiModel(
+        count = coverArtCount,
+    ),
+    textRepresentation = TextRepresentationUiModel(
+        script = script,
+        language = language,
+    ),
     formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
     formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-    imageUrl = largeUrl,
-    areas = areas.map { it.toAreaListItemModel() },
-    artistCredits = artistCreditNamesWithEntities.map {
-        it.artistCreditNameRoomModel.toArtistCreditUiModel()
-    },
-    releaseGroup = releaseGroup?.toReleaseGroupListItemModel(),
+    imageUrl = imageUrl,
+    areas = releaseEvents.map { it.toAreaListItemModel() },
+    artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+    releaseGroup = releaseGroup,
     labels = labels.map { it.toLabelListItemModel() },
-    urls = urls.map { it.relation.toRelationListItemModel() },
+    urls = urls.map { it.toRelationListItemModel() },
     releaseLength = releaseLength,
-    hasNullLength = hasNullLength
+    hasNullLength = hasNullLength,
 )

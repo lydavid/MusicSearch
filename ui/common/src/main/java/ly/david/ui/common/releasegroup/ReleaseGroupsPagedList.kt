@@ -15,14 +15,14 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.core.getDisplayTypes
+import ly.david.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.data.core.releasegroup.getDisplayTypes
 import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.ReleaseGroupListItemModel
 import ly.david.data.domain.listitem.toReleaseGroupListItemModel
 import ly.david.data.domain.paging.BrowseEntityRemoteMediator
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.releasegroup.ReleaseGroupForListItem
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList
 import org.koin.core.annotation.Factory

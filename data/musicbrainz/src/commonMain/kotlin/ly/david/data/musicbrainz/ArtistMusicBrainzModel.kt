@@ -2,7 +2,7 @@ package ly.david.data.musicbrainz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.core.Artist
+import ly.david.data.core.artist.Artist
 
 @Serializable
 data class ArtistMusicBrainzModel(
@@ -14,7 +14,7 @@ data class ArtistMusicBrainzModel(
     @SerialName("type-id") val typeId: String? = null,
     @SerialName("gender") override val gender: String? = null,
     @SerialName("country") override val countryCode: String? = null,
-    @SerialName("life-span") override val lifeSpan: LifeSpanMusicBrainzModel? = null,
+    @SerialName("life-span") val lifeSpan: LifeSpanMusicBrainzModel? = null,
 
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Artist

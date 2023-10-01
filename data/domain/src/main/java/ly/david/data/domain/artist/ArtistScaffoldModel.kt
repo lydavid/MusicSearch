@@ -1,11 +1,11 @@
 package ly.david.data.domain.artist
 
-import ly.david.data.core.Artist
+import ly.david.data.core.artist.Artist
+import ly.david.data.core.artist.ArtistForDetails
 import ly.david.data.domain.common.LifeSpanUiModel
-import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.artist.ArtistWithAllData
+import lydavidmusicsearchdatadatabase.Relation
 
 data class ArtistScaffoldModel(
     override val id: String,
@@ -15,21 +15,26 @@ data class ArtistScaffoldModel(
     override val type: String? = null,
     override val gender: String? = null,
     override val countryCode: String? = null,
-    override val lifeSpan: LifeSpanUiModel? = null,
-    val urls: List<RelationListItemModel> = listOf(),
+    val lifeSpan: LifeSpanUiModel? = null,
     val imageUrl: String? = null,
+    val urls: List<RelationListItemModel> = listOf(),
 ) : Artist
 
-internal fun ArtistWithAllData.toArtistScaffoldModel() =
-    ArtistScaffoldModel(
-        id = artist.id,
-        name = artist.name,
-        sortName = artist.sortName,
-        disambiguation = artist.disambiguation,
-        type = artist.type,
-        gender = artist.gender,
-        countryCode = artist.countryCode,
-        lifeSpan = artist.lifeSpan?.toLifeSpanUiModel(),
-        urls = urls.map { it.relation.toRelationListItemModel() },
-        imageUrl = largeUrl
-    )
+internal fun ArtistForDetails.toArtistScaffoldModel(
+    urls: List<Relation>,
+) = ArtistScaffoldModel(
+    id = id,
+    name = name,
+    sortName = sortName,
+    disambiguation = disambiguation,
+    type = type,
+    gender = gender,
+    countryCode = countryCode,
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
+    imageUrl = imageUrl,
+    urls = urls.map { it.toRelationListItemModel() }
+)

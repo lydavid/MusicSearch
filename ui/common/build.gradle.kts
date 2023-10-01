@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.ui.core)
     implementation(projects.ui.image)
+    implementation(projects.data.database) // TODO: remove dependency
     testImplementation(projects.ui.test.image)
     testImplementation(projects.ui.test.screenshot)
 
@@ -23,6 +24,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
+    implementation(libs.paging.common)
 
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)

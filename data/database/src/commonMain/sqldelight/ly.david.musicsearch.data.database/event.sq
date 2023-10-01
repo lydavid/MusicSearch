@@ -1,0 +1,21 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS event (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  disambiguation TEXT,
+  type TEXT,
+  type_id TEXT,
+  time TEXT,
+  cancelled INTEGER AS Boolean,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean
+);
+
+insert:
+INSERT OR IGNORE INTO event
+VALUES ?;
+
+getEvent:
+SELECT * FROM event WHERE id = ?;

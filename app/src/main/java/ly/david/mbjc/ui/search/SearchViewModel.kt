@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+import ly.david.data.core.history.SearchHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.EndOfList
 import ly.david.data.domain.listitem.Header
@@ -28,8 +28,7 @@ import ly.david.data.domain.listitem.toSearchHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
 import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.history.search.SearchHistoryDao
-import ly.david.data.room.history.search.SearchHistoryRoomModel
+import ly.david.musicsearch.data.database.dao.SearchHistoryDao
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
 import org.koin.android.annotation.KoinViewModel
 
@@ -66,32 +65,26 @@ internal class SearchViewModel(
     }
 
     fun recordSearchHistory() {
-        viewModelScope.launch {
-            val query = searchQuery.value
-            if (query.isEmpty()) return@launch
-            val entity = searchEntity.value
-            searchHistoryDao.insertReplace(
-                SearchHistoryRoomModel(
-                    query = query,
-                    entity = entity
-                )
+        val query = searchQuery.value
+        if (query.isEmpty()) return
+        val entity = searchEntity.value
+        searchHistoryDao.upsert(
+            SearchHistory(
+                entity = entity,
+                query = query,
             )
-        }
+        )
     }
 
     fun deleteSearchHistoryItem(item: SearchHistoryListItemModel) {
-        viewModelScope.launch {
-            searchHistoryDao.delete(
-                query = item.query,
-                entity = item.entity
-            )
-        }
+        searchHistoryDao.delete(
+            entity = item.entity,
+            query = item.query,
+        )
     }
 
     fun deleteAllSearchHistoryForEntity() {
-        viewModelScope.launch {
-            searchHistoryDao.deleteAll(searchEntity.value)
-        }
+        searchHistoryDao.deleteAll(searchEntity.value)
     }
 
     // TODO: because of debounce, scrollToItem(0) does not work properly
@@ -129,7 +122,7 @@ internal class SearchViewModel(
                     }
                 ).flow.map { pagingData ->
                     pagingData
-                        .map(SearchHistoryRoomModel::toSearchHistoryListItemModel)
+                        .map(SearchHistory::toSearchHistoryListItemModel)
                         .insertSeparators { before: SearchHistoryListItemModel?, after: SearchHistoryListItemModel? ->
                             // TODO: rather than changing behaviour of header when empty,
                             //  just modify full empty screen text

@@ -1,13 +1,12 @@
 package ly.david.data.domain.recordng
 
-import ly.david.data.core.Recording
 import ly.david.data.domain.artist.ArtistCreditUiModel
 import ly.david.data.domain.artist.toArtistCreditUiModel
-import ly.david.data.domain.artist.toArtistCreditUiModels
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.data.room.recording.RecordingWithAllData
+import lydavidmusicsearchdatadatabase.Artist_credit_name
+import lydavidmusicsearchdatadatabase.Recording
+import lydavidmusicsearchdatadatabase.Relation
 
 data class RecordingScaffoldModel(
     override val id: String,
@@ -19,29 +18,19 @@ data class RecordingScaffoldModel(
     val isrcs: List<String>? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
-) : Recording
+) : ly.david.data.core.Recording
 
-internal fun RecordingWithAllData.toRecordingScaffoldModel() = RecordingScaffoldModel(
-    id = recording.id,
-    name = recording.name,
-    firstReleaseDate = recording.firstReleaseDate,
-    disambiguation = recording.disambiguation,
-    length = recording.length,
-    video = recording.video,
-    isrcs = recording.isrcs,
-    artistCredits = artistCreditNamesWithEntities.map {
-        it.artistCreditNameRoomModel.toArtistCreditUiModel()
-    },
-    urls = urls.map { it.relation.toRelationListItemModel() },
-)
-
-internal fun RecordingMusicBrainzModel.toRecordingScaffoldModel() = RecordingScaffoldModel(
+internal fun Recording.toRecordingScaffoldModel(
+    artistCreditNames: List<Artist_credit_name>,
+    urls: List<Relation>,
+) = RecordingScaffoldModel(
     id = id,
     name = name,
-    firstReleaseDate = firstReleaseDate,
+    firstReleaseDate = first_release_date,
     disambiguation = disambiguation,
     length = length,
-    video = video ?: false,
+    video = video,
     isrcs = isrcs,
-    artistCredits = artistCredits.toArtistCreditUiModels()
+    artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+    urls = urls.map { it.toRelationListItemModel() },
 )

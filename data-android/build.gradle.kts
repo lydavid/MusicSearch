@@ -9,12 +9,6 @@ plugins {
 android {
     namespace = "ly.david.data"
 
-    defaultConfig {
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
-    }
-
     buildTypes {
         all {
             // These will only be set through GHA environment
@@ -102,18 +96,13 @@ dependencies {
 
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
-    implementation(libs.kotlinx.datetime)
     implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor.android)
 
     implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    implementation(libs.room.paging)
     implementation(libs.timber)
 
     ksp(libs.koin.ksp.compiler)
-    ksp(libs.room.compiler)
 
     testImplementation(libs.androidx.test.junit)
     testImplementation(libs.junit)

@@ -25,7 +25,6 @@ import ly.david.mbjc.StringReferences
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
 /**
@@ -34,7 +33,7 @@ import org.koin.test.inject
  * However, try to refrain from testing the details of constituent composables such as its cards.
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
-internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
 
     private val areaRepository: AreaRepository by inject()
 
@@ -79,9 +78,8 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences, KoinTest
         setArea(ontario)
 
         waitForThenPerformClickOn(relationships)
-        // TODO: passes locally but not in CI
-//        waitForThenAssertIsDisplayed(canada.name)
-//        waitForThenAssertIsDisplayed(toronto.name)
+        waitForThenAssertIsDisplayed(canada.name)
+        waitForThenAssertIsDisplayed(toronto.name)
 
         composeTestRule
             .onNodeWithContentDescription(filter)

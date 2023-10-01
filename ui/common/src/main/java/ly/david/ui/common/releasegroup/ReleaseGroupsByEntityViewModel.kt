@@ -2,19 +2,19 @@ package ly.david.ui.common.releasegroup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.data.domain.listitem.ListItemModel
+import ly.david.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.listitem.ListItemModel
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.data.room.relation.BrowseEntityCount
-import ly.david.data.room.relation.RelationDao
-import ly.david.data.room.releasegroup.ReleaseGroupDao
-import ly.david.data.room.releasegroup.ReleaseGroupForListItem
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList
+import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class ReleaseGroupsByEntityViewModel(
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     private val releaseGroupDao: ReleaseGroupDao,
     private val releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ViewModel(),
@@ -37,16 +37,16 @@ abstract class ReleaseGroupsByEntityViewModel(
         val response = browseReleaseGroupsByEntity(entityId, nextOffset)
 
         if (response.offset == 0) {
-            relationDao.insertBrowseEntityCount(
-                browseEntityCount = BrowseEntityCount(
-                    entityId = entityId,
-                    browseEntity = MusicBrainzEntity.RELEASE_GROUP,
-                    localCount = response.musicBrainzModels.size,
-                    remoteCount = response.count
+            browseEntityCountDao.insert(
+                browseEntityCount = Browse_entity_count(
+                    entity_id = entityId,
+                    browse_entity = MusicBrainzEntity.RELEASE_GROUP,
+                    local_count = response.musicBrainzModels.size,
+                    remote_count = response.count
                 )
             )
         } else {
-            relationDao.incrementLocalCountForEntity(
+            browseEntityCountDao.incrementLocalCountForEntity(
                 entityId = entityId,
                 browseEntity = MusicBrainzEntity.RELEASE_GROUP,
                 additionalOffset = response.musicBrainzModels.size
@@ -54,15 +54,15 @@ abstract class ReleaseGroupsByEntityViewModel(
         }
 
         val releaseGroupMusicBrainzModels = response.musicBrainzModels
-        releaseGroupDao.insertAllReleaseGroupsWithArtistCredits(releaseGroupMusicBrainzModels)
+        releaseGroupDao.insertAll(releaseGroupMusicBrainzModels)
         insertAllLinkingModels(entityId, releaseGroupMusicBrainzModels)
 
         return releaseGroupMusicBrainzModels.size
     }
 
     override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.remoteCount
+        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.remoteCount
 
-    override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
-        relationDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.localCount ?: 0
+    override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int =
+        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.localCount ?: 0
 }

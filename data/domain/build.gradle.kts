@@ -7,11 +7,12 @@ dependencies {
     implementation(projects.data.core)
     implementation(projects.data.common.network)
     implementation(projects.data.coverart)
+    implementation(projects.data.database)
     implementation(projects.data.musicbrainz)
-    implementation(projects.data.room)
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
-    implementation(libs.androidx.paging.common)
+    implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.paging.common)
 
     ksp(libs.koin.ksp.compiler)
 

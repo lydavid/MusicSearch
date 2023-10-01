@@ -3,34 +3,49 @@ package ly.david.data.domain.releasegroup
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.releasegroup.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import org.koin.core.annotation.Single
 
 @Single
 class ReleaseGroupRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val releaseGroupDao: ReleaseGroupDao,
+    private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
-        val releaseGroupWithAllData = releaseGroupDao.getReleaseGroup(releaseGroupId)
+        val releaseGroupForDetails = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
+        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseGroupId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
-        if (releaseGroupWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return releaseGroupWithAllData.toReleaseGroupScaffoldModel()
+        if (releaseGroupForDetails != null &&
+            artistCreditNames.isNotEmpty() &&
+            hasUrlsBeenSavedForEntity
+        ) {
+            return releaseGroupForDetails.toReleaseGroupScaffoldModel(
+                artistCreditNames = artistCreditNames,
+                urls = urlRelations,
+            )
         }
 
         val releaseGroupMusicBrainzModel = musicBrainzApi.lookupReleaseGroup(releaseGroupId)
+        cache(releaseGroupMusicBrainzModel)
+        return lookupReleaseGroup(releaseGroupId)
+    }
+
+    private fun cache(releaseGroup: ReleaseGroupMusicBrainzModel) {
         releaseGroupDao.withTransaction {
-            releaseGroupDao.insertReleaseGroupWithArtistCredits(releaseGroupMusicBrainzModel)
-            relationRepository.insertAllRelations(
-                entityId = releaseGroupId,
-                relationMusicBrainzModels = releaseGroupMusicBrainzModel.relations,
+            releaseGroupDao.insert(releaseGroup)
+            relationRepository.insertAllUrlRelations(
+                entityId = releaseGroup.id,
+                relationMusicBrainzModels = releaseGroup.relations,
             )
         }
-        return lookupReleaseGroup(releaseGroupId)
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

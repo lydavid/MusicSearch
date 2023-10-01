@@ -45,4 +45,4 @@ See [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 
 ## Database schema
 
-![](assets/mbjc_db_schema.svg)
+![](assets/musicsearch_db_schema.svg)

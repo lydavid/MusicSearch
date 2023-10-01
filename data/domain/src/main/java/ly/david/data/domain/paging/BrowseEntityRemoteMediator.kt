@@ -1,17 +1,16 @@
 package ly.david.data.domain.paging
 
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
-import androidx.paging.PagingState
-import androidx.paging.RemoteMediator
+import app.cash.paging.ExperimentalPagingApi
+import app.cash.paging.PagingState
+import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
 import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.musicbrainz.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.musicbrainz.api.SEARCH_BROWSE_LIMIT
-import ly.david.data.room.RoomModel
 
 /**
- * Generic RemoteMediator for loading remote data into [RoomModel].
+ * Generic RemoteMediator for loading remote data into a database, then fetching it from the database.
  *
  * When using [LoadType.REFRESH], [getRemoteEntityCount] does not need to be checked.
  * A refresh load will always call [browseEntity].
@@ -24,12 +23,12 @@ import ly.david.data.room.RoomModel
  *  Expects back the number of returned entities.
  */
 @OptIn(ExperimentalPagingApi::class)
-class BrowseEntityRemoteMediator<RM : RoomModel>(
+class BrowseEntityRemoteMediator<DM : Any>(
     private val getRemoteEntityCount: suspend () -> Int?,
     private val getLocalEntityCount: suspend () -> Int,
     private val deleteLocalEntity: suspend () -> Unit,
     private val browseEntity: suspend (offset: Int) -> Int,
-) : RemoteMediator<Int, RM>() {
+) : RemoteMediator<Int, DM>() {
 
     override suspend fun initialize(): InitializeAction {
         return if (getRemoteEntityCount() == null) {
@@ -41,7 +40,7 @@ class BrowseEntityRemoteMediator<RM : RoomModel>(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, RM>,
+        state: PagingState<Int, DM>,
     ): MediatorResult {
         return try {
             val nextOffset: Int = when (loadType) {

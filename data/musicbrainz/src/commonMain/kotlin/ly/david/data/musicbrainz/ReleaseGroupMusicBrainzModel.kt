@@ -2,7 +2,7 @@ package ly.david.data.musicbrainz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.core.ReleaseGroup
+import ly.david.data.core.releasegroup.ReleaseGroup
 
 @Serializable
 data class ReleaseGroupMusicBrainzModel(

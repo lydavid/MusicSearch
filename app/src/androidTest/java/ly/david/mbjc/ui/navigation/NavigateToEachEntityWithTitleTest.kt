@@ -5,6 +5,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.Coil
+import coil.ImageLoaderFactory
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
@@ -16,6 +18,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.koin.test.inject
 
 @RunWith(Parameterized::class)
 internal class NavigateToEachEntityWithTitleTest(
@@ -32,10 +35,12 @@ internal class NavigateToEachEntityWithTitleTest(
         }
     }
 
+    private val imageLoaderFactory: ImageLoaderFactory by inject()
     private lateinit var navController: NavHostController
 
     @Before
     fun setupApp() {
+        Coil.setImageLoader(imageLoaderFactory)
         composeTestRule.activity.setContent {
             navController = rememberNavController()
             PreviewTheme {

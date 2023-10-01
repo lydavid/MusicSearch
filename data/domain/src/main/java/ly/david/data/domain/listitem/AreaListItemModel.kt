@@ -1,11 +1,10 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Area
+import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.common.toLifeSpanUiModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.data.room.area.AreaRoomModel
-import ly.david.data.room.release.AreaWithReleaseDate
+import lydavidmusicsearchdatadatabase.Area
 
 data class AreaListItemModel(
     override val id: String,
@@ -16,7 +15,7 @@ data class AreaListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val countryCodes: List<String>? = null,
     val date: String? = null,
-) : Area, ListItemModel()
+) : ly.david.data.core.area.Area, ListItemModel()
 
 internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = AreaListItemModel(
     id = id,
@@ -29,22 +28,22 @@ internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = Ar
     date = date
 )
 
-fun AreaRoomModel.toAreaListItemModel() = AreaListItemModel(
+fun Area.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,
-    sortName = sortName,
+    sortName = sort_name,
     disambiguation = disambiguation,
     type = type,
-    lifeSpan = lifeSpan?.toLifeSpanUiModel(),
+    lifeSpan = LifeSpanUiModel(
+        begin = begin,
+        end = end,
+        ended = ended,
+    ),
 )
 
-fun AreaWithReleaseDate.toAreaListItemModel() = AreaListItemModel(
-    id = area.id,
-    name = area.name,
-    sortName = area.sortName,
-    disambiguation = area.disambiguation,
-    type = area.type,
-    lifeSpan = area.lifeSpan?.toLifeSpanUiModel(),
-    countryCodes = countryCodes.map { it.code },
-    date = releaseCountry.date
+fun ReleaseEvent.toAreaListItemModel() = AreaListItemModel(
+    id = id,
+    name = name,
+    date = date,
+    countryCodes = countryCode?.let { listOf(it) },
 )

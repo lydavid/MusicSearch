@@ -1,28 +1,21 @@
 package ly.david.data.domain.release
 
-import ly.david.data.core.AreaType
+import ly.david.data.core.area.AreaType
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.AreaDao
-import ly.david.data.room.area.getAreaCountryCodes
-import ly.david.data.room.area.releases.ReleaseCountryDao
-import ly.david.data.room.area.releases.getReleaseCountries
-import ly.david.data.room.area.toAreaRoomModel
-import ly.david.data.room.label.LabelDao
-import ly.david.data.room.label.releases.ReleaseLabelDao
-import ly.david.data.room.label.releases.toReleaseLabels
-import ly.david.data.room.label.toRoomModels
-import ly.david.data.room.release.ReleaseDao
-import ly.david.data.room.release.tracks.MediumDao
-import ly.david.data.room.release.tracks.TrackDao
-import ly.david.data.room.release.tracks.toMediumRoomModel
-import ly.david.data.room.releasegroup.ReleaseGroupDao
-import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroup
-import ly.david.data.room.releasegroup.releases.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.CountryCodeDao
+import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
+import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -31,10 +24,10 @@ class ReleaseRepository(
     private val releaseDao: ReleaseDao,
     private val releaseReleaseGroupDao: ReleaseReleaseGroupDao,
     private val releaseGroupDao: ReleaseGroupDao,
-    private val mediumDao: MediumDao,
-    private val trackDao: TrackDao,
+    private val artistCreditDao: ArtistCreditDao,
     private val releaseCountryDao: ReleaseCountryDao,
     private val areaDao: AreaDao,
+    private val countryCodeDao: CountryCodeDao,
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
@@ -49,66 +42,74 @@ class ReleaseRepository(
      * Looks up release and stores its data (excludes relationships).
      */
     suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
-        val releaseWithAllData = releaseDao.getReleaseWithAllData(releaseId)
+        val releaseForDetails = releaseDao.getReleaseForDetails(releaseId)
+        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseId)
+        val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
+        val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
+        val labels = releaseLabelDao.getLabelsByRelease(releaseId)
+        val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(releaseId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
-        if (releaseWithAllData != null &&
-            releaseWithAllData.artistCreditNamesWithEntities.isNotEmpty() &&
-            releaseWithAllData.formatTrackCounts.isNotEmpty() &&
+        if (releaseForDetails != null &&
+            releaseGroup != null &&
+            artistCreditNames.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
-            return releaseWithAllData.toReleaseScaffoldModel()
+            return releaseForDetails.toReleaseScaffoldModel(
+                artistCreditNames = artistCreditNames,
+                releaseGroup = releaseGroup,
+                formatTrackCounts = formatTrackCounts,
+                labels = labels,
+                releaseEvents = releaseEvents,
+                urls = urlRelations,
+            )
         }
 
-        // Fetch from network. Store all relevant models.
         val releaseMusicBrainzModel = musicBrainzApi.lookupRelease(releaseId)
-        insertAllModels(releaseMusicBrainzModel)
+        cache(releaseMusicBrainzModel)
         return lookupRelease(releaseId)
     }
 
-    private suspend fun insertAllModels(release: ReleaseMusicBrainzModel) {
+    private fun cache(release: ReleaseMusicBrainzModel) {
         releaseDao.withTransaction {
             release.releaseGroup?.let { releaseGroup ->
-                releaseGroupDao.insertReleaseGroupWithArtistCredits(releaseGroup)
+                releaseGroupDao.insert(releaseGroup)
                 releaseReleaseGroupDao.insert(
-                    ReleaseReleaseGroup(
-                        releaseId = release.id,
-                        releaseGroupId = releaseGroup.id
-                    )
+                    releaseId = release.id,
+                    releaseGroupId = releaseGroup.id
                 )
             }
-            releaseDao.insertReleaseWithArtistCredits(release)
+            releaseDao.insert(release)
 
             // This serves as a replacement for browsing labels by release.
             // Unless we find a release that has more than 25 labels, we don't need to browse for labels.
-            labelDao.insertAll(release.labelInfoList?.toRoomModels().orEmpty())
-            releaseLabelDao.insertAll(
-                release.labelInfoList?.toReleaseLabels(releaseId = release.id).orEmpty()
+            labelDao.insertAll(release.labelInfoList?.mapNotNull { it.label })
+            releaseLabelDao.linkLabelsByRelease(
+                releaseId = release.id,
+                labelInfoList = release.labelInfoList,
             )
-
-            release.media?.forEach { medium ->
-                val mediumId = mediumDao.insert(medium.toMediumRoomModel(release.id))
-                medium.tracks?.forEach { track ->
-                    trackDao.insertTrackWithArtistCredits(track, mediumId)
-                }
-            }
 
             areaDao.insertAll(
                 release.releaseEvents?.mapNotNull {
                     // release events returns null type, but we know they are countries
                     // Except in the case of [Worldwide], but it will replace itself when we first visit it.
-                    it.area?.toAreaRoomModel()?.copy(type = AreaType.COUNTRY)
+                    it.area?.copy(type = AreaType.COUNTRY)
                 }.orEmpty()
             )
-            areaDao.insertAllCountryCodes(
-                release.releaseEvents?.flatMap { releaseEvent ->
-                    releaseEvent.area?.getAreaCountryCodes().orEmpty()
-                }.orEmpty()
+            release.releaseEvents?.forEach {
+                countryCodeDao.insertCountryCodesForArea(
+                    areaId = it.area?.id ?: return@forEach,
+                    countryCodes = it.area?.countryCodes,
+                )
+            }
+            releaseCountryDao.linkCountriesByRelease(
+                releaseId = release.id,
+                releaseEvents = release.releaseEvents,
             )
-            releaseCountryDao.insertAll(release.getReleaseCountries())
 
-            relationRepository.insertAllRelations(
+            relationRepository.insertAllUrlRelations(
                 entityId = release.id,
                 relationMusicBrainzModels = release.relations,
             )

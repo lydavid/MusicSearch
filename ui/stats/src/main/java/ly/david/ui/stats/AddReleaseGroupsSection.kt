@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.data.core.getDisplayTypes
-import ly.david.data.room.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
+import ly.david.data.core.releasegroup.getDisplayTypes
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews

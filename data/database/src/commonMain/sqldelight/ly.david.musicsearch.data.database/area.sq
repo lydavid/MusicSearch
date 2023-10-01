@@ -1,0 +1,20 @@
+import kotlin.Boolean;
+
+CREATE TABLE IF NOT EXISTS area (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  sort_name TEXT NOT NULL,
+  disambiguation TEXT,
+  type TEXT,
+  type_id TEXT,
+  begin TEXT,
+  end TEXT,
+  ended INTEGER AS Boolean
+);
+
+insert:
+INSERT OR IGNORE INTO area
+VALUES ?;
+
+getArea:
+SELECT * FROM area WHERE id = ?;

@@ -15,7 +15,6 @@ kotlin {
                 implementation(libs.ktor.client.auth)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(libs.kotlinx.datetime)
             }
         }
         val commonTest by getting {

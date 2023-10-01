@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS work_attribute (
+  `work_id` TEXT NOT NULL,
+  `type` TEXT NOT NULL,
+  `type_id` TEXT NOT NULL,
+  `value` TEXT NOT NULL,
+
+  PRIMARY KEY(`work_id`, `type`),
+
+  FOREIGN KEY(`work_id`) REFERENCES `work`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+insert:
+INSERT OR IGNORE INTO work_attribute
+VALUES ?;
+
+getWorkAttributesForWork:
+SELECT work_attribute.*
+FROM work_attribute
+INNER JOIN work ON work_attribute.work_id = work.id
+WHERE work.id = :workId;

@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS artist_credit_entity (
+  `artist_credit_id` INTEGER NOT NULL,
+  `entity_id` TEXT NOT NULL,
+
+  PRIMARY KEY (`artist_credit_id`, `entity_id`),
+
+  FOREIGN KEY(`artist_credit_id`) REFERENCES `artist_credit`(`id`)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE
+);
+
+insert:
+INSERT OR IGNORE INTO artist_credit_entity
+VALUES ?;

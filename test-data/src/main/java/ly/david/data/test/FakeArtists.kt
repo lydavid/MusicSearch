@@ -82,7 +82,6 @@ val davidBowie = ArtistMusicBrainzModel(
 val davidBowieArtistCredit = ArtistCreditMusicBrainzModel(
     artist = davidBowie,
     name = "Different Artist Name",
-    joinPhrase = " & "
 )
 
 val queen = ArtistMusicBrainzModel(
@@ -96,6 +95,7 @@ val queen = ArtistMusicBrainzModel(
 val queenArtistCredit = ArtistCreditMusicBrainzModel(
     artist = queen,
     name = "Other Artist",
+    joinPhrase = " & ",
 )
 
 val fakeArtists = listOf(

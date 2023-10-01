@@ -7,14 +7,12 @@ import ly.david.data.domain.listitem.toAreaListItemModel
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.AreaDao
-import ly.david.data.room.area.AreaRoomModel
-import ly.david.data.room.area.toAreaRoomModel
-import ly.david.data.room.collection.CollectionEntityDao
-import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.relation.RelationDao
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.ui.common.area.AreasPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
+import lydavidmusicsearchdatadatabase.Area
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,11 +20,11 @@ internal class AreasByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
     private val areaDao: AreaDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: AreasPagedList,
-) : BrowseEntitiesByEntityViewModel<AreaRoomModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
+) : BrowseEntitiesByEntityViewModel<Area, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
     byEntity = MusicBrainzEntity.AREA,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
@@ -38,41 +36,30 @@ internal class AreasByCollectionViewModel(
     }
 
     override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<AreaMusicBrainzModel>) {
-        areaDao.insertAll(musicBrainzModels.map { it.toAreaRoomModel() })
+        areaDao.insertAll(musicBrainzModels)
         collectionEntityDao.insertAll(
-            musicBrainzModels.map { area ->
-                CollectionEntityRoomModel(
-                    id = entityId,
-                    entityId = area.id
-                )
-            }
+            collectionId = entityId,
+            musicBrainzModels.map { area -> area.id }
         )
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.AREA)
         }
     }
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, AreaRoomModel> = when {
-        query.isEmpty() -> {
-            collectionEntityDao.getAreasByCollection(entityId)
-        }
+    ): PagingSource<Int, Area> =
+        collectionEntityDao.getAreasByCollection(
+            collectionId = entityId,
+            query = "%$query%"
+        )
 
-        else -> {
-            collectionEntityDao.getAreasByCollectionFiltered(
-                collectionId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
-
-    override fun transformRoomToListItemModel(roomModel: AreaRoomModel): AreaListItemModel {
-        return roomModel.toAreaListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: Area): AreaListItemModel {
+        return databaseModel.toAreaListItemModel()
     }
 }

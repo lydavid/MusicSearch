@@ -1,9 +1,9 @@
 package ly.david.data.test
 
-import ly.david.data.core.AreaType
+import ly.david.data.core.area.AreaType
+import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.Direction
-import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseAreasResponse
 import ly.david.data.musicbrainz.api.SearchAreasResponse

@@ -71,6 +71,7 @@ android {
 
 dependencies {
     implementation(projects.dataAndroid)
+    implementation(projects.data.database)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.collections)
@@ -102,6 +103,7 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.annotations)
     implementation(libs.koin.core)
+    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
 
     debugImplementation(libs.compose.ui.tooling)
@@ -120,7 +122,8 @@ dependencies {
     androidTestImplementation(libs.coil.test)
     androidTestImplementation(libs.compose.ui.test)
     androidTestImplementation(libs.koin.test)
-    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.sqldelight.android.driver)
+    androidTestImplementation(libs.test.parameter.injector)
 
     ksp(libs.koin.ksp.compiler)
     kspAndroidTest(libs.koin.ksp.compiler)

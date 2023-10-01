@@ -17,7 +17,7 @@ import coil.Coil
 import coil.ImageLoaderFactory
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
@@ -34,10 +34,9 @@ import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
-internal class ArtistScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
 
     private val artistRepository: ArtistRepository by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()

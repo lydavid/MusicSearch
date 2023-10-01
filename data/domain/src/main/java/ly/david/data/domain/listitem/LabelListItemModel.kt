@@ -1,10 +1,9 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Label
+import ly.david.data.core.label.LabelWithCatalog
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.data.room.label.LabelRoomModel
-import ly.david.data.room.release.LabelWithCatalog
+import lydavidmusicsearchdatadatabase.Label
 
 data class LabelListItemModel(
     override val id: String,
@@ -15,7 +14,7 @@ data class LabelListItemModel(
 
     // TODO: don't need this in scaffold model
     val catalogNumber: String? = null,
-) : Label, ListItemModel()
+) : ly.david.data.core.Label, ListItemModel()
 
 internal fun LabelMusicBrainzModel.toLabelListItemModel() =
     LabelListItemModel(
@@ -26,23 +25,23 @@ internal fun LabelMusicBrainzModel.toLabelListItemModel() =
         labelCode = labelCode
     )
 
-fun LabelRoomModel.toLabelListItemModel() =
+fun Label.toLabelListItemModel() =
     LabelListItemModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         type = type,
-        labelCode = labelCode
+        labelCode = label_code,
     )
 
 internal fun LabelWithCatalog.toLabelListItemModel() =
     LabelListItemModel(
-        id = label.id,
-        name = label.name,
-        disambiguation = label.disambiguation,
-        type = label.type,
-        labelCode = label.labelCode,
-        catalogNumber = releaseLabel.catalogNumber
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        labelCode = labelCode,
+        catalogNumber = catalogNumber,
     )
 
 fun List<LabelInfo>.toLabelListItemModels(): List<LabelListItemModel> {

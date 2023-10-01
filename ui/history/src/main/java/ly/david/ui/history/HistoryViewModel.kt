@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import ly.david.data.core.common.getDateFormatted
+import ly.david.data.core.history.LookupHistoryForListItem
 import ly.david.data.domain.history.HistorySortOption
 import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.domain.listitem.ListItemModel
@@ -25,7 +26,6 @@ import ly.david.data.domain.listitem.ListSeparator
 import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.data.domain.listitem.toLookupHistoryListItemModel
 import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.room.history.LookupHistoryForListItem
 import ly.david.ui.settings.AppPreferences
 import org.koin.android.annotation.KoinViewModel
 

@@ -1,9 +1,9 @@
 package ly.david.data.domain.series
 
-import ly.david.data.core.Series
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.room.series.SeriesWithAllData
+import lydavidmusicsearchdatadatabase.Relation
+import lydavidmusicsearchdatadatabase.Series
 
 data class SeriesScaffoldModel(
     override val id: String,
@@ -11,13 +11,14 @@ data class SeriesScaffoldModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : Series
+) : ly.david.data.core.Series
 
-internal fun SeriesWithAllData.toSeriesScaffoldModel() =
-    SeriesScaffoldModel(
-        id = series.id,
-        name = series.name,
-        disambiguation = series.disambiguation,
-        type = series.type,
-        urls = urls.map { it.relation.toRelationListItemModel() },
-    )
+internal fun Series.toSeriesScaffoldModel(
+    urls: List<Relation>,
+) = SeriesScaffoldModel(
+    id = id,
+    name = name,
+    disambiguation = disambiguation,
+    type = type,
+    urls = urls.map { it.toRelationListItemModel() },
+)

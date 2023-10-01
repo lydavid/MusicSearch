@@ -5,13 +5,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
+import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.domain.history.IncrementLookupHistoryUseCase
 import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.data.domain.recordng.RecordingScaffoldModel
-import ly.david.data.room.history.LookupHistoryDao
-import ly.david.data.room.history.RecordLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -21,11 +21,10 @@ import timber.log.Timber
 @KoinViewModel
 internal class RecordingScaffoldViewModel(
     private val repository: RecordingRepository,
-    override val lookupHistoryDao: LookupHistoryDao,
+    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
     private val relationsList: RelationsList,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
-    RecordLookupHistory,
     IRelationsList by relationsList {
 
     private var recordedLookup = false
@@ -38,7 +37,7 @@ internal class RecordingScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.repository = repository
+        relationsList.relationsListRepository = repository
     }
 
     fun loadDataForTab(
@@ -62,10 +61,12 @@ internal class RecordingScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        recordLookupHistory(
-                            entityId = recordingId,
-                            entity = entity,
-                            summary = title.value
+                        incrementLookupHistoryUseCase(
+                            LookupHistory(
+                                mbid = recordingId,
+                                title = title.value,
+                                entity = entity,
+                            )
                         )
                         recordedLookup = true
                     }

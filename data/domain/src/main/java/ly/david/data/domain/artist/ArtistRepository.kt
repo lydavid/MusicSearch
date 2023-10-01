@@ -2,11 +2,11 @@ package ly.david.data.domain.artist
 
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
+import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.artist.ArtistDao
-import ly.david.data.room.artist.toArtistRoomModel
+import ly.david.musicsearch.data.database.dao.ArtistDao
 import org.koin.core.annotation.Single
 
 @Single
@@ -17,23 +17,28 @@ class ArtistRepository(
 ) : RelationsListRepository {
 
     suspend fun lookupArtist(artistId: String): ArtistScaffoldModel {
-        val artistWithAllData = artistDao.getArtist(artistId)
+        val artistForDetails = artistDao.getArtistForDetails(artistId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
-        if (artistWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return artistWithAllData.toArtistScaffoldModel()
-        }
-
-        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(
-            artistId = artistId,
-        )
-        artistDao.withTransaction {
-            artistDao.insert(artistMusicBrainzModel.toArtistRoomModel())
-            relationRepository.insertAllRelations(
-                entityId = artistId,
-                relationMusicBrainzModels = artistMusicBrainzModel.relations,
+        if (artistForDetails != null && hasUrlsBeenSavedForEntity) {
+            return artistForDetails.toArtistScaffoldModel(
+                urls = urlRelations,
             )
         }
+
+        val artistMusicBrainzModel = musicBrainzApi.lookupArtist(artistId)
+        cache(artistMusicBrainzModel)
         return lookupArtist(artistId)
+    }
+
+    private fun cache(artist: ArtistMusicBrainzModel) {
+        artistDao.withTransaction {
+            artistDao.insert(artist)
+            relationRepository.insertAllUrlRelations(
+                entityId = artist.id,
+                relationMusicBrainzModels = artist.relations,
+            )
+        }
     }
 
     override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {

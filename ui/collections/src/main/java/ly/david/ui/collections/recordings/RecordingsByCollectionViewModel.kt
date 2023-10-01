@@ -1,18 +1,16 @@
 package ly.david.ui.collections.recordings
 
 import androidx.paging.PagingSource
+import ly.david.data.core.RecordingForListItem
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.data.domain.listitem.toRecordingListItemModel
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.collection.CollectionEntityDao
-import ly.david.data.room.collection.CollectionEntityRoomModel
-import ly.david.data.room.recording.RecordingDao
-import ly.david.data.room.recording.RecordingForListItem
-import ly.david.data.room.recording.toRoomModel
-import ly.david.data.room.relation.RelationDao
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
+import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -21,19 +19,19 @@ import org.koin.android.annotation.KoinViewModel
 internal class RecordingsByCollectionViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val collectionEntityDao: CollectionEntityDao,
-    private val relationDao: RelationDao,
+    private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
 ) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
-    relationDao = relationDao,
+    browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {
         return musicBrainzApi.browseRecordingsByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -41,40 +39,32 @@ internal class RecordingsByCollectionViewModel(
         entityId: String,
         musicBrainzModels: List<RecordingMusicBrainzModel>,
     ) {
-        recordingDao.insertAll(musicBrainzModels.map { it.toRoomModel() })
-        collectionEntityDao.insertAll(
-            musicBrainzModels.map { recording ->
-                CollectionEntityRoomModel(
-                    id = entityId,
-                    entityId = recording.id
-                )
-            }
-        )
+        collectionEntityDao.withTransaction {
+            recordingDao.insertAll(musicBrainzModels)
+            collectionEntityDao.insertAll(
+                collectionId = entityId,
+                entityIds = musicBrainzModels.map { recording -> recording.id },
+            )
+        }
     }
 
     override suspend fun deleteLinkedEntitiesByEntity(entityId: String) {
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteAllFromCollection(entityId)
-            relationDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(entityId, MusicBrainzEntity.RECORDING)
         }
     }
 
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, RecordingForListItem> = when {
-        query.isEmpty() -> {
-            collectionEntityDao.getRecordingsByCollection(entityId)
-        }
-        else -> {
-            collectionEntityDao.getRecordingsByCollectionFiltered(
-                collectionId = entityId,
-                query = "%$query%"
-            )
-        }
-    }
+    ): PagingSource<Int, RecordingForListItem> =
+        collectionEntityDao.getRecordingsByCollection(
+            collectionId = entityId,
+            query = "%$query%",
+        )
 
-    override fun transformRoomToListItemModel(roomModel: RecordingForListItem): RecordingListItemModel {
-        return roomModel.toRecordingListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: RecordingForListItem): RecordingListItemModel {
+        return databaseModel.toRecordingListItemModel()
     }
 }

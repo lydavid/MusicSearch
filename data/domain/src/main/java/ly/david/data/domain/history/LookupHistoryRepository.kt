@@ -1,12 +1,17 @@
 package ly.david.data.domain.history
 
-import ly.david.data.room.history.LookupHistoryDao
+import ly.david.data.core.history.LookupHistory
+import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import org.koin.core.annotation.Single
 
 @Single
 class LookupHistoryRepository(
     private val lookupHistoryDao: LookupHistoryDao,
 ) {
+    fun upsert(lookupHistory: LookupHistory) {
+        lookupHistoryDao.upsert(lookupHistory)
+    }
+
     fun getAllLookupHistory(query: String, sortOption: HistorySortOption) =
         lookupHistoryDao.getAllLookupHistory(
             query = "%$query%",
@@ -18,27 +23,27 @@ class LookupHistoryRepository(
             leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
         )
 
-    suspend fun markHistoryAsDeleted(mbid: String) {
+    fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, true)
     }
 
-    suspend fun undoDeleteHistory(mbid: String) {
+    fun undoDeleteHistory(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, false)
     }
 
-    suspend fun markAllHistoryAsDeleted() {
+    fun markAllHistoryAsDeleted() {
         lookupHistoryDao.markAllAsDeleted(true)
     }
 
-    suspend fun undoDeleteAllHistory() {
+    fun undoDeleteAllHistory() {
         lookupHistoryDao.markAllAsDeleted(false)
     }
 
-    suspend fun deleteHistory(mbid: String) {
+    fun deleteHistory(mbid: String) {
         lookupHistoryDao.delete(mbid)
     }
 
-    suspend fun deleteAllHistory() {
+    fun deleteAllHistory() {
         lookupHistoryDao.deleteAll()
     }
 }

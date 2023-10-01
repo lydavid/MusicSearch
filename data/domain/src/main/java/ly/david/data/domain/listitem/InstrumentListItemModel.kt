@@ -1,8 +1,7 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.Instrument
 import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
-import ly.david.data.room.instrument.InstrumentRoomModel
+import lydavidmusicsearchdatadatabase.Instrument
 
 data class InstrumentListItemModel(
     override val id: String,
@@ -10,7 +9,7 @@ data class InstrumentListItemModel(
     override val disambiguation: String? = null,
     override val description: String? = null,
     override val type: String? = null,
-) : Instrument, ListItemModel()
+) : ly.david.data.core.Instrument, ListItemModel()
 
 internal fun InstrumentMusicBrainzModel.toInstrumentListItemModel() =
     InstrumentListItemModel(
@@ -21,7 +20,7 @@ internal fun InstrumentMusicBrainzModel.toInstrumentListItemModel() =
         type = type,
     )
 
-fun InstrumentRoomModel.toInstrumentListItemModel() =
+fun Instrument.toInstrumentListItemModel() =
     InstrumentListItemModel(
         id = id,
         name = name,

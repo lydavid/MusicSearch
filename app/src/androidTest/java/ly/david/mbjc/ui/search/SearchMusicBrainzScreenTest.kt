@@ -30,13 +30,12 @@ import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
 
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachEntityTest].
  */
 @RunWith(AndroidJUnit4::class)
-internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences, KoinTest {
+internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {
 
     private lateinit var navController: NavHostController
 

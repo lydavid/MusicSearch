@@ -6,15 +6,15 @@ import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.data.room.area.AreaDao
-import ly.david.data.room.area.getAreaCountryCodes
-import ly.david.data.room.area.toAreaRoomModel
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import org.koin.core.annotation.Single
 
 @Single
 class AreaRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val areaDao: AreaDao,
+    private val countryCodeDao: CountryCodeDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
@@ -24,23 +24,30 @@ class AreaRepository(
      * Lookup area, and stores all relevant data.
      */
     suspend fun lookupArea(areaId: String): AreaScaffoldModel {
-        val areaWithAllData = areaDao.getArea(areaId)
+        val area = areaDao.getArea(areaId)
+        val countryCodes: List<String> = countryCodeDao.getCountryCodesForArea(areaId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(areaId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)
-        if (areaWithAllData != null && hasUrlsBeenSavedForEntity) {
-            return areaWithAllData.toAreaScaffoldModel()
+        if (area != null && hasUrlsBeenSavedForEntity) {
+            return area.toAreaScaffoldModel(
+                countryCodes = countryCodes,
+                urls = urlRelations,
+            )
         }
 
         val areaMusicBrainzModel = musicBrainzApi.lookupArea(areaId)
-        insertAllModels(areaMusicBrainzModel)
+        cache(areaMusicBrainzModel)
         return lookupArea(areaId)
     }
 
-    private suspend fun insertAllModels(area: AreaMusicBrainzModel) {
+    private fun cache(area: AreaMusicBrainzModel) {
         areaDao.withTransaction {
-            areaDao.insert(area.toAreaRoomModel())
-            areaDao.insertAllCountryCodes(area.getAreaCountryCodes())
-
-            relationRepository.insertAllRelations(
+            areaDao.insert(area)
+            countryCodeDao.insertCountryCodesForArea(
+                areaId = area.id,
+                countryCodes = area.countryCodes.orEmpty()
+            )
+            relationRepository.insertAllUrlRelations(
                 entityId = area.id,
                 relationMusicBrainzModels = area.relations,
             )

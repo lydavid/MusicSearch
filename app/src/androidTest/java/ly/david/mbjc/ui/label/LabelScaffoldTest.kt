@@ -14,10 +14,9 @@ import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
-import org.koin.test.KoinTest
 import org.koin.test.inject
 
-internal class LabelScaffoldTest : MainActivityTest(), StringReferences, KoinTest {
+internal class LabelScaffoldTest : MainActivityTest(), StringReferences {
 
     private val labelRepository: LabelRepository by inject()
 
