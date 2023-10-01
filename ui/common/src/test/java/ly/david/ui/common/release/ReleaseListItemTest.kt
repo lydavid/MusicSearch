@@ -7,8 +7,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import ly.david.data.core.release.ReleaseCountry
 import ly.david.data.domain.listitem.ReleaseListItemModel
-import ly.david.data.room.area.releases.ReleaseCountry
 import ly.david.ui.test.image.FakeImageLoader
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
 import org.junit.After

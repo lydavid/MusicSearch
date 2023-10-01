@@ -26,7 +26,6 @@ okhttp = "4.11.0"
 paging = "3.2.1"
 pagingMultiplatform = "3.1.1-0.3.1"
 paparazzi = "1.3.1"
-room = "2.5.2"
 sqldelight = "2.0.0"
 
 [libraries]
@@ -87,12 +86,6 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "pagingMultiplatform" }
 paparazzi = { group = "app.cash.paparazzi", name = "paparazzi", version.ref = "paparazzi" }
 robolectric = { group = "org.robolectric", name = "robolectric", version = "4.10.3" }
-room-common = { group = "androidx.room", name = "room-common", version.ref = "room" }
-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
 sqldelight-android-driver = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-extensions", version.ref = "sqldelight" }

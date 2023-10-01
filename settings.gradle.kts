@@ -44,7 +44,6 @@ include(
     ":data:database",
     ":data:domain",
     ":data:spotify",
-    ":data:room",
     ":data:musicbrainz",
     ":test-data",
     ":ui:collections",
