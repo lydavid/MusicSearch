@@ -16,8 +16,6 @@ import org.koin.test.inject
 
 internal class EventScaffoldTest : MainActivityTest(), StringReferences {
 
-    // TODO: ui test should not interact directly with implementation detail
-    //  to repeat a visit, literally do just that
     private val eventRepository: EventRepository by inject()
 
     private fun setEvent(eventMusicBrainzModel: EventMusicBrainzModel) {

@@ -32,7 +32,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.koin.core.component.KoinComponent
 import org.koin.test.inject
 
 /**
@@ -41,7 +40,7 @@ import org.koin.test.inject
 @RunWith(Parameterized::class)
 internal class CollectionParameterizedTest(
     private val entity: MusicBrainzEntity,
-) : MainActivityTest(), StringReferences, KoinComponent {
+) : MainActivityTest(), StringReferences {
 
     companion object {
         @JvmStatic
