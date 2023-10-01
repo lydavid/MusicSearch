@@ -1,9 +1,10 @@
 package ly.david.data.domain.artist
 
+import ly.david.data.core.artist.Artist
+import ly.david.data.core.artist.ArtistForDetails
 import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.data.domain.listitem.RelationListItemModel
 import ly.david.data.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Artist
 import lydavidmusicsearchdatadatabase.Relation
 
 data class ArtistScaffoldModel(
@@ -14,27 +15,26 @@ data class ArtistScaffoldModel(
     override val type: String? = null,
     override val gender: String? = null,
     override val countryCode: String? = null,
-    override val lifeSpan: LifeSpanUiModel? = null,
-    val urls: List<RelationListItemModel> = listOf(),
+    val lifeSpan: LifeSpanUiModel? = null,
     val imageUrl: String? = null,
-) : ly.david.data.core.Artist
+    val urls: List<RelationListItemModel> = listOf(),
+) : Artist
 
-internal fun Artist.toArtistScaffoldModel(
-    imageUrl: String?,
+internal fun ArtistForDetails.toArtistScaffoldModel(
     urls: List<Relation>,
 ) = ArtistScaffoldModel(
     id = id,
     name = name,
-    sortName = sort_name,
+    sortName = sortName,
     disambiguation = disambiguation,
     type = type,
     gender = gender,
-    countryCode = country_code,
+    countryCode = countryCode,
     lifeSpan = LifeSpanUiModel(
         begin = begin,
         end = end,
         ended = ended,
     ),
-    urls = urls.map { it.toRelationListItemModel() },
-    imageUrl = imageUrl
+    imageUrl = imageUrl,
+    urls = urls.map { it.toRelationListItemModel() }
 )

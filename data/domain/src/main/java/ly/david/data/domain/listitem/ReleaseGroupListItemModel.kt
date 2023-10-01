@@ -1,6 +1,6 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.releasegroup.ReleaseGroup
 import ly.david.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel

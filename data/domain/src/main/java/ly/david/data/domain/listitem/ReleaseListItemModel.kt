@@ -1,6 +1,6 @@
 package ly.david.data.domain.listitem
 
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.release.Release
 import ly.david.data.core.release.ReleaseCountry
 import ly.david.data.core.release.ReleaseForListItem

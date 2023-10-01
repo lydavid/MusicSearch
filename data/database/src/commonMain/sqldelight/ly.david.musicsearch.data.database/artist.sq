@@ -18,5 +18,19 @@ insert:
 INSERT OR IGNORE INTO artist
 VALUES ?;
 
-getArtist:
-SELECT * FROM artist WHERE id = ?;
+getArtistForDetails:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.gender,
+  a.country_code,
+  a.begin,
+  a.end,
+  a.ended,
+  mi.large_url
+FROM artist a
+LEFT JOIN mbid_image mi ON mi.mbid = a.id
+WHERE id = :artistId;

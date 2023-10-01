@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity

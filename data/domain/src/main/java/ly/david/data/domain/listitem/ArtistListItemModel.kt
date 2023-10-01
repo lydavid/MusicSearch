@@ -13,8 +13,8 @@ data class ArtistListItemModel(
     override val type: String? = null,
     override val gender: String? = null,
     override val countryCode: String? = null,
-    override val lifeSpan: LifeSpanUiModel? = null,
-) : ListItemModel(), ly.david.data.core.Artist
+    val lifeSpan: LifeSpanUiModel? = null,
+) : ListItemModel(), ly.david.data.core.artist.Artist
 
 fun ArtistMusicBrainzModel.toArtistListItemModel() =
     ArtistListItemModel(

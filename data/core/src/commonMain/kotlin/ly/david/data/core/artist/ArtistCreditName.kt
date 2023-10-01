@@ -1,4 +1,4 @@
-package ly.david.data.core
+package ly.david.data.core.artist
 
 interface ArtistCreditName {
     val name: String

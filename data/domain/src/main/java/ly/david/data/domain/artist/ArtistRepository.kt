@@ -1,6 +1,5 @@
 package ly.david.data.domain.artist
 
-import ly.david.data.core.image.ImageUrlDao
 import ly.david.data.domain.RelationsListRepository
 import ly.david.data.domain.relation.RelationRepository
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
@@ -14,18 +13,15 @@ import org.koin.core.annotation.Single
 class ArtistRepository(
     private val musicBrainzApi: MusicBrainzApi,
     private val artistDao: ArtistDao,
-    private val imageUrlDao: ImageUrlDao,
     private val relationRepository: RelationRepository,
 ) : RelationsListRepository {
 
     suspend fun lookupArtist(artistId: String): ArtistScaffoldModel {
-        val artist = artistDao.getArtist(artistId)
-        val largeImageUrl = imageUrlDao.getLargeUrlForEntity(artistId)
+        val artistForDetails = artistDao.getArtistForDetails(artistId)
         val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
-        if (artist != null && hasUrlsBeenSavedForEntity) {
-            return artist.toArtistScaffoldModel(
-                imageUrl = largeImageUrl,
+        if (artistForDetails != null && hasUrlsBeenSavedForEntity) {
+            return artistForDetails.toArtistScaffoldModel(
                 urls = urlRelations,
             )
         }

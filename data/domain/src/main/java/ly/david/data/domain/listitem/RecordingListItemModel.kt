@@ -2,7 +2,7 @@ package ly.david.data.domain.listitem
 
 import ly.david.data.core.Recording
 import ly.david.data.core.RecordingForListItem
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 
 data class RecordingListItemModel(

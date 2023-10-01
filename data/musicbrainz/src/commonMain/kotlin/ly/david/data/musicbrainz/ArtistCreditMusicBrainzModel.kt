@@ -2,7 +2,7 @@ package ly.david.data.musicbrainz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.core.ArtistCreditName
+import ly.david.data.core.artist.ArtistCreditName
 
 @Serializable
 data class ArtistCreditMusicBrainzModel(

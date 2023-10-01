@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
+import ly.david.data.core.artist.ArtistForDetails
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Artist
@@ -37,7 +38,36 @@ class ArtistDao(
         }
     }
 
-    fun getArtist(artistId: String): Artist? {
-        return transacter.getArtist(artistId).executeAsOneOrNull()
+    fun getArtistForDetails(artistId: String): ArtistForDetails? {
+        return transacter.getArtistForDetails(
+            artistId,
+            mapper = ::mapToArtistForDetails,
+        ).executeAsOneOrNull()
     }
+
+    private fun mapToArtistForDetails(
+        id: String,
+        name: String,
+        sortName: String,
+        disambiguation: String?,
+        type: String?,
+        gender: String?,
+        countryCode: String?,
+        begin: String?,
+        end: String?,
+        ended: Boolean?,
+        largeUrl: String?,
+    ) = ArtistForDetails(
+        id = id,
+        name = name,
+        sortName = sortName,
+        disambiguation = disambiguation,
+        type = type,
+        gender = gender,
+        countryCode = countryCode,
+        begin = begin,
+        end = end,
+        ended = ended,
+        imageUrl = largeUrl,
+    )
 }

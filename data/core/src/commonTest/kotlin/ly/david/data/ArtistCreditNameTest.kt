@@ -2,8 +2,8 @@ package ly.david.data
 
 import io.mockk.every
 import io.mockk.mockk
-import ly.david.data.core.ArtistCreditName
-import ly.david.data.core.getDisplayNames
+import ly.david.data.core.artist.ArtistCreditName
+import ly.david.data.core.artist.getDisplayNames
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

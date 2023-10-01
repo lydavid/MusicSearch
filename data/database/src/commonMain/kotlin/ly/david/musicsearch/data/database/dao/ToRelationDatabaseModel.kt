@@ -1,9 +1,9 @@
 package ly.david.musicsearch.data.database.dao
 
 import java.net.URLDecoder
+import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.common.emptyToNull
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.data.core.getDisplayNames
 import ly.david.data.core.getLifeSpanForDisplay
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
