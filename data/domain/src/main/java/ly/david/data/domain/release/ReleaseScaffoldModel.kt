@@ -53,7 +53,6 @@ data class ReleaseScaffoldModel(
 internal fun ReleaseWithAllData.toReleaseScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
     releaseGroup: ReleaseGroupForRelease,
-    imageUrl: String?,
     formatTrackCounts: List<FormatTrackCount>,
     labels: List<LabelWithCatalog>,
     releaseEvents: List<ReleaseEvent>,

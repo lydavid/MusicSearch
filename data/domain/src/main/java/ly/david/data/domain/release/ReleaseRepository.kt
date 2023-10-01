@@ -47,7 +47,6 @@ class ReleaseRepository(
         val release = releaseDao.getRelease(releaseId)
         val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseId)
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
-        val largeImageUrl = imageUrlDao.getLargeUrlForEntity(releaseId)
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
         val releaseEvents = releaseCountryDao.getCountriesByRelease(releaseId)
@@ -63,7 +62,6 @@ class ReleaseRepository(
             return release.toReleaseScaffoldModel(
                 artistCreditNames = artistCreditNames,
                 releaseGroup = releaseGroup,
-                imageUrl = largeImageUrl,
                 formatTrackCounts = formatTrackCounts,
                 labels = labels,
                 releaseEvents = releaseEvents,

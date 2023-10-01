@@ -18,13 +18,4 @@ interface Release : NameWithDisambiguation {
     val statusId: String?
     val packaging: String?
     val packagingId: String?
-//    val coverArtArchive: CoverArtArchive
-//    val textRepresentation: TextRepresentation?
-//    val releaseEvents: List<ReleaseEvent>? = null,
-
-//    val media: List<Medium>? = null,
-
-//    val artistCredits: List<MusicBrainzArtistCredit>? = null,
-
-//    val labelInfoList: List<LabelInfo>? = null,
 }

@@ -63,17 +63,6 @@ class ReleaseDao(
             mapper = ::mapToReleaseWithAllData,
         ).executeAsOneOrNull()
 
-    fun getReleaseFormatTrackCount(releaseId: String): List<FormatTrackCount> =
-        transacter.getReleaseFormatTrackCount(
-            releaseId = releaseId,
-            mapper = { format, trackCount ->
-                FormatTrackCount(
-                    format = format,
-                    trackCount = trackCount.toInt(),
-                )
-            }
-        ).executeAsList()
-
     private fun mapToReleaseWithAllData(
         id: String,
         name: String,
@@ -90,6 +79,7 @@ class ReleaseDao(
         script: String?,
         language: String?,
         coverArtCount: Int,
+        imageUrl: String?,
         releaseLength: Double?,
         hasNullLength: Boolean,
     ) = ReleaseWithAllData(
@@ -108,7 +98,19 @@ class ReleaseDao(
         script = script,
         language = language,
         coverArtCount = coverArtCount,
+        imageUrl = imageUrl,
         releaseLength = releaseLength?.toInt(),
         hasNullLength = hasNullLength,
     )
+
+    fun getReleaseFormatTrackCount(releaseId: String): List<FormatTrackCount> =
+        transacter.getReleaseFormatTrackCount(
+            releaseId = releaseId,
+            mapper = { format, trackCount ->
+                FormatTrackCount(
+                    format = format,
+                    trackCount = trackCount.toInt(),
+                )
+            }
+        ).executeAsList()
 }
