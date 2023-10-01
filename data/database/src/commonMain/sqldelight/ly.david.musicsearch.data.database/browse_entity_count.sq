@@ -18,7 +18,7 @@ import ly.david.data.core.network.MusicBrainzEntity;
 --  but rather the current offset for browsing browse_entity.
 -- remote_count: How many browse_entity exists in MusicBrainz's database.
 --  NULL means we have not yet started browsing. 0 means there were none.
-CREATE TABLE browse_entity_count (
+CREATE TABLE IF NOT EXISTS browse_entity_count (
   entity_id TEXT NOT NULL,
   browse_entity TEXT AS MusicBrainzEntity NOT NULL,
   local_count INTEGER AS Int NOT NULL,

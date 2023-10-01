@@ -38,7 +38,7 @@ internal class PlacesByCollectionViewModel(
     override suspend fun insertAllLinkingModels(entityId: String, musicBrainzModels: List<PlaceMusicBrainzModel>) {
         placeDao.insertAll(musicBrainzModels)
         collectionEntityDao.insertAll(
-            collectionId = entityId, // TODO: confusingly named, but this is correct
+            collectionId = entityId,
             entityIds = musicBrainzModels.map { place -> place.id },
         )
     }

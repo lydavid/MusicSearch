@@ -1,4 +1,4 @@
-CREATE TABLE artist_release_group (
+CREATE TABLE IF NOT EXISTS artist_release_group (
   `artist_id` TEXT NOT NULL,
   `release_group_id` TEXT NOT NULL,
 

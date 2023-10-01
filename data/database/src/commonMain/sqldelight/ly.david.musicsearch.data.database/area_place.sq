@@ -1,4 +1,4 @@
-CREATE TABLE area_place (
+CREATE TABLE IF NOT EXISTS area_place (
   area_id TEXT NOT NULL,
   place_id TEXT NOT NULL,
 

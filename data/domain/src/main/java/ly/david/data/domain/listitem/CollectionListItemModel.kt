@@ -20,5 +20,4 @@ fun Collection.toCollectionListItemModel() =
         name = name,
         entity = entity,
         entityCount = entity_count,
-//        entityIds = entities.map { it.entityId }
     )

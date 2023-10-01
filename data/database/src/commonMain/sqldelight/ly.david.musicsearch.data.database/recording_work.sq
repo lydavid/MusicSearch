@@ -1,4 +1,4 @@
-CREATE TABLE recording_work (
+CREATE TABLE IF NOT EXISTS recording_work (
   recording_id TEXT NOT NULL,
   work_id TEXT NOT NULL,
 

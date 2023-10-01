@@ -2,7 +2,7 @@ import kotlin.Boolean;
 import kotlin.Int;
 import ly.david.data.core.network.MusicBrainzEntity;
 
-CREATE TABLE collection (
+CREATE TABLE IF NOT EXISTS collection (
   id TEXT PRIMARY KEY NOT NULL,
   is_remote INTEGER AS Boolean NOT NULL,
   name TEXT NOT NULL,

@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 
-CREATE TABLE mb_entity_has_urls (
+CREATE TABLE IF NOT EXISTS mb_entity_has_urls (
   entity_id TEXT PRIMARY KEY NOT NULL,
   has_urls INTEGER AS Boolean NOT NULL
 );
