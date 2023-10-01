@@ -39,39 +39,39 @@ import ly.david.musicsearch.data.database.dao.WorkDao
 import org.koin.dsl.module
 
 val databaseDaoModule = module {
-    factory { AreaDao(get()) }
-    factory { AreaPlaceDao(get(), get()) }
-    factory { ArtistCreditDao(get(), get()) }
-    factory { ArtistDao(get()) }
-    factory { ArtistReleaseDao(get(), get()) }
-    factory { ArtistReleaseGroupDao(get(), get()) }
-    factory { BrowseEntityCountDao(get(), get()) }
-    factory { CollectionDao(get(), get()) }
-    factory { CollectionEntityDao(get(), get()) }
-    factory { CountryCodeDao(get()) }
-    factory { EntityHasRelationsDao(get()) }
-    factory { EntityHasUrlsDao(get()) }
-    factory { EventDao(get()) }
-    factory { EventPlaceDao(get(), get()) }
-    factory { InstrumentDao(get()) }
-    factory { LabelDao(get()) }
-    factory { LookupHistoryDao(get(), get()) }
-    factory<ImageUrlDao> { MbidImageDao(get()) }
-    factory { MediumDao(get(), get()) }
-    factory { NowPlayingHistoryDao(get(), get()) }
-    factory { PlaceDao(get()) }
-    factory { RecordingDao(get(), get()) }
-    factory { RecordingReleaseDao(get(), get()) }
-    factory { RecordingWorkDao(get(), get()) }
-    factory { RelationDao(get(), get()) }
-    factory { ReleaseCountryDao(get(), get()) }
-    factory { ReleaseDao(get(), get(), get()) }
-    factory { ReleaseGroupDao(get(), get()) }
-    factory { ReleaseLabelDao(get(), get()) }
-    factory { ReleaseReleaseGroupDao(get(), get()) }
-    factory { SearchHistoryDao(get(), get()) }
-    factory { SeriesDao(get()) }
-    factory { TrackDao(get(), get(), get()) }
-    factory { WorkAttributeDao(get()) }
-    factory { WorkDao(get()) }
+    single { AreaDao(get()) }
+    single { AreaPlaceDao(get(), get()) }
+    single { ArtistCreditDao(get(), get()) }
+    single { ArtistDao(get()) }
+    single { ArtistReleaseDao(get(), get()) }
+    single { ArtistReleaseGroupDao(get(), get()) }
+    single { BrowseEntityCountDao(get(), get()) }
+    single { CollectionDao(get(), get()) }
+    single { CollectionEntityDao(get(), get()) }
+    single { CountryCodeDao(get()) }
+    single { EntityHasRelationsDao(get()) }
+    single { EntityHasUrlsDao(get()) }
+    single { EventDao(get()) }
+    single { EventPlaceDao(get(), get()) }
+    single { InstrumentDao(get()) }
+    single { LabelDao(get()) }
+    single { LookupHistoryDao(get(), get()) }
+    single<ImageUrlDao> { MbidImageDao(get()) }
+    single { MediumDao(get(), get()) }
+    single { NowPlayingHistoryDao(get(), get()) }
+    single { PlaceDao(get()) }
+    single { RecordingDao(get(), get()) }
+    single { RecordingReleaseDao(get(), get()) }
+    single { RecordingWorkDao(get(), get()) }
+    single { RelationDao(get(), get()) }
+    single { ReleaseCountryDao(get(), get()) }
+    single { ReleaseDao(get(), get(), get()) }
+    single { ReleaseGroupDao(get(), get()) }
+    single { ReleaseLabelDao(get(), get()) }
+    single { ReleaseReleaseGroupDao(get(), get()) }
+    single { SearchHistoryDao(get(), get()) }
+    single { SeriesDao(get()) }
+    single { TrackDao(get(), get(), get()) }
+    single { WorkAttributeDao(get()) }
+    single { WorkDao(get()) }
 }
