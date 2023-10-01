@@ -1,0 +1,13 @@
+name: "Create issue from TODO comments"
+on:
+  push:
+    branches:
+      - beta
+jobs:
+  create-todo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Create issue from TODO comments"
+        uses: alstr/todo-to-issue-action@v4
