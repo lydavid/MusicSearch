@@ -7,7 +7,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import ly.david.data.core.release.ReleaseCountry
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.ui.test.image.FakeImageLoader
 import ly.david.ui.test.screenshot.PaparazziScreenshotTest
@@ -103,11 +102,7 @@ class ReleaseListItemTest : PaparazziScreenshotTest() {
                     id = "1",
                     name = "Release title",
                     countryCode = "CA",
-                    releaseCountryCount = listOf(
-                        ReleaseCountry("1", countryId = "2"),
-                        ReleaseCountry("1", countryId = "3"),
-                        ReleaseCountry("1", countryId = "4"),
-                    ),
+                    releaseCountryCount = 3,
                 ),
                 showMoreInfo = true
             )
