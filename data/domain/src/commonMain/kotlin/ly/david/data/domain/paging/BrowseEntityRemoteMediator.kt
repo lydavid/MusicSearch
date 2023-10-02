@@ -1,6 +1,6 @@
 package ly.david.data.domain.paging
 
-import androidx.paging.LoadType
+import app.cash.paging.LoadType
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator

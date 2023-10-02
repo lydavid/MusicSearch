@@ -1,21 +1,32 @@
 plugins {
-    id("ly.david.kotlin")
+    id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.ksp)
 }
 
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.data.core)
+                implementation(projects.data.common.network)
+                implementation(projects.data.coverart)
+                implementation(projects.data.database)
+                implementation(projects.data.musicbrainz)
+                implementation(libs.koin.annotations)
+                implementation(libs.koin.core)
+                implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.paging.common)
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.junit)
+                implementation(libs.mockk)
+            }
+        }
+    }
+}
+
 dependencies {
-    implementation(projects.data.core)
-    implementation(projects.data.common.network)
-    implementation(projects.data.coverart)
-    implementation(projects.data.database)
-    implementation(projects.data.musicbrainz)
-    implementation(libs.koin.annotations)
-    implementation(libs.koin.core)
-    implementation(libs.kotlinx.collections.immutable)
-    implementation(libs.paging.common)
-
-    ksp(libs.koin.ksp.compiler)
-
-    testImplementation(libs.junit)
-    testImplementation(libs.mockk)
+    add("kspJvm", libs.koin.ksp.compiler)
 }
