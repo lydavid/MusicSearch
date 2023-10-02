@@ -2,7 +2,6 @@ package ly.david.data.domain.listitem
 
 import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.release.Release
-import ly.david.data.core.release.ReleaseCountry
 import ly.david.data.core.release.ReleaseForListItem
 import ly.david.data.domain.release.CoverArtArchiveUiModel
 import ly.david.data.domain.release.TextRepresentationUiModel
@@ -32,8 +31,7 @@ data class ReleaseListItemModel(
     val formattedTracks: String? = null,
     val formattedArtistCredits: String? = null,
 
-    // TODO: we only use this to show +12, so let's just sub query count
-    val releaseCountries: List<ReleaseCountry> = listOf(),
+    val releaseCountryCount: Int = 0,
 ) : ListItemModel(), Release
 
 fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
@@ -53,22 +51,8 @@ fun ReleaseMusicBrainzModel.toReleaseListItemModel() = ReleaseListItemModel(
     quality = quality,
     imageUrl = null,
     formattedArtistCredits = artistCredits.getDisplayNames(),
-    releaseCountries = getReleaseCountries(),
+    releaseCountryCount = releaseEvents?.count() ?: 0,
 )
-
-private fun ReleaseMusicBrainzModel.getReleaseCountries(): List<ReleaseCountry> =
-    releaseEvents?.mapNotNull { releaseEvent ->
-        val countryId = releaseEvent.area?.id
-        if (countryId == null) {
-            null
-        } else {
-            ReleaseCountry(
-                releaseId = id,
-                countryId = countryId,
-                date = releaseEvent.date,
-            )
-        }
-    }.orEmpty()
 
 fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
     id = id,
@@ -94,5 +78,5 @@ fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
 //    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
     imageUrl = thumbnailUrl,
     formattedArtistCredits = formattedArtistCreditNames,
-//    releaseCountries = releaseCountries,
+    releaseCountryCount = releaseCountryCount,
 )

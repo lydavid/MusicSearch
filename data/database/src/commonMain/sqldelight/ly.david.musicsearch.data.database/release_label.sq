@@ -60,8 +60,18 @@ SELECT IFNULL(
 
 -- DISTINCT because junction table can have the same release/label with different catalog number
 getReleasesByLabel:
-SELECT DISTINCT r.*, ac.name AS artist_credits, mi.thumbnail_url
-FROM release r
+SELECT
+  DISTINCT r.*,
+  ac.name AS artistCreditNames,
+  mi.thumbnail_url,
+  (
+    SELECT COUNT(cc.area_id)
+    FROM `release`
+    INNER JOIN release_country rc ON rc.release_id = `release`.id
+    INNER JOIN country_code cc ON cc.area_id = rc.country_id
+    WHERE r.id = `release`.id
+  ) AS releaseCountryCount
+FROM `release` r
 INNER JOIN release_label rl ON r.id = rl.release_id
 INNER JOIN label l ON l.id = rl.label_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id

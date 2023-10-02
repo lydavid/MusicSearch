@@ -54,8 +54,18 @@ SELECT IFNULL(
 ) AS count;
 
 getReleasesByCountry:
-SELECT r.*, ac.name AS artist_credits, mi.thumbnail_url
-FROM release r
+SELECT
+  r.*,
+  ac.name AS artistCreditNames,
+  mi.thumbnail_url,
+  (
+    SELECT COUNT(cc.area_id)
+    FROM `release`
+    INNER JOIN release_country ON release_country.release_id = `release`.id
+    INNER JOIN country_code cc ON cc.area_id = release_country.country_id
+    WHERE r.id = `release`.id
+  ) AS releaseCountryCount
+FROM `release` r
 INNER JOIN release_country rc ON r.id = rc.release_id
 INNER JOIN area a ON a.id = rc.country_id
 INNER JOIN artist_credit_entity acr ON acr.entity_id = r.id

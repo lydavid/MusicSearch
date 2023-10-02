@@ -19,7 +19,6 @@ import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.common.toFlagEmoji
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.release.ReleaseCountry
 import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.ui.common.getIcon
 import ly.david.ui.core.preview.DefaultPreviews
@@ -75,10 +74,9 @@ fun ReleaseListItem(
                         }
 
                         release.countryCode.ifNotNullOrEmpty { countryCode ->
-                            // Since we don't store release events when browsing releases,
-                            // releaseEvents will be empty until after we've clicked into it
-                            val additionalReleaseEvents = if (release.releaseCountries.size > 1) {
-                                "+ ${release.releaseCountries.size - 1}"
+                            val count = release.releaseCountryCount
+                            val additionalReleaseEvents = if (count > 1) {
+                                "+ ${count - 1}"
                             } else {
                                 ""
                             }
@@ -194,11 +192,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "9",
             name = "Release title",
             countryCode = "DZ",
-            releaseCountries = listOf(
-                ReleaseCountry("1", countryId = "2"),
-                ReleaseCountry("1", countryId = "3"),
-                ReleaseCountry("1", countryId = "4"),
-            ),
+            releaseCountryCount = 3,
             formattedArtistCredits = "Some artist feat. another"
         ),
     )

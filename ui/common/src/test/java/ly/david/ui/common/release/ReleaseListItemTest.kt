@@ -103,7 +103,7 @@ class ReleaseListItemTest : PaparazziScreenshotTest() {
                     id = "1",
                     name = "Release title",
                     countryCode = "CA",
-                    releaseCountries = listOf(
+                    releaseCountryCount = listOf(
                         ReleaseCountry("1", countryId = "2"),
                         ReleaseCountry("1", countryId = "3"),
                         ReleaseCountry("1", countryId = "4"),

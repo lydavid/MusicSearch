@@ -18,4 +18,5 @@ data class ReleaseForListItem(
     val coverArtCount: Int,
     val formattedArtistCreditNames: String,
     val thumbnailUrl: String?,
+    val releaseCountryCount: Int,
 ) : Release

@@ -20,6 +20,7 @@ internal fun mapToReleaseForListItem(
     coverArtCount: Int,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
+    releaseCountryCount: Long,
 ) = ReleaseForListItem(
     id = id,
     name = name,
@@ -38,4 +39,5 @@ internal fun mapToReleaseForListItem(
     coverArtCount = coverArtCount,
     formattedArtistCreditNames = formattedArtistCreditNames,
     thumbnailUrl = thumbnailUrl,
+    releaseCountryCount = releaseCountryCount.toInt(),
 )
