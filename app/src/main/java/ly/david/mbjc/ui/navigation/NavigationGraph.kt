@@ -15,8 +15,6 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.Destination
-import ly.david.data.domain.toLookupDestination
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
 import ly.david.data.core.network.toMusicBrainzEntity
@@ -33,6 +31,8 @@ import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.search.SearchScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
+import ly.david.musicsearch.domain.Destination
+import ly.david.musicsearch.domain.toLookupDestination
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.R

@@ -9,8 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.data.domain.listitem.SearchHistoryListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.domain.listitem.SearchHistoryListItemModel
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.core.TINY_ICON_SIZE

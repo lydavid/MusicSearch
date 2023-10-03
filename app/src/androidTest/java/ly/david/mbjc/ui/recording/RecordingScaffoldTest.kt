@@ -9,7 +9,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.recordng.RecordingRepository
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.test.davidBowie
 import ly.david.data.test.davidBowieArtistCredit
@@ -18,6 +17,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.musicsearch.domain.recordng.RecordingRepository
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ly.david.data.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.domain.listitem.CollectionListItemModel
 import ly.david.ui.common.R
 import ly.david.ui.core.theme.TextStyles
 

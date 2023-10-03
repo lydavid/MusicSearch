@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.common.toDisplayTime
-import ly.david.data.domain.recordng.RecordingScaffoldModel
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.musicsearch.domain.recordng.RecordingScaffoldModel
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeadingRes

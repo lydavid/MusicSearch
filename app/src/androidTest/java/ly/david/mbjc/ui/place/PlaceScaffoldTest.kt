@@ -5,13 +5,13 @@ import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.domain.place.PlaceRepository
-import ly.david.data.domain.place.formatForDisplay
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.data.test.fakePlaceWithAllData
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.musicsearch.domain.place.PlaceRepository
+import ly.david.musicsearch.domain.place.formatForDisplay
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject

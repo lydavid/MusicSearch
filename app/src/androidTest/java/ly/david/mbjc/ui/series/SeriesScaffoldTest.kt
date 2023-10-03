@@ -5,12 +5,12 @@ import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.domain.series.SeriesRepository
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.test.fakeInstrument
 import ly.david.data.test.fakeSeries
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.musicsearch.domain.series.SeriesRepository
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject

@@ -15,10 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.domain.event.EventScaffoldModel
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.common.LifeSpanUiModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.musicsearch.domain.common.LifeSpanUiModel
+import ly.david.musicsearch.domain.event.EventScaffoldModel
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText

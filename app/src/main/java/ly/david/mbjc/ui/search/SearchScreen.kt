@@ -28,7 +28,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.searchableEntities
-import ly.david.data.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.ListItemModel
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted

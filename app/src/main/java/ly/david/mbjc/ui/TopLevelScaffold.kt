@@ -27,13 +27,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
-import ly.david.data.domain.Destination
-import ly.david.data.domain.getTopLevelDestination
-import ly.david.data.domain.getTopLevelRoute
-import ly.david.data.domain.listitem.CollectionListItemModel
-import ly.david.data.domain.listitem.LookupHistoryListItemModel
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
+import ly.david.musicsearch.domain.Destination
+import ly.david.musicsearch.domain.getTopLevelDestination
+import ly.david.musicsearch.domain.getTopLevelRoute
+import ly.david.musicsearch.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
 import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -64,7 +64,8 @@ internal fun TopLevelScaffold(
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: Destination.LOOKUP.route
-    val currentTopLevelDestination: Destination = currentRoute.getTopLevelRoute().getTopLevelDestination()
+    val currentTopLevelDestination: Destination =
+        currentRoute.getTopLevelRoute().getTopLevelDestination()
 
     val onTopLevelDestinationClick: Destination.() -> Unit = {
         navController.navigate(name) {

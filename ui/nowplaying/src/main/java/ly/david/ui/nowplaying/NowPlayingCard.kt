@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.datetime.Instant
 import ly.david.data.core.common.getTimeFormatted
-import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
+import ly.david.musicsearch.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles

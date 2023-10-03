@@ -11,7 +11,6 @@ import androidx.compose.ui.test.performClick
 import coil.Coil
 import coil.ImageLoaderFactory
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.releasegroup.ReleaseGroupRepository
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.test.davidBowieArtistCredit
 import ly.david.data.test.hotSpaceReleaseGroup
@@ -20,6 +19,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test

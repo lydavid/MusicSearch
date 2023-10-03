@@ -11,10 +11,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.domain.listitem.Header
-import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.SearchHistoryListItemModel
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.domain.listitem.Header
+import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.SearchHistoryListItemModel
 import ly.david.ui.common.R
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler

@@ -5,7 +5,7 @@ import android.service.notification.StatusBarNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.data.core.history.NowPlayingHistory
-import ly.david.data.domain.nowplaying.NowPlayingHistoryRepository
+import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
 import org.koin.android.ext.android.inject
 
 private const val ANDROID_SYSTEM_INTELLIGENCE_PACKAGE_NAME = "com.google.android.as"

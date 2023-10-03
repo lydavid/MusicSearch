@@ -13,7 +13,6 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.area.AreaRepository
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.test.canada
 import ly.david.data.test.fakePlace
@@ -22,6 +21,7 @@ import ly.david.data.test.toronto
 import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test

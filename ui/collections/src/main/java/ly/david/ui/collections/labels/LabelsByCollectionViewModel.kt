@@ -2,14 +2,14 @@ package ly.david.ui.collections.labels
 
 import androidx.paging.PagingSource
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.LabelListItemModel
-import ly.david.data.domain.listitem.toLabelListItemModel
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.domain.listitem.toLabelListItemModel
 import ly.david.ui.common.label.LabelsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import lydavidmusicsearchdatadatabase.Label

@@ -18,11 +18,11 @@ import ly.david.data.core.common.toDisplayTime
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.releasegroup.getDisplayTypes
-import ly.david.data.domain.listitem.AreaListItemModel
-import ly.david.data.domain.listitem.LabelListItemModel
-import ly.david.data.domain.release.ReleaseScaffoldModel
-import ly.david.data.domain.release.TextRepresentationUiModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.musicsearch.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.domain.release.ReleaseScaffoldModel
+import ly.david.musicsearch.domain.release.TextRepresentationUiModel
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem

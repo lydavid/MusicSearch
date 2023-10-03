@@ -20,15 +20,15 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.core.history.SearchHistory
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.EndOfList
-import ly.david.data.domain.listitem.Header
-import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.SearchHistoryListItemModel
-import ly.david.data.domain.listitem.toSearchHistoryListItemModel
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
+import ly.david.musicsearch.domain.listitem.EndOfList
+import ly.david.musicsearch.domain.listitem.Header
+import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.SearchHistoryListItemModel
+import ly.david.musicsearch.domain.listitem.toSearchHistoryListItemModel
+import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
+import ly.david.musicsearch.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
 import org.koin.android.annotation.KoinViewModel
 

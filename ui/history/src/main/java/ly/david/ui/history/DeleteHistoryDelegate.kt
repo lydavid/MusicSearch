@@ -1,6 +1,6 @@
 package ly.david.ui.history
 
-import ly.david.data.domain.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
 
 interface DeleteHistoryDelegate {
     fun delete(history: LookupHistoryListItemModel)

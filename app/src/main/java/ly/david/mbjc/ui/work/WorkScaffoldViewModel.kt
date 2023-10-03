@@ -8,9 +8,9 @@ import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.history.IncrementLookupHistoryUseCase
-import ly.david.data.domain.work.WorkRepository
-import ly.david.data.domain.work.WorkScaffoldModel
+import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.work.WorkRepository
+import ly.david.musicsearch.domain.work.WorkScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList

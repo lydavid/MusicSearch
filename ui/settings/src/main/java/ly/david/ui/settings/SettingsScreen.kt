@@ -8,7 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import ly.david.data.domain.Destination
+import ly.david.musicsearch.domain.Destination
 import ly.david.ui.common.R
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.listitem.ListSeparatorHeader

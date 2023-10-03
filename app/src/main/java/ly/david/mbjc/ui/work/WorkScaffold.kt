@@ -31,10 +31,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.RecordingListItemModel
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 import ly.david.mbjc.ui.work.stats.WorkGroupStatsScreen
+import ly.david.musicsearch.domain.listitem.RecordingListItemModel
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted

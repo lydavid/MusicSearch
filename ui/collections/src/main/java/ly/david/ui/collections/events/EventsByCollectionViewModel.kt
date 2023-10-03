@@ -2,14 +2,14 @@ package ly.david.ui.collections.events
 
 import androidx.paging.PagingSource
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.EventListItemModel
-import ly.david.data.domain.listitem.toEventListItemModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
+import ly.david.musicsearch.domain.listitem.EventListItemModel
+import ly.david.musicsearch.domain.listitem.toEventListItemModel
 import ly.david.ui.common.event.EventsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import lydavidmusicsearchdatadatabase.Event

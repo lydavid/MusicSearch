@@ -19,7 +19,6 @@ import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.domain.artist.ArtistRepository
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.test.bandAid
 import ly.david.data.test.carlosAlomar
@@ -30,6 +29,7 @@ import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
+import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before

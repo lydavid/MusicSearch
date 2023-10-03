@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.ListSeparator
-import ly.david.data.domain.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.ListSeparator
+import ly.david.musicsearch.domain.listitem.ReleaseGroupListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler

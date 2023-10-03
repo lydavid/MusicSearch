@@ -13,11 +13,11 @@ import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.common.LifeSpanUiModel
-import ly.david.data.domain.listitem.AreaListItemModel
-import ly.david.data.domain.place.CoordinatesUiModel
-import ly.david.data.domain.place.PlaceScaffoldModel
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.musicsearch.domain.common.LifeSpanUiModel
+import ly.david.musicsearch.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.domain.place.PlaceScaffoldModel
 import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.listitem.InformationListSeparatorHeader

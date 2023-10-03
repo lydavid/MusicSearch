@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import java.util.Locale
 import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.domain.listitem.RelationListItemModel
-import ly.david.data.domain.work.WorkAttributeUiModel
-import ly.david.data.domain.work.WorkScaffoldModel
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
+import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.domain.work.WorkAttributeUiModel
+import ly.david.musicsearch.domain.work.WorkScaffoldModel
 import ly.david.ui.common.R
 import ly.david.ui.common.listitem.AttributesListSeparatorHeader
 import ly.david.ui.common.listitem.InformationListSeparatorHeader

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.data.domain.history.HistorySortOption
+import ly.david.musicsearch.domain.history.HistorySortOption
 import ly.david.ui.common.R
 import org.koin.core.annotation.Single
 

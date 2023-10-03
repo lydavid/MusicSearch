@@ -10,7 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import ly.david.data.domain.history.HistorySortOption
+import ly.david.musicsearch.domain.history.HistorySortOption
 import ly.david.ui.common.R
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.core.preview.DefaultPreviews

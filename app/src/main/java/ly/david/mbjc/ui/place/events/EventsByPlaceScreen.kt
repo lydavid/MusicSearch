@@ -10,7 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.EventListItemModel
+import ly.david.musicsearch.domain.listitem.EventListItemModel
 import ly.david.ui.common.event.EventsListScreen
 import org.koin.androidx.compose.koinViewModel
 

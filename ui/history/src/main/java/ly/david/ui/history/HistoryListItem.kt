@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.datetime.Instant
 import ly.david.data.core.common.getTimeFormatted
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
 import ly.david.ui.common.getDisplayTextRes
 import ly.david.ui.common.getIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem

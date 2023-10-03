@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.core.common.getDateFormatted
 import ly.david.data.core.history.NowPlayingHistory
-import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.ListSeparator
-import ly.david.data.domain.listitem.NowPlayingHistoryListItemModel
-import ly.david.data.domain.listitem.toNowPlayingHistoryListItemModel
-import ly.david.data.domain.nowplaying.NowPlayingHistoryRepository
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
+import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.ListSeparator
+import ly.david.musicsearch.domain.listitem.NowPlayingHistoryListItemModel
+import ly.david.musicsearch.domain.listitem.toNowPlayingHistoryListItemModel
+import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
+import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel

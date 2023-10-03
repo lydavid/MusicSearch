@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
-import ly.david.data.domain.browse.GetBrowseEntityCountFlowUseCase
-import ly.david.data.domain.relation.GetCountOfEachRelationshipTypeUseCase
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
+import ly.david.musicsearch.domain.browse.GetBrowseEntityCountFlowUseCase
+import ly.david.musicsearch.domain.relation.GetCountOfEachRelationshipTypeUseCase
 import ly.david.ui.stats.ReleaseGroupStats
 import ly.david.ui.stats.ReleaseStats
 import ly.david.ui.stats.Stats

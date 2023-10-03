@@ -1,6 +1,6 @@
 package ly.david.ui.common.area
 
-import ly.david.data.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.domain.listitem.AreaListItemModel
 import ly.david.ui.common.paging.PagedList
 import lydavidmusicsearchdatadatabase.Area
 import org.koin.core.annotation.Factory

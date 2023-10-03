@@ -10,9 +10,9 @@ import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.coverart.ReleaseImageRepository
-import ly.david.data.domain.history.IncrementLookupHistoryUseCase
-import ly.david.data.domain.release.ReleaseRepository
-import ly.david.data.domain.release.ReleaseScaffoldModel
+import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.musicsearch.domain.release.ReleaseScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList

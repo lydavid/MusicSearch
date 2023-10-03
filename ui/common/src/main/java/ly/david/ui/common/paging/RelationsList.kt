@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.RelationsListRepository
-import ly.david.data.domain.listitem.RelationListItemModel
-import ly.david.data.domain.listitem.toRelationListItemModel
-import ly.david.data.domain.paging.LookupEntityRemoteMediator
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.domain.relation.RelationRepository
+import ly.david.musicsearch.domain.RelationsListRepository
+import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.domain.listitem.toRelationListItemModel
+import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
+import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
+import ly.david.musicsearch.domain.relation.RelationRepository
 import lydavidmusicsearchdatadatabase.Relation
 import org.koin.core.annotation.Factory
 

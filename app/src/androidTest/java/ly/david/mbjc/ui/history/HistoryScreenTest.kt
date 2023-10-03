@@ -6,12 +6,12 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.test.runTest
-import ly.david.data.domain.Destination
-import ly.david.data.domain.history.LookupHistoryRepository
 import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.domain.Destination
+import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test

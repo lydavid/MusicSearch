@@ -31,12 +31,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.ReleaseListItemModel
 import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
+import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
 import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen

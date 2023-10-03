@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.domain.common.LifeSpanUiModel
+import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.ui.common.R
 import ly.david.ui.common.text.TextWithHeadingRes
 import ly.david.ui.core.preview.DefaultPreviews

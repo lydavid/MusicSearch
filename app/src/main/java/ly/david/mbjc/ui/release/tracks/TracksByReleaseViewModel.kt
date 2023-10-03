@@ -18,16 +18,16 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.data.core.TrackForListItem
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.data.domain.listitem.ListItemModel
-import ly.david.data.domain.listitem.ListSeparator
-import ly.david.data.domain.listitem.TrackListItemModel
-import ly.david.data.domain.listitem.toTrackListItemModel
-import ly.david.data.domain.paging.LookupEntityRemoteMediator
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
-import ly.david.data.domain.release.ReleaseRepository
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.domain.listitem.ListSeparator
+import ly.david.musicsearch.domain.listitem.TrackListItemModel
+import ly.david.musicsearch.domain.listitem.toTrackListItemModel
+import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
+import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
+import ly.david.musicsearch.domain.release.ReleaseRepository
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel

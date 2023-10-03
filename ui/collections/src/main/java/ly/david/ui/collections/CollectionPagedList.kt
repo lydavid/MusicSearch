@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.domain.listitem.CollectionListItemModel
-import ly.david.data.domain.listitem.toCollectionListItemModel
-import ly.david.data.domain.paging.BrowseEntityRemoteMediator
-import ly.david.data.domain.paging.MusicBrainzPagingConfig
+import ly.david.musicsearch.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.domain.listitem.toCollectionListItemModel
+import ly.david.musicsearch.domain.paging.BrowseEntityRemoteMediator
+import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.common.paging.IPagedList
 import lydavidmusicsearchdatadatabase.Collection
 import org.koin.core.annotation.Factory
