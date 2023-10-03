@@ -20,6 +20,7 @@ android {
 
 dependencies {
     implementation(projects.dataAndroid)
+    implementation(projects.domain)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     testImplementation(projects.ui.test.screenshot)

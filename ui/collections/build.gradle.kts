@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.data)
     implementation(projects.data.database)
     implementation(projects.dataAndroid)
+    implementation(projects.domain)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.settings)

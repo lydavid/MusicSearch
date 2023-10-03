@@ -7,7 +7,6 @@ dependencies {
     api(projects.data.core)
     api(projects.data.common.network)
     api(projects.data.coverart)
-    api(projects.domain)
     api(projects.data.spotify)
     api(projects.data.musicbrainz)
 }
