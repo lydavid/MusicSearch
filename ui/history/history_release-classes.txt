@@ -8,7 +8,7 @@ stable class ViewModelState {
 }
 unstable class HistoryViewModel {
   unstable val appPreferences: AppPreferences
-  unstable val lookupHistoryRepository: LookupHistoryRepository
+  runtime val lookupHistoryRepository: LookupHistoryRepository
   unstable val query: MutableStateFlow<String>
   unstable val sortOption: StateFlow<HistorySortOption>
   unstable val viewModelState: Flow<ViewModelState>

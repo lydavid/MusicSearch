@@ -25,8 +25,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaScaff
 
   unstable viewModel: AreaScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun AreaDetailsScreen(
-  unstable area: AreaScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaDetailsScreen(
+  area: AreaScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -105,8 +105,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistSca
 
   unstable viewModel: ArtistScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsScreen(
-  unstable artist: ArtistScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsScreen(
+  artist: ArtistScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable artistImageUrl: String? = @static ""
@@ -177,8 +177,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventScaf
 
   unstable viewModel: EventScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun EventDetailsScreen(
-  unstable event: EventScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventDetailsScreen(
+  event: EventScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -192,7 +192,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventStat
   stable modifier: Modifier? = @static Companion
   stable eventId: String
   stable tabs: ImmutableList<Tab>
-  unstable viewModel: EventStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  viewModel: EventStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun GenreScaffold(
   stable genreId: String
@@ -223,8 +223,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Instrumen
 
   unstable viewModel: InstrumentScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentDetailsScreen(
-  unstable instrument: InstrumentScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentDetailsScreen(
+  instrument: InstrumentScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -238,7 +238,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Instrumen
   stable instrumentId: String
   stable modifier: Modifier? = @static Companion
   stable tabs: ImmutableList<Tab>
-  unstable viewModel: InstrumentStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  viewModel: InstrumentStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelScaffold(
   stable labelId: String
@@ -263,8 +263,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelScaf
 
   unstable viewModel: LabelScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun LabelDetailsScreen(
-  unstable label: LabelScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelDetailsScreen(
+  label: LabelScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -337,8 +337,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceScaf
 
   unstable viewModel: PlaceScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDetailsScreen(
-  unstable place: PlaceScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDetailsScreen(
+  place: PlaceScaffoldModel
   stable modifier: Modifier? = @static Companion
   unstable context: Context? = @dynamic LocalContext.<get-current>($composer, 0)
   stable filterText: String? = @static ""
@@ -389,8 +389,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Recording
 
   unstable viewModel: RecordingScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun RecordingDetailsScreen(
-  unstable recording: RecordingScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingDetailsScreen(
+  recording: RecordingScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -442,8 +442,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseSc
 
   unstable viewModel: ReleaseScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsScreen(
-  unstable release: ReleaseScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsScreen(
+  release: ReleaseScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable coverArtUrl: String? = @static ""
@@ -458,7 +458,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseSt
   stable releaseId: String
   stable modifier: Modifier? = @static Companion
   stable tabs: ImmutableList<Tab>
-  unstable viewModel: ReleaseStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  viewModel: ReleaseStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByReleaseScreen(
   stable releaseId: String
@@ -511,8 +511,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGr
 
   unstable viewModel: ReleaseGroupScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupDetailsScreen(
-  unstable releaseGroup: ReleaseGroupScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupDetailsScreen(
+  releaseGroup: ReleaseGroupScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable coverArtUrl: String? = @static ""
@@ -555,8 +555,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecentSea
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeaderEmpty()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
-  unstable searchHistory: SearchHistoryListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
+  searchHistory: SearchHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'query')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
 
@@ -631,8 +631,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesSca
 
   unstable viewModel: SeriesScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun SeriesDetailsScreen(
-  unstable series: SeriesScaffoldModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesDetailsScreen(
+  series: SeriesScaffoldModel
   stable modifier: Modifier? = @static Companion
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
@@ -645,7 +645,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesSta
   stable seriesId: String
   stable modifier: Modifier? = @static Companion
   stable tabs: ImmutableList<Tab>
-  unstable viewModel: SeriesStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+  viewModel: SeriesStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkScaffold(
   stable workId: String
@@ -665,9 +665,9 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkScaff
 
   unstable viewModel: WorkScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun WorkDetailsScreen(
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkDetailsScreen(
   stable modifier: Modifier? = @static Companion
-  unstable work: WorkScaffoldModel
+  work: WorkScaffoldModel
   stable filterText: String? = @static ""
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->

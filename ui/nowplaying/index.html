@@ -128,7 +128,7 @@ footer {
         <table class="center" style="text-align:left;">
           <tr>
             <th>Skippable Composables</th>
-            <td>18</td>
+            <td>20</td>
           </tr>
           <tr>
             <th>Restartable Composables</th>
@@ -164,11 +164,11 @@ footer {
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
-            <td>4</td>
+            <td>2</td>
           </tr>
           <tr>
             <th>Unknown Stable Arguments</th>
-            <td>5</td>
+            <td>7</td>
           </tr>
           <tr>
             <th>Total Arguments</th>
@@ -243,7 +243,7 @@ footer {
             <td>ly.david.ui.nowplaying.NowPlayingCard</td>
             <td>NowPlayingCard</td>
             <td>1</td>
-            <td>0</td>
+            <td>1</td>
             <td>1</td>
             <td>0</td>
             <td>0</td>
@@ -356,14 +356,16 @@ footer {
     </section>
     <hr>
     <section><button class="collapsible">Composables Report</button>
-      <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Composables with issues (Restartable but Not Skippable)</button>
-        <div class="content" style="background-color:#FFEBEE;">
+      <div class="content">
+        <div class="empty-content">No composable found with issues 😁</div>
+<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
+        <div class="content" style="background-color:#F1F8E9;">
           <table>
             <tr>
               <td>1.</td>
               <td>
                 <h3 class="code"><span> fun NowPlayingCard</span></h3>
-                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
                 <table>
                   <tr>
                     <th>No.</th>
@@ -371,9 +373,9 @@ footer {
                     <th>Parameter</th>
                     <th>Type</th>
                   </tr>
-                  <tr class="background-status-failure">
+                  <tr class="background-status-missing">
                     <td>1</td>
-                    <td>UNSTABLE</td>
+                    <td>MISSING</td>
                     <td class="code">nowPlayingHistory</td>
                     <td class="code">NowPlayingHistoryListItemModel</td>
                   </tr>
@@ -392,13 +394,8 @@ footer {
                 </table>
               </td>
             </tr>
-          </table>
-        </div>
-<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
-        <div class="content" style="background-color:#F1F8E9;">
-          <table>
             <tr>
-              <td>1.</td>
+              <td>2.</td>
               <td>
                 <h3 class="code"><span> fun PreviewNowPlayingCard</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -406,7 +403,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>2.</td>
+              <td>3.</td>
               <td>
                 <h3 class="code"><span> fun NowPlayingHistoryScaffold</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -439,7 +436,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>3.</td>
+              <td>4.</td>
               <td>
                 <h3 class="code"><span> fun NowPlayingHistoryScaffoldInternal</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -478,7 +475,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>4.</td>
+              <td>5.</td>
               <td>
                 <h3 class="code"><span> fun NowPlayingHistoryScaffoldInternal</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -535,7 +532,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>5.</td>
+              <td>6.</td>
               <td>
                 <h3 class="code"><span> fun PreviewNowPlayingHistoryScaffold</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -543,7 +540,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>6.</td>
+              <td>7.</td>
               <td>
                 <h3 class="code"><span> fun NowPlayingHistoryScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -582,7 +579,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>7.</td>
+              <td>8.</td>
               <td>
                 <h3 class="code"><span> fun PreviewNowPlayingHistoryScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>

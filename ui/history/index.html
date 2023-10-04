@@ -128,7 +128,7 @@ footer {
         <table class="center" style="text-align:left;">
           <tr>
             <th>Skippable Composables</th>
-            <td>30</td>
+            <td>32</td>
           </tr>
           <tr>
             <th>Restartable Composables</th>
@@ -164,11 +164,11 @@ footer {
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
-            <td>8</td>
+            <td>4</td>
           </tr>
           <tr>
             <th>Unknown Stable Arguments</th>
-            <td>3</td>
+            <td>7</td>
           </tr>
           <tr>
             <th>Total Arguments</th>
@@ -243,7 +243,7 @@ footer {
             <td>ly.david.ui.history.HistoryListItem</td>
             <td>HistoryListItem</td>
             <td>1</td>
-            <td>0</td>
+            <td>1</td>
             <td>1</td>
             <td>0</td>
             <td>0</td>
@@ -370,14 +370,16 @@ footer {
     </section>
     <hr>
     <section><button class="collapsible">Composables Report</button>
-      <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Composables with issues (Restartable but Not Skippable)</button>
-        <div class="content" style="background-color:#FFEBEE;">
+      <div class="content">
+        <div class="empty-content">No composable found with issues 😁</div>
+<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
+        <div class="content" style="background-color:#F1F8E9;">
           <table>
             <tr>
               <td>1.</td>
               <td>
                 <h3 class="code"><span> fun HistoryListItem</span></h3>
-                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
                 <table>
                   <tr>
                     <th>No.</th>
@@ -385,9 +387,9 @@ footer {
                     <th>Parameter</th>
                     <th>Type</th>
                   </tr>
-                  <tr class="background-status-failure">
+                  <tr class="background-status-missing">
                     <td>1</td>
-                    <td>UNSTABLE</td>
+                    <td>MISSING</td>
                     <td class="code">lookupHistory</td>
                     <td class="code">LookupHistoryListItemModel</td>
                   </tr>
@@ -412,13 +414,8 @@ footer {
                 </table>
               </td>
             </tr>
-          </table>
-        </div>
-<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
-        <div class="content" style="background-color:#F1F8E9;">
-          <table>
             <tr>
-              <td>1.</td>
+              <td>2.</td>
               <td>
                 <h3 class="code"><span> fun PreviewLookupHistoryReleaseGroup</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -439,7 +436,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>2.</td>
+              <td>3.</td>
               <td>
                 <h3 class="code"><span> fun PreviewLookupHistoryRelease</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -460,7 +457,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>3.</td>
+              <td>4.</td>
               <td>
                 <h3 class="code"><span> fun PreviewLookupHistoryArtist</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -481,7 +478,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>4.</td>
+              <td>5.</td>
               <td>
                 <h3 class="code"><span> fun HistoryScaffold</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -520,7 +517,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>5.</td>
+              <td>6.</td>
               <td>
                 <h3 class="code"><span> fun HistoryScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -559,7 +556,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>6.</td>
+              <td>7.</td>
               <td>
                 <h3 class="code"><span> fun HistorySortBottomSheet</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -598,7 +595,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>7.</td>
+              <td>8.</td>
               <td>
                 <h3 class="code"><span> fun HistorySortBottomSheetContent</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -625,7 +622,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>8.</td>
+              <td>9.</td>
               <td>
                 <h3 class="code"><span> fun PreviewHistorySortBottomSheetContent</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -659,9 +656,9 @@ footer {
                       <td class="code">val appPreferences</td>
                       <td class="code">AppPreferences</td>
                     </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                    <tr style="color:#000000;background-color:#FFF9C4;">
                       <td>2</td>
-                      <td>UNSTABLE</td>
+                      <td>RUNTIME</td>
                       <td class="code">val lookupHistoryRepository</td>
                       <td class="code">LookupHistoryRepository</td>
                     </tr>

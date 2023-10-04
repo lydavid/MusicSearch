@@ -44,7 +44,7 @@ stable class State {
   <runtime stability> = Stable
 }
 unstable class RelationsList {
-  unstable val relationRepository: RelationRepository
+  runtime val relationRepository: RelationRepository
   unstable val entityId: MutableStateFlow<String>
   unstable val query: MutableStateFlow<String>
   unstable val paramState: Flow<State>

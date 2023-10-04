@@ -12,8 +12,8 @@ fun rememberFlowWithLifecycleStarted(
   unstable flow: Flow<T>
   unstable lifecycleOwner: Lifecycle? = @dynamic LocalLifecycleOwner.<get-current>($composer, 0).lifecycle
 ): Flow<T>
-restartable scheme("[androidx.compose.ui.UiComposable]") fun AreaListItem(
-  unstable area: AreaListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaListItem(
+  area: AreaListItemModel
   stable modifier: Modifier? = @static Companion
   stable showType: Boolean = @static true
   stable onAreaClick: @[ExtensionFunctionType] Function1<AreaListItemModel, Unit>? = @static {
@@ -21,20 +21,20 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun AreaListItem(
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable area: AreaListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  area: AreaListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleaseEvent()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistListItem(
-  unstable artist: ArtistListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistListItem(
+  artist: ArtistListItemModel
   stable modifier: Modifier? = @static Companion
   stable onArtistClick: @[ExtensionFunctionType] Function1<ArtistListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable artist: ArtistListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  artist: ArtistListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RetryButton(
   stable modifier: Modifier? = @static Companion
@@ -86,16 +86,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SimpleAle
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSimpleAlertDialog()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun EventListItem(
-  unstable event: EventListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventListItem(
+  event: EventListItemModel
   stable modifier: Modifier? = @static Companion
   stable onEventClick: @[ExtensionFunctionType] Function1<EventListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable event: EventListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  event: EventListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsListScreen(
   stable snackbarHostState: SnackbarHostState
@@ -135,42 +135,42 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun FullScree
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentListItem(
-  unstable instrument: InstrumentListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentListItem(
+  instrument: InstrumentListItemModel
   stable modifier: Modifier? = @static Companion
   stable onInstrumentClick: @[ExtensionFunctionType] Function1<InstrumentListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable instrument: InstrumentListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  instrument: InstrumentListItemModel
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun LabelListItem(
-  unstable label: LabelListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelListItem(
+  label: LabelListItemModel
   stable modifier: Modifier? = @static Companion
   stable onLabelClick: @[ExtensionFunctionType] Function1<LabelListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable label: LabelListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  label: LabelListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun DisambiguationText(
   stable disambiguation: String?
   stable modifier: Modifier? = @static Companion
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun LifeSpanText(
-  unstable lifeSpan: LifeSpanUiModel?
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LifeSpanText(
+  lifeSpan: LifeSpanUiModel?
   stable modifier: Modifier? = @static Companion
   stable beginHeadingRes: Int = @dynamic string.start_date
   stable endHeadingRes: Int = @dynamic string.end_date
   stable filterText: String? = @static ""
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable lifeSpan: LifeSpanUiModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  lifeSpan: LifeSpanUiModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ListSeparatorHeader(
   stable text: String
@@ -211,21 +211,21 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compo
 )
 restartable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateListItem(
   unstable context: Context
-  unstable coordinates: CoordinatesUiModel
+  coordinates: CoordinatesUiModel
   stable modifier: Modifier? = @static Companion
   stable label: String? = @static null
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun CoordinateCardPreview()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun PlaceListItem(
-  unstable place: PlaceListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceListItem(
+  place: PlaceListItemModel
   stable modifier: Modifier? = @static Companion
   stable onPlaceClick: @[ExtensionFunctionType] Function1<PlaceListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable place: PlaceListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  place: PlaceListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesListScreen(
   stable snackbarHostState: SnackbarHostState
@@ -237,16 +237,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesLis
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun RecordingListItem(
-  unstable recording: RecordingListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingListItem(
+  recording: RecordingListItemModel
   stable modifier: Modifier? = @static Companion
   stable onRecordingClick: @[ExtensionFunctionType] Function1<RecordingListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable recording: RecordingListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  recording: RecordingListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingsListScreen(
   lazyPagingItems: LazyPagingItems<RecordingListItemModel>
@@ -255,8 +255,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Recording
   stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
   stable onRecordingClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
-  unstable relation: RelationListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RelationListItem(
+  relation: RelationListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
 
@@ -276,8 +276,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Relations
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
-  unstable release: ReleaseListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
+  release: ReleaseListItemModel
   stable modifier: Modifier? = @static Companion
   stable showMoreInfo: Boolean = @static true
   unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
@@ -289,8 +289,8 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseListItem(
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable release: ReleaseListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  release: ReleaseListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesListScreen(
   lazyPagingItems: LazyPagingItems<ReleaseListItemModel>
@@ -322,19 +322,19 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesL
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewReleasesListScreen()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
-  unstable track: TrackListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TrackListItem(
+  track: TrackListItemModel
   stable modifier: Modifier? = @static Companion
   stable onRecordingClick: Function2<String, String, Unit>? = @static { <unused var>: String, <unused var>: String ->
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable track: TrackListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  track: TrackListItemModel
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
-  unstable releaseGroup: ReleaseGroupListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupListItem(
+  releaseGroup: ReleaseGroupListItemModel
   stable modifier: Modifier? = @static Companion
   unstable requestForMissingCoverArtUrl: SuspendFunction0<Unit>? = @static {
 
@@ -358,16 +358,16 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGr
   stable onDeleteFromCollection: Function2<@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>? = @static null
   unstable viewModel: ReleaseGroupsListViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListItem(
-  unstable series: SeriesListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesListItem(
+  series: SeriesListItemModel
   stable modifier: Modifier? = @static Companion
   stable onSeriesClick: @[ExtensionFunctionType] Function1<SeriesListItemModel, Unit>? = @static {
 
 }
 
 )
-restartable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
-  unstable series: SeriesListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview(
+  series: SeriesListItemModel
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TextWithHeading(
   stable heading: String
@@ -521,8 +521,8 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun UrlsSection(
 
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewUrlsSection()
-restartable scheme("[androidx.compose.ui.UiComposable]") fun WorkListItem(
-  unstable work: WorkListItemModel
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkListItem(
+  work: WorkListItemModel
   stable modifier: Modifier? = @static Companion
   stable onWorkClick: @[ExtensionFunctionType] Function1<WorkListItemModel, Unit>? = @static {
 

@@ -1,5 +1,5 @@
 package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
-ly.david.ui.history.HistoryListItem,HistoryListItem,1,0,1,0,0,0,0,0,1,1,
+ly.david.ui.history.HistoryListItem,HistoryListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.ui.history.PreviewLookupHistoryReleaseGroup,PreviewLookupHistoryReleaseGroup,1,1,1,0,0,0,0,0,1,1,
 ly.david.ui.history.PreviewLookupHistoryRelease,PreviewLookupHistoryRelease,1,1,1,0,0,0,0,0,1,1,
 ly.david.ui.history.PreviewLookupHistoryArtist,PreviewLookupHistoryArtist,1,1,1,0,0,0,0,0,1,1,

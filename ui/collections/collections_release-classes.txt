@@ -5,7 +5,7 @@ unstable class CollectionListViewModel {
   unstable val musicBrainzAuthStore: MusicBrainzAuthStore
   unstable val collectionDao: CollectionDao
   unstable val browseEntityCountDao: BrowseEntityCountDao
-  unstable val getBrowseEntityCountUseCase: GetBrowseEntityCountUseCase
+  runtime val getBrowseEntityCountUseCase: GetBrowseEntityCountUseCase
   <runtime stability> = Unstable
 }
 stable class ViewModelState {
@@ -33,7 +33,7 @@ stable class CollectionUiModule {
 }
 unstable class CollectionViewModel {
   unstable val collectionDao: CollectionDao
-  unstable val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase
+  runtime val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase
   stable var recordedLookup: Boolean
   <runtime stability> = Unstable
 }

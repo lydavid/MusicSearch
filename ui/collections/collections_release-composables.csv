@@ -1,6 +1,6 @@
 package,name,composable,skippable,restartable,readonly,inline,isLambda,hasDefaults,defaultsGroup,groups,calls,
 ly.david.ui.collections.CollectionBottomSheet,CollectionBottomSheet,1,0,1,0,0,0,0,0,1,1,
-ly.david.ui.collections.CollectionListItem,CollectionListItem,1,0,1,0,0,0,0,0,1,1,
+ly.david.ui.collections.CollectionListItem,CollectionListItem,1,1,1,0,0,0,0,0,1,1,
 ly.david.ui.collections.Preview,Preview,1,1,1,0,0,0,0,0,1,1,
 ly.david.ui.collections.CollectionListScaffold,CollectionListScaffold,1,1,1,0,0,0,1,0,2,9,
 ly.david.ui.collections.CollectionsFilterChipsBar,CollectionsFilterChipsBar,1,1,1,0,0,0,0,0,1,1,

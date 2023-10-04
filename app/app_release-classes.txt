@@ -22,29 +22,29 @@ stable class RemoteResult {
   <runtime stability> = Stable
 }
 unstable class AreaStatsViewModel {
-  unstable val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
-  unstable val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase
   unstable val releaseCountryDao: ReleaseCountryDao
   unstable val areaPlaceDao: AreaPlaceDao
   <runtime stability> = Unstable
 }
-unstable class EventStatsViewModel {
-  unstable val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
-  <runtime stability> = Unstable
+runtime class EventStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
 }
-unstable class InstrumentStatsViewModel {
-  unstable val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
-  <runtime stability> = Unstable
+runtime class InstrumentStatsViewModel {
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  <runtime stability> = Runtime(GetCountOfEachRelationshipTypeUseCase)
 }
 unstable class LabelStatsViewModel {
-  unstable val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
-  unstable val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase
   unstable val releaseLabelDao: ReleaseLabelDao
   <runtime stability> = Unstable
 }
 unstable class PlaceStatsViewModel {
-  unstable val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
-  unstable val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase
+  runtime val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase
+  runtime val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase
   unstable val eventPlaceDao: EventPlaceDao
   <runtime stability> = Unstable
 }

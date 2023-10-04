@@ -1,0 +1,505 @@
+stable class DomainModule {
+  <runtime stability> = Stable
+}
+unstable class AreaRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val areaDao: AreaDao
+  unstable val countryCodeDao: CountryCodeDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class AreaScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val sortName: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val lifeSpan: LifeSpanUiModel?
+  unstable val countryCodes: List<String>?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+stable class ArtistCreditUiModel {
+  stable val artistId: String
+  stable val name: String
+  stable val joinPhrase: String?
+  <runtime stability> = Stable
+}
+unstable class ArtistRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val artistDao: ArtistDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class ArtistScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val sortName: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val gender: String?
+  stable val countryCode: String?
+  stable val lifeSpan: LifeSpanUiModel?
+  stable val imageUrl: String?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class BrowseEntityCountRepository {
+  unstable val browseEntityCountDao: BrowseEntityCountDao
+  <runtime stability> = Unstable
+}
+unstable class GetBrowseEntityCountFlowUseCase {
+  unstable val browseEntityCountRepository: BrowseEntityCountRepository
+  <runtime stability> = Unstable
+}
+unstable class GetBrowseEntityCountUseCase {
+  unstable val browseEntityCountRepository: BrowseEntityCountRepository
+  <runtime stability> = Unstable
+}
+stable class LifeSpanUiModel {
+  stable val begin: String?
+  stable val end: String?
+  stable val ended: Boolean?
+  <runtime stability> = Stable
+}
+unstable class EventRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val eventDao: EventDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class EventScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val time: String?
+  stable val cancelled: Boolean?
+  stable val lifeSpan: LifeSpanUiModel?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class IncrementLookupHistoryUseCase {
+  unstable val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Unstable
+}
+unstable class LookupHistoryRepository {
+  unstable val lookupHistoryDao: LookupHistoryDao
+  <runtime stability> = Unstable
+}
+unstable class InstrumentRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val instrumentDao: InstrumentDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class InstrumentScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val description: String?
+  stable val type: String?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class LabelRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val labelDao: LabelDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class LabelScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val labelCode: Int?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class AreaListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val sortName: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val lifeSpan: LifeSpanUiModel?
+  unstable val countryCodes: List<String>?
+  stable val date: String?
+  <runtime stability> = Unstable
+}
+stable class ArtistListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val sortName: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val gender: String?
+  stable val countryCode: String?
+  stable val lifeSpan: LifeSpanUiModel?
+  <runtime stability> = Stable
+}
+unstable class CollectionListItemModel {
+  stable val id: String
+  stable val isRemote: Boolean
+  stable val name: String
+  stable val description: String
+  stable val entity: MusicBrainzEntity
+  stable val entityCount: Int
+  unstable val entityIds: List<String>
+  <runtime stability> = Unstable
+}
+stable class EventListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val time: String?
+  stable val cancelled: Boolean?
+  stable val lifeSpan: LifeSpanUiModel?
+  <runtime stability> = Stable
+}
+stable class GenreListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  <runtime stability> = Stable
+}
+stable class InstrumentListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val description: String?
+  stable val type: String?
+  <runtime stability> = Stable
+}
+stable class LabelListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val labelCode: Int?
+  stable val catalogNumber: String?
+  <runtime stability> = Stable
+}
+stable class ListItemModel {
+  <runtime stability> = Stable
+}
+stable class Header {
+  stable val id: String
+  stable val isListEmpty: Boolean
+  <runtime stability> = Stable
+}
+stable class EndOfList {
+  stable val id: String
+  <runtime stability> = Stable
+}
+stable class ListSeparator {
+  stable val id: String
+  stable val text: String
+  <runtime stability> = Stable
+}
+unstable class LookupHistoryListItemModel {
+  stable val id: String
+  stable val title: String
+  stable val entity: MusicBrainzEntity
+  stable val numberOfVisits: Int
+  unstable val lastAccessed: Instant
+  stable val imageUrl: String?
+  <runtime stability> = Unstable
+}
+unstable class NowPlayingHistoryListItemModel {
+  stable val id: String
+  stable val title: String
+  stable val artist: String
+  unstable val lastPlayed: Instant
+  <runtime stability> = Unstable
+}
+unstable class PlaceListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val address: String
+  stable val type: String?
+  unstable val coordinates: Coordinates?
+  stable val lifeSpan: LifeSpanUiModel?
+  unstable val area: AreaListItemModel?
+  <runtime stability> = Unstable
+}
+stable class RecordingListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val firstReleaseDate: String?
+  stable val disambiguation: String
+  stable val length: Int?
+  stable val video: Boolean
+  stable val formattedArtistCredits: String?
+  <runtime stability> = Stable
+}
+stable class RelationListItemModel {
+  stable val id: String
+  stable val linkedEntityId: String
+  stable val label: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val attributes: String?
+  stable val additionalInfo: String?
+  stable val linkedEntity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+unstable class ReleaseGroupListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val firstReleaseDate: String
+  stable val disambiguation: String
+  stable val primaryType: String?
+  unstable val secondaryTypes: List<String>?
+  stable val formattedArtistCredits: String?
+  stable val imageUrl: String?
+  <runtime stability> = Unstable
+}
+stable class ReleaseListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String
+  stable val date: String?
+  stable val barcode: String?
+  stable val status: String?
+  stable val statusId: String?
+  stable val countryCode: String?
+  stable val packaging: String?
+  stable val packagingId: String?
+  stable val asin: String?
+  stable val quality: String?
+  stable val coverArtArchive: CoverArtArchiveUiModel
+  stable val textRepresentation: TextRepresentationUiModel?
+  stable val imageUrl: String?
+  stable val formattedFormats: String?
+  stable val formattedTracks: String?
+  stable val formattedArtistCredits: String?
+  stable val releaseCountryCount: Int
+  <runtime stability> = Stable
+}
+stable class SearchHistoryListItemModel {
+  stable val id: String
+  stable val query: String
+  stable val entity: MusicBrainzEntity
+  <runtime stability> = Stable
+}
+stable class SeriesListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  <runtime stability> = Stable
+}
+stable class TrackListItemModel {
+  stable val id: String
+  stable val position: Int
+  stable val number: String
+  stable val title: String
+  stable val length: Int?
+  stable val mediumId: Long
+  stable val recordingId: String
+  stable val formattedArtistCredits: String?
+  <runtime stability> = Stable
+}
+unstable class WorkListItemModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val language: String?
+  unstable val iswcs: List<String>?
+  unstable val attributes: List<WorkAttributeUiModel>
+  <runtime stability> = Unstable
+}
+unstable class NowPlayingHistoryRepository {
+  unstable val nowPlayingHistoryDao: NowPlayingHistoryDao
+  <runtime stability> = Unstable
+}
+unstable class BrowseEntityRemoteMediator {
+  unstable val getRemoteEntityCount: SuspendFunction0<Int?>
+  unstable val getLocalEntityCount: SuspendFunction0<Int>
+  unstable val deleteLocalEntity: SuspendFunction0<Unit>
+  unstable val browseEntity: SuspendFunction1<@[ParameterName(name = 'offset')] Int, Int>
+  <runtime stability> = Unstable
+}
+unstable class LookupEntityRemoteMediator {
+  unstable val hasEntityBeenStored: SuspendFunction0<Boolean>
+  unstable val lookupEntity: SuspendFunction1<@[ParameterName(name = 'forceRefresh')] Boolean, Unit>
+  unstable val deleteLocalEntity: SuspendFunction0<Unit>
+  <runtime stability> = Unstable
+}
+unstable class MusicBrainzPagingConfig {
+  stable val PREFETCH_DISTANCE: Int
+  unstable val pagingConfig: PagingConfig{ app.cash.paging.PagingConfig_jvmKt.PagingConfig }
+  <runtime stability> = Unstable
+}
+unstable class SearchMusicBrainzPagingSource {
+  unstable val searchApi: SearchApi
+  stable val entity: MusicBrainzEntity
+  stable val queryString: String
+  <runtime stability> = Unstable
+}
+stable class CoordinatesUiModel {
+  stable val longitude: Double?
+  stable val latitude: Double?
+  <runtime stability> = Stable
+}
+unstable class PlaceRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val placeDao: PlaceDao
+  unstable val areaPlaceDao: AreaPlaceDao
+  unstable val areaDao: AreaDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class PlaceScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val address: String
+  stable val type: String?
+  stable val coordinates: CoordinatesUiModel?
+  stable val lifeSpan: LifeSpanUiModel?
+  unstable val area: AreaListItemModel?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class RecordingRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val recordingDao: RecordingDao
+  unstable val artistCreditDao: ArtistCreditDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class RecordingScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val firstReleaseDate: String?
+  stable val disambiguation: String
+  stable val length: Int?
+  stable val video: Boolean
+  unstable val isrcs: List<String>?
+  unstable val artistCredits: List<ArtistCreditUiModel>
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class GetCountOfEachRelationshipTypeUseCase {
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class RelationRepository {
+  unstable val entityHasRelationsDao: EntityHasRelationsDao
+  unstable val entityHasUrlsDao: EntityHasUrlsDao
+  unstable val relationDao: RelationDao
+  <runtime stability> = Unstable
+}
+stable class CoverArtArchiveUiModel {
+  stable val count: Int
+  <runtime stability> = Stable
+}
+unstable class ReleaseRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val releaseDao: ReleaseDao
+  unstable val releaseReleaseGroupDao: ReleaseReleaseGroupDao
+  unstable val releaseGroupDao: ReleaseGroupDao
+  unstable val artistCreditDao: ArtistCreditDao
+  unstable val releaseCountryDao: ReleaseCountryDao
+  unstable val areaDao: AreaDao
+  unstable val countryCodeDao: CountryCodeDao
+  unstable val labelDao: LabelDao
+  unstable val releaseLabelDao: ReleaseLabelDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class ReleaseScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String
+  stable val date: String?
+  stable val barcode: String?
+  stable val status: String?
+  stable val statusId: String?
+  stable val countryCode: String?
+  stable val packaging: String?
+  stable val packagingId: String?
+  stable val asin: String?
+  stable val quality: String?
+  stable val coverArtArchive: CoverArtArchiveUiModel
+  stable val textRepresentation: TextRepresentationUiModel?
+  stable val imageUrl: String?
+  stable val formattedFormats: String?
+  stable val formattedTracks: String?
+  unstable val artistCredits: List<ArtistCreditUiModel>
+  unstable val releaseGroup: ReleaseGroupForRelease?
+  unstable val areas: List<AreaListItemModel>
+  unstable val labels: List<LabelListItemModel>
+  unstable val urls: List<RelationListItemModel>
+  stable val releaseLength: Int?
+  stable val hasNullLength: Boolean
+  <runtime stability> = Unstable
+}
+stable class TextRepresentationUiModel {
+  stable val script: String?
+  stable val language: String?
+  <runtime stability> = Stable
+}
+unstable class ReleaseGroupRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val releaseGroupDao: ReleaseGroupDao
+  unstable val artistCreditDao: ArtistCreditDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class ReleaseGroupScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val firstReleaseDate: String
+  stable val disambiguation: String
+  stable val primaryType: String?
+  unstable val secondaryTypes: List<String>?
+  stable val imageUrl: String?
+  unstable val artistCredits: List<ArtistCreditUiModel>
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+unstable class SeriesRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val seriesDao: SeriesDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class SeriesScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
+stable class WorkAttributeUiModel {
+  stable val type: String
+  stable val typeId: String
+  stable val value: String
+  <runtime stability> = Stable
+}
+unstable class WorkRepository {
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val workDao: WorkDao
+  unstable val workAttributeDao: WorkAttributeDao
+  unstable val relationRepository: RelationRepository
+  <runtime stability> = Unstable
+}
+unstable class WorkScaffoldModel {
+  stable val id: String
+  stable val name: String
+  stable val disambiguation: String?
+  stable val type: String?
+  stable val language: String?
+  unstable val iswcs: List<String>?
+  unstable val attributes: List<WorkAttributeUiModel>
+  unstable val urls: List<RelationListItemModel>
+  <runtime stability> = Unstable
+}
