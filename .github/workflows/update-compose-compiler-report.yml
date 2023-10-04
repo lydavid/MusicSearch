@@ -2,10 +2,7 @@ name: Update compose compiler report
 
 on:
   schedule:
-    - cron: '42 6 * * *'
-  push:
-    branches:
-      - "dl/compose-compiler-report" # TODO: remove
+    - cron: '42 6 * * 5'
   workflow_dispatch:
 
 jobs:
