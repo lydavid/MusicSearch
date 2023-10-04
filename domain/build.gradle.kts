@@ -1,4 +1,5 @@
 plugins {
+    id("ly.david.musicsearch.compose.multiplatform")
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.ksp)
 }
@@ -12,6 +13,7 @@ kotlin {
                 implementation(projects.data.coverart)
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
+                implementation(compose.runtime)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
