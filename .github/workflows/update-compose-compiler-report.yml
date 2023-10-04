@@ -48,7 +48,7 @@ jobs:
         shell: bash
 
       - name: Assemble apk with compose compiler reports enabled
-        run: ./gradlew assembleRelease -Pmbjc.enableComposeCompilerReports=true --rerun-tasks
+        run: ./gradlew assembleRelease -Pmusicsearch.enableComposeCompilerReports=true --rerun-tasks
 
       - name: Generated HTML from compose reports
         run: find . -type d -path '*/build/compose_metrics' | xargs -I {} composeReport2Html -app MusicSearch -i {} -o {}
