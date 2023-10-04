@@ -1,0 +1,35 @@
+stable class Stats {
+  stable val totalRelations: Int?
+  unstable val relationTypeCounts: ImmutableList<RelationTypeCount>
+  stable val eventStats: EventStats
+  stable val placeStats: PlaceStats
+  stable val recordingStats: RecordingStats
+  stable val releaseStats: ReleaseStats
+  unstable val releaseGroupStats: ReleaseGroupStats
+}
+stable class EventStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
+}
+stable class PlaceStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
+}
+stable class RecordingStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
+}
+stable class ReleaseStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  <runtime stability> = Stable
+}
+unstable class ReleaseGroupStats {
+  stable val totalRemote: Int?
+  stable val totalLocal: Int
+  unstable val releaseGroupTypeCounts: ImmutableList<ReleaseGroupTypeCount>
+  <runtime stability> = Unstable
+}

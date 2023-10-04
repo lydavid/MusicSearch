@@ -1,0 +1,695 @@
+restartable scheme("[androidx.compose.ui.UiComposable]") fun TopLevelScaffold(
+  unstable navController: NavHostController
+  unstable viewModel: TopLevelViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaScaffold(
+  stable areaId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  unstable viewModel: AreaScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun AreaDetailsScreen(
+  unstable area: AreaScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewAreaDetailsScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlacesByAreaScreen(
+  stable areaId: String
+  stable filterText: String
+  stable snackbarHostState: SnackbarHostState
+  stable placesLazyListState: LazyListState
+  placesLazyPagingItems: LazyPagingItems<PlaceListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onPlaceClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedPlacesFlowChange: Function1<Flow<PagingData<PlaceListItemModel>>, Unit>? = @static { it: Flow<PagingData<PlaceListItemModel>> ->
+
+}
+
+  unstable viewModel: PlacesByAreaViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesByAreaScreen(
+  stable areaId: String
+  stable filterText: String
+  stable showMoreInfo: Boolean
+  stable snackbarHostState: SnackbarHostState
+  stable releasesLazyListState: LazyListState
+  releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedReleasesFlowChange: Function1<Flow<PagingData<ReleaseListItemModel>>, Unit>? = @static { it: Flow<PagingData<ReleaseListItemModel>> ->
+
+}
+
+  unstable viewModel: ReleasesByAreaViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun AreaStatsScreen(
+  stable areaId: String
+  stable tabs: ImmutableList<Tab>
+  stable modifier: Modifier? = @static Companion
+  unstable viewModel: AreaStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistScaffold(
+  stable artistId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  stable sortReleaseGroupListItems: Boolean = @static false
+  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  unstable viewModel: ArtistScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ArtistDetailsScreen(
+  unstable artist: ArtistScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable artistImageUrl: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupsByArtistScreen(
+  stable artistId: String
+  stable modifier: Modifier
+  stable filterText: String
+  stable isSorted: Boolean
+  stable snackbarHostState: SnackbarHostState
+  stable lazyListState: LazyListState
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable onReleaseGroupClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedReleaseGroupsChange: Function1<Flow<PagingData<ListItemModel>>, Unit>? = @static { it: Flow<PagingData<ListItemModel>> ->
+
+}
+
+  unstable viewModel: ReleaseGroupsByArtistViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesByArtistScreen(
+  stable artistId: String
+  stable filterText: String
+  stable showMoreInfo: Boolean
+  stable snackbarHostState: SnackbarHostState
+  stable releasesLazyListState: LazyListState
+  releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedReleasesFlowChange: Function1<Flow<PagingData<ReleaseListItemModel>>, Unit>? = @static { it: Flow<PagingData<ReleaseListItemModel>> ->
+
+}
+
+  unstable viewModel: ReleasesByArtistViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ArtistStatsScreen(
+  stable artistId: String
+  stable tabs: ImmutableList<Tab>
+  stable modifier: Modifier? = @static Companion
+  unstable viewModel: ArtistStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventScaffold(
+  stable eventId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  unstable viewModel: EventScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun EventDetailsScreen(
+  unstable event: EventScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventStatsScreen(
+  stable modifier: Modifier? = @static Companion
+  stable eventId: String
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: EventStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun GenreScaffold(
+  stable genreId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  unstable viewModel: GenreScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentScaffold(
+  stable instrumentId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  unstable viewModel: InstrumentScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentDetailsScreen(
+  unstable instrument: InstrumentScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun InstrumentStatsScreen(
+  stable instrumentId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: InstrumentStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelScaffold(
+  stable labelId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  unstable viewModel: LabelScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun LabelDetailsScreen(
+  unstable label: LabelScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesByLabelScreen(
+  stable labelId: String
+  stable filterText: String
+  stable showMoreInfo: Boolean
+  stable snackbarHostState: SnackbarHostState
+  stable releasesLazyListState: LazyListState
+  releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedReleasesFlowChange: Function1<Flow<PagingData<ReleaseListItemModel>>, Unit>? = @static { it: Flow<PagingData<ReleaseListItemModel>> ->
+
+}
+
+  unstable viewModel: ReleasesByLabelViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LabelStatsScreen(
+  stable labelId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: LabelStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun BottomNavigationBar(
+  stable currentTopLevelDestination: Destination
+  stable navigateToTopLevelDestination: Function1<Destination, Unit>? = @static { it: Destination ->
+
+}
+
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun NavigationGraph(
+  unstable navController: NavHostController
+  unstable deleteHistoryDelegate: DeleteHistoryDelegate
+  stable onLoginClick: Function0<Unit>
+  stable onLogoutClick: Function0<Unit>
+  stable onCreateCollectionClick: Function0<Unit>
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>
+  stable onDeleteFromCollection: Function3<@[ParameterName(name = 'collectionId')] String, @[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit>
+  stable showMoreInfoInReleaseListItem: Boolean
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>
+  stable sortReleaseGroupListItems: Boolean
+  stable onSortReleaseGroupListItemsChange: Function1<Boolean, Unit>
+  stable modifier: Modifier? = @static Companion
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceScaffold(
+  stable placeId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  unstable viewModel: PlaceScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun PlaceDetailsScreen(
+  unstable place: PlaceScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  unstable context: Context? = @dynamic LocalContext.<get-current>($composer, 0)
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun EventsByPlaceScreen(
+  stable placeId: String
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  lazyPagingItems: LazyPagingItems<EventListItemModel>
+  stable onEventClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>
+  stable onPagedEventsFlowChange: Function1<Flow<PagingData<EventListItemModel>>, Unit>
+  stable filterText: String
+  unstable viewModel: EventsByPlaceViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceStatsScreen(
+  stable placeId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: PlaceStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingScaffold(
+  stable recordingId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  unstable viewModel: RecordingScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun RecordingDetailsScreen(
+  unstable recording: RecordingScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesByRecordingScreen(
+  stable recordingId: String
+  stable filterText: String
+  stable showMoreInfo: Boolean
+  stable snackbarHostState: SnackbarHostState
+  stable releasesLazyListState: LazyListState
+  releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedReleasesFlowChange: Function1<Flow<PagingData<ReleaseListItemModel>>, Unit>? = @static { it: Flow<PagingData<ReleaseListItemModel>> ->
+
+}
+
+  unstable viewModel: ReleasesByRecordingViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingStatsScreen(
+  stable recordingId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: RecordingStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseScaffold(
+  stable releaseId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  unstable viewModel: ReleaseScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseDetailsScreen(
+  unstable release: ReleaseScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable coverArtUrl: String? = @static ""
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseStatsScreen(
+  stable releaseId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: ReleaseStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByReleaseScreen(
+  stable releaseId: String
+  stable filterText: String
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onRecordingClick: Function2<String, String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedTracksFlowChange: Function1<Flow<PagingData<ListItemModel>>, Unit>? = @static { it: Flow<PagingData<ListItemModel>> ->
+
+}
+
+  unstable viewModel: TracksByReleaseViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun TracksByReleaseScreen(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onRecordingClick: Function2<String, String, Unit>? = @static { <unused var>: String, <unused var>: String ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewTracksInReleaseScreen()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupScaffold(
+  stable releaseGroupId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable showMoreInfoInReleaseListItem: Boolean = @static true
+  stable onShowMoreInfoInReleaseListItemChange: Function1<Boolean, Unit>? = @static { it: Boolean ->
+
+}
+
+  unstable viewModel: ReleaseGroupScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupDetailsScreen(
+  unstable releaseGroup: ReleaseGroupScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable coverArtUrl: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleasesByReleaseGroupScreen(
+  stable releaseGroupId: String
+  stable filterText: String
+  stable showMoreInfo: Boolean
+  stable snackbarHostState: SnackbarHostState
+  stable releasesLazyListState: LazyListState
+  releasesLazyPagingItems: LazyPagingItems<ReleaseListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onReleaseClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String ->
+
+}
+
+  stable onPagedReleasesFlowChange: Function1<Flow<PagingData<ReleaseListItemModel>>, Unit>? = @static { it: Flow<PagingData<ReleaseListItemModel>> ->
+
+}
+
+  unstable viewModel: ReleasesByReleaseGroupViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun ReleaseGroupStatsScreen(
+  stable releaseGroupId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: ReleaseGroupStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecentSearchesHeader(
+  stable isListEmpty: Boolean = @static false
+  stable onDeleteAllHistory: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeader()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewRecentSearchesHeaderEmpty()
+restartable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryListItem(
+  unstable searchHistory: SearchHistoryListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'query')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static { it: SearchHistoryListItemModel ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchHistoryScreen(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'query')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  stable onDeleteItem: Function1<SearchHistoryListItemModel, Unit>? = @static { it: SearchHistoryListItemModel ->
+
+}
+
+  stable onDeleteAllHistory: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchResultsScreen(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchScaffold(
+  stable modifier: Modifier? = @static Companion
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable initialQuery: String? = @static null
+  stable initialEntity: MusicBrainzEntity? = @static null
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SearchScreen(
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable initialQuery: String? = @static null
+  stable initialEntity: MusicBrainzEntity? = @static null
+  unstable viewModel: SearchViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesScaffold(
+  stable seriesId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  unstable viewModel: SeriesScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun SeriesDetailsScreen(
+  unstable series: SeriesScaffoldModel
+  stable modifier: Modifier? = @static Companion
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SeriesStatsScreen(
+  stable seriesId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: SeriesStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkScaffold(
+  stable workId: String
+  stable modifier: Modifier? = @static Companion
+  stable titleWithDisambiguation: String? = @static null
+  stable onBack: Function0<Unit>? = @static {
+
+}
+
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onAddToCollectionMenuClick: Function2<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String ->
+
+}
+
+  unstable viewModel: WorkScaffoldViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable scheme("[androidx.compose.ui.UiComposable]") fun WorkDetailsScreen(
+  stable modifier: Modifier? = @static Companion
+  unstable work: WorkScaffoldModel
+  stable filterText: String? = @static ""
+  stable lazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun RecordingsByWorkScreen(
+  stable workId: String
+  stable modifier: Modifier? = @static Companion
+  stable snackbarHostState: SnackbarHostState? = @dynamic SnackbarHostState()
+  stable recordingsLazyListState: LazyListState? = @dynamic rememberLazyListState(0, 0, $composer, 0, 0b0011)
+  recordingsLazyPagingItems: LazyPagingItems<RecordingListItemModel>
+  stable onRecordingClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit>
+  stable onPagedRecordingsFlowChange: Function1<Flow<PagingData<RecordingListItemModel>>, Unit>
+  stable filterText: String
+  unstable viewModel: RecordingsByWorkViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun WorkGroupStatsScreen(
+  stable workId: String
+  stable modifier: Modifier? = @static Companion
+  stable tabs: ImmutableList<Tab>
+  unstable viewModel: WorkStatsViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
