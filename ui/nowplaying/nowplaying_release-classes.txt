@@ -1,0 +1,3 @@
+stable class NowPlayingUiModule {
+  <runtime stability> = Stable
+}

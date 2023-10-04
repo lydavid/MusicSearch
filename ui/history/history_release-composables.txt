@@ -1,0 +1,62 @@
+restartable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
+  unstable lookupHistory: LookupHistoryListItemModel
+  stable modifier: Modifier? = @static Companion
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static { it: LookupHistoryListItemModel ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryReleaseGroup(
+  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryRelease(
+  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewLookupHistoryArtist(
+  stable imageUrl: String? = @static "https://www.example.com/image.jpg"
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryScaffold(
+  deleteHistoryDelegate: DeleteHistoryDelegate
+  stable modifier: Modifier? = @static Companion
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  unstable viewModel: HistoryViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryScreen(
+  lazyPagingItems: LazyPagingItems<ListItemModel>
+  stable modifier: Modifier? = @static Companion
+  stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
+
+}
+
+  stable onDeleteItem: Function1<LookupHistoryListItemModel, Unit>? = @static { it: LookupHistoryListItemModel ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistorySortBottomSheet(
+  stable sortOption: HistorySortOption
+  stable onSortOptionClick: Function1<HistorySortOption, Unit>? = @static { it: HistorySortOption ->
+
+}
+
+  stable bottomSheetState: SheetState? = @dynamic rememberModalBottomSheetState(false, null, $composer, 0, 0b0011)
+  stable onDismiss: Function0<Unit>? = @static {
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistorySortBottomSheetContent(
+  stable sortOption: HistorySortOption? = @static HistorySortOption.RECENTLY_VISITED
+  stable onSortOptionClick: Function1<HistorySortOption, Unit>? = @static { it: HistorySortOption ->
+
+}
+
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewHistorySortBottomSheetContent()

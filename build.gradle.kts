@@ -26,12 +26,11 @@ subprojects {
         mavenCentral()
     }
 
-    // ./gradlew assembleRelease -Pmbjc.enableComposeCompilerReports=true --rerun-tasks
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")
 
-            if (project.findProperty("mbjc.enableComposeCompilerReports") == "true") {
+            if (project.findProperty("musicsearch.enableComposeCompilerReports") == "true") {
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +

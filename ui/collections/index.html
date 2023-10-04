@@ -1,0 +1,1822 @@
+<html>
+  <head>
+    <title>MusicSearch - Compose Compiler Report</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" type="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+    <style>body {
+    font-family: 'Roboto', sans-serif;
+    text-align:center
+}
+
+hr {
+    margin: 8px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 8px;
+    padding: 4px
+}
+
+.code {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.active, .collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+ .content-header {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.content-body {
+    padding: 0 18px;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer {
+    padding: 16px;
+    background-color: #E0E0E0 
+}
+
+.status-success {
+    color: #004D40;
+}
+
+.status-failure {
+    color: #D32F2F;
+}
+
+.background-status-success {
+    background-color: #B2DFDB;
+    color: #000000;
+}
+
+.background-status-failure {
+    background-color: #D32F2F;
+    color: #FFFFFF
+}
+
+.background-status-missing {
+    background-color: #FFAC1C;
+    color: #000000
+}
+
+.empty-content {
+    margin: 4px;
+    padding: 18px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}</style>
+  </head>
+  <body>
+    <h1>Compose Compiler Report - MusicSearch</h1>
+    <section><button class="collapsible">Brief Statistics</button>
+      <div class="content">
+        <table class="center" style="text-align:left;">
+          <tr>
+            <th>Skippable Composables</th>
+            <td>62</td>
+          </tr>
+          <tr>
+            <th>Restartable Composables</th>
+            <td>80</td>
+          </tr>
+          <tr>
+            <th>Readonly Composables</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Total Composables</th>
+            <td>80</td>
+          </tr>
+          <tr>
+            <th>Restart Groups</th>
+            <td>80</td>
+          </tr>
+          <tr>
+            <th>Total Groups</th>
+            <td>111</td>
+          </tr>
+          <tr>
+            <th>Static Arguments</th>
+            <td>98</td>
+          </tr>
+          <tr>
+            <th>Certain Arguments</th>
+            <td>166</td>
+          </tr>
+          <tr>
+            <th>Known Stable Arguments</th>
+            <td>935</td>
+          </tr>
+          <tr>
+            <th>Known Unstable Arguments</th>
+            <td>59</td>
+          </tr>
+          <tr>
+            <th>Unknown Stable Arguments</th>
+            <td>12</td>
+          </tr>
+          <tr>
+            <th>Total Arguments</th>
+            <td>1006</td>
+          </tr>
+          <tr>
+            <th>Marked Stable Classes</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Inferred Stable Classes</th>
+            <td>2</td>
+          </tr>
+          <tr>
+            <th>Inferred Unstable Classes</th>
+            <td>3</td>
+          </tr>
+          <tr>
+            <th>Inferred Uncertain Classes</th>
+            <td>0</td>
+          </tr>
+          <tr>
+            <th>Effectively Stable Classes</th>
+            <td>2</td>
+          </tr>
+          <tr>
+            <th>Total Classes</th>
+            <td>5</td>
+          </tr>
+          <tr>
+            <th>Memoized Lambdas</th>
+            <td>121</td>
+          </tr>
+          <tr>
+            <th>Singleton Lambdas</th>
+            <td>47</td>
+          </tr>
+          <tr>
+            <th>Singleton Composable Lambdas</th>
+            <td>15</td>
+          </tr>
+          <tr>
+            <th>Composable Lambdas</th>
+            <td>54</td>
+          </tr>
+          <tr>
+            <th>Total Lambdas</th>
+            <td>160</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <hr>
+    <section><button class="collapsible">Detailed Statistics</button>
+      <div class="content">
+        <table style="width:100%;">
+          <tr>
+            <th>package</th>
+            <th>name</th>
+            <th>composable</th>
+            <th>skippable</th>
+            <th>restartable</th>
+            <th>readonly</th>
+            <th>inline</th>
+            <th>isLambda</th>
+            <th>hasDefaults</th>
+            <th>defaultsGroup</th>
+            <th>groups</th>
+            <th>calls</th>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CollectionBottomSheet</td>
+            <td>CollectionBottomSheet</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CollectionListItem</td>
+            <td>CollectionListItem</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CollectionListScaffold</td>
+            <td>CollectionListScaffold</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CollectionsFilterChipsBar</td>
+            <td>CollectionsFilterChipsBar</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CollectionScaffold</td>
+            <td>CollectionScaffold</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CollectionScaffoldContent</td>
+            <td>CollectionScaffoldContent</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>15</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.CreateCollectionDialog</td>
+            <td>CreateCollectionDialog</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.Preview</td>
+            <td>Preview</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.areas.AreasByCollectionScreen</td>
+            <td>AreasByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.artists.ArtistsByCollectionScreen</td>
+            <td>ArtistsByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.events.EventsByCollectionScreen</td>
+            <td>EventsByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.instruments.InstrumentsByCollectionScreen</td>
+            <td>InstrumentsByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.labels.LabelsByCollectionScreen</td>
+            <td>LabelsByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.places.PlacesByCollectionScreen</td>
+            <td>PlacesByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.recordings.RecordingsByCollectionScreen</td>
+            <td>RecordingsByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.releasegroups.ReleaseGroupsByCollectionScreen</td>
+            <td>ReleaseGroupsByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.releases.ReleasesByCollectionScreen</td>
+            <td>ReleasesByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.series.SeriesByCollectionScreen</td>
+            <td>SeriesByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>ly.david.ui.collections.works.WorksByCollectionScreen</td>
+            <td>WorksByCollectionScreen</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <hr>
+    <section><button class="collapsible">Composables Report</button>
+      <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Composables with issues (Restartable but Not Skippable)</button>
+        <div class="content" style="background-color:#FFEBEE;">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>
+                <h3 class="code"><span> fun CollectionBottomSheet</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">bottomSheetState</td>
+                    <td class="code">SheetState</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>2</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">scope</td>
+                    <td class="code">CoroutineScope</td>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>3</td>
+                    <td>MISSING</td>
+                    <td class="code">collections</td>
+                    <td class="code">LazyPagingItems&lt;CollectionListItemModel&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onDismiss</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onCreateCollectionClick</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>6</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">onAddToCollection</td>
+                    <td class="code">SuspendFunction1&lt;@[ParameterName(name = 'collectionId')] String, Unit&gt;? = @static { it</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>
+                <h3 class="code"><span> fun CollectionListItem</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>1</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">collection</td>
+                    <td class="code">CollectionListItemModel</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onClick</td>
+                    <td class="code">@[ExtensionFunctionType] Function1&lt;CollectionListItemModel, Unit&gt;? = @static {</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
+        <div class="content" style="background-color:#F1F8E9;">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>
+                <h3 class="code"><span> fun CollectionListScaffold</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onCollectionClick</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'id')] String, @[ParameterName(name = 'isRemote')] Boolean, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onCreateCollectionClick</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>4</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">CollectionListViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>3.</td>
+              <td>
+                <h3 class="code"><span> fun CollectionsFilterChipsBar</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">showLocal</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onShowLocalToggle</td>
+                    <td class="code">Function1&lt;Boolean, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">showRemote</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">onShowRemoteToggle</td>
+                    <td class="code">Function1&lt;Boolean, Unit&gt;? = @static { it</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>4.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>5.</td>
+              <td>
+                <h3 class="code"><span> fun CollectionScaffold</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">onBack</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">onItemClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">showMoreInfoInReleaseListItem</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onShowMoreInfoInReleaseListItemChange</td>
+                    <td class="code">Function1&lt;Boolean, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">sortReleaseGroupListItems</td>
+                    <td class="code">Boolean = @static false</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">onSortReleaseGroupListItemsChange</td>
+                    <td class="code">Function1&lt;Boolean, Unit&gt;? = @static { it</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>9</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'collectableId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>10</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">CollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>6.</td>
+              <td>
+                <h3 class="code"><span> fun CollectionScaffoldContent</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">entity</td>
+                    <td class="code">MusicBrainzEntity?</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">innerPadding</td>
+                    <td class="code">PaddingValues</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">scrollBehavior</td>
+                    <td class="code">TopAppBarScrollBehavior</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">showMoreInfoInReleaseListItem</td>
+                    <td class="code">Boolean = @static true</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>9</td>
+                    <td>STABLE</td>
+                    <td class="code">sortReleaseGroupListItems</td>
+                    <td class="code">Boolean = @static false</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>10</td>
+                    <td>STABLE</td>
+                    <td class="code">onItemClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>11</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'collectableId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>7.</td>
+              <td>
+                <h3 class="code"><span> fun CreateCollectionDialog</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">onDismiss</td>
+                    <td class="code">Function0&lt;Unit&gt;? = @static {</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">onSubmit</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'name')] String, @[ParameterName(name = 'entity')] MusicBrainzEntity, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>8.</td>
+              <td>
+                <h3 class="code"><span> fun Preview</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table></table>
+              </td>
+            </tr>
+            <tr>
+              <td>9.</td>
+              <td>
+                <h3 class="code"><span> fun AreasByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onAreaClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">AreasByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>10.</td>
+              <td>
+                <h3 class="code"><span> fun ArtistsByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onArtistClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">ArtistsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>11.</td>
+              <td>
+                <h3 class="code"><span> fun EventsByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onEventClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">EventsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>12.</td>
+              <td>
+                <h3 class="code"><span> fun InstrumentsByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onInstrumentClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">InstrumentsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>13.</td>
+              <td>
+                <h3 class="code"><span> fun LabelsByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onLabelClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">LabelsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>14.</td>
+              <td>
+                <h3 class="code"><span> fun PlacesByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onPlaceClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">PlacesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>15.</td>
+              <td>
+                <h3 class="code"><span> fun RecordingsByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onRecordingClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">RecordingsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>16.</td>
+              <td>
+                <h3 class="code"><span> fun ReleaseGroupsByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">isSorted</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onReleaseGroupClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>9</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">ReleaseGroupsByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>17.</td>
+              <td>
+                <h3 class="code"><span> fun ReleasesByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">showMoreInfo</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onReleaseClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>8</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>9</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">ReleasesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>18.</td>
+              <td>
+                <h3 class="code"><span> fun SeriesByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onSeriesClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">SeriesByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>19.</td>
+              <td>
+                <h3 class="code"><span> fun WorksByCollectionScreen</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">collectionId</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">isRemote</td>
+                    <td class="code">Boolean</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>3</td>
+                    <td>STABLE</td>
+                    <td class="code">filterText</td>
+                    <td class="code">String</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>4</td>
+                    <td>STABLE</td>
+                    <td class="code">snackbarHostState</td>
+                    <td class="code">SnackbarHostState</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>5</td>
+                    <td>STABLE</td>
+                    <td class="code">modifier</td>
+                    <td class="code">Modifier? = @static Companion</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>6</td>
+                    <td>STABLE</td>
+                    <td class="code">onWorkClick</td>
+                    <td class="code">Function3&lt;@[ParameterName(name = 'entity')] MusicBrainzEntity, String, String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>7</td>
+                    <td>STABLE</td>
+                    <td class="code">onDeleteFromCollection</td>
+                    <td class="code">Function2&lt;@[ParameterName(name = 'entityId')] String, @[ParameterName(name = 'name')] String, Unit&gt;? = @static { &lt;unused var&gt;</td>
+                  </tr>
+                  <tr class="background-status-failure">
+                    <td>8</td>
+                    <td>UNSTABLE</td>
+                    <td class="code">viewModel</td>
+                    <td class="code">WorksByCollectionViewModel? = @dynamic koinViewModel(null, null, null, null, null, null, $composer, 0, 0b00111111)</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+    <hr>
+    <section>
+      <div><button class="collapsible">Classes Report</button>
+        <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Unstable Classes</button>
+          <div class="content" style="background-color:#FFEBEE;">
+            <table>
+              <tr>
+                <td>1.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class CollectionListViewModel</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val appPreferences</td>
+                      <td class="code">AppPreferences</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>2</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val pagedList</td>
+                      <td class="code">CollectionPagedList</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>3</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val musicBrainzApi</td>
+                      <td class="code">MusicBrainzApi</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>4</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val musicBrainzAuthStore</td>
+                      <td class="code">MusicBrainzAuthStore</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>5</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val collectionDao</td>
+                      <td class="code">CollectionDao</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>6</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val browseEntityCountDao</td>
+                      <td class="code">BrowseEntityCountDao</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>7</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val getBrowseEntityCountUseCase</td>
+                      <td class="code">GetBrowseEntityCountUseCase</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>2.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class CollectionPagedList</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val entityId</td>
+                      <td class="code">MutableStateFlow&lt;String&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>2</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val query</td>
+                      <td class="code">MutableStateFlow&lt;String&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>3</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val isRemote</td>
+                      <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>4</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val showLocal</td>
+                      <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>5</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val showRemote</td>
+                      <td class="code">MutableStateFlow&lt;Boolean&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>6</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val paramState</td>
+                      <td class="code">Flow&lt;ViewModelState&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>7</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">var scope</td>
+                      <td class="code">CoroutineScope</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>8</td>
+                      <td>RUNTIME</td>
+                      <td class="code">var useCase</td>
+                      <td class="code">BrowseCollectionUseCase&lt;Collection&gt;</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>9</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val pagedEntities$delegate</td>
+                      <td class="code">Lazy&lt;Flow&lt;PagingData&lt;CollectionListItemModel&gt;&gt;&gt;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>3.</td>
+                <td>
+                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class CollectionViewModel</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>1</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val collectionDao</td>
+                      <td class="code">CollectionDao</td>
+                    </tr>
+                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
+                      <td>2</td>
+                      <td>UNSTABLE</td>
+                      <td class="code">val incrementLookupHistoryUseCase</td>
+                      <td class="code">IncrementLookupHistoryUseCase</td>
+                    </tr>
+                    <tr style="color:#000000;background-color:#B2DFDB;">
+                      <td>3</td>
+                      <td>STABLE</td>
+                      <td class="code">var recordedLookup</td>
+                      <td class="code">Boolean</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+<br>
+          <div class="empty-content">No Stable classes found</div>
+        </div>
+      </div>
+    </section>
+    <hr>
+    <footer><i>This report is beautified with <a href="https://github.com/PatilShreyas/compose-report-to-html" target="_blank">Compose Report to HTML</a></i></footer>
+    <script>var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+      content.style.overflow = "hidden"
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+      content.style.overflow = "auto";
+      content.style.maxHeight = "none";
+    } 
+  });
+}</script>
+  </body>
+</html>

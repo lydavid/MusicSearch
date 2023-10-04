@@ -1,0 +1,39 @@
+unstable class CollectionListViewModel {
+  unstable val appPreferences: AppPreferences
+  unstable val pagedList: CollectionPagedList
+  unstable val musicBrainzApi: MusicBrainzApi
+  unstable val musicBrainzAuthStore: MusicBrainzAuthStore
+  unstable val collectionDao: CollectionDao
+  unstable val browseEntityCountDao: BrowseEntityCountDao
+  unstable val getBrowseEntityCountUseCase: GetBrowseEntityCountUseCase
+  <runtime stability> = Unstable
+}
+stable class ViewModelState {
+  stable val entityId: String
+  stable val query: String
+  stable val isRemote: Boolean
+  stable val showLocal: Boolean
+  stable val showRemote: Boolean
+  <runtime stability> = Stable
+}
+unstable class CollectionPagedList {
+  unstable val entityId: MutableStateFlow<String>
+  unstable val query: MutableStateFlow<String>
+  unstable val isRemote: MutableStateFlow<Boolean>
+  unstable val showLocal: MutableStateFlow<Boolean>
+  unstable val showRemote: MutableStateFlow<Boolean>
+  unstable val paramState: Flow<ViewModelState>
+  unstable var scope: CoroutineScope
+  runtime var useCase: BrowseCollectionUseCase<Collection>
+  unstable val pagedEntities$delegate: Lazy<Flow<PagingData<CollectionListItemModel>>>
+  <runtime stability> = Unstable
+}
+stable class CollectionUiModule {
+  <runtime stability> = Stable
+}
+unstable class CollectionViewModel {
+  unstable val collectionDao: CollectionDao
+  unstable val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase
+  stable var recordedLookup: Boolean
+  <runtime stability> = Unstable
+}
