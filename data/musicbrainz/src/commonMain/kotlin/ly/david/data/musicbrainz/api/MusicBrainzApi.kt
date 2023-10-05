@@ -31,16 +31,14 @@ interface MusicBrainzApi : SearchApi, BrowseApi, LookupApi, CollectionApi, Music
                                 BearerTokens(it, "")
                             }
                         }
-                        // TODO: this block is never executed unlike for spotify
                         refreshTokens {
                             musicBrainzAuthRepository.getAuthState()?.let {
                                 BearerTokens(it, "")
                             }
                         }
-                        // TODO: handle collection browse, one way to do it is to split up the
-                        //  api that requires auth and just return true here
                         sendWithoutRequest { request ->
-                            request.url.pathSegments.contains(USER_INFO)
+                            request.url.parameters["collection"] != null ||
+                                request.url.pathSegments.contains(USER_INFO)
                         }
                     }
                 }
