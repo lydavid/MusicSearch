@@ -191,7 +191,11 @@ tasks.register("projectDependencyGraph") {
 
         dot.appendText("}\n")
 
-        val p = Runtime.getRuntime().exec(arrayOf("dot", "-Tsvg", "-O", "project.dot"), emptyArray(), dot.parentFile)
+        val p = Runtime.getRuntime().exec(
+            arrayOf("dot", "-Tsvg", "project.dot", "-o", "$rootDir/assets/module_dependency_graph.svg"),
+            emptyArray(),
+            dot.parentFile
+        )
         p.waitFor()
         require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(java.io.BufferedReader::readText) }
 
