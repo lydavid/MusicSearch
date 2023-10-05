@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 import java.io.BufferedReader
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -87,6 +87,7 @@ tasks.register("projectDependencyGraph") {
         dot.appendText("  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.4];\n")
         dot.appendText("  node [style=filled, fillcolor=\"#bbbbbb\"];\n")
         dot.appendText("  rankdir=TB;\n")
+        dot.appendText("  splines=ortho;\n")
 
         val projects = LinkedHashSet<Project>()
         val dependencies = LinkedHashMap<Pair<Project, Project>, List<String>>()
@@ -155,6 +156,7 @@ tasks.register("projectDependencyGraph") {
 
             if (rootProjects.contains(project)) {
                 traits.add("shape=box")
+                traits.add("width=5")
             }
 
             if (multiplatformProjects.contains(project)) {
