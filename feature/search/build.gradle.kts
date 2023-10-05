@@ -16,6 +16,7 @@ dependencies {
     implementation(projects.data.database) // TODO: remove
     implementation(projects.ui.common)
     implementation(projects.ui.core)
+    testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
@@ -30,4 +31,6 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
+
+    testImplementation(libs.test.parameter.injector)
 }

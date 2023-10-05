@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.searchableEntities
 import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.feature.search.SearchScreenTestTag
 import ly.david.musicsearch.feature.search.di.SearchViewModel
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
@@ -132,8 +133,4 @@ internal fun SearchScreen(
             )
         }
     }
-}
-
-enum class SearchScreenTestTag {
-    TEXT_FIELD,
 }
