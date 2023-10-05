@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import java.io.BufferedReader
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -72,4 +73,128 @@ tasks.register("listKMPModules") {
         .forEach {
             println(it.path)
         }
+}
+
+// Original from https://github.com/JakeWharton/SdkSearch/blob/master/gradle/projectDependencyGraph.gradle
+// kts version from https://github.com/leinardi/Forlago/blob/e47f2d8781b8a05e074bf2b761e1693b14b7a06c/build-conventions/src/main/kotlin/forlago.dependency-graph-conventions.gradle.kts
+tasks.register("projectDependencyGraph") {
+    doLast {
+        val dot = File(rootProject.buildDir, "reports/dependency-graph/project.dot")
+        dot.parentFile.mkdirs()
+        dot.delete()
+
+        dot.writeText("digraph {\n")
+        dot.appendText("  graph [label=\"${rootProject.name}\\n \",labelloc=t,fontsize=30,ranksep=1.4];\n")
+        dot.appendText("  node [style=filled, fillcolor=\"#bbbbbb\"];\n")
+        dot.appendText("  rankdir=TB;\n")
+
+        val projects = LinkedHashSet<Project>()
+        val dependencies = LinkedHashMap<Pair<Project, Project>, List<String>>()
+        val multiplatformProjects = mutableListOf<Project>()
+        val jsProjects = mutableListOf<Project>()
+        val androidProjects = mutableListOf<Project>()
+        val javaProjects = mutableListOf<Project>()
+
+        val rootProjects = mutableListOf<Project>()
+        val queue = mutableListOf<Project>(rootProject)
+        while (queue.isNotEmpty()) {
+            val project = queue.removeFirst()
+            queue.addAll(project.childProjects.values)
+
+            if (project.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+                multiplatformProjects.add(project)
+            }
+            if (project.plugins.hasPlugin("org.jetbrains.kotlin.js")) {
+                jsProjects.add(project)
+            }
+            if (project.plugins.hasPlugin("com.android.library") || project.plugins.hasPlugin("com.android.application")) {
+                androidProjects.add(project)
+            }
+            if (project.plugins.hasPlugin("java-library") || project.plugins.hasPlugin("java")) {
+                javaProjects.add(project)
+            }
+
+            project.configurations.forEach outer@{ config ->
+                config.dependencies
+                    .withType(ProjectDependency::class.java)
+                    .map { it.dependencyProject }
+                    .forEach inner@{ dependency ->
+                        if (project == rootProject) return@outer
+                        if (project == dependency) return@inner
+
+                        projects.add(project)
+                        projects.add(dependency)
+
+                        if (project.path.contains("app")) {
+                            rootProjects.add(project)
+                        }
+
+                        if (config.name.lowercase().endsWith("implementation")) {
+                            dependencies.put(project to dependency, listOf("style=dotted"))
+                        } else {
+                            dependencies.put(project to dependency, listOf())
+                        }
+                    }
+            }
+        }
+
+        projects.sortedBy { it.path }
+
+//        println("\nAll projects")
+//        projects.forEach { project ->
+//            println(project)
+//        }
+//        println("\nDependencies")
+//        for ((key, value) in dependencies) {
+//            println("$key $value")
+//        }
+
+        dot.appendText("\n  # Projects\n\n")
+        for (project in projects) {
+            val traits = mutableListOf<String>()
+
+            if (rootProjects.contains(project)) {
+                traits.add("shape=box")
+            }
+
+            if (multiplatformProjects.contains(project)) {
+                traits.add("fillcolor=\"#ffd2b3\"")
+            } else if (jsProjects.contains(project)) {
+                traits.add("fillcolor=\"#ffffba\"")
+            } else if (androidProjects.contains(project)) {
+                traits.add("fillcolor=\"#baffc9\"")
+            } else if (javaProjects.contains(project)) {
+                traits.add("fillcolor=\"#ffb3ba\"")
+            } else {
+                traits.add("fillcolor=\"#eeeeee\"")
+            }
+
+            dot.appendText("  \"${project.path}\" [${traits.joinToString(", ")}];\n")
+        }
+
+        dot.appendText("\n  {rank = same;")
+        for (project in projects) {
+            if (rootProjects.contains(project)) {
+                dot.appendText(" \"${project.path}\";")
+            }
+        }
+        dot.appendText("}\n")
+
+        dot.appendText("\n  # Dependencies\n\n")
+        dependencies.forEach { key, traits ->
+            dot.appendText("  \"${key.first.path}\" -> \"${key.second.path}\"")
+            if (traits.isNotEmpty()) {
+                dot.appendText(" [${traits.joinToString(", ")}]")
+            }
+            dot.appendText("\n")
+        }
+
+        dot.appendText("}\n")
+
+        val p = Runtime.getRuntime().exec(arrayOf("dot", "-Tsvg", "-O", "project.dot"), emptyArray(), dot.parentFile)
+        p.waitFor()
+        require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(java.io.BufferedReader::readText) }
+
+        println("Project module dependency graph created at ${dot.absolutePath}.svg")
+    }
 }
