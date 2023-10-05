@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("ly.david.android.library")
     kotlin("android")
@@ -12,7 +11,6 @@ android {
 
 dependencies {
     implementation(projects.data.core)
-    implementation(projects.data.spotify)
     implementation(projects.ui.core)
     implementation(projects.ui.common)
     testImplementation(projects.ui.test.screenshot)

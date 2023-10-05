@@ -80,7 +80,7 @@ dependencies {
     implementation(projects.ui.image)
     implementation(projects.ui.nowplaying)
     implementation(projects.ui.settings)
-    implementation(projects.ui.spotify)
+    implementation(projects.ui.spotifyBroadcastReceiver)
     implementation(projects.ui.stats)
     implementation(libs.accompanist.pager)
     implementation(libs.androidx.activity.compose)

@@ -1,4 +1,4 @@
-package ly.david.data.spotify
+package ly.david.ui.spotify
 
 data class SpotifyMetadata(
     val trackId: String? = null,

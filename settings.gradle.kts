@@ -55,6 +55,6 @@ include(
     ":ui:test:image",
     ":ui:test:screenshot",
     ":ui:settings",
-    ":ui:spotify",
+    ":ui:spotify-broadcast-receiver",
     ":ui:stats",
 )

@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.spotify.SpotifyMetadata
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.core.preview.DefaultPreviews

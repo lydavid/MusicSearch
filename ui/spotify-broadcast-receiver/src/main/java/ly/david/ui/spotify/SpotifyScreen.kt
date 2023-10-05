@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.spotify.SpotifyMetadata
 import ly.david.ui.common.R
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.core.preview.DefaultPreviews

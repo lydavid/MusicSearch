@@ -7,7 +7,6 @@ import android.content.IntentFilter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
-import ly.david.data.spotify.SpotifyMetadata
 
 private object BroadcastTypes {
     private const val SPOTIFY_PACKAGE = "com.spotify.music"
