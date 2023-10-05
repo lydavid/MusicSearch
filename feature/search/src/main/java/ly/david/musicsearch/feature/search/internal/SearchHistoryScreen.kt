@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.feature.search.internal
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyListState

@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.feature.search.internal
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -50,7 +50,7 @@ internal fun RecentSearchesHeader(
 
 @DefaultPreviews
 @Composable
-private fun PreviewRecentSearchesHeader() {
+internal fun PreviewRecentSearchesHeader() {
     PreviewTheme {
         Surface {
             RecentSearchesHeader()
@@ -60,7 +60,7 @@ private fun PreviewRecentSearchesHeader() {
 
 @DefaultPreviews
 @Composable
-private fun PreviewRecentSearchesHeaderEmpty() {
+internal fun PreviewRecentSearchesHeaderEmpty() {
     PreviewTheme {
         Surface {
             RecentSearchesHeader(isListEmpty = true)

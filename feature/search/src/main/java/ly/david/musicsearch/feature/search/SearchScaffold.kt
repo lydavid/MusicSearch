@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.feature.search
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,12 +10,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.feature.search.internal.SearchScreen
 import ly.david.ui.common.R
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SearchScaffold(
+fun SearchScaffold(
     modifier: Modifier = Modifier,
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,

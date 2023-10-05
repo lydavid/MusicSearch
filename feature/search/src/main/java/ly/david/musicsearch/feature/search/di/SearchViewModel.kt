@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.feature.search.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,7 +35,7 @@ import org.koin.android.annotation.KoinViewModel
 private const val SEARCH_DELAY_MS = 500L
 
 @KoinViewModel
-internal class SearchViewModel(
+class SearchViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val searchHistoryDao: SearchHistoryDao,
 ) : ViewModel() {

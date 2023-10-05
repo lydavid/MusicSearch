@@ -26,6 +26,7 @@ import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.feature.search.internal.SearchScreenTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test

@@ -28,11 +28,11 @@ import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
-import ly.david.mbjc.ui.search.SearchScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.domain.toLookupDestination
+import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.common.R

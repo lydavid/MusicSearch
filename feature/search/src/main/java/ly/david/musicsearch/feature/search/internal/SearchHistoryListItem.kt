@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.feature.search.internal
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -54,7 +54,7 @@ internal fun SearchHistoryListItem(
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewSearchHistoryListItem() {
     PreviewTheme {
         Surface {
             SearchHistoryListItem(

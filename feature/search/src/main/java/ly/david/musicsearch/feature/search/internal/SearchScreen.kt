@@ -1,4 +1,4 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.feature.search.internal
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.searchableEntities
 import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.feature.search.di.SearchViewModel
 import ly.david.ui.common.ExposedDropdownMenuBox
 import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -37,7 +38,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 internal fun SearchScreen(
     modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     initialQuery: String? = null,
     initialEntity: MusicBrainzEntity? = null,

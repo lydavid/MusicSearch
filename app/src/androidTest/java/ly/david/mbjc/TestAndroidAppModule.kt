@@ -16,6 +16,7 @@ import ly.david.mbjc.di.testPreferencesDataStoreModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.domain.DomainModule
+import ly.david.musicsearch.feature.search.di.SearchFeatureModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
 import ly.david.ui.history.HistoryUiModule
@@ -31,7 +32,7 @@ val testAndroidAppModule = module {
         testPreferencesDataStoreModule,
         testImageModule,
         testDatabaseDriverModule,
-
+        SearchFeatureModule().module,
         ViewModelsModule().module,
         appDataModule,
         coroutinesScopesModule,
