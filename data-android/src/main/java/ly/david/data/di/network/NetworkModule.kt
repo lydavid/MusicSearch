@@ -19,7 +19,6 @@ import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.api.MusicBrainzOAuthApi
 import ly.david.data.spotify.api.SpotifyApi
-import ly.david.data.spotify.api.auth.SpotifyOAuthApi
 import okhttp3.Cache
 import org.koin.dsl.module
 import timber.log.Timber
@@ -89,12 +88,6 @@ val networkModule = module {
         MusicBrainzApi.create(
             httpClient = get(),
             musicBrainzAuthRepository = get(),
-        )
-    }
-
-    single {
-        SpotifyOAuthApi.create(
-            httpClient = get(),
         )
     }
 

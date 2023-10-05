@@ -7,11 +7,11 @@ import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
+import ly.david.data.test.di.testNetworkModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
 import ly.david.mbjc.di.testDatabaseDriverModule
 import ly.david.mbjc.di.testImageModule
-import ly.david.mbjc.di.testNetworkModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule

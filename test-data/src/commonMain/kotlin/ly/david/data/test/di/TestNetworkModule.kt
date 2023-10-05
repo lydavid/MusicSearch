@@ -1,4 +1,4 @@
-package ly.david.mbjc.di
+package ly.david.data.test.di
 
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi

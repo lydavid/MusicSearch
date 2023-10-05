@@ -1,12 +1,15 @@
 plugins {
-    id("ly.david.android.library")
-    kotlin("android")
+    id("ly.david.musicsearch.kotlin.multiplatform")
+    alias(libs.plugins.ksp)
 }
 
-android {
-    namespace = "ly.david.data.test"
-}
-
-dependencies {
-    implementation(projects.data)
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.data)
+                implementation(libs.koin.core)
+            }
+        }
+    }
 }

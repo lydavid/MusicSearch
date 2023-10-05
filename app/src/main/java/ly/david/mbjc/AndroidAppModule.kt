@@ -10,6 +10,7 @@ import ly.david.data.di.network.networkModule
 import ly.david.data.di.preferences.preferencesDataStoreModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
+import ly.david.data.spotify.di.spotifyApiModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
@@ -33,6 +34,7 @@ val androidAppModule = module {
         loggingModule,
         musicBrainzAuthModule,
         networkModule,
+        spotifyApiModule,
         preferencesDataStoreModule,
         imageModule,
         CoverArtDataModule().module,
