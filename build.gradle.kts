@@ -79,7 +79,7 @@ tasks.register("listKMPModules") {
 // kts version from https://github.com/leinardi/Forlago/blob/e47f2d8781b8a05e074bf2b761e1693b14b7a06c/build-conventions/src/main/kotlin/forlago.dependency-graph-conventions.gradle.kts
 tasks.register("projectDependencyGraph") {
     doLast {
-        val dot = File(rootProject.buildDir, "reports/dependency-graph/project.dot")
+        val dot = rootProject.layout.buildDirectory.file("reports/dependency-graph/project.dot").get().asFile
         dot.parentFile.mkdirs()
         dot.delete()
 
@@ -97,7 +97,7 @@ tasks.register("projectDependencyGraph") {
         val javaProjects = mutableListOf<Project>()
 
         val rootProjects = mutableListOf<Project>()
-        val queue = mutableListOf<Project>(rootProject)
+        val queue = mutableListOf(rootProject)
         while (queue.isNotEmpty()) {
             val project = queue.removeFirst()
             queue.addAll(project.childProjects.values)
@@ -108,7 +108,9 @@ tasks.register("projectDependencyGraph") {
             if (project.plugins.hasPlugin("org.jetbrains.kotlin.js")) {
                 jsProjects.add(project)
             }
-            if (project.plugins.hasPlugin("com.android.library") || project.plugins.hasPlugin("com.android.application")) {
+            if (project.plugins.hasPlugin("com.android.library") ||
+                project.plugins.hasPlugin("com.android.application")
+            ) {
                 androidProjects.add(project)
             }
             if (project.plugins.hasPlugin("java-library") || project.plugins.hasPlugin("java")) {
@@ -137,7 +139,7 @@ tasks.register("projectDependencyGraph") {
                         if (config.name.lowercase().contains("test")) {
                             traits.add("color=\"#ff9ab1\"")
                         }
-                        dependencies.put(project to dependency, traits)
+                        dependencies[project to dependency] = traits
                     }
             }
         }
@@ -186,7 +188,7 @@ tasks.register("projectDependencyGraph") {
         dot.appendText("}\n")
 
         dot.appendText("\n  # Dependencies\n\n")
-        dependencies.forEach { key, traits ->
+        dependencies.forEach { (key, traits) ->
             dot.appendText("  \"${key.first.path}\" -> \"${key.second.path}\"")
             if (traits.isNotEmpty()) {
                 dot.appendText(" [${traits.joinToString(", ")}]")
