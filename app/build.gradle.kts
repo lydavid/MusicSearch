@@ -128,4 +128,6 @@ dependencies {
 
     ksp(libs.koin.ksp.compiler)
     kspAndroidTest(libs.koin.ksp.compiler)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
