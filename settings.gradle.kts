@@ -34,7 +34,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
     ":app",
-    ":desktop-app",
+    ":desktop:app",
 
     ":data-android",
     ":data",

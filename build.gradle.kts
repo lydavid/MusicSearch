@@ -127,7 +127,7 @@ tasks.register("projectDependencyGraph") {
                         projects.add(project)
                         projects.add(dependency)
 
-                        if (project.path.contains("app")) {
+                        if (project.path.split(":").lastOrNull()?.equals("app") == true) {
                             rootProjects.add(project)
                         }
 
