@@ -13,25 +13,25 @@
 <!-- :app -->
 <g id="node1" class="node">
 <title>:app</title>
-<polygon fill="#baffc9" stroke="black" points="776.54,-1132 416.54,-1132 416.54,-1096 776.54,-1096 776.54,-1132"/>
+<polygon fill="#9affb5" stroke="black" points="776.54,-1132 416.54,-1132 416.54,-1096 776.54,-1096 776.54,-1132"/>
 <text text-anchor="middle" x="596.54" y="-1108.58" font-family="Times New Roman,serif" font-size="14.00">:app</text>
 </g>
 <!-- :test&#45;data -->
 <g id="node2" class="node">
 <title>:test&#45;data</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="316.54" cy="-429" rx="44.08" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="316.54" cy="-429" rx="44.08" ry="18"/>
 <text text-anchor="middle" x="316.54" y="-423.57" font-family="Times New Roman,serif" font-size="14.00">:test&#45;data</text>
 </g>
 <!-- :app&#45;&gt;:test&#45;data -->
 <g id="edge1" class="edge">
 <title>:app&#45;&gt;:test&#45;data</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M533.78,-1095.7C533.78,-988.16 533.78,-443 533.78,-443 533.78,-443 356.39,-443 356.39,-443"/>
-<polygon fill="black" stroke="black" points="356.39,-439.5 346.39,-443 356.39,-446.5 356.39,-439.5"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M533.78,-1095.7C533.78,-988.16 533.78,-443 533.78,-443 533.78,-443 356.39,-443 356.39,-443"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="356.39,-439.5 346.39,-443 356.39,-446.5 356.39,-439.5"/>
 </g>
 <!-- :data&#45;android -->
 <g id="node3" class="node">
 <title>:data&#45;android</title>
-<ellipse fill="#baffc9" stroke="black" cx="316.54" cy="-566" rx="59.55" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="316.54" cy="-566" rx="59.55" ry="18"/>
 <text text-anchor="middle" x="316.54" y="-560.58" font-family="Times New Roman,serif" font-size="14.00">:data&#45;android</text>
 </g>
 <!-- :app&#45;&gt;:data&#45;android -->
@@ -43,7 +43,7 @@
 <!-- :data:database -->
 <g id="node4" class="node">
 <title>:data:database</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="62.54" cy="-429" rx="62.54" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="62.54" cy="-429" rx="62.54" ry="18"/>
 <text text-anchor="middle" x="62.54" y="-423.57" font-family="Times New Roman,serif" font-size="14.00">:data:database</text>
 </g>
 <!-- :app&#45;&gt;:data:database -->
@@ -55,7 +55,7 @@
 <!-- :domain -->
 <g id="node5" class="node">
 <title>:domain</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="160.54" cy="-566" rx="40.09" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="160.54" cy="-566" rx="40.09" ry="18"/>
 <text text-anchor="middle" x="160.54" y="-560.58" font-family="Times New Roman,serif" font-size="14.00">:domain</text>
 </g>
 <!-- :app&#45;&gt;:domain -->
@@ -67,7 +67,7 @@
 <!-- :ui:common -->
 <g id="node6" class="node">
 <title>:ui:common</title>
-<ellipse fill="#baffc9" stroke="black" cx="600.54" cy="-703" rx="54.06" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="600.54" cy="-703" rx="54.06" ry="18"/>
 <text text-anchor="middle" x="600.54" y="-697.58" font-family="Times New Roman,serif" font-size="14.00">:ui:common</text>
 </g>
 <!-- :app&#45;&gt;:ui:common -->
@@ -79,7 +79,7 @@
 <!-- :ui:core -->
 <g id="node7" class="node">
 <title>:ui:core</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="1090.54" cy="-429" rx="37.59" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="1090.54" cy="-429" rx="37.59" ry="18"/>
 <text text-anchor="middle" x="1090.54" y="-423.57" font-family="Times New Roman,serif" font-size="14.00">:ui:core</text>
 </g>
 <!-- :app&#45;&gt;:ui:core -->
@@ -91,7 +91,7 @@
 <!-- :ui:collections -->
 <g id="node8" class="node">
 <title>:ui:collections</title>
-<ellipse fill="#baffc9" stroke="black" cx="404.54" cy="-977" rx="61.04" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="404.54" cy="-977" rx="61.04" ry="18"/>
 <text text-anchor="middle" x="404.54" y="-971.58" font-family="Times New Roman,serif" font-size="14.00">:ui:collections</text>
 </g>
 <!-- :app&#45;&gt;:ui:collections -->
@@ -103,7 +103,7 @@
 <!-- :ui:history -->
 <g id="node9" class="node">
 <title>:ui:history</title>
-<ellipse fill="#baffc9" stroke="black" cx="709.54" cy="-977" rx="46.57" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="709.54" cy="-977" rx="46.57" ry="18"/>
 <text text-anchor="middle" x="709.54" y="-971.58" font-family="Times New Roman,serif" font-size="14.00">:ui:history</text>
 </g>
 <!-- :app&#45;&gt;:ui:history -->
@@ -115,7 +115,7 @@
 <!-- :ui:image -->
 <g id="node10" class="node">
 <title>:ui:image</title>
-<ellipse fill="#baffc9" stroke="black" cx="1247.54" cy="-566" rx="42.58" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="1247.54" cy="-566" rx="42.58" ry="18"/>
 <text text-anchor="middle" x="1247.54" y="-560.58" font-family="Times New Roman,serif" font-size="14.00">:ui:image</text>
 </g>
 <!-- :app&#45;&gt;:ui:image -->
@@ -127,7 +127,7 @@
 <!-- :ui:nowplaying -->
 <g id="node11" class="node">
 <title>:ui:nowplaying</title>
-<ellipse fill="#baffc9" stroke="black" cx="764.54" cy="-840" rx="63.54" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="764.54" cy="-840" rx="63.54" ry="18"/>
 <text text-anchor="middle" x="764.54" y="-834.58" font-family="Times New Roman,serif" font-size="14.00">:ui:nowplaying</text>
 </g>
 <!-- :app&#45;&gt;:ui:nowplaying -->
@@ -139,7 +139,7 @@
 <!-- :ui:settings -->
 <g id="node12" class="node">
 <title>:ui:settings</title>
-<ellipse fill="#baffc9" stroke="black" cx="481.54" cy="-840" rx="49.07" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="481.54" cy="-840" rx="49.07" ry="18"/>
 <text text-anchor="middle" x="481.54" y="-834.58" font-family="Times New Roman,serif" font-size="14.00">:ui:settings</text>
 </g>
 <!-- :app&#45;&gt;:ui:settings -->
@@ -151,7 +151,7 @@
 <!-- :ui:spotify&#45;broadcast&#45;receiver -->
 <g id="node13" class="node">
 <title>:ui:spotify&#45;broadcast&#45;receiver</title>
-<ellipse fill="#baffc9" stroke="black" cx="1173.54" cy="-840" rx="118.93" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="1173.54" cy="-840" rx="118.93" ry="18"/>
 <text text-anchor="middle" x="1173.54" y="-834.58" font-family="Times New Roman,serif" font-size="14.00">:ui:spotify&#45;broadcast&#45;receiver</text>
 </g>
 <!-- :app&#45;&gt;:ui:spotify&#45;broadcast&#45;receiver -->
@@ -163,7 +163,7 @@
 <!-- :ui:stats -->
 <g id="node14" class="node">
 <title>:ui:stats</title>
-<ellipse fill="#baffc9" stroke="black" cx="960.54" cy="-840" rx="38.09" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="960.54" cy="-840" rx="38.09" ry="18"/>
 <text text-anchor="middle" x="960.54" y="-834.58" font-family="Times New Roman,serif" font-size="14.00">:ui:stats</text>
 </g>
 <!-- :app&#45;&gt;:ui:stats -->
@@ -175,7 +175,7 @@
 <!-- :data -->
 <g id="node15" class="node">
 <title>:data</title>
-<ellipse fill="#ffb3ba" stroke="black" cx="468.54" cy="-292" rx="28.11" ry="18"/>
+<ellipse fill="#ffb59a" stroke="black" cx="468.54" cy="-292" rx="28.11" ry="18"/>
 <text text-anchor="middle" x="468.54" y="-286.57" font-family="Times New Roman,serif" font-size="14.00">:data</text>
 </g>
 <!-- :test&#45;data&#45;&gt;:data -->
@@ -187,8 +187,8 @@
 <!-- :data&#45;android&#45;&gt;:test&#45;data -->
 <g id="edge15" class="edge">
 <title>:data&#45;android&#45;&gt;:test&#45;data</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M316.54,-547.52C316.54,-547.52 316.54,-458.18 316.54,-458.18"/>
-<polygon fill="black" stroke="black" points="320.04,-458.18 316.54,-448.18 313.04,-458.18 320.04,-458.18"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M316.54,-547.52C316.54,-547.52 316.54,-458.18 316.54,-458.18"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="320.04,-458.18 316.54,-448.18 313.04,-458.18 320.04,-458.18"/>
 </g>
 <!-- :data&#45;android&#45;&gt;:data -->
 <g id="edge14" class="edge">
@@ -199,7 +199,7 @@
 <!-- :data:core -->
 <g id="node16" class="node">
 <title>:data:core</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="510.54" cy="-18" rx="46.57" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="510.54" cy="-18" rx="46.57" ry="18"/>
 <text text-anchor="middle" x="510.54" y="-12.57" font-family="Times New Roman,serif" font-size="14.00">:data:core</text>
 </g>
 <!-- :data:database&#45;&gt;:data:core -->
@@ -211,7 +211,7 @@
 <!-- :data:common:network -->
 <g id="node17" class="node">
 <title>:data:common:network</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="132.54" cy="-155" rx="94.98" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="132.54" cy="-155" rx="94.98" ry="18"/>
 <text text-anchor="middle" x="132.54" y="-149.57" font-family="Times New Roman,serif" font-size="14.00">:data:common:network</text>
 </g>
 <!-- :data:database&#45;&gt;:data:common:network -->
@@ -223,7 +223,7 @@
 <!-- :data:musicbrainz -->
 <g id="node20" class="node">
 <title>:data:musicbrainz</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="319.54" cy="-155" rx="74.52" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="319.54" cy="-155" rx="74.52" ry="18"/>
 <text text-anchor="middle" x="319.54" y="-149.57" font-family="Times New Roman,serif" font-size="14.00">:data:musicbrainz</text>
 </g>
 <!-- :data:database&#45;&gt;:data:musicbrainz -->
@@ -253,7 +253,7 @@
 <!-- :data:coverart -->
 <g id="node18" class="node">
 <title>:data:coverart</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="641.54" cy="-155" rx="60.54" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="641.54" cy="-155" rx="60.54" ry="18"/>
 <text text-anchor="middle" x="641.54" y="-149.57" font-family="Times New Roman,serif" font-size="14.00">:data:coverart</text>
 </g>
 <!-- :domain&#45;&gt;:data:coverart -->
@@ -301,26 +301,26 @@
 <!-- :ui:test:screenshot -->
 <g id="node22" class="node">
 <title>:ui:test:screenshot</title>
-<ellipse fill="#baffc9" stroke="black" cx="905.54" cy="-566" rx="76.01" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="905.54" cy="-566" rx="76.01" ry="18"/>
 <text text-anchor="middle" x="905.54" y="-560.58" font-family="Times New Roman,serif" font-size="14.00">:ui:test:screenshot</text>
 </g>
 <!-- :ui:common&#45;&gt;:ui:test:screenshot -->
 <g id="edge54" class="edge">
 <title>:ui:common&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M636.14,-689C707.34,-689 860.5,-689 860.5,-689 860.5,-689 860.5,-591.59 860.5,-591.59"/>
-<polygon fill="black" stroke="black" points="864,-591.59 860.5,-581.59 857,-591.59 864,-591.59"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M636.14,-689C707.34,-689 860.5,-689 860.5,-689 860.5,-689 860.5,-591.59 860.5,-591.59"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="864,-591.59 860.5,-581.59 857,-591.59 864,-591.59"/>
 </g>
 <!-- :ui:test:image -->
 <g id="node23" class="node">
 <title>:ui:test:image</title>
-<ellipse fill="#baffc9" stroke="black" cx="672.54" cy="-566" rx="57.55" ry="18"/>
+<ellipse fill="#9affb5" stroke="black" cx="672.54" cy="-566" rx="57.55" ry="18"/>
 <text text-anchor="middle" x="672.54" y="-560.58" font-family="Times New Roman,serif" font-size="14.00">:ui:test:image</text>
 </g>
 <!-- :ui:common&#45;&gt;:ui:test:image -->
 <g id="edge53" class="edge">
 <title>:ui:common&#45;&gt;:ui:test:image</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M634.79,-688.85C634.79,-688.85 634.79,-590.86 634.79,-590.86"/>
-<polygon fill="black" stroke="black" points="638.29,-590.86 634.79,-580.86 631.29,-590.86 638.29,-590.86"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M634.79,-688.85C634.79,-688.85 634.79,-590.86 634.79,-590.86"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="638.29,-590.86 634.79,-580.86 631.29,-590.86 638.29,-590.86"/>
 </g>
 <!-- :ui:collections&#45;&gt;:data&#45;android -->
 <g id="edge61" class="edge">
@@ -367,8 +367,8 @@
 <!-- :ui:collections&#45;&gt;:ui:test:screenshot -->
 <g id="edge66" class="edge">
 <title>:ui:collections&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M454.55,-966.22C454.55,-946.81 454.55,-908 454.55,-908 454.55,-908 891.48,-908 891.48,-908 891.48,-908 891.48,-594.91 891.48,-594.91"/>
-<polygon fill="black" stroke="black" points="894.98,-594.91 891.48,-584.91 887.98,-594.91 894.98,-594.91"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M454.55,-966.22C454.55,-946.81 454.55,-908 454.55,-908 454.55,-908 891.48,-908 891.48,-908 891.48,-908 891.48,-594.91 891.48,-594.91"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="894.98,-594.91 891.48,-584.91 887.98,-594.91 894.98,-594.91"/>
 </g>
 <!-- :ui:history&#45;&gt;:domain -->
 <g id="edge72" class="edge">
@@ -409,14 +409,14 @@
 <!-- :ui:history&#45;&gt;:ui:test:screenshot -->
 <g id="edge78" class="edge">
 <title>:ui:history&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M750.45,-968C808.27,-968 906.96,-968 906.96,-968 906.96,-968 906.96,-595.32 906.96,-595.32"/>
-<polygon fill="black" stroke="black" points="910.46,-595.32 906.96,-585.32 903.46,-595.32 910.46,-595.32"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M750.45,-968C808.27,-968 906.96,-968 906.96,-968 906.96,-968 906.96,-595.32 906.96,-595.32"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="910.46,-595.32 906.96,-585.32 903.46,-595.32 910.46,-595.32"/>
 </g>
 <!-- :ui:history&#45;&gt;:ui:test:image -->
 <g id="edge77" class="edge">
 <title>:ui:history&#45;&gt;:ui:test:image</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M693.4,-959.86C693.4,-959.86 693.4,-594.21 693.4,-594.21"/>
-<polygon fill="black" stroke="black" points="696.9,-594.21 693.4,-584.21 689.9,-594.21 696.9,-594.21"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M693.4,-959.86C693.4,-959.86 693.4,-594.21 693.4,-594.21"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="696.9,-594.21 693.4,-584.21 689.9,-594.21 696.9,-594.21"/>
 </g>
 <!-- :ui:image&#45;&gt;:ui:core -->
 <g id="edge35" class="edge">
@@ -463,14 +463,14 @@
 <!-- :ui:nowplaying&#45;&gt;:ui:test:screenshot -->
 <g id="edge47" class="edge">
 <title>:ui:nowplaying&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M828.4,-840C853.3,-840 875.99,-840 875.99,-840 875.99,-840 875.99,-593.73 875.99,-593.73"/>
-<polygon fill="black" stroke="black" points="879.49,-593.73 875.99,-583.73 872.49,-593.73 879.49,-593.73"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M828.4,-840C853.3,-840 875.99,-840 875.99,-840 875.99,-840 875.99,-593.73 875.99,-593.73"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="879.49,-593.73 875.99,-583.73 872.49,-593.73 879.49,-593.73"/>
 </g>
 <!-- :ui:nowplaying&#45;&gt;:ui:test:image -->
 <g id="edge46" class="edge">
 <title>:ui:nowplaying&#45;&gt;:ui:test:image</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M722.82,-826.04C722.82,-826.04 722.82,-586.15 722.82,-586.15"/>
-<polygon fill="black" stroke="black" points="726.32,-586.15 722.82,-576.15 719.32,-586.15 726.32,-586.15"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M722.82,-826.04C722.82,-826.04 722.82,-586.15 722.82,-586.15"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="726.32,-586.15 722.82,-576.15 719.32,-586.15 726.32,-586.15"/>
 </g>
 <!-- :ui:settings&#45;&gt;:data&#45;android -->
 <g id="edge36" class="edge">
@@ -499,8 +499,8 @@
 <!-- :ui:settings&#45;&gt;:ui:test:screenshot -->
 <g id="edge40" class="edge">
 <title>:ui:settings&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M510.62,-825.2C510.62,-774.21 510.62,-609 510.62,-609 510.62,-609 845.01,-609 845.01,-609 845.01,-609 845.01,-588.3 845.01,-588.3"/>
-<polygon fill="black" stroke="black" points="848.51,-588.3 845.01,-578.3 841.51,-588.3 848.51,-588.3"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M510.62,-825.2C510.62,-774.21 510.62,-609 510.62,-609 510.62,-609 845.01,-609 845.01,-609 845.01,-609 845.01,-588.3 845.01,-588.3"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="848.51,-588.3 845.01,-578.3 841.51,-588.3 848.51,-588.3"/>
 </g>
 <!-- :ui:spotify&#45;broadcast&#45;receiver&#45;&gt;:ui:common -->
 <g id="edge57" class="edge">
@@ -523,8 +523,8 @@
 <!-- :ui:spotify&#45;broadcast&#45;receiver&#45;&gt;:ui:test:screenshot -->
 <g id="edge58" class="edge">
 <title>:ui:spotify&#45;broadcast&#45;receiver&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1075.62,-829.59C1075.62,-779.54 1075.62,-566 1075.62,-566 1075.62,-566 992.63,-566 992.63,-566"/>
-<polygon fill="black" stroke="black" points="992.63,-562.5 982.63,-566 992.63,-569.5 992.63,-562.5"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M1075.62,-829.59C1075.62,-779.54 1075.62,-566 1075.62,-566 1075.62,-566 992.63,-566 992.63,-566"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="992.63,-562.5 982.63,-566 992.63,-569.5 992.63,-562.5"/>
 </g>
 <!-- :ui:stats&#45;&gt;:ui:common -->
 <g id="edge68" class="edge">
@@ -547,8 +547,8 @@
 <!-- :ui:stats&#45;&gt;:ui:test:screenshot -->
 <g id="edge70" class="edge">
 <title>:ui:stats&#45;&gt;:ui:test:screenshot</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M961.85,-821.6C961.85,-821.6 961.85,-589.36 961.85,-589.36"/>
-<polygon fill="black" stroke="black" points="965.35,-589.36 961.85,-579.36 958.35,-589.36 965.35,-589.36"/>
+<path fill="none" stroke="#ff9ab1" stroke-dasharray="1,5" d="M961.85,-821.6C961.85,-821.6 961.85,-589.36 961.85,-589.36"/>
+<polygon fill="#ff9ab1" stroke="#ff9ab1" points="965.35,-589.36 961.85,-579.36 958.35,-589.36 965.35,-589.36"/>
 </g>
 <!-- :data&#45;&gt;:data:core -->
 <g id="edge16" class="edge">
@@ -571,7 +571,7 @@
 <!-- :data:spotify -->
 <g id="node19" class="node">
 <title>:data:spotify</title>
-<ellipse fill="#ffd2b3" stroke="black" cx="468.54" cy="-155" rx="56.05" ry="18"/>
+<ellipse fill="#b59aff" stroke="black" cx="468.54" cy="-155" rx="56.05" ry="18"/>
 <text text-anchor="middle" x="468.54" y="-149.57" font-family="Times New Roman,serif" font-size="14.00">:data:spotify</text>
 </g>
 <!-- :data&#45;&gt;:data:spotify -->
@@ -607,7 +607,7 @@
 <!-- :desktop&#45;app -->
 <g id="node21" class="node">
 <title>:desktop&#45;app</title>
-<polygon fill="#ffb3ba" stroke="black" points="1652.54,-1132 1292.54,-1132 1292.54,-1096 1652.54,-1096 1652.54,-1132"/>
+<polygon fill="#ffb59a" stroke="black" points="1652.54,-1132 1292.54,-1132 1292.54,-1096 1652.54,-1096 1652.54,-1132"/>
 <text text-anchor="middle" x="1472.54" y="-1108.58" font-family="Times New Roman,serif" font-size="14.00">:desktop&#45;app</text>
 </g>
 <!-- :desktop&#45;app&#45;&gt;:ui:core -->

@@ -130,11 +130,14 @@ tasks.register("projectDependencyGraph") {
                             rootProjects.add(project)
                         }
 
+                        val traits = mutableListOf<String>()
                         if (config.name.lowercase().endsWith("implementation")) {
-                            dependencies.put(project to dependency, listOf("style=dotted"))
-                        } else {
-                            dependencies.put(project to dependency, listOf())
+                            traits.add("style=dotted")
                         }
+                        if (config.name.lowercase().contains("test")) {
+                            traits.add("color=\"#ff9ab1\"")
+                        }
+                        dependencies.put(project to dependency, traits)
                     }
             }
         }
@@ -160,13 +163,13 @@ tasks.register("projectDependencyGraph") {
             }
 
             if (multiplatformProjects.contains(project)) {
-                traits.add("fillcolor=\"#ffd2b3\"")
+                traits.add("fillcolor=\"#b59aff\"")
             } else if (jsProjects.contains(project)) {
-                traits.add("fillcolor=\"#ffffba\"")
+                traits.add("fillcolor=\"#ffe89a\"")
             } else if (androidProjects.contains(project)) {
-                traits.add("fillcolor=\"#baffc9\"")
+                traits.add("fillcolor=\"#9affb5\"")
             } else if (javaProjects.contains(project)) {
-                traits.add("fillcolor=\"#ffb3ba\"")
+                traits.add("fillcolor=\"#ffb59a\"")
             } else {
                 traits.add("fillcolor=\"#eeeeee\"")
             }
