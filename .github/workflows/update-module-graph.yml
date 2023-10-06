@@ -24,10 +24,7 @@ jobs:
 
       - name: Regenerate module graph
         run: |
-          ./gradlew graphModules \
-            -PautoOpenGraph=false \
-            -PgraphOutputFormat=svg \
-            -PgraphOutputFilePath=$(pwd)/assets/module_dependency_graph.svg
+          ./gradlew projectDependencyGraph
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
