@@ -1,8 +1,9 @@
 package ly.david.musicsearch.feature.search.di
 
-import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Module
+import ly.david.musicsearch.feature.search.internal.SearchViewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.dsl.module
 
-@Module
-@ComponentScan
-class SearchFeatureModule
+val searchFeatureModule = module {
+    viewModelOf(::SearchViewModel)
+}

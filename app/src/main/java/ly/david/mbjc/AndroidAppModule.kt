@@ -16,7 +16,7 @@ import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.domain.DomainModule
-import ly.david.musicsearch.feature.search.di.SearchFeatureModule
+import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
 import ly.david.ui.history.HistoryUiModule
@@ -38,7 +38,7 @@ val androidAppModule = module {
         spotifyApiModule,
         preferencesDataStoreModule,
         imageModule,
-        SearchFeatureModule().module,
+        searchFeatureModule,
         CoverArtDataModule().module,
         DomainModule().module,
         MusicBrainzDataModule().module,

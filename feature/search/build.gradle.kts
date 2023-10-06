@@ -11,9 +11,9 @@ android {
 }
 
 dependencies {
-    implementation(projects.data)
-    implementation(projects.domain)
-    implementation(projects.data.database) // TODO: remove
+    implementation(projects.data) // TODO: remove dependency
+    implementation(projects.domain) // TODO: remove dependency
+    implementation(projects.data.database) // TODO: remove dependency
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     testImplementation(projects.ui.test.screenshot)

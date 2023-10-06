@@ -1,4 +1,4 @@
-package ly.david.musicsearch.feature.search.di
+package ly.david.musicsearch.feature.search.internal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,12 +30,10 @@ import ly.david.musicsearch.domain.listitem.toSearchHistoryListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.musicsearch.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty
-import org.koin.android.annotation.KoinViewModel
 
 private const val SEARCH_DELAY_MS = 500L
 
-@KoinViewModel
-class SearchViewModel(
+internal class SearchViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val searchHistoryDao: SearchHistoryDao,
 ) : ViewModel() {
