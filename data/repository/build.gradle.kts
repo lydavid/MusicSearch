@@ -1,0 +1,30 @@
+plugins {
+    id("ly.david.android.library")
+    id("ly.david.musicsearch.kotlin.multiplatform")
+}
+
+android {
+    namespace = "ly.david.musicsearch.data.repository"
+}
+
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.data.core)
+                implementation(projects.data.database)
+                implementation(projects.data.musicbrainz)
+                implementation(projects.invertedDomain)
+                implementation(libs.koin.core)
+                implementation(libs.kotlinx.collections.immutable)
+                implementation(libs.paging.common)
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.junit)
+                implementation(libs.mockk)
+            }
+        }
+    }
+}

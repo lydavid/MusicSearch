@@ -10,7 +10,7 @@ import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.domain.Destination
-import ly.david.musicsearch.domain.history.LookupHistoryRepository
+import ly.david.musicsearch.domain.history.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -22,7 +22,7 @@ internal class HistoryScreenTest : MainActivityTest() {
     private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
-    private val lookupHistoryRepository: LookupHistoryRepository by inject()
+    private val lookupHistoryRepository: LookupHistoryRepositoryImpl by inject()
 
     @Before
     fun setupApp() {

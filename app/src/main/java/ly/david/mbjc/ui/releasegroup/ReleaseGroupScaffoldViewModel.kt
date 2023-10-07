@@ -10,7 +10,7 @@ import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.coverart.ReleaseGroupImageRepository
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
@@ -22,7 +22,7 @@ import timber.log.Timber
 @KoinViewModel
 internal class ReleaseGroupScaffoldViewModel(
     private val repository: ReleaseGroupRepository,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsList: RelationsList,
     private val releaseGroupImageRepository: ReleaseGroupImageRepository,
 ) : ViewModel(),
@@ -67,7 +67,7 @@ internal class ReleaseGroupScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = releaseGroupId,
                                 title = title.value,

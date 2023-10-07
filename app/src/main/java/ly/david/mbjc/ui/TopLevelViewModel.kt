@@ -6,7 +6,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
-import java.util.UUID
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +22,9 @@ import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.domain.history.LookupHistoryRepository
+import ly.david.musicsearch.domain.history.DeleteLookupHistory
+import ly.david.musicsearch.domain.history.MarkLookupHistoryForDeletion
+import ly.david.musicsearch.domain.history.UnMarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel
 import ly.david.musicsearch.domain.listitem.toCollectionListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
@@ -36,6 +37,7 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.ClientAuthentication
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
+import java.util.UUID
 
 @KoinViewModel
 internal class TopLevelViewModel(
@@ -51,7 +53,9 @@ internal class TopLevelViewModel(
     private val authService: AuthorizationService,
     private val clientAuth: ClientAuthentication,
 
-    private val lookupHistoryRepository: LookupHistoryRepository,
+    private val markLookupHistoryForDeletion: MarkLookupHistoryForDeletion,
+    private val unMarkLookupHistoryForDeletion: UnMarkLookupHistoryForDeletion,
+    private val deleteLookupHistory: DeleteLookupHistory,
 ) : ViewModel() {
 
     data class RemoteResult(
@@ -217,26 +221,26 @@ internal class TopLevelViewModel(
     }
 
     fun markHistoryAsDeleted(mbid: String) {
-        lookupHistoryRepository.markHistoryAsDeleted(mbid)
-    }
-
-    fun undoDeleteHistory(mbid: String) {
-        lookupHistoryRepository.undoDeleteHistory(mbid)
+        markLookupHistoryForDeletion(mbid)
     }
 
     fun markAllHistoryAsDeleted() {
-        lookupHistoryRepository.markAllHistoryAsDeleted()
+        markLookupHistoryForDeletion()
+    }
+
+    fun undoDeleteHistory(mbid: String) {
+        unMarkLookupHistoryForDeletion(mbid)
     }
 
     fun undoDeleteAllHistory() {
-        lookupHistoryRepository.undoDeleteAllHistory()
+        unMarkLookupHistoryForDeletion()
     }
 
     fun deleteHistory(mbid: String) {
-        lookupHistoryRepository.deleteHistory(mbid)
+        deleteLookupHistory(mbid)
     }
 
     fun deleteAllHistory() {
-        lookupHistoryRepository.deleteAllHistory()
+        deleteLookupHistory()
     }
 }

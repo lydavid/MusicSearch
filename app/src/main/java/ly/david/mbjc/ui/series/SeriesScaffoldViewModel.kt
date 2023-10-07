@@ -8,7 +8,7 @@ import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.musicsearch.domain.series.SeriesRepository
 import ly.david.musicsearch.domain.series.SeriesScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
@@ -21,7 +21,7 @@ import timber.log.Timber
 internal class SeriesScaffoldViewModel(
     private val repository: SeriesRepository,
     private val relationsList: RelationsList,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
     IRelationsList by relationsList {
@@ -58,7 +58,7 @@ internal class SeriesScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = seriesId,
                                 title = title.value,

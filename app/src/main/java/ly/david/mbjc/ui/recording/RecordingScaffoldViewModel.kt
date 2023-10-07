@@ -9,7 +9,7 @@ import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.musicsearch.domain.recordng.RecordingRepository
 import ly.david.musicsearch.domain.recordng.RecordingScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
@@ -21,7 +21,7 @@ import timber.log.Timber
 @KoinViewModel
 internal class RecordingScaffoldViewModel(
     private val repository: RecordingRepository,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsList: RelationsList,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
@@ -61,7 +61,7 @@ internal class RecordingScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = recordingId,
                                 title = title.value,
