@@ -1,5 +1,7 @@
 package ly.david.mbjc.ui.search
 
+import android.content.Intent
+import android.net.Uri
 import androidx.activity.compose.setContent
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
@@ -15,10 +17,12 @@ import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.network.resourceUri
 import ly.david.data.test.toFakeMusicBrainzModel
+import ly.david.data.test.underPressureReleaseGroup
+import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
@@ -28,6 +32,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachEntityTest].
@@ -166,19 +171,19 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest() {
 
     // TODO: flaky
     //  No compose hierarchies found in the app. Possible reasons include: (1) the Activity that calls setContent did not launch; (2) setContent was not called; (3) setContent was called before the ComposeTestRule ran. If setContent is called by the Activity, make sure the Activity is launched after the ComposeTestRule runs
-//    @Test
-//    fun deeplinkToSearchWithQueryAndType() = runTest {
-//        composeTestRule.awaitIdle()
-//
-//        composeTestRule.activityRule.scenario.onActivity {
-//            val intent = Intent(Intent.ACTION_VIEW).apply {
-//                val query = "some query" // The query doesn't matter for this test since we're returning fakes.
-//                val resourceUri = MusicBrainzEntity.RELEASE_GROUP.resourceUri
-//                data = Uri.parse("${strings.deeplinkSchema}://app/lookup?query=$query&type=$resourceUri")
-//            }
-//            it.startActivity(intent)
-//        }
-//
-//        waitForThenAssertIsDisplayed(underPressureReleaseGroup.name)
-//    }
+    @Test
+    fun deeplinkToSearchWithQueryAndType() = runTest {
+        composeTestRule.awaitIdle()
+
+        composeTestRule.activityRule.scenario.onActivity {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                val query = "some query" // The query doesn't matter for this test since we're returning fakes.
+                val resourceUri = MusicBrainzEntity.RELEASE_GROUP.resourceUri
+                data = Uri.parse("$DEEP_LINK_SCHEMA://app/lookup?query=$query&type=$resourceUri")
+            }
+            it.startActivity(intent)
+        }
+
+        waitForThenAssertIsDisplayed(underPressureReleaseGroup.name)
+    }
 }
