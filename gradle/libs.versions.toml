@@ -121,7 +121,7 @@ ktor-android = [
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.24.0" }
+dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version = "1.25.0" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version = "2.9.9" }
