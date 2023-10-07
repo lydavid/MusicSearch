@@ -13,6 +13,8 @@
         android:theme="@style/Theme.MusicSearch"
         tools:targetApi="tiramisu">
 
+        <profileable android:shell="true" />
+
         <activity
             android:name="ly.david.mbjc.ui.MainActivity"
             android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"

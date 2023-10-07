@@ -62,3 +62,4 @@ include(
     ":ui:spotify-broadcast-receiver",
     ":ui:stats",
 )
+include(":benchmark")

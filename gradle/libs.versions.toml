@@ -28,6 +28,8 @@ paging = "3.2.1"
 pagingMultiplatform = "3.1.1-0.3.1"
 paparazzi = "1.3.1"
 sqldelight = "2.0.0"
+uiautomator = "2.2.0"
+benchmark-macro-junit4 = "1.1.1"
 
 [libraries]
 aboutlibraries-compose = { group = "com.mikepenz", name = "aboutlibraries-compose", version.ref = "aboutlibraries" }
@@ -103,6 +105,8 @@ compose-gradlePlugin = { group = "org.jetbrains.compose", name = "compose-gradle
 detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 
 
 [bundles]
@@ -133,3 +137,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+com-android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
