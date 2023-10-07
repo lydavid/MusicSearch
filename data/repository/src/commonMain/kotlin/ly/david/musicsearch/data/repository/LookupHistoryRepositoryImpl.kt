@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository
 
-import androidx.paging.PagingSource
+import app.cash.paging.PagingSource
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.history.LookupHistoryForListItem
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao

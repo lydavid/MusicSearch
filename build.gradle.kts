@@ -1,5 +1,5 @@
-import java.io.BufferedReader
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+import java.io.BufferedReader
 
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -34,12 +34,12 @@ subprojects {
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-                        project.buildDir.absolutePath + "/compose_metrics"
+                            project.buildDir.absolutePath + "/compose_metrics"
                 )
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-                        project.buildDir.absolutePath + "/compose_metrics"
+                            project.buildDir.absolutePath + "/compose_metrics"
                 )
             }
         }
@@ -132,7 +132,15 @@ tasks.register("projectDependencyGraph") {
                         }
 
                         val traits = mutableListOf<String>()
-                        if (config.name.lowercase().endsWith("implementation")) {
+                        if (project.path.split(":").getOrNull(1)?.equals("ui") == true &&
+                            dependency.path.contains("data")
+                        ) {
+                            traits.add("color=orange")
+                        } else if (project.path.split(":").getOrNull(1)?.equals("ui") == true &&
+                            dependency.path.split(":").getOrNull(1)?.equals("ui") == true
+                        ) {
+                            traits.add("color=red")
+                        } else if (config.name.lowercase().endsWith("implementation")) {
                             traits.add("style=dotted")
                         }
                         if (config.name.lowercase().contains("test")) {
