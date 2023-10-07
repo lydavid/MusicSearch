@@ -1,4 +1,4 @@
-package ly.david.ui.common.strings
+package ly.david.musicsearch.strings
 
 val EnStrings = AppStrings(
     appName = "MusicSearch",

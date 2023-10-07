@@ -11,7 +11,7 @@ import ly.david.data.test.fakePlaceWithAllData
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.musicsearch.domain.place.formatForDisplay
-import ly.david.ui.common.strings.AppStrings
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject

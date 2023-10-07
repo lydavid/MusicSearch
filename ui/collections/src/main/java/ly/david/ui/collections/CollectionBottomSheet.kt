@@ -23,7 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)

@@ -29,7 +29,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

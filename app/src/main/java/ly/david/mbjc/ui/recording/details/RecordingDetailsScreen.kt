@@ -12,7 +12,7 @@ import ly.david.data.core.common.toDisplayTime
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.recordng.RecordingScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews

@@ -11,7 +11,7 @@ import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
-import ly.david.ui.common.strings.AppStrings
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test

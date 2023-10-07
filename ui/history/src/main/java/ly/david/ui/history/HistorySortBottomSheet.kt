@@ -11,8 +11,8 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import ly.david.musicsearch.domain.history.HistorySortOption
 import ly.david.ui.common.component.ClickableItem
-import ly.david.ui.common.strings.AppStrings
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 

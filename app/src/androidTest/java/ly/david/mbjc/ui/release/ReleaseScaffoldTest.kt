@@ -32,7 +32,7 @@ import ly.david.data.test.underPressureRemasterOf
 import ly.david.data.test.underPressureTrack
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.release.ReleaseRepository
-import ly.david.ui.common.strings.AppStrings
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.image.LargeImageTestTag

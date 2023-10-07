@@ -17,9 +17,9 @@ import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
+import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
-import ly.david.ui.common.di.stringsModule
 import ly.david.ui.history.HistoryUiModule
 import ly.david.ui.nowplaying.NowPlayingUiModule
 import ly.david.ui.settings.SettingsUiModule

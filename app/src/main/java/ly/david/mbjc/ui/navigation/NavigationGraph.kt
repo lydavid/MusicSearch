@@ -34,7 +34,7 @@ import ly.david.musicsearch.domain.toLookupDestination
 import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.history.DeleteHistoryDelegate
 import ly.david.ui.history.HistoryScaffold
 import ly.david.ui.nowplaying.NowPlayingHistoryScaffold

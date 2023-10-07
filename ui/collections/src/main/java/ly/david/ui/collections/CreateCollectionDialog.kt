@@ -34,7 +34,7 @@ import androidx.compose.ui.window.Dialog
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.collectableEntities
 import ly.david.ui.common.ExposedDropdownMenuBox
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles

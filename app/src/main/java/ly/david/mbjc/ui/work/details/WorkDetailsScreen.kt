@@ -14,7 +14,7 @@ import ly.david.musicsearch.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.work.WorkAttributeUiModel
 import ly.david.musicsearch.domain.work.WorkScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews

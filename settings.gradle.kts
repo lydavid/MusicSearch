@@ -46,6 +46,7 @@ include(
     ":data:musicbrainz",
     ":domain",
     ":feature:search",
+    ":strings",
     ":test-data",
     ":ui:collections",
     ":ui:common",

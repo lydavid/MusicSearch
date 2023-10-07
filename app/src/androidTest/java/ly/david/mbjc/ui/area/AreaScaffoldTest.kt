@@ -21,7 +21,7 @@ import ly.david.data.test.toronto
 import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.area.AreaRepository
-import ly.david.ui.common.strings.AppStrings
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test

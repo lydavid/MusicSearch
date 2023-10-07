@@ -25,7 +25,7 @@ import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.ui.common.strings.AppStrings
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before

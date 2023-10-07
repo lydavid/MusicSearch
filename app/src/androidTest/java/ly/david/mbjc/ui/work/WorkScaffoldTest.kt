@@ -12,7 +12,7 @@ import ly.david.data.test.fakeWorkWithAllData
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.work.WorkRepository
-import ly.david.ui.common.strings.AppStrings
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject

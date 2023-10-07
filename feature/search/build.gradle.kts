@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.data) // TODO: remove dependency
     implementation(projects.domain) // TODO: remove dependency
     implementation(projects.data.database) // TODO: remove dependency
+    implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     testImplementation(projects.ui.test.screenshot)

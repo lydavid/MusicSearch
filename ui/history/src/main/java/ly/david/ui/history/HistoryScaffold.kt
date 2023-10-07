@@ -25,7 +25,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import org.koin.androidx.compose.koinViewModel
 

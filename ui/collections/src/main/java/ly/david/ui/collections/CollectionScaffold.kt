@@ -31,10 +31,9 @@ import ly.david.ui.collections.releasegroups.ReleaseGroupsByCollectionScreen
 import ly.david.ui.collections.releases.ReleasesByCollectionScreen
 import ly.david.ui.collections.series.SeriesByCollectionScreen
 import ly.david.ui.collections.works.WorksByCollectionScreen
-import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.ui.common.fullscreen.FullScreenText
-import ly.david.ui.common.strings.LocalStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.ToggleMenuItem
