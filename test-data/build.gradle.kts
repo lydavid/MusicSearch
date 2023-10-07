@@ -8,6 +8,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.data)
+                implementation(projects.invertedDomain)
                 implementation(libs.koin.core)
             }
         }

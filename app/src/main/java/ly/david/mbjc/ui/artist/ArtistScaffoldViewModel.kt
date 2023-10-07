@@ -11,7 +11,7 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.spotify.di.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.artist.ArtistScaffoldModel
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -21,7 +21,7 @@ import timber.log.Timber
 @KoinViewModel
 internal class ArtistScaffoldViewModel(
     private val repository: ArtistRepository,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsList: RelationsList,
     private val artistImageRepository: ArtistImageRepository,
 ) : ViewModel(),
@@ -62,7 +62,7 @@ internal class ArtistScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = artistId,
                                 title = title.value,

@@ -1,18 +1,23 @@
-package ly.david.musicsearch.domain.history
+package ly.david.musicsearch.data.repository
 
+import app.cash.paging.PagingSource
 import ly.david.data.core.history.LookupHistory
+import ly.david.data.core.history.LookupHistoryForListItem
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
-import org.koin.core.annotation.Single
+import ly.david.musicsearch.domain.history.HistorySortOption
+import ly.david.musicsearch.domain.history.LookupHistoryRepository
 
-@Single
-class LookupHistoryRepository(
+class LookupHistoryRepositoryImpl(
     private val lookupHistoryDao: LookupHistoryDao,
-) {
-    fun upsert(lookupHistory: LookupHistory) {
+) : LookupHistoryRepository {
+    override fun upsert(lookupHistory: LookupHistory) {
         lookupHistoryDao.upsert(lookupHistory)
     }
 
-    fun getAllLookupHistory(query: String, sortOption: HistorySortOption) =
+    override fun getAllLookupHistory(
+        query: String,
+        sortOption: HistorySortOption,
+    ): PagingSource<Int, LookupHistoryForListItem> =
         lookupHistoryDao.getAllLookupHistory(
             query = "%$query%",
             alphabetically = sortOption == HistorySortOption.ALPHABETICALLY,
@@ -23,27 +28,27 @@ class LookupHistoryRepository(
             leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
         )
 
-    fun markHistoryAsDeleted(mbid: String) {
+    override fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, true)
     }
 
-    fun undoDeleteHistory(mbid: String) {
+    override fun undoDeleteHistory(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, false)
     }
 
-    fun markAllHistoryAsDeleted() {
+    override fun markAllHistoryAsDeleted() {
         lookupHistoryDao.markAllAsDeleted(true)
     }
 
-    fun undoDeleteAllHistory() {
+    override fun undoDeleteAllHistory() {
         lookupHistoryDao.markAllAsDeleted(false)
     }
 
-    fun deleteHistory(mbid: String) {
+    override fun deleteHistory(mbid: String) {
         lookupHistoryDao.delete(mbid)
     }
 
-    fun deleteAllHistory() {
+    override fun deleteAllHistory() {
         lookupHistoryDao.deleteAll()
     }
 }
