@@ -9,8 +9,6 @@ import cafe.adriel.lyricist.ProvideStrings
 import cafe.adriel.lyricist.rememberStrings
 
 data class AppStrings(
-    val appName: String,
-    val deeplinkSchema: String,
     val theme: String,
     val light: String,
     val dark: String,

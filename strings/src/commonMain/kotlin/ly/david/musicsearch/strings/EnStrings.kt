@@ -1,10 +1,6 @@
 package ly.david.musicsearch.strings
 
 val EnStrings = AppStrings(
-    appName = "MusicSearch",
-
-    deeplinkSchema = "io.github.lydavid.musicsearch",
-
     theme = "Theme",
 
     light = "Light",
