@@ -16,7 +16,7 @@ class LookupHistoryRepositoryImpl(
 
     override fun getAllLookupHistory(
         query: String,
-        sortOption: HistorySortOption
+        sortOption: HistorySortOption,
     ): PagingSource<Int, LookupHistoryForListItem> =
         lookupHistoryDao.getAllLookupHistory(
             query = "%$query%",
