@@ -11,14 +11,15 @@ import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.test.fakeWorkWithAllData
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.work.WorkRepository
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject
 
-internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
+internal class WorkScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val repository: WorkRepository by inject()
 
     private fun setWork(workMusicBrainzModel: WorkMusicBrainzModel) {
@@ -54,12 +55,12 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText("$attributeType: $attributeValue")
             .assertIsDisplayed()
 
-        waitForThenPerformClickOn(recordings)
+        waitForThenPerformClickOn(strings.recordings)
         waitForThenAssertIsDisplayed(underPressureRecording.name)
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(recordings).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.recordings).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     // TODO: why does this take so long on CI? ~20s. is relations query really inefficient?
@@ -67,7 +68,7 @@ internal class WorkScaffoldTest : MainActivityTest(), StringReferences {
     fun hasRelations() = runTest {
         setWork(fakeWorkWithAllData)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(fakeWorkWithAllData.relations?.first()?.work?.name!!)
     }
 }

@@ -31,8 +31,8 @@ import ly.david.data.test.underPressureReleaseGroup
 import ly.david.data.test.underPressureRemasterOf
 import ly.david.data.test.underPressureTrack
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.image.LargeImageTestTag
@@ -40,8 +40,9 @@ import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
 
-internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
+internal class ReleaseScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val releaseRepository: ReleaseRepository by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
 
@@ -123,7 +124,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
             }
 
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
@@ -139,7 +140,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
 
     // TODO: always empty
     private fun testTracksTab() {
-        waitForThenPerformClickOn(tracks)
+        waitForThenPerformClickOn(strings.tracks)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressureTrack.title).and(
@@ -153,7 +154,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     private fun testRelationshipsTab() {
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressure.name).and(
@@ -165,7 +166,7 @@ internal class ReleaseScaffoldTest : MainActivityTest(), StringReferences {
     }
 
     private fun testStatsTab() {
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 }

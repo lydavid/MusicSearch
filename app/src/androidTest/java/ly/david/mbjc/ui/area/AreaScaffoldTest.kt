@@ -20,8 +20,8 @@ import ly.david.data.test.ontario
 import ly.david.data.test.toronto
 import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.area.AreaRepository
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
@@ -33,8 +33,9 @@ import org.koin.test.inject
  * However, try to refrain from testing the details of constituent composables such as its cards.
  * These should be tested in its own test class (screenshot tests). For now, previews will be enough.
  */
-internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
+internal class AreaScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val areaRepository: AreaRepository by inject()
 
     private fun setArea(areaMusicBrainzModel: AreaMusicBrainzModel) {
@@ -66,7 +67,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(ontario.name)
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithText(places)
+            .onNodeWithText(strings.places)
             .performClick()
         composeTestRule
             .onNodeWithText(fakePlace.name)
@@ -77,12 +78,12 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     fun hasRelations() = runTest {
         setArea(ontario)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(canada.name)
         waitForThenAssertIsDisplayed(toronto.name)
 
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
@@ -109,11 +110,11 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     fun nonCountryStatsExcludesReleases() = runTest {
         setArea(ontario)
 
-        waitForThenPerformClickOn(stats)
+        waitForThenPerformClickOn(strings.stats)
 
         // Differentiate between Releases tab and header inside stats
         composeTestRule
-            .onNode(hasText(releases).and(hasNoClickAction()))
+            .onNode(hasText(strings.releases).and(hasNoClickAction()))
             .assertDoesNotExist()
     }
 
@@ -126,7 +127,7 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     fun countryHasReleasesTab() = runTest {
         setArea(canada)
 
-        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(strings.releases)
         waitForThenAssertIsDisplayed(underPressure.name)
     }
 
@@ -134,9 +135,9 @@ internal class AreaScaffoldTest : MainActivityTest(), StringReferences {
     fun countryStatsIncludesReleases() = runTest {
         setArea(canada)
 
-        waitForThenPerformClickOn(releases)
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.releases)
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.releases).and(hasNoClickAction()))
     }
     // endregion
 }

@@ -16,14 +16,15 @@ import ly.david.data.test.queenArtistCredit
 import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.recordng.RecordingRepository
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject
 
-internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
+internal class RecordingScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val recordingRepository: RecordingRepository by inject()
 
     private fun setRecording(recordingMusicBrainzModel: RecordingMusicBrainzModel) {
@@ -63,7 +64,7 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithText(queenArtistCredit.name)
             .assertIsDisplayed()
 
-        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(strings.releases)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressure.name).and(hasAnySibling(hasText(underPressure.date!!))),
@@ -71,11 +72,11 @@ internal class RecordingScaffoldTest : MainActivityTest(), StringReferences {
             )
             .assertIsDisplayed()
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(davidBowie.name)
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.releases).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 }

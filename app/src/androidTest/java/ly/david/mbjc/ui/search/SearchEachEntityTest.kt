@@ -20,15 +20,16 @@ import ly.david.data.core.network.resourceUri
 import ly.david.data.core.network.searchableEntities
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
 import ly.david.ui.common.getDisplayTextRes
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.koin.test.inject
 
 /**
  * Test interacting with each [searchableEntities] from [SearchScreen].
@@ -36,7 +37,7 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized::class)
 internal class SearchEachEntityTest(
     private val entity: MusicBrainzEntity,
-) : MainActivityTest(), StringReferences {
+) : MainActivityTest() {
 
     companion object {
         @JvmStatic
@@ -46,6 +47,7 @@ internal class SearchEachEntityTest(
         }
     }
 
+    private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -61,7 +63,7 @@ internal class SearchEachEntityTest(
     @Test
     fun searchEachEntity() {
         composeTestRule
-            .onNodeWithText(resourceLabel)
+            .onNodeWithText(strings.resource)
             .performClick()
 
         composeTestRule
@@ -90,7 +92,7 @@ internal class SearchEachEntityTest(
 
         // Entity shows up in history
         composeTestRule
-            .onNodeWithText(history)
+            .onNodeWithText(strings.history)
             .performClick()
         composeTestRule
             .onNodeWithText(entity.toFakeMusicBrainzModel().name!!)

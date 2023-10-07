@@ -7,16 +7,18 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.koin.test.inject
 
 @RunWith(Parameterized::class)
 internal class LookupEachEntityErrorTest(
     private val entity: MusicBrainzEntity
-) : MainActivityTest(), StringReferences {
+) : MainActivityTest() {
 
     companion object {
         @JvmStatic
@@ -28,6 +30,7 @@ internal class LookupEachEntityErrorTest(
         }
     }
 
+    private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -47,7 +50,7 @@ internal class LookupEachEntityErrorTest(
         val entityId = "error"
         navController.goToEntityScreen(entity = entity, id = entityId)
 
-        waitForThenAssertAtLeastOneIsDisplayed(retry)
+        waitForThenAssertAtLeastOneIsDisplayed(strings.retry)
 
         // TODO: in order to make retry actually work, we need to be able to fake out error
         //  rather than pass an id that results in error

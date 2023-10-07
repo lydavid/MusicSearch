@@ -20,29 +20,27 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
 import ly.david.ui.common.strings.AppStrings
-import ly.david.ui.common.strings.LocalStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.test.inject
 
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachEntityTest].
  */
 @RunWith(AndroidJUnit4::class)
-internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {
+internal class SearchMusicBrainzScreenTest : MainActivityTest() {
 
-    private lateinit var strings: AppStrings
+    private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
     @Before
     fun setupApp() {
         composeTestRule.activity.setContent {
-            strings = LocalStrings.current
             navController = rememberNavController()
             PreviewTheme {
                 TopLevelScaffold(navController)

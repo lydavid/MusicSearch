@@ -18,10 +18,10 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.collections.CollectionListScaffold
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import lydavidmusicsearchdatadatabase.Collection
@@ -32,11 +32,11 @@ import org.koin.test.inject
 /**
  * Tests [CollectionListScaffold]-specific features.
  */
-internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences {
+internal class CollectionListScaffoldTest : MainActivityTest() {
 
-    private lateinit var navController: NavHostController
-
+    private val strings: AppStrings by inject()
     private val collectionDao: CollectionDao by inject()
+    private lateinit var navController: NavHostController
 
     @Before
     fun setupApp() {
@@ -51,26 +51,26 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
     @Test
     fun createCollections() = runTest(timeout = 15.seconds) {
         composeTestRule
-            .onNodeWithText(collections)
+            .onNodeWithText(strings.collections)
             .performClick()
 
         composeTestRule
-            .onNodeWithContentDescription(createCollection)
+            .onNodeWithContentDescription(strings.createCollection)
             .performClick()
         composeTestRule
-            .onNodeWithText(cancel)
+            .onNodeWithText(strings.cancel)
             .performClick()
 
         val name1 = "My test collection"
         composeTestRule
-            .onNodeWithContentDescription(createCollection)
+            .onNodeWithContentDescription(strings.createCollection)
             .performClick()
         composeTestRule
-            .onNodeWithText(name)
+            .onNodeWithText(strings.name)
             .performClick()
             .performTextInput(name1)
         composeTestRule
-            .onNodeWithText(ok)
+            .onNodeWithText(strings.ok)
             .performClick()
         composeTestRule
             .onNodeWithText("My test collection")
@@ -78,14 +78,14 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
 
         val name2 = "My other test collection"
         composeTestRule
-            .onNodeWithContentDescription(createCollection)
+            .onNodeWithContentDescription(strings.createCollection)
             .performClick()
         composeTestRule
-            .onNodeWithText(name)
+            .onNodeWithText(strings.name)
             .performClick()
             .performTextInput(name2)
         composeTestRule
-            .onNodeWithText(resourceLabel)
+            .onNodeWithText(strings.resource)
             .performClick()
         composeTestRule
             .onNodeWithTag("ExposedDropdownMenu")
@@ -94,7 +94,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .onNodeWithTag(MusicBrainzEntity.WORK.resourceUri)
             .performClick()
         composeTestRule
-            .onNodeWithText(ok)
+            .onNodeWithText(strings.ok)
             .performClick()
         composeTestRule
             .onNodeWithText(name1)
@@ -107,7 +107,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
     @Test
     fun filterCollections() = runTest {
         composeTestRule
-            .onNodeWithText(collections)
+            .onNodeWithText(strings.collections)
             .performClick()
 
         val name1 = "should find me"
@@ -140,7 +140,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
         waitForThenAssertIsDisplayed(name2)
 
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
@@ -151,7 +151,7 @@ internal class CollectionListScaffoldTest : MainActivityTest(), StringReferences
             .assertIsNotDisplayedOrDoesNotExist()
 
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)

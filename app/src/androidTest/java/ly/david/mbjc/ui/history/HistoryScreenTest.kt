@@ -8,17 +8,18 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.test.runTest
 import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
 
-internal class HistoryScreenTest : MainActivityTest(), StringReferences {
+internal class HistoryScreenTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
     private val lookupHistoryRepository: LookupHistoryRepository by inject()
@@ -39,11 +40,11 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
         navController.navigate(Destination.HISTORY.route)
 
         composeTestRule
-            .onNodeWithText(historyScreenTitle)
+            .onNodeWithText(strings.recentHistory)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(noResultsFound)
+            .onNodeWithText(strings.noResultsFound)
             .assertIsDisplayed()
     }
 
@@ -54,7 +55,7 @@ internal class HistoryScreenTest : MainActivityTest(), StringReferences {
         navController.navigate(Destination.HISTORY.route)
 
         composeTestRule
-            .onNodeWithText(historyScreenTitle)
+            .onNodeWithText(strings.recentHistory)
             .assertIsDisplayed()
 
         composeTestRule

@@ -18,15 +18,16 @@ import ly.david.data.test.queenArtistCredit
 import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
+import ly.david.ui.common.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
 
-internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
+internal class ReleaseGroupScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val releaseGroupRepository: ReleaseGroupRepository by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
 
@@ -70,7 +71,7 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(davidBowieArtistCredit.name)
         waitForThenAssertIsDisplayed(queenArtistCredit.name)
 
-        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(strings.releases)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressure.name).and(hasAnySibling(hasText(underPressure.date!!))),
@@ -78,16 +79,16 @@ internal class ReleaseGroupScaffoldTest : MainActivityTest(), StringReferences {
             )
             .assertIsDisplayed()
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.releases).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     @Test
     fun hasRelations() = runTest {
         setReleaseGroup(underPressureReleaseGroup)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(hotSpaceReleaseGroup.name)
     }
 }
