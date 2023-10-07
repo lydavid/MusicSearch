@@ -1,6 +1,5 @@
 package ly.david.convention.plugin
 
-import ly.david.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -11,10 +10,6 @@ class ComposeMultiplatformConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("org.jetbrains.compose")
-            }
-            compose {
-                kotlinCompilerPlugin.set(libs.findVersion("compose-multiplatform").get().toString())
-                kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.10")
             }
         }
     }
