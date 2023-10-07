@@ -73,6 +73,8 @@ dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.data.database)
     implementation(projects.domain)
+    implementation(projects.feature.search)
+    implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.collections)

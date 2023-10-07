@@ -13,10 +13,10 @@ import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.artist.ArtistScaffoldModel
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -31,6 +31,8 @@ internal fun ArtistDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
@@ -42,46 +44,47 @@ internal fun ArtistDetailsScreen(
             )
 
             artist.run {
-                InformationListSeparatorHeader(R.string.artist)
+                ListSeparatorHeader(text = strings.informationHeader(strings.artist))
                 sortName.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.sort_name,
+                    TextWithHeading(
+                        heading = strings.sortName,
                         text = it,
                         filterText = filterText
                     )
                 }
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it,
                         filterText = filterText
                     )
                 }
                 gender?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.gender,
+                    TextWithHeading(
+                        heading = strings.gender,
                         text = it,
                         filterText = filterText
                     )
                 }
                 LifeSpanText(
                     lifeSpan = lifeSpan,
-                    beginHeadingRes = when (type) {
-                        "Person" -> R.string.born
-                        "Character" -> R.string.created
-                        else -> R.string.founded
+                    heading = strings.date,
+                    beginHeading = when (type) {
+                        "Person" -> strings.born
+                        "Character" -> strings.created
+                        else -> strings.founded
                     },
-                    endHeadingRes = when (type) {
-                        "Person" -> R.string.died
+                    endHeading = when (type) {
+                        "Person" -> strings.died
                         // Characters do not "die": https://musicbrainz.org/doc/Artist
-                        else -> R.string.dissolved
+                        else -> strings.dissolved
                     },
                     filterText = filterText
                 )
 
                 // TODO: begin area, area, end area
 //                countryCode?.ifNotNullOrEmpty {
-//                    TextWithHeadingRes(headingRes = R.string.area, text = it.toFlagEmoji())
+//                    TextWithHeadingRes(headingRes = strings.area, text = it.toFlagEmoji())
 //                }
 
                 // TODO: isni code

@@ -15,12 +15,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import ly.david.ui.common.R
-
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -34,6 +32,8 @@ fun MultipleChoiceDialog(
     onSelectChoiceIndex: (Int) -> Unit = {},
     onDismiss: () -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     Dialog(
         onDismissRequest = {
             onDismiss()
@@ -87,9 +87,7 @@ fun MultipleChoiceDialog(
                         .align(Alignment.End),
                     onClick = onDismiss
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.cancel),
-                    )
+                    Text(strings.cancel)
                 }
             }
         }

@@ -28,14 +28,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.collectableEntities
 import ly.david.ui.common.ExposedDropdownMenuBox
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -45,6 +44,7 @@ fun CreateCollectionDialog(
     onDismiss: () -> Unit = {},
     onSubmit: (name: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
+    val strings = LocalStrings.current
     var name by rememberSaveable { mutableStateOf("") }
     var selectedEntity by rememberSaveable { mutableStateOf(MusicBrainzEntity.RELEASE) }
     val focusManager = LocalFocusManager.current
@@ -68,7 +68,7 @@ fun CreateCollectionDialog(
             ) {
                 Text(
                     modifier = Modifier,
-                    text = stringResource(id = R.string.create_collection),
+                    text = strings.createCollection,
                     style = TextStyles.getHeaderTextStyle(),
                 )
 
@@ -78,8 +78,8 @@ fun CreateCollectionDialog(
                         .focusRequester(focusRequester),
                     shape = RectangleShape,
                     value = name,
-                    label = { Text(stringResource(id = R.string.name)) },
-                    placeholder = { Text(stringResource(id = R.string.collection_name_placeholder)) },
+                    label = { Text(strings.name) },
+                    placeholder = { Text(strings.collectionNamePlaceholder) },
                     maxLines = 1,
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -95,7 +95,7 @@ fun CreateCollectionDialog(
                             name = ""
                             focusRequester.requestFocus()
                         }) {
-                            Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_search))
+                            Icon(Icons.Default.Clear, contentDescription = strings.clearSearch)
                         }
                     },
                     onValueChange = { newText ->
@@ -123,7 +123,7 @@ fun CreateCollectionDialog(
                 ) {
                     TextButton(onClick = onDismiss) {
                         Text(
-                            text = stringResource(id = R.string.cancel),
+                            text = strings.cancel,
                         )
                     }
                     TextButton(
@@ -134,7 +134,7 @@ fun CreateCollectionDialog(
                         enabled = name.isNotEmpty()
                     ) {
                         Text(
-                            text = stringResource(id = R.string.ok),
+                            text = strings.ok,
                         )
                     }
                 }

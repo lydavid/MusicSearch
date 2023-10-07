@@ -22,13 +22,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.series.details.SeriesDetailsScreen
 import ly.david.mbjc.ui.series.stats.SeriesStatsScreen
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -37,6 +37,7 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 /**
@@ -56,6 +57,7 @@ internal fun SeriesScaffold(
     viewModel: SeriesScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.SERIES
+    val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -108,7 +110,7 @@ internal fun SeriesScaffold(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = SeriesTab.values().map { stringResource(id = it.tab.titleRes) },
+                        tabsTitle = SeriesTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
                     )

@@ -14,12 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.showMap
 import ly.david.musicsearch.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.domain.place.formatForDisplay
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -31,6 +30,7 @@ fun CoordinateListItem(
     modifier: Modifier = Modifier,
     label: String? = null,
 ) {
+    val strings = LocalStrings.current
     val text = coordinates.formatForDisplay() ?: return
 
     ListItem(
@@ -41,7 +41,7 @@ fun CoordinateListItem(
                 Icon(
                     modifier = Modifier.padding(end = 8.dp),
                     imageVector = Icons.Default.PinDrop,
-                    contentDescription = stringResource(id = R.string.open_google_maps)
+                    contentDescription = strings.openGoogleMaps,
                 )
                 Text(
                     text = text,

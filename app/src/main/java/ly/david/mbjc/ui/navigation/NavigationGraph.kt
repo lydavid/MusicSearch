@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -11,13 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import java.net.URLDecoder
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import ly.david.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
 import ly.david.data.core.network.toMusicBrainzEntity
+import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
 import ly.david.mbjc.ui.event.EventScaffold
@@ -28,20 +25,22 @@ import ly.david.mbjc.ui.place.PlaceScaffold
 import ly.david.mbjc.ui.recording.RecordingScaffold
 import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
-import ly.david.mbjc.ui.search.SearchScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.domain.toLookupDestination
+import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.ui.common.R
 import ly.david.ui.history.DeleteHistoryDelegate
 import ly.david.ui.history.HistoryScaffold
 import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
 import ly.david.ui.spotify.SpotifyScaffold
+import java.net.URLDecoder
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 private const val ID = "id"
 private const val TITLE = "title"
@@ -82,8 +81,7 @@ internal fun NavigationGraph(
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
-    val uriPrefix = "$deeplinkSchema://app/"
+    val uriPrefix = "$DEEP_LINK_SCHEMA://app/"
 
     NavHost(
         navController = navController,

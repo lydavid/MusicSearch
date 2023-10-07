@@ -8,17 +8,17 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.ui.common.R
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
 fun LifeSpanText(
     lifeSpan: LifeSpanUiModel?,
+    heading: String,
     modifier: Modifier = Modifier,
-    beginHeadingRes: Int = R.string.start_date,
-    endHeadingRes: Int = R.string.end_date,
+    beginHeading: String = "",
+    endHeading: String = "",
     filterText: String = "",
 ) {
     lifeSpan?.run {
@@ -27,22 +27,22 @@ fun LifeSpanText(
         ) {
             val beginDate = begin
             if (beginDate == end && beginDate != null) {
-                TextWithHeadingRes(
-                    headingRes = R.string.date,
+                TextWithHeading(
+                    heading = heading,
                     text = beginDate,
                     filterText = filterText
                 )
             } else {
                 begin?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = beginHeadingRes,
+                    TextWithHeading(
+                        heading = beginHeading,
                         text = it,
                         filterText = filterText
                     )
                 }
                 end?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = endHeadingRes,
+                    TextWithHeading(
+                        heading = endHeading,
                         text = it,
                         filterText = filterText
                     )
@@ -84,7 +84,10 @@ private fun Preview(
 ) {
     PreviewTheme {
         Surface {
-            LifeSpanText(lifeSpan = lifeSpan)
+            LifeSpanText(
+                lifeSpan = lifeSpan,
+                heading = "Date",
+            )
         }
     }
 }

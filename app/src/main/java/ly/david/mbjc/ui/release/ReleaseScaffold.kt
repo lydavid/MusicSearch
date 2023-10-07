@@ -24,7 +24,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -37,6 +36,7 @@ import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksByReleaseScreen
 import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
@@ -46,6 +46,7 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 /**
@@ -63,6 +64,7 @@ internal fun ReleaseScaffold(
     viewModel: ReleaseScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.RELEASE
+    val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -141,7 +143,7 @@ internal fun ReleaseScaffold(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = ReleaseTab.values().map { stringResource(id = it.tab.titleRes) },
+                        tabsTitle = ReleaseTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
                     )

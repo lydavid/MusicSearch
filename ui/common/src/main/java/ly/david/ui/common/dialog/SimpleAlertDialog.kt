@@ -5,8 +5,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -53,9 +51,9 @@ internal fun PreviewSimpleAlertDialog() {
     PreviewTheme {
         Surface {
             SimpleAlertDialog(
-                title = stringResource(id = R.string.delete_search_history_confirmation),
-                confirmText = stringResource(id = R.string.yes),
-                dismissText = stringResource(id = R.string.no)
+                title = "Clear your search history?",
+                confirmText = "Yes",
+                dismissText = "No",
             )
         }
     }

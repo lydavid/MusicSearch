@@ -17,13 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.relation.RelationTypeCount
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.EntityIcon
-import ly.david.ui.common.R
-import ly.david.ui.common.getDisplayTextRes
+import ly.david.ui.common.getDisplayText
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -34,7 +33,8 @@ internal fun LazyListScope.addRelationshipsSection(
     relationTypeCounts: List<RelationTypeCount>,
 ) {
     item {
-        ListSeparatorHeader(text = stringResource(id = R.string.relationships))
+        val strings = LocalStrings.current
+        ListSeparatorHeader(strings.relationships)
 
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
@@ -47,7 +47,7 @@ internal fun LazyListScope.addRelationshipsSection(
         )
     }
     items(relationTypeCounts) { relationTypeCount ->
-
+        val strings = LocalStrings.current
         val linkedEntity = relationTypeCount.linkedEntity
 
         Column(
@@ -64,7 +64,7 @@ internal fun LazyListScope.addRelationshipsSection(
                 )
                 Text(
                     style = TextStyles.getCardBodySubTextStyle(),
-                    text = "${stringResource(id = linkedEntity.getDisplayTextRes())}: ${relationTypeCount.count}"
+                    text = "${linkedEntity.getDisplayText(strings)}: ${relationTypeCount.count}"
                 )
             }
 

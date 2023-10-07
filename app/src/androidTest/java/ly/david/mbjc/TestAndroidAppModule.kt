@@ -16,6 +16,8 @@ import ly.david.mbjc.di.testPreferencesDataStoreModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.domain.DomainModule
+import ly.david.musicsearch.feature.search.di.searchFeatureModule
+import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
 import ly.david.ui.history.HistoryUiModule
@@ -26,12 +28,13 @@ import org.koin.ksp.generated.module
 
 val testAndroidAppModule = module {
     includes(
+        stringsModule,
         testCoroutineDispatchersModule,
         testNetworkModule,
         testPreferencesDataStoreModule,
         testImageModule,
         testDatabaseDriverModule,
-
+        searchFeatureModule,
         ViewModelsModule().module,
         appDataModule,
         coroutinesScopesModule,

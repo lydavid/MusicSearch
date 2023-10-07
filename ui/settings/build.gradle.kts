@@ -21,9 +21,9 @@ android {
 dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.domain)
+    implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
-    testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.aboutlibraries.compose)
     implementation(libs.aboutlibraries.core)
@@ -46,5 +46,6 @@ dependencies {
 
     testRuntimeOnly(libs.bundles.kotlinx.coroutines)
 
+    testImplementation(projects.ui.test.screenshot)
     testImplementation(libs.test.parameter.injector)
 }

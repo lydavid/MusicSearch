@@ -9,14 +9,15 @@ import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.test.fakeInstrument
 import ly.david.data.test.fakeSeries
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.series.SeriesRepository
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject
 
-internal class SeriesScaffoldTest : MainActivityTest(), StringReferences {
+internal class SeriesScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val seriesRepository: SeriesRepository by inject()
 
     private fun setSeries(seriesMusicBrainzModel: SeriesMusicBrainzModel) {
@@ -45,15 +46,15 @@ internal class SeriesScaffoldTest : MainActivityTest(), StringReferences {
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(fakeSeries.getNameWithDisambiguation())
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     @Test
     fun hasRelations() = runTest {
         setSeries(fakeSeries)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(fakeInstrument.relations?.first()?.area?.name!!)
     }
 }

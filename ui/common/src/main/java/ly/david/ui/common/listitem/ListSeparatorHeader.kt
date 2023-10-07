@@ -1,6 +1,5 @@
 package ly.david.ui.common.listitem
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -10,9 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -40,42 +37,12 @@ fun ListSeparatorHeader(
     }
 }
 
-@Composable
-fun AttributesListSeparatorHeader(@StringRes entityStringRes: Int) {
-    ListSeparatorHeader(text = stringResource(id = R.string.attributes_header, stringResource(id = entityStringRes)))
-}
-
-@Composable
-fun InformationListSeparatorHeader(@StringRes entityStringRes: Int) {
-    ListSeparatorHeader(text = stringResource(id = R.string.information_header, stringResource(id = entityStringRes)))
-}
-
 @DefaultPreviews
 @Composable
-private fun ListSeparatorHeaderPreview() {
+internal fun ListSeparatorHeaderPreview() {
     PreviewTheme {
         Surface {
             ListSeparatorHeader("Album + Compilation")
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun AttributesListSeparatorHeaderPreview() {
-    PreviewTheme {
-        Surface {
-            AttributesListSeparatorHeader(R.string.work)
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-private fun InformationListSeparatorHeaderPreview() {
-    PreviewTheme {
-        Surface {
-            InformationListSeparatorHeader(R.string.area)
         }
     }
 }

@@ -31,9 +31,9 @@ import ly.david.ui.collections.releasegroups.ReleaseGroupsByCollectionScreen
 import ly.david.ui.collections.releases.ReleasesByCollectionScreen
 import ly.david.ui.collections.series.SeriesByCollectionScreen
 import ly.david.ui.collections.works.WorksByCollectionScreen
-import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
 import ly.david.ui.common.fullscreen.FullScreenText
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.ToggleMenuItem
@@ -60,6 +60,7 @@ fun CollectionScaffold(
     onDeleteFromCollection: (collectableId: String, name: String) -> Unit = { _, _ -> },
     viewModel: CollectionViewModel = koinViewModel(),
 ) {
+    val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -89,16 +90,16 @@ fun CollectionScaffold(
                     CopyToClipboardMenuItem(collectionId)
                     if (entity == MusicBrainzEntity.RELEASE_GROUP) {
                         ToggleMenuItem(
-                            toggleOnText = R.string.sort,
-                            toggleOffText = R.string.unsort,
+                            toggleOnText = strings.sort,
+                            toggleOffText = strings.unsort,
                             toggled = sortReleaseGroupListItems,
                             onToggle = onSortReleaseGroupListItemsChange
                         )
                     }
                     if (entity == MusicBrainzEntity.RELEASE) {
                         ToggleMenuItem(
-                            toggleOnText = R.string.show_more_info,
-                            toggleOffText = R.string.show_less_info,
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
                             onToggle = onShowMoreInfoInReleaseListItemChange
                         )

@@ -13,6 +13,7 @@ android {
 dependencies {
     implementation(projects.data)
     implementation(projects.domain)
+    implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.ui.image)

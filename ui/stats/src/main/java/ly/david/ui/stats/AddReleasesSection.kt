@@ -1,6 +1,5 @@
 package ly.david.ui.stats
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,9 +7,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.R
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -18,16 +15,16 @@ import ly.david.ui.core.theme.PreviewTheme
 internal fun LazyListScope.addEntitiesStatsSection(
     totalRemote: Int?,
     totalLocal: Int,
-    @StringRes headerRes: Int,
-    @StringRes cachedLocalOfRemoteRes: Int,
+    header: String,
+    cachedLocalOfRemote: (Int, Int) -> String,
 ) {
     item {
-        ListSeparatorHeader(text = stringResource(id = headerRes))
+        ListSeparatorHeader(header)
 
         LocalRemoteProgressBar(
             totalRemote = totalRemote,
             totalLocal = totalLocal,
-            cachedLocalOfRemoteRes = cachedLocalOfRemoteRes
+            cachedLocalOfRemote = cachedLocalOfRemote
         )
 
         Spacer(modifier = Modifier.padding(top = 16.dp))
@@ -43,8 +40,10 @@ private fun Preview() {
                 addEntitiesStatsSection(
                     totalRemote = 10,
                     totalLocal = 7,
-                    headerRes = R.string.releases,
-                    cachedLocalOfRemoteRes = R.string.cached_releases
+                    header = "Releases",
+                    cachedLocalOfRemote = { local, remote ->
+                        "Cached $local of $remote releases"
+                    },
                 )
             }
         }

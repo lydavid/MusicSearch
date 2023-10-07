@@ -9,10 +9,10 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import ly.david.musicsearch.domain.history.HistorySortOption
-import ly.david.ui.common.R
 import ly.david.ui.common.component.ClickableItem
+import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -40,10 +40,12 @@ private fun HistorySortBottomSheetContent(
     sortOption: HistorySortOption = HistorySortOption.RECENTLY_VISITED,
     onSortOptionClick: (HistorySortOption) -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     Column {
         HistorySortOption.entries.forEach {
             ClickableItem(
-                title = stringResource(id = it.labelRes),
+                title = it.getLabel(strings),
                 endIcon = if (sortOption == it) Icons.Default.Check else null,
                 onClick = {
                     onSortOptionClick(it)
@@ -53,17 +55,16 @@ private fun HistorySortBottomSheetContent(
     }
 }
 
-internal val HistorySortOption.labelRes: Int
-    get() {
-        return when (this) {
-            HistorySortOption.ALPHABETICALLY -> R.string.alphabetically
-            HistorySortOption.ALPHABETICALLY_REVERSE -> R.string.alphabetically_reverse
-            HistorySortOption.LEAST_RECENTLY_VISITED -> R.string.least_recently_visited
-            HistorySortOption.RECENTLY_VISITED -> R.string.recently_visited
-            HistorySortOption.MOST_VISITED -> R.string.most_visited
-            HistorySortOption.LEAST_VISITED -> R.string.least_visited
-        }
+private fun HistorySortOption.getLabel(strings: AppStrings): String {
+    return when (this) {
+        HistorySortOption.ALPHABETICALLY -> strings.alphabetically
+        HistorySortOption.ALPHABETICALLY_REVERSE -> strings.alphabeticallyReverse
+        HistorySortOption.LEAST_RECENTLY_VISITED -> strings.leastRecentlyVisited
+        HistorySortOption.RECENTLY_VISITED -> strings.recentlyVisited
+        HistorySortOption.MOST_VISITED -> strings.mostVisited
+        HistorySortOption.LEAST_VISITED -> strings.leastVisited
     }
+}
 
 @DefaultPreviews
 @Composable

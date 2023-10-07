@@ -11,11 +11,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -48,11 +47,13 @@ internal fun SpotifyScreen(
 
 @Composable
 private fun TutorialBanner() {
+    val strings = LocalStrings.current
+
     Card(
         modifier = Modifier.padding(vertical = 16.dp),
     ) {
         Text(
-            text = stringResource(id = R.string.spotify_tutorial),
+            text = strings.spotifyTutorial,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -66,10 +67,12 @@ private fun SpotifySearchLinks(
     metadata: SpotifyMetadata,
     searchMusicBrainz: (query: String, id: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     metadata.artistName.ifNotNullOrEmpty { artistName ->
         ClickableItem(
             title = artistName,
-            subtitle = stringResource(id = R.string.search_x, artistName),
+            subtitle = strings.searchX(artistName),
             endIcon = Icons.Default.Search,
             onClick = {
                 searchMusicBrainz(
@@ -82,7 +85,7 @@ private fun SpotifySearchLinks(
         metadata.albumName.ifNotNullOrEmpty { albumName ->
             ClickableItem(
                 title = albumName,
-                subtitle = stringResource(id = R.string.search_x_by_x, albumName, artistName),
+                subtitle = strings.searchXByX(albumName, artistName),
                 endIcon = Icons.Default.Search,
                 onClick = {
                     searchMusicBrainz(
@@ -96,7 +99,7 @@ private fun SpotifySearchLinks(
         metadata.trackName.ifNotNullOrEmpty { trackName ->
             ClickableItem(
                 title = trackName,
-                subtitle = stringResource(id = R.string.search_x_by_x, trackName, artistName),
+                subtitle = strings.searchXByX(trackName, artistName),
                 endIcon = Icons.Default.Search,
                 onClick = {
                     searchMusicBrainz(

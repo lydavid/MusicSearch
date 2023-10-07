@@ -10,14 +10,15 @@ import ly.david.data.test.elektra
 import ly.david.data.test.elektraMusicGroup
 import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.label.LabelRepository
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject
 
-internal class LabelScaffoldTest : MainActivityTest(), StringReferences {
+internal class LabelScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val labelRepository: LabelRepository by inject()
 
     private fun setLabel(labelMusicBrainzModel: LabelMusicBrainzModel) {
@@ -46,19 +47,19 @@ internal class LabelScaffoldTest : MainActivityTest(), StringReferences {
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(elektra.getNameWithDisambiguation())
 
-        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(strings.releases)
         waitForThenAssertIsDisplayed(underPressure.name)
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.releases).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     @Test
     fun hasRelations() = runTest {
         setLabel(elektra)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(elektraMusicGroup.name)
     }
 }

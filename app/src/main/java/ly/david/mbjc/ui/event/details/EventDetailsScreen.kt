@@ -11,18 +11,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.event.EventScaffoldModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -36,24 +34,32 @@ internal fun EventDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
         item {
             event.run {
-                InformationListSeparatorHeader(R.string.event)
+                ListSeparatorHeader(text = strings.informationHeader(strings.event))
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it,
                         filterText = filterText,
                     )
                 }
-                LifeSpanText(lifeSpan = lifeSpan)
+                LifeSpanText(
+                    lifeSpan = lifeSpan,
+                    heading = strings.date,
+                    beginHeading = strings.startDate,
+                    endHeading = strings.endDate,
+                    filterText = filterText,
+                )
                 time?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.time,
+                    TextWithHeading(
+                        heading = strings.time,
                         text = it,
                         filterText = filterText,
                     )
@@ -64,7 +70,7 @@ internal fun EventDetailsScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 4.dp),
-                            text = "(${stringResource(id = R.string.cancelled)})",
+                            text = "(${strings.cancelled})",
                             style = TextStyles.getCardBodyTextStyle(),
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.error
@@ -86,7 +92,6 @@ internal fun EventDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

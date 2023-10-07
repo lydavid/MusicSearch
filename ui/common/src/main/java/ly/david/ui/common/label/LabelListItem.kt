@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -18,7 +17,7 @@ import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.domain.listitem.LabelListItemModel
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.core.theme.getSubTextColor
@@ -29,6 +28,8 @@ fun LabelListItem(
     modifier: Modifier = Modifier,
     onLabelClick: LabelListItemModel.() -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     ListItem(
         headlineContent = {
             Column {
@@ -49,7 +50,7 @@ fun LabelListItem(
                 label.labelCode?.ifNotNull {
                     Text(
                         modifier = Modifier.padding(top = 4.dp),
-                        text = stringResource(id = R.string.lc, it),
+                        text = strings.lc(it),
                         style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }

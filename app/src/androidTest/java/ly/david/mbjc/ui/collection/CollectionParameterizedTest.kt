@@ -20,12 +20,12 @@ import ly.david.data.core.network.collectableEntities
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -40,7 +40,9 @@ import org.koin.test.inject
 @RunWith(Parameterized::class)
 internal class CollectionParameterizedTest(
     private val entity: MusicBrainzEntity,
-) : MainActivityTest(), StringReferences {
+) : MainActivityTest() {
+
+    private val strings: AppStrings by inject()
 
     companion object {
         @JvmStatic
@@ -68,7 +70,7 @@ internal class CollectionParameterizedTest(
     @Test
     fun onlyLocalCollections() = runTest(timeout = 15.seconds) {
         composeTestRule
-            .onNodeWithText(collections)
+            .onNodeWithText(strings.collections)
             .performClick()
 
         val collectionName = "local $entity collection"
@@ -97,17 +99,17 @@ internal class CollectionParameterizedTest(
         navController.goToEntityScreen(entity = entity, id = entityId)
 
         composeTestRule
-            .onNodeWithContentDescription(moreActions)
+            .onNodeWithContentDescription(strings.moreActions)
             .performClick()
         composeTestRule
-            .onNodeWithText(addToCollection)
+            .onNodeWithText(strings.addToCollection)
             .performClick()
         composeTestRule
             .onNodeWithText(collectionName)
             .performClick()
 
         composeTestRule
-            .onNodeWithText(collections)
+            .onNodeWithText(strings.collections)
             .performClick()
         composeTestRule
             .onNodeWithText(collectionName)
@@ -118,7 +120,7 @@ internal class CollectionParameterizedTest(
             .onNodeWithText(entityName) // list item
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
@@ -127,7 +129,7 @@ internal class CollectionParameterizedTest(
             .onNodeWithText(entityName)
             .assertDoesNotExist()
         composeTestRule
-            .onNodeWithContentDescription(clearFilterText)
+            .onNodeWithContentDescription(strings.clearFilter)
             .performClick()
         composeTestRule
             .onNodeWithText(entityName)
@@ -138,7 +140,7 @@ internal class CollectionParameterizedTest(
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithContentDescription(back)
+            .onNodeWithContentDescription(strings.back)
             .performClick()
         composeTestRule
             .onNodeWithText(entityName)
@@ -153,7 +155,7 @@ internal class CollectionParameterizedTest(
     @Test
     fun onlyRemoteCollections() = runTest {
         composeTestRule
-            .onNodeWithText(collections)
+            .onNodeWithText(strings.collections)
             .performClick()
 
         val name = "remote $entity collection"

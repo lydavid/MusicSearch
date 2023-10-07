@@ -1,6 +1,5 @@
 package ly.david.ui.common
 
-import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Album
 import androidx.compose.material.icons.filled.CollectionsBookmark
@@ -18,27 +17,27 @@ import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.TheaterComedy
 import androidx.compose.ui.graphics.vector.ImageVector
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.strings.AppStrings
 
 /**
- * Returns an appropriate string resource for this [MusicBrainzEntity].
+ * Returns an appropriate string for this [MusicBrainzEntity].
  */
-@StringRes
-fun MusicBrainzEntity.getDisplayTextRes(): Int {
+fun MusicBrainzEntity.getDisplayText(strings: AppStrings): String {
     return when (this) {
-        MusicBrainzEntity.AREA -> R.string.area
-        MusicBrainzEntity.ARTIST -> R.string.artist
-        MusicBrainzEntity.EVENT -> R.string.event
-        MusicBrainzEntity.GENRE -> R.string.genre
-        MusicBrainzEntity.INSTRUMENT -> R.string.instrument
-        MusicBrainzEntity.LABEL -> R.string.label
-        MusicBrainzEntity.PLACE -> R.string.place
-        MusicBrainzEntity.RECORDING -> R.string.recording
-        MusicBrainzEntity.RELEASE -> R.string.release
-        MusicBrainzEntity.RELEASE_GROUP -> R.string.release_group
-        MusicBrainzEntity.SERIES -> R.string.series
-        MusicBrainzEntity.WORK -> R.string.work
-        MusicBrainzEntity.URL -> R.string.url
-        MusicBrainzEntity.COLLECTION -> R.string.collection
+        MusicBrainzEntity.AREA -> strings.area
+        MusicBrainzEntity.ARTIST -> strings.artist
+        MusicBrainzEntity.EVENT -> strings.event
+        MusicBrainzEntity.GENRE -> strings.genre
+        MusicBrainzEntity.INSTRUMENT -> strings.instrument
+        MusicBrainzEntity.LABEL -> strings.label
+        MusicBrainzEntity.PLACE -> strings.place
+        MusicBrainzEntity.RECORDING -> strings.recording
+        MusicBrainzEntity.RELEASE -> strings.release
+        MusicBrainzEntity.RELEASE_GROUP -> strings.releaseGroup
+        MusicBrainzEntity.SERIES -> strings.series
+        MusicBrainzEntity.WORK -> strings.work
+        MusicBrainzEntity.URL -> strings.url
+        MusicBrainzEntity.COLLECTION -> strings.collection
     }
 }
 

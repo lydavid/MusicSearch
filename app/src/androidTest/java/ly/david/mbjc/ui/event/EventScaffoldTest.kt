@@ -8,14 +8,15 @@ import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.event.EventRepository
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject
 
-internal class EventScaffoldTest : MainActivityTest(), StringReferences {
+internal class EventScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val eventRepository: EventRepository by inject()
 
     private fun setEvent(eventMusicBrainzModel: EventMusicBrainzModel) {
@@ -44,15 +45,15 @@ internal class EventScaffoldTest : MainActivityTest(), StringReferences {
     private fun assertFieldsDisplayed() {
         waitForThenAssertIsDisplayed(fakeEvent.getNameWithDisambiguation())
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     @Test
     fun hasRelations() = runTest {
         setEvent(fakeEvent)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(fakeEvent.relations?.first()?.area?.name!!)
     }
 }

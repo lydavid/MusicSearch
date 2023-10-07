@@ -15,7 +15,6 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import coil.Coil
 import coil.ImageLoaderFactory
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
@@ -28,16 +27,18 @@ import ly.david.data.test.davidBowieSpotify
 import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureReleaseGroup
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.artist.ArtistRepository
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
-internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
+internal class ArtistScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val artistRepository: ArtistRepository by inject()
     private val imageLoaderFactory: ImageLoaderFactory by inject()
 
@@ -77,7 +78,7 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed(davidBowieDeezer.resource)
 
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
@@ -96,7 +97,7 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_BACK.name)
             .performClick()
 
-        waitForThenPerformClickOn(releaseGroups)
+        waitForThenPerformClickOn(strings.releaseGroups)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressureReleaseGroup.name).and(
@@ -106,13 +107,13 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             )
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(moreActions)
+            .onNodeWithContentDescription(strings.moreActions)
             .performClick()
         composeTestRule
-            .onNodeWithText(sort) // Doesn't do anything because it's not hooked up, just checking the text exists
+            .onNodeWithText(strings.sort) // Doesn't do anything because it's not hooked up, just checking the text exists
             .performClick()
 
-        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(strings.releases)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressure.name).and(
@@ -122,27 +123,27 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             )
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(moreActions)
+            .onNodeWithContentDescription(strings.moreActions)
             .performClick()
         composeTestRule
-            .onNodeWithText(showLessInfo)
+            .onNodeWithText(strings.showLessInfo)
             .performClick()
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(releaseGroups).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(releases).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.releaseGroups).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.releases).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     @Test
     fun hasRelations() = runTest {
         setArtist(davidBowie)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertIsDisplayed(davidBowie.name)
 
         composeTestRule
-            .onNodeWithContentDescription(filter)
+            .onNodeWithContentDescription(strings.filter)
             .performClick()
         composeTestRule
             .onNodeWithTag(TopAppBarWithFilterTestTag.FILTER_TEXT_FIELD.name)
@@ -178,7 +179,7 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             }
         }
 
-        waitForThenPerformClickOn(releaseGroups)
+        waitForThenPerformClickOn(strings.releaseGroups)
         waitForThenAssertIsDisplayed(underPressureReleaseGroup.primaryType!!) // Separator
         composeTestRule
             .onNode(
@@ -189,10 +190,10 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             )
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(moreActions)
+            .onNodeWithContentDescription(strings.moreActions)
             .performClick()
         composeTestRule
-            .onNodeWithText(unsort)
+            .onNodeWithText(strings.unsort)
             .performClick()
     }
 
@@ -207,7 +208,7 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             }
         }
 
-        waitForThenPerformClickOn(releases)
+        waitForThenPerformClickOn(strings.releases)
         composeTestRule
             .onNode(
                 matcher = hasText(underPressure.name).and(hasAnySibling(hasText(underPressure.date!!))),
@@ -217,10 +218,10 @@ internal class ArtistScaffoldTest : MainActivityTest(), StringReferences {
             .onAllNodesWithText(underPressure.date!!)
             .assertCountEquals(0)
         composeTestRule
-            .onNodeWithContentDescription(moreActions)
+            .onNodeWithContentDescription(strings.moreActions)
             .performClick()
         composeTestRule
-            .onNodeWithText(showMoreInfo)
+            .onNodeWithText(strings.showMoreInfo)
             .performClick()
     }
 }

@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -36,6 +35,7 @@ import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 import ly.david.mbjc.ui.place.stats.PlaceStatsScreen
 import ly.david.musicsearch.domain.listitem.EventListItemModel
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -44,6 +44,7 @@ import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -58,6 +59,7 @@ internal fun PlaceScaffold(
     viewModel: PlaceScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.PLACE
+    val strings = LocalStrings.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -111,7 +113,7 @@ internal fun PlaceScaffold(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = PlaceTab.values().map { stringResource(id = it.tab.titleRes) },
+                        tabsTitle = PlaceTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
                     )

@@ -1,6 +1,5 @@
 package ly.david.ui.settings
 
-import androidx.annotation.StringRes
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -12,15 +11,14 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.domain.history.HistorySortOption
-import ly.david.ui.common.R
 import org.koin.core.annotation.Single
 
 interface AppPreferences {
 
-    enum class Theme(@StringRes val textRes: Int) {
-        LIGHT(R.string.light),
-        DARK(R.string.dark),
-        SYSTEM(R.string.system),
+    enum class Theme {
+        LIGHT,
+        DARK,
+        SYSTEM,
     }
 
     val theme: Flow<Theme>

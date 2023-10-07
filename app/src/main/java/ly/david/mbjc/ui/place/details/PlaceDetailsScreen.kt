@@ -8,22 +8,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.domain.place.PlaceScaffoldModel
-import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.place.CoordinateListItem
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -37,39 +34,41 @@ internal fun PlaceDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
         item {
             place.run {
-                InformationListSeparatorHeader(R.string.place)
+                ListSeparatorHeader(text = strings.informationHeader(strings.place))
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 lifeSpan?.run {
                     begin?.ifNotNullOrEmpty {
-                        TextWithHeadingRes(
-                            headingRes = R.string.opened,
+                        TextWithHeading(
+                            heading = strings.opened,
                             text = it,
                             filterText = filterText,
                         )
                     }
                     end?.ifNotNullOrEmpty {
-                        TextWithHeadingRes(
-                            headingRes = R.string.closed,
+                        TextWithHeading(
+                            heading = strings.closed,
                             text = it,
                             filterText = filterText,
                         )
                     }
                 }
                 address.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.address,
+                    TextWithHeading(
+                        heading = strings.address,
                         text = it,
                         filterText = filterText,
                     )
@@ -78,7 +77,7 @@ internal fun PlaceDetailsScreen(
                 area?.ifNotNull {
                     val areaName = it.getNameWithDisambiguation()
                     if (areaName.contains(filterText)) {
-                        ListSeparatorHeader(text = stringResource(id = R.string.area))
+                        ListSeparatorHeader(strings.area)
                         AreaListItem(
                             area = it,
                             showType = false,
@@ -90,9 +89,9 @@ internal fun PlaceDetailsScreen(
                 }
 
                 coordinates?.let {
-                    ListSeparatorHeader(text = stringResource(id = R.string.coordinates))
+                    ListSeparatorHeader(strings.coordinates)
                     val label = place.name +
-                        if (place.lifeSpan?.ended == true) " (${stringResource(id = R.string.closed)})" else ""
+                        if (place.lifeSpan?.ended == true) " (${strings.closed})" else ""
                     CoordinateListItem(
                         context = context,
                         coordinates = it,
@@ -111,7 +110,6 @@ internal fun PlaceDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

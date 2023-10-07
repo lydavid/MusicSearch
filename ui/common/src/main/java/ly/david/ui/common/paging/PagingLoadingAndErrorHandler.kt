@@ -15,7 +15,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -26,7 +25,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ly.david.data.core.Identifiable
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
 import ly.david.ui.common.fullscreen.FullScreenLoadingIndicator
@@ -50,7 +49,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
-    noResultsText: String = stringResource(id = R.string.no_results_found),
+    customNoResultsText: String = "",
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
 //    val refreshScope = rememberCoroutineScope()
@@ -69,6 +68,11 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
 //    }
 //
 //    val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
+
+    val strings = LocalStrings.current
+    val noResultsText = customNoResultsText.ifEmpty {
+        strings.noResultsFound
+    }
 
     val swipeRefreshState = rememberSwipeRefreshState(false)
     SwipeRefresh(

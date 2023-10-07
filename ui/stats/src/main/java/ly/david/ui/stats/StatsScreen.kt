@@ -9,7 +9,7 @@ import kotlinx.collections.immutable.persistentListOf
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.relation.RelationTypeCount
 import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -23,6 +23,8 @@ fun StatsScreen(
     stats: Stats,
     modifier: Modifier = Modifier,
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(modifier = modifier) {
         tabs.forEach { tab ->
             when (tab) {
@@ -30,8 +32,8 @@ fun StatsScreen(
                     addEntitiesStatsSection(
                         totalRemote = stats.eventStats.totalRemote,
                         totalLocal = stats.eventStats.totalLocal,
-                        headerRes = R.string.events,
-                        cachedLocalOfRemoteRes = R.string.cached_events,
+                        header = strings.events,
+                        cachedLocalOfRemote = strings.cachedEvents,
                     )
                 }
 
@@ -39,8 +41,8 @@ fun StatsScreen(
                     addEntitiesStatsSection(
                         totalRemote = stats.placeStats.totalRemote,
                         totalLocal = stats.placeStats.totalLocal,
-                        headerRes = R.string.places,
-                        cachedLocalOfRemoteRes = R.string.cached_places,
+                        header = strings.places,
+                        cachedLocalOfRemote = strings.cachedPlaces,
                     )
                 }
 
@@ -48,8 +50,8 @@ fun StatsScreen(
                     addEntitiesStatsSection(
                         totalRemote = stats.recordingStats.totalRemote,
                         totalLocal = stats.recordingStats.totalLocal,
-                        headerRes = R.string.recordings,
-                        cachedLocalOfRemoteRes = R.string.cached_recordings,
+                        header = strings.recordings,
+                        cachedLocalOfRemote = strings.cachedRecordings,
                     )
                 }
 
@@ -64,8 +66,8 @@ fun StatsScreen(
                     addEntitiesStatsSection(
                         totalRemote = stats.releaseStats.totalRemote,
                         totalLocal = stats.releaseStats.totalLocal,
-                        headerRes = R.string.releases,
-                        cachedLocalOfRemoteRes = R.string.cached_releases,
+                        header = strings.releases,
+                        cachedLocalOfRemote = strings.cachedReleases,
                     )
                 }
 

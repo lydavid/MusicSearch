@@ -18,13 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.TextStyles
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -37,13 +36,15 @@ fun CollectionBottomSheet(
     onCreateCollectionClick: () -> Unit = {},
     onAddToCollection: suspend (collectionId: String) -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = bottomSheetState,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = stringResource(id = R.string.add_to_collection),
+                text = strings.addToCollection,
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
                 style = TextStyles.getCardBodyTextStyle()
@@ -54,7 +55,7 @@ fun CollectionBottomSheet(
             IconButton(onClick = onCreateCollectionClick) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.create_collection)
+                    contentDescription = strings.createCollection,
                 )
             }
         }

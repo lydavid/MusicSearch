@@ -22,7 +22,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -37,7 +36,7 @@ import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.musicsearch.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
@@ -47,6 +46,7 @@ import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
 import ly.david.ui.common.topappbar.TabsBar
 import ly.david.ui.common.topappbar.ToggleMenuItem
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
+import ly.david.ui.common.topappbar.getTitle
 import org.koin.androidx.compose.koinViewModel
 
 /**
@@ -66,6 +66,7 @@ internal fun AreaScaffold(
     viewModel: AreaScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.AREA
+    val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -109,8 +110,8 @@ internal fun AreaScaffold(
                     CopyToClipboardMenuItem(areaId)
                     if (selectedTab == AreaTab.RELEASES) {
                         ToggleMenuItem(
-                            toggleOnText = R.string.show_more_info,
-                            toggleOffText = R.string.show_less_info,
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
                             onToggle = onShowMoreInfoInReleaseListItemChange
                         )
@@ -128,7 +129,7 @@ internal fun AreaScaffold(
                 },
                 additionalBar = {
                     TabsBar(
-                        tabsTitle = areaTabs.map { stringResource(id = it.tab.titleRes) },
+                        tabsTitle = areaTabs.map { it.tab.getTitle(strings) },
                         selectedTabIndex = areaTabs.indexOf(selectedTab),
                         onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
                     )

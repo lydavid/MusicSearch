@@ -12,9 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -47,6 +46,7 @@ internal fun SpotifyScaffold(
     onBack: () -> Unit = {},
     searchMusicBrainz: (query: String, entity: MusicBrainzEntity) -> Unit = { _, _ -> },
 ) {
+    val strings = LocalStrings.current
     val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
@@ -55,7 +55,7 @@ internal fun SpotifyScaffold(
             ScrollableTopAppBar(
                 showBackButton = true,
                 onBack = onBack,
-                title = stringResource(id = R.string.spotify),
+                title = strings.spotify,
                 scrollBehavior = scrollBehavior,
             )
         },

@@ -9,15 +9,16 @@ import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.data.test.fakePlaceWithAllData
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.musicsearch.domain.place.formatForDisplay
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
 import org.koin.test.inject
 
-internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
+internal class PlaceScaffoldTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private val placeRepository: PlaceRepository by inject()
 
     private fun setPlace(placeMusicBrainzModel: PlaceMusicBrainzModel) {
@@ -53,19 +54,19 @@ internal class PlaceScaffoldTest : MainActivityTest(), StringReferences {
         waitForThenAssertIsDisplayed("Opened: ${fakePlaceWithAllData.lifeSpan?.begin!!}")
         waitForThenAssertIsDisplayed("Closed: ${fakePlaceWithAllData.lifeSpan?.end!!}")
 
-        waitForThenPerformClickOn(events)
+        waitForThenPerformClickOn(strings.events)
         waitForThenAssertAtLeastOneIsDisplayed(fakeEvent.name)
 
-        waitForThenPerformClickOn(stats)
-        waitForThenAssertIsDisplayed(hasText(events).and(hasNoClickAction()))
-        waitForThenAssertIsDisplayed(hasText(relationships).and(hasNoClickAction()))
+        waitForThenPerformClickOn(strings.stats)
+        waitForThenAssertIsDisplayed(hasText(strings.events).and(hasNoClickAction()))
+        waitForThenAssertIsDisplayed(hasText(strings.relationships).and(hasNoClickAction()))
     }
 
     @Test
     fun hasRelations() = runTest {
         setPlace(fakePlaceWithAllData)
 
-        waitForThenPerformClickOn(relationships)
+        waitForThenPerformClickOn(strings.relationships)
         waitForThenAssertAtLeastOneIsDisplayed(fakePlaceWithAllData.relations?.first()?.event?.name!!)
     }
 }

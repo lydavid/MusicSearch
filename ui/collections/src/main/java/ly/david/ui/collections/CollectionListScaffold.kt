@@ -24,13 +24,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel
-import ly.david.ui.common.R
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -47,6 +46,7 @@ fun CollectionListScaffold(
     onCreateCollectionClick: () -> Unit = {},
     viewModel: CollectionListViewModel = koinViewModel(),
 ) {
+    val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -66,7 +66,7 @@ fun CollectionListScaffold(
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = false,
-                title = stringResource(id = R.string.collections),
+                title = strings.collections,
                 scrollBehavior = scrollBehavior,
                 filterText = filterText,
                 onFilterTextChange = {
@@ -77,7 +77,7 @@ fun CollectionListScaffold(
                     IconButton(onClick = onCreateCollectionClick) {
                         Icon(
                             imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(id = R.string.create_collection)
+                            contentDescription = strings.createCollection,
                         )
                     }
                 },

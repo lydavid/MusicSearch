@@ -13,14 +13,16 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.inject
 
-internal class NavigationTest : MainActivityTest(), StringReferences {
+internal class NavigationTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -38,27 +40,27 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
 
         // Main title
         composeTestRule
-            .onNodeWithText(searchTitle)
+            .onNodeWithText(strings.searchMusicbrainz)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(history)
+            .onNodeWithText(strings.history)
             .performClick()
 
         composeTestRule
-            .onNode(hasText(searchTitle))
+            .onNode(hasText(strings.searchMusicbrainz))
             .assertDoesNotExist()
 
         composeTestRule
-            .onNodeWithText(historyScreenTitle)
+            .onNodeWithText(strings.recentHistory)
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(searchLabel)
+            .onNodeWithText(strings.search)
             .performClick()
 
         composeTestRule
-            .onNodeWithText(searchTitle)
+            .onNodeWithText(strings.searchMusicbrainz)
             .assertIsDisplayed()
     }
 
@@ -86,46 +88,46 @@ internal class NavigationTest : MainActivityTest(), StringReferences {
     @Test
     fun pressHardwareBackButton() {
         composeTestRule
-            .onNodeWithText(history)
+            .onNodeWithText(strings.history)
             .performClick()
         composeTestRule
-            .onNodeWithText(historyScreenTitle)
+            .onNodeWithText(strings.recentHistory)
             .assertIsDisplayed()
         composeTestRule.activityRule.scenario.onActivity {
             it.onBackPressedDispatcher.onBackPressed()
         }
         composeTestRule
-            .onAllNodesWithText(searchTitle)
+            .onAllNodesWithText(strings.searchMusicbrainz)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(collections)
+            .onNodeWithText(strings.collections)
             .performClick()
         composeTestRule
-            .onAllNodesWithText(collections)
+            .onAllNodesWithText(strings.collections)
             .filterToOne(hasNoClickAction())
             .assertIsDisplayed()
         composeTestRule.activityRule.scenario.onActivity {
             it.onBackPressedDispatcher.onBackPressed()
         }
         composeTestRule
-            .onAllNodesWithText(searchTitle)
+            .onAllNodesWithText(strings.searchMusicbrainz)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText(settings)
+            .onNodeWithText(strings.settings)
             .performClick()
         composeTestRule
-            .onAllNodesWithText(settings)
+            .onAllNodesWithText(strings.settings)
             .filterToOne(hasNoClickAction())
             .assertIsDisplayed()
         composeTestRule.activityRule.scenario.onActivity {
             it.onBackPressedDispatcher.onBackPressed()
         }
         composeTestRule
-            .onAllNodesWithText(searchTitle)
+            .onAllNodesWithText(strings.searchMusicbrainz)
             .filterToOne(matcher = hasNoClickAction())
             .assertIsDisplayed()
     }

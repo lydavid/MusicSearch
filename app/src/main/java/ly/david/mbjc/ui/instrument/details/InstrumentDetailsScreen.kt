@@ -10,16 +10,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.musicsearch.domain.instrument.InstrumentScaffoldModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -33,22 +30,24 @@ internal fun InstrumentDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
         item {
             instrument.run {
-                InformationListSeparatorHeader(R.string.instrument)
+                ListSeparatorHeader(strings.informationHeader(strings.instrument))
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it,
                         filterText = filterText,
                     )
                 }
 
-                ListSeparatorHeader(stringResource(id = R.string.description))
+                ListSeparatorHeader(strings.description)
                 description?.ifNotNullOrEmpty {
                     SelectionContainer {
                         Text(
@@ -72,7 +71,6 @@ internal fun InstrumentDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

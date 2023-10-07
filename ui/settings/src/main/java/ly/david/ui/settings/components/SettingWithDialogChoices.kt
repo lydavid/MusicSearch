@@ -2,7 +2,6 @@ package ly.david.ui.settings.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -10,22 +9,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.R
 import ly.david.ui.common.dialog.MultipleChoiceDialog
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
-import ly.david.ui.settings.AppPreferences
 
 @Composable
 internal fun SettingWithDialogChoices(
-    titleRes: Int,
+    title: String,
     choices: List<String>,
     selectedChoiceIndex: Int,
     onSelectChoiceIndex: (Int) -> Unit = {},
@@ -34,7 +29,7 @@ internal fun SettingWithDialogChoices(
 
     if (showThemeDialog) {
         MultipleChoiceDialog(
-            title = stringResource(id = titleRes),
+            title = title,
             choices = choices,
             selectedChoiceIndex = selectedChoiceIndex,
             onSelectChoiceIndex = onSelectChoiceIndex,
@@ -51,7 +46,7 @@ internal fun SettingWithDialogChoices(
             .padding(16.dp),
     ) {
         Text(
-            text = stringResource(id = titleRes),
+            text = title,
             style = TextStyles.getCardBodyTextStyle(),
         )
 
@@ -64,17 +59,13 @@ internal fun SettingWithDialogChoices(
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewSettingWithDialogChoices() {
     PreviewTheme {
-        // Preview is intentionally max sized so that we can see the dialog pop up in the middle of the screen
-        Surface(modifier = Modifier.fillMaxSize()) {
-            var theme by remember { mutableStateOf(AppPreferences.Theme.SYSTEM) }
-
+        Surface {
             SettingWithDialogChoices(
-                titleRes = R.string.theme,
-                choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
-                selectedChoiceIndex = theme.ordinal,
-                onSelectChoiceIndex = { theme = AppPreferences.Theme.values()[it] }
+                title = "Theme",
+                choices = listOf("Light"),
+                selectedChoiceIndex = 0,
             )
         }
     }

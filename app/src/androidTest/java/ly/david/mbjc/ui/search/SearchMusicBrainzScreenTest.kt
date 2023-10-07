@@ -17,26 +17,30 @@ import androidx.compose.ui.test.swipeRight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.data.test.underPressureReleaseGroup
+import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.MainActivityTest
-import ly.david.mbjc.StringReferences
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.feature.search.SearchScreenTestTag
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * General UI test for search screen. For testing each resource, see [SearchEachEntityTest].
  */
 @RunWith(AndroidJUnit4::class)
-internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReferences {
+internal class SearchMusicBrainzScreenTest : MainActivityTest() {
 
+    private val strings: AppStrings by inject()
     private lateinit var navController: NavHostController
 
     @Before
@@ -86,12 +90,12 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             .performTextInput("Hello there")
 
         composeTestRule
-            .onNodeWithContentDescription(clearSearchContentDescription)
+            .onNodeWithContentDescription(strings.clearSearch)
             .assertIsDisplayed()
             .performClick()
 
         composeTestRule
-            .onNodeWithContentDescription(clearSearchContentDescription)
+            .onNodeWithContentDescription(strings.clearSearch)
             .assertDoesNotExist()
 
         searchFieldNode
@@ -109,10 +113,10 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             .onNodeWithText(MusicBrainzEntity.ARTIST.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(back)
+            .onNodeWithContentDescription(strings.back)
             .performClick()
         composeTestRule
-            .onNodeWithContentDescription(clearSearchContentDescription)
+            .onNodeWithContentDescription(strings.clearSearch)
             .performClick()
 
         searchFieldNode.performTextInput("Some other search text")
@@ -121,10 +125,10 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             .onNodeWithText(MusicBrainzEntity.ARTIST.toFakeMusicBrainzModel().name!!)
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(back)
+            .onNodeWithContentDescription(strings.back)
             .performClick()
         composeTestRule
-            .onNodeWithContentDescription(clearSearchContentDescription)
+            .onNodeWithContentDescription(strings.clearSearch)
             .performClick()
 
         // Search query shows up in search history
@@ -145,20 +149,20 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
 
         // Can delete all search history
         composeTestRule
-            .onNodeWithContentDescription(clearSearchHistory)
+            .onNodeWithContentDescription(strings.clearSearchHistory)
             .performClick()
         composeTestRule
-            .onNodeWithText(no)
+            .onNodeWithText(strings.no)
             .performClick()
         composeTestRule
             .onNodeWithText("Some other search text")
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription(clearSearchHistory)
+            .onNodeWithContentDescription(strings.clearSearchHistory)
             .performClick()
         composeTestRule.awaitIdle()
         composeTestRule
-            .onNodeWithText(yes)
+            .onNodeWithText(strings.yes)
             .performClick()
         composeTestRule
             .onNodeWithText("Some other search text")
@@ -175,7 +179,7 @@ internal class SearchMusicBrainzScreenTest : MainActivityTest(), StringReference
             val intent = Intent(Intent.ACTION_VIEW).apply {
                 val query = "some query" // The query doesn't matter for this test since we're returning fakes.
                 val resourceUri = MusicBrainzEntity.RELEASE_GROUP.resourceUri
-                data = Uri.parse("$deeplinkSchema://app/lookup?query=$query&type=$resourceUri")
+                data = Uri.parse("$DEEP_LINK_SCHEMA://app/lookup?query=$query&type=$resourceUri")
             }
             it.startActivity(intent)
         }

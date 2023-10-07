@@ -21,12 +21,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.collectAsLazyPagingItems
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.ui.common.R
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,6 +37,7 @@ fun HistoryScaffold(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     viewModel: HistoryViewModel = koinViewModel(),
 ) {
+    val strings = LocalStrings.current
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -51,9 +51,9 @@ fun HistoryScaffold(
 
     if (showDeleteConfirmationDialog) {
         SimpleAlertDialog(
-            title = stringResource(id = R.string.delete_lookup_history_confirmation),
-            confirmText = stringResource(id = R.string.yes),
-            dismissText = stringResource(id = R.string.no),
+            title = strings.deleteLookupHistoryConfirmation,
+            confirmText = strings.yes,
+            dismissText = strings.no,
             onDismiss = { showDeleteConfirmationDialog = false },
             onConfirmClick = { deleteHistoryDelegate.deleteAll() }
         )
@@ -73,7 +73,7 @@ fun HistoryScaffold(
         topBar = {
             TopAppBarWithFilter(
                 showBackButton = false,
-                title = stringResource(id = R.string.recent_history),
+                title = strings.recentHistory,
                 scrollBehavior = scrollBehavior,
                 filterText = filterText,
                 onFilterTextChange = {
@@ -82,14 +82,14 @@ fun HistoryScaffold(
                 },
                 overflowDropdownMenuItems = {
                     DropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.clear_history)) },
+                        text = { Text(strings.clearHistory) },
                         onClick = {
                             showDeleteConfirmationDialog = true
                             closeMenu()
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text(stringResource(id = R.string.sort)) },
+                        text = { Text(strings.sort) },
                         onClick = {
                             showBottomSheet = true
                             closeMenu()
