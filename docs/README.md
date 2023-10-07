@@ -12,6 +12,7 @@ A place to document my development, testing, and release processes.
 
 ## Testing
 
+- [ADB Testing](./testing/adb_testing.md)
 - [Deep links](./testing/deep_links.md)
 
 ## Release
