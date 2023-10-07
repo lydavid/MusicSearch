@@ -13,7 +13,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -25,7 +24,6 @@ import ly.david.musicsearch.domain.listitem.ListItemModel
 import ly.david.musicsearch.domain.listitem.ListSeparator
 import ly.david.musicsearch.domain.listitem.NowPlayingHistoryListItemModel
 import ly.david.musicsearch.strings.LocalStrings
-import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.ui.common.topappbar.TopAppBarWithFilter
 import ly.david.ui.core.preview.DefaultPreviews

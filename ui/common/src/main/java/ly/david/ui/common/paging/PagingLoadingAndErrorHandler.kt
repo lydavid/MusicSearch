@@ -49,7 +49,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
     modifier: Modifier = Modifier,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState? = null,
-    noResultsText: String = "",
+    customNoResultsText: String = "",
     itemContent: @Composable LazyItemScope.(value: T?) -> Unit,
 ) {
 //    val refreshScope = rememberCoroutineScope()
@@ -70,7 +70,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
 //    val pullRefreshState = rememberPullRefreshState(refreshing, ::refresh)
 
     val strings = LocalStrings.current
-    val _noResultsText = noResultsText.ifEmpty {
+    val noResultsText = customNoResultsText.ifEmpty {
         strings.noResultsFound
     }
 
@@ -109,7 +109,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                 //  also there should be a difference between 0 out of 0, and 0 out of 1 found
                 //  the latter should offer a retry button
 
-                FullScreenText(_noResultsText)
+                FullScreenText(noResultsText)
             }
 
             else -> {

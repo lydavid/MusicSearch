@@ -25,7 +25,7 @@ internal fun RecentSearchesHeader(
     onDeleteAllHistory: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
-    
+
     Row(
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
