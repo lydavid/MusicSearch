@@ -12,10 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -25,12 +24,14 @@ internal fun RecentSearchesHeader(
     isListEmpty: Boolean = false,
     onDeleteAllHistory: () -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+    
     Row(
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(id = R.string.recent_searches),
+            text = strings.recentSearches,
             style = TextStyles.getHeaderTextStyle(),
             fontWeight = FontWeight.SemiBold
         )
@@ -41,7 +42,7 @@ internal fun RecentSearchesHeader(
             IconButton(onClick = onDeleteAllHistory) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(id = R.string.clear_search_history)
+                    contentDescription = strings.clearSearchHistory,
                 )
             }
         }

@@ -8,10 +8,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.feature.search.internal.SearchScreen
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,6 +21,7 @@ fun SearchScaffold(
     initialQuery: String? = null,
     initialEntity: MusicBrainzEntity? = null,
 ) {
+    val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -30,7 +30,7 @@ fun SearchScaffold(
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = false,
-                title = stringResource(id = R.string.search_musicbrainz),
+                title = strings.searchMusicbrainz,
             )
         },
     ) { innerPadding ->

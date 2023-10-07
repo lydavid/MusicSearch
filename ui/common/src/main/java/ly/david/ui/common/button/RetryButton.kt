@@ -10,9 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -21,6 +20,8 @@ fun RetryButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     Button(
         onClick = onClick,
         modifier = modifier
@@ -29,7 +30,7 @@ fun RetryButton(
         Text(
             modifier = Modifier.padding(start = 8.dp),
             style = MaterialTheme.typography.headlineMedium,
-            text = stringResource(id = R.string.retry)
+            text = strings.retry,
         )
     }
 }

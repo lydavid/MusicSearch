@@ -11,27 +11,42 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import ly.david.musicsearch.domain.Destination
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.strings.LocalStrings
 
-private enum class BottomNavigationItem(val stringRes: Int, val icon: ImageVector, val destination: Destination) {
-    Search(R.string.search, Icons.Default.Search, Destination.LOOKUP),
-    History(R.string.history, Icons.Default.History, Destination.HISTORY),
-    Collection(R.string.collections, Icons.Default.CollectionsBookmark, Destination.COLLECTIONS),
-    Settings(R.string.settings, Icons.Default.Settings, Destination.SETTINGS),
+private enum class BottomNavigationItem(val icon: ImageVector, val destination: Destination) {
+    Search(Icons.Default.Search, Destination.LOOKUP),
+    History(Icons.Default.History, Destination.HISTORY),
+    Collection(Icons.Default.CollectionsBookmark, Destination.COLLECTIONS),
+    Settings(Icons.Default.Settings, Destination.SETTINGS),
 }
+
+private fun BottomNavigationItem.getText(strings: AppStrings): String =
+    when (this) {
+        BottomNavigationItem.Search -> strings.search
+        BottomNavigationItem.History -> strings.history
+        BottomNavigationItem.Collection -> strings.collections
+        BottomNavigationItem.Settings -> strings.settings
+    }
 
 @Composable
 internal fun BottomNavigationBar(
     currentTopLevelDestination: Destination,
     navigateToTopLevelDestination: (Destination) -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     NavigationBar {
         BottomNavigationItem.values().forEach { item ->
             NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = null) },
-                label = { Text(stringResource(id = item.stringRes)) },
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = null,
+                    )
+                },
+                label = { Text(item.getText(strings)) },
                 selected = currentTopLevelDestination == item.destination,
                 onClick = {
                     navigateToTopLevelDestination(item.destination)

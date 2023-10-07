@@ -7,13 +7,11 @@ import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import ly.david.musicsearch.domain.Destination
-import ly.david.ui.common.R
-import ly.david.ui.common.component.ClickableItem
-import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.component.ClickableItem
+import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -88,12 +86,12 @@ internal fun SettingsScreen(
                 onCheckedChange = onSortReleaseGroupListItemsChange
             )
 
-            ListSeparatorHeader(text = stringResource(id = R.string.experimental_search))
+            ListSeparatorHeader(text = strings.experimentalSearch)
 
             if (isNotificationListenerEnabled) {
                 ClickableItem(
-                    title = stringResource(id = R.string.now_playing_history),
-                    subtitle = stringResource(id = R.string.now_playing_history_subtitle),
+                    title = strings.nowPlayingHistory,
+                    subtitle = strings.nowPlayingHistorySubtitle,
                     endIcon = Icons.Default.ChevronRight,
                     onClick = {
                         onDestinationClick(Destination.SETTINGS_NOWPLAYING)
@@ -101,32 +99,32 @@ internal fun SettingsScreen(
                 )
             } else {
                 ClickableItem(
-                    title = stringResource(id = R.string.enable_notification_listener),
-                    subtitle = stringResource(id = R.string.enable_notification_listener_subtitle),
+                    title = strings.enableNotificationListener,
+                    subtitle = strings.enableNotificationListenerSubtitle,
                     onClick = onGoToNotificationListenerSettings,
                 )
             }
 
             ClickableItem(
-                title = stringResource(id = R.string.spotify),
-                subtitle = stringResource(id = R.string.spotify_subtitle),
+                title = strings.spotify,
+                subtitle = strings.spotifySubtitle,
                 endIcon = Icons.Default.ChevronRight,
                 onClick = {
                     onDestinationClick(Destination.EXPERIMENTAL_SPOTIFY)
                 },
             )
 
-            ListSeparatorHeader(text = stringResource(id = R.string.about))
+            ListSeparatorHeader(text = strings.about)
 
             ClickableItem(
-                title = stringResource(id = R.string.open_source_licenses),
+                title = strings.openSourceLicenses,
                 endIcon = Icons.Default.ChevronRight,
                 onClick = {
                     onDestinationClick(Destination.SETTINGS_LICENSES)
                 },
             )
 
-            val versionKey = stringResource(id = R.string.app_version)
+            val versionKey = strings.appVersion
             TextWithHeading(heading = versionKey, text = "$versionName ($versionCode)")
 
             if (BuildConfig.DEBUG) {

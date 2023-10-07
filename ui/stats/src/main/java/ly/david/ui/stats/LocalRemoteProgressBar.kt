@@ -11,9 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
@@ -22,7 +20,7 @@ import ly.david.ui.core.theme.TextStyles
 internal fun LocalRemoteProgressBar(
     totalRemote: Int?,
     totalLocal: Int,
-    cachedLocalOfRemoteRes: Int,
+    cachedLocalOfRemote: (Int, Int) -> String,
 ) {
     Column(
         modifier = Modifier
@@ -40,7 +38,7 @@ internal fun LocalRemoteProgressBar(
             //  since the moment they click a release, it will require downloading details
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
-                text = stringResource(id = cachedLocalOfRemoteRes, totalLocal, totalRemote)
+                text = cachedLocalOfRemote(totalLocal, totalRemote)
             )
 
             if (totalRemote != 0) {
@@ -70,7 +68,9 @@ private fun Empty() {
             LocalRemoteProgressBar(
                 totalRemote = 1,
                 totalLocal = 0,
-                cachedLocalOfRemoteRes = R.string.cached_releases
+                cachedLocalOfRemote = { local, remote ->
+                    "Cached $local of $remote releases"
+                },
             )
         }
     }
@@ -84,7 +84,9 @@ private fun Half() {
             LocalRemoteProgressBar(
                 totalRemote = 2,
                 totalLocal = 1,
-                cachedLocalOfRemoteRes = R.string.cached_releases
+                cachedLocalOfRemote = { local, remote ->
+                    "Cached $local of $remote releases"
+                },
             )
         }
     }
@@ -98,7 +100,9 @@ private fun Full() {
             LocalRemoteProgressBar(
                 totalRemote = 1,
                 totalLocal = 1,
-                cachedLocalOfRemoteRes = R.string.cached_releases
+                cachedLocalOfRemote = { local, remote ->
+                    "Cached $local of $remote releases"
+                },
             )
         }
     }
@@ -112,7 +116,9 @@ private fun Overflow() {
             LocalRemoteProgressBar(
                 totalRemote = 1,
                 totalLocal = 2,
-                cachedLocalOfRemoteRes = R.string.cached_releases
+                cachedLocalOfRemote = { local, remote ->
+                    "Cached $local of $remote releases"
+                },
             )
         }
     }

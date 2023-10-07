@@ -22,7 +22,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
@@ -30,8 +29,8 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.searchableEntities
 import ly.david.musicsearch.domain.listitem.ListItemModel
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.ExposedDropdownMenuBox
-import ly.david.ui.common.R
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,6 +43,8 @@ internal fun SearchScreen(
     initialEntity: MusicBrainzEntity? = null,
     viewModel: SearchViewModel = koinViewModel(),
 ) {
+    val strings = LocalStrings.current
+
     val searchResults: LazyPagingItems<ListItemModel> =
         rememberFlowWithLifecycleStarted(viewModel.searchResults)
             .collectAsLazyPagingItems()
@@ -80,8 +81,8 @@ internal fun SearchScreen(
                     .focusRequester(focusRequester),
                 shape = RectangleShape,
                 value = queryText,
-                label = { Text(stringResource(id = R.string.search)) },
-                placeholder = { Text(stringResource(id = R.string.search)) },
+                label = { Text(strings.search) },
+                placeholder = { Text(strings.search) },
                 maxLines = 1,
                 singleLine = true,
                 trailingIcon = {
@@ -90,7 +91,7 @@ internal fun SearchScreen(
                         viewModel.clearQuery()
                         focusRequester.requestFocus()
                     }) {
-                        Icon(Icons.Default.Clear, contentDescription = stringResource(id = R.string.clear_search))
+                        Icon(Icons.Default.Clear, contentDescription = strings.clearSearch)
                     }
                 },
                 onValueChange = { newText ->

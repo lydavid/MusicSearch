@@ -15,11 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.data.core.releasegroup.getDisplayTypes
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -31,12 +30,13 @@ internal fun LazyListScope.addReleaseGroupsSection(
     releaseGroupTypeCounts: List<ReleaseGroupTypeCount>,
 ) {
     item {
-        ListSeparatorHeader(text = stringResource(id = R.string.release_groups))
+        val strings = LocalStrings.current
+        ListSeparatorHeader(strings.releaseGroup)
 
         LocalRemoteProgressBar(
             totalRemote = totalRemote,
             totalLocal = totalLocal,
-            cachedLocalOfRemoteRes = R.string.cached_release_groups
+            cachedLocalOfRemote = strings.cachedReleaseGroups,
         )
     }
     items(releaseGroupTypeCounts) {

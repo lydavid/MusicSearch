@@ -35,11 +35,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.zIndex
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -116,6 +115,7 @@ internal fun TopAppBarWithFilterInternal(
     additionalActions: @Composable () -> Unit = {},
     additionalBar: @Composable () -> Unit = {},
 ) {
+    val strings = LocalStrings.current
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -152,10 +152,13 @@ internal fun TopAppBarWithFilterInternal(
                                 },
                                 modifier = Modifier.testTag(TopAppBarWithFilterTestTag.FILTER_BACK.name)
                             ) {
-                                Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cancel))
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = strings.cancel,
+                                )
                             }
                         },
-                        placeholder = { Text(stringResource(id = R.string.filter)) },
+                        placeholder = { Text(strings.filter) },
                         trailingIcon = {
                             if (filterText.isEmpty()) return@TextField
                             IconButton(onClick = {
@@ -164,7 +167,7 @@ internal fun TopAppBarWithFilterInternal(
                             }) {
                                 Icon(
                                     Icons.Default.Clear,
-                                    contentDescription = stringResource(id = R.string.clear_filter)
+                                    contentDescription = strings.clearFilter,
                                 )
                             }
                         },
@@ -201,7 +204,7 @@ internal fun TopAppBarWithFilterInternal(
                     }) {
                         Icon(
                             imageVector = Icons.Outlined.FindInPage,
-                            contentDescription = stringResource(id = R.string.filter)
+                            contentDescription = strings.filter,
                         )
                     }
                 }

@@ -9,7 +9,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
@@ -28,7 +27,7 @@ import ly.david.musicsearch.domain.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
 import ly.david.musicsearch.domain.listitem.SeriesListItemModel
 import ly.david.musicsearch.domain.listitem.WorkListItemModel
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistListItem
 import ly.david.ui.common.event.EventListItem
@@ -49,11 +48,13 @@ internal fun SearchResultsScreen(
     snackbarHostState: SnackbarHostState = SnackbarHostState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     PagingLoadingAndErrorHandler(
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
         snackbarHostState = snackbarHostState,
-        noResultsText = stringResource(id = R.string.no_results_found_search)
+        noResultsText = strings.noResultsFoundSearch,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ArtistListItemModel -> {

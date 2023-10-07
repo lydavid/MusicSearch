@@ -22,20 +22,20 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.EntityIcon
-import ly.david.ui.common.R
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
@@ -74,6 +74,8 @@ fun ScrollableTopAppBar(
 
     additionalBar: @Composable () -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     Column(modifier = modifier) {
         TopAppBar(
             title = {
@@ -88,7 +90,10 @@ fun ScrollableTopAppBar(
             navigationIcon = {
                 if (showBackButton) {
                     IconButton(onClick = { onBack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.back))
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = strings.back,
+                        )
                     }
                 }
             },
@@ -203,6 +208,7 @@ private fun SubtitleWithOverflow(
 private fun OverflowMenu(
     overflowDropdownMenuItems: (@Composable OverflowMenuScope.() -> Unit)? = null,
 ) {
+    val strings = LocalStrings.current
     var showMenu by rememberSaveable { mutableStateOf(false) }
 
     val scope = remember {
@@ -217,7 +223,7 @@ private fun OverflowMenu(
         IconButton(onClick = { showMenu = !showMenu }) {
             Icon(
                 imageVector = Icons.Default.MoreVert,
-                contentDescription = stringResource(id = R.string.more_actions)
+                contentDescription = strings.moreActions,
             )
         }
         DropdownMenu(
@@ -265,7 +271,7 @@ private fun WithIcon() {
 @Composable
 private fun WithTabs() {
     PreviewTheme {
-        var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+        var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
         ScrollableTopAppBar(
             entity = MusicBrainzEntity.RELEASE_GROUP,
