@@ -22,6 +22,7 @@ kotlinx-coroutines = "1.7.1"
 ktor = "2.3.4"
 ksp = "1.9.10-1.0.13"
 leakcanaryAndroid = "2.12"
+lyricist = "1.4.2"
 mockk = "1.13.8"
 okhttp = "4.11.0"
 paging = "3.2.1"
@@ -83,6 +84,8 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
+lyricist-core = { module = "cafe.adriel.lyricist:lyricist-core", version.ref = "lyricist" }
+lyricist-library = { module = "cafe.adriel.lyricist:lyricist", version.ref = "lyricist" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 paging-common = { group = "app.cash.paging", name = "paging-common", version.ref = "pagingMultiplatform" }

@@ -2,7 +2,6 @@ package ly.david.mbjc.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -35,7 +34,7 @@ import ly.david.musicsearch.domain.toLookupDestination
 import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.ui.common.R
+import ly.david.ui.common.strings.LocalStrings
 import ly.david.ui.history.DeleteHistoryDelegate
 import ly.david.ui.history.HistoryScaffold
 import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
@@ -82,7 +81,8 @@ internal fun NavigationGraph(
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val deeplinkSchema = stringResource(id = R.string.deeplink_schema)
+    val strings = LocalStrings.current
+    val deeplinkSchema = strings.deeplinkSchema
     val uriPrefix = "$deeplinkSchema://app/"
 
     NavHost(

@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
 
+    implementation(libs.lyricist.library)
+
     implementation(libs.timber)
 
     testImplementation(libs.bundles.kotlinx.coroutines)

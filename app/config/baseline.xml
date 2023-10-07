@@ -11,7 +11,6 @@
     <ID>ComposableParamOrder:RecordingsByWorkScreen.kt$RecordingsByWorkScreen</ID>
     <ID>ComposableParamOrder:ReleaseGroupStatsScreen.kt$ReleaseGroupStatsScreen</ID>
     <ID>ComposableParamOrder:ReleaseStatsScreen.kt$ReleaseStatsScreen</ID>
-    <ID>ComposableParamOrder:SearchScreen.kt$SearchScreen</ID>
     <ID>ComposableParamOrder:SeriesStatsScreen.kt$SeriesStatsScreen</ID>
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
