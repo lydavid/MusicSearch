@@ -15,6 +15,7 @@ import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
+import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.domain.InvertedDomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
@@ -41,6 +42,7 @@ val testAndroidAppModule = module {
         coroutinesScopesModule,
         loggingModule,
         musicBrainzAuthModule,
+        repositoryDataModule,
         CoverArtDataModule().module,
         DomainModule().module,
         MusicBrainzDataModule().module,
