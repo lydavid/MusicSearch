@@ -11,7 +11,7 @@ import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.area.showReleases
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.area.AreaScaffoldModel
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -21,7 +21,7 @@ import timber.log.Timber
 @KoinViewModel
 internal class AreaScaffoldViewModel(
     private val repository: AreaRepository,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsList: RelationsList,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
@@ -63,7 +63,7 @@ internal class AreaScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = areaId,
                                 title = title.value,

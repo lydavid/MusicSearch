@@ -10,7 +10,7 @@ import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.coverart.ReleaseImageRepository
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.musicsearch.domain.release.ReleaseRepository
 import ly.david.musicsearch.domain.release.ReleaseScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
@@ -21,7 +21,7 @@ import timber.log.Timber
 
 @KoinViewModel
 internal class ReleaseScaffoldViewModel(
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
     private val releaseImageRepository: ReleaseImageRepository,
     private val repository: ReleaseRepository,
     private val relationsList: RelationsList,
@@ -70,7 +70,7 @@ internal class ReleaseScaffoldViewModel(
                     // However, reloading it will not record another visit, so its title will remain empty in history.
                     // But clicking on it will update its title, so we're not fixing it right now.
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = releaseId,
                                 title = title.value,

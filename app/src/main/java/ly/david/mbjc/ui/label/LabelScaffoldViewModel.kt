@@ -8,7 +8,7 @@ import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.musicsearch.domain.label.LabelRepository
 import ly.david.musicsearch.domain.label.LabelScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
@@ -20,7 +20,7 @@ import timber.log.Timber
 @KoinViewModel
 internal class LabelScaffoldViewModel(
     private val repository: LabelRepository,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
     private val relationsList: RelationsList,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
@@ -58,7 +58,7 @@ internal class LabelScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = labelId,
                                 title = title.value,

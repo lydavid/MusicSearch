@@ -27,9 +27,7 @@ import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.domain.listitem.toLookupHistoryListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.settings.AppPreferences
-import org.koin.android.annotation.KoinViewModel
 
-@KoinViewModel
 class HistoryViewModel(
     private val appPreferences: AppPreferences,
     private val lookupHistoryRepository: LookupHistoryRepository,

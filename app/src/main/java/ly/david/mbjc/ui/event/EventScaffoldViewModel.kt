@@ -10,7 +10,7 @@ import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.event.EventRepository
 import ly.david.musicsearch.domain.event.EventScaffoldModel
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -21,7 +21,7 @@ import timber.log.Timber
 internal class EventScaffoldViewModel(
     private val repository: EventRepository,
     private val relationsList: RelationsList,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
 ) : ViewModel(),
     MusicBrainzEntityViewModel,
     IRelationsList by relationsList {
@@ -58,7 +58,7 @@ internal class EventScaffoldViewModel(
                     }
 
                     if (!recordedLookup) {
-                        incrementLookupHistoryUseCase(
+                        incrementLookupHistory(
                             LookupHistory(
                                 mbid = eventId,
                                 title = title.value,

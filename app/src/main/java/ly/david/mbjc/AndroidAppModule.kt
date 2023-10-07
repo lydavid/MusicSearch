@@ -15,11 +15,13 @@ import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
+import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.domain.DomainModule
+import ly.david.musicsearch.domain.InvertedDomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
-import ly.david.ui.history.HistoryUiModule
+import ly.david.ui.history.di.historyUiModule
 import ly.david.ui.image.di.imageModule
 import ly.david.ui.nowplaying.NowPlayingUiModule
 import ly.david.ui.settings.SettingsUiModule
@@ -39,6 +41,8 @@ val androidAppModule = module {
         preferencesDataStoreModule,
         imageModule,
         searchFeatureModule,
+        repositoryDataModule,
+        InvertedDomainModule().module,
         CoverArtDataModule().module,
         DomainModule().module,
         MusicBrainzDataModule().module,
@@ -46,7 +50,7 @@ val androidAppModule = module {
         AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,
-        HistoryUiModule().module,
+        historyUiModule,
         NowPlayingUiModule().module,
         SettingsUiModule().module,
 

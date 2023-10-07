@@ -10,7 +10,7 @@ import ly.david.data.core.history.LookupHistory
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.GenreMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.domain.history.IncrementLookupHistoryUseCase
+import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber
@@ -18,7 +18,7 @@ import timber.log.Timber
 @KoinViewModel
 internal class GenreScaffoldViewModel(
     private val musicBrainzApi: MusicBrainzApi,
-    private val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase,
+    private val incrementLookupHistory: IncrementLookupHistory,
 ) : ViewModel(),
     MusicBrainzEntityViewModel {
 
@@ -44,7 +44,7 @@ internal class GenreScaffoldViewModel(
             }
 
             if (!recordedLookup) {
-                incrementLookupHistoryUseCase(
+                incrementLookupHistory(
                     LookupHistory(
                         mbid = genreId,
                         title = title.value,

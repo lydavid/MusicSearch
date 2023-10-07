@@ -1,8 +1,8 @@
-package ly.david.ui.history
+package ly.david.musicsearch.domain
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 
 @Module
 @ComponentScan
-class HistoryUiModule
+class InvertedDomainModule
