@@ -37,10 +37,10 @@ import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
 import ly.david.musicsearch.domain.listitem.PlaceListItemModel
 import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
-import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.strings.LocalStrings
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
@@ -66,6 +66,7 @@ internal fun AreaScaffold(
     viewModel: AreaScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.AREA
+    val strings = LocalStrings.current
     val snackbarHostState = remember { SnackbarHostState() }
     var selectedTab by rememberSaveable { mutableStateOf(AreaTab.DETAILS) }
     var filterText by rememberSaveable { mutableStateOf("") }
@@ -109,8 +110,8 @@ internal fun AreaScaffold(
                     CopyToClipboardMenuItem(areaId)
                     if (selectedTab == AreaTab.RELEASES) {
                         ToggleMenuItem(
-                            toggleOnText = R.string.show_more_info,
-                            toggleOffText = R.string.show_less_info,
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
                             onToggle = onShowMoreInfoInReleaseListItemChange
                         )

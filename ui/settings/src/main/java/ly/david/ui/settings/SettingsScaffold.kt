@@ -11,10 +11,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.core.app.NotificationManagerCompat
 import ly.david.musicsearch.domain.Destination
-import ly.david.ui.common.R
+import ly.david.ui.common.strings.LocalStrings
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -31,12 +30,14 @@ fun SettingsScaffold(
     onSortReleaseGroupListItemsChange: (Boolean) -> Unit = {},
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
+    val strings = LocalStrings.current
+
     Scaffold(
         modifier = modifier,
         topBar = {
             ScrollableTopAppBar(
                 showBackButton = false,
-                title = stringResource(id = R.string.settings),
+                title = strings.settings,
             )
         },
     ) { innerPadding ->

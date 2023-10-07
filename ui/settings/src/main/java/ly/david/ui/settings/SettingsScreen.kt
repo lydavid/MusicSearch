@@ -12,12 +12,21 @@ import ly.david.musicsearch.domain.Destination
 import ly.david.ui.common.R
 import ly.david.ui.common.component.ClickableItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.strings.AppStrings
+import ly.david.ui.common.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.settings.components.ProfileCard
 import ly.david.ui.settings.components.SettingSwitch
 import ly.david.ui.settings.components.SettingWithDialogChoices
+
+private fun AppPreferences.Theme.getText(strings: AppStrings): String =
+    when (this) {
+        AppPreferences.Theme.LIGHT -> strings.light
+        AppPreferences.Theme.DARK -> strings.dark
+        AppPreferences.Theme.SYSTEM -> strings.system
+    }
 
 @Composable
 internal fun SettingsScreen(
@@ -40,6 +49,8 @@ internal fun SettingsScreen(
     versionName: String = "",
     versionCode: Int = 0,
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(modifier = modifier) {
         item {
             ProfileCard(
@@ -50,8 +61,8 @@ internal fun SettingsScreen(
             )
 
             SettingWithDialogChoices(
-                titleRes = R.string.theme,
-                choices = AppPreferences.Theme.values().map { stringResource(id = it.textRes) },
+                title = strings.theme,
+                choices = AppPreferences.Theme.values().map { it.getText(strings) },
                 selectedChoiceIndex = theme.ordinal,
                 onSelectChoiceIndex = { onThemeChange(AppPreferences.Theme.values()[it]) },
             )

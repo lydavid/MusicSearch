@@ -43,7 +43,7 @@ fun TextWithHeading(
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewTextWithHeading() {
     PreviewTheme {
         Surface {
             TextWithHeading(

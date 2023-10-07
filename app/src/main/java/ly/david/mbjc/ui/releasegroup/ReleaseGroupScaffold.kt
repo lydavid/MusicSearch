@@ -38,10 +38,10 @@ import ly.david.mbjc.ui.releasegroup.releases.ReleasesByReleaseGroupScreen
 import ly.david.mbjc.ui.releasegroup.stats.ReleaseGroupStatsScreen
 import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
 import ly.david.ui.common.EntityIcon
-import ly.david.ui.common.R
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
+import ly.david.ui.common.strings.LocalStrings
 import ly.david.ui.common.topappbar.AddToCollectionMenuItem
 import ly.david.ui.common.topappbar.CopyToClipboardMenuItem
 import ly.david.ui.common.topappbar.OpenInBrowserMenuItem
@@ -69,6 +69,7 @@ internal fun ReleaseGroupScaffold(
     viewModel: ReleaseGroupScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.RELEASE_GROUP
+    val strings = LocalStrings.current
     val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -113,8 +114,8 @@ internal fun ReleaseGroupScaffold(
                     CopyToClipboardMenuItem(releaseGroupId)
                     if (selectedTab == ReleaseGroupTab.RELEASES) {
                         ToggleMenuItem(
-                            toggleOnText = R.string.show_more_info,
-                            toggleOffText = R.string.show_less_info,
+                            toggleOnText = strings.showMoreInfo,
+                            toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
                             onToggle = onShowMoreInfoInReleaseListItemChange
                         )
