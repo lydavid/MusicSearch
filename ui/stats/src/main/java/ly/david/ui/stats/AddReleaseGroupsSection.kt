@@ -31,7 +31,7 @@ internal fun LazyListScope.addReleaseGroupsSection(
 ) {
     item {
         val strings = LocalStrings.current
-        ListSeparatorHeader(strings.releaseGroup)
+        ListSeparatorHeader(strings.releaseGroups)
 
         LocalRemoteProgressBar(
             totalRemote = totalRemote,

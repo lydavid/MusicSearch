@@ -15,7 +15,6 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import coil.Coil
 import coil.ImageLoaderFactory
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
 import ly.david.data.core.artist.getDisplayNames
 import ly.david.data.core.getNameWithDisambiguation
@@ -35,6 +34,7 @@ import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
 internal class ArtistScaffoldTest : MainActivityTest() {
 
