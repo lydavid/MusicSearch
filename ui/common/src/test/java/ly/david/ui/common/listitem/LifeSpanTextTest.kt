@@ -16,7 +16,10 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
                     end = "2022-12-16"
-                )
+                ),
+                heading = "Date",
+                beginHeading = "Start Date",
+                endHeading = "End Date",
             )
         }
     }
@@ -28,7 +31,10 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
                     end = "2022-12-15"
-                )
+                ),
+                heading = "Date",
+                beginHeading = "Start Date",
+                endHeading = "End Date",
             )
         }
     }
@@ -40,7 +46,10 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
                     end = null
-                )
+                ),
+                heading = "Date",
+                beginHeading = "Start Date",
+                endHeading = "End Date",
             )
         }
     }
@@ -52,7 +61,10 @@ class LifeSpanTextTest : PaparazziScreenshotTest() {
                 lifeSpan = LifeSpanUiModel(
                     begin = null,
                     end = "2022-12-15"
-                )
+                ),
+                heading = "Date",
+                beginHeading = "Start Date",
+                endHeading = "End Date",
             )
         }
     }

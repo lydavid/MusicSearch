@@ -19,12 +19,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.network.resourceUri
+import ly.david.musicsearch.strings.LocalStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +34,7 @@ fun ExposedDropdownMenuBox(
     modifier: Modifier = Modifier,
     onSelectOption: (MusicBrainzEntity) -> Unit,
 ) {
+    val strings = LocalStrings.current
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     // TODO: this can't properly take up the full size allotted to it
@@ -47,9 +48,9 @@ fun ExposedDropdownMenuBox(
             modifier = Modifier.menuAnchor(),
             readOnly = true,
             shape = RectangleShape,
-            value = stringResource(id = selectedOption.getDisplayTextRes()),
+            value = selectedOption.getDisplayText(strings),
             onValueChange = { },
-            label = { Text(stringResource(id = R.string.resource)) },
+            label = { Text(strings.resource) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
@@ -85,7 +86,7 @@ fun ExposedDropdownMenuBox(
                                     modifier = Modifier.padding(end = 8.dp),
                                     entity = option
                                 )
-                                Text(text = stringResource(id = option.getDisplayTextRes()))
+                                Text(option.getDisplayText(strings))
                             }
                         },
                         onClick = {

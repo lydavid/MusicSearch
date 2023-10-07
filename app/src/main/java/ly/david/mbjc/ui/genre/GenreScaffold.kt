@@ -14,12 +14,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.lookupInBrowser
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.ui.common.R
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.fullscreen.FullScreenContent
 import ly.david.ui.common.topappbar.ScrollableTopAppBar
@@ -40,6 +39,7 @@ internal fun GenreScaffold(
     viewModel: GenreScaffoldViewModel = koinViewModel(),
 ) {
     val resource = MusicBrainzEntity.GENRE
+    val strings = LocalStrings.current
     val context = LocalContext.current
     var forceRefresh by rememberSaveable { mutableStateOf(false) }
 
@@ -82,7 +82,7 @@ internal fun GenreScaffold(
                 Button(onClick = {
                     context.lookupInBrowser(resource, genreId)
                 }) {
-                    Text(text = stringResource(id = R.string.open_in_browser))
+                    Text(strings.openInBrowser)
                 }
             }
         }

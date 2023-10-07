@@ -22,8 +22,8 @@ import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.musicsearch.feature.search.SearchScreenTestTag
-import ly.david.ui.common.getDisplayTextRes
 import ly.david.musicsearch.strings.AppStrings
+import ly.david.ui.common.getDisplayText
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
 import org.junit.Test
@@ -74,7 +74,7 @@ internal class SearchEachEntityTest(
             .performClick()
 
         composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(entity.getDisplayTextRes()))
+            .onNodeWithText(entity.getDisplayText(strings))
             .assertIsDisplayed()
 
         // Entity shows up in search result

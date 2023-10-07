@@ -10,12 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import kotlinx.datetime.Instant
 import ly.david.data.core.common.getTimeFormatted
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
-import ly.david.ui.common.getDisplayTextRes
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.ui.common.getDisplayText
 import ly.david.ui.common.getIcon
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.core.preview.DefaultPreviews
@@ -30,6 +30,8 @@ internal fun HistoryListItem(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     onDeleteItem: (LookupHistoryListItemModel) -> Unit = {},
 ) {
+    val strings = LocalStrings.current
+
     SwipeToDeleteListItem(
         content = {
             ListItem(
@@ -43,7 +45,7 @@ internal fun HistoryListItem(
                     onItemClick(lookupHistory.entity, lookupHistory.id, lookupHistory.title)
                 },
                 supportingContent = {
-                    val resource = stringResource(id = lookupHistory.entity.getDisplayTextRes())
+                    val resource = lookupHistory.entity.getDisplayText(strings)
                     Text(
                         text = resource,
                         style = TextStyles.getCardBodySubTextStyle(),

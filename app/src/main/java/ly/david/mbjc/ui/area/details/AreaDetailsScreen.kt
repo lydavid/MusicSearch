@@ -10,9 +10,9 @@ import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.area.AreaScaffoldModel
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
+import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
@@ -27,7 +27,7 @@ internal fun AreaDetailsScreen(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
     val strings = LocalStrings.current
-    
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState

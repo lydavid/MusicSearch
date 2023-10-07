@@ -13,6 +13,7 @@ dependencies {
     implementation(projects.data)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
+    implementation(projects.strings)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
