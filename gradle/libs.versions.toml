@@ -9,7 +9,6 @@ compose-material = "1.5.3"
 compose-material3 = "1.1.2"
 compose-multiplatform = "1.5.2"
 compose-ui = "1.5.3"
-desugar_jdk_libs = "2.0.3"
 detekt = "1.23.1"
 hilt = "2.48"
 hilt-navigation = "1.0.0"
@@ -59,7 +58,7 @@ compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compos
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui" }
 compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-ui" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui" }
-desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+desugarjdklibs = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.3" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version = "0.3.0" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.3.1" }
