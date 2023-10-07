@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import java.util.Locale
 import ly.david.data.core.area.AreaType.COUNTRY
 import ly.david.data.core.area.AreaType.WORLDWIDE
@@ -18,17 +17,15 @@ import ly.david.data.core.common.toDisplayTime
 import ly.david.data.core.getNameWithDisambiguation
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.data.core.releasegroup.getDisplayTypes
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.musicsearch.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.domain.release.ReleaseScaffoldModel
 import ly.david.musicsearch.domain.release.TextRepresentationUiModel
-import ly.david.ui.common.R
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -43,6 +40,8 @@ internal fun ReleaseDetailsScreen(
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
     lazyListState: LazyListState = rememberLazyListState(),
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
@@ -54,24 +53,24 @@ internal fun ReleaseDetailsScreen(
             )
 
             release.run {
-                InformationListSeparatorHeader(R.string.release)
+                ListSeparatorHeader(text = strings.informationHeader(strings.release))
                 barcode?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.barcode,
+                    TextWithHeading(
+                        heading = strings.barcode,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 formattedFormats?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.format,
+                    TextWithHeading(
+                        heading = strings.format,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 formattedTracks?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.tracks,
+                    TextWithHeading(
+                        heading = strings.tracks,
                         text = it,
                         filterText = filterText,
                     )
@@ -83,52 +82,52 @@ internal fun ReleaseDetailsScreen(
                 } else {
                     releaseLength
                 }
-                TextWithHeadingRes(
-                    headingRes = R.string.length,
+                TextWithHeading(
+                    heading = strings.length,
                     text = formattedReleaseLength,
                     filterText = filterText,
                 )
 
                 date?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.date,
+                    TextWithHeading(
+                        heading = strings.date,
                         text = it,
                         filterText = filterText,
                     )
                 }
 
-                ListSeparatorHeader(text = stringResource(id = R.string.additional_details))
+                ListSeparatorHeader(strings.additionalDetails)
                 releaseGroup?.let {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it.getDisplayTypes(),
                         filterText = filterText,
                     )
                 }
                 packaging?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.packaging,
+                    TextWithHeading(
+                        heading = strings.packaging,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 status?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.status,
+                    TextWithHeading(
+                        heading = strings.status,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 textRepresentation?.language?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.language,
+                    TextWithHeading(
+                        heading = strings.language,
                         text = Locale(it).displayLanguage,
                         filterText = filterText,
                     )
                 }
                 textRepresentation?.script?.ifNotNullOrEmpty { script ->
                     val scriptOrCode = if (script == "Qaaa") {
-                        stringResource(id = R.string.multiple_scripts)
+                        strings.multipleScripts
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         // TODO: Works for Latn but not Jpan or Kore
                         //  let's just map the most common codes to their name stored in strings.xml
@@ -137,29 +136,29 @@ internal fun ReleaseDetailsScreen(
                     } else {
                         script
                     }
-                    TextWithHeadingRes(
-                        headingRes = R.string.script,
+                    TextWithHeading(
+                        heading = strings.script,
                         text = scriptOrCode,
                         filterText = filterText,
                     )
                 }
                 quality?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.data_quality,
+                    TextWithHeading(
+                        heading = strings.dataQuality,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 asin?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.asin,
+                    TextWithHeading(
+                        heading = strings.asin,
                         text = it,
                         filterText = filterText,
                     )
                 }
 
                 labels.ifNotNullOrEmpty {
-                    ListSeparatorHeader(text = stringResource(id = R.string.labels))
+                    ListSeparatorHeader(strings.labels)
                 }
                 labels
                     .filter { it.getNameWithDisambiguation().contains(filterText) }
@@ -173,7 +172,7 @@ internal fun ReleaseDetailsScreen(
                     }
 
                 areas.ifNotNullOrEmpty {
-                    ListSeparatorHeader(text = stringResource(id = R.string.release_events))
+                    ListSeparatorHeader(strings.releaseEvents)
                 }
                 areas
                     .filter { it.getNameWithDisambiguation().contains(filterText) }
@@ -198,7 +197,6 @@ internal fun ReleaseDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {

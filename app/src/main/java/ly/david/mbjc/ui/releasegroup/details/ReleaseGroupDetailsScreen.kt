@@ -5,12 +5,12 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.core.releasegroup.getDisplayTypes
 import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.data.core.releasegroup.getDisplayTypes
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupScaffoldModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.image.LargeImage
 
@@ -23,6 +23,8 @@ internal fun ReleaseGroupDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
@@ -36,9 +38,9 @@ internal fun ReleaseGroupDetailsScreen(
 
         item {
             releaseGroup.run {
-                InformationListSeparatorHeader(R.string.release_group)
-                TextWithHeadingRes(
-                    headingRes = R.string.type,
+                ListSeparatorHeader(text = strings.informationHeader(strings.releaseGroup))
+                TextWithHeading(
+                    heading = strings.type,
                     text = getDisplayTypes(),
                     filterText = filterText,
                 )

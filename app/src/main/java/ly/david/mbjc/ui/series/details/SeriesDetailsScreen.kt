@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.series.SeriesScaffoldModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 
 @Composable
@@ -21,16 +21,18 @@ internal fun SeriesDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
         item {
             series.run {
-                InformationListSeparatorHeader(R.string.series)
+                ListSeparatorHeader(text = strings.informationHeader(strings.series))
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it,
                         filterText = filterText,
                     )

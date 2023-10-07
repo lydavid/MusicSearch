@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.musicsearch.domain.area.AreaScaffoldModel
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
 import ly.david.ui.common.listitem.LifeSpanText
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -27,24 +26,33 @@ internal fun AreaDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+    
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
         item {
             area.run {
-                InformationListSeparatorHeader(R.string.area)
+                // TODO: Consider passing the string mapping of MusicBrainzEntity to these instead
+                ListSeparatorHeader(text = strings.informationHeader(strings.area))
                 type?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.type,
+                    TextWithHeading(
+                        heading = strings.type,
                         text = it,
                         filterText = filterText,
                     )
                 }
-                LifeSpanText(lifeSpan = lifeSpan)
+                LifeSpanText(
+                    lifeSpan = lifeSpan,
+                    heading = strings.date,
+                    beginHeading = strings.startDate,
+                    endHeading = strings.endDate,
+                    filterText = filterText,
+                )
                 countryCodes?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.iso_3166_1,
+                    TextWithHeading(
+                        heading = strings.iso31661,
                         text = it.joinToString(", "),
                         filterText = filterText,
                     )
@@ -64,7 +72,6 @@ internal fun AreaDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 internal fun PreviewAreaDetailsScreen() {

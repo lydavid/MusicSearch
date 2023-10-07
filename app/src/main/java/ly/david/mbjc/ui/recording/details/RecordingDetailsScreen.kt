@@ -10,11 +10,10 @@ import ly.david.data.core.common.ifNotNull
 import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.common.toDisplayTime
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.mbjc.ExcludeFromJacocoGeneratedReport
 import ly.david.musicsearch.domain.recordng.RecordingScaffoldModel
-import ly.david.ui.common.R
-import ly.david.ui.common.listitem.InformationListSeparatorHeader
-import ly.david.ui.common.text.TextWithHeadingRes
+import ly.david.ui.common.listitem.ListSeparatorHeader
+import ly.david.ui.common.strings.LocalStrings
+import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
@@ -27,30 +26,32 @@ internal fun RecordingDetailsScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onItemClick: (entity: MusicBrainzEntity, id: String, title: String?) -> Unit = { _, _, _ -> },
 ) {
+    val strings = LocalStrings.current
+
     LazyColumn(
         modifier = modifier,
         state = lazyListState
     ) {
         item {
             recording.run {
-                InformationListSeparatorHeader(R.string.recording)
+                ListSeparatorHeader(text = strings.informationHeader(strings.recording))
                 length?.ifNotNull {
-                    TextWithHeadingRes(
-                        headingRes = R.string.length,
+                    TextWithHeading(
+                        heading = strings.length,
                         text = it.toDisplayTime(),
                         filterText = filterText,
                     )
                 }
                 firstReleaseDate?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.first_release_date,
+                    TextWithHeading(
+                        heading = strings.firstReleaseDate,
                         text = it,
                         filterText = filterText,
                     )
                 }
                 isrcs?.ifNotNullOrEmpty {
-                    TextWithHeadingRes(
-                        headingRes = R.string.isrc,
+                    TextWithHeading(
+                        heading = strings.isrc,
                         text = it.joinToString("\n"),
                         filterText = filterText,
                     )
@@ -67,7 +68,6 @@ internal fun RecordingDetailsScreen(
 }
 
 // region Previews
-@ExcludeFromJacocoGeneratedReport
 @DefaultPreviews
 @Composable
 private fun Preview() {
