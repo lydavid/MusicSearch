@@ -21,7 +21,6 @@ import ly.david.ui.core.theme.TextStyles
 
 @Composable
 internal fun RecentSearchesHeader(
-    isListEmpty: Boolean = false,
     onDeleteAllHistory: () -> Unit = {},
 ) {
     val strings = LocalStrings.current
@@ -38,13 +37,11 @@ internal fun RecentSearchesHeader(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        if (!isListEmpty) {
-            IconButton(onClick = onDeleteAllHistory) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = strings.clearSearchHistory,
-                )
-            }
+        IconButton(onClick = onDeleteAllHistory) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = strings.clearSearchHistory,
+            )
         }
     }
 }
@@ -55,16 +52,6 @@ internal fun PreviewRecentSearchesHeader() {
     PreviewTheme {
         Surface {
             RecentSearchesHeader()
-        }
-    }
-}
-
-@DefaultPreviews
-@Composable
-internal fun PreviewRecentSearchesHeaderEmpty() {
-    PreviewTheme {
-        Surface {
-            RecentSearchesHeader(isListEmpty = true)
         }
     }
 }

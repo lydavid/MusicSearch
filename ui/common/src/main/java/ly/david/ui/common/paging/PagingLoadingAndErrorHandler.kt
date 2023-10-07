@@ -25,6 +25,7 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ly.david.data.core.Identifiable
+import ly.david.musicsearch.domain.listitem.Header
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry
@@ -104,7 +105,9 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                 FullScreenErrorWithRetry(onClick = { lazyPagingItems.refresh() })
             }
 
-            lazyPagingItems.loadState.append.endOfPaginationReached && lazyPagingItems.itemCount == 0 -> {
+            lazyPagingItems.loadState.append.endOfPaginationReached &&
+                lazyPagingItems.itemCount == 0 ||
+                lazyPagingItems.itemCount == 1 && lazyPagingItems[0] is Header -> {
                 // TODO: cannot refresh
                 //  also there should be a difference between 0 out of 0, and 0 out of 1 found
                 //  the latter should offer a retry button

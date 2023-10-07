@@ -122,9 +122,7 @@ internal class SearchViewModel(
                     pagingData
                         .map(SearchHistory::toSearchHistoryListItemModel)
                         .insertSeparators { before: SearchHistoryListItemModel?, after: SearchHistoryListItemModel? ->
-                            // TODO: rather than changing behaviour of header when empty,
-                            //  just modify full empty screen text
-                            if (before == null) Header(isListEmpty = after == null) else null
+                            if (before == null) Header() else null
                         }
                 }
             }

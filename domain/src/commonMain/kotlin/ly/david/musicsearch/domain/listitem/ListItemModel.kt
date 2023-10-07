@@ -23,12 +23,9 @@ sealed class ListItemModel : Identifiable
 /**
  * Content that appears in front of a list of [ListItemModel].
  * There should only be at most one header per list.
- *
- * @param isListEmpty Whether there's any list items besides this header.
  */
 class Header(
     override val id: String = "Header",
-    val isListEmpty: Boolean,
 ) : ListItemModel()
 
 /**

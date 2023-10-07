@@ -42,15 +42,15 @@ internal fun SearchHistoryScreen(
 
     PagingLoadingAndErrorHandler(
         lazyPagingItems = lazyPagingItems,
-        lazyListState = lazyListState
+        lazyListState = lazyListState,
+        customNoResultsText = "Enter a query to start searching MusicBrainz's database",
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is Header -> {
                 RecentSearchesHeader(
-                    isListEmpty = listItemModel.isListEmpty,
                     onDeleteAllHistory = {
                         showDeleteConfirmationDialog = true
-                    }
+                    },
                 )
             }
 
@@ -59,7 +59,7 @@ internal fun SearchHistoryScreen(
                     searchHistory = listItemModel,
                     modifier = Modifier.animateItemPlacement(),
                     onItemClick = onItemClick,
-                    onDeleteItem = onDeleteItem
+                    onDeleteItem = onDeleteItem,
                 )
             }
 
