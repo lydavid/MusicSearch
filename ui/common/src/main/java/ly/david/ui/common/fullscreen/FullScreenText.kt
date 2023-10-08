@@ -25,10 +25,10 @@ fun FullScreenText(
 
 @DefaultPreviews
 @Composable
-private fun Preview() {
+internal fun PreviewFullScreenText() {
     PreviewTheme {
         Surface {
-            FullScreenText("Hello world")
+            FullScreenText("This is text that spans the width the screen, let's see if it's padded")
         }
     }
 }

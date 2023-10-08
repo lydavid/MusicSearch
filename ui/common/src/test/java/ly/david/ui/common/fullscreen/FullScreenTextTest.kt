@@ -11,7 +11,7 @@ class FullScreenTextTest : PaparazziScreenshotTest(isFullScreen = true) {
     @Test
     fun default() {
         snapshot {
-            FullScreenText("Hello world")
+            PreviewFullScreenText()
         }
     }
 }
