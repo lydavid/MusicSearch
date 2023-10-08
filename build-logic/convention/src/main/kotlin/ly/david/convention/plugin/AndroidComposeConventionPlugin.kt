@@ -9,6 +9,7 @@ import org.gradle.kotlin.dsl.configure
 /**
  * Applicable to both android applications and libraries.
  */
+@Suppress("unused")
 class AndroidComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

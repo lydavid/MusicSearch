@@ -9,6 +9,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
+@Suppress("unused")
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

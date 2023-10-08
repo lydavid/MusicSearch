@@ -5,6 +5,7 @@ import ly.david.convention.configureDetekt
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+@Suppress("unused")
 class AndroidLibraryConventionPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
