@@ -7,7 +7,7 @@ name: Publish beta build
 # Google Play allows us to reuse versionName, so it isn't a problem for our releases to be out of sync.
 on:
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '42 7 * * *'
   workflow_dispatch:
 
 jobs:
