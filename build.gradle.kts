@@ -77,6 +77,13 @@ tasks.register("listKMPModules") {
 // Original from https://github.com/JakeWharton/SdkSearch/blob/master/gradle/projectDependencyGraph.gradle
 // kts version from https://github.com/leinardi/Forlago/blob/e47f2d8781b8a05e074bf2b761e1693b14b7a06c/build-conventions/src/main/kotlin/forlago.dependency-graph-conventions.gradle.kts
 tasks.register("projectDependencyGraph") {
+    inputs.files(fileTree(rootDir) {
+        include("**/build.gradle.kts")
+    })
+
+    val outputFile = "$rootDir/assets/module_dependency_graph.svg"
+    outputs.file(outputFile)
+
     doLast {
         val dot = rootProject.layout.buildDirectory.file("reports/dependency-graph/project.dot").get().asFile
         dot.parentFile.mkdirs()
@@ -206,7 +213,7 @@ tasks.register("projectDependencyGraph") {
         dot.appendText("}\n")
 
         val p = Runtime.getRuntime().exec(
-            arrayOf("dot", "-Tsvg", "project.dot", "-o", "$rootDir/assets/module_dependency_graph.svg"),
+            arrayOf("dot", "-Tsvg", "project.dot", "-o", outputFile),
             emptyArray(),
             dot.parentFile
         )
