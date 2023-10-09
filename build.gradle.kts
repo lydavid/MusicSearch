@@ -46,9 +46,16 @@ subprojects {
     }
 }
 
+// Android Studio highlighting in standalone gradle.kts scripts seems to be broken:
+// https://issuetracker.google.com/issues/293048764
+// So for now, we will just put them all under here:
+
+// region Project tasks
+private val projectGroup = "MusicSearch"
+
 tasks.register("testKotlinModules") {
     description = "Run unit tests on Kotlin (non-Android) modules"
-    group = "verification"
+    group = projectGroup
     dependsOn(
         subprojects
             .filter { it.plugins.hasPlugin("ly.david.kotlin") }
@@ -58,7 +65,7 @@ tasks.register("testKotlinModules") {
 
 tasks.register("testKotlinMultiplatformModules") {
     description = "Run JVM tests on Kotlin Multiplatform modules"
-    group = "verification"
+    group = projectGroup
     dependsOn(
         subprojects
             .filter { it.plugins.hasPlugin("ly.david.musicsearch.kotlin.multiplatform") }
@@ -67,6 +74,7 @@ tasks.register("testKotlinMultiplatformModules") {
 }
 
 tasks.register("listKMPModules") {
+    group = projectGroup
     subprojects
         .filter { it.plugins.hasPlugin("ly.david.musicsearch.kotlin.multiplatform") }
         .forEach {
@@ -77,6 +85,8 @@ tasks.register("listKMPModules") {
 // Original from https://github.com/JakeWharton/SdkSearch/blob/master/gradle/projectDependencyGraph.gradle
 // kts version from https://github.com/leinardi/Forlago/blob/e47f2d8781b8a05e074bf2b761e1693b14b7a06c/build-conventions/src/main/kotlin/forlago.dependency-graph-conventions.gradle.kts
 tasks.register("projectDependencyGraph") {
+    group = projectGroup
+
     inputs.files(fileTree(rootDir) {
         include("**/build.gradle.kts")
     })
@@ -223,3 +233,4 @@ tasks.register("projectDependencyGraph") {
         println("Project module dependency graph created at ${dot.absolutePath}.svg")
     }
 }
+// endregion
