@@ -19,7 +19,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.core.theme.getSubTextColor
-import ly.david.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.image.ThumbnailImage
 
 // TODO: have 2 modes: query and browse where some data is displayed differently
 /**

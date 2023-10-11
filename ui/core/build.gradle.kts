@@ -5,6 +5,10 @@ plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
 }
 
+android {
+    namespace = "ly.david.ui.core"
+}
+
 kotlin {
     sourceSets {
         val commonMain by getting {
@@ -15,8 +19,4 @@ kotlin {
             }
         }
     }
-}
-
-android {
-    namespace = "ly.david.ui.core"
 }

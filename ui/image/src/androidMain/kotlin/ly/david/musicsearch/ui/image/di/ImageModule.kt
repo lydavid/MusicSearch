@@ -1,4 +1,4 @@
-package ly.david.ui.image.di
+package ly.david.musicsearch.ui.image.di
 
 import coil.ImageLoader
 import coil.ImageLoaderFactory
@@ -20,7 +20,7 @@ private class RequestHeaderInterceptor(
     }
 }
 
-val imageModule = module {
+actual val imageModule = module {
     single {
         ImageLoaderFactory {
             ImageLoader.Builder(get())

@@ -1,10 +1,7 @@
-package ly.david.ui.image
+package ly.david.musicsearch.ui.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Album
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,16 +16,17 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
 import ly.david.data.core.common.useHttps
+import ly.david.musicsearch.ui.image.internal.PlaceholderIcon
 import ly.david.ui.core.SMALL_IMAGE_SIZE
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-fun ThumbnailImage(
+actual fun ThumbnailImage(
     url: String,
     mbid: String,
     placeholderIcon: ImageVector?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
 ) {
     val sizeModifier = modifier.size(SMALL_IMAGE_SIZE.dp)
 
@@ -66,19 +64,6 @@ fun ThumbnailImage(
     } else {
         PlaceholderIcon(sizeModifier, placeholderIcon)
     }
-}
-
-@Composable
-private fun PlaceholderIcon(
-    modifier: Modifier = Modifier,
-    placeholderIcon: ImageVector? = null,
-) {
-    Icon(
-        modifier = modifier
-            .size(SMALL_IMAGE_SIZE.dp),
-        imageVector = placeholderIcon ?: Icons.Default.Album,
-        contentDescription = null
-    )
 }
 
 @DefaultPreviews

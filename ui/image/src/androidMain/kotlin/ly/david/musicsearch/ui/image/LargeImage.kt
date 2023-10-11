@@ -1,4 +1,4 @@
-package ly.david.ui.image
+package ly.david.musicsearch.ui.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -26,10 +26,10 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 
 @Composable
-fun LargeImage(
+actual fun LargeImage(
     url: String,
     mbid: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
 ) {
     if (url.isNotEmpty()) {
         val painter = rememberAsyncImagePainter(

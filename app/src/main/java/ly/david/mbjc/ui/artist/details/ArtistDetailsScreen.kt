@@ -13,14 +13,14 @@ import ly.david.data.core.common.ifNotNullOrEmpty
 import ly.david.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.artist.ArtistScaffoldModel
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
+import ly.david.musicsearch.strings.LocalStrings
+import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader
-import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
-import ly.david.ui.image.LargeImage
 
 @Composable
 internal fun ArtistDetailsScreen(
