@@ -29,7 +29,7 @@ import ly.david.ui.common.text.TextWithHeading
 import ly.david.ui.common.url.UrlsSection
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
-import ly.david.ui.image.LargeImage
+import ly.david.musicsearch.ui.image.LargeImage
 
 @Composable
 internal fun ReleaseDetailsScreen(

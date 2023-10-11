@@ -1,28 +1,33 @@
 plugins {
     id("ly.david.android.library")
-    kotlin("android")
-    id("ly.david.android.compose")
-    alias(libs.plugins.ksp)
+    id("ly.david.musicsearch.compose.multiplatform")
+    id("ly.david.musicsearch.kotlin.multiplatform")
 }
 
 android {
-    namespace = "ly.david.ui.image"
+    namespace = "ly.david.musicsearch.ui.image"
 }
 
-dependencies {
-    implementation(projects.data.core)
-    implementation(projects.ui.core)
-    implementation(libs.compose.foundation)
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.preview)
-    implementation(libs.coil.base)
-    implementation(libs.coil.compose)
-    implementation(libs.koin.core)
-    implementation(libs.koin.annotations)
-
-    debugImplementation(libs.compose.ui.tooling)
-
-    ksp(libs.koin.ksp.compiler)
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(projects.data.core)
+                implementation(projects.ui.core)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.preview)
+                implementation(compose.ui)
+                implementation(compose.uiTooling)
+                implementation(libs.koin.core)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.coil.base)
+                implementation(libs.coil.compose)
+            }
+        }
+    }
 }

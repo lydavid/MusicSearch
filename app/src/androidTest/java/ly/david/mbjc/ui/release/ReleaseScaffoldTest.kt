@@ -33,9 +33,9 @@ import ly.david.data.test.underPressureTrack
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.release.ReleaseRepository
 import ly.david.musicsearch.strings.AppStrings
+import ly.david.musicsearch.ui.image.LargeImageTestTag
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
-import ly.david.ui.image.LargeImageTestTag
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject

@@ -25,7 +25,7 @@ import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 import ly.david.ui.core.theme.getSubTextColor
-import ly.david.ui.image.ThumbnailImage
+import ly.david.musicsearch.ui.image.ThumbnailImage
 
 // TODO: rethink showing release country -> could be misleading, and expensive joins
 //  with cover art loaded by default, we can prob hide the other info by default
