@@ -2,12 +2,12 @@ package ly.david.ui.common.releasegroup
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.domain.listitem.ReleaseGroupListItemModel
-import ly.david.ui.test.screenshot.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class ReleaseGroupListItemTest : PaparazziScreenshotTest() {
+class ReleaseGroupListItemTest : ScreenshotTest() {
 
     @Test
     fun default() {

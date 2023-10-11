@@ -2,12 +2,12 @@ package ly.david.ui.common.label
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.domain.listitem.LabelListItemModel
-import ly.david.ui.test.screenshot.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class LabelListItemTest : PaparazziScreenshotTest() {
+class LabelListItemTest : ScreenshotTest() {
 
     @Test
     fun simple() {

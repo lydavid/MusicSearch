@@ -2,12 +2,12 @@ package ly.david.ui.common.listitem
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.ui.test.screenshot.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(TestParameterInjector::class)
-class LifeSpanTextTest : PaparazziScreenshotTest() {
+class LifeSpanTextTest : ScreenshotTest() {
 
     @Test
     fun beginAndEnd() {

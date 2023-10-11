@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import ly.david.ui.test.image.FakeImageLoader
-import ly.david.ui.test.screenshot.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(TestParameterInjector::class)
-class HistoryListItemTest : PaparazziScreenshotTest() {
+class HistoryListItemTest : ScreenshotTest() {
 
     @Before
     fun before() {

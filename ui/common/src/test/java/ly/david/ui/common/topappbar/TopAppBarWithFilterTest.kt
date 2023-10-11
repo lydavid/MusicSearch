@@ -6,13 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.ui.test.screenshot.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RunWith(TestParameterInjector::class)
-class TopAppBarWithFilterTest : PaparazziScreenshotTest() {
+class TopAppBarWithFilterTest : ScreenshotTest() {
 
     @Test
     fun default() {

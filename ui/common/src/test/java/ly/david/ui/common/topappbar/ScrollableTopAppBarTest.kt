@@ -7,13 +7,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.ui.test.screenshot.PaparazziScreenshotTest
+import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RunWith(TestParameterInjector::class)
-class ScrollableTopAppBarTest : PaparazziScreenshotTest() {
+class ScrollableTopAppBarTest : ScreenshotTest() {
 
     @Test
     fun default() {
