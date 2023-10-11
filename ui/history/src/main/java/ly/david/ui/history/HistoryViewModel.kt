@@ -2,11 +2,8 @@ package ly.david.ui.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,22 +12,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import ly.david.data.core.common.getDateFormatted
-import ly.david.data.core.history.LookupHistoryForListItem
+import ly.david.musicsearch.domain.history.GetPagedHistory
 import ly.david.musicsearch.domain.history.HistorySortOption
-import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.domain.listitem.ListItemModel
-import ly.david.musicsearch.domain.listitem.ListSeparator
-import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.domain.listitem.toLookupHistoryListItemModel
-import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.settings.AppPreferences
 
 class HistoryViewModel(
     private val appPreferences: AppPreferences,
-    private val lookupHistoryRepository: LookupHistoryRepository,
+    private val getPagedHistory: GetPagedHistory,
 ) : ViewModel() {
 
     data class ViewModelState(
@@ -60,52 +50,8 @@ class HistoryViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val lookUpHistory: Flow<PagingData<ListItemModel>> =
         viewModelState.flatMapLatest { (query, sortOption) ->
-            Pager(
-                config = MusicBrainzPagingConfig.pagingConfig,
-                pagingSourceFactory = {
-                    lookupHistoryRepository.getAllLookupHistory(
-                        query = query,
-                        sortOption = sortOption
-                    )
-                }
-            ).flow.map { pagingData ->
-                pagingData
-                    .map(LookupHistoryForListItem::toLookupHistoryListItemModel)
-                    .insertSeparators {
-                            before: LookupHistoryListItemModel?,
-                            after: LookupHistoryListItemModel?,
-                        ->
-                        getListSeparator(
-                            before = before,
-                            after = after,
-                            sortOption = sortOption
-                        )
-                    }
-            }
+            getPagedHistory(query, sortOption)
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
-
-    private fun getListSeparator(
-        before: LookupHistoryListItemModel?,
-        after: LookupHistoryListItemModel?,
-        sortOption: HistorySortOption,
-    ): ListSeparator? {
-        if (sortOption != HistorySortOption.RECENTLY_VISITED &&
-            sortOption != HistorySortOption.LEAST_RECENTLY_VISITED
-        ) {
-            return null
-        }
-
-        val beforeDate = before?.lastAccessed?.getDateFormatted()
-        val afterDate = after?.lastAccessed?.getDateFormatted()
-        if (beforeDate == afterDate || afterDate == null) {
-            return null
-        }
-
-        return ListSeparator(
-            id = afterDate,
-            text = afterDate,
-        )
-    }
 }
