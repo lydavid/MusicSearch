@@ -34,12 +34,12 @@ subprojects {
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-                            project.buildDir.absolutePath + "/compose_metrics"
+                        layout.buildDirectory.dir("/compose_metrics").get().toString()
                 )
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-                            project.buildDir.absolutePath + "/compose_metrics"
+                        layout.buildDirectory.dir("/compose_metrics").get().toString()
                 )
             }
         }
@@ -228,7 +228,7 @@ tasks.register("projectDependencyGraph") {
             dot.parentFile
         )
         p.waitFor()
-        require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(java.io.BufferedReader::readText) }
+        require(p.exitValue() == 0) { p.errorStream.bufferedReader().use(BufferedReader::readText) }
 
         println("Project module dependency graph created at ${dot.absolutePath}.svg")
     }
