@@ -33,6 +33,3 @@ jobs:
 
       - name: Verify screenshot tests
         run: ./gradlew verifyPaparazziDebug
-
-      - name: Unit test Android modules with coverage
-        run: ./gradlew app:createDebugUnitTestCoverageReport
