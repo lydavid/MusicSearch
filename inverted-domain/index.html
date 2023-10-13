@@ -128,11 +128,11 @@ footer {
         <table class="center" style="text-align:left;">
           <tr>
             <th>Skippable Composables</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Restartable Composables</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Readonly Composables</th>
@@ -140,19 +140,19 @@ footer {
           </tr>
           <tr>
             <th>Total Composables</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Restart Groups</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Total Groups</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Static Arguments</th>
-            <td>2</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Certain Arguments</th>
@@ -160,7 +160,7 @@ footer {
           </tr>
           <tr>
             <th>Known Stable Arguments</th>
-            <td>10</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
@@ -172,7 +172,7 @@ footer {
           </tr>
           <tr>
             <th>Total Arguments</th>
-            <td>10</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Marked Stable Classes</th>
@@ -180,27 +180,27 @@ footer {
           </tr>
           <tr>
             <th>Inferred Stable Classes</th>
-            <td>0</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Inferred Unstable Classes</th>
-            <td>1</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Inferred Uncertain Classes</th>
-            <td>0</td>
+            <td>5</td>
           </tr>
           <tr>
             <th>Effectively Stable Classes</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Total Classes</th>
             <td>1</td>
           </tr>
           <tr>
+            <th>Total Classes</th>
+            <td>6</td>
+          </tr>
+          <tr>
             <th>Memoized Lambdas</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Singleton Lambdas</th>
@@ -212,11 +212,11 @@ footer {
           </tr>
           <tr>
             <th>Composable Lambdas</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Total Lambdas</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
         </table>
       </div>
@@ -234,7 +234,7 @@ footer {
               <tr>
                 <td>1.</td>
                 <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ScreenshotTest</span></h3>
+                  <h3><span class="status-failure">Missing</span><span class="code"> class DeleteLookupHistory</span></h3>
                   <table>
                     <tr>
                       <th>No.</th>
@@ -242,23 +242,91 @@ footer {
                       <th>Field</th>
                       <th>Type</th>
                     </tr>
-                    <tr style="color:#000000;background-color:#B2DFDB;">
+                    <tr style="color:#000000;background-color:#FFF9C4;">
                       <td>1</td>
-                      <td>STABLE</td>
-                      <td class="code">val isFullScreen</td>
-                      <td class="code">Boolean</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val lookupHistoryRepository</td>
+                      <td class="code">LookupHistoryRepository</td>
                     </tr>
-                    <tr style="color:#000000;background-color:#B2DFDB;">
-                      <td>2</td>
-                      <td>STABLE</td>
-                      <td class="code">var nightMode</td>
-                      <td class="code">NightMode</td>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>2.</td>
+                <td>
+                  <h3><span class="status-failure">Missing</span><span class="code"> class GetPagedHistory</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
                     </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>3</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val paparazzi$delegate</td>
-                      <td class="code">Lazy&lt;Paparazzi&gt;</td>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val lookupHistoryRepository</td>
+                      <td class="code">LookupHistoryRepository</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>3.</td>
+                <td>
+                  <h3><span class="status-failure">Missing</span><span class="code"> class IncrementLookupHistory</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val lookupHistoryRepository</td>
+                      <td class="code">LookupHistoryRepository</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>4.</td>
+                <td>
+                  <h3><span class="status-failure">Missing</span><span class="code"> class MarkLookupHistoryForDeletion</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val lookupHistoryRepository</td>
+                      <td class="code">LookupHistoryRepository</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td>5.</td>
+                <td>
+                  <h3><span class="status-failure">Missing</span><span class="code"> class UnMarkLookupHistoryForDeletion</span></h3>
+                  <table>
+                    <tr>
+                      <th>No.</th>
+                      <th>Status</th>
+                      <th>Field</th>
+                      <th>Type</th>
+                    </tr>
+                    <tr style="color:#000000;background-color:#FFF9C4;">
+                      <td>1</td>
+                      <td>RUNTIME</td>
+                      <td class="code">val lookupHistoryRepository</td>
+                      <td class="code">LookupHistoryRepository</td>
                     </tr>
                   </table>
                 </td>

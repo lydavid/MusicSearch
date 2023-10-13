@@ -1,5 +1,5 @@
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
-  lookupHistory: LookupHistoryListItemModel
+restartable scheme("[androidx.compose.ui.UiComposable]") fun HistoryListItem(
+  unstable lookupHistory: LookupHistoryListItemModel
   stable modifier: Modifier? = @static Companion
   stable onItemClick: Function3<@[ParameterName(name = 'entity')] MusicBrainzEntity, @[ParameterName(name = 'id')] String, @[ParameterName(name = 'title')] String?, Unit>? = @static { <unused var>: MusicBrainzEntity, <unused var>: String, <unused var>: String? ->
 

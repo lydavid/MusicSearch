@@ -14,8 +14,8 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Thumbnail
   stable placeholderIcon: ImageVector?
   stable modifier: Modifier? = @static Companion
 )
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewThumbnailImage()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PlaceholderIcon(
   stable modifier: Modifier? = @static Companion
   stable placeholderIcon: ImageVector? = @static null
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewThumbnailImage()

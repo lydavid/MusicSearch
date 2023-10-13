@@ -6,7 +6,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LocalRemoteProgressBar(
   stable totalRemote: Int?
   stable totalLocal: Int
-  stable cachedLocalOfRemoteRes: Int
+  stable cachedLocalOfRemote: Function2<Int, Int, String>
 )
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Empty()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Half()

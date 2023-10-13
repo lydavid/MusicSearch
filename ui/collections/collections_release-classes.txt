@@ -33,7 +33,7 @@ stable class CollectionUiModule {
 }
 unstable class CollectionViewModel {
   unstable val collectionDao: CollectionDao
-  runtime val incrementLookupHistoryUseCase: IncrementLookupHistoryUseCase
+  runtime val incrementLookupHistory: IncrementLookupHistory
   stable var recordedLookup: Boolean
   <runtime stability> = Unstable
 }

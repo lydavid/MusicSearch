@@ -128,7 +128,7 @@ footer {
         <table class="center" style="text-align:left;">
           <tr>
             <th>Skippable Composables</th>
-            <td>73</td>
+            <td>62</td>
           </tr>
           <tr>
             <th>Restartable Composables</th>
@@ -160,19 +160,19 @@ footer {
           </tr>
           <tr>
             <th>Known Stable Arguments</th>
-            <td>935</td>
+            <td>925</td>
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
-            <td>47</td>
+            <td>59</td>
           </tr>
           <tr>
             <th>Unknown Stable Arguments</th>
-            <td>24</td>
+            <td>12</td>
           </tr>
           <tr>
             <th>Total Arguments</th>
-            <td>1006</td>
+            <td>996</td>
           </tr>
           <tr>
             <th>Marked Stable Classes</th>
@@ -208,7 +208,7 @@ footer {
           </tr>
           <tr>
             <th>Singleton Composable Lambdas</th>
-            <td>15</td>
+            <td>8</td>
           </tr>
           <tr>
             <th>Composable Lambdas</th>
@@ -251,13 +251,13 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>1</td>
+            <td>2</td>
           </tr>
           <tr>
             <td>ly.david.ui.collections.CollectionListItem</td>
             <td>CollectionListItem</td>
             <td>1</td>
-            <td>1</td>
+            <td>0</td>
             <td>1</td>
             <td>0</td>
             <td>0</td>
@@ -293,7 +293,7 @@ footer {
             <td>1</td>
             <td>0</td>
             <td>2</td>
-            <td>9</td>
+            <td>10</td>
           </tr>
           <tr>
             <td>ly.david.ui.collections.CollectionsFilterChipsBar</td>
@@ -335,7 +335,7 @@ footer {
             <td>1</td>
             <td>0</td>
             <td>2</td>
-            <td>9</td>
+            <td>10</td>
           </tr>
           <tr>
             <td>ly.david.ui.collections.CollectionScaffoldContent</td>
@@ -363,7 +363,7 @@ footer {
             <td>0</td>
             <td>0</td>
             <td>1</td>
-            <td>6</td>
+            <td>7</td>
           </tr>
           <tr>
             <td>ly.david.ui.collections.Preview</td>
@@ -592,16 +592,11 @@ footer {
                 </table>
               </td>
             </tr>
-          </table>
-        </div>
-<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
-        <div class="content" style="background-color:#F1F8E9;">
-          <table>
             <tr>
-              <td>1.</td>
+              <td>2.</td>
               <td>
                 <h3 class="code"><span> fun CollectionListItem</span></h3>
-                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
                 <table>
                   <tr>
                     <th>No.</th>
@@ -609,9 +604,9 @@ footer {
                     <th>Parameter</th>
                     <th>Type</th>
                   </tr>
-                  <tr class="background-status-missing">
+                  <tr class="background-status-failure">
                     <td>1</td>
-                    <td>MISSING</td>
+                    <td>UNSTABLE</td>
                     <td class="code">collection</td>
                     <td class="code">CollectionListItemModel</td>
                   </tr>
@@ -630,8 +625,13 @@ footer {
                 </table>
               </td>
             </tr>
+          </table>
+        </div>
+<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
+        <div class="content" style="background-color:#F1F8E9;">
+          <table>
             <tr>
-              <td>2.</td>
+              <td>1.</td>
               <td>
                 <h3 class="code"><span> fun Preview</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -639,7 +639,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>3.</td>
+              <td>2.</td>
               <td>
                 <h3 class="code"><span> fun CollectionListScaffold</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -678,7 +678,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>4.</td>
+              <td>3.</td>
               <td>
                 <h3 class="code"><span> fun CollectionsFilterChipsBar</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -723,7 +723,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>5.</td>
+              <td>4.</td>
               <td>
                 <h3 class="code"><span> fun Preview</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -731,7 +731,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>6.</td>
+              <td>5.</td>
               <td>
                 <h3 class="code"><span> fun CollectionScaffold</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -806,7 +806,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>7.</td>
+              <td>6.</td>
               <td>
                 <h3 class="code"><span> fun CollectionScaffoldContent</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -887,7 +887,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>8.</td>
+              <td>7.</td>
               <td>
                 <h3 class="code"><span> fun CreateCollectionDialog</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -914,7 +914,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>9.</td>
+              <td>8.</td>
               <td>
                 <h3 class="code"><span> fun Preview</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -922,7 +922,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>10.</td>
+              <td>9.</td>
               <td>
                 <h3 class="code"><span> fun AreasByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -985,7 +985,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>11.</td>
+              <td>10.</td>
               <td>
                 <h3 class="code"><span> fun ArtistsByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1048,7 +1048,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>12.</td>
+              <td>11.</td>
               <td>
                 <h3 class="code"><span> fun EventsByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1111,7 +1111,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>13.</td>
+              <td>12.</td>
               <td>
                 <h3 class="code"><span> fun InstrumentsByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1174,7 +1174,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>14.</td>
+              <td>13.</td>
               <td>
                 <h3 class="code"><span> fun LabelsByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1237,7 +1237,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>15.</td>
+              <td>14.</td>
               <td>
                 <h3 class="code"><span> fun PlacesByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1300,7 +1300,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>16.</td>
+              <td>15.</td>
               <td>
                 <h3 class="code"><span> fun RecordingsByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1363,7 +1363,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>17.</td>
+              <td>16.</td>
               <td>
                 <h3 class="code"><span> fun ReleaseGroupsByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1432,7 +1432,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>18.</td>
+              <td>17.</td>
               <td>
                 <h3 class="code"><span> fun ReleasesByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1501,7 +1501,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>19.</td>
+              <td>18.</td>
               <td>
                 <h3 class="code"><span> fun SeriesByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1564,7 +1564,7 @@ footer {
               </td>
             </tr>
             <tr>
-              <td>20.</td>
+              <td>19.</td>
               <td>
                 <h3 class="code"><span> fun WorksByCollectionScreen</span></h3>
                 <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
@@ -1780,8 +1780,8 @@ footer {
                     <tr style="color:#000000;background-color:#FFF9C4;">
                       <td>2</td>
                       <td>RUNTIME</td>
-                      <td class="code">val incrementLookupHistoryUseCase</td>
-                      <td class="code">IncrementLookupHistoryUseCase</td>
+                      <td class="code">val incrementLookupHistory</td>
+                      <td class="code">IncrementLookupHistory</td>
                     </tr>
                     <tr style="color:#000000;background-color:#B2DFDB;">
                       <td>3</td>

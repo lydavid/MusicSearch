@@ -1,0 +1,23 @@
+stable class InvertedDomainModule {
+  <runtime stability> = Stable
+}
+runtime class DeleteLookupHistory {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class GetPagedHistory {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class IncrementLookupHistory {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class MarkLookupHistoryForDeletion {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}
+runtime class UnMarkLookupHistoryForDeletion {
+  runtime val lookupHistoryRepository: LookupHistoryRepository
+  <runtime stability> = Uncertain(LookupHistoryRepository)
+}

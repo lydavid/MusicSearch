@@ -96,7 +96,7 @@ unstable class ReleaseGroupsPagedList {
   unstable val sorted: MutableStateFlow<Boolean>
   unstable val paramState: Flow<ViewModelState>
   unstable var scope: CoroutineScope
-  runtime var useCase: BrowseSortableEntityUseCase<ReleaseGroupForListItem>
+  runtime var useCase: BrowseSortableEntityUseCase<ReleaseGroupListItemModel>
   unstable val pagedEntities$delegate: Lazy<Flow<PagingData<ListItemModel>>>
   <runtime stability> = Unstable
 }

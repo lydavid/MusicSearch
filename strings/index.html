@@ -128,11 +128,11 @@ footer {
         <table class="center" style="text-align:left;">
           <tr>
             <th>Skippable Composables</th>
-            <td>3</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Restartable Composables</th>
-            <td>3</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Readonly Composables</th>
@@ -140,39 +140,39 @@ footer {
           </tr>
           <tr>
             <th>Total Composables</th>
-            <td>3</td>
-          </tr>
-          <tr>
-            <th>Restart Groups</th>
-            <td>3</td>
-          </tr>
-          <tr>
-            <th>Total Groups</th>
-            <td>3</td>
-          </tr>
-          <tr>
-            <th>Static Arguments</th>
             <td>2</td>
           </tr>
           <tr>
+            <th>Restart Groups</th>
+            <td>1</td>
+          </tr>
+          <tr>
+            <th>Total Groups</th>
+            <td>2</td>
+          </tr>
+          <tr>
+            <th>Static Arguments</th>
+            <td>1</td>
+          </tr>
+          <tr>
             <th>Certain Arguments</th>
-            <td>0</td>
+            <td>3</td>
           </tr>
           <tr>
             <th>Known Stable Arguments</th>
-            <td>10</td>
+            <td>3</td>
           </tr>
           <tr>
             <th>Known Unstable Arguments</th>
-            <td>0</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Unknown Stable Arguments</th>
-            <td>0</td>
+            <td>1</td>
           </tr>
           <tr>
             <th>Total Arguments</th>
-            <td>10</td>
+            <td>5</td>
           </tr>
           <tr>
             <th>Marked Stable Classes</th>
@@ -180,11 +180,11 @@ footer {
           </tr>
           <tr>
             <th>Inferred Stable Classes</th>
-            <td>0</td>
+            <td>2</td>
           </tr>
           <tr>
             <th>Inferred Unstable Classes</th>
-            <td>1</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Inferred Uncertain Classes</th>
@@ -192,15 +192,15 @@ footer {
           </tr>
           <tr>
             <th>Effectively Stable Classes</th>
-            <td>0</td>
+            <td>2</td>
           </tr>
           <tr>
             <th>Total Classes</th>
-            <td>1</td>
+            <td>2</td>
           </tr>
           <tr>
             <th>Memoized Lambdas</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Singleton Lambdas</th>
@@ -212,59 +212,128 @@ footer {
           </tr>
           <tr>
             <th>Composable Lambdas</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Total Lambdas</th>
-            <td>3</td>
+            <td>0</td>
           </tr>
         </table>
       </div>
     </section>
     <hr>
-    <div class="empty-content">No Detailed Statistics</div>
+    <section><button class="collapsible">Detailed Statistics</button>
+      <div class="content">
+        <table style="width:100%;">
+          <tr>
+            <th>package</th>
+            <th>name</th>
+            <th>composable</th>
+            <th>skippable</th>
+            <th>restartable</th>
+            <th>readonly</th>
+            <th>inline</th>
+            <th>isLambda</th>
+            <th>hasDefaults</th>
+            <th>defaultsGroup</th>
+            <th>groups</th>
+            <th>calls</th>
+          </tr>
+          <tr>
+            <td>ly.david.musicsearch.strings.rememberStrings</td>
+            <td>rememberStrings</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ly.david.musicsearch.strings.ProvideStrings</td>
+            <td>ProvideStrings</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </div>
+    </section>
     <hr>
-    <div class="empty-content">No Composables Report</div>
+    <section><button class="collapsible">Composables Report</button>
+      <div class="content">
+        <div class="empty-content">No composable found with issues 😁</div>
+<button class="collapsible" style="background-color:#004D40;font-size:18px;">Composibles without issues</button>
+        <div class="content" style="background-color:#F1F8E9;">
+          <table>
+            <tr>
+              <td>1.</td>
+              <td>
+                <h3 class="code"><span> fun rememberStrings</span></h3>
+                <h4><span class="status-failure">❌ Non Skippable</span><span class="status-failure"> ❌ Non Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>1</td>
+                    <td>STABLE</td>
+                    <td class="code">languageTag</td>
+                    <td class="code">String? = @static Locales.EN</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>
+                <h3 class="code"><span> fun ProvideStrings</span></h3>
+                <h4><span class="status-success">✅ Skippable</span><span class="status-success"> ✅ Restartable</span></h4>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>Stability</th>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                  </tr>
+                  <tr class="background-status-missing">
+                    <td>1</td>
+                    <td>MISSING</td>
+                    <td class="code">lyricist</td>
+                    <td class="code">Lyricist&lt;AppStrings&gt;</td>
+                  </tr>
+                  <tr class="background-status-success">
+                    <td>2</td>
+                    <td>STABLE</td>
+                    <td class="code">content</td>
+                    <td class="code">Function2&lt;Composer, Int, Unit&gt;</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
     <hr>
     <section>
       <div><button class="collapsible">Classes Report</button>
-        <div class="content"><button class="collapsible" style="background-color:#D32F2F;font-size:18px;">Unstable Classes</button>
-          <div class="content" style="background-color:#FFEBEE;">
-            <table>
-              <tr>
-                <td>1.</td>
-                <td>
-                  <h3><span class="status-failure">❌ Unstable</span><span class="code"> class ScreenshotTest</span></h3>
-                  <table>
-                    <tr>
-                      <th>No.</th>
-                      <th>Status</th>
-                      <th>Field</th>
-                      <th>Type</th>
-                    </tr>
-                    <tr style="color:#000000;background-color:#B2DFDB;">
-                      <td>1</td>
-                      <td>STABLE</td>
-                      <td class="code">val isFullScreen</td>
-                      <td class="code">Boolean</td>
-                    </tr>
-                    <tr style="color:#000000;background-color:#B2DFDB;">
-                      <td>2</td>
-                      <td>STABLE</td>
-                      <td class="code">var nightMode</td>
-                      <td class="code">NightMode</td>
-                    </tr>
-                    <tr style="color:#FFFFFF;background-color:#D32F2F;">
-                      <td>3</td>
-                      <td>UNSTABLE</td>
-                      <td class="code">val paparazzi$delegate</td>
-                      <td class="code">Lazy&lt;Paparazzi&gt;</td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </div>
+        <div class="content">
+          <div class="empty-content">No Unstable classes found 😁</div>
 <br>
           <div class="empty-content">No Stable classes found</div>
         </div>

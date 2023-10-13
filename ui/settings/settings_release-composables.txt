@@ -104,7 +104,7 @@ restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun SettingSw
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchChecked()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingSwitchUnchecked()
 restartable scheme("[androidx.compose.ui.UiComposable]") fun SettingWithDialogChoices(
-  stable titleRes: Int
+  stable title: String
   unstable choices: List<String>
   stable selectedChoiceIndex: Int
   stable onSelectChoiceIndex: Function1<Int, Unit>? = @static { it: Int ->
@@ -112,7 +112,7 @@ restartable scheme("[androidx.compose.ui.UiComposable]") fun SettingWithDialogCh
 }
 
 )
-restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun PreviewSettingWithDialogChoices()
 restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun LicensesScaffold(
   stable modifier: Modifier? = @static Companion
   stable onBack: Function0<Unit>? = @static {
