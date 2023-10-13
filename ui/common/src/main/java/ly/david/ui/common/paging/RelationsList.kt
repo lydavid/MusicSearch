@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.domain.RelationsListRepository
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig

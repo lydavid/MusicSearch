@@ -19,7 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
 import ly.david.ui.collections.areas.AreasByCollectionScreen
 import ly.david.ui.collections.artists.ArtistsByCollectionScreen
 import ly.david.ui.collections.events.EventsByCollectionScreen

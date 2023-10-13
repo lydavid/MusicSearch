@@ -35,7 +35,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.release.details.ReleaseDetailsScreen
 import ly.david.mbjc.ui.release.stats.ReleaseStatsScreen
 import ly.david.mbjc.ui.release.tracks.TracksByReleaseScreen
-import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling

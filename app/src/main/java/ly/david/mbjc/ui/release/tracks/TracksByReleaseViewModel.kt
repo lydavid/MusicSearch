@@ -21,10 +21,10 @@ import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.TrackDao
-import ly.david.musicsearch.domain.listitem.ListItemModel
-import ly.david.musicsearch.domain.listitem.ListSeparator
-import ly.david.musicsearch.domain.listitem.TrackListItemModel
-import ly.david.musicsearch.domain.listitem.toTrackListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListSeparator
+import ly.david.musicsearch.data.core.listitem.TrackListItemModel
+import ly.david.musicsearch.data.core.listitem.toTrackListItemModel
 import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.musicsearch.domain.release.ReleaseRepository

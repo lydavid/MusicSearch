@@ -1,6 +1,6 @@
 package ly.david.ui.common.event
 
-import ly.david.musicsearch.domain.listitem.EventListItemModel
+import ly.david.musicsearch.data.core.listitem.EventListItemModel
 import ly.david.ui.common.paging.PagedList
 import lydavidmusicsearchdatadatabase.Event
 import org.koin.core.annotation.Factory

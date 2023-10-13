@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.core.releasegroup.ReleaseGroup
 import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForDetails
 import ly.david.musicsearch.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.domain.artist.toArtistCreditUiModel
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Relation

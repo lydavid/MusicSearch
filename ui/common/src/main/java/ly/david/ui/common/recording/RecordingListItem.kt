@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.common.toDisplayTime
-import ly.david.musicsearch.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.common.release.TrackListItem
 import ly.david.ui.core.preview.DefaultPreviews

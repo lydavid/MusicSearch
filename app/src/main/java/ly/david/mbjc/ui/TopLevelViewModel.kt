@@ -25,7 +25,7 @@ import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.domain.history.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.UnMarkLookupHistoryForDeletion
-import ly.david.musicsearch.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
 import ly.david.musicsearch.domain.listitem.toCollectionListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.settings.AppPreferences

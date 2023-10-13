@@ -9,7 +9,7 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
-import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
 import ly.david.ui.common.release.ReleasesByEntityViewModel
 import ly.david.ui.common.release.ReleasesPagedList
 import org.koin.android.annotation.KoinViewModel

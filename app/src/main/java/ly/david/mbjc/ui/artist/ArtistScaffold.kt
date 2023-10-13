@@ -34,8 +34,8 @@ import ly.david.mbjc.ui.artist.details.ArtistDetailsScreen
 import ly.david.mbjc.ui.artist.releasegroups.ReleaseGroupsByArtistScreen
 import ly.david.mbjc.ui.artist.releases.ReleasesByArtistScreen
 import ly.david.mbjc.ui.artist.stats.ArtistStatsScreen
-import ly.david.musicsearch.domain.listitem.ListItemModel
-import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen

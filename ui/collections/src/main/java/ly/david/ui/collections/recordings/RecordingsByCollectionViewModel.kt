@@ -9,8 +9,8 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
-import ly.david.musicsearch.domain.listitem.RecordingListItemModel
-import ly.david.musicsearch.domain.listitem.toRecordingListItemModel
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
+import ly.david.musicsearch.data.core.listitem.toRecordingListItemModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel

@@ -17,10 +17,10 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
-import ly.david.musicsearch.domain.listitem.ListItemModel
-import ly.david.musicsearch.domain.listitem.ListSeparator
-import ly.david.musicsearch.domain.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.domain.listitem.toReleaseGroupListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListSeparator
+import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.data.core.listitem.toReleaseGroupListItemModel
 import ly.david.musicsearch.domain.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.domain.event
 
-import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.LifeSpanUiModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Relation

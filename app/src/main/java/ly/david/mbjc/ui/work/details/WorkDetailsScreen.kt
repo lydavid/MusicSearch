@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import java.util.Locale
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.work.WorkAttributeUiModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
 import ly.david.musicsearch.domain.work.WorkScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings

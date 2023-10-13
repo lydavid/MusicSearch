@@ -12,8 +12,8 @@ import ly.david.musicsearch.data.core.common.ifNotNull
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.musicsearch.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.data.core.LifeSpanUiModel
+import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.musicsearch.domain.place.CoordinatesUiModel
 import ly.david.musicsearch.domain.place.PlaceScaffoldModel
 import ly.david.ui.common.area.AreaListItem

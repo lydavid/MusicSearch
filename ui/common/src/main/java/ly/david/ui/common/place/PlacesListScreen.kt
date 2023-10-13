@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.listitem.PlaceListItemModel
+import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)

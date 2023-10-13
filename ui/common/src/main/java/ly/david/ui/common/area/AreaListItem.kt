@@ -19,7 +19,7 @@ import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.common.toFlagEmoji
 import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.data.core.getLifeSpanForDisplay
-import ly.david.musicsearch.domain.listitem.AreaListItemModel
+import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

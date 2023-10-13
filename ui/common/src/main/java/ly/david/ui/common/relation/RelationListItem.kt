@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.data.common.openUrl
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

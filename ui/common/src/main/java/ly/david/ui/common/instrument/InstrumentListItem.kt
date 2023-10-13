@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.domain.listitem.InstrumentListItemModel
+import ly.david.musicsearch.data.core.listitem.InstrumentListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

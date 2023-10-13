@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.label
 
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Relation
