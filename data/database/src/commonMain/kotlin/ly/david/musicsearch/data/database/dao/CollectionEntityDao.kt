@@ -3,12 +3,12 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.data.core.CoroutineDispatchers
-import ly.david.musicsearch.data.core.RecordingForListItem
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.data.core.release.ReleaseForListItem
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
-import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem
+import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseForListItem
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import lydavidmusicsearchdatadatabase.Area
@@ -186,7 +186,7 @@ class CollectionEntityDao(
     fun getRecordingsByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, RecordingForListItem> = QueryPagingSource(
+    ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfRecordingsByCollection(
             collectionId = collectionId,
             query = query,
@@ -199,7 +199,7 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
-            mapper = ::mapToRecordingForListItem,
+            mapper = ::mapToRecordingListItemModel,
         )
     }
 

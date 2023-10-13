@@ -1,16 +1,14 @@
 package ly.david.mbjc.ui.work.recordings
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.RecordingForListItem
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.RecordingDao
 import ly.david.musicsearch.data.database.dao.RecordingWorkDao
-import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
-import ly.david.musicsearch.data.core.listitem.toRecordingListItemModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.recording.RecordingsPagedList
 import org.koin.android.annotation.KoinViewModel
@@ -22,7 +20,7 @@ internal class RecordingsByWorkViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
-) : BrowseEntitiesByEntityViewModel<RecordingForListItem, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
+) : BrowseEntitiesByEntityViewModel<RecordingListItemModel, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList
@@ -58,13 +56,13 @@ internal class RecordingsByWorkViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, RecordingForListItem> =
+    ): PagingSource<Int, RecordingListItemModel> =
         recordingWorkDao.getRecordingsByWork(
             workId = entityId,
             query = "%$query%",
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: RecordingForListItem): RecordingListItemModel {
-        return databaseModel.toRecordingListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: RecordingListItemModel): RecordingListItemModel {
+        return databaseModel
     }
 }

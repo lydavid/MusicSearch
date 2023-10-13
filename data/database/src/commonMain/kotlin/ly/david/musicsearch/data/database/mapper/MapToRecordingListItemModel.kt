@@ -1,23 +1,21 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.RecordingForListItem
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 
-internal fun mapToRecordingForListItem(
+internal fun mapToRecordingListItemModel(
     id: String,
     name: String,
     disambiguation: String,
     firstReleaseDate: String?,
     length: Int?,
     video: Boolean,
-    isrcs: List<String>?,
     formattedArtistCreditNames: String,
-) = RecordingForListItem(
+) = RecordingListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     firstReleaseDate = firstReleaseDate,
     length = length,
-    isrcs = isrcs,
     video = video,
-    formattedArtistCreditNames = formattedArtistCreditNames,
+    formattedArtistCredits = formattedArtistCreditNames,
 )

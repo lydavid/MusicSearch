@@ -270,7 +270,14 @@ SELECT IFNULL(
 ) AS count;
 
 getRecordingsByCollection:
-SELECT r.*, ac.name AS artist_credits
+SELECT
+  r.id,
+  r.name,
+  r.disambiguation,
+  r.first_release_date,
+  r.length,
+  r.video,
+  ac.name AS artist_credits
 FROM recording r
 INNER JOIN collection_entity ce ON r.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
