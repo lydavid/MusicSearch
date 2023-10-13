@@ -5,9 +5,7 @@ import androidx.lifecycle.viewModelScope
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
-import ly.david.musicsearch.data.core.listitem.toReleaseListItemModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.release.ReleaseForListItem
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.ui.common.paging.BrowseEntityUseCase
@@ -20,7 +18,7 @@ abstract class ReleasesByEntityViewModel(
     private val pagedList: ReleasesPagedList,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
-    BrowseEntityUseCase<ReleaseForListItem, ReleaseListItemModel> {
+    BrowseEntityUseCase<ReleaseListItemModel, ReleaseListItemModel> {
 
     init {
         pagedList.scope = viewModelScope
@@ -67,7 +65,7 @@ abstract class ReleasesByEntityViewModel(
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
         browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.localCount ?: 0
 
-    override fun transformDatabaseToListItemModel(databaseModel: ReleaseForListItem): ReleaseListItemModel {
-        return databaseModel.toReleaseListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: ReleaseListItemModel): ReleaseListItemModel {
+        return databaseModel
     }
 }

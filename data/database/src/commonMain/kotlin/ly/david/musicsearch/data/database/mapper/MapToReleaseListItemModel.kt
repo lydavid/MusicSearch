@@ -1,9 +1,11 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.release.ReleaseForListItem
+import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.data.core.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
 
 // Although SQLDelight generates models for us, their types are based on the function names.
-internal fun mapToReleaseForListItem(
+internal fun mapToReleaseListItemModel(
     id: String,
     name: String,
     disambiguation: String,
@@ -22,7 +24,7 @@ internal fun mapToReleaseForListItem(
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
     releaseCountryCount: Long,
-) = ReleaseForListItem(
+) = ReleaseListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
@@ -35,10 +37,14 @@ internal fun mapToReleaseForListItem(
     statusId = statusId,
     packaging = packaging,
     packagingId = packagingId,
-    script = script,
-    language = language,
-    coverArtCount = coverArtCount,
-    formattedArtistCreditNames = formattedArtistCreditNames,
-    thumbnailUrl = thumbnailUrl,
+    textRepresentation = TextRepresentationUiModel(
+        script = script,
+        language = language,
+    ),
+    coverArtArchive = CoverArtArchiveUiModel(
+        count = coverArtCount,
+    ),
+    formattedArtistCredits = formattedArtistCreditNames,
+    imageUrl = thumbnailUrl,
     releaseCountryCount = releaseCountryCount.toInt(),
 )

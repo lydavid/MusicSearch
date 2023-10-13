@@ -1,11 +1,11 @@
 package ly.david.mbjc.ui.area.releases
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
@@ -53,7 +53,7 @@ internal class ReleasesByAreaViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, ReleaseForListItem> =
+    ): PagingSource<Int, ReleaseListItemModel> =
         releaseCountryDao.getReleasesByCountry(
             areaId = entityId,
             query = "%$query%",

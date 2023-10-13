@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.core.listitem
 
 import ly.david.musicsearch.data.core.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.data.core.release.Release
-import ly.david.musicsearch.data.core.release.ReleaseForListItem
 import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
 
 data class ReleaseListItemModel(
@@ -29,30 +28,3 @@ data class ReleaseListItemModel(
 
     val releaseCountryCount: Int = 0,
 ) : ListItemModel(), Release
-
-fun ReleaseForListItem.toReleaseListItemModel() = ReleaseListItemModel(
-    id = id,
-    name = name,
-    disambiguation = disambiguation,
-    date = date,
-    status = status,
-    barcode = barcode,
-    statusId = statusId,
-    countryCode = countryCode,
-    packaging = packaging,
-    packagingId = packagingId,
-    asin = asin,
-    quality = quality,
-    coverArtArchive = CoverArtArchiveUiModel(
-        count = coverArtCount,
-    ),
-    textRepresentation = TextRepresentationUiModel(
-        script = script,
-        language = language,
-    ),
-//    formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
-//    formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),
-    imageUrl = thumbnailUrl,
-    formattedArtistCredits = formattedArtistCreditNames,
-    releaseCountryCount = releaseCountryCount,
-)
