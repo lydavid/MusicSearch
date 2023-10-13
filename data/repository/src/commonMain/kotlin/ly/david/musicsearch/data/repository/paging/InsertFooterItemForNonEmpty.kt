@@ -1,4 +1,4 @@
-package ly.david.ui.common.paging
+package ly.david.musicsearch.data.repository.paging
 
 import androidx.paging.PagingData
 import androidx.paging.TerminalSeparatorType
@@ -7,7 +7,7 @@ import androidx.paging.insertSeparators
 /**
  * Inserts a footer, only if there was data before it.
  */
-fun <T : Any> PagingData<T>.insertFooterItemForNonEmpty(
+internal fun <T : Any> PagingData<T>.insertFooterItemForNonEmpty(
     terminalSeparatorType: TerminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
     item: T,
 ): PagingData<T> = insertSeparators(terminalSeparatorType) { before, after ->

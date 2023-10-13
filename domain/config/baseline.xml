@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComplexCondition:ReleaseRepository.kt$ReleaseRepository$releaseForDetails != null &amp;&amp; releaseGroup != null &amp;&amp; artistCreditNames.isNotEmpty() &amp;&amp; hasUrlsBeenSavedForEntity</ID>
-    <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
     <ID>ReturnCount:BrowseEntityRemoteMediator.kt$BrowseEntityRemoteMediator$override suspend fun load( loadType: LoadType, state: PagingState&lt;Int, DM&gt;, ): MediatorResult</ID>
   </CurrentIssues>
 </SmellBaseline>

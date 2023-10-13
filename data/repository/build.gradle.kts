@@ -14,6 +14,7 @@ kotlin {
                 implementation(projects.data.core)
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
+                implementation(projects.data.common.network)
                 implementation(projects.invertedDomain)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
@@ -22,7 +23,9 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation(projects.testData)
                 implementation(libs.junit)
+                implementation(libs.kotlinx.coroutines.test)
                 implementation(libs.mockk)
             }
         }

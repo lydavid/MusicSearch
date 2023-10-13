@@ -1,13 +1,13 @@
-package ly.david.mbjc.ui.search
+package ly.david.musicsearch.data.repository
 
 import androidx.paging.PagingSource
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.test.api.FakeMusicBrainzApi
-import ly.david.musicsearch.data.core.network.searchableEntities
 import ly.david.data.test.toFakeMusicBrainzModel
-import ly.david.musicsearch.domain.listitem.toListItemModel
-import ly.david.musicsearch.domain.paging.SearchMusicBrainzPagingSource
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.searchableEntities
+import ly.david.musicsearch.data.repository.paging.SearchMusicBrainzPagingSource
+import ly.david.musicsearch.data.repository.paging.toListItemModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

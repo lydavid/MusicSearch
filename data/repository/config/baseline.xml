@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
+  </CurrentIssues>
+</SmellBaseline>

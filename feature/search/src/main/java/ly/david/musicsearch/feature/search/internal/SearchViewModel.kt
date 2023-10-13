@@ -2,11 +2,8 @@ package ly.david.musicsearch.feature.search.internal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -17,25 +14,21 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.history.SearchHistory
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.data.database.dao.SearchHistoryDao
-import ly.david.musicsearch.data.core.listitem.EndOfList
-import ly.david.musicsearch.data.core.listitem.Header
 import ly.david.musicsearch.data.core.listitem.ListItemModel
 import ly.david.musicsearch.data.core.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.data.core.listitem.toSearchHistoryListItemModel
-import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
-import ly.david.musicsearch.domain.paging.SearchMusicBrainzPagingSource
-import ly.david.ui.common.paging.insertFooterItemForNonEmpty
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.domain.search.history.usecase.DeleteSearchHistory
+import ly.david.musicsearch.domain.search.history.usecase.GetSearchHistory
+import ly.david.musicsearch.domain.search.history.usecase.RecordSearchHistory
+import ly.david.musicsearch.domain.search.results.usecase.GetSearchResults
 
 private const val SEARCH_DELAY_MS = 500L
 
 internal class SearchViewModel(
-    private val musicBrainzApi: MusicBrainzApi,
-    private val searchHistoryDao: SearchHistoryDao,
+    private val getSearchResults: GetSearchResults,
+    private val getSearchHistory: GetSearchHistory,
+    private val recordSearchHistory: RecordSearchHistory,
+    private val deleteSearchHistory: DeleteSearchHistory,
 ) : ViewModel() {
 
     private data class ViewModelState(
@@ -66,23 +59,18 @@ internal class SearchViewModel(
         val query = searchQuery.value
         if (query.isEmpty()) return
         val entity = searchEntity.value
-        searchHistoryDao.upsert(
-            SearchHistory(
-                entity = entity,
-                query = query,
-            )
-        )
+        recordSearchHistory(entity, query)
     }
 
     fun deleteSearchHistoryItem(item: SearchHistoryListItemModel) {
-        searchHistoryDao.delete(
+        deleteSearchHistory(
             entity = item.entity,
             query = item.query,
         )
     }
 
     fun deleteAllSearchHistoryForEntity() {
-        searchHistoryDao.deleteAll(searchEntity.value)
+        deleteSearchHistory(entity = searchEntity.value)
     }
 
     // TODO: because of debounce, scrollToItem(0) does not work properly
@@ -91,18 +79,10 @@ internal class SearchViewModel(
         viewModelState.filterNot { it.query.isEmpty() }
             .debounce(SEARCH_DELAY_MS)
             .flatMapLatest { viewModelState ->
-                Pager(
-                    config = MusicBrainzPagingConfig.pagingConfig,
-                    pagingSourceFactory = {
-                        SearchMusicBrainzPagingSource(
-                            searchApi = musicBrainzApi,
-                            entity = viewModelState.entity,
-                            queryString = viewModelState.query,
-                        )
-                    }
-                ).flow.map { pagingData ->
-                    pagingData.insertFooterItemForNonEmpty(item = EndOfList)
-                }
+                getSearchResults(
+                    entity = viewModelState.entity,
+                    query = viewModelState.query,
+                )
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
@@ -111,20 +91,7 @@ internal class SearchViewModel(
     val searchHistory: Flow<PagingData<ListItemModel>> =
         viewModelState.filter { it.query.isEmpty() }
             .flatMapLatest { viewModelState ->
-                Pager(
-                    config = MusicBrainzPagingConfig.pagingConfig,
-                    pagingSourceFactory = {
-                        searchHistoryDao.getAllSearchHistory(
-                            entity = viewModelState.entity
-                        )
-                    }
-                ).flow.map { pagingData ->
-                    pagingData
-                        .map(SearchHistory::toSearchHistoryListItemModel)
-                        .insertSeparators { before: SearchHistoryListItemModel?, after: SearchHistoryListItemModel? ->
-                            if (before == null) Header() else null
-                        }
-                }
+                getSearchHistory(viewModelState.entity)
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
