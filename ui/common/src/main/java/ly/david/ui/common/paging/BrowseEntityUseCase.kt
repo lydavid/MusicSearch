@@ -18,6 +18,6 @@ interface BrowseEntityUseCase<DM : Any, LI : ListItemModel> : StoreEntityUseCase
     }
 }
 
-interface BrowseSortableEntityUseCase<DM : Any> : StoreEntityUseCase {
-    fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean): PagingSource<Int, DM>
+interface BrowseSortableEntityUseCase<LI : Any> : StoreEntityUseCase {
+    fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean): PagingSource<Int, LI>
 }

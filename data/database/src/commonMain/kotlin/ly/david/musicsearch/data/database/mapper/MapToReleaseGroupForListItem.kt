@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
 
-internal fun mapToReleaseGroupForListItem(
+internal fun mapToReleaseGroupListItemModel(
     id: String,
     name: String,
     firstReleaseDate: String,
@@ -11,13 +11,13 @@ internal fun mapToReleaseGroupForListItem(
     secondaryTypes: List<String>?,
     formattedArtistCreditNames: String,
     thumbnailUrl: String?,
-) = ReleaseGroupForListItem(
+) = ReleaseGroupListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     firstReleaseDate = firstReleaseDate,
     primaryType = primaryType,
     secondaryTypes = secondaryTypes,
-    formattedArtistCreditNames = formattedArtistCreditNames,
-    thumbnailUrl = thumbnailUrl,
+    formattedArtistCredits = formattedArtistCreditNames,
+    imageUrl = thumbnailUrl,
 )

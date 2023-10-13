@@ -5,7 +5,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
-import androidx.paging.map
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -15,12 +14,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
-import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
 import ly.david.musicsearch.data.core.listitem.ListItemModel
 import ly.david.musicsearch.data.core.listitem.ListSeparator
 import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.data.core.listitem.toReleaseGroupListItemModel
+import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
 import ly.david.musicsearch.domain.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
@@ -46,9 +43,9 @@ class ReleaseGroupsPagedList : SortablePagedList<ListItemModel> {
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseSortableEntityUseCase<ReleaseGroupForListItem>
+    lateinit var useCase: BrowseSortableEntityUseCase<ReleaseGroupListItemModel>
 
-    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<ReleaseGroupForListItem>(
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<ReleaseGroupListItemModel>(
         getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
@@ -67,7 +64,6 @@ class ReleaseGroupsPagedList : SortablePagedList<ListItemModel> {
                     pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query, sorted) }
                 ).flow.map { pagingData ->
                     pagingData
-                        .map(ReleaseGroupForListItem::toReleaseGroupListItemModel)
                         .insertSeparators { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
                             if (sorted && rg2 != null &&
                                 (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)

@@ -2,13 +2,13 @@ package ly.david.ui.common.releasegroup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
-import ly.david.musicsearch.data.core.listitem.ListItemModel
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase
 import ly.david.ui.common.paging.SortablePagedList
 import lydavidmusicsearchdatadatabase.Browse_entity_count
@@ -19,7 +19,7 @@ abstract class ReleaseGroupsByEntityViewModel(
     private val releaseGroupsPagedList: ReleaseGroupsPagedList,
 ) : ViewModel(),
     SortablePagedList<ListItemModel> by releaseGroupsPagedList,
-    BrowseSortableEntityUseCase<ReleaseGroupForListItem> {
+    BrowseSortableEntityUseCase<ReleaseGroupListItemModel> {
 
     init {
         releaseGroupsPagedList.scope = viewModelScope
