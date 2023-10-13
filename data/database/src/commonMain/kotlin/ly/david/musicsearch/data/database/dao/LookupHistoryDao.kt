@@ -54,7 +54,7 @@ class LookupHistoryDao(
             leastVisited = leastVisited,
             limit = limit,
             offset = offset,
-            mapper = ::mapToLookupHistoryForListItem,
+            mapper = ::mapToLookupHistoryListItemModel,
         )
     }
 
@@ -78,7 +78,7 @@ class LookupHistoryDao(
     }
 }
 
-private fun mapToLookupHistoryForListItem(
+private fun mapToLookupHistoryListItemModel(
     mbid: String,
     title: String,
     entity: MusicBrainzEntity,
