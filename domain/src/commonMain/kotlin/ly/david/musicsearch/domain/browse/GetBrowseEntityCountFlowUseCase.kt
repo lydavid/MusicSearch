@@ -1,8 +1,8 @@
 package ly.david.musicsearch.domain.browse
 
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.core.browse.BrowseEntityCount
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.browse.BrowseEntityCount
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import org.koin.core.annotation.Single
 
 @Single

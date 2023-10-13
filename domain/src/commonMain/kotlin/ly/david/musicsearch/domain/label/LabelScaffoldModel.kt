@@ -12,7 +12,7 @@ data class LabelScaffoldModel(
     override val type: String? = null,
     override val labelCode: Int? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Label
+) : ly.david.musicsearch.data.core.Label
 
 internal fun Label.toLabelScaffoldModel(
     urls: List<Relation>,

@@ -8,10 +8,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import ly.david.data.core.common.ifNotNull
-import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.common.ifNotNull
+import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
+import ly.david.musicsearch.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.domain.place.CoordinatesUiModel

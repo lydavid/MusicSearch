@@ -2,8 +2,8 @@ package ly.david.data.musicbrainz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.data.core.LifeSpan
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.LifeSpan
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 
 @Serializable
 data class RelationMusicBrainzModel(

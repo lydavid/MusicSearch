@@ -2,8 +2,8 @@ package ly.david.data.coverart
 
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
-import ly.david.data.core.image.ImageUrlDao
-import ly.david.data.core.logging.Logger
+import ly.david.musicsearch.data.core.image.ImageUrlDao
+import ly.david.musicsearch.data.core.logging.Logger
 import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.coverart.api.getFrontLargeCoverArtUrl
 import ly.david.data.coverart.api.getFrontThumbnailCoverArtUrl

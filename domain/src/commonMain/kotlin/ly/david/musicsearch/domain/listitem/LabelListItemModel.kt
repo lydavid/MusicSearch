@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.label.LabelWithCatalog
+import ly.david.musicsearch.data.core.label.LabelWithCatalog
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Label
@@ -14,7 +14,7 @@ data class LabelListItemModel(
 
     // TODO: don't need this in scaffold model
     val catalogNumber: String? = null,
-) : ly.david.data.core.Label, ListItemModel()
+) : ly.david.musicsearch.data.core.Label, ListItemModel()
 
 internal fun LabelMusicBrainzModel.toLabelListItemModel() =
     LabelListItemModel(

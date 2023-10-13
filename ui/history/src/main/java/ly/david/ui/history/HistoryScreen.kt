@@ -4,7 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.listitem.ListItemModel
 import ly.david.musicsearch.domain.listitem.ListSeparator
 import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel

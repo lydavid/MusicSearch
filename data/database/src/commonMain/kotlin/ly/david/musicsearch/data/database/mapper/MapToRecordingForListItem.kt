@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.data.core.RecordingForListItem
+import ly.david.musicsearch.data.core.RecordingForListItem
 
 internal fun mapToRecordingForListItem(
     id: String,

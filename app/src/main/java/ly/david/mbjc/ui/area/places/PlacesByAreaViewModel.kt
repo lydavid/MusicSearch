@@ -1,7 +1,7 @@
 package ly.david.mbjc.ui.area.places
 
 import androidx.paging.PagingSource
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi

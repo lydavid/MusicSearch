@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.resourceUriPlural
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.resourceUriPlural
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo

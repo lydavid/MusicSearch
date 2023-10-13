@@ -12,8 +12,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler

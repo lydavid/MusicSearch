@@ -2,7 +2,7 @@ package ly.david.data.test
 
 import ly.david.data.musicbrainz.Direction
 import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.data.musicbrainz.api.SearchInstrumentsResponse

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.Track
-import ly.david.data.core.TrackForListItem
+import ly.david.musicsearch.data.core.Track
+import ly.david.musicsearch.data.core.TrackForListItem
 
 data class TrackListItemModel(
     override val id: String,

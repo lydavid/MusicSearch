@@ -6,9 +6,9 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.data.core.CoroutineDispatchers
-import ly.david.data.core.area.ReleaseEvent
-import ly.david.data.core.release.ReleaseForListItem
+import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.area.ReleaseEvent
+import ly.david.musicsearch.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseEventMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.database.Database

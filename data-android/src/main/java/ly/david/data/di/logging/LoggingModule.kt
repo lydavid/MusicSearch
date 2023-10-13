@@ -1,6 +1,6 @@
 package ly.david.data.di.logging
 
-import ly.david.data.core.logging.Logger
+import ly.david.musicsearch.data.core.logging.Logger
 import org.koin.dsl.module
 import timber.log.Timber
 

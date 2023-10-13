@@ -11,7 +11,7 @@ data class SeriesScaffoldModel(
     override val disambiguation: String? = null,
     override val type: String? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Series
+) : ly.david.musicsearch.data.core.Series
 
 internal fun Series.toSeriesScaffoldModel(
     urls: List<Relation>,

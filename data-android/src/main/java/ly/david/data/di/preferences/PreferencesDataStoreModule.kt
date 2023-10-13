@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.CoroutineDispatchers
 import org.koin.dsl.module
 
 private const val SETTINGS_KEY = "settings"

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.work
 
-import ly.david.data.core.WorkAttribute
+import ly.david.musicsearch.data.core.WorkAttribute
 import ly.david.data.musicbrainz.WorkAttributeMusicBrainzModel
 import lydavidmusicsearchdatadatabase.Work_attribute
 

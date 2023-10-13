@@ -1,8 +1,8 @@
 package ly.david.ui.collections
 
 import androidx.lifecycle.ViewModel
-import ly.david.data.core.history.LookupHistory
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.domain.history.IncrementLookupHistory
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel

@@ -13,9 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.core.common.ifNotNull
-import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.data.core.common.ifNotNull
+import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
+import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.domain.listitem.LabelListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.theme.PreviewTheme

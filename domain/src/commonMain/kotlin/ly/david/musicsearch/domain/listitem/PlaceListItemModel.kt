@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.Coordinates
+import ly.david.musicsearch.data.core.Coordinates
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.common.toLifeSpanUiModel
@@ -18,7 +18,7 @@ data class PlaceListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
 
     val area: AreaListItemModel? = null,
-) : ly.david.data.core.Place, ListItemModel()
+) : ly.david.musicsearch.data.core.Place, ListItemModel()
 
 internal fun PlaceMusicBrainzModel.toPlaceListItemModel() =
     PlaceListItemModel(

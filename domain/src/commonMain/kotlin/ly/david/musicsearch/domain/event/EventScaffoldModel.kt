@@ -15,7 +15,7 @@ data class EventScaffoldModel(
     override val cancelled: Boolean? = null,
     override val lifeSpan: LifeSpanUiModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Event
+) : ly.david.musicsearch.data.core.Event
 
 internal fun Event.toEventScaffoldModel(
     urls: List<Relation>,

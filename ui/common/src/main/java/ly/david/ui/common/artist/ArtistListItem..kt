@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.data.core.common.ifNotNull
-import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.core.common.toFlagEmoji
-import ly.david.data.core.getLifeSpanForDisplay
+import ly.david.musicsearch.data.core.common.ifNotNull
+import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
+import ly.david.musicsearch.data.core.common.toFlagEmoji
+import ly.david.musicsearch.data.core.getLifeSpanForDisplay
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.listitem.ArtistListItemModel
 import ly.david.ui.common.listitem.DisambiguationText

@@ -1,7 +1,7 @@
 package ly.david.data.musicbrainz
 
 import kotlinx.serialization.Serializable
-import ly.david.data.core.TextRepresentation
+import ly.david.musicsearch.data.core.TextRepresentation
 
 @Serializable
 data class TextRepresentationMusicBrainzModel(

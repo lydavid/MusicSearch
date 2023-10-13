@@ -5,8 +5,8 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.series.SeriesScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings

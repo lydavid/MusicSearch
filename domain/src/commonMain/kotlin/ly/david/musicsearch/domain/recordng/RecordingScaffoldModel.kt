@@ -18,7 +18,7 @@ data class RecordingScaffoldModel(
     val isrcs: List<String>? = null,
     val artistCredits: List<ArtistCreditUiModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Recording
+) : ly.david.musicsearch.data.core.Recording
 
 internal fun Recording.toRecordingScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,

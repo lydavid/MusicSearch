@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.release
 
-import ly.david.data.core.CoverArtArchive
+import ly.david.musicsearch.data.core.CoverArtArchive
 import ly.david.data.musicbrainz.CoverArtArchiveMusicBrainzModel
 
 data class CoverArtArchiveUiModel(

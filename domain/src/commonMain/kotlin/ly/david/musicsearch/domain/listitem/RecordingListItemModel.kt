@@ -1,8 +1,8 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.Recording
-import ly.david.data.core.RecordingForListItem
-import ly.david.data.core.artist.getDisplayNames
+import ly.david.musicsearch.data.core.Recording
+import ly.david.musicsearch.data.core.RecordingForListItem
+import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 
 data class RecordingListItemModel(

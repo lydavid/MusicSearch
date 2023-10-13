@@ -8,8 +8,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.listitem.LabelListItemModel
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem

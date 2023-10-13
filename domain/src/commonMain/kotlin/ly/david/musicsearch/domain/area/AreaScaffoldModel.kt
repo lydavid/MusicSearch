@@ -15,7 +15,7 @@ data class AreaScaffoldModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val countryCodes: List<String>? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.area.Area
+) : ly.david.musicsearch.data.core.area.Area
 
 internal fun Area.toAreaScaffoldModel(
     countryCodes: List<String>,

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.release
 
-import ly.david.data.core.area.AreaType
+import ly.david.musicsearch.data.core.area.AreaType
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi

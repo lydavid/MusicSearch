@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.data.core.common.ifNotNull
-import ly.david.data.core.common.ifNotNullOrEmpty
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.common.ifNotNull
+import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.label.LabelScaffoldModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader

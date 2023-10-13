@@ -1,5 +1,5 @@
 import kotlin.Int;
-import ly.david.data.core.network.MusicBrainzEntity;
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity;
 
 -- Tracks how many [browse_entity] there are in MusicBrainz with [remote_count]
 -- and how many we have collected with [local_count] that are linked to the entity with [entity_id].

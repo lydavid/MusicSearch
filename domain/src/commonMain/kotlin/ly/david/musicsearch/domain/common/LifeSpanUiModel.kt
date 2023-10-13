@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.common
 
-import ly.david.data.core.LifeSpan
+import ly.david.musicsearch.data.core.LifeSpan
 import ly.david.data.musicbrainz.LifeSpanMusicBrainzModel
 
 data class LifeSpanUiModel(

@@ -16,8 +16,8 @@ import androidx.compose.ui.test.performTextInput
 import coil.Coil
 import coil.ImageLoaderFactory
 import kotlinx.coroutines.test.runTest
-import ly.david.data.core.artist.getDisplayNames
-import ly.david.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.data.core.artist.getDisplayNames
+import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.test.bandAid
 import ly.david.data.test.carlosAlomar

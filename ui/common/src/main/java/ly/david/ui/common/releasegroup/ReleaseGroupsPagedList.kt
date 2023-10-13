@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.core.releasegroup.ReleaseGroupForListItem
-import ly.david.data.core.releasegroup.getDisplayTypes
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
 import ly.david.musicsearch.domain.listitem.ListItemModel
 import ly.david.musicsearch.domain.listitem.ListSeparator
 import ly.david.musicsearch.domain.listitem.ReleaseGroupListItemModel

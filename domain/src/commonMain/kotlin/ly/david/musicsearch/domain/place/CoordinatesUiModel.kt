@@ -1,7 +1,7 @@
 package ly.david.musicsearch.domain.place
 
 import kotlin.math.abs
-import ly.david.data.core.Coordinates
+import ly.david.musicsearch.data.core.Coordinates
 
 data class CoordinatesUiModel(
     override val longitude: Double?,
