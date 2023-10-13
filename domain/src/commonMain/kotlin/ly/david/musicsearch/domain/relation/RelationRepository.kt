@@ -3,14 +3,14 @@ package ly.david.musicsearch.domain.relation
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.relation.RelationTypeCount
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
 import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
-import lydavidmusicsearchdatadatabase.Relation
 import org.koin.core.annotation.Single
 
 @Single
@@ -51,7 +51,7 @@ class RelationRepository(
     fun getEntityRelationshipsExcludingUrls(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Relation> {
+    ): PagingSource<Int, RelationListItemModel> {
         return relationDao.getEntityRelationshipsExcludingUrls(
             entityId = entityId,
             query = "%$query%",
@@ -60,7 +60,7 @@ class RelationRepository(
 
     fun getEntityUrlRelationships(
         entityId: String,
-    ) = relationDao.getEntityUrlRelationships(
+    ): List<RelationListItemModel> = relationDao.getEntityUrlRelationships(
         entityId = entityId,
     )
 

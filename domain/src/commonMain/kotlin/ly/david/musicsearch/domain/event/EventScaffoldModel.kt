@@ -2,9 +2,7 @@ package ly.david.musicsearch.domain.event
 
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Event
-import lydavidmusicsearchdatadatabase.Relation
 
 data class EventScaffoldModel(
     override val id: String,
@@ -18,7 +16,7 @@ data class EventScaffoldModel(
 ) : ly.david.musicsearch.data.core.Event
 
 internal fun Event.toEventScaffoldModel(
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = EventScaffoldModel(
     id = id,
     name = name,
@@ -31,5 +29,5 @@ internal fun Event.toEventScaffoldModel(
         end = end,
         ended = ended,
     ),
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

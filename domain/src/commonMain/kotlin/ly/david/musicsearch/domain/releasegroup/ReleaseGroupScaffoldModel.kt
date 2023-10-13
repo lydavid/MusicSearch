@@ -1,13 +1,11 @@
 package ly.david.musicsearch.domain.releasegroup
 
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.data.core.releasegroup.ReleaseGroup
 import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForDetails
 import ly.david.musicsearch.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.domain.artist.toArtistCreditUiModel
-import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
-import lydavidmusicsearchdatadatabase.Relation
 
 data class ReleaseGroupScaffoldModel(
     override val id: String,
@@ -23,7 +21,7 @@ data class ReleaseGroupScaffoldModel(
 
 internal fun ReleaseGroupForDetails.toReleaseGroupScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = ReleaseGroupScaffoldModel(
     id = id,
     name = name,
@@ -33,5 +31,5 @@ internal fun ReleaseGroupForDetails.toReleaseGroupScaffoldModel(
     secondaryTypes = secondaryTypes,
     imageUrl = imageUrl,
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

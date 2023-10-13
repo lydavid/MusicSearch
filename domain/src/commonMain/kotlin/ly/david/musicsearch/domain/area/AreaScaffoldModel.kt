@@ -2,9 +2,7 @@ package ly.david.musicsearch.domain.area
 
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Area
-import lydavidmusicsearchdatadatabase.Relation
 
 data class AreaScaffoldModel(
     override val id: String,
@@ -17,9 +15,9 @@ data class AreaScaffoldModel(
     val urls: List<RelationListItemModel> = listOf(),
 ) : ly.david.musicsearch.data.core.area.Area
 
-internal fun Area.toAreaScaffoldModel(
+fun Area.toAreaScaffoldModel(
     countryCodes: List<String>,
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = AreaScaffoldModel(
     id = id,
     name = name,
@@ -31,5 +29,5 @@ internal fun Area.toAreaScaffoldModel(
         ended = ended,
     ),
     countryCodes = countryCodes,
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

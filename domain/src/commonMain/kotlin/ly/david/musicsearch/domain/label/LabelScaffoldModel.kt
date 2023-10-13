@@ -1,9 +1,7 @@
 package ly.david.musicsearch.domain.label
 
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Label
-import lydavidmusicsearchdatadatabase.Relation
 
 data class LabelScaffoldModel(
     override val id: String,
@@ -15,12 +13,12 @@ data class LabelScaffoldModel(
 ) : ly.david.musicsearch.data.core.Label
 
 internal fun Label.toLabelScaffoldModel(
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = LabelScaffoldModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     type = type,
     labelCode = label_code,
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

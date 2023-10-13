@@ -17,9 +17,7 @@ import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
 import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.musicsearch.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.domain.artist.toArtistCreditUiModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
-import lydavidmusicsearchdatadatabase.Relation
 
 data class ReleaseScaffoldModel(
     override val id: String,
@@ -59,7 +57,7 @@ internal fun ReleaseForDetails.toReleaseScaffoldModel(
     formatTrackCounts: List<FormatTrackCount>,
     labels: List<LabelWithCatalog>,
     releaseEvents: List<ReleaseEvent>,
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = ReleaseScaffoldModel(
     id = id,
     name = name,
@@ -87,7 +85,7 @@ internal fun ReleaseForDetails.toReleaseScaffoldModel(
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
     releaseGroup = releaseGroup,
     labels = labels.map { it.toLabelListItemModel() },
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
     releaseLength = releaseLength,
     hasNullLength = hasNullLength,
 )

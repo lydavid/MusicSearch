@@ -6,6 +6,8 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 import lydavidmusicsearchdatadatabase.Relation
@@ -31,7 +33,7 @@ class RelationDao(
     fun getEntityRelationshipsExcludingUrls(
         entityId: String,
         query: String = "%%",
-    ): PagingSource<Int, Relation> = QueryPagingSource(
+    ): PagingSource<Int, RelationListItemModel> = QueryPagingSource(
         countQuery = transacter.countEntityRelationshipsExcludingUrls(
             entityId = entityId,
             query = query,
@@ -44,17 +46,40 @@ class RelationDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::toRelationListItemModel
         )
     }
 
     fun getEntityUrlRelationships(
         entityId: String,
-    ): List<Relation> {
+    ): List<RelationListItemModel> {
         return transacter.getEntityUrlRelationships(
             entityId = entityId,
             query = "%%", // TODO: either filter here or with Kotlin like before
+            mapper = ::toRelationListItemModel
         ).executeAsList()
     }
+
+    private fun toRelationListItemModel(
+        entity_id: String,
+        linked_entity_id: String,
+        linked_entity: MusicBrainzEntity,
+        order: Int,
+        label: String,
+        name: String,
+        disambiguation: String?,
+        attributes: String?,
+        additional_info: String?,
+    ) = RelationListItemModel(
+        id = "${linked_entity_id}_$order",
+        linkedEntityId = linked_entity_id,
+        linkedEntity = linked_entity,
+        label = label,
+        name = name,
+        disambiguation = disambiguation,
+        attributes = attributes,
+        additionalInfo = additional_info
+    )
 
     fun deleteRelationshipsExcludingUrlsByEntity(
         entityId: String,

@@ -1,8 +1,6 @@
 package ly.david.musicsearch.domain.series
 
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Series
 
 data class SeriesScaffoldModel(
@@ -14,11 +12,11 @@ data class SeriesScaffoldModel(
 ) : ly.david.musicsearch.data.core.Series
 
 internal fun Series.toSeriesScaffoldModel(
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = SeriesScaffoldModel(
     id = id,
     name = name,
     disambiguation = disambiguation,
     type = type,
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

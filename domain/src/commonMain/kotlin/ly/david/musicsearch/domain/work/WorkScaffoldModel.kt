@@ -2,8 +2,6 @@ package ly.david.musicsearch.domain.work
 
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Relation
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.Work_attribute
 
@@ -20,7 +18,7 @@ data class WorkScaffoldModel(
 
 internal fun Work.toWorkScaffoldModel(
     workAttributes: List<Work_attribute>,
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = WorkScaffoldModel(
     id = id,
     name = name,
@@ -29,5 +27,5 @@ internal fun Work.toWorkScaffoldModel(
     language = language,
     iswcs = iswcs,
     attributes = workAttributes.map { it.toWorkAttributeUiModel() },
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

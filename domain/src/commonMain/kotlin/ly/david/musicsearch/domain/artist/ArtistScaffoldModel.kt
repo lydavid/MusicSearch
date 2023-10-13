@@ -1,11 +1,9 @@
 package ly.david.musicsearch.domain.artist
 
+import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.artist.Artist
 import ly.david.musicsearch.data.core.artist.ArtistForDetails
-import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
-import lydavidmusicsearchdatadatabase.Relation
 
 data class ArtistScaffoldModel(
     override val id: String,
@@ -21,7 +19,7 @@ data class ArtistScaffoldModel(
 ) : Artist
 
 internal fun ArtistForDetails.toArtistScaffoldModel(
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = ArtistScaffoldModel(
     id = id,
     name = name,
@@ -36,5 +34,5 @@ internal fun ArtistForDetails.toArtistScaffoldModel(
         ended = ended,
     ),
     imageUrl = imageUrl,
-    urls = urls.map { it.toRelationListItemModel() }
+    urls = urls,
 )

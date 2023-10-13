@@ -1,12 +1,10 @@
 package ly.david.musicsearch.domain.recordng
 
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.domain.artist.toArtistCreditUiModel
-import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Artist_credit_name
 import lydavidmusicsearchdatadatabase.Recording
-import lydavidmusicsearchdatadatabase.Relation
 
 data class RecordingScaffoldModel(
     override val id: String,
@@ -22,7 +20,7 @@ data class RecordingScaffoldModel(
 
 internal fun Recording.toRecordingScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = RecordingScaffoldModel(
     id = id,
     name = name,
@@ -32,5 +30,5 @@ internal fun Recording.toRecordingScaffoldModel(
     video = video,
     isrcs = isrcs,
     artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )

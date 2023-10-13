@@ -4,10 +4,8 @@ import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toAreaListItemModel
-import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Area
 import lydavidmusicsearchdatadatabase.Place
-import lydavidmusicsearchdatadatabase.Relation
 
 data class PlaceScaffoldModel(
     override val id: String,
@@ -23,7 +21,7 @@ data class PlaceScaffoldModel(
 
 internal fun Place.toPlaceScaffoldModel(
     area: Area?,
-    urls: List<Relation>,
+    urls: List<RelationListItemModel>,
 ) = PlaceScaffoldModel(
     id = id,
     name = name,
@@ -40,5 +38,5 @@ internal fun Place.toPlaceScaffoldModel(
         ended = ended,
     ),
     area = area?.toAreaListItemModel(),
-    urls = urls.map { it.toRelationListItemModel() },
+    urls = urls,
 )
