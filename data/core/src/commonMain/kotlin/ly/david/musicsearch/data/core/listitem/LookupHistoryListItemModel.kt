@@ -2,7 +2,6 @@ package ly.david.musicsearch.data.core.listitem
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 
 data class LookupHistoryListItemModel(
@@ -13,13 +12,3 @@ data class LookupHistoryListItemModel(
     val lastAccessed: Instant = Clock.System.now(),
     val imageUrl: String? = null,
 ) : ListItemModel()
-
-fun LookupHistoryForListItem.toLookupHistoryListItemModel() =
-    LookupHistoryListItemModel(
-        id = mbid,
-        title = title,
-        entity = entity,
-        numberOfVisits = numberOfVisits,
-        lastAccessed = lastAccessed,
-        imageUrl = imageUrl,
-    )

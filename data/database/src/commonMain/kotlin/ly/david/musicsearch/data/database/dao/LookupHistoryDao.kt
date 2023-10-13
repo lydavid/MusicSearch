@@ -3,10 +3,10 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.data.core.history.LookupHistory
-import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 
 class LookupHistoryDao(
@@ -37,7 +37,7 @@ class LookupHistoryDao(
         leastRecentlyVisited: Boolean,
         mostVisited: Boolean,
         leastVisited: Boolean,
-    ): PagingSource<Int, LookupHistoryForListItem> = QueryPagingSource(
+    ): PagingSource<Int, LookupHistoryListItemModel> = QueryPagingSource(
         countQuery = transacter.getAllLookupHistoryCount(
             query = query,
         ),
@@ -54,7 +54,7 @@ class LookupHistoryDao(
             leastVisited = leastVisited,
             limit = limit,
             offset = offset,
-            mapper = ::mapToLookupHistoryForListItem,
+            mapper = ::mapToLookupHistoryListItemModel,
         )
     }
 
@@ -78,15 +78,15 @@ class LookupHistoryDao(
     }
 }
 
-private fun mapToLookupHistoryForListItem(
+private fun mapToLookupHistoryListItemModel(
     mbid: String,
     title: String,
     entity: MusicBrainzEntity,
     numberOfVisits: Int,
     lastAccessed: Instant,
     imageUrl: String?,
-) = LookupHistoryForListItem(
-    mbid = mbid,
+) = LookupHistoryListItemModel(
+    id = mbid,
     title = title,
     entity = entity,
     numberOfVisits = numberOfVisits,
