@@ -1,7 +1,7 @@
 package ly.david.ui.common.paging
 
 import app.cash.paging.PagingSource
-import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
 
 interface StoreEntityUseCase {
     suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int
@@ -18,6 +18,6 @@ interface BrowseEntityUseCase<DM : Any, LI : ListItemModel> : StoreEntityUseCase
     }
 }
 
-interface BrowseSortableEntityUseCase<DM : Any> : StoreEntityUseCase {
-    fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean): PagingSource<Int, DM>
+interface BrowseSortableEntityUseCase<LI : Any> : StoreEntityUseCase {
+    fun getLinkedEntitiesPagingSource(entityId: String, query: String, sorted: Boolean): PagingSource<Int, LI>
 }

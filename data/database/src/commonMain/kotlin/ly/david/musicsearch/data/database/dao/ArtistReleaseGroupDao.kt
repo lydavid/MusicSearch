@@ -8,10 +8,10 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.core.CoroutineDispatchers
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.Database
-import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
+import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import lydavidmusicsearchdatadatabase.Artist_release_group
 
 class ArtistReleaseGroupDao(
@@ -77,7 +77,7 @@ class ArtistReleaseGroupDao(
         artistId: String,
         query: String,
         sorted: Boolean,
-    ): PagingSource<Int, ReleaseGroupForListItem> = QueryPagingSource(
+    ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleaseGroupsByArtist(
             artistId = artistId,
             query = query,
@@ -91,7 +91,7 @@ class ArtistReleaseGroupDao(
             sorted = sorted,
             limit = limit,
             offset = offset,
-            mapper = ::mapToReleaseGroupForListItem,
+            mapper = ::mapToReleaseGroupListItemModel,
         )
     }
 }

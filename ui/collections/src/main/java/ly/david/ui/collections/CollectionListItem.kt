@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.SMALL_IMAGE_SIZE
 import ly.david.ui.core.preview.DefaultPreviews

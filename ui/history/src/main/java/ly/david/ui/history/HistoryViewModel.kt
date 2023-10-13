@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import ly.david.musicsearch.domain.history.GetPagedHistory
 import ly.david.musicsearch.domain.history.HistorySortOption
-import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
 import ly.david.ui.settings.AppPreferences
 
 class HistoryViewModel(

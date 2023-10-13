@@ -33,7 +33,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.work.details.WorkDetailsScreen
 import ly.david.mbjc.ui.work.recordings.RecordingsByWorkScreen
 import ly.david.mbjc.ui.work.stats.WorkGroupStatsScreen
-import ly.david.musicsearch.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen

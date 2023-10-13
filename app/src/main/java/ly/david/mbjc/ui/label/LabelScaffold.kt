@@ -33,7 +33,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.mbjc.ui.label.details.LabelDetailsScreen
 import ly.david.mbjc.ui.label.releases.ReleasesByLabelScreen
 import ly.david.mbjc.ui.label.stats.LabelStatsScreen
-import ly.david.musicsearch.domain.listitem.ReleaseListItemModel
+import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen

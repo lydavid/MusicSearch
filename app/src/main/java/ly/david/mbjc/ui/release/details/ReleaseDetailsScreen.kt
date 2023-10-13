@@ -17,10 +17,10 @@ import ly.david.musicsearch.data.core.common.toDisplayTime
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
-import ly.david.musicsearch.domain.listitem.AreaListItemModel
-import ly.david.musicsearch.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.data.core.listitem.AreaListItemModel
+import ly.david.musicsearch.data.core.listitem.LabelListItemModel
 import ly.david.musicsearch.domain.release.ReleaseScaffoldModel
-import ly.david.musicsearch.domain.release.TextRepresentationUiModel
+import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader

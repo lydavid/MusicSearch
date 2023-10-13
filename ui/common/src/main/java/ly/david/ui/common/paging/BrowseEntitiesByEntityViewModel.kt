@@ -6,7 +6,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.MusicBrainzModel
 import ly.david.data.musicbrainz.api.Browsable
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
-import ly.david.musicsearch.domain.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class BrowseEntitiesByEntityViewModel<

@@ -8,7 +8,7 @@ import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
-import ly.david.musicsearch.domain.listitem.SeriesListItemModel
+import ly.david.musicsearch.data.core.listitem.SeriesListItemModel
 import ly.david.musicsearch.domain.listitem.toSeriesListItemModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.series.SeriesPagedList

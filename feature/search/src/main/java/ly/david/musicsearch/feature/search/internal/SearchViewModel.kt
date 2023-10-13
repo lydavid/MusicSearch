@@ -22,11 +22,11 @@ import ly.david.musicsearch.data.core.history.SearchHistory
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
-import ly.david.musicsearch.domain.listitem.EndOfList
-import ly.david.musicsearch.domain.listitem.Header
-import ly.david.musicsearch.domain.listitem.ListItemModel
-import ly.david.musicsearch.domain.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.domain.listitem.toSearchHistoryListItemModel
+import ly.david.musicsearch.data.core.listitem.EndOfList
+import ly.david.musicsearch.data.core.listitem.Header
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.SearchHistoryListItemModel
+import ly.david.musicsearch.data.core.listitem.toSearchHistoryListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.musicsearch.domain.paging.SearchMusicBrainzPagingSource
 import ly.david.ui.common.paging.insertFooterItemForNonEmpty

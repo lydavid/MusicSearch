@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.core.common.getDateFormatted
 import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
-import ly.david.musicsearch.domain.listitem.ListItemModel
-import ly.david.musicsearch.domain.listitem.ListSeparator
-import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
-import ly.david.musicsearch.domain.listitem.toLookupHistoryListItemModel
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListSeparator
+import ly.david.musicsearch.data.core.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.data.core.listitem.toLookupHistoryListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import org.koin.core.annotation.Single
 

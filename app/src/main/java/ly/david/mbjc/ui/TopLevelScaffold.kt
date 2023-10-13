@@ -32,8 +32,8 @@ import ly.david.mbjc.ui.navigation.NavigationGraph
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.domain.getTopLevelDestination
 import ly.david.musicsearch.domain.getTopLevelRoute
-import ly.david.musicsearch.domain.listitem.CollectionListItemModel
-import ly.david.musicsearch.domain.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.listitem.LookupHistoryListItemModel
 import ly.david.ui.collections.CollectionBottomSheet
 import ly.david.ui.collections.CreateCollectionDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted

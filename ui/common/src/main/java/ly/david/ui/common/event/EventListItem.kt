@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.data.core.common.ifNotNull
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.getLifeSpanForDisplay
-import ly.david.musicsearch.domain.common.LifeSpanUiModel
-import ly.david.musicsearch.domain.listitem.EventListItemModel
+import ly.david.musicsearch.data.core.LifeSpanUiModel
+import ly.david.musicsearch.data.core.listitem.EventListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

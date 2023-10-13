@@ -1,7 +1,7 @@
 package ly.david.ui.common.recording
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.domain.listitem.RecordingListItemModel
+import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

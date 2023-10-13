@@ -1,7 +1,7 @@
 package ly.david.ui.common.label
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.domain.listitem.LabelListItemModel
+import ly.david.musicsearch.data.core.listitem.LabelListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

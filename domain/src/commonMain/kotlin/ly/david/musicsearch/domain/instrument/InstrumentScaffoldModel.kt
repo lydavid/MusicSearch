@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.instrument
 
-import ly.david.musicsearch.domain.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toRelationListItemModel
 import lydavidmusicsearchdatadatabase.Instrument
 import lydavidmusicsearchdatadatabase.Relation
