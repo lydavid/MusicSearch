@@ -1,12 +1,13 @@
 package ly.david.musicsearch.domain.release
 
-import ly.david.data.core.area.ReleaseEvent
-import ly.david.data.core.getFormatsForDisplay
-import ly.david.data.core.getTracksForDisplay
-import ly.david.data.core.label.LabelWithCatalog
-import ly.david.data.core.release.FormatTrackCount
-import ly.david.data.core.release.ReleaseForDetails
-import ly.david.data.core.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.data.core.area.ReleaseEvent
+import ly.david.musicsearch.data.core.getFormatsForDisplay
+import ly.david.musicsearch.data.core.getTracksForDisplay
+import ly.david.musicsearch.data.core.label.LabelWithCatalog
+import ly.david.musicsearch.data.core.release.FormatTrackCount
+import ly.david.musicsearch.data.core.release.ReleaseForDetails
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.data.core.release.Release
 import ly.david.musicsearch.domain.artist.ArtistCreditUiModel
 import ly.david.musicsearch.domain.artist.toArtistCreditUiModel
 import ly.david.musicsearch.domain.listitem.AreaListItemModel
@@ -48,7 +49,7 @@ data class ReleaseScaffoldModel(
 
     val releaseLength: Int? = null,
     val hasNullLength: Boolean = false,
-) : ly.david.data.core.release.Release
+) : Release
 
 internal fun ReleaseForDetails.toReleaseScaffoldModel(
     artistCreditNames: List<Artist_credit_name>,

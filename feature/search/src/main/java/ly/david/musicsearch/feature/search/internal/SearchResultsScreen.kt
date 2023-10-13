@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import ly.david.data.core.getNameWithDisambiguation
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.listitem.AreaListItemModel
 import ly.david.musicsearch.domain.listitem.ArtistListItemModel
 import ly.david.musicsearch.domain.listitem.EndOfList

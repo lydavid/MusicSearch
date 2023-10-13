@@ -8,7 +8,7 @@ data class SeriesListItemModel(
     override val name: String,
     override val disambiguation: String? = null,
     override val type: String? = null,
-) : ly.david.data.core.Series, ListItemModel()
+) : ly.david.musicsearch.data.core.Series, ListItemModel()
 
 fun SeriesMusicBrainzModel.toSeriesListItemModel() =
     SeriesListItemModel(

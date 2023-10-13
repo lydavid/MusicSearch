@@ -1,5 +1,5 @@
 import kotlinx.datetime.Instant;
-import ly.david.data.core.network.MusicBrainzEntity;
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity;
 
 CREATE TABLE IF NOT EXISTS search_history (
   `entity` TEXT AS MusicBrainzEntity NOT NULL,

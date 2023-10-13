@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.release
 
-import ly.david.data.core.TextRepresentation
+import ly.david.musicsearch.data.core.TextRepresentation
 import ly.david.data.musicbrainz.TextRepresentationMusicBrainzModel
 
 data class TextRepresentationUiModel(

@@ -15,8 +15,8 @@ import coil.Coil
 import coil.ImageLoaderFactory
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.collectableEntities
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.collectableEntities
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest

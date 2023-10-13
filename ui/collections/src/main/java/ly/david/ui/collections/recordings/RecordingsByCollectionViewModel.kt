@@ -1,8 +1,8 @@
 package ly.david.ui.collections.recordings
 
 import androidx.paging.PagingSource
-import ly.david.data.core.RecordingForListItem
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.RecordingForListItem
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi

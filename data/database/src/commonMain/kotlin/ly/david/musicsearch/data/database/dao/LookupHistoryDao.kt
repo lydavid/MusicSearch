@@ -3,10 +3,10 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.datetime.Instant
-import ly.david.data.core.CoroutineDispatchers
-import ly.david.data.core.history.LookupHistory
-import ly.david.data.core.history.LookupHistoryForListItem
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.database.Database
 
 class LookupHistoryDao(

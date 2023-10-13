@@ -15,7 +15,7 @@ data class WorkScaffoldModel(
     override val iswcs: List<String>? = null,
     val attributes: List<WorkAttributeUiModel> = listOf(),
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Work
+) : ly.david.musicsearch.data.core.Work
 
 internal fun Work.toWorkScaffoldModel(
     workAttributes: List<Work_attribute>,

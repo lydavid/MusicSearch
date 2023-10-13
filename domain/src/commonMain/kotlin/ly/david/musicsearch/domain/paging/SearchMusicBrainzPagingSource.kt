@@ -5,7 +5,7 @@ import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.MusicBrainzModel
 import ly.david.data.musicbrainz.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.musicbrainz.api.STARTING_OFFSET

@@ -19,7 +19,7 @@ data class PlaceScaffoldModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val area: AreaListItemModel? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Place
+) : ly.david.musicsearch.data.core.Place
 
 internal fun Place.toPlaceScaffoldModel(
     area: Area?,

@@ -18,8 +18,8 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.data.core.history.SearchHistory
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.history.SearchHistory
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
 import ly.david.musicsearch.domain.listitem.EndOfList

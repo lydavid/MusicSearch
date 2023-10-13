@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.Identifiable
+import ly.david.musicsearch.data.core.Identifiable
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.EventMusicBrainzModel

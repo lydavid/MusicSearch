@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Relation
 
 /**
@@ -19,7 +19,7 @@ data class RelationListItemModel(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
-) : ListItemModel(), ly.david.data.core.Relation
+) : ListItemModel(), ly.david.musicsearch.data.core.Relation
 
 fun Relation.toRelationListItemModel() =
     RelationListItemModel(

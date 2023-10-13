@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.repository
 
 import app.cash.paging.PagingSource
-import ly.david.data.core.history.LookupHistory
-import ly.david.data.core.history.LookupHistoryForListItem
+import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.domain.history.HistorySortOption
 import ly.david.musicsearch.domain.history.LookupHistoryRepository

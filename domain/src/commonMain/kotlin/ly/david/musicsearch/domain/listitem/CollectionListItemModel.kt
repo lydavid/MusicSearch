@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Collection
 
 data class CollectionListItemModel(

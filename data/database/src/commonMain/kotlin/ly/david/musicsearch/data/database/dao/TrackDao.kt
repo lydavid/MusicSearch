@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.data.core.CoroutineDispatchers
-import ly.david.data.core.TrackForListItem
+import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.TrackForListItem
 import ly.david.data.musicbrainz.TrackMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToTrackForListItem

@@ -1,8 +1,8 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.artist.getDisplayNames
-import ly.david.data.core.release.Release
-import ly.david.data.core.release.ReleaseForListItem
+import ly.david.musicsearch.data.core.artist.getDisplayNames
+import ly.david.musicsearch.data.core.release.Release
+import ly.david.musicsearch.data.core.release.ReleaseForListItem
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.musicsearch.domain.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.domain.release.TextRepresentationUiModel

@@ -1,8 +1,8 @@
 package ly.david.musicsearch.domain.history
 
 import androidx.paging.PagingSource
-import ly.david.data.core.history.LookupHistory
-import ly.david.data.core.history.LookupHistoryForListItem
+import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
 
 interface LookupHistoryRepository {
     fun upsert(lookupHistory: LookupHistory)

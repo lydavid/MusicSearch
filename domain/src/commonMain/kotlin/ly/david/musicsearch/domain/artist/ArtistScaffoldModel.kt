@@ -1,7 +1,7 @@
 package ly.david.musicsearch.domain.artist
 
-import ly.david.data.core.artist.Artist
-import ly.david.data.core.artist.ArtistForDetails
+import ly.david.musicsearch.data.core.artist.Artist
+import ly.david.musicsearch.data.core.artist.ArtistForDetails
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.listitem.RelationListItemModel
 import ly.david.musicsearch.domain.listitem.toRelationListItemModel

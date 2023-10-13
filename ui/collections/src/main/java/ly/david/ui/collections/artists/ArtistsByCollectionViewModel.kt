@@ -1,7 +1,7 @@
 package ly.david.ui.collections.artists
 
 import androidx.paging.PagingSource
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi

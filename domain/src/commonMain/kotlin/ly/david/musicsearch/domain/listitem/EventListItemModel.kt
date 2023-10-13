@@ -13,7 +13,7 @@ data class EventListItemModel(
     override val time: String? = null,
     override val cancelled: Boolean? = null,
     override val lifeSpan: LifeSpanUiModel? = null,
-) : ly.david.data.core.Event, ListItemModel()
+) : ly.david.musicsearch.data.core.Event, ListItemModel()
 
 fun EventMusicBrainzModel.toEventListItemModel() =
     EventListItemModel(

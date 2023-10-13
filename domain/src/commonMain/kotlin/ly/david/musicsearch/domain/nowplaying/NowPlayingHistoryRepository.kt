@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.nowplaying
 
-import ly.david.data.core.history.NowPlayingHistory
+import ly.david.musicsearch.data.core.history.NowPlayingHistory
 import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import org.koin.core.annotation.Single
 

@@ -2,7 +2,7 @@ package ly.david.ui.collections
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.listitem.CollectionListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test

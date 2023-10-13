@@ -2,10 +2,10 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.data.core.CoroutineDispatchers
-import ly.david.data.core.RecordingForListItem
-import ly.david.data.core.release.ReleaseForListItem
-import ly.david.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.RecordingForListItem
+import ly.david.musicsearch.data.core.release.ReleaseForListItem
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToRecordingForListItem

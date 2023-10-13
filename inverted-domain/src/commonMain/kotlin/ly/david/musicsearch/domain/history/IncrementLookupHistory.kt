@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.history
 
-import ly.david.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.history.LookupHistory
 import org.koin.core.annotation.Single
 
 @Single

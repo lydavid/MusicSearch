@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.data.core.release.ReleaseForListItem
+import ly.david.musicsearch.data.core.release.ReleaseForListItem
 
 // Although SQLDelight generates models for us, their types are based on the function names.
 internal fun mapToReleaseForListItem(

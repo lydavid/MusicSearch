@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.data.core.image.ImageUrlDao
+import ly.david.musicsearch.data.core.image.ImageUrlDao
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Mbid_image
 

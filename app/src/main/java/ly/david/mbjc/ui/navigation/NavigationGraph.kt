@@ -10,10 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import ly.david.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.data.core.network.MusicBrainzEntity
-import ly.david.data.core.network.resourceUri
-import ly.david.data.core.network.toMusicBrainzEntity
+import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.resourceUri
+import ly.david.musicsearch.data.core.network.toMusicBrainzEntity
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold

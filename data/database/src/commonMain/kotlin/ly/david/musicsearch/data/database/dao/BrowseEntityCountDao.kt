@@ -4,9 +4,9 @@ import app.cash.sqldelight.Query
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.core.CoroutineDispatchers
-import ly.david.data.core.browse.BrowseEntityCount
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.browse.BrowseEntityCount
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 

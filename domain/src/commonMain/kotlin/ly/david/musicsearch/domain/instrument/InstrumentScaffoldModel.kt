@@ -12,7 +12,7 @@ data class InstrumentScaffoldModel(
     override val description: String? = null,
     override val type: String? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.data.core.Instrument
+) : ly.david.musicsearch.data.core.Instrument
 
 internal fun Instrument.toInstrumentListItemModel(
     urls: List<Relation>,

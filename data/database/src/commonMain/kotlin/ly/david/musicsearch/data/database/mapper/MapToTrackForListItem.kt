@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.data.core.TrackForListItem
+import ly.david.musicsearch.data.core.TrackForListItem
 
 internal fun mapToTrackForListItem(
     id: String,

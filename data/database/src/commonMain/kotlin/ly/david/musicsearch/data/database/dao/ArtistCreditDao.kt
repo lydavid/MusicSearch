@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.data.core.artist.getDisplayNames
+import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT

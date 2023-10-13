@@ -3,7 +3,7 @@ package ly.david.data.test
 import ly.david.data.musicbrainz.Direction
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.data.musicbrainz.api.SearchLabelsResponse

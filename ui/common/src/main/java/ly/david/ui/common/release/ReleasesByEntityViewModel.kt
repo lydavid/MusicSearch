@@ -2,8 +2,8 @@ package ly.david.ui.common.release
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.data.core.release.ReleaseForListItem
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.release.ReleaseForListItem
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao

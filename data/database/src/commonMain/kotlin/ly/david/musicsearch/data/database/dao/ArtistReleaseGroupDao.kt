@@ -7,9 +7,9 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.data.core.CoroutineDispatchers
-import ly.david.data.core.releasegroup.ReleaseGroupForListItem
-import ly.david.data.core.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForListItem
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupForListItem
 import lydavidmusicsearchdatadatabase.Artist_release_group

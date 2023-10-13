@@ -2,8 +2,8 @@ package ly.david.musicsearch.domain.listitem
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.data.core.history.LookupHistoryForListItem
-import ly.david.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 
 data class LookupHistoryListItemModel(
     override val id: String,

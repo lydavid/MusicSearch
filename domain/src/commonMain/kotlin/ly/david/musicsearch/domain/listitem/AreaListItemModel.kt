@@ -1,7 +1,7 @@
 package ly.david.musicsearch.domain.listitem
 
-import ly.david.data.core.area.ReleaseEvent
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.musicsearch.data.core.area.ReleaseEvent
 import ly.david.musicsearch.domain.common.LifeSpanUiModel
 import ly.david.musicsearch.domain.common.toLifeSpanUiModel
 import lydavidmusicsearchdatadatabase.Area
@@ -15,7 +15,7 @@ data class AreaListItemModel(
     override val lifeSpan: LifeSpanUiModel? = null,
     val countryCodes: List<String>? = null,
     val date: String? = null,
-) : ly.david.data.core.area.Area, ListItemModel()
+) : ly.david.musicsearch.data.core.area.Area, ListItemModel()
 
 internal fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = AreaListItemModel(
     id = id,

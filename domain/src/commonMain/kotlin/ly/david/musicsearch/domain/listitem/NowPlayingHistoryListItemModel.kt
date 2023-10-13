@@ -2,7 +2,7 @@ package ly.david.musicsearch.domain.listitem
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import ly.david.data.core.history.NowPlayingHistory
+import ly.david.musicsearch.data.core.history.NowPlayingHistory
 
 data class NowPlayingHistoryListItemModel(
     override val id: String,

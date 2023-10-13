@@ -15,7 +15,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import coil.size.Size
-import ly.david.data.core.common.useHttps
+import ly.david.musicsearch.data.core.common.useHttps
 import ly.david.musicsearch.ui.image.internal.PlaceholderIcon
 import ly.david.ui.core.SMALL_IMAGE_SIZE
 import ly.david.ui.core.preview.DefaultPreviews
