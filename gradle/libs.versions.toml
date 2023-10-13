@@ -94,7 +94,7 @@ sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-exte
 sqldelight-paging = { group = "app.cash.sqldelight", name = "androidx-paging3-extensions", version.ref = "sqldelight" }
 sqldelight-primitive = { group = "app.cash.sqldelight", name = "primitive-adapters", version.ref = "sqldelight" }
 sqldelight-sqlite-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
-test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version = "1.12" }
+test-parameter-injector = { group = "com.google.testparameterinjector", name = "test-parameter-injector", version = "1.13" }
 timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }
 
 # build-logic libraries
