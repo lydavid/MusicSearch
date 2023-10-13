@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.area.showReleases
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.area.AreaScaffoldModel
-import ly.david.musicsearch.domain.history.IncrementLookupHistory
+import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList

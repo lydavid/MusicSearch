@@ -22,9 +22,9 @@ import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.domain.history.DeleteLookupHistory
-import ly.david.musicsearch.domain.history.MarkLookupHistoryForDeletion
-import ly.david.musicsearch.domain.history.UnMarkLookupHistoryForDeletion
+import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
+import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
+import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
 import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
 import ly.david.musicsearch.domain.listitem.toCollectionListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig

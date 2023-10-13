@@ -1,5 +1,6 @@
-package ly.david.musicsearch.domain.history
+package ly.david.musicsearch.domain.history.usecase
 
+import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import org.koin.core.annotation.Single
 
 @Single

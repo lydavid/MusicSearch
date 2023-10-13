@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.core.history.LookupHistory
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.GenreMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.domain.history.IncrementLookupHistory
+import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import org.koin.android.annotation.KoinViewModel
 import timber.log.Timber

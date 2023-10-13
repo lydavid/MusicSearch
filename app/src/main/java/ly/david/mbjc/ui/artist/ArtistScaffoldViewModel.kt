@@ -11,7 +11,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.spotify.di.ArtistImageRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.artist.ArtistScaffoldModel
-import ly.david.musicsearch.domain.history.IncrementLookupHistory
+import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
