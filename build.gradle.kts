@@ -34,12 +34,12 @@ subprojects {
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-                        project.layout.buildDirectory.dir("/compose_metrics").get().toString()
+                        project.layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics"
                 )
                 freeCompilerArgs.addAll(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-                        project.layout.buildDirectory.dir("/compose_metrics").get().toString()
+                        project.layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics"
                 )
             }
         }
