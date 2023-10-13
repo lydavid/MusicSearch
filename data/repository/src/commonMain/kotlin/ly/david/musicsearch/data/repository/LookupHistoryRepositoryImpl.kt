@@ -1,9 +1,17 @@
 package ly.david.musicsearch.data.repository
 
-import app.cash.paging.PagingSource
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.insertSeparators
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import ly.david.musicsearch.data.core.common.getDateFormatted
 import ly.david.musicsearch.data.core.history.LookupHistory
-import ly.david.musicsearch.data.core.history.LookupHistoryForListItem
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListSeparator
+import ly.david.musicsearch.data.core.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
+import ly.david.musicsearch.data.repository.paging.CommonPagingConfig
 import ly.david.musicsearch.domain.history.HistorySortOption
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
 
@@ -14,19 +22,59 @@ class LookupHistoryRepositoryImpl(
         lookupHistoryDao.upsert(lookupHistory)
     }
 
-    override fun getAllLookupHistory(
+    override fun observeAllLookupHistory(
         query: String,
         sortOption: HistorySortOption,
-    ): PagingSource<Int, LookupHistoryForListItem> =
-        lookupHistoryDao.getAllLookupHistory(
-            query = "%$query%",
-            alphabetically = sortOption == HistorySortOption.ALPHABETICALLY,
-            alphabeticallyReverse = sortOption == HistorySortOption.ALPHABETICALLY_REVERSE,
-            recentlyVisited = sortOption == HistorySortOption.RECENTLY_VISITED,
-            leastRecentlyVisited = sortOption == HistorySortOption.LEAST_RECENTLY_VISITED,
-            mostVisited = sortOption == HistorySortOption.MOST_VISITED,
-            leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
+    ): Flow<PagingData<ListItemModel>> =
+        Pager(
+            config = CommonPagingConfig.pagingConfig,
+            pagingSourceFactory = {
+                lookupHistoryDao.getAllLookupHistory(
+                    query = "%$query%",
+                    alphabetically = sortOption == HistorySortOption.ALPHABETICALLY,
+                    alphabeticallyReverse = sortOption == HistorySortOption.ALPHABETICALLY_REVERSE,
+                    recentlyVisited = sortOption == HistorySortOption.RECENTLY_VISITED,
+                    leastRecentlyVisited = sortOption == HistorySortOption.LEAST_RECENTLY_VISITED,
+                    mostVisited = sortOption == HistorySortOption.MOST_VISITED,
+                    leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
+                )
+            }
+        ).flow.map { pagingData ->
+            pagingData
+                .insertSeparators {
+                        before: LookupHistoryListItemModel?,
+                        after: LookupHistoryListItemModel?,
+                    ->
+                    getListSeparator(
+                        before = before,
+                        after = after,
+                        sortOption = sortOption
+                    )
+                }
+        }
+
+    private fun getListSeparator(
+        before: LookupHistoryListItemModel?,
+        after: LookupHistoryListItemModel?,
+        sortOption: HistorySortOption,
+    ): ListSeparator? {
+        if (sortOption != HistorySortOption.RECENTLY_VISITED &&
+            sortOption != HistorySortOption.LEAST_RECENTLY_VISITED
+        ) {
+            return null
+        }
+
+        val beforeDate = before?.lastAccessed?.getDateFormatted()
+        val afterDate = after?.lastAccessed?.getDateFormatted()
+        if (beforeDate == afterDate || afterDate == null) {
+            return null
+        }
+
+        return ListSeparator(
+            id = afterDate,
+            text = afterDate,
         )
+    }
 
     override fun markHistoryAsDeleted(mbid: String) {
         lookupHistoryDao.markAsDeleted(mbid, true)
