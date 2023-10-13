@@ -7,7 +7,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertSeparators
-import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,15 +15,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.TrackForListItem
 import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.data.database.dao.MediumDao
-import ly.david.musicsearch.data.database.dao.ReleaseDao
-import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.data.core.listitem.ListItemModel
 import ly.david.musicsearch.data.core.listitem.ListSeparator
 import ly.david.musicsearch.data.core.listitem.TrackListItemModel
-import ly.david.musicsearch.data.core.listitem.toTrackListItemModel
+import ly.david.musicsearch.data.database.dao.MediumDao
+import ly.david.musicsearch.data.database.dao.ReleaseDao
+import ly.david.musicsearch.data.database.dao.TrackDao
 import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.musicsearch.domain.release.ReleaseRepository
@@ -76,7 +73,6 @@ internal class TracksByReleaseViewModel(
                     }
                 ).flow.map { pagingData ->
                     pagingData
-                        .map(TrackForListItem::toTrackListItemModel)
                         .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
                             if (before?.mediumId != after?.mediumId && after != null) {
                                 val medium =

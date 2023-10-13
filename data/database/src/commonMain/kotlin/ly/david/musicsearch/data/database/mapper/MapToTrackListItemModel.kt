@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.TrackForListItem
+import ly.david.musicsearch.data.core.listitem.TrackListItemModel
 
-internal fun mapToTrackForListItem(
+internal fun mapToTrackListItemModel(
     id: String,
     mediumId: Long,
     recordingId: String,
@@ -11,7 +11,7 @@ internal fun mapToTrackForListItem(
     title: String,
     length: Int?,
     formattedArtistCreditNames: String,
-) = TrackForListItem(
+) = TrackListItemModel(
     id = id,
     position = position,
     number = number,
@@ -19,5 +19,5 @@ internal fun mapToTrackForListItem(
     length = length,
     mediumId = mediumId,
     recordingId = recordingId,
-    formattedArtistCreditNames = formattedArtistCreditNames,
+    formattedArtistCredits = formattedArtistCreditNames,
 )
