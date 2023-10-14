@@ -18,4 +18,13 @@ INSERT OR IGNORE INTO label
 VALUES ?;
 
 getLabel:
-SELECT * FROM label WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  type,
+  label_code,
+  begin,
+  end,
+  ended
+FROM label WHERE id = ?;

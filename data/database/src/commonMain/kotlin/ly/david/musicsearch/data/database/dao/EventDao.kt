@@ -38,7 +38,7 @@ class EventDao(
         }
     }
 
-    fun getEvent(eventId: String): EventScaffoldModel? {
+    fun getEventForDetails(eventId: String): EventScaffoldModel? {
         return transacter.getEvent(
             eventId,
             mapper = ::toEventScaffoldModel,
@@ -50,7 +50,6 @@ class EventDao(
         name: String,
         disambiguation: String?,
         type: String?,
-        type_id: String?,
         time: String?,
         cancelled: Boolean?,
         begin: String?,

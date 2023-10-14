@@ -22,7 +22,7 @@ class AreaRepositoryImpl(
      * Lookup area, and stores all relevant data.
      */
     override suspend fun lookupArea(areaId: String): AreaScaffoldModel {
-        val area = areaDao.getArea(areaId)
+        val area = areaDao.getAreaForDetails(areaId)
         val countryCodes: List<String> = countryCodeDao.getCountryCodesForArea(areaId)
         val urlRelations = relationRepository.getEntityUrlRelationships(areaId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)

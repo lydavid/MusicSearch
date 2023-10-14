@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
+import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.label.LabelScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Label
@@ -36,7 +37,7 @@ class LabelDao(
         }
     }
 
-    fun getLabel(labelId: String): LabelScaffoldModel? {
+    fun getLabelForDetails(labelId: String): LabelScaffoldModel? {
         return transacter.getLabel(
             id = labelId,
             mapper = ::toLabelScaffoldModel,
@@ -48,8 +49,7 @@ class LabelDao(
         name: String,
         disambiguation: String?,
         type: String?,
-        type_id: String?,
-        label_code: Int?,
+        labelCode: Int?,
         begin: String?,
         end: String?,
         ended: Boolean?,
@@ -58,6 +58,11 @@ class LabelDao(
         name = name,
         disambiguation = disambiguation,
         type = type,
-        labelCode = label_code,
+        labelCode = labelCode,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        )
     )
 }

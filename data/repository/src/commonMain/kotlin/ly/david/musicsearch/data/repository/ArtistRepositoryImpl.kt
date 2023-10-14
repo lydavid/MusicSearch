@@ -15,7 +15,7 @@ class ArtistRepositoryImpl(
 ) : ArtistRepository {
 
     override suspend fun lookupArtist(artistId: String): ArtistScaffoldModel {
-        val artistScaffoldModel = artistDao.getArtist(artistId)
+        val artistScaffoldModel = artistDao.getArtistForDetails(artistId)
         val urlRelations = relationRepository.getEntityUrlRelationships(artistId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(artistId)
         if (artistScaffoldModel != null && hasUrlsBeenSavedForEntity) {

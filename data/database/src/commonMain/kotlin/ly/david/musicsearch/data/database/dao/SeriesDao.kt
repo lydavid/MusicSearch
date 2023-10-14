@@ -33,7 +33,7 @@ class SeriesDao(
         }
     }
 
-    fun getSeries(seriesId: String): SeriesScaffoldModel? {
+    fun getSeriesForDetails(seriesId: String): SeriesScaffoldModel? {
         return transacter.getSeries(
             seriesId,
             mapper = ::toSeriesScaffoldModel,
@@ -45,7 +45,6 @@ class SeriesDao(
         name: String,
         disambiguation: String?,
         type: String?,
-        type_id: String?,
     ) = SeriesScaffoldModel(
         id = id,
         name = name,

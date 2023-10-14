@@ -164,6 +164,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO: list item
     fun getPlacesByCollection(
         collectionId: String,
         query: String,

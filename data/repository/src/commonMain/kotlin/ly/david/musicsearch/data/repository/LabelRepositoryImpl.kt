@@ -15,7 +15,7 @@ class LabelRepositoryImpl(
 ) : LabelRepository {
 
     override suspend fun lookupLabel(labelId: String): LabelScaffoldModel {
-        val label = labelDao.getLabel(labelId)
+        val label = labelDao.getLabelForDetails(labelId)
         val urlRelations = relationRepository.getEntityUrlRelationships(labelId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(labelId)
         if (label != null && hasUrlsBeenSavedForEntity) {

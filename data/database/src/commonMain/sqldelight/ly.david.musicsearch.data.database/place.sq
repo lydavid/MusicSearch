@@ -19,4 +19,15 @@ INSERT OR IGNORE INTO place
 VALUES ?;
 
 getPlace:
-SELECT * FROM place WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  address,
+  type,
+  longitude,
+  latitude,
+  begin,
+  end,
+  ended
+FROM place WHERE id = ?;

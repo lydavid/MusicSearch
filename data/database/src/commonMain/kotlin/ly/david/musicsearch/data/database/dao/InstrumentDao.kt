@@ -33,7 +33,7 @@ class InstrumentDao(
         }
     }
 
-    fun getInstrument(instrumentId: String): InstrumentScaffoldModel? {
+    fun getInstrumentForDetails(instrumentId: String): InstrumentScaffoldModel? {
         return transacter.getInstrument(
             instrumentId,
             mapper = ::toInstrumentScaffoldModel,
@@ -46,7 +46,6 @@ class InstrumentDao(
         disambiguation: String?,
         description: String?,
         type: String?,
-        type_id: String?,
     ) = InstrumentScaffoldModel(
         id = id,
         name = name,

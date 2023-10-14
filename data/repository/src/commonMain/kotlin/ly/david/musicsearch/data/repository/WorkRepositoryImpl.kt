@@ -19,7 +19,7 @@ class WorkRepositoryImpl(
     override suspend fun lookupWork(
         workId: String,
     ): WorkScaffoldModel {
-        val work = workDao.getWork(workId)
+        val work = workDao.getWorkForDetails(workId)
         val workAttributes = workAttributeDao.getWorkAttributesForWork(workId)
         val urlRelations = relationRepository.getEntityUrlRelationships(workId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(workId)

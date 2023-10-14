@@ -39,7 +39,7 @@ class ArtistDao(
         }
     }
 
-    fun getArtist(artistId: String): ArtistScaffoldModel? {
+    fun getArtistForDetails(artistId: String): ArtistScaffoldModel? {
         return transacter.getArtistForDetails(
             artistId,
             mapper = ::toArtistScaffoldModel,

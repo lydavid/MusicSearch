@@ -17,4 +17,12 @@ INSERT OR IGNORE INTO area
 VALUES ?;
 
 getArea:
-SELECT * FROM area WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  type,
+  begin,
+  end,
+  ended
+FROM area WHERE id = ?;

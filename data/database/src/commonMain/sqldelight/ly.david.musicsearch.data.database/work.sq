@@ -16,4 +16,11 @@ INSERT OR IGNORE INTO work
 VALUES ?;
 
 getWork:
-SELECT * FROM work WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  type,
+  language,
+  iswcs
+FROM work WHERE id = ?;

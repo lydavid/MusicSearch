@@ -18,4 +18,14 @@ INSERT OR IGNORE INTO event
 VALUES ?;
 
 getEvent:
-SELECT * FROM event WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  type,
+  time,
+  cancelled,
+  begin,
+  end,
+  ended
+FROM event WHERE id = ?;

@@ -36,7 +36,7 @@ class WorkDao(
         }
     }
 
-    fun getWork(workId: String): WorkScaffoldModel? {
+    fun getWorkForDetails(workId: String): WorkScaffoldModel? {
         return transacter.getWork(
             workId,
             mapper = ::toWorkScaffoldModel,
@@ -48,7 +48,6 @@ class WorkDao(
         name: String,
         disambiguation: String?,
         type: String?,
-        type_id: String?,
         language: String?,
         iswcs: List<String>?,
     ) = WorkScaffoldModel(

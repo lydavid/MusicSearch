@@ -19,7 +19,7 @@ class PlaceRepositoryImpl(
 ) : PlaceRepository {
 
     override suspend fun lookupPlace(placeId: String): PlaceScaffoldModel {
-        val place = placeDao.getPlace(placeId)
+        val place = placeDao.getPlaceForDetails(placeId)
         val area = areaPlaceDao.getAreaByPlace(placeId)
         val urlRelations = relationRepository.getEntityUrlRelationships(placeId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(placeId)

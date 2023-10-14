@@ -15,7 +15,7 @@ class InstrumentRepositoryImpl(
 ) : InstrumentRepository {
 
     override suspend fun lookupInstrument(instrumentId: String): InstrumentScaffoldModel {
-        val instrument = instrumentDao.getInstrument(instrumentId)
+        val instrument = instrumentDao.getInstrumentForDetails(instrumentId)
         val urlRelations = relationRepository.getEntityUrlRelationships(instrumentId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(instrumentId)
         if (instrument != null && hasUrlsBeenSavedForEntity) {

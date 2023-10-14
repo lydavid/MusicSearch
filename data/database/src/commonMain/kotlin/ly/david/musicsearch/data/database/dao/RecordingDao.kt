@@ -40,7 +40,7 @@ class RecordingDao(
         }
     }
 
-    fun getRecording(recordingId: String): RecordingScaffoldModel? {
+    fun getRecordingForDetails(recordingId: String): RecordingScaffoldModel? {
         return transacter.getRecording(
             recordingId,
             mapper = ::toRecordingScaffoldModel,
@@ -51,14 +51,14 @@ class RecordingDao(
         id: String,
         name: String,
         disambiguation: String,
-        first_release_date: String?,
+        firstReleaseDate: String?,
         length: Int?,
         video: Boolean,
         isrcs: List<String>?,
     ) = RecordingScaffoldModel(
         id = id,
         name = name,
-        firstReleaseDate = first_release_date,
+        firstReleaseDate = firstReleaseDate,
         disambiguation = disambiguation,
         length = length,
         video = video,

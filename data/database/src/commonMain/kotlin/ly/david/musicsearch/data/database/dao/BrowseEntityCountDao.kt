@@ -27,11 +27,11 @@ class BrowseEntityCountDao(
         transacter.getBrowseEntityCount(
             entityId = entityId,
             browseEntity = browseEntity,
-            mapper = { _, browse_entity, local_count, remote_count ->
+            mapper = { browseEntity, localCount, remoteCount ->
                 BrowseEntityCount(
-                    browseEntity = browse_entity,
-                    localCount = local_count,
-                    remoteCount = remote_count,
+                    browseEntity = browseEntity,
+                    localCount = localCount,
+                    remoteCount = remoteCount,
                 )
             }
         )

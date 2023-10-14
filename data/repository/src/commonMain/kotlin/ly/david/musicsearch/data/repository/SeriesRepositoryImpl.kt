@@ -15,7 +15,7 @@ class SeriesRepositoryImpl(
 ) : SeriesRepository {
 
     override suspend fun lookupSeries(seriesId: String): SeriesScaffoldModel {
-        val series = seriesDao.getSeries(seriesId)
+        val series = seriesDao.getSeriesForDetails(seriesId)
         val urlRelations = relationRepository.getEntityUrlRelationships(seriesId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(seriesId)
         if (series != null && hasUrlsBeenSavedForEntity) {

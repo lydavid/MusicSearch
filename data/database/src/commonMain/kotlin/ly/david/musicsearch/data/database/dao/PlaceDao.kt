@@ -40,7 +40,7 @@ class PlaceDao(
         }
     }
 
-    fun getPlace(placeId: String): PlaceScaffoldModel? {
+    fun getPlaceForDetails(placeId: String): PlaceScaffoldModel? {
         return transacter.getPlace(
             placeId,
             mapper = ::mapToPlaceScaffoldModel,
@@ -53,7 +53,6 @@ class PlaceDao(
         disambiguation: String?,
         address: String,
         type: String?,
-        type_id: String?,
         longitude: Double?,
         latitude: Double?,
         begin: String?,

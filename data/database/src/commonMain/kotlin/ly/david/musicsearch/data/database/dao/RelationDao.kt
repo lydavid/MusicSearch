@@ -73,24 +73,23 @@ class RelationDao(
     }
 
     private fun toRelationListItemModel(
-        entity_id: String,
-        linked_entity_id: String,
-        linked_entity: MusicBrainzEntity,
+        linkedEntityId: String,
+        linkedEntity: MusicBrainzEntity,
         order: Int,
         label: String,
         name: String,
         disambiguation: String?,
         attributes: String?,
-        additional_info: String?,
+        additionalInfo: String?,
     ) = RelationListItemModel(
-        id = "${linked_entity_id}_$order",
-        linkedEntityId = linked_entity_id,
-        linkedEntity = linked_entity,
+        id = "${linkedEntityId}_$order",
+        linkedEntityId = linkedEntityId,
+        linkedEntity = linkedEntity,
         label = label,
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        additionalInfo = additional_info
+        additionalInfo = additionalInfo
     )
 
     fun deleteRelationshipsExcludingUrlsByEntity(

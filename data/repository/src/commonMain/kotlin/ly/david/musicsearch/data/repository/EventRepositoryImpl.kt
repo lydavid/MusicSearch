@@ -15,7 +15,7 @@ class EventRepositoryImpl(
 ) : EventRepository {
 
     override suspend fun lookupEvent(eventId: String): EventScaffoldModel {
-        val event = eventDao.getEvent(eventId)
+        val event = eventDao.getEventForDetails(eventId)
         val urlRelations = relationRepository.getEntityUrlRelationships(eventId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(eventId)
         if (event != null && hasUrlsBeenSavedForEntity) {
