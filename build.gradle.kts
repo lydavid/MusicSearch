@@ -29,7 +29,7 @@ subprojects {
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")
-
+    
             if (project.findProperty("musicsearch.enableComposeCompilerReports") == "true") {
                 freeCompilerArgs.addAll(
                     "-P",
@@ -43,6 +43,10 @@ subprojects {
                 )
             }
         }
+    }
+    
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
