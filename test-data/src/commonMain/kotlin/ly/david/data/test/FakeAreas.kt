@@ -11,13 +11,13 @@ import ly.david.data.musicbrainz.api.SearchAreasResponse
 val canada = AreaMusicBrainzModel(
     id = "71bbafaa-e825-3e15-8ca9-017dcad1748b",
     name = "Canada",
-    type = AreaType.COUNTRY
+    type = AreaType.COUNTRY,
 )
 
 val toronto = AreaMusicBrainzModel(
     id = "74b24e62-d2fe-42d2-9d96-31f2da756c77",
     name = "Toronto",
-    type = "City"
+    type = "City",
 )
 
 /**
@@ -33,31 +33,31 @@ val ontario = AreaMusicBrainzModel(
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzEntity.AREA,
-            area = canada
+            area = canada,
         ),
         RelationMusicBrainzModel(
             type = "part of",
             typeId = "de7cc874-8b1b-3a05-8272-f3834c968fb7",
             direction = Direction.FORWARD,
             targetType = MusicBrainzEntity.AREA,
-            area = toronto
+            area = toronto,
         ),
-    )
+    ),
 )
 
 val fakeAreas = listOf(
     ontario,
-    canada
+    canada,
 )
 
 val browseAreasResponse = BrowseAreasResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(ontario)
+    musicBrainzModels = listOf(ontario),
 )
 
 val searchAreasResponse = SearchAreasResponse(
     count = 1,
     offset = 0,
-    areas = listOf(element = ontario)
+    areas = listOf(element = ontario),
 )

@@ -24,7 +24,7 @@ class LabelDao(
                     begin = label.lifeSpan?.begin,
                     end = label.lifeSpan?.end,
                     ended = label.lifeSpan?.ended,
-                )
+                ),
             )
         }
     }
@@ -63,6 +63,6 @@ class LabelDao(
             begin = begin,
             end = end,
             ended = ended,
-        )
+        ),
     )
 }

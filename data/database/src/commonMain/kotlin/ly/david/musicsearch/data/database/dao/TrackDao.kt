@@ -43,8 +43,8 @@ class TrackDao(
                     number = number,
                     title = title,
                     length = length,
-                    recording_id = recording.id
-                )
+                    recording_id = recording.id,
+                ),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = track.id,

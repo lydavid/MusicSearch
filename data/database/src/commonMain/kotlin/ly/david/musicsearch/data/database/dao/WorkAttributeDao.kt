@@ -27,7 +27,7 @@ class WorkAttributeDao(
                         type = workAttribute.type,
                         type_id = workAttribute.typeId,
                         value_ = workAttribute.value,
-                    )
+                    ),
                 )
             }
         }
@@ -42,6 +42,6 @@ class WorkAttributeDao(
                     typeId = typeId,
                     value = value,
                 )
-            }
+            },
         ).executeAsList()
 }

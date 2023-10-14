@@ -23,7 +23,7 @@ class CountryCodeDao(
                     Country_code(
                         area_id = areaId,
                         code = countryCode,
-                    )
+                    ),
                 )
             }
         }

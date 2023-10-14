@@ -11,7 +11,7 @@ import ly.david.data.musicbrainz.api.SearchLabelsResponse
 val elektraMusicGroup = LabelMusicBrainzModel(
     id = "c85c94c0-f83b-42f5-bac0-6b89720de387",
     name = "Elektra Music Group",
-    type = "Holding"
+    type = "Holding",
 )
 
 val elektra = LabelMusicBrainzModel(
@@ -25,14 +25,14 @@ val elektra = LabelMusicBrainzModel(
             typeId = "23f8c592-006d-4214-9080-c4e5000c05d7",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzEntity.LABEL,
-            label = elektraMusicGroup
-        )
-    )
+            label = elektraMusicGroup,
+        ),
+    ),
 )
 
 val underPressureLabelInfo = LabelInfo(
     catalogNumber = "E47235",
-    label = elektra
+    label = elektra,
 )
 
 val fakeLabels = listOf(
@@ -43,11 +43,11 @@ val fakeLabels = listOf(
 val browseLabelsResponse = BrowseLabelsResponse(
     count = 1,
     offset = 0,
-    listOf(element = elektra)
+    listOf(element = elektra),
 )
 
 val searchLabelsResponse = SearchLabelsResponse(
     count = 1,
     offset = 0,
-    listOf(element = elektra)
+    listOf(element = elektra),
 )

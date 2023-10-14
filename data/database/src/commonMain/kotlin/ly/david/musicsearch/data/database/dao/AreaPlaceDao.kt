@@ -28,7 +28,7 @@ class AreaPlaceDao(
             Area_place(
                 area_id = areaId,
                 place_id = placeId,
-            )
+            ),
         )
     }
 

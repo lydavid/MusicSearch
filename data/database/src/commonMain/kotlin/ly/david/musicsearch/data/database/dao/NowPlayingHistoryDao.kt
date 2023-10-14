@@ -39,7 +39,7 @@ class NowPlayingHistoryDao(
                     raw = raw,
                     lastPlayed = lastPlayed,
                 )
-            }
+            },
         )
     }
 

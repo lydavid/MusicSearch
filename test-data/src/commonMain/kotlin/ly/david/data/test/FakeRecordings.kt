@@ -19,23 +19,23 @@ val underPressureRecording = RecordingMusicBrainzModel(
             typeId = "5c0ceac3-feb4-41f0-868d-dc06f6e27fc0",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzEntity.ARTIST,
-            artist = davidBowie
-        )
-    )
+            artist = davidBowie,
+        ),
+    ),
 )
 
 val fakeRecordings = listOf(
-    underPressureRecording
+    underPressureRecording,
 )
 
 val browseRecordingsResponse = BrowseRecordingsResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(underPressureRecording)
+    musicBrainzModels = listOf(underPressureRecording),
 )
 
 val searchRecordingsResponse = SearchRecordingsResponse(
     count = 1,
     offset = 0,
-    listOf(element = underPressureRecording)
+    listOf(element = underPressureRecording),
 )

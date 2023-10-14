@@ -24,7 +24,7 @@ class ReleaseGroupDao(
                     primary_type_id = primaryTypeId,
                     secondary_types = secondaryTypes,
                     secondary_type_ids = secondaryTypeIds,
-                )
+                ),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = releaseGroup.id,
@@ -75,8 +75,8 @@ class ReleaseGroupDao(
                     firstReleaseDate = firstReleaseDate,
                     disambiguation = disambiguation,
                     primaryType = primaryType,
-                    secondaryTypes = secondaryTypes
+                    secondaryTypes = secondaryTypes,
                 )
-            }
+            },
         ).executeAsOneOrNull()
 }

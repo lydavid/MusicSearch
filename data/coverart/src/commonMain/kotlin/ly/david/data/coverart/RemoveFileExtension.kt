@@ -5,7 +5,7 @@ package ly.david.data.coverart
  * https://musicbrainz.org/doc/How_to_Add_Cover_Art
  */
 private val fileFormats = listOf(
-    "gif", "jpg", "jpeg", "png", "htm", "html", "jpe", "jfif", "pdf"
+    "gif", "jpg", "jpeg", "png", "htm", "html", "jpe", "jfif", "pdf",
 )
 
 internal fun String.removeFileExtension(): String {

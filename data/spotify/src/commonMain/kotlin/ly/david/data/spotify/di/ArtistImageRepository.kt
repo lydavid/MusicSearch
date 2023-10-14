@@ -34,7 +34,7 @@ class ArtistImageRepository(
             imageUrlDao.saveUrl(
                 mbid = artistMbid,
                 thumbnailUrl = thumbnailUrl,
-                largeUrl = largeUrl
+                largeUrl = largeUrl,
             )
             largeUrl
         } catch (ex: ClientRequestException) {

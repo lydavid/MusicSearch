@@ -8,7 +8,7 @@ val underPressureTrack = TrackMusicBrainzModel(
     position = 1,
     number = "1",
     title = "Under Pressure",
-    recording = underPressureRecording
+    recording = underPressureRecording,
 )
 
 val soulBrotherTrack = TrackMusicBrainzModel(
@@ -16,7 +16,7 @@ val soulBrotherTrack = TrackMusicBrainzModel(
     position = 2,
     number = "2",
     title = "Soul Brother",
-    recording = underPressureRecording
+    recording = underPressureRecording,
 )
 
 val underPressureMedia = MediumMusicBrainzModel(
@@ -24,5 +24,5 @@ val underPressureMedia = MediumMusicBrainzModel(
     title = "",
     trackCount = 2,
     format = "Vinyl",
-    tracks = listOf(underPressureTrack, soulBrotherTrack)
+    tracks = listOf(underPressureTrack, soulBrotherTrack),
 )

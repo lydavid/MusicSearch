@@ -23,9 +23,9 @@ fun BaseTheme(
     MaterialTheme(
         colorScheme = appColorScheme(
             darkTheme = darkTheme,
-            materialYou = materialYou
+            materialYou = materialYou,
         ),
-        content = content
+        content = content,
     )
 }
 
@@ -42,6 +42,6 @@ fun PreviewTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
 
     MaterialTheme(
         colorScheme = colorSchemes,
-        content = content
+        content = content,
     )
 }

@@ -20,7 +20,7 @@ class InstrumentDao(
                     description = description,
                     type = type,
                     type_id = typeId,
-                )
+                ),
             )
         }
     }

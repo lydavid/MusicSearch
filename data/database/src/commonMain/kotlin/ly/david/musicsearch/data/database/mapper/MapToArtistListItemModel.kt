@@ -26,5 +26,5 @@ fun mapToArtistListItemModel(
         begin = begin,
         end = end,
         ended = ended,
-    )
+    ),
 )

@@ -42,7 +42,7 @@ class ReleaseDao(
                     cover_art_count = coverArtArchive.count,
                     script = textRepresentation?.script,
                     language = textRepresentation?.language,
-                )
+                ),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = id,
@@ -117,6 +117,6 @@ class ReleaseDao(
                     format = format,
                     trackCount = trackCount.toInt(),
                 )
-            }
+            },
         ).executeAsList()
 }

@@ -23,7 +23,7 @@ class RecordingDao(
                     length = length,
                     video = video ?: false,
                     isrcs = isrcs?.toImmutableList(),
-                )
+                ),
             )
             artistCreditDao.insertArtistCredits(
                 entityId = recording.id,

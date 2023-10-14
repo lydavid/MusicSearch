@@ -41,7 +41,7 @@ class SpotifyOAuthApiImpl(
                 append("client_id", clientId)
                 append("client_secret", clientSecret)
                 append("grant_type", grantType)
-            }
+            },
         ).body()
     }
 }

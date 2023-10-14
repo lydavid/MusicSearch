@@ -26,7 +26,7 @@ class RecordingReleaseDao(
             Recording_release(
                 recording_id = recordingId,
                 release_id = releaseId,
-            )
+            ),
         )
     }
 

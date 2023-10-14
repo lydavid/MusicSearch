@@ -35,7 +35,7 @@ class ReleaseLabelDao(
                 release_id = releaseId,
                 label_id = labelId,
                 catalog_number = catalogNumber,
-            )
+            ),
         )
     }
 
@@ -76,7 +76,7 @@ class ReleaseLabelDao(
         disambiguation = disambiguation,
         type = type,
         labelCode = labelCode,
-        catalogNumber = catalogNumber
+        catalogNumber = catalogNumber,
     )
     // endregion
 

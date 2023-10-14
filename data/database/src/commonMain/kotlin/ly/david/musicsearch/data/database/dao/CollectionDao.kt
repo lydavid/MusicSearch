@@ -42,8 +42,8 @@ class CollectionDao(
                     entity = entity,
                     type = type,
                     type_id = typeId,
-                    entity_count = getCount()
-                )
+                    entity_count = getCount(),
+                ),
             )
         }
     }
@@ -59,7 +59,7 @@ class CollectionDao(
     fun getCollection(id: String): CollectionListItemModel =
         transacter.getCollection(
             id,
-            mapper = ::mapToCollectionListItem
+            mapper = ::mapToCollectionListItem,
         ).executeAsOne()
 
     fun getAllCollections(

@@ -43,7 +43,7 @@ class AreaRepositoryImpl(
             areaDao.insert(area)
             countryCodeDao.insertCountryCodesForArea(
                 areaId = area.id,
-                countryCodes = area.countryCodes.orEmpty()
+                countryCodes = area.countryCodes.orEmpty(),
             )
 
             val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)

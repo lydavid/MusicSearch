@@ -25,9 +25,9 @@ class CollectionRepositoryImpl(
                     showLocal = showLocal,
                     showRemote = showRemote,
                     query = "%$query%",
-                    entity = entity
+                    entity = entity,
                 )
-            }
+            },
         ).flow
     }
 }

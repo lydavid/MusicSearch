@@ -161,6 +161,6 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         name = linkedEntityName,
         disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
-        additionalInfo = additionalInfo
+        additionalInfo = additionalInfo,
     )
 }

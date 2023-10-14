@@ -25,7 +25,7 @@ class EventDao(
                     begin = lifeSpan?.begin,
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
-                )
+                ),
             )
         }
     }

@@ -30,5 +30,5 @@ fun mapToPlaceListItemModel(
         end = end,
         ended = ended,
     ),
-    area = null
+    area = null,
 )

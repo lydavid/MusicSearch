@@ -82,7 +82,7 @@ internal class SearchMusicBrainzPagingSource(
                 entity = entity,
                 queryString = queryString,
                 currentOffset = currentOffset,
-                limit = limit
+                limit = limit,
             )
             val searchResults = response.data
             val nextOffset = if (searchResults.size < limit) {
@@ -94,7 +94,7 @@ internal class SearchMusicBrainzPagingSource(
             LoadResult.Page(
                 data = searchResults.map { it.toListItemModel() },
                 prevKey = if (currentOffset == STARTING_OFFSET) null else currentOffset,
-                nextKey = nextOffset
+                nextKey = nextOffset,
             )
         } catch (exception: RecoverableNetworkException) {
             LoadResult.Error(exception)
@@ -118,11 +118,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryArtists = searchApi.queryArtists(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryArtists.offset,
-                    queryArtists.artists
+                    queryArtists.artists,
                 )
             }
 
@@ -130,11 +130,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryReleaseGroups = searchApi.queryReleaseGroups(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryReleaseGroups.offset,
-                    queryReleaseGroups.releaseGroups
+                    queryReleaseGroups.releaseGroups,
                 )
             }
 
@@ -142,11 +142,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryReleases = searchApi.queryReleases(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryReleases.offset,
-                    queryReleases.releases
+                    queryReleases.releases,
                 )
             }
 
@@ -154,11 +154,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryRecordings = searchApi.queryRecordings(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryRecordings.offset,
-                    queryRecordings.recordings
+                    queryRecordings.recordings,
                 )
             }
 
@@ -166,11 +166,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryWorks = searchApi.queryWorks(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryWorks.offset,
-                    queryWorks.works
+                    queryWorks.works,
                 )
             }
 
@@ -178,11 +178,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryAreas = searchApi.queryAreas(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryAreas.offset,
-                    queryAreas.areas
+                    queryAreas.areas,
                 )
             }
 
@@ -190,11 +190,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryPlaces = searchApi.queryPlaces(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryPlaces.offset,
-                    queryPlaces.places
+                    queryPlaces.places,
                 )
             }
 
@@ -202,11 +202,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryInstruments = searchApi.queryInstruments(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryInstruments.offset,
-                    queryInstruments.instruments
+                    queryInstruments.instruments,
                 )
             }
 
@@ -214,11 +214,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryLabels = searchApi.queryLabels(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryLabels.offset,
-                    queryLabels.labels
+                    queryLabels.labels,
                 )
             }
 
@@ -226,11 +226,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryEvents = searchApi.queryEvents(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryEvents.offset,
-                    queryEvents.events
+                    queryEvents.events,
                 )
             }
 
@@ -238,11 +238,11 @@ internal class SearchMusicBrainzPagingSource(
                 val queryEvents = searchApi.querySeries(
                     query = queryString,
                     offset = currentOffset,
-                    limit = limit
+                    limit = limit,
                 )
                 QueryResults(
                     queryEvents.offset,
-                    queryEvents.series
+                    queryEvents.series,
                 )
             }
 
@@ -253,7 +253,7 @@ internal class SearchMusicBrainzPagingSource(
             -> {
                 QueryResults(
                     offset = 0,
-                    data = listOf()
+                    data = listOf(),
                 )
             }
         }
@@ -284,7 +284,7 @@ internal fun MusicBrainzModel.toListItemModel(): ListItemModel {
         is SeriesMusicBrainzModel -> this.toSeriesListItemModel()
         is GenreMusicBrainzModel -> this.toGenreListItemModel()
         else -> error(
-            "Converting collection MusicBrainz models directly to list item models not supported."
+            "Converting collection MusicBrainz models directly to list item models not supported.",
         )
     }
 }
@@ -297,7 +297,7 @@ private fun AreaMusicBrainzModel.toAreaListItemModel(date: String? = null) = Are
     type = type,
     lifeSpan = lifeSpan?.toLifeSpanUiModel(),
     countryCodes = countryCodes,
-    date = date
+    date = date,
 )
 
 private fun ArtistMusicBrainzModel.toArtistListItemModel() =
@@ -309,7 +309,7 @@ private fun ArtistMusicBrainzModel.toArtistListItemModel() =
         type = type,
         gender = gender,
         countryCode = countryCode,
-        lifeSpan = lifeSpan?.toLifeSpanUiModel()
+        lifeSpan = lifeSpan?.toLifeSpanUiModel(),
     )
 
 private fun EventMusicBrainzModel.toEventListItemModel() =
@@ -320,7 +320,7 @@ private fun EventMusicBrainzModel.toEventListItemModel() =
         type = type,
         time = time,
         cancelled = cancelled,
-        lifeSpan = lifeSpan?.toLifeSpanUiModel()
+        lifeSpan = lifeSpan?.toLifeSpanUiModel(),
     )
 
 private fun InstrumentMusicBrainzModel.toInstrumentListItemModel() =
@@ -338,7 +338,7 @@ private fun LabelMusicBrainzModel.toLabelListItemModel() =
         name = name,
         disambiguation = disambiguation,
         type = type,
-        labelCode = labelCode
+        labelCode = labelCode,
     )
 
 private fun PlaceMusicBrainzModel.toPlaceListItemModel() =
@@ -350,7 +350,7 @@ private fun PlaceMusicBrainzModel.toPlaceListItemModel() =
         type = type,
         coordinates = coordinates,
         lifeSpan = lifeSpan?.toLifeSpanUiModel(),
-        area = area?.toAreaListItemModel()
+        area = area?.toAreaListItemModel(),
     )
 
 private fun RecordingMusicBrainzModel.toRecordingListItemModel() = RecordingListItemModel(
@@ -360,7 +360,7 @@ private fun RecordingMusicBrainzModel.toRecordingListItemModel() = RecordingList
     disambiguation = disambiguation,
     length = length,
     video = video ?: false,
-    formattedArtistCredits = artistCredits.getDisplayNames()
+    formattedArtistCredits = artistCredits.getDisplayNames(),
 )
 
 private fun ReleaseGroupMusicBrainzModel.toReleaseGroupListItemModel(): ReleaseGroupListItemModel {
@@ -411,13 +411,13 @@ private fun WorkMusicBrainzModel.toWorkListItemModel() =
         type = type,
         language = language,
         iswcs = iswcs,
-        attributes = attributes?.map { it.toWorkAttributeUiModel() }.orEmpty()
+        attributes = attributes?.map { it.toWorkAttributeUiModel() }.orEmpty(),
     )
 
 private fun LifeSpanMusicBrainzModel.toLifeSpanUiModel() = LifeSpanUiModel(
     begin = begin,
     end = end,
-    ended = ended
+    ended = ended,
 )
 
 private fun TextRepresentationMusicBrainzModel.toTextRepresentationUiModel() = TextRepresentationUiModel(
@@ -433,7 +433,7 @@ private fun WorkAttributeMusicBrainzModel.toWorkAttributeUiModel() =
     WorkAttributeUiModel(
         type = type,
         typeId = typeId,
-        value = value
+        value = value,
     )
 
 private fun GenreMusicBrainzModel.toGenreListItemModel() =

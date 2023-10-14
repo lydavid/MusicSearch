@@ -26,7 +26,7 @@ class EventPlaceDao(
             Event_place(
                 event_id = eventId,
                 place_id = placeId,
-            )
+            ),
         )
     }
 

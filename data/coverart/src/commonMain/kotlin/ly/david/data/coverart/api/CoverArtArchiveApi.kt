@@ -29,7 +29,7 @@ interface CoverArtArchiveApi {
             httpClient: HttpClient,
         ): CoverArtArchiveApi {
             return CoverArtArchiveApiImpl(
-                client = httpClient
+                client = httpClient,
             )
         }
     }

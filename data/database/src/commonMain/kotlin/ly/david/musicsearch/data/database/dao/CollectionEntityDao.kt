@@ -44,7 +44,7 @@ class CollectionEntityDao(
                 Collection_entity(
                     id = collectionId,
                     entity_id = entityId,
-                )
+                ),
             )
             transacter.lastInsertRowId().executeAsOne()
         } catch (ex: Exception) {

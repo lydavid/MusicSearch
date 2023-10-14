@@ -26,7 +26,7 @@ class ArtistReleaseDao(
             Artist_release(
                 artist_id = artistId,
                 release_id = releaseId,
-            )
+            ),
         )
     }
 

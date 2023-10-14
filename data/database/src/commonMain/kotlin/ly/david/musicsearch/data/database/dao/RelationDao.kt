@@ -58,7 +58,7 @@ class RelationDao(
             query = query,
             limit = limit,
             offset = offset,
-            mapper = ::toRelationListItemModel
+            mapper = ::toRelationListItemModel,
         )
     }
 
@@ -68,7 +68,7 @@ class RelationDao(
         return transacter.getEntityUrlRelationships(
             entityId = entityId,
             query = "%%", // TODO: either filter here or with Kotlin like before
-            mapper = ::toRelationListItemModel
+            mapper = ::toRelationListItemModel,
         ).executeAsList()
     }
 
@@ -89,7 +89,7 @@ class RelationDao(
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        additionalInfo = additionalInfo
+        additionalInfo = additionalInfo,
     )
 
     fun deleteRelationshipsExcludingUrlsByEntity(

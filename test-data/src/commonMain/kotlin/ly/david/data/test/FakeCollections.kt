@@ -7,22 +7,22 @@ import ly.david.data.musicbrainz.api.BrowseCollectionsResponse
 val fakeAreaCollection = CollectionMusicBrainzModel(
     id = "fakeAreaCollection",
     name = "My areas",
-    entity = MusicBrainzEntity.AREA
+    entity = MusicBrainzEntity.AREA,
 )
 
 val fakeArtistCollection = CollectionMusicBrainzModel(
     id = "fakeArtistCollection",
     name = "My artists",
-    entity = MusicBrainzEntity.ARTIST
+    entity = MusicBrainzEntity.ARTIST,
 )
 
 val fakeCollections = listOf(
     fakeAreaCollection,
-    fakeArtistCollection
+    fakeArtistCollection,
 )
 
 val browseCollectionsResponse = BrowseCollectionsResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = fakeCollections
+    musicBrainzModels = fakeCollections,
 )

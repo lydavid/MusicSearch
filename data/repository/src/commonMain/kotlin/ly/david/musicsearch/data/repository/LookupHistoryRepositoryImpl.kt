@@ -38,7 +38,7 @@ class LookupHistoryRepositoryImpl(
                     mostVisited = sortOption == HistorySortOption.MOST_VISITED,
                     leastVisited = sortOption == HistorySortOption.LEAST_VISITED,
                 )
-            }
+            },
         ).flow.map { pagingData ->
             pagingData
                 .insertSeparators {
@@ -48,7 +48,7 @@ class LookupHistoryRepositoryImpl(
                     getListSeparator(
                         before = before,
                         after = after,
-                        sortOption = sortOption
+                        sortOption = sortOption,
                     )
                 }
         }

@@ -16,23 +16,23 @@ val fakeEvent = EventMusicBrainzModel(
             typeId = "542f8484-8bc7-3ce5-a022-747850b2b928",
             direction = Direction.FORWARD,
             targetType = MusicBrainzEntity.AREA,
-            area = ontario
-        )
-    )
+            area = ontario,
+        ),
+    ),
 )
 
 val fakeEvents = listOf(
-    fakeEvent
+    fakeEvent,
 )
 
 val browseEventsResponse = BrowseEventsResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(fakeEvent)
+    musicBrainzModels = listOf(fakeEvent),
 )
 
 val searchEventsResponse = SearchEventsResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeEvent)
+    listOf(element = fakeEvent),
 )

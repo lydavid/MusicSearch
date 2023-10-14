@@ -23,7 +23,7 @@ class WorkDao(
                     type_id = typeId,
                     language = language,
                     iswcs = iswcs?.toImmutableList(),
-                )
+                ),
             )
         }
     }

@@ -285,5 +285,5 @@ val EnStrings = AppStrings(
 
     mostVisited = "Most visited",
 
-    leastVisited = "Least visited"
+    leastVisited = "Least visited",
 )

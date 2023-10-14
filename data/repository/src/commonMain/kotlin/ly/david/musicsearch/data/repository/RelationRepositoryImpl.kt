@@ -41,7 +41,7 @@ class RelationRepositoryImpl(
     ) {
         val relationMusicBrainzModels = lookupEntityWithRelations(
             entity = entity,
-            entityId = entityId
+            entityId = entityId,
         )
         val relationWithOrderList = relationMusicBrainzModels.toRelationWithOrderList(entityId)
         relationDao.insertAll(relationWithOrderList)
@@ -159,14 +159,14 @@ class RelationRepositoryImpl(
                 },
                 deleteLocalEntity = {
                     deleteEntityRelationships(entityId)
-                }
+                },
             ),
             pagingSourceFactory = {
                 relationDao.getEntityRelationshipsExcludingUrls(
                     entityId = entityId,
                     query = "%$query%",
                 )
-            }
+            },
         ).flow
     }
 

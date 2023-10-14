@@ -42,7 +42,7 @@ class ArtistReleaseGroupDao(
             Artist_release_group(
                 artist_id = artistId,
                 release_group_id = releaseGroupId,
-            )
+            ),
         )
     }
 
@@ -68,7 +68,7 @@ class ArtistReleaseGroupDao(
                     secondaryTypes = secondaryTypes,
                     count = count.toInt(),
                 )
-            }
+            },
         )
             .asFlow()
             .mapToList(coroutineDispatchers.io)

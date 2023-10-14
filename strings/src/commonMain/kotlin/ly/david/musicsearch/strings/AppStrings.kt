@@ -143,7 +143,7 @@ object Locales {
 }
 
 val Strings: Map<LanguageTag, AppStrings> = mapOf(
-    Locales.EN to EnStrings
+    Locales.EN to EnStrings,
 )
 
 val LocalStrings: ProvidableCompositionLocal<AppStrings> = staticCompositionLocalOf { EnStrings }

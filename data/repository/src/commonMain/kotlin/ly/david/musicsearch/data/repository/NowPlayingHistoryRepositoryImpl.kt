@@ -27,7 +27,7 @@ class NowPlayingHistoryRepositoryImpl(
                 nowPlayingHistoryDao.getAllNowPlayingHistory(
                     query = "%$query%",
                 )
-            }
+            },
         ).flow.map { pagingData ->
             pagingData
                 // TODO: cannot use app.cash.paging here due to:

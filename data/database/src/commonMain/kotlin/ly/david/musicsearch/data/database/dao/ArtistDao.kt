@@ -26,7 +26,7 @@ class ArtistDao(
                     begin = lifeSpan?.begin,
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
-                )
+                ),
             )
         }
     }

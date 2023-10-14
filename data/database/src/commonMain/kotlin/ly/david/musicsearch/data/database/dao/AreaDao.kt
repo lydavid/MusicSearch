@@ -25,7 +25,7 @@ class AreaDao(
                     begin = lifeSpan?.begin,
                     end = lifeSpan?.end,
                     ended = lifeSpan?.ended,
-                )
+                ),
             )
         }
     }

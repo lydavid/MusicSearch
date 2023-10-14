@@ -92,7 +92,7 @@ class ReleaseRepositoryImpl(
                 releaseGroupDao.insert(releaseGroup)
                 releaseReleaseGroupDao.insert(
                     releaseId = release.id,
-                    releaseGroupId = releaseGroup.id
+                    releaseGroupId = releaseGroup.id,
                 )
             }
             releaseDao.insert(release)
@@ -110,7 +110,7 @@ class ReleaseRepositoryImpl(
                     // release events returns null type, but we know they are countries
                     // Except in the case of [Worldwide], but it will replace itself when we first visit it.
                     it.area?.copy(type = AreaType.COUNTRY)
-                }.orEmpty()
+                }.orEmpty(),
             )
             release.releaseEvents?.forEach {
                 countryCodeDao.insertCountryCodesForArea(
@@ -141,14 +141,14 @@ class ReleaseRepositoryImpl(
             remoteMediator = LookupEntityRemoteMediator(
                 hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
                 lookupEntity = { lookupRelease(releaseId) },
-                deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) }
+                deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) },
             ),
             pagingSourceFactory = {
                 trackDao.getTracksByRelease(
                     releaseId = releaseId,
                     query = "%$query%",
                 )
-            }
+            },
         ).flow.map { pagingData ->
             pagingData
                 .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
@@ -160,7 +160,7 @@ class ReleaseRepositoryImpl(
                             id = "${medium.id}",
                             text = medium.format.orEmpty() +
                                 (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
-                                medium.name.transformThisIfNotNullOrEmpty { " ($it)" }
+                                medium.name.transformThisIfNotNullOrEmpty { " ($it)" },
                         )
                     } else {
                         null

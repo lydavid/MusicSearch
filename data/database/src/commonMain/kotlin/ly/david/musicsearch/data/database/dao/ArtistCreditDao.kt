@@ -63,7 +63,7 @@ class ArtistCreditDao(
             Artist_credit_entity(
                 artist_credit_id = artistCreditId,
                 entity_id = entityId,
-            )
+            ),
         )
     }
 
@@ -76,9 +76,9 @@ class ArtistCreditDao(
                 ArtistCreditUiModel(
                     artistId = artistId,
                     name = name,
-                    joinPhrase = joinPhrase
+                    joinPhrase = joinPhrase,
                 )
-            }
+            },
         ).executeAsList()
 }
 

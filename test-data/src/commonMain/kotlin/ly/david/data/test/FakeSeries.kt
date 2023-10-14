@@ -16,23 +16,23 @@ val fakeSeries = SeriesMusicBrainzModel(
             typeId = "281bf307-f1e8-4a56-a7b8-fe8304bb2bf3",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzEntity.AREA,
-            area = ontario
-        )
-    )
+            area = ontario,
+        ),
+    ),
 )
 
 val fakeSeriesList = listOf(
-    fakeSeries
+    fakeSeries,
 )
 
 val browseSeriesResponse = BrowseSeriesResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeSeries)
+    listOf(element = fakeSeries),
 )
 
 val searchSeriesResponse = SearchSeriesResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeSeries)
+    listOf(element = fakeSeries),
 )

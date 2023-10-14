@@ -16,23 +16,23 @@ val fakeInstrument = InstrumentMusicBrainzModel(
             typeId = "0b67183b-9f36-4b09-b561-0fa531508f91",
             direction = Direction.BACKWARD,
             targetType = MusicBrainzEntity.AREA,
-            area = ontario
-        )
-    )
+            area = ontario,
+        ),
+    ),
 )
 
 val fakeInstruments = listOf(
-    fakeInstrument
+    fakeInstrument,
 )
 
 val browseInstrumentsResponse = BrowseInstrumentsResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeInstrument)
+    listOf(element = fakeInstrument),
 )
 
 val searchInstrumentsResponse = SearchInstrumentsResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakeInstrument)
+    listOf(element = fakeInstrument),
 )

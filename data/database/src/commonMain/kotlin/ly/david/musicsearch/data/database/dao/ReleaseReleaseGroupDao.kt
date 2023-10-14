@@ -26,7 +26,7 @@ class ReleaseReleaseGroupDao(
             Release_release_group(
                 release_id = releaseId,
                 release_group_id = releaseGroupId,
-            )
+            ),
         )
     }
 

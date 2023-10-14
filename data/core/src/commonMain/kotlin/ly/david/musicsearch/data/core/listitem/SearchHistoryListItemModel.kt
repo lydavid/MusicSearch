@@ -12,5 +12,5 @@ data class SearchHistoryListItemModel(
 fun SearchHistory.toSearchHistoryListItemModel() = SearchHistoryListItemModel(
     id = "${query}_$entity",
     query = query,
-    entity = entity
+    entity = entity,
 )

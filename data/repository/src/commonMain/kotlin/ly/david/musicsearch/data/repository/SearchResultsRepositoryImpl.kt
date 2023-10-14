@@ -24,7 +24,7 @@ class SearchResultsRepositoryImpl(
                 entity = entity,
                 queryString = query,
             )
-        }
+        },
     ).flow.map { pagingData ->
         pagingData.insertFooterItemForNonEmpty(item = EndOfList)
     }

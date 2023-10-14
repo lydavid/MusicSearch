@@ -11,10 +11,10 @@ class FakeCoverArtArchiveApi : CoverArtArchiveApi {
                 CoverArtUrls(
                     id = "b",
                     imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    front = true
-                )
+                    front = true,
+                ),
             ),
-            releaseUrl = "blah"
+            releaseUrl = "blah",
         )
     }
 
@@ -24,10 +24,10 @@ class FakeCoverArtArchiveApi : CoverArtArchiveApi {
                 CoverArtUrls(
                     id = "b",
                     imageUrl = "http://coverartarchive.org/release/00e48019-5901-4110-b44d-875c3026491b/247510391.png",
-                    front = true
-                )
+                    front = true,
+                ),
             ),
-            releaseUrl = "blah"
+            releaseUrl = "blah",
         )
     }
 }

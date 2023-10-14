@@ -12,7 +12,7 @@ import ly.david.data.musicbrainz.api.SearchPlacesResponse
 val fakePlace = PlaceMusicBrainzModel(
     id = "place1",
     name = "Place Name",
-    type = "Venue"
+    type = "Venue",
 )
 
 val eventHeldAtPlace = RelationMusicBrainzModel(
@@ -20,7 +20,7 @@ val eventHeldAtPlace = RelationMusicBrainzModel(
     typeId = "e2c6f697-07dc-38b1-be0b-83d740165532",
     direction = Direction.BACKWARD,
     targetType = MusicBrainzEntity.EVENT,
-    event = fakeEvent
+    event = fakeEvent,
 )
 
 val fakePlaceWithAllData = PlaceMusicBrainzModel(
@@ -32,16 +32,16 @@ val fakePlaceWithAllData = PlaceMusicBrainzModel(
     lifeSpan = LifeSpanMusicBrainzModel(
         begin = "2022-01-01",
         end = "2022-12-10",
-        ended = true
+        ended = true,
     ),
     area = ontario,
     coordinates = CoordinatesMusicBrainzModel(
         longitude = 123.123,
-        latitude = 123.123
+        latitude = 123.123,
     ),
     relations = listOf(
-        eventHeldAtPlace
-    )
+        eventHeldAtPlace,
+    ),
 )
 
 val fakePlaces = listOf(
@@ -52,11 +52,11 @@ val fakePlaces = listOf(
 val browsePlacesResponse = BrowsePlacesResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(fakePlace)
+    musicBrainzModels = listOf(fakePlace),
 )
 
 val searchPlacesResponse = SearchPlacesResponse(
     count = 1,
     offset = 0,
-    listOf(element = fakePlace)
+    listOf(element = fakePlace),
 )

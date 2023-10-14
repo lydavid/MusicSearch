@@ -34,7 +34,7 @@ class ReleaseCountryDao(
                 country_id = areaId,
                 release_id = releaseId,
                 date = date,
-            )
+            ),
         )
     }
 
@@ -66,7 +66,7 @@ class ReleaseCountryDao(
                 date = date,
                 countryCode = countryCode,
             )
-        }
+        },
     ).executeAsList()
     // endregion
 

@@ -27,7 +27,7 @@ object ApiHttpClient {
                     Json {
                         ignoreUnknownKeys = true
                         isLenient = true
-                    }
+                    },
                 )
             }
 

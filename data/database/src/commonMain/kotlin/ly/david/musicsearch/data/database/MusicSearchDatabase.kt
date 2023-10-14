@@ -25,7 +25,7 @@ fun createDatabase(driver: SqlDriver): Database {
         driver = driver,
         relationAdapter = Relation.Adapter(
             linked_entityAdapter = MusicBrainzEntityStringColumnAdapter,
-            orderAdapter = IntColumnAdapter
+            orderAdapter = IntColumnAdapter,
         ),
         browse_entity_countAdapter = Browse_entity_count.Adapter(
             browse_entityAdapter = MusicBrainzEntityStringColumnAdapter,
@@ -75,6 +75,6 @@ fun createDatabase(driver: SqlDriver): Database {
         search_historyAdapter = Search_history.Adapter(
             entityAdapter = MusicBrainzEntityStringColumnAdapter,
             last_accessedAdapter = InstantLongColumnAdapter,
-        )
+        ),
     )
 }

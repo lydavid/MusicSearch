@@ -38,7 +38,7 @@ class ReleaseGroupImageRepository(
             imageUrlDao.saveUrl(
                 mbid = releaseGroupId,
                 thumbnailUrl = thumbnailUrl.removeFileExtension(),
-                largeUrl = largeUrl.removeFileExtension()
+                largeUrl = largeUrl.removeFileExtension(),
             )
             return if (thumbnail) thumbnailUrl else largeUrl
         } catch (ex: ClientRequestException) {
@@ -46,7 +46,7 @@ class ReleaseGroupImageRepository(
                 imageUrlDao.saveUrl(
                     mbid = releaseGroupId,
                     thumbnailUrl = "",
-                    largeUrl = ""
+                    largeUrl = "",
                 )
             } else {
                 logger.e(ex)

@@ -13,7 +13,7 @@ val underPressureRemastered = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",
     name = "Under Pressure",
     artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
-    releaseGroup = underPressureReleaseGroup
+    releaseGroup = underPressureReleaseGroup,
 )
 
 val underPressureRemasterOf = RelationMusicBrainzModel(
@@ -21,12 +21,12 @@ val underPressureRemasterOf = RelationMusicBrainzModel(
     typeId = "48e327b5-2d04-4518-93f1-fed5f0f0fa3c",
     direction = Direction.BACKWARD,
     targetType = MusicBrainzEntity.RELEASE,
-    release = underPressureRemastered
+    release = underPressureRemastered,
 )
 
 val fakeReleaseEvent = ReleaseEventMusicBrainzModel(
     area = canada,
-    date = "2022-10-29"
+    date = "2022-10-29",
 )
 
 val underPressure = ReleaseMusicBrainzModel(
@@ -37,31 +37,31 @@ val underPressure = ReleaseMusicBrainzModel(
     artistCredits = listOf(queenArtistCredit, davidBowieArtistCredit),
     releaseGroup = underPressureReleaseGroup,
     releaseEvents = listOf(
-        fakeReleaseEvent
+        fakeReleaseEvent,
     ),
     media = listOf(underPressureMedia),
     labelInfoList = listOf(
         underPressureLabelInfo,
         LabelInfo(
-            label = elektraMusicGroup
-        )
+            label = elektraMusicGroup,
+        ),
     ),
-    relations = listOf(underPressureRemasterOf)
+    relations = listOf(underPressureRemasterOf),
 )
 
 val fakeReleases = listOf(
     underPressure,
-    underPressureRemastered
+    underPressureRemastered,
 )
 
 val browseReleasesResponse = BrowseReleasesResponse(
     count = 1,
     offset = 0,
-    musicBrainzModels = listOf(underPressure)
+    musicBrainzModels = listOf(underPressure),
 )
 
 val searchReleasesResponse = SearchReleasesResponse(
     count = 1,
     offset = 0,
-    listOf(element = underPressure)
+    listOf(element = underPressure),
 )

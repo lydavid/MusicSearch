@@ -27,7 +27,7 @@ class RecordingWorkDao(
             Recording_work(
                 recording_id = recordingId,
                 work_id = workId,
-            )
+            ),
         )
     }
 

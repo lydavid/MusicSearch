@@ -19,6 +19,6 @@ internal fun PlaceholderIcon(
         modifier = modifier
             .size(SMALL_IMAGE_SIZE.dp),
         imageVector = placeholderIcon ?: Icons.Default.Album,
-        contentDescription = null
+        contentDescription = null,
     )
 }

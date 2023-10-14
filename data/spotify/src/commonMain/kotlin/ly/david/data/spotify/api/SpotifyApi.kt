@@ -51,7 +51,7 @@ interface SpotifyApi {
             }
 
             return SpotifyApiImpl(
-                client = extendedClient
+                client = extendedClient,
             )
         }
     }

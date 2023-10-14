@@ -15,7 +15,7 @@ class MbidImageDao(
                 mbid = mbid,
                 thumbnail_url = thumbnailUrl,
                 large_url = largeUrl,
-            )
+            ),
         )
     }
 }

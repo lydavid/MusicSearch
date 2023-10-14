@@ -33,7 +33,7 @@ class BrowseEntityCountDao(
                     localCount = localCount,
                     remoteCount = remoteCount,
                 )
-            }
+            },
         )
 
     fun getBrowseEntityCount(

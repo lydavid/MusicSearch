@@ -20,7 +20,7 @@ class SeriesDao(
                     disambiguation = disambiguation,
                     type = type,
                     type_id = typeId,
-                )
+                ),
             )
         }
     }

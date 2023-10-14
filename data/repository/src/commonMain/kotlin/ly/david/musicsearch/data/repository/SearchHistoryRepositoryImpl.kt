@@ -24,9 +24,9 @@ class SearchHistoryRepositoryImpl(
             config = CommonPagingConfig.pagingConfig,
             pagingSourceFactory = {
                 searchHistoryDao.getAllSearchHistory(
-                    entity = entity
+                    entity = entity,
                 )
-            }
+            },
         ).flow.map { pagingData ->
             pagingData
                 .map(SearchHistory::toSearchHistoryListItemModel)
@@ -40,7 +40,7 @@ class SearchHistoryRepositoryImpl(
             SearchHistory(
                 entity = entity,
                 query = query,
-            )
+            ),
         )
     }
 
