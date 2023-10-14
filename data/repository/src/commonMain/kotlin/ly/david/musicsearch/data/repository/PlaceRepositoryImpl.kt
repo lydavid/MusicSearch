@@ -25,7 +25,7 @@ class PlaceRepositoryImpl(
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(placeId)
         if (place != null && hasUrlsBeenSavedForEntity) {
             return place.copy(
-                area = area?.toAreaListItemModel(),
+                area = area,
                 urls = urlRelations,
             )
         }

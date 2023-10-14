@@ -9,10 +9,8 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.domain.listitem.toAreaListItemModel
 import ly.david.ui.common.area.AreasPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import lydavidmusicsearchdatadatabase.Area
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class AreasByCollectionViewModel(
     private val areaDao: AreaDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: AreasPagedList,
-) : BrowseEntitiesByEntityViewModel<Area, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
+) : BrowseEntitiesByEntityViewModel<AreaListItemModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
     byEntity = MusicBrainzEntity.AREA,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -53,13 +51,14 @@ internal class AreasByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Area> =
+    ): PagingSource<Int, AreaListItemModel> =
         collectionEntityDao.getAreasByCollection(
             collectionId = entityId,
             query = "%$query%"
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Area): AreaListItemModel {
-        return databaseModel.toAreaListItemModel()
+    // TODO: remove transformDatabaseToListItemModel
+    override fun transformDatabaseToListItemModel(databaseModel: AreaListItemModel): AreaListItemModel {
+        return databaseModel
     }
 }

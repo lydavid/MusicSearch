@@ -7,8 +7,9 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Area
+import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import lydavidmusicsearchdatadatabase.Area_place
 import lydavidmusicsearchdatadatabase.Place
 
@@ -30,8 +31,11 @@ class AreaPlaceDao(
         )
     }
 
-    fun getAreaByPlace(placeId: String): Area? =
-        transacter.getAreaByPlace(placeId).executeAsOneOrNull()
+    fun getAreaByPlace(placeId: String): AreaListItemModel? =
+        transacter.getAreaByPlace(
+            placeId,
+            mapper = ::mapToAreaListItemModel,
+        ).executeAsOneOrNull()
 
     // region places by area
     fun linkAreaWithPlaces(

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository.paging
+package ly.david.musicsearch.data.repository.internal.paging
 
 import app.cash.paging.PagingSource
 import app.cash.paging.PagingState

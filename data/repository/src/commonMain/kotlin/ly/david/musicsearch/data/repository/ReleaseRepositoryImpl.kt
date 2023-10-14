@@ -40,7 +40,7 @@ class ReleaseRepositoryImpl(
     //  but swipe to refresh should only refresh its own tab
     override suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel {
         val releaseForDetails = releaseDao.getReleaseForDetails(releaseId)
-        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseId)
+        val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseId)
         val releaseGroup = releaseGroupDao.getReleaseGroupForRelease(releaseId)
         val formatTrackCounts = releaseDao.getReleaseFormatTrackCount(releaseId)
         val labels = releaseLabelDao.getLabelsByRelease(releaseId)
@@ -49,13 +49,13 @@ class ReleaseRepositoryImpl(
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseId)
         if (releaseForDetails != null &&
             releaseGroup != null &&
-            artistCreditNames.isNotEmpty() &&
+            artistCredits.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
             // According to MB database schema: https://musicbrainz.org/doc/MusicBrainz_Database/Schema
             // releases must have artist credits and a release group.
             return releaseForDetails.copy(
-                artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+                artistCredits = artistCredits,
                 releaseGroup = releaseGroup,
                 formattedFormats = formatTrackCounts.map { it.format }.getFormatsForDisplay(),
                 formattedTracks = formatTrackCounts.map { it.trackCount }.getTracksForDisplay(),

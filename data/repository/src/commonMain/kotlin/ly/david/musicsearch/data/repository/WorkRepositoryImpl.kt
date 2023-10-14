@@ -25,7 +25,7 @@ class WorkRepositoryImpl(
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(workId)
         if (work != null && hasUrlsBeenSavedForEntity) {
             return work.copy(
-                attributes = workAttributes.map { it.toWorkAttributeUiModel() },
+                attributes = workAttributes,
                 urls = urlRelations,
             )
         }

@@ -6,8 +6,8 @@ import ly.david.data.test.api.FakeMusicBrainzApi
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.network.searchableEntities
-import ly.david.musicsearch.data.repository.paging.SearchMusicBrainzPagingSource
-import ly.david.musicsearch.data.repository.paging.toListItemModel
+import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzPagingSource
+import ly.david.musicsearch.data.repository.internal.paging.toListItemModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

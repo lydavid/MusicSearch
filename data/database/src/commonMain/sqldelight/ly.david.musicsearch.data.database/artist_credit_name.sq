@@ -19,7 +19,10 @@ INSERT OR IGNORE INTO artist_credit_name
 VALUES ?;
 
 getArtistCreditNamesForEntity:
-SELECT acn.*
+SELECT
+  acn.artist_id,
+  acn.name,
+  acn.join_phrase
 FROM artist_credit_entity ace
 INNER JOIN artist_credit ac ON ac.id = ace.artist_credit_id
 INNER JOIN artist_credit_name acn ON acn.artist_credit_id = ac.id

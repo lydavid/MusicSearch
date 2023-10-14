@@ -1,6 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.WorkAttributeMusicBrainzModel
+import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Work_attribute
 import lydavidmusicsearchdatadatabase.Work_attributeQueries
@@ -32,6 +33,15 @@ class WorkAttributeDao(
         }
     }
 
-    fun getWorkAttributesForWork(workId: String): List<Work_attribute> =
-        transacter.getWorkAttributesForWork(workId).executeAsList()
+    fun getWorkAttributesForWork(workId: String): List<WorkAttributeUiModel> =
+        transacter.getWorkAttributesForWork(
+            workId,
+            mapper = { type: String, typeId: String, value: String ->
+                WorkAttributeUiModel(
+                    type = type,
+                    typeId = typeId,
+                    value = value,
+                )
+            }
+        ).executeAsList()
 }

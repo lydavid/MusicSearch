@@ -18,15 +18,15 @@ class RecordingRepositoryImpl(
 
     override suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
         val recording = recordingDao.getRecordingForDetails(recordingId)
-        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(recordingId)
+        val artistCredits = artistCreditDao.getArtistCreditsForEntity(recordingId)
         val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(recordingId)
         if (recording != null &&
-            artistCreditNames.isNotEmpty() &&
+            artistCredits.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
             return recording.copy(
-                artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+                artistCredits = artistCredits,
                 urls = urlRelations,
             )
         }

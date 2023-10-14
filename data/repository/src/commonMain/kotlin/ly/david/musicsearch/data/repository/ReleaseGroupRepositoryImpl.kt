@@ -18,15 +18,15 @@ class ReleaseGroupRepositoryImpl(
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
         val releaseGroup = releaseGroupDao.getReleaseGroupForDetails(releaseGroupId)
-        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(releaseGroupId)
+        val artistCredits = artistCreditDao.getArtistCreditsForEntity(releaseGroupId)
         val urlRelations = relationRepository.getEntityUrlRelationships(releaseGroupId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(releaseGroupId)
         if (releaseGroup != null &&
-            artistCreditNames.isNotEmpty() &&
+            artistCredits.isNotEmpty() &&
             hasUrlsBeenSavedForEntity
         ) {
             return releaseGroup.copy(
-                artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+                artistCredits = artistCredits,
                 urls = urlRelations,
             )
         }

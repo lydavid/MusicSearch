@@ -1,7 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.core.artist.ArtistCreditUiModel
+import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import lydavidmusicsearchdatadatabase.Artist_credit_entity
@@ -66,10 +67,19 @@ class ArtistCreditDao(
         )
     }
 
-    fun getArtistCreditNamesForEntity(
+    fun getArtistCreditsForEntity(
         entityId: String,
-    ): List<Artist_credit_name> =
-        artistCreditNameQueries.getArtistCreditNamesForEntity(entityId).executeAsList()
+    ): List<ArtistCreditUiModel> =
+        artistCreditNameQueries.getArtistCreditNamesForEntity(
+            entityId,
+            mapper = { artistId: String, name: String, joinPhrase: String? ->
+                ArtistCreditUiModel(
+                    artistId = artistId,
+                    name = name,
+                    joinPhrase = joinPhrase
+                )
+            }
+        ).executeAsList()
 }
 
 /**
