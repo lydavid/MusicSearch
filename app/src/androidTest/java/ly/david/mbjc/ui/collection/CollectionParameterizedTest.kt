@@ -13,19 +13,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.Coil
 import coil.ImageLoaderFactory
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.collectableEntities
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.collectableEntities
 import ly.david.musicsearch.data.database.dao.CollectionDao
+import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
-import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Before
@@ -33,6 +33,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Tests interacting with [CollectionListScaffold] and [CollectionScaffold].
@@ -76,14 +77,12 @@ internal class CollectionParameterizedTest(
         val collectionName = "local $entity collection"
 
         collectionDao.insertLocal(
-            lydavidmusicsearchdatadatabase.Collection(
+            CollectionListItemModel(
                 id = entity.name,
                 name = collectionName,
                 entity = entity,
-                is_remote = false,
-                entity_count = 0,
-                type = null,
-                type_id = null,
+                isRemote = false,
+                entityCount = 0,
             )
         )
 

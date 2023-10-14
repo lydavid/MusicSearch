@@ -2,10 +2,11 @@ package ly.david.musicsearch.data.database.dao
 
 import androidx.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.data.core.CoroutineDispatchers
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
 import ly.david.data.musicbrainz.getCount
+import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Collection
 
@@ -15,10 +16,18 @@ class CollectionDao(
 ) {
     private val transacter = database.collectionQueries
 
-    fun insertLocal(collection: Collection) {
+    fun insertLocal(collection: CollectionListItemModel) {
         collection.run {
             transacter.insert(
-                collection = collection,
+                collection = Collection(
+                    id = id,
+                    is_remote = isRemote,
+                    name = name,
+                    entity = entity,
+                    type = null,
+                    type_id = null,
+                    entity_count = entityCount,
+                ),
             )
         }
     }
@@ -47,15 +56,18 @@ class CollectionDao(
         }
     }
 
-    fun getCollection(id: String): Collection =
-        transacter.getCollection(id).executeAsOne()
+    fun getCollection(id: String): CollectionListItemModel =
+        transacter.getCollection(
+            id,
+            mapper = ::mapToCollectionListItem
+        ).executeAsOne()
 
     fun getAllCollections(
         showLocal: Boolean = true,
         showRemote: Boolean = true,
         query: String = "%%",
         entity: MusicBrainzEntity? = null,
-    ): PagingSource<Int, Collection> = QueryPagingSource(
+    ): PagingSource<Int, CollectionListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfCollections(
             showLocal = showLocal,
             showRemote = showRemote,
@@ -72,8 +84,23 @@ class CollectionDao(
             limit = limit,
             offset = offset,
             entity = entity,
+            mapper = ::mapToCollectionListItem,
         )
     }
+
+    private fun mapToCollectionListItem(
+        id: String,
+        isRemote: Boolean,
+        name: String,
+        entity: MusicBrainzEntity,
+        entityCount: Int,
+    ) = CollectionListItemModel(
+        id = id,
+        isRemote = isRemote,
+        name = name,
+        entity = entity,
+        entityCount = entityCount,
+    )
 
     fun deleteMusicBrainzCollections() {
         transacter.deleteMusicBrainzCollections()

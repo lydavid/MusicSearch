@@ -5,31 +5,27 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUriPlural
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.resourceUriPlural
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
-import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
-import ly.david.musicsearch.domain.listitem.toCollectionListItemModel
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.settings.AppPreferences
-import lydavidmusicsearchdatadatabase.Collection
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse
@@ -74,9 +70,7 @@ internal class TopLevelViewModel(
                 pagingSourceFactory = {
                     collectionDao.getAllCollections(entity = it)
                 }
-            ).flow.map { pagingData ->
-                pagingData.map(Collection::toCollectionListItemModel)
-            }
+            ).flow
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
@@ -92,14 +86,12 @@ internal class TopLevelViewModel(
     fun createNewCollection(name: String, entity: MusicBrainzEntity) {
         viewModelScope.launch {
             collectionDao.insertLocal(
-                Collection(
+                CollectionListItemModel(
                     id = UUID.randomUUID().toString(),
                     name = name,
                     entity = entity,
-                    entity_count = 1,
-                    is_remote = false,
-                    type = null,
-                    type_id = null,
+                    entityCount = 1,
+                    isRemote = false,
                 )
             )
         }
@@ -109,7 +101,7 @@ internal class TopLevelViewModel(
         var result = RemoteResult()
 
         val collection = collectionDao.getCollection(collectionId)
-        if (collection.is_remote) {
+        if (collection.isRemote) {
             try {
                 musicBrainzApi.uploadToCollection(
                     collectionId = collectionId,
@@ -151,7 +143,7 @@ internal class TopLevelViewModel(
         entityName: String,
     ): RemoteResult {
         val collection = collectionDao.getCollection(collectionId)
-        if (collection.is_remote) {
+        if (collection.isRemote) {
             try {
                 musicBrainzApi.deleteFromCollection(
                     collectionId = collectionId,

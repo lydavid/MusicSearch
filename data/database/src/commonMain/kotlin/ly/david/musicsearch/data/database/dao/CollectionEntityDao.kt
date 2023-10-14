@@ -91,6 +91,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO:
     fun getArtistsByCollection(
         collectionId: String,
         query: String,
@@ -110,6 +111,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO:
     fun getEventsByCollection(
         collectionId: String,
         query: String,
@@ -129,6 +131,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO:
     fun getInstrumentsByCollection(
         collectionId: String,
         query: String,
@@ -148,6 +151,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO:
     fun getLabelsByCollection(
         collectionId: String,
         query: String,
@@ -249,6 +253,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO:
     fun getSeriesByCollection(
         collectionId: String,
         query: String,
@@ -268,6 +273,7 @@ class CollectionEntityDao(
         )
     }
 
+    // TODO:
     fun getWorksByCollection(
         collectionId: String,
         query: String,
