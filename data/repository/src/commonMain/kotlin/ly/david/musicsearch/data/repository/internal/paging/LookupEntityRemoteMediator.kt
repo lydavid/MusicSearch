@@ -1,4 +1,4 @@
-package ly.david.musicsearch.domain.paging
+package ly.david.musicsearch.data.repository.internal.paging
 
 import app.cash.paging.ExperimentalPagingApi
 import app.cash.paging.LoadType
@@ -11,7 +11,7 @@ import ly.david.data.common.network.RecoverableNetworkException
  * A refresh load will always call [lookupEntity] with force refresh flag.
  */
 @OptIn(ExperimentalPagingApi::class)
-class LookupEntityRemoteMediator<DM : Any>(
+internal class LookupEntityRemoteMediator<DM : Any>(
     private val hasEntityBeenStored: suspend () -> Boolean,
     private val lookupEntity: suspend (forceRefresh: Boolean) -> Unit,
     private val deleteLocalEntity: suspend () -> Unit,

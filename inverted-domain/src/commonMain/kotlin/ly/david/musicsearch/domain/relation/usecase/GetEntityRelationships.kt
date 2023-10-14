@@ -5,16 +5,16 @@ import ly.david.musicsearch.domain.relation.RelationRepository
 import org.koin.core.annotation.Single
 
 @Single
-class LookupRelationsAndStore(
+class GetEntityRelationships(
     private val relationRepository: RelationRepository,
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         entity: MusicBrainzEntity,
         entityId: String,
-    ) {
-        relationRepository.insertAllRelationsExcludingUrls(
-            entity,
-            entityId,
-        )
-    }
+        query: String,
+    ) = relationRepository.observeEntityRelationshipsExcludingUrls(
+        entity = entity,
+        entityId = entityId,
+        query = query,
+    )
 }

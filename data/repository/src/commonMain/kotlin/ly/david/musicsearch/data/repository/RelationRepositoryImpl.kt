@@ -1,6 +1,8 @@
 package ly.david.musicsearch.data.repository
 
-import app.cash.paging.PagingSource
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
@@ -13,6 +15,8 @@ import ly.david.musicsearch.data.core.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.domain.relation.RelationRepository
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
@@ -23,9 +27,6 @@ class RelationRepositoryImpl(
     private val entityHasUrlsDao: EntityHasUrlsDao,
     private val relationDao: RelationDao,
 ) : RelationRepository {
-    override fun hasUrlsBeenSavedFor(entityId: String): Boolean =
-        entityHasUrlsDao.hasUrls(entityId)
-
     override fun insertAllUrlRelations(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
@@ -136,20 +137,62 @@ class RelationRepositoryImpl(
         }
     }
 
-    override fun hasRelationsBeenSavedFor(entityId: String): Boolean {
+    override fun hasUrlsBeenSavedFor(entityId: String): Boolean =
+        entityHasUrlsDao.hasUrls(entityId)
+
+    @OptIn(ExperimentalPagingApi::class)
+    override fun observeEntityRelationshipsExcludingUrls(
+        entity: MusicBrainzEntity,
+        entityId: String,
+        query: String,
+    ): Flow<PagingData<RelationListItemModel>> {
+        return Pager(
+            config = CommonPagingConfig.pagingConfig,
+            remoteMediator = LookupEntityRemoteMediator(
+                hasEntityBeenStored = { hasRelationsBeenSavedFor(entityId) },
+                lookupEntity = { forceRefresh ->
+                    lookupRelationsAndStore(
+                        entity = entity,
+                        entityId = entityId,
+                        forceRefresh = forceRefresh,
+                    )
+                },
+                deleteLocalEntity = {
+                    deleteEntityRelationships(entityId)
+                }
+            ),
+            pagingSourceFactory = {
+                relationDao.getEntityRelationshipsExcludingUrls(
+                    entityId = entityId,
+                    query = "%$query%",
+                )
+            }
+        ).flow
+    }
+
+    private fun hasRelationsBeenSavedFor(entityId: String): Boolean {
         return entityHasRelationsDao.hasRelationsBeenSavedFor(
             entityId = entityId,
         )
     }
 
-    override fun getEntityRelationshipsExcludingUrls(
+    private suspend fun lookupRelationsAndStore(
+        entity: MusicBrainzEntity,
         entityId: String,
-        query: String,
-    ): PagingSource<Int, RelationListItemModel> {
-        return relationDao.getEntityRelationshipsExcludingUrls(
+        forceRefresh: Boolean,
+    ) {
+        if (!forceRefresh) return
+
+        insertAllRelationsExcludingUrls(
+            entity = entity,
             entityId = entityId,
-            query = "%$query%",
         )
+    }
+
+    private fun deleteEntityRelationships(
+        entityId: String,
+    ) {
+        relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
     }
 
     override fun getEntityUrlRelationships(
@@ -157,12 +200,6 @@ class RelationRepositoryImpl(
     ): List<RelationListItemModel> = relationDao.getEntityUrlRelationships(
         entityId = entityId,
     )
-
-    override fun deleteEntityRelationships(
-        entityId: String,
-    ) {
-        relationDao.deleteRelationshipsExcludingUrlsByEntity(entityId)
-    }
 
     override fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>> =
         relationDao.getCountOfEachRelationshipType(entityId).map {

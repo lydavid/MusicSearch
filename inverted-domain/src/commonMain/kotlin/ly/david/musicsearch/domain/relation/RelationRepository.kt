@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.relation
 
-import app.cash.paging.PagingSource
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.data.core.listitem.RelationWithOrder
@@ -20,19 +20,15 @@ interface RelationRepository {
         entityId: String,
     )
 
-    fun hasRelationsBeenSavedFor(entityId: String): Boolean
-    fun getEntityRelationshipsExcludingUrls(
+    fun observeEntityRelationshipsExcludingUrls(
+        entity: MusicBrainzEntity,
         entityId: String,
         query: String,
-    ): PagingSource<Int, RelationListItemModel>
+    ): Flow<PagingData<RelationListItemModel>>
 
     fun getEntityUrlRelationships(
         entityId: String,
     ): List<RelationListItemModel>
-
-    fun deleteEntityRelationships(
-        entityId: String,
-    )
 
     fun getCountOfEachRelationshipType(entityId: String): Flow<List<RelationTypeCount>>
 }

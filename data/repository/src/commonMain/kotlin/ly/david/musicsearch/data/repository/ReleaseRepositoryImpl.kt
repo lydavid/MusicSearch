@@ -1,10 +1,20 @@
 package ly.david.musicsearch.data.repository
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.insertSeparators
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.core.area.AreaType
+import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.data.core.getFormatsForDisplay
 import ly.david.musicsearch.data.core.getTracksForDisplay
+import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.listitem.ListSeparator
+import ly.david.musicsearch.data.core.listitem.TrackListItemModel
 import ly.david.musicsearch.data.core.listitem.toAreaListItemModel
 import ly.david.musicsearch.data.core.listitem.toLabelListItemModel
 import ly.david.musicsearch.data.core.release.ReleaseScaffoldModel
@@ -12,11 +22,15 @@ import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.database.dao.LabelDao
+import ly.david.musicsearch.data.database.dao.MediumDao
 import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
+import ly.david.musicsearch.data.database.dao.TrackDao
+import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.data.repository.internal.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.domain.relation.RelationRepository
 import ly.david.musicsearch.domain.release.ReleaseRepository
@@ -33,6 +47,8 @@ class ReleaseRepositoryImpl(
     private val labelDao: LabelDao,
     private val releaseLabelDao: ReleaseLabelDao,
     private val relationRepository: RelationRepository,
+    private val mediumDao: MediumDao,
+    private val trackDao: TrackDao,
 ) : ReleaseRepository {
 
     // TODO: split up what data to include when calling from details/tracks tabs?
@@ -112,6 +128,56 @@ class ReleaseRepositoryImpl(
                 entityId = release.id,
                 relationWithOrderList = relationWithOrderList,
             )
+        }
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    override fun observeTracksByRelease(
+        releaseId: String,
+        query: String,
+    ): Flow<PagingData<ListItemModel>> {
+        return Pager(
+            config = CommonPagingConfig.pagingConfig,
+            remoteMediator = LookupEntityRemoteMediator(
+                hasEntityBeenStored = { hasReleaseTracksBeenStored(releaseId) },
+                lookupEntity = { lookupRelease(releaseId) },
+                deleteLocalEntity = { deleteMediaAndTracksByRelease(releaseId) }
+            ),
+            pagingSourceFactory = {
+                trackDao.getTracksByRelease(
+                    releaseId = releaseId,
+                    query = "%$query%",
+                )
+            }
+        ).flow.map { pagingData ->
+            pagingData
+                .insertSeparators { before: TrackListItemModel?, after: TrackListItemModel? ->
+                    if (before?.mediumId != after?.mediumId && after != null) {
+                        val medium =
+                            mediumDao.getMediumForTrack(after.id) ?: return@insertSeparators null
+
+                        ListSeparator(
+                            id = "${medium.id}",
+                            text = medium.format.orEmpty() +
+                                (medium.position?.toString() ?: "").transformThisIfNotNullOrEmpty { " $it" } +
+                                medium.name.transformThisIfNotNullOrEmpty { " ($it)" }
+                        )
+                    } else {
+                        null
+                    }
+                }
+        }
+    }
+
+    private fun hasReleaseTracksBeenStored(releaseId: String): Boolean {
+        // TODO: right now the details tab is coupled with the tracks list tab
+        return releaseDao.getReleaseForDetails(releaseId) != null
+    }
+
+    private fun deleteMediaAndTracksByRelease(releaseId: String) {
+        releaseDao.withTransaction {
+            releaseDao.delete(releaseId)
+            mediumDao.deleteMediaByRelease(releaseId)
         }
     }
 }

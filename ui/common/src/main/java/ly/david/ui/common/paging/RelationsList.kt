@@ -1,8 +1,6 @@
 package ly.david.ui.common.paging
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.CoroutineScope
@@ -15,10 +13,7 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
-import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
-import ly.david.musicsearch.domain.relation.RelationRepository
-import ly.david.musicsearch.domain.relation.usecase.LookupRelationsAndStore
+import ly.david.musicsearch.domain.relation.usecase.GetEntityRelationships
 import org.koin.core.annotation.Factory
 
 /**
@@ -41,8 +36,6 @@ interface IRelationsList {
     fun updateQuery(query: String) {
         this.query.value = query
     }
-
-    suspend fun hasRelationsBeenStored(): Boolean
 }
 
 /**
@@ -54,8 +47,7 @@ interface IRelationsList {
  */
 @Factory
 class RelationsList(
-    private val relationRepository: RelationRepository,
-    private val lookupRelationsAndStore: LookupRelationsAndStore,
+    private val getEntityRelationships: GetEntityRelationships,
 ) : IRelationsList {
 
     data class State(
@@ -65,61 +57,32 @@ class RelationsList(
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
-    private val paramState = combine(entityId, query) { entityId, query ->
-        State(entityId, query)
+    private val paramState = combine(
+        entityId,
+        query
+    ) { entityId, query ->
+        State(
+            entityId,
+            query
+        )
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
     lateinit var entity: MusicBrainzEntity
 
-    @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
+    @OptIn(
+        ExperimentalCoroutinesApi::class
+    )
     override val pagedRelations: Flow<PagingData<RelationListItemModel>> by lazy {
         paramState.filterNot { it.entityId.isEmpty() }
             .flatMapLatest { (entityId, query) ->
-                Pager(
-                    config = MusicBrainzPagingConfig.pagingConfig,
-                    remoteMediator = LookupEntityRemoteMediator(
-                        hasEntityBeenStored = { hasRelationsBeenStored() },
-                        lookupEntity = { forceRefresh ->
-                            lookupRelationsAndStore(entityId, forceRefresh = forceRefresh)
-                        },
-                        deleteLocalEntity = {
-                            deleteLocalRelations(entityId)
-                        }
-                    ),
-                    pagingSourceFactory = {
-                        relationRepository.getEntityRelationshipsExcludingUrls(
-                            entityId = entityId,
-                            query = query,
-                        )
-                    }
-                ).flow
+                getEntityRelationships(
+                    entity = entity,
+                    entityId = entityId,
+                    query = query,
+                )
             }
             .distinctUntilChanged()
             .cachedIn(scope)
-    }
-
-    /**
-     * This will determine whether we will call [lookupRelationsAndStore].
-     *
-     * So it makes the most sense for [lookupRelationsAndStore] to set this underlying query to true.
-     */
-    override suspend fun hasRelationsBeenStored(): Boolean =
-        relationRepository.hasRelationsBeenSavedFor(entityId.value)
-
-    /**
-     * This is responsible for making a lookup request for this resource's relationships,
-     * then storing them into our database.
-     *
-     * Unlike browse requests, this is expected to only be called once.
-     */
-    private suspend fun lookupRelationsAndStore(entityId: String, forceRefresh: Boolean) {
-        if (!forceRefresh) return
-
-        lookupRelationsAndStore(entity, entityId)
-    }
-
-    private fun deleteLocalRelations(entityId: String) {
-        relationRepository.deleteEntityRelationships(entityId)
     }
 }
