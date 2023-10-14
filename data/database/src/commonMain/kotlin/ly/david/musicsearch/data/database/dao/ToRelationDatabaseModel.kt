@@ -1,15 +1,16 @@
 package ly.david.musicsearch.data.database.dao
 
-import java.net.URLDecoder
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.data.musicbrainz.getFormattedAttributesForDisplay
+import ly.david.data.musicbrainz.getHeader
 import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.musicsearch.data.core.common.emptyToNull
 import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.data.core.getLifeSpanForDisplay
+import ly.david.musicsearch.data.core.listitem.RelationWithOrder
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.getFormattedAttributesForDisplay
-import ly.david.data.musicbrainz.getHeader
 import lydavidmusicsearchdatadatabase.Relation
+import java.net.URLDecoder
 
 /**
  * We cannot guarantee that a [Relation] will be created in the scenario that target-type points to a resource
@@ -19,7 +20,7 @@ import lydavidmusicsearchdatadatabase.Relation
 fun RelationMusicBrainzModel.toRelationDatabaseModel(
     entityId: String,
     order: Int,
-): Relation? {
+): RelationWithOrder? {
     var linkedEntityId = ""
     var linkedEntityName = ""
     var linkedEntityDisambiguation: String? = null
@@ -151,15 +152,15 @@ fun RelationMusicBrainzModel.toRelationDatabaseModel(
         else -> return null
     }
 
-    return Relation(
-        entity_id = entityId,
-        linked_entity_id = linkedEntityId,
-        linked_entity = linkedTargetType,
+    return RelationWithOrder(
+        id = entityId,
+        linkedEntityId = linkedEntityId,
+        linkedEntity = linkedTargetType,
         order = order,
         label = getHeader(),
         name = linkedEntityName,
         disambiguation = linkedEntityDisambiguation,
         attributes = getFormattedAttributesForDisplay(),
-        additional_info = additionalInfo
+        additionalInfo = additionalInfo
     )
 }

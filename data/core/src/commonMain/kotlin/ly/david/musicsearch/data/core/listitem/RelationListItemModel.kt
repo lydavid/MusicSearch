@@ -20,3 +20,15 @@ data class RelationListItemModel(
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
 ) : ListItemModel(), Relation
+
+data class RelationWithOrder(
+    override val id: String,
+    override val linkedEntityId: String,
+    override val label: String,
+    override val name: String,
+    override val disambiguation: String? = null,
+    override val attributes: String? = null,
+    override val additionalInfo: String? = null,
+    override val linkedEntity: MusicBrainzEntity,
+    val order: Int,
+) : ListItemModel(), Relation

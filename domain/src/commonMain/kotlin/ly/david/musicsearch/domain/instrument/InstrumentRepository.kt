@@ -6,7 +6,6 @@ import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.database.dao.InstrumentDao
 import ly.david.musicsearch.domain.RelationsListRepository
-import ly.david.musicsearch.domain.relation.RelationRepository
 import org.koin.core.annotation.Single
 
 @Single

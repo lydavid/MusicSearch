@@ -1,35 +1,33 @@
-package ly.david.musicsearch.domain.area
+package ly.david.musicsearch.data.repository
 
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.api.LookupApi.Companion.INC_ALL_RELATIONS_EXCEPT_URLS
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.area.AreaScaffoldModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
-import ly.david.musicsearch.domain.RelationsListRepository
+import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.relation.RelationRepository
-import org.koin.core.annotation.Single
 
-@Single
-class AreaRepository(
+class AreaRepositoryImpl(
     private val musicBrainzApi: MusicBrainzApi,
     private val areaDao: AreaDao,
     private val countryCodeDao: CountryCodeDao,
     private val relationRepository: RelationRepository,
-) : RelationsListRepository {
+) : AreaRepository {
 
     /**
      * Returns area for display.
      *
      * Lookup area, and stores all relevant data.
      */
-    suspend fun lookupArea(areaId: String): AreaScaffoldModel {
+    override suspend fun lookupArea(areaId: String): AreaScaffoldModel {
         val area = areaDao.getArea(areaId)
         val countryCodes: List<String> = countryCodeDao.getCountryCodesForArea(areaId)
         val urlRelations = relationRepository.getEntityUrlRelationships(areaId)
         val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(areaId)
         if (area != null && hasUrlsBeenSavedForEntity) {
-            return area.toAreaScaffoldModel(
+            return area.copy(
                 countryCodes = countryCodes,
                 urls = urlRelations,
             )
@@ -47,17 +45,26 @@ class AreaRepository(
                 areaId = area.id,
                 countryCodes = area.countryCodes.orEmpty()
             )
+
+            val relationWithOrderList = area.relations.toRelationWithOrderList(area.id)
             relationRepository.insertAllUrlRelations(
                 entityId = area.id,
-                relationMusicBrainzModels = area.relations,
+                relationWithOrderList = relationWithOrderList,
             )
         }
     }
 
-    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-        return musicBrainzApi.lookupArea(
-            areaId = entityId,
-            include = INC_ALL_RELATIONS_EXCEPT_URLS,
-        ).relations
-    }
+//    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationWithOrder>? {
+//        val relations = musicBrainzApi.lookupArea(
+//            areaId = entityId,
+//            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+//        ).relations
+//        val relationWithOrderList = relations?.mapIndexedNotNull { index, relationMusicBrainzModel ->
+//            relationMusicBrainzModel.toRelationDatabaseModel(
+//                entityId = entityId,
+//                order = index,
+//            )
+//        }
+//        return relationWithOrderList
+//    }
 }
