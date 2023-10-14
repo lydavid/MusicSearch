@@ -7,6 +7,7 @@ import ly.david.musicsearch.data.repository.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.InstrumentRepositoryImpl
 import ly.david.musicsearch.data.repository.LabelRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
+import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
@@ -23,6 +24,7 @@ import ly.david.musicsearch.domain.event.EventRepository
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.domain.instrument.InstrumentRepository
 import ly.david.musicsearch.domain.label.LabelRepository
+import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.musicsearch.domain.recording.RecordingRepository
 import ly.david.musicsearch.domain.relation.RelationRepository
@@ -44,6 +46,7 @@ val repositoryDataModule = module {
     singleOf(::InstrumentRepositoryImpl) bind InstrumentRepository::class
     singleOf(::LabelRepositoryImpl) bind LabelRepository::class
     singleOf(::LookupHistoryRepositoryImpl) bind LookupHistoryRepository::class
+    singleOf(::NowPlayingHistoryRepositoryImpl) bind NowPlayingHistoryRepository::class
     singleOf(::PlaceRepositoryImpl) bind PlaceRepository::class
     singleOf(::RecordingRepositoryImpl) bind RecordingRepository::class
     singleOf(::RelationRepositoryImpl) bind RelationRepository::class

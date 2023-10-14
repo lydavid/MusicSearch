@@ -53,18 +53,4 @@ class AreaRepositoryImpl(
             )
         }
     }
-
-//    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationWithOrder>? {
-//        val relations = musicBrainzApi.lookupArea(
-//            areaId = entityId,
-//            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
-//        ).relations
-//        val relationWithOrderList = relations?.mapIndexedNotNull { index, relationMusicBrainzModel ->
-//            relationMusicBrainzModel.toRelationDatabaseModel(
-//                entityId = entityId,
-//                order = index,
-//            )
-//        }
-//        return relationWithOrderList
-//    }
 }

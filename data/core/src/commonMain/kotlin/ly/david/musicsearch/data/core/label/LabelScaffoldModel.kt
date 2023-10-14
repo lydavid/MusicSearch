@@ -1,5 +1,6 @@
 package ly.david.musicsearch.data.core.label
 
+import ly.david.musicsearch.data.core.Label
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 
 data class LabelScaffoldModel(
@@ -9,4 +10,4 @@ data class LabelScaffoldModel(
     override val type: String? = null,
     override val labelCode: Int? = null,
     val urls: List<RelationListItemModel> = listOf(),
-) : ly.david.musicsearch.data.core.Label
+) : Label

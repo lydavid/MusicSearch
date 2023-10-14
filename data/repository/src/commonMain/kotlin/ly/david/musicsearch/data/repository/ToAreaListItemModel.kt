@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import lydavidmusicsearchdatadatabase.Area
 
-// TODO: have db output single listitem
+// TODO: remove: have db output single listitem
 fun Area.toAreaListItemModel() = AreaListItemModel(
     id = id,
     name = name,

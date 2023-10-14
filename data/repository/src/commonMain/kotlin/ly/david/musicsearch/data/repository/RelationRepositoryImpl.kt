@@ -30,37 +30,21 @@ class RelationRepositoryImpl(
         entityId: String,
         relationWithOrderList: List<RelationWithOrder>?,
     ) {
-        insertRelations(entityId, relationWithOrderList)
+        relationDao.insertAll(relationWithOrderList)
         entityHasUrlsDao.markEntityHasUrls(entityId)
     }
 
     override suspend fun insertAllRelationsExcludingUrls(
         entity: MusicBrainzEntity,
         entityId: String,
-//        relationMusicBrainzModels: List<RelationWithOrder>?,
     ) {
-//        val relations = relationsListRepository.lookupRelationsFromNetwork(entityId)
-//        val relationWithOrderList = relations?.mapIndexedNotNull { index, relationMusicBrainzModel ->
-//            relationMusicBrainzModel.toRelationDatabaseModel(
-//                entityId = entityId,
-//                order = index,
-//            )
-//        }
-//        relationRepository.insertAllRelationsExcludingUrls(
-//            entityId = entityId,
-//            relationMusicBrainzModels = relationWithOrderList,
-//        )
-        val relationMusicBrainzModels = lookupEntityWithRelations(entity, entityId)
+        val relationMusicBrainzModels = lookupEntityWithRelations(
+            entity = entity,
+            entityId = entityId
+        )
         val relationWithOrderList = relationMusicBrainzModels.toRelationWithOrderList(entityId)
-        insertRelations(entityId, relationWithOrderList)
+        relationDao.insertAll(relationWithOrderList)
         entityHasRelationsDao.markEntityHasRelationsStored(entityId)
-    }
-
-    override fun insertRelations(
-        entityId: String,
-        relationMusicBrainzModels: List<RelationWithOrder>?,
-    ) {
-        relationDao.insertAll(relationMusicBrainzModels)
     }
 
     private suspend fun lookupEntityWithRelations(
@@ -74,78 +58,83 @@ class RelationRepositoryImpl(
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.ARTIST -> {
                 musicBrainzApi.lookupArtist(
                     artistId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
-            MusicBrainzEntity.COLLECTION -> TODO()
+
             MusicBrainzEntity.EVENT -> {
                 musicBrainzApi.lookupEvent(
                     eventId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
-            MusicBrainzEntity.GENRE -> TODO()
+
             MusicBrainzEntity.INSTRUMENT -> {
                 musicBrainzApi.lookupInstrument(
                     instrumentId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.LABEL -> {
                 musicBrainzApi.lookupLabel(
                     labelId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.PLACE -> {
                 musicBrainzApi.lookupPlace(
                     placeId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.RECORDING -> {
                 musicBrainzApi.lookupRecording(
                     recordingId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.RELEASE -> {
                 musicBrainzApi.lookupRelease(
                     releaseId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.RELEASE_GROUP -> {
                 musicBrainzApi.lookupReleaseGroup(
                     releaseGroupId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.SERIES -> {
                 musicBrainzApi.lookupSeries(
                     seriesId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
+
             MusicBrainzEntity.WORK -> {
                 musicBrainzApi.lookupWork(
                     workId = entityId,
                     include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
                 ).relations
             }
-            MusicBrainzEntity.URL -> TODO()
+
+            MusicBrainzEntity.COLLECTION,
+            MusicBrainzEntity.GENRE,
+            MusicBrainzEntity.URL,
+            -> error("Attempting to lookup the relationships of unsupported entity $entity")
         }
     }
-
-//    private suspend fun lookupEntityWithUrls(
-//        entity: MusicBrainzEntity,
-//        entityId: String,
-//    ): List<RelationWithOrder> {
-//
-//    }
 
     override fun hasRelationsBeenSavedFor(entityId: String): Boolean {
         return entityHasRelationsDao.hasRelationsBeenSavedFor(

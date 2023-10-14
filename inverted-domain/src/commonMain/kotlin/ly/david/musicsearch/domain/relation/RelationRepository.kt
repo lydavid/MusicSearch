@@ -12,7 +12,7 @@ interface RelationRepository {
 
     fun insertAllUrlRelations(
         entityId: String,
-        relationWithOrderList: List<RelationWithOrder>?
+        relationWithOrderList: List<RelationWithOrder>?,
     )
 
     suspend fun insertAllRelationsExcludingUrls(
@@ -20,7 +20,6 @@ interface RelationRepository {
         entityId: String,
     )
 
-    fun insertRelations(entityId: String, relationMusicBrainzModels: List<RelationWithOrder>?)
     fun hasRelationsBeenSavedFor(entityId: String): Boolean
     fun getEntityRelationshipsExcludingUrls(
         entityId: String,

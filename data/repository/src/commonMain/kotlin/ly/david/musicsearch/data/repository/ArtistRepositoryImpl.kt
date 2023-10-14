@@ -40,11 +40,4 @@ class ArtistRepositoryImpl(
             )
         }
     }
-
-//    override suspend fun lookupRelationsFromNetwork(entityId: String): List<RelationMusicBrainzModel>? {
-//        return musicBrainzApi.lookupArtist(
-//            artistId = entityId,
-//            include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
-//        ).relations
-//    }
 }

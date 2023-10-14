@@ -13,20 +13,3 @@ data class AreaScaffoldModel(
     val countryCodes: List<String>? = null,
     val urls: List<RelationListItemModel> = listOf(),
 ) : Area
-
-//fun Area.toAreaScaffoldModel(
-//    countryCodes: List<String>,
-//    urls: List<RelationListItemModel>,
-//) = AreaScaffoldModel(
-//    id = id,
-//    name = name,
-//    disambiguation = disambiguation,
-//    type = type,
-//    lifeSpan = LifeSpanUiModel(
-//        begin = begin,
-//        end = end,
-//        ended = ended,
-//    ),
-//    countryCodes = countryCodes,
-//    urls = urls,
-//)

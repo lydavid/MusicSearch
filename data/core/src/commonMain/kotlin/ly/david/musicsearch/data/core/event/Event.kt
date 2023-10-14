@@ -1,4 +1,7 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.event
+
+import ly.david.musicsearch.data.core.LifeSpan
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 interface Event : NameWithDisambiguation {
     val id: String

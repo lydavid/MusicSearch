@@ -117,17 +117,6 @@ class RelationsList(
         if (!forceRefresh) return
 
         lookupRelationsAndStore(entity, entityId)
-//        val relations = relationsListRepository.lookupRelationsFromNetwork(entityId)
-//        val relationWithOrderList = relations?.mapIndexedNotNull { index, relationMusicBrainzModel ->
-//            relationMusicBrainzModel.toRelationDatabaseModel(
-//                entityId = entityId,
-//                order = index,
-//            )
-//        }
-//        relationRepository.insertAllRelationsExcludingUrls(
-//            entityId = entityId,
-//            relationMusicBrainzModels = relationWithOrderList,
-//        )
     }
 
     private fun deleteLocalRelations(entityId: String) {

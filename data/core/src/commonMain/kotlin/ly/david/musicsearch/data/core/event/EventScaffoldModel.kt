@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.event
 
-import ly.david.musicsearch.data.core.Event
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 
