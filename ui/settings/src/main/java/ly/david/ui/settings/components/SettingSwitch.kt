@@ -19,7 +19,7 @@ import ly.david.ui.core.theme.PreviewTheme
 import ly.david.ui.core.theme.TextStyles
 
 @Composable
-fun SettingSwitch(
+internal fun SettingSwitch(
     header: String,
     checked: Boolean,
     modifier: Modifier = Modifier,

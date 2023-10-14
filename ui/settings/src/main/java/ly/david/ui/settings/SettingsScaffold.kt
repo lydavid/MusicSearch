@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationManagerCompat
+import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.ScrollableTopAppBar

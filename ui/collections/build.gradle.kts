@@ -11,15 +11,14 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.preferences)
     implementation(projects.data)
     implementation(projects.data.database)
-    implementation(projects.dataAndroid)
     implementation(projects.domain)
     implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
-    implementation(projects.ui.settings)
     testImplementation(projects.ui.test.screenshot)
 
     implementation(libs.androidx.paging.compose)

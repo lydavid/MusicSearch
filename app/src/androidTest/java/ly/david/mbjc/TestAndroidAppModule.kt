@@ -13,6 +13,7 @@ import ly.david.mbjc.di.testCoroutineDispatchersModule
 import ly.david.mbjc.di.testDatabaseDriverModule
 import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
+import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
@@ -33,6 +34,7 @@ val testAndroidAppModule = module {
         testCoroutineDispatchersModule,
         testNetworkModule,
         testPreferencesDataStoreModule,
+        appPreferencesModule,
         testImageModule,
         testDatabaseDriverModule,
         searchFeatureModule,

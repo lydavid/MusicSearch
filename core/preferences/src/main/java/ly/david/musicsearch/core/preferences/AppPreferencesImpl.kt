@@ -1,4 +1,4 @@
-package ly.david.ui.settings
+package ly.david.musicsearch.core.preferences
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -10,62 +10,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.domain.history.HistorySortOption
-import org.koin.core.annotation.Single
-
-interface AppPreferences {
-
-    enum class Theme {
-        LIGHT,
-        DARK,
-        SYSTEM,
-    }
-
-    val theme: Flow<Theme>
-    fun setTheme(theme: Theme)
-
-    val useMaterialYou: Flow<Boolean>
-    fun setUseMaterialYou(use: Boolean)
-
-    val showMoreInfoInReleaseListItem: Flow<Boolean>
-    fun setShowMoreInfoInReleaseListItem(show: Boolean)
-
-    val sortReleaseGroupListItems: Flow<Boolean>
-    fun setSortReleaseGroupListItems(show: Boolean)
-
-    val showLocalCollections: Flow<Boolean>
-    fun setShowLocalCollections(show: Boolean)
-
-    val showRemoteCollections: Flow<Boolean>
-    fun setShowRemoteCollections(show: Boolean)
-
-    val historySortOption: Flow<HistorySortOption>
-    fun setHistorySortOption(sort: HistorySortOption)
-}
+import ly.david.musicsearch.data.core.history.HistorySortOption
 
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)
-
 private const val USE_MATERIAL_YOU_KEY = "useMaterialYou"
 private val USE_MATERIAL_YOU_PREFERENCE = booleanPreferencesKey(USE_MATERIAL_YOU_KEY)
-
 private const val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY = "showMoreInfoInReleaseListItem"
 private val SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_PREFERENCE =
     booleanPreferencesKey(SHOW_MORE_INFO_IN_RELEASE_LIST_ITEM_KEY)
-
 private const val SORT_RELEASE_GROUP_LIST_ITEMS = "sortReleaseGroupListItems"
 private val SORT_RELEASE_GROUP_LIST_ITEMS_PREFERENCE =
     booleanPreferencesKey(SORT_RELEASE_GROUP_LIST_ITEMS)
-
 private const val SHOW_LOCAL_COLLECTIONS = "showLocalCollections"
 private val SHOW_LOCAL_COLLECTIONS_PREFERENCE =
     booleanPreferencesKey(SHOW_LOCAL_COLLECTIONS)
-
 private const val SHOW_REMOTE_COLLECTIONS = "showRemoteCollections"
 private val SHOW_REMOTE_COLLECTIONS_PREFERENCE =
     booleanPreferencesKey(SHOW_REMOTE_COLLECTIONS)
 
-@Single(binds = [AppPreferences::class])
 class AppPreferencesImpl(
     private val preferencesDataStore: DataStore<Preferences>,
     private val coroutineScope: CoroutineScope,

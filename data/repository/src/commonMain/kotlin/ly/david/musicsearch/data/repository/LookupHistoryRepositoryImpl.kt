@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.core.listitem.ListSeparator
 import ly.david.musicsearch.data.core.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.LookupHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
-import ly.david.musicsearch.domain.history.HistorySortOption
+import ly.david.musicsearch.data.core.history.HistorySortOption
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
 
 class LookupHistoryRepositoryImpl(

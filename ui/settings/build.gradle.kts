@@ -12,37 +12,43 @@ android {
 
     buildTypes {
         all {
-            buildConfigField("int", "VERSION_CODE", project.properties["VERSION_CODE"] as String? ?: "")
-            buildConfigField("String", "VERSION_NAME", "\"${project.properties["VERSION_NAME"] as String? ?: ""}\"")
+            buildConfigField(
+                type = "int",
+                name = "VERSION_CODE",
+                value = project.properties["VERSION_CODE"] as String? ?: "",
+            )
+            buildConfigField(
+                type = "String",
+                name = "VERSION_NAME",
+                value = "\"${project.properties["VERSION_NAME"] as String? ?: ""}\"",
+            )
         }
     }
 }
 
 dependencies {
-    implementation(projects.dataAndroid)
-    implementation(projects.domain)
+    implementation(projects.core.preferences)
+    implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
+    implementation(projects.domain) // TODO: remove after extracting destination
     implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
-
     implementation(libs.aboutlibraries.compose)
     implementation(libs.aboutlibraries.core)
-
     implementation(libs.androidx.datastore.preferences)
-
     implementation(libs.appauth)
-
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
-    debugImplementation(libs.compose.ui.tooling)
-
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
+
+    debugImplementation(libs.compose.ui.tooling)
+
     ksp(libs.koin.ksp.compiler)
 
     testRuntimeOnly(libs.bundles.kotlinx.coroutines)

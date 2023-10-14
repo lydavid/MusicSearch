@@ -24,7 +24,7 @@ import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
-import ly.david.ui.settings.AppPreferences
+import ly.david.musicsearch.core.preferences.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationResponse

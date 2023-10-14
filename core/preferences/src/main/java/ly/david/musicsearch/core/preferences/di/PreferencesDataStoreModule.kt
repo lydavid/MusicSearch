@@ -1,4 +1,4 @@
-package ly.david.data.di.preferences
+package ly.david.musicsearch.core.preferences.di
 
 import android.content.Context
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
@@ -19,7 +19,12 @@ val preferencesDataStoreModule = module {
             corruptionHandler = ReplaceFileCorruptionHandler(
                 produceNewData = { emptyPreferences() },
             ),
-            migrations = listOf(SharedPreferencesMigration(get(), SETTINGS_KEY)),
+            migrations = listOf(
+                SharedPreferencesMigration(
+                    get(),
+                    SETTINGS_KEY,
+                ),
+            ),
             scope = CoroutineScope(SupervisorJob() + get<CoroutineDispatchers>().io),
             produceFile = { get<Context>().preferencesDataStoreFile(SETTINGS_KEY) },
         )
