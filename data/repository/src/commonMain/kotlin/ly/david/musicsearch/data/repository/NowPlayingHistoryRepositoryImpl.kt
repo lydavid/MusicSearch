@@ -1,3 +1,4 @@
+@file:JvmTarget(11)
 package ly.david.musicsearch.data.repository
 
 import androidx.paging.Pager
