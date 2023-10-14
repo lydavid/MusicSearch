@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository.di
 import ly.david.musicsearch.data.repository.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.ArtistRepositoryImpl
 import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
+import ly.david.musicsearch.data.repository.CollectionRepositoryImpl
 import ly.david.musicsearch.data.repository.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.InstrumentRepositoryImpl
 import ly.david.musicsearch.data.repository.LabelRepositoryImpl
@@ -20,6 +21,7 @@ import ly.david.musicsearch.data.repository.WorkRepositoryImpl
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
+import ly.david.musicsearch.domain.collection.CollectionRepository
 import ly.david.musicsearch.domain.event.EventRepository
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.domain.instrument.InstrumentRepository
@@ -42,6 +44,7 @@ val repositoryDataModule = module {
     singleOf(::AreaRepositoryImpl) bind AreaRepository::class
     singleOf(::ArtistRepositoryImpl) bind ArtistRepository::class
     singleOf(::BrowseEntityCountRepositoryImpl) bind BrowseEntityCountRepository::class
+    singleOf(::CollectionRepositoryImpl) bind CollectionRepository::class
     singleOf(::EventRepositoryImpl) bind EventRepository::class
     singleOf(::InstrumentRepositoryImpl) bind InstrumentRepository::class
     singleOf(::LabelRepositoryImpl) bind LabelRepository::class

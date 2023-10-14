@@ -2,7 +2,6 @@ package ly.david.mbjc.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,10 +20,10 @@ import ly.david.musicsearch.data.core.network.resourceUriPlural
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
+import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import ly.david.musicsearch.domain.history.usecase.DeleteLookupHistory
 import ly.david.musicsearch.domain.history.usecase.MarkLookupHistoryForDeletion
 import ly.david.musicsearch.domain.history.usecase.UnMarkLookupHistoryForDeletion
-import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.settings.AppPreferences
 import net.openid.appauth.AuthState
 import net.openid.appauth.AuthorizationRequest
@@ -41,6 +40,7 @@ internal class TopLevelViewModel(
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
 
     private val collectionDao: CollectionDao,
+    private val getAllCollections: GetAllCollections,
     private val collectionEntityDao: CollectionEntityDao,
     private val musicBrainzApi: MusicBrainzApi,
 
@@ -65,12 +65,7 @@ internal class TopLevelViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val collections: Flow<PagingData<CollectionListItemModel>> =
         entity.flatMapLatest {
-            Pager(
-                config = MusicBrainzPagingConfig.pagingConfig,
-                pagingSourceFactory = {
-                    collectionDao.getAllCollections(entity = it)
-                }
-            ).flow
+            getAllCollections(entity = it)
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
@@ -83,7 +78,10 @@ internal class TopLevelViewModel(
         this.entityId.value = entityId
     }
 
-    fun createNewCollection(name: String, entity: MusicBrainzEntity) {
+    fun createNewCollection(
+        name: String,
+        entity: MusicBrainzEntity,
+    ) {
         viewModelScope.launch {
             collectionDao.insertLocal(
                 CollectionListItemModel(
@@ -100,6 +98,7 @@ internal class TopLevelViewModel(
     suspend fun addToCollectionAndGetResult(collectionId: String): RemoteResult {
         var result = RemoteResult()
 
+        // TODO: handle this in repository
         val collection = collectionDao.getCollection(collectionId)
         if (collection.isRemote) {
             try {
@@ -161,12 +160,18 @@ internal class TopLevelViewModel(
         }
 
         collectionEntityDao.withTransaction {
-            collectionEntityDao.deleteFromCollection(collectionId, entityId)
+            collectionEntityDao.deleteFromCollection(
+                collectionId,
+                entityId
+            )
         }
         return RemoteResult("Deleted $entityName from ${collection.name}.")
     }
 
-    fun getLoginContract() = MusicBrainzLoginContract(authService, authRequest)
+    fun getLoginContract() = MusicBrainzLoginContract(
+        authService,
+        authRequest
+    )
 
     fun performTokenRequest(authorizationResponse: AuthorizationResponse) {
         authService.performTokenRequest(
@@ -175,7 +180,10 @@ internal class TopLevelViewModel(
         ) { response, exception ->
             viewModelScope.launch {
                 val authState = AuthState()
-                authState.update(response, exception)
+                authState.update(
+                    response,
+                    exception
+                )
                 musicBrainzAuthStore.saveTokens(
                     accessToken = authState.accessToken.orEmpty(),
                     refreshToken = authState.refreshToken.orEmpty(),
@@ -206,7 +214,10 @@ internal class TopLevelViewModel(
                 // TODO: snackbar
                 Timber.e("$ex")
             } finally {
-                musicBrainzAuthStore.saveTokens("", "")
+                musicBrainzAuthStore.saveTokens(
+                    "",
+                    ""
+                )
                 musicBrainzAuthStore.setUsername("")
             }
         }
