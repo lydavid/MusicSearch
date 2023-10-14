@@ -24,7 +24,7 @@ fun PlacesListScreen(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { placeListItemModel: PlaceListItemModel? ->
         when (placeListItemModel) {
             is PlaceListItemModel -> {

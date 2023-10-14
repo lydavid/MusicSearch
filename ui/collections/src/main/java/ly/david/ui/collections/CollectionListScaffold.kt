@@ -86,9 +86,9 @@ fun CollectionListScaffold(
                         showLocal = showLocal,
                         onShowLocalToggle = viewModel::setShowLocal,
                         showRemote = showRemote,
-                        onShowRemoteToggle = viewModel::setShowRemote
+                        onShowRemoteToggle = viewModel::setShowRemote,
                     )
-                }
+                },
             )
         },
     ) { innerPadding ->
@@ -104,7 +104,7 @@ fun CollectionListScaffold(
                     CollectionListItem(
                         collection = collectionListItemModel,
                         modifier = Modifier.animateItemPlacement(),
-                        onClick = { onCollectionClick(id, isRemote) }
+                        onClick = { onCollectionClick(id, isRemote) },
                     )
                 }
 
@@ -134,7 +134,7 @@ private fun CollectionsFilterChipsBar(
                 if (showLocal) {
                     Icon(imageVector = Icons.Default.Done, contentDescription = null)
                 }
-            }
+            },
         )
         Spacer(modifier = Modifier.padding(start = 8.dp))
         FilterChip(
@@ -145,7 +145,7 @@ private fun CollectionsFilterChipsBar(
                 if (showRemote) {
                     Icon(imageVector = Icons.Default.Done, contentDescription = null)
                 }
-            }
+            },
         )
     }
 }

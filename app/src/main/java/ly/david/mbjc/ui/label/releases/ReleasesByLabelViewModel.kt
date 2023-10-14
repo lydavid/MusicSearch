@@ -29,7 +29,7 @@ internal class ReleasesByLabelViewModel(
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
         return musicBrainzApi.browseReleasesByLabel(
             labelId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 

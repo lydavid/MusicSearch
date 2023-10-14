@@ -93,7 +93,7 @@ fun CollectionScaffold(
                             toggleOnText = strings.sort,
                             toggleOffText = strings.unsort,
                             toggled = sortReleaseGroupListItems,
-                            onToggle = onSortReleaseGroupListItemsChange
+                            onToggle = onSortReleaseGroupListItemsChange,
                         )
                     }
                     if (entity == MusicBrainzEntity.RELEASE) {
@@ -101,7 +101,7 @@ fun CollectionScaffold(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = onShowMoreInfoInReleaseListItemChange
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
                         )
                     }
                 },
@@ -117,7 +117,7 @@ fun CollectionScaffold(
             FullScreenText(
                 text = "Cannot find collection.",
                 modifier = Modifier
-                    .padding(innerPadding)
+                    .padding(innerPadding),
             )
         } else {
             CollectionScaffoldContent(
@@ -131,7 +131,7 @@ fun CollectionScaffold(
                 showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
                 onItemClick = onItemClick,
-                onDeleteFromCollection = onDeleteFromCollection
+                onDeleteFromCollection = onDeleteFromCollection,
             )
         }
     }
@@ -164,7 +164,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onAreaClick = onItemClick
+                onAreaClick = onItemClick,
             )
         }
 
@@ -179,7 +179,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onArtistClick = onItemClick
+                onArtistClick = onItemClick,
             )
         }
 
@@ -194,7 +194,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onEventClick = onItemClick
+                onEventClick = onItemClick,
             )
         }
 
@@ -209,7 +209,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onInstrumentClick = onItemClick
+                onInstrumentClick = onItemClick,
             )
         }
 
@@ -224,7 +224,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onLabelClick = onItemClick
+                onLabelClick = onItemClick,
             )
         }
 
@@ -239,7 +239,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onPlaceClick = onItemClick
+                onPlaceClick = onItemClick,
             )
         }
 
@@ -254,7 +254,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onRecordingClick = onItemClick
+                onRecordingClick = onItemClick,
             )
         }
 
@@ -270,7 +270,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onReleaseClick = onItemClick
+                onReleaseClick = onItemClick,
             )
         }
 
@@ -301,7 +301,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onSeriesClick = onItemClick
+                onSeriesClick = onItemClick,
             )
         }
 
@@ -316,7 +316,7 @@ private fun CollectionScaffoldContent(
                     .fillMaxSize()
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onDeleteFromCollection = onDeleteFromCollection,
-                onWorkClick = onItemClick
+                onWorkClick = onItemClick,
             )
         }
 

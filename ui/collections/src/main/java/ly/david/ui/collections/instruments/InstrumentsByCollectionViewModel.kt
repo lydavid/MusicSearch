@@ -29,7 +29,7 @@ internal class InstrumentsByCollectionViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseInstrumentsResponse {
         return musicBrainzApi.browseInstrumentsByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -54,7 +54,7 @@ internal class InstrumentsByCollectionViewModel(
     ): PagingSource<Int, InstrumentListItemModel> =
         collectionEntityDao.getInstrumentsByCollection(
             collectionId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     override fun transformDatabaseToListItemModel(databaseModel: InstrumentListItemModel): InstrumentListItemModel {

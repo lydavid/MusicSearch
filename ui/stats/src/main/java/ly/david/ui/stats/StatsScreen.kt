@@ -109,15 +109,15 @@ internal fun PreviewStatsScreen() {
                             ReleaseGroupTypeCount(
                                 primaryType = "Album",
                                 secondaryTypes = listOf("Compilation", "Demo"),
-                                count = 1
+                                count = 1,
                             ),
                         ),
                     ),
                     releaseStats = ReleaseStats(
                         totalRemote = 20,
-                        totalLocal = 15
+                        totalLocal = 15,
                     ),
-                )
+                ),
             )
         }
     }

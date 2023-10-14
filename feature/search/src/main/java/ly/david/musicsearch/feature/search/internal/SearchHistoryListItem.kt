@@ -32,7 +32,7 @@ internal fun SearchHistoryListItem(
                     Text(
                         text = searchHistory.query,
                         style = TextStyles.getCardBodyTextStyle(),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 },
                 modifier = modifier.clickable {
@@ -41,14 +41,14 @@ internal fun SearchHistoryListItem(
                 leadingContent = {
                     EntityIcon(
                         entity = searchHistory.entity,
-                        modifier = Modifier.size(TINY_ICON_SIZE.dp)
+                        modifier = Modifier.size(TINY_ICON_SIZE.dp),
                     )
                 },
             )
         },
         onDelete = {
             onDeleteItem(searchHistory)
-        }
+        },
     )
 }
 
@@ -61,8 +61,8 @@ internal fun PreviewSearchHistoryListItem() {
                 searchHistory = SearchHistoryListItemModel(
                     id = "ARTIST_aha",
                     query = "aha",
-                    entity = MusicBrainzEntity.ARTIST
-                )
+                    entity = MusicBrainzEntity.ARTIST,
+                ),
             )
         }
     }

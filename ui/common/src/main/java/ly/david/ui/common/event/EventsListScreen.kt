@@ -24,7 +24,7 @@ fun EventsListScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { eventListItemModel: EventListItemModel? ->
         when (eventListItemModel) {
             is EventListItemModel -> {

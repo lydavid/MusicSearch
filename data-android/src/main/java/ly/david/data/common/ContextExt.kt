@@ -15,7 +15,7 @@ fun Context.lookupInBrowser(entity: MusicBrainzEntity, musicBrainzId: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("$MUSIC_BRAINZ_BASE_URL/${entity.resourceUri}/$musicBrainzId")
-        }
+        },
     )
 }
 
@@ -35,7 +35,7 @@ fun Context.showMap(coordinates: Coordinates, label: String?) {
                 "geo:0,0?q=$latitude,$longitude($label)&z=$ZOOM_LEVEL"
             }
             data = Uri.parse(urlString)
-        }
+        },
     )
 }
 
@@ -50,6 +50,6 @@ fun Context.openUrl(url: String) {
     startActivity(
         Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(url)
-        }
+        },
     )
 }

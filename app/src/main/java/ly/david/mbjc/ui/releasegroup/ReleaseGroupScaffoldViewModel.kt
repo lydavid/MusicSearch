@@ -72,7 +72,7 @@ internal class ReleaseGroupScaffoldViewModel(
                                 mbid = releaseGroupId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }
@@ -97,7 +97,7 @@ internal class ReleaseGroupScaffoldViewModel(
         val imageUrl = releaseGroupScaffoldModel.imageUrl
         url.value = imageUrl ?: releaseGroupImageRepository.getReleaseGroupCoverArtUrlFromNetwork(
             releaseGroupId = releaseGroupId,
-            thumbnail = false
+            thumbnail = false,
         )
     }
 }

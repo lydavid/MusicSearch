@@ -26,9 +26,9 @@ class CollectionListItemTest : ScreenshotTest() {
                     entityCount = 9999,
                     entityIds = listOf(
                         "1b1e4b65-9b1a-48cd-8e3a-b4824f15bf0c",
-                        "b437fbda-9c32-4078-afa2-1afb98ff0d74"
-                    )
-                )
+                        "b437fbda-9c32-4078-afa2-1afb98ff0d74",
+                    ),
+                ),
             )
         }
     }

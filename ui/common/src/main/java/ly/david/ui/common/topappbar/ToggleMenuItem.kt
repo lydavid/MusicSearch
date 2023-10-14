@@ -21,6 +21,6 @@ fun OverflowMenuScope.ToggleMenuItem(
             closeMenu()
             onToggle(!toggled)
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

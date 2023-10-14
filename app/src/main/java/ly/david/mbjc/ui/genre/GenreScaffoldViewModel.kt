@@ -49,7 +49,7 @@ internal class GenreScaffoldViewModel(
                         mbid = genreId,
                         title = title.value,
                         entity = entity,
-                    )
+                    ),
                 )
                 recordedLookup = true
             }

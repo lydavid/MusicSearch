@@ -25,7 +25,7 @@ fun RecordingsListScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { recordingListItemModel: RecordingListItemModel? ->
         when (recordingListItemModel) {
             is RecordingListItemModel -> {

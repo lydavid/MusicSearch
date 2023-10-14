@@ -9,7 +9,6 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 
 fun Project.configureDetekt() {
-
     with(pluginManager) {
         apply("io.gitlab.arturbosch.detekt")
     }
@@ -25,11 +24,10 @@ fun Project.configureDetekt() {
         allRules = false
         parallel = true
 
-        // Use a single config file
-        config = files("${project.rootDir}/config/detekt.yml")
+        config.setFrom(files("${project.rootDir}/config/detekt.yml"))
 
         // Each module has its own baseline otherwise they overwrite each other
-        baseline = file("${projectDir}/config/baseline.xml")
+        baseline = file("$projectDir/config/baseline.xml")
     }
 
     tasks.withType<Detekt>().configureEach {

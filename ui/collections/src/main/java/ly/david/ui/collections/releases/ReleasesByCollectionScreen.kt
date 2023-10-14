@@ -46,6 +46,6 @@ internal fun ReleasesByCollectionScreen(
         lazyPagingItems = lazyPagingItems,
         showMoreInfo = showMoreInfo,
         onReleaseClick = onReleaseClick,
-        onDeleteFromCollection = onDeleteFromCollection
+        onDeleteFromCollection = onDeleteFromCollection,
     )
 }

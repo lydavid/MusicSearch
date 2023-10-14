@@ -121,7 +121,7 @@ internal fun PreviewNowPlayingHistoryScaffold() {
                 listOf(
                     ListSeparator(
                         id = "separator1",
-                        text = "Saturday, July 7, 2023"
+                        text = "Saturday, July 7, 2023",
                     ),
                     NowPlayingHistoryListItemModel(
                         id = "1",
@@ -137,7 +137,7 @@ internal fun PreviewNowPlayingHistoryScaffold() {
                     ),
                     ListSeparator(
                         id = "separator2",
-                        text = "Friday, July 6, 2023"
+                        text = "Friday, July 6, 2023",
                     ),
                     NowPlayingHistoryListItemModel(
                         id = "3",
@@ -145,8 +145,8 @@ internal fun PreviewNowPlayingHistoryScaffold() {
                         artist = "A different artist",
                         lastPlayed = Instant.parse("2023-07-15T11:42:19Z"),
                     ),
-                )
-            )
+                ),
+            ),
         )
         NowPlayingHistoryScaffoldInternal(lazyPagingItems = items.collectAsLazyPagingItems())
     }

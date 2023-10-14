@@ -49,6 +49,6 @@ internal fun ReleaseGroupsByCollectionScreen(
         snackbarHostState = snackbarHostState,
         lazyPagingItems = lazyPagingItems,
         onReleaseGroupClick = onReleaseGroupClick,
-        onDeleteFromCollection = onDeleteFromCollection
+        onDeleteFromCollection = onDeleteFromCollection,
     )
 }

@@ -41,7 +41,7 @@ fun SimpleAlertDialog(
             }) {
                 Text(dismissText)
             }
-        }
+        },
     )
 }
 

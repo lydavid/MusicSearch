@@ -39,7 +39,7 @@ fun SearchScaffold(
             snackbarHostState = snackbarHostState,
             onItemClick = onItemClick,
             initialQuery = initialQuery,
-            initialEntity = initialEntity
+            initialEntity = initialEntity,
         )
     }
 }

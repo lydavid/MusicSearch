@@ -43,7 +43,7 @@ internal fun LazyListScope.addRelationshipsSection(
                 "No relationship stats available. Tap Relationships tab to fetch this entity's relationships."
             } else {
                 "Total relationships: $totalRelations"
-            }
+            },
         )
     }
     items(relationTypeCounts) { relationTypeCount ->
@@ -56,15 +56,15 @@ internal fun LazyListScope.addRelationshipsSection(
                 .padding(top = 4.dp),
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 EntityIcon(
                     modifier = Modifier.padding(end = 8.dp),
-                    entity = linkedEntity
+                    entity = linkedEntity,
                 )
                 Text(
                     style = TextStyles.getCardBodySubTextStyle(),
-                    text = "${linkedEntity.getDisplayText(strings)}: ${relationTypeCount.count}"
+                    text = "${linkedEntity.getDisplayText(strings)}: ${relationTypeCount.count}",
                 )
             }
 
@@ -77,7 +77,7 @@ internal fun LazyListScope.addRelationshipsSection(
                         .fillMaxWidth(),
                     progress = relationTypeCount.count / totalRelations.toFloat(),
                     color = MaterialTheme.colorScheme.primary,
-                    trackColor = Color.Transparent
+                    trackColor = Color.Transparent,
                 )
             }
         }
@@ -110,7 +110,7 @@ private fun Default() {
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.SERIES, count = 3),
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.URL, count = 2),
                         RelationTypeCount(linkedEntity = MusicBrainzEntity.WORK, count = 1),
-                    )
+                    ),
                 )
             }
         }
@@ -125,7 +125,7 @@ private fun NoRelationships() {
             LazyColumn {
                 addRelationshipsSection(
                     totalRelations = 0,
-                    relationTypeCounts = listOf()
+                    relationTypeCounts = listOf(),
                 )
             }
         }
@@ -140,7 +140,7 @@ private fun NullRelationships() {
             LazyColumn {
                 addRelationshipsSection(
                     totalRelations = null,
-                    relationTypeCounts = listOf()
+                    relationTypeCounts = listOf(),
                 )
             }
         }

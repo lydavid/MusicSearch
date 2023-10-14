@@ -48,7 +48,7 @@ internal fun EventsByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: EventListItemModel? ->
         when (listItemModel) {
             is EventListItemModel -> {
@@ -63,7 +63,7 @@ internal fun EventsByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

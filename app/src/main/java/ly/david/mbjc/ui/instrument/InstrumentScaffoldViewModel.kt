@@ -63,7 +63,7 @@ internal class InstrumentScaffoldViewModel(
                                 mbid = instrumentId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

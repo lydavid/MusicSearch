@@ -27,7 +27,7 @@ internal class ReleaseGroupsByArtistViewModel(
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
         return musicBrainzApi.browseReleaseGroupsByArtist(
             artistId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -52,6 +52,6 @@ internal class ReleaseGroupsByArtistViewModel(
         artistReleaseGroupDao.getReleaseGroupsByArtist(
             artistId = entityId,
             query = "%$query%",
-            sorted = sorted
+            sorted = sorted,
         )
 }

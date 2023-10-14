@@ -44,8 +44,8 @@ abstract class BrowseEntitiesByEntityViewModel<
                     entity_id = entityId,
                     browse_entity = byEntity,
                     local_count = response.musicBrainzModels.size,
-                    remote_count = response.count
-                )
+                    remote_count = response.count,
+                ),
             )
         } else {
             browseEntityCountDao.incrementLocalCountForEntity(entityId, byEntity, response.musicBrainzModels.size)

@@ -43,21 +43,21 @@ fun RelationListItem(
             Column {
                 Text(
                     text = "${relation.label}:",
-                    style = TextStyles.getCardBodySubTextStyle()
+                    style = TextStyles.getCardBodySubTextStyle(),
                 )
 
                 Row(
                     modifier = Modifier.padding(top = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     EntityIcon(
                         entity = relation.linkedEntity,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = 8.dp),
                     )
 
                     Text(
                         text = relation.name,
-                        style = TextStyles.getCardBodyTextStyle()
+                        style = TextStyles.getCardBodyTextStyle(),
                     )
                 }
 
@@ -67,7 +67,7 @@ fun RelationListItem(
                         modifier = Modifier.padding(top = 4.dp),
                         text = "($disambiguation)",
                         style = TextStyles.getCardBodySubTextStyle(),
-                        color = getSubTextColor()
+                        color = getSubTextColor(),
                     )
                 }
 
@@ -103,8 +103,8 @@ fun RelationListItem(
                 onLongClick = {
                     haptics.performHapticFeedback(HapticFeedbackType.LongPress)
                     clipboardManager.setText(AnnotatedString(relation.name))
-                }
-            )
+                },
+            ),
     )
 }
 
@@ -123,7 +123,7 @@ internal fun PreviewArtistRelationListItem() {
                     name = "Artist Name",
                     disambiguation = "that guy",
                     attributes = "task: director & organizer, strings",
-                )
+                ),
             )
         }
     }
@@ -142,7 +142,7 @@ internal fun PreviewRecordingRelationListItem() {
                     label = "DJ-mixes",
                     name = "Recording Name",
                     additionalInfo = "by Artist Names (order: 10)",
-                )
+                ),
             )
         }
     }
@@ -160,7 +160,7 @@ internal fun PreviewUrlRelationListItem() {
                     linkedEntity = MusicBrainzEntity.URL,
                     label = "Stream for free",
                     name = "https://www.example.com",
-                )
+                ),
             )
         }
     }

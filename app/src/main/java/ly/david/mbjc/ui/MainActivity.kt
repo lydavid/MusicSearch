@@ -25,7 +25,7 @@ internal class MainActivity : ComponentActivity() {
                 materialYou = appPreferences.useMaterialYou(),
                 content = {
                     TopLevelScaffold(navController)
-                }
+                },
             )
         }
     }

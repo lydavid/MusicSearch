@@ -48,7 +48,7 @@ class FakeImageLoader : ImageLoader {
         return SuccessResult(
             drawable = drawable,
             request = request,
-            dataSource = DataSource.MEMORY_CACHE
+            dataSource = DataSource.MEMORY_CACHE,
         )
     }
 

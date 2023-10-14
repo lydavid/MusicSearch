@@ -36,7 +36,7 @@ fun CoordinateListItem(
     ListItem(
         headlineContent = {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     modifier = Modifier.padding(end = 8.dp),
@@ -51,7 +51,7 @@ fun CoordinateListItem(
         },
         modifier = modifier.clickable {
             context.showMap(coordinates, label)
-        }
+        },
     )
 }
 
@@ -64,8 +64,8 @@ private fun CoordinateCardPreview() {
                 context = LocalContext.current,
                 coordinates = CoordinatesUiModel(
                     longitude = -73.98905,
-                    latitude = 40.76688
-                )
+                    latitude = 40.76688,
+                ),
             )
         }
     }

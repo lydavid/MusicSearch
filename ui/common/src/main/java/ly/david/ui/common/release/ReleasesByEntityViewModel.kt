@@ -41,14 +41,14 @@ abstract class ReleasesByEntityViewModel(
                     entity_id = entityId,
                     browse_entity = MusicBrainzEntity.RELEASE,
                     local_count = response.musicBrainzModels.size,
-                    remote_count = response.count
-                )
+                    remote_count = response.count,
+                ),
             )
         } else {
             browseEntityCountDao.incrementLocalCountForEntity(
                 entityId = entityId,
                 browseEntity = MusicBrainzEntity.RELEASE,
-                additionalOffset = response.musicBrainzModels.size
+                additionalOffset = response.musicBrainzModels.size,
             )
         }
 

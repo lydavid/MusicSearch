@@ -63,7 +63,7 @@ internal class SeriesScaffoldViewModel(
                                 mbid = seriesId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

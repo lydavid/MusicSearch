@@ -16,7 +16,7 @@ fun TabsBar(
     if (tabsTitle.isNotEmpty()) {
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
-            modifier = modifier
+            modifier = modifier,
         ) {
             tabsTitle.forEachIndexed { index, title ->
                 Tab(
@@ -24,7 +24,7 @@ fun TabsBar(
                     selected = selectedTabIndex == index,
                     onClick = {
                         onSelectTabIndex(index)
-                    }
+                    },
                 )
             }
         }

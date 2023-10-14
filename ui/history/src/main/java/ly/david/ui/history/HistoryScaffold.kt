@@ -55,7 +55,7 @@ fun HistoryScaffold(
             confirmText = strings.yes,
             dismissText = strings.no,
             onDismiss = { showDeleteConfirmationDialog = false },
-            onConfirmClick = { deleteHistoryDelegate.deleteAll() }
+            onConfirmClick = { deleteHistoryDelegate.deleteAll() },
         )
     }
 
@@ -64,7 +64,7 @@ fun HistoryScaffold(
             sortOption = sortOption,
             onSortOptionClick = viewModel::updateSortOption,
             bottomSheetState = bottomSheetState,
-            onDismiss = { showBottomSheet = false }
+            onDismiss = { showBottomSheet = false },
         )
     }
 
@@ -86,14 +86,14 @@ fun HistoryScaffold(
                         onClick = {
                             showDeleteConfirmationDialog = true
                             closeMenu()
-                        }
+                        },
                     )
                     DropdownMenuItem(
                         text = { Text(strings.sort) },
                         onClick = {
                             showBottomSheet = true
                             closeMenu()
-                        }
+                        },
                     )
                 },
             )
@@ -103,7 +103,7 @@ fun HistoryScaffold(
                 SwipeToDismiss(
                     state = rememberDismissState(),
                     background = {},
-                    dismissContent = { Snackbar(snackbarData) }
+                    dismissContent = { Snackbar(snackbarData) },
                 )
             }
         },
@@ -114,7 +114,7 @@ fun HistoryScaffold(
                 .padding(innerPadding)
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             onItemClick = onItemClick,
-            onDeleteItem = deleteHistoryDelegate::delete
+            onDeleteItem = deleteHistoryDelegate::delete,
         )
     }
 }

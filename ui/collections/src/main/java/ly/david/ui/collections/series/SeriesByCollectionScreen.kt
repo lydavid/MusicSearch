@@ -48,7 +48,7 @@ internal fun SeriesByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: SeriesListItemModel? ->
         when (listItemModel) {
             is SeriesListItemModel -> {
@@ -63,7 +63,7 @@ internal fun SeriesByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

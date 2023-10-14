@@ -83,7 +83,7 @@ internal fun WorkScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             workId = workId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -113,9 +113,9 @@ internal fun WorkScaffold(
                     TabsBar(
                         tabsTitle = WorkTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -135,7 +135,7 @@ internal fun WorkScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (WorkTab.values()[page]) {
                 WorkTab.DETAILS -> {
@@ -143,7 +143,7 @@ internal fun WorkScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = work
+                        scaffoldModel = work,
                     ) {
                         WorkDetailsScreen(
                             work = it,
@@ -189,7 +189,7 @@ internal fun WorkScaffold(
                         recordingsLazyPagingItems = recordingsLazyPagingItems,
                         onPagedRecordingsFlowChange = { pagedRecordingsFlow = it },
                         onRecordingClick = onItemClick,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
 

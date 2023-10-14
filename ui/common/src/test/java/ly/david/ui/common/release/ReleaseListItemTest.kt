@@ -39,7 +39,7 @@ class ReleaseListItemTest : ScreenshotTest() {
                     id = "1",
                     name = "Release title",
                 ),
-                showMoreInfo = true
+                showMoreInfo = true,
             )
         }
     }
@@ -53,7 +53,7 @@ class ReleaseListItemTest : ScreenshotTest() {
                     name = "Release title",
                     disambiguation = "Disambiguation text",
                 ),
-                showMoreInfo = true
+                showMoreInfo = true,
             )
         }
     }
@@ -69,9 +69,9 @@ class ReleaseListItemTest : ScreenshotTest() {
                     date = "2021-09-08",
                     countryCode = "CA",
                     formattedFormats = "2×CD + Blu-ray",
-                    formattedTracks = "15 + 8 + 24"
+                    formattedTracks = "15 + 8 + 24",
                 ),
-                showMoreInfo = true
+                showMoreInfo = true,
             )
         }
     }
@@ -87,9 +87,9 @@ class ReleaseListItemTest : ScreenshotTest() {
                     date = "2021-09-08",
                     countryCode = "CA",
                     formattedFormats = "2×CD + Blu-ray",
-                    formattedTracks = "15 + 8 + 24"
+                    formattedTracks = "15 + 8 + 24",
                 ),
-                showMoreInfo = false
+                showMoreInfo = false,
             )
         }
     }
@@ -104,7 +104,7 @@ class ReleaseListItemTest : ScreenshotTest() {
                     countryCode = "CA",
                     releaseCountryCount = 3,
                 ),
-                showMoreInfo = true
+                showMoreInfo = true,
             )
         }
     }
@@ -116,9 +116,9 @@ class ReleaseListItemTest : ScreenshotTest() {
                 release = ReleaseListItemModel(
                     id = "1",
                     name = "Release title",
-                    imageUrl = "https://www.example.com/image.jpg"
+                    imageUrl = "https://www.example.com/image.jpg",
                 ),
-                showMoreInfo = true
+                showMoreInfo = true,
             )
         }
     }

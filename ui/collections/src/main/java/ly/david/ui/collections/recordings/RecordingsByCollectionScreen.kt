@@ -48,7 +48,7 @@ internal fun RecordingsByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: RecordingListItemModel? ->
         when (listItemModel) {
             is RecordingListItemModel -> {
@@ -63,7 +63,7 @@ internal fun RecordingsByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

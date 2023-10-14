@@ -29,7 +29,7 @@ internal class AreasByCollectionViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseAreasResponse {
         return musicBrainzApi.browseAreasByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -37,7 +37,7 @@ internal class AreasByCollectionViewModel(
         areaDao.insertAll(musicBrainzModels)
         collectionEntityDao.insertAll(
             collectionId = entityId,
-            musicBrainzModels.map { area -> area.id }
+            musicBrainzModels.map { area -> area.id },
         )
     }
 
@@ -54,7 +54,7 @@ internal class AreasByCollectionViewModel(
     ): PagingSource<Int, AreaListItemModel> =
         collectionEntityDao.getAreasByCollection(
             collectionId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     // TODO: remove transformDatabaseToListItemModel

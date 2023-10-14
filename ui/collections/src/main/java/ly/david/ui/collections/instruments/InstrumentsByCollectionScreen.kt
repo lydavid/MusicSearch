@@ -48,7 +48,7 @@ internal fun InstrumentsByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: InstrumentListItemModel? ->
         when (listItemModel) {
             is InstrumentListItemModel -> {
@@ -63,7 +63,7 @@ internal fun InstrumentsByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

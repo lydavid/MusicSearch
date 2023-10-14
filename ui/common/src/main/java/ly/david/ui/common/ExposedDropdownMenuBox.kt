@@ -42,7 +42,7 @@ fun ExposedDropdownMenuBox(
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
-        modifier = modifier
+        modifier = modifier,
     ) {
         TextField(
             modifier = Modifier.menuAnchor(),
@@ -53,10 +53,10 @@ fun ExposedDropdownMenuBox(
             label = { Text(strings.resource) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
+                    expanded = expanded,
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
         )
 
         // Focusing on this "consumes" a back press, and is independent of onDismissRequest.
@@ -65,7 +65,7 @@ fun ExposedDropdownMenuBox(
                 testTag = "ExposedDropdownMenu"
             },
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
         ) {
             options.forEach { option ->
                 Surface(
@@ -74,7 +74,7 @@ fun ExposedDropdownMenuBox(
                         MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
                     } else {
                         MaterialTheme.colorScheme.background
-                    }
+                    },
                 ) {
                     DropdownMenuItem(
                         modifier = Modifier.semantics {
@@ -84,7 +84,7 @@ fun ExposedDropdownMenuBox(
                             Row(verticalAlignment = CenterVertically) {
                                 EntityIcon(
                                     modifier = Modifier.padding(end = 8.dp),
-                                    entity = option
+                                    entity = option,
                                 )
                                 Text(option.getDisplayText(strings))
                             }
@@ -92,7 +92,7 @@ fun ExposedDropdownMenuBox(
                         onClick = {
                             onSelectOption(option)
                             expanded = false
-                        }
+                        },
                     )
                 }
             }

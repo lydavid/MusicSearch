@@ -27,7 +27,7 @@ internal class ReleaseGroupsByCollectionViewModel(
     override suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse {
         return musicBrainzApi.browseReleaseGroupsByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 

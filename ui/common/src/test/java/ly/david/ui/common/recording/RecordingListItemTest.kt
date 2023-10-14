@@ -16,7 +16,7 @@ class RecordingListItemTest : ScreenshotTest() {
                 recording = RecordingListItemModel(
                     id = "1",
                     name = "Recording name",
-                )
+                ),
             )
         }
     }
@@ -32,8 +32,8 @@ class RecordingListItemTest : ScreenshotTest() {
                     disambiguation = "that one",
                     length = 25300000,
                     video = false,
-                    formattedArtistCredits = "Some artist feat. Other artist"
-                )
+                    formattedArtistCredits = "Some artist feat. Other artist",
+                ),
             )
         }
     }

@@ -23,13 +23,13 @@ internal class WorksByCollectionViewModel(
 ) : BrowseEntitiesByEntityViewModel<WorkListItemModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
     byEntity = MusicBrainzEntity.WORK,
     browseEntityCountDao = browseEntityCountDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseWorksResponse {
         return musicBrainzApi.browseWorksByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 

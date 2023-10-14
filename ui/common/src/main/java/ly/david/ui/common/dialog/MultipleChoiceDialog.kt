@@ -37,7 +37,7 @@ fun MultipleChoiceDialog(
     Dialog(
         onDismissRequest = {
             onDismiss()
-        }
+        },
     ) {
         Surface(
             shape = RoundedCornerShape(28.dp),
@@ -62,17 +62,17 @@ fun MultipleChoiceDialog(
                                         onSelectChoiceIndex(index)
                                         onDismiss()
                                     },
-                                    role = Role.RadioButton
+                                    role = Role.RadioButton,
                                 )
                                 .fillMaxWidth()
                                 .padding(horizontal = 10.dp)
                                 .heightIn(min = 48.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = index == selectedChoiceIndex,
                                 onClick = null,
-                                modifier = Modifier.padding(end = 8.dp)
+                                modifier = Modifier.padding(end = 8.dp),
                             )
                             Text(
                                 text = choice,
@@ -85,7 +85,7 @@ fun MultipleChoiceDialog(
                 TextButton(
                     modifier = Modifier
                         .align(Alignment.End),
-                    onClick = onDismiss
+                    onClick = onDismiss,
                 ) {
                     Text(strings.cancel)
                 }
@@ -104,10 +104,10 @@ private fun Preview() {
                 choices = listOf(
                     "Light",
                     "Dark",
-                    "System"
+                    "System",
                 ),
                 selectedChoiceIndex = 0,
-                onSelectChoiceIndex = {}
+                onSelectChoiceIndex = {},
             )
         }
     }

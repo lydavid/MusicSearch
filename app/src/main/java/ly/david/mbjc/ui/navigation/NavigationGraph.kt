@@ -117,13 +117,13 @@ internal fun NavigationGraph(
                 },
                 navArgument(TYPE) {
                     type = NavType.StringType
-                }
+                },
             ),
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "$uriPrefix${Destination.LOOKUP.route}?$QUERY={query}&$TYPE={type}"
-                }
-            )
+                },
+            ),
         ) { entry ->
             val query = entry.arguments?.getString(QUERY)?.decodeUtf8()
             val type = entry.arguments?.getString(TYPE)?.toMusicBrainzEntity()
@@ -132,13 +132,13 @@ internal fun NavigationGraph(
                 modifier = modifier,
                 onItemClick = onLookupEntityClick,
                 initialQuery = query,
-                initialEntity = type
+                initialEntity = type,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.AREA,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             AreaScaffold(
                 areaId = entityId,
@@ -154,7 +154,7 @@ internal fun NavigationGraph(
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.ARTIST,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entity, title ->
             ArtistScaffold(
                 artistId = entity,
@@ -166,13 +166,13 @@ internal fun NavigationGraph(
                 showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
                 onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.EVENT,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             EventScaffold(
                 eventId = entityId,
@@ -180,25 +180,25 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.GENRE,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             GenreScaffold(
                 genreId = entityId,
                 modifier = modifier,
                 titleWithDisambiguation = title,
-                onBack = navController::navigateUp
+                onBack = navController::navigateUp,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.INSTRUMENT,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             InstrumentScaffold(
                 instrumentId = entityId,
@@ -206,13 +206,13 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.LABEL,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             LabelScaffold(
                 labelId = entityId,
@@ -228,7 +228,7 @@ internal fun NavigationGraph(
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.PLACE,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             PlaceScaffold(
                 placeId = entityId,
@@ -236,13 +236,13 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.RECORDING,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             RecordingScaffold(
                 recordingId = entityId,
@@ -258,7 +258,7 @@ internal fun NavigationGraph(
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.RELEASE,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             ReleaseScaffold(
                 releaseId = entityId,
@@ -266,12 +266,12 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
             )
         }
         addLookupEntityScreen(
             entity = MusicBrainzEntity.RELEASE_GROUP,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             ReleaseGroupScaffold(
                 releaseGroupId = entityId,
@@ -287,7 +287,7 @@ internal fun NavigationGraph(
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.SERIES,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             SeriesScaffold(
                 seriesId = entityId,
@@ -295,13 +295,13 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
             )
         }
 
         addLookupEntityScreen(
             entity = MusicBrainzEntity.WORK,
-            uriPrefix = uriPrefix
+            uriPrefix = uriPrefix,
         ) { entityId, title ->
             WorkScaffold(
                 workId = entityId,
@@ -309,7 +309,7 @@ internal fun NavigationGraph(
                 titleWithDisambiguation = title,
                 onBack = navController::navigateUp,
                 onItemClick = onLookupEntityClick,
-                onAddToCollectionMenuClick = onAddToCollectionMenuClick
+                onAddToCollectionMenuClick = onAddToCollectionMenuClick,
             )
         }
 
@@ -318,13 +318,13 @@ internal fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "$uriPrefix${Destination.HISTORY.route}"
-                }
+                },
             ),
         ) {
             HistoryScaffold(
                 deleteHistoryDelegate = deleteHistoryDelegate,
                 modifier = modifier,
-                onItemClick = onLookupEntityClick
+                onItemClick = onLookupEntityClick,
             )
         }
 
@@ -333,13 +333,13 @@ internal fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}"
-                }
+                },
             ),
         ) {
             CollectionListScaffold(
                 modifier = modifier,
                 onCollectionClick = onCollectionClick,
-                onCreateCollectionClick = onCreateCollectionClick
+                onCreateCollectionClick = onCreateCollectionClick,
             )
         }
 
@@ -348,7 +348,7 @@ internal fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "$uriPrefix${Destination.COLLECTIONS.route}/{$ID}"
-                }
+                },
             ),
         ) { entry ->
             val collectionId = entry.arguments?.getString(ID) ?: return@composable
@@ -364,7 +364,7 @@ internal fun NavigationGraph(
                 onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
                 onDeleteFromCollection = { collectableId, name ->
                     onDeleteFromCollection(collectionId, collectableId, name)
-                }
+                },
             )
         }
 
@@ -377,7 +377,7 @@ internal fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "$uriPrefix${Destination.SETTINGS.route}"
-                }
+                },
             ),
         ) {
             SettingsScaffold(
@@ -390,12 +390,12 @@ internal fun NavigationGraph(
                 showMoreInfoInReleaseListItem = showMoreInfoInReleaseListItem,
                 onShowMoreInfoInReleaseListItemChange = onShowMoreInfoInReleaseListItemChange,
                 sortReleaseGroupListItems = sortReleaseGroupListItems,
-                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange
+                onSortReleaseGroupListItemsChange = onSortReleaseGroupListItemsChange,
             )
         }
 
         composable(
-            Destination.SETTINGS_NOWPLAYING.route
+            Destination.SETTINGS_NOWPLAYING.route,
         ) {
             NowPlayingHistoryScaffold(
                 modifier = modifier,
@@ -405,21 +405,21 @@ internal fun NavigationGraph(
         }
 
         composable(
-            Destination.SETTINGS_LICENSES.route
+            Destination.SETTINGS_LICENSES.route,
         ) {
             LicensesScaffold(
                 modifier = modifier,
-                onBack = navController::navigateUp
+                onBack = navController::navigateUp,
             )
         }
 
         composable(
-            Destination.EXPERIMENTAL_SPOTIFY.route
+            Destination.EXPERIMENTAL_SPOTIFY.route,
         ) {
             SpotifyScaffold(
                 modifier = modifier,
                 onBack = navController::navigateUp,
-                searchMusicBrainz = searchMusicBrainz
+                searchMusicBrainz = searchMusicBrainz,
             )
         }
     }
@@ -445,8 +445,8 @@ private fun NavGraphBuilder.addLookupEntityScreen(
         deepLinks = listOf(
             navDeepLink {
                 uriPattern = "$uriPrefix${entity.resourceUri}/{$ID}?$TITLE={$TITLE}"
-            }
-        )
+            },
+        ),
     ) { entry: NavBackStackEntry ->
         val entityId = entry.arguments?.getString(ID) ?: return@composable
         val title = entry.arguments?.getString(TITLE)?.decodeUtf8()

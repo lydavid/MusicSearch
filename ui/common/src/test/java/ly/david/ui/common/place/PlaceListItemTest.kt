@@ -17,8 +17,8 @@ class PlaceListItemTest : ScreenshotTest() {
                 place = PlaceListItemModel(
                     id = "2",
                     name = "Place Name",
-                    address = "123 Fake St"
-                )
+                    address = "123 Fake St",
+                ),
             )
         }
     }
@@ -33,8 +33,8 @@ class PlaceListItemTest : ScreenshotTest() {
                     disambiguation = "NYC, closed 2007",
                     type = "Studio",
                     address = "460 W. 54th St., at 10th Avenue, Manhatten, NY",
-                    lifeSpan = LifeSpanUiModel(begin = "1993", end = "2007-08", ended = true)
-                )
+                    lifeSpan = LifeSpanUiModel(begin = "1993", end = "2007-08", ended = true),
+                ),
             )
         }
     }

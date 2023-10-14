@@ -20,7 +20,7 @@ class ScrollableTopAppBarTest : ScreenshotTest() {
         snapshot {
             ScrollableTopAppBar(
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
-                subtitle = "A subtitle that is also very long that will also go off the screen."
+                subtitle = "A subtitle that is also very long that will also go off the screen.",
             )
         }
     }
@@ -31,7 +31,7 @@ class ScrollableTopAppBarTest : ScreenshotTest() {
             ScrollableTopAppBar(
                 entity = MusicBrainzEntity.ARTIST,
                 title = "A title that is very long so that it will go off the screen and allow us to scroll.",
-                subtitle = "A subtitle that is also very long that will also go off the screen."
+                subtitle = "A subtitle that is also very long that will also go off the screen.",
             )
         }
     }
@@ -49,9 +49,9 @@ class ScrollableTopAppBarTest : ScreenshotTest() {
                     TabsBar(
                         tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
                         selectedTabIndex = selectedTabIndex,
-                        onSelectTabIndex = { selectedTabIndex = it }
+                        onSelectTabIndex = { selectedTabIndex = it },
                     )
-                }
+                },
             )
         }
     }

@@ -44,7 +44,7 @@ fun ReleaseGroupListItem(
         headlineContent = {
             Text(
                 text = releaseGroup.name,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         modifier = modifier.clickable { onClick(releaseGroup) },
@@ -54,7 +54,7 @@ fun ReleaseGroupListItem(
                     Text(
                         text = "($it)",
                         color = getSubTextColor(),
-                        style = TextStyles.getCardBodySubTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -62,7 +62,7 @@ fun ReleaseGroupListItem(
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodySubTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -70,7 +70,7 @@ fun ReleaseGroupListItem(
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodySubTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
             }
@@ -79,9 +79,9 @@ fun ReleaseGroupListItem(
             ThumbnailImage(
                 url = releaseGroup.imageUrl.orEmpty(),
                 mbid = releaseGroup.id,
-                placeholderIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon()
+                placeholderIcon = MusicBrainzEntity.RELEASE_GROUP.getIcon(),
             )
-        }
+        },
     )
 }
 
@@ -91,7 +91,7 @@ private val testReleaseGroup = ReleaseGroupListItemModel(
     name = "欠けた心象、世のよすが",
     primaryType = "EP",
     firstReleaseDate = "2021-09-08",
-    formattedArtistCredits = "Some artist feat. some other artist"
+    formattedArtistCredits = "Some artist feat. some other artist",
 )
 
 @DefaultPreviews

@@ -31,19 +31,19 @@ internal fun LocalRemoteProgressBar(
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
                 // TODO: better copy
-                text = "No stats available. Tap this resource's tab to begin browsing."
+                text = "No stats available. Tap this resource's tab to begin browsing.",
             )
         } else {
             // TODO: "cached" is misleading here
             //  since the moment they click a release, it will require downloading details
             Text(
                 style = TextStyles.getCardBodyTextStyle(),
-                text = cachedLocalOfRemote(totalLocal, totalRemote)
+                text = cachedLocalOfRemote(totalLocal, totalRemote),
             )
 
             if (totalRemote != 0) {
                 Surface(
-                    shape = RoundedCornerShape(8.dp)
+                    shape = RoundedCornerShape(8.dp),
                 ) {
                     LinearProgressIndicator(
                         modifier = Modifier
@@ -51,7 +51,7 @@ internal fun LocalRemoteProgressBar(
                             .fillMaxWidth(),
                         progress = totalLocal / totalRemote.toFloat(),
                         color = MaterialTheme.colorScheme.primary,
-                        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                     )
                 }
             }

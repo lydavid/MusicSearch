@@ -29,7 +29,7 @@ internal fun SpotifyScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
     ) {
         item {
             val artistName = metadata.artistName
@@ -77,9 +77,9 @@ private fun SpotifySearchLinks(
             onClick = {
                 searchMusicBrainz(
                     "\"$artistName\"",
-                    MusicBrainzEntity.ARTIST
+                    MusicBrainzEntity.ARTIST,
                 )
-            }
+            },
         )
 
         metadata.albumName.ifNotNullOrEmpty { albumName ->
@@ -92,7 +92,7 @@ private fun SpotifySearchLinks(
                         "\"$albumName\" artist:\"$artistName\"",
                         MusicBrainzEntity.RELEASE_GROUP,
                     )
-                }
+                },
             )
         }
 
@@ -106,7 +106,7 @@ private fun SpotifySearchLinks(
                         "\"$trackName\" artist:\"$artistName\"",
                         MusicBrainzEntity.RECORDING,
                     )
-                }
+                },
             )
         }
     }
@@ -133,7 +133,7 @@ internal fun PreviewSpotifyScreenWithData() {
                     artistName = "Artist",
                     albumName = "Album",
                     trackName = "Track",
-                )
+                ),
             )
         }
     }

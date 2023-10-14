@@ -38,6 +38,6 @@ internal fun ReleasesByLabelScreen(
         snackbarHostState = snackbarHostState,
         lazyPagingItems = releasesLazyPagingItems,
         showMoreInfo = showMoreInfo,
-        onReleaseClick = onReleaseClick
+        onReleaseClick = onReleaseClick,
     )
 }

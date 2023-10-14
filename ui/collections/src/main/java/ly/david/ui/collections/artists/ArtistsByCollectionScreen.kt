@@ -48,7 +48,7 @@ internal fun ArtistsByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: ArtistListItemModel? ->
 
         when (listItemModel) {
@@ -64,7 +64,7 @@ internal fun ArtistsByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

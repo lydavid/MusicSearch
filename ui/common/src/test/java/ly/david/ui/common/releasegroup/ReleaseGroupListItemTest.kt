@@ -18,8 +18,8 @@ class ReleaseGroupListItemTest : ScreenshotTest() {
                     name = "欠けた心象、世のよすが",
                     primaryType = "EP",
                     firstReleaseDate = "2021-09-08",
-                    formattedArtistCredits = "Some artist feat. some other artist"
-                )
+                    formattedArtistCredits = "Some artist feat. some other artist",
+                ),
             )
         }
     }

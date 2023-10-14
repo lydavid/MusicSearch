@@ -39,6 +39,6 @@ internal fun ReleaseGroupsByArtistScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         lazyPagingItems = lazyPagingItems,
-        onReleaseGroupClick = onReleaseGroupClick
+        onReleaseGroupClick = onReleaseGroupClick,
     )
 }

@@ -47,7 +47,7 @@ fun ReleaseListItem(
         headlineContent = {
             Text(
                 text = release.name,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         modifier = modifier.clickable { onClick(release) },
@@ -57,7 +57,7 @@ fun ReleaseListItem(
                     Text(
                         text = "($it)",
                         color = getSubTextColor(),
-                        style = TextStyles.getCardBodySubTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -87,7 +87,7 @@ fun ReleaseListItem(
                                     .padding(top = 4.dp)
                                     .weight(1f),
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                textAlign = TextAlign.End
+                                textAlign = TextAlign.End,
                             )
                         }
                     }
@@ -110,7 +110,7 @@ fun ReleaseListItem(
                                     .weight(1f),
                                 text = it,
                                 style = TextStyles.getCardBodySubTextStyle(),
-                                textAlign = TextAlign.End
+                                textAlign = TextAlign.End,
                             )
                         }
                     }
@@ -121,7 +121,7 @@ fun ReleaseListItem(
                             modifier = Modifier
                                 .padding(top = 4.dp)
                                 .fillMaxWidth(),
-                            style = TextStyles.getCardBodySubTextStyle()
+                            style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
 
@@ -135,7 +135,7 @@ fun ReleaseListItem(
                 mbid = release.id,
                 placeholderIcon = MusicBrainzEntity.RELEASE.getIcon(),
             )
-        }
+        },
     )
 }
 
@@ -155,13 +155,13 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "3",
             name = "Release title",
             disambiguation = "Disambiguation text",
-            countryCode = "US"
+            countryCode = "US",
         ),
         ReleaseListItemModel(
             id = "4",
             name = "Release title",
             disambiguation = "",
-            countryCode = "CA"
+            countryCode = "CA",
         ),
         ReleaseListItemModel(
             id = "5",
@@ -169,7 +169,7 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             date = "2021-09-08",
             countryCode = "JP",
             formattedFormats = "2×CD + Blu-ray",
-            formattedTracks = "15 + 8 + 24"
+            formattedTracks = "15 + 8 + 24",
         ),
         ReleaseListItemModel(
             id = "6",
@@ -186,14 +186,14 @@ internal class ReleasePreviewParameterProvider : PreviewParameterProvider<Releas
             id = "8",
             name = "Release title",
             date = "2022-04-03",
-            formattedArtistCredits = "Some artist feat. Other artist"
+            formattedArtistCredits = "Some artist feat. Other artist",
         ),
         ReleaseListItemModel(
             id = "9",
             name = "Release title",
             countryCode = "DZ",
             releaseCountryCount = 3,
-            formattedArtistCredits = "Some artist feat. another"
+            formattedArtistCredits = "Some artist feat. another",
         ),
     )
 }
@@ -207,7 +207,7 @@ private fun Preview(
         Surface {
             ReleaseListItem(
                 release = release,
-                showMoreInfo = true
+                showMoreInfo = true,
             )
         }
     }

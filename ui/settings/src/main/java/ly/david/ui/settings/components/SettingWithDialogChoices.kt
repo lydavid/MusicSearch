@@ -33,7 +33,7 @@ internal fun SettingWithDialogChoices(
             choices = choices,
             selectedChoiceIndex = selectedChoiceIndex,
             onSelectChoiceIndex = onSelectChoiceIndex,
-            onDismiss = { showThemeDialog = false }
+            onDismiss = { showThemeDialog = false },
         )
     }
 

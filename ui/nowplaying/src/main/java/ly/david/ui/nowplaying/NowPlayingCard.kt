@@ -53,7 +53,7 @@ internal fun PreviewNowPlayingCard() {
                     title = "Immigrant Song",
                     artist = "Led Zeppelin",
                     lastPlayed = Instant.parse("2023-09-23T11:42:20Z"),
-                )
+                ),
             )
         }
     }

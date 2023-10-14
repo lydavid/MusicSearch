@@ -32,7 +32,7 @@ fun ArtistListItem(
         headlineContent = {
             Text(
                 text = artist.name,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         modifier = modifier.clickable {
@@ -46,7 +46,7 @@ fun ArtistListItem(
                     Text(
                         text = it,
                         modifier = Modifier.padding(top = 4.dp),
-                        style = TextStyles.getCardBodySubTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
 
@@ -63,10 +63,10 @@ fun ArtistListItem(
             artist.countryCode?.ifNotNullOrEmpty { countryCode ->
                 Text(
                     text = "${countryCode.toFlagEmoji()} $countryCode",
-                    style = TextStyles.getCardBodyTextStyle()
+                    style = TextStyles.getCardBodyTextStyle(),
                 )
             }
-        }
+        },
     )
 }
 
@@ -76,7 +76,7 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistL
             id = "1",
             name = "artist name",
             sortName = "sort name should not be seen",
-            countryCode = "CA"
+            countryCode = "CA",
         ),
         ArtistListItemModel(
             id = "2",
@@ -87,14 +87,14 @@ internal class ArtistPreviewParameterProvider : PreviewParameterProvider<ArtistL
             countryCode = "XW",
             lifeSpan = LifeSpanUiModel(
                 begin = "2020-12-31",
-                end = "2022-01-01"
-            )
+                end = "2022-01-01",
+            ),
         ),
         ArtistListItemModel(
             id = "3",
             name = "wow, this artist name is so long it will wrap around the screen",
-            sortName = ""
-        )
+            sortName = "",
+        ),
     )
 }
 

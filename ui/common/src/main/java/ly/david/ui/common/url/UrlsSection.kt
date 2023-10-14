@@ -25,7 +25,7 @@ fun UrlsSection(
             .forEach {
                 RelationListItem(
                     relation = it,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
     }
@@ -52,7 +52,7 @@ internal fun PreviewUrlsSection() {
                         label = "official homepage",
                         name = "https://www.example.com",
                     ),
-                )
+                ),
             )
         }
     }

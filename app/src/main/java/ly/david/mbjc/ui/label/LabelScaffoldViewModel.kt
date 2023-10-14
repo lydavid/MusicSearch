@@ -63,7 +63,7 @@ internal class LabelScaffoldViewModel(
                                 mbid = labelId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

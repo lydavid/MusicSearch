@@ -18,7 +18,7 @@ internal fun FooterLoadingIndicator() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         CircularProgressIndicator()
     }

@@ -33,7 +33,7 @@ fun ReleaseGroupsListScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is ReleaseGroupListItemModel -> {
@@ -50,7 +50,7 @@ fun ReleaseGroupsListScreen(
                                 } catch (ex: Exception) {
                                     Timber.e(ex)
                                 }
-                            }
+                            },
                         ) {
                             onReleaseGroupClick(MusicBrainzEntity.RELEASE_GROUP, id, getNameWithDisambiguation())
                         }
@@ -58,7 +58,7 @@ fun ReleaseGroupsListScreen(
                     disable = onDeleteFromCollection == null,
                     onDelete = {
                         onDeleteFromCollection?.invoke(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

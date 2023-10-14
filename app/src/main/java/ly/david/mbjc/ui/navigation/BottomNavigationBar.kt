@@ -50,7 +50,7 @@ internal fun BottomNavigationBar(
                 selected = currentTopLevelDestination == item.destination,
                 onClick = {
                     navigateToTopLevelDestination(item.destination)
-                }
+                },
             )
         }
     }

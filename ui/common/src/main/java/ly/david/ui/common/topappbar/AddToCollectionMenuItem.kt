@@ -21,6 +21,6 @@ fun OverflowMenuScope.AddToCollectionMenuItem(
             onClick()
             closeMenu()
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

@@ -35,12 +35,12 @@ internal fun ArtistDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             LargeImage(
                 url = artistImageUrl,
-                mbid = artist.id
+                mbid = artist.id,
             )
 
             artist.run {
@@ -49,21 +49,21 @@ internal fun ArtistDetailsScreen(
                     TextWithHeading(
                         heading = strings.sortName,
                         text = it,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
                 type?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.type,
                         text = it,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
                 gender?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = strings.gender,
                         text = it,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
                 LifeSpanText(
@@ -79,7 +79,7 @@ internal fun ArtistDetailsScreen(
                         // Characters do not "die": https://musicbrainz.org/doc/Artist
                         else -> strings.dissolved
                     },
-                    filterText = filterText
+                    filterText = filterText,
                 )
 
                 // TODO: begin area, area, end area
@@ -96,7 +96,7 @@ internal fun ArtistDetailsScreen(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -117,11 +117,11 @@ private fun Preview() {
                     lifeSpan = LifeSpanUiModel(
                         begin = "1960",
                         end = "1970-04-10",
-                        ended = true
+                        ended = true,
                     ),
-                    sortName = "Beatles, The"
+                    sortName = "Beatles, The",
                 ),
-                artistImageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433"
+                artistImageUrl = "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433",
             )
         }
     }

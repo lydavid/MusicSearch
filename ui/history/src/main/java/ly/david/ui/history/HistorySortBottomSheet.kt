@@ -30,7 +30,7 @@ internal fun HistorySortBottomSheet(
     ) {
         HistorySortBottomSheetContent(
             sortOption = sortOption,
-            onSortOptionClick = onSortOptionClick
+            onSortOptionClick = onSortOptionClick,
         )
     }
 }
@@ -49,7 +49,7 @@ private fun HistorySortBottomSheetContent(
                 endIcon = if (sortOption == it) Icons.Default.Check else null,
                 onClick = {
                     onSortOptionClick(it)
-                }
+                },
             )
         }
     }

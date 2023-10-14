@@ -29,7 +29,7 @@ internal class PlacesByCollectionViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowsePlacesResponse {
         return musicBrainzApi.browsePlacesByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 

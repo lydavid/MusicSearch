@@ -15,8 +15,8 @@ class WorkListItemTest : ScreenshotTest() {
             WorkListItem(
                 work = WorkListItemModel(
                     id = "1",
-                    name = "work name"
-                )
+                    name = "work name",
+                ),
             )
         }
     }
@@ -30,7 +30,7 @@ class WorkListItemTest : ScreenshotTest() {
                     name = "work name",
                     disambiguation = "that one",
                     type = "Song",
-                )
+                ),
             )
         }
     }

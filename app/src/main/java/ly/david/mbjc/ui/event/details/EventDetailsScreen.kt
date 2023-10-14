@@ -38,7 +38,7 @@ internal fun EventDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             event.run {
@@ -73,7 +73,7 @@ internal fun EventDetailsScreen(
                             text = "(${strings.cancelled})",
                             style = TextStyles.getCardBodyTextStyle(),
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.error
+                            color = MaterialTheme.colorScheme.error,
                         )
                     }
                 }
@@ -84,7 +84,7 @@ internal fun EventDetailsScreen(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -107,9 +107,9 @@ private fun Preview() {
                     lifeSpan = LifeSpanUiModel(
                         begin = "2022-01-01",
                         end = "2022-12-10",
-                        ended = true
+                        ended = true,
                     ),
-                )
+                ),
             )
         }
     }

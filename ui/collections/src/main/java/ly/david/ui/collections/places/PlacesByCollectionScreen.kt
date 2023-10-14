@@ -48,7 +48,7 @@ internal fun PlacesByCollectionScreen(
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
         lazyListState = lazyListState,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: PlaceListItemModel? ->
         when (listItemModel) {
             is PlaceListItemModel -> {
@@ -63,7 +63,7 @@ internal fun PlacesByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

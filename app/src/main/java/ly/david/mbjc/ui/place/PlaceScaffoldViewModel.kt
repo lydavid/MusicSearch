@@ -63,7 +63,7 @@ internal class PlaceScaffoldViewModel(
                                 mbid = placeId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

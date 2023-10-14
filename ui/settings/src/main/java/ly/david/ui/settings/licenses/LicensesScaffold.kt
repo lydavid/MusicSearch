@@ -38,8 +38,8 @@ fun LicensesScaffold(
                 backgroundColor = MaterialTheme.colorScheme.background,
                 contentColor = MaterialTheme.colorScheme.onBackground,
                 badgeBackgroundColor = MaterialTheme.colorScheme.primary,
-                badgeContentColor = MaterialTheme.colorScheme.onPrimary
-            )
+                badgeContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
         )
     }
 }

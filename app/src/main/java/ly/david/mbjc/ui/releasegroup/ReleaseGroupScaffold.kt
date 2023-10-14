@@ -96,7 +96,7 @@ internal fun ReleaseGroupScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             releaseGroupId = releaseGroupId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -117,7 +117,7 @@ internal fun ReleaseGroupScaffold(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = onShowMoreInfoInReleaseListItemChange
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
                         )
                     }
                     AddToCollectionMenuItem {
@@ -134,7 +134,7 @@ internal fun ReleaseGroupScaffold(
                                 // Don't pass a title, because the name used here may not be the name used for the
                                 // the artist's page.
                                 onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
-                            }
+                            },
                         )
                     }
                 },
@@ -149,9 +149,9 @@ internal fun ReleaseGroupScaffold(
                     TabsBar(
                         tabsTitle = ReleaseGroupTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -171,7 +171,7 @@ internal fun ReleaseGroupScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (ReleaseGroupTab.values()[page]) {
                 ReleaseGroupTab.DETAILS -> {
@@ -179,7 +179,7 @@ internal fun ReleaseGroupScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = releaseGroup
+                        scaffoldModel = releaseGroup,
                     ) {
                         ReleaseGroupDetailsScreen(
                             releaseGroup = it,
@@ -208,7 +208,7 @@ internal fun ReleaseGroupScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         onReleaseClick = onItemClick,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     )
                 }
 

@@ -53,7 +53,7 @@ internal fun GenreScaffold(
 
     LaunchedEffect(key1 = forceRefresh) {
         viewModel.onSelectedTabChange(
-            genreId = genreId
+            genreId = genreId,
         )
     }
 
@@ -70,14 +70,14 @@ internal fun GenreScaffold(
         DetailsWithErrorHandling(
             showError = showError,
             onRetryClick = { forceRefresh = true },
-            scaffoldModel = genre
+            scaffoldModel = genre,
         ) {
             FullScreenContent(modifier = Modifier.padding(innerPadding)) {
                 Text(
                     modifier = Modifier.padding(16.dp),
                     textAlign = TextAlign.Center,
                     text = "Genre lookup is currently not supported in this app.",
-                    style = TextStyles.getCardBodyTextStyle()
+                    style = TextStyles.getCardBodyTextStyle(),
                 )
                 Button(onClick = {
                     context.lookupInBrowser(resource, genreId)

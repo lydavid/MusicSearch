@@ -63,7 +63,7 @@ internal class EventScaffoldViewModel(
                                 mbid = eventId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

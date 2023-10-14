@@ -23,13 +23,13 @@ internal class EventsByPlaceViewModel(
 ) : BrowseEntitiesByEntityViewModel<EventListItemModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
     browseEntityCountDao = browseEntityCountDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
         return musicBrainzApi.browseEventsByPlace(
             placeId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -38,7 +38,7 @@ internal class EventsByPlaceViewModel(
         eventPlaceDao.insertAll(
             musicBrainzModels.map { event ->
                 event.id to entityId
-            }
+            },
         )
     }
 
@@ -55,7 +55,7 @@ internal class EventsByPlaceViewModel(
     ): PagingSource<Int, EventListItemModel> =
         eventPlaceDao.getEventsByPlace(
             placeId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     override fun transformDatabaseToListItemModel(databaseModel: EventListItemModel): EventListItemModel {

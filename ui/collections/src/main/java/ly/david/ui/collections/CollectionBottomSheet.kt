@@ -47,7 +47,7 @@ fun CollectionBottomSheet(
                 text = strings.addToCollection,
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -82,7 +82,7 @@ fun CollectionBottomSheet(
                                         onDismiss()
                                     }
                                 }
-                            }
+                            },
                         )
                     }
                     else -> {

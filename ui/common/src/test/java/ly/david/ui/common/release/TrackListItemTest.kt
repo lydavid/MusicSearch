@@ -19,8 +19,8 @@ class TrackListItemTest : ScreenshotTest() {
                     position = 1,
                     number = "A",
                     mediumId = 1L,
-                    recordingId = "r1"
-                )
+                    recordingId = "r1",
+                ),
             )
         }
     }
@@ -37,8 +37,8 @@ class TrackListItemTest : ScreenshotTest() {
                     length = 25300000,
                     mediumId = 2L,
                     recordingId = "r2",
-                    formattedArtistCredits = "Some artist feat. Other artist"
-                )
+                    formattedArtistCredits = "Some artist feat. Other artist",
+                ),
             )
         }
     }

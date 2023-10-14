@@ -24,7 +24,7 @@ internal fun LazyListScope.addEntitiesStatsSection(
         LocalRemoteProgressBar(
             totalRemote = totalRemote,
             totalLocal = totalLocal,
-            cachedLocalOfRemote = cachedLocalOfRemote
+            cachedLocalOfRemote = cachedLocalOfRemote,
         )
 
         Spacer(modifier = Modifier.padding(top = 16.dp))

@@ -101,7 +101,7 @@ internal fun TopLevelScaffold(
             onDismiss = { showCreateCollectionDialog = false },
             onSubmit = { name, entity ->
                 viewModel.createNewCollection(name, entity)
-            }
+            },
         )
     }
 
@@ -109,7 +109,7 @@ internal fun TopLevelScaffold(
         val snackbarResult = snackbarHostState.showSnackbar(
             message = remoteResult.message,
             actionLabel = remoteResult.actionLabel,
-            duration = SnackbarDuration.Short
+            duration = SnackbarDuration.Short,
         )
 
         when (snackbarResult) {
@@ -133,14 +133,14 @@ internal fun TopLevelScaffold(
             onAddToCollection = { collectionId ->
                 scope.launch {
                     val addToCollectionResult = viewModel.addToCollectionAndGetResult(
-                        collectionId = collectionId
+                        collectionId = collectionId,
                     )
 
                     if (addToCollectionResult.message.isEmpty()) return@launch
 
                     showSnackbarAndHandleResult(addToCollectionResult)
                 }
-            }
+            },
         )
     }
 
@@ -148,7 +148,7 @@ internal fun TopLevelScaffold(
         bottomBar = {
             BottomNavigationBar(
                 currentTopLevelDestination = currentTopLevelDestination,
-                navigateToTopLevelDestination = { it.onTopLevelDestinationClick() }
+                navigateToTopLevelDestination = { it.onTopLevelDestinationClick() },
             )
         },
         snackbarHost = {
@@ -156,7 +156,7 @@ internal fun TopLevelScaffold(
                 SwipeToDismiss(
                     state = rememberDismissState(),
                     background = {},
-                    dismissContent = { Snackbar(snackbarData) }
+                    dismissContent = { Snackbar(snackbarData) },
                 )
             }
         },
@@ -172,7 +172,7 @@ internal fun TopLevelScaffold(
                         val snackbarResult = snackbarHostState.showSnackbar(
                             message = "Removed ${history.title}",
                             actionLabel = "Undo",
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Short,
                         )
 
                         when (snackbarResult) {
@@ -194,7 +194,7 @@ internal fun TopLevelScaffold(
                         val snackbarResult = snackbarHostState.showSnackbar(
                             message = "Cleared history",
                             actionLabel = "Undo",
-                            duration = SnackbarDuration.Short
+                            duration = SnackbarDuration.Short,
                         )
 
                         when (snackbarResult) {

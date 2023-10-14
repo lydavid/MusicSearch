@@ -22,7 +22,7 @@ fun ListSeparatorHeader(
     val surfaceColor = MaterialTheme.colorScheme.surfaceVariant
     Surface(
         modifier = modifier,
-        color = surfaceColor
+        color = surfaceColor,
     ) {
         SelectionContainer {
             Text(
@@ -31,7 +31,7 @@ fun ListSeparatorHeader(
                     .padding(horizontal = 16.dp, vertical = 4.dp)
                     .fillMaxWidth(),
                 color = contentColorFor(backgroundColor = surfaceColor),
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         }
     }

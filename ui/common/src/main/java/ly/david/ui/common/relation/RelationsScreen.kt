@@ -23,7 +23,7 @@ fun RelationsScreen(
         modifier = modifier,
         lazyPagingItems = lazyPagingItems,
         lazyListState = lazyListState,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: ListItemModel? ->
 
         when (listItemModel) {

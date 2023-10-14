@@ -85,7 +85,7 @@ internal fun PlaceScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             placeId = placeId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -115,9 +115,9 @@ internal fun PlaceScaffold(
                     TabsBar(
                         tabsTitle = PlaceTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -137,7 +137,7 @@ internal fun PlaceScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (PlaceTab.values()[page]) {
                 PlaceTab.DETAILS -> {
@@ -145,7 +145,7 @@ internal fun PlaceScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = place
+                        scaffoldModel = place,
                     ) {
                         PlaceDetailsScreen(
                             place = it,
@@ -187,7 +187,7 @@ internal fun PlaceScaffold(
                         lazyPagingItems = eventsLazyPagingItems,
                         onPagedEventsFlowChange = { pagedEventsFlow = it },
                         onEventClick = onItemClick,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
 

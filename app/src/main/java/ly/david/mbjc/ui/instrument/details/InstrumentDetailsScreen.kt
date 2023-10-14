@@ -34,7 +34,7 @@ internal fun InstrumentDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             instrument.run {
@@ -63,7 +63,7 @@ internal fun InstrumentDetailsScreen(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -83,8 +83,8 @@ private fun Preview() {
                     disambiguation = "Baroque gut string guitar",
                     type = "String instrument",
                     description = "Predecessor of the modern classical guitar, it had gut strings and even gut frets. " +
-                        "First described in 1555, it surpassed the Renaissance lute's popularity."
-                )
+                        "First described in 1555, it surpassed the Renaissance lute's popularity.",
+                ),
             )
         }
     }

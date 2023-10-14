@@ -16,6 +16,6 @@ fun EntityIcon(
     Icon(
         modifier = modifier,
         imageVector = entity.getIcon() ?: return,
-        contentDescription = null
+        contentDescription = null,
     )
 }

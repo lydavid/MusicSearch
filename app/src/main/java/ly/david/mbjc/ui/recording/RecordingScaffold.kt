@@ -89,7 +89,7 @@ internal fun RecordingScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             recordingId = recordingId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -110,7 +110,7 @@ internal fun RecordingScaffold(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = onShowMoreInfoInReleaseListItemChange
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
                         )
                     }
                     AddToCollectionMenuItem {
@@ -125,7 +125,7 @@ internal fun RecordingScaffold(
                             onClick = {
                                 closeMenu()
                                 onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
-                            }
+                            },
                         )
                     }
                 },
@@ -140,9 +140,9 @@ internal fun RecordingScaffold(
                     TabsBar(
                         tabsTitle = RecordingTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
     ) { innerPadding ->
@@ -161,7 +161,7 @@ internal fun RecordingScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (RecordingTab.values()[page]) {
                 RecordingTab.DETAILS -> {
@@ -169,7 +169,7 @@ internal fun RecordingScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = recording
+                        scaffoldModel = recording,
                     ) {
                         RecordingDetailsScreen(
                             recording = it,
@@ -197,7 +197,7 @@ internal fun RecordingScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         onReleaseClick = onItemClick,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     )
                 }
 

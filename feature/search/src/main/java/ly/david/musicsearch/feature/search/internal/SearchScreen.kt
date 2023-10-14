@@ -98,7 +98,7 @@ internal fun SearchScreen(
                     if (!newText.contains("\n")) {
                         search(query = newText)
                     }
-                }
+                },
             )
 
             ExposedDropdownMenuBox(
@@ -107,7 +107,7 @@ internal fun SearchScreen(
                 selectedOption = selectedEntity,
                 onSelectOption = { entity ->
                     search(entity = entity)
-                }
+                },
             )
         }
 
@@ -119,7 +119,7 @@ internal fun SearchScreen(
                     search(query = query, entity = entity)
                 },
                 onDeleteItem = viewModel::deleteSearchHistoryItem,
-                onDeleteAllHistory = viewModel::deleteAllSearchHistoryForEntity
+                onDeleteAllHistory = viewModel::deleteAllSearchHistoryForEntity,
             )
         } else {
             SearchResultsScreen(
@@ -129,7 +129,7 @@ internal fun SearchScreen(
                 onItemClick = { entity, id, title ->
                     viewModel.recordSearchHistory()
                     onItemClick(entity, id, title)
-                }
+                },
             )
         }
     }

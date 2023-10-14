@@ -29,7 +29,7 @@ internal fun LabelDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             label.run {
@@ -56,7 +56,7 @@ internal fun LabelDetailsScreen(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -75,8 +75,8 @@ private fun Preview() {
                     name = "Sony BMG Music Entertainment",
                     disambiguation = "Aug 5, 2004 - Oct 1, 2008",
                     type = "Original Production",
-                    labelCode = 13989
-                )
+                    labelCode = 13989,
+                ),
             )
         }
     }

@@ -68,7 +68,7 @@ internal class ArtistScaffoldViewModel(
                                 title = title.value,
                                 entity = entity,
                                 searchHint = artist.value?.sortName ?: "",
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

@@ -82,7 +82,7 @@ internal fun InstrumentScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             instrumentId = instrumentId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -110,9 +110,9 @@ internal fun InstrumentScaffold(
                     TabsBar(
                         tabsTitle = InstrumentTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -126,7 +126,7 @@ internal fun InstrumentScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (InstrumentTab.values()[page]) {
                 InstrumentTab.DETAILS -> {
@@ -134,7 +134,7 @@ internal fun InstrumentScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = instrument
+                        scaffoldModel = instrument,
                     ) {
                         InstrumentDetailsScreen(
                             instrument = it,

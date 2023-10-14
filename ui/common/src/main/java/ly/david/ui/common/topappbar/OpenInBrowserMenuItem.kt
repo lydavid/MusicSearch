@@ -24,6 +24,6 @@ fun OverflowMenuScope.OpenInBrowserMenuItem(
             context.lookupInBrowser(entity, entityId)
             closeMenu()
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

@@ -69,7 +69,7 @@ internal class AreaScaffoldViewModel(
                                 title = title.value,
                                 entity = entity,
                                 searchHint = area.value?.sortName ?: "",
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

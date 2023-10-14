@@ -29,11 +29,11 @@ internal class TracksByReleaseViewModel(
     private val query: MutableStateFlow<String> = MutableStateFlow("")
     private val tracksParamState: Flow<ViewModelState> = combine(
         releaseId,
-        query
+        query,
     ) { releaseId, query ->
         ViewModelState(
             releaseId,
-            query
+            query,
         )
     }.distinctUntilChanged()
 

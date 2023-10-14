@@ -41,13 +41,13 @@ fun TrackListItem(
         leadingContent = {
             Text(
                 text = track.number,
-                style = TextStyles.getCardBodySubTextStyle()
+                style = TextStyles.getCardBodySubTextStyle(),
             )
         },
         trailingContent = {
             Text(
                 text = track.length.toDisplayTime(),
-                style = TextStyles.getCardBodySubTextStyle()
+                style = TextStyles.getCardBodySubTextStyle(),
             )
         },
         supportingContent = {
@@ -57,10 +57,10 @@ fun TrackListItem(
                     modifier = Modifier
                         .padding(top = 4.dp)
                         .fillMaxWidth(),
-                    style = TextStyles.getCardBodySubTextStyle()
+                    style = TextStyles.getCardBodySubTextStyle(),
                 )
             }
-        }
+        },
     )
 }
 
@@ -72,7 +72,7 @@ internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<Trac
             position = 1,
             number = "A",
             mediumId = 1L,
-            recordingId = "r1"
+            recordingId = "r1",
         ),
         TrackListItemModel(
             id = "2",
@@ -82,8 +82,8 @@ internal class TrackCardPreviewParameterProvider : PreviewParameterProvider<Trac
             length = 25300000,
             mediumId = 2L,
             recordingId = "r2",
-            formattedArtistCredits = "Some artist feat. Other artist"
-        )
+            formattedArtistCredits = "Some artist feat. Other artist",
+        ),
     )
 }
 

@@ -59,11 +59,11 @@ class RelationsList(
     override val query: MutableStateFlow<String> = MutableStateFlow("")
     private val paramState = combine(
         entityId,
-        query
+        query,
     ) { entityId, query ->
         State(
             entityId,
-            query
+            query,
         )
     }.distinctUntilChanged()
 
@@ -71,7 +71,7 @@ class RelationsList(
     lateinit var entity: MusicBrainzEntity
 
     @OptIn(
-        ExperimentalCoroutinesApi::class
+        ExperimentalCoroutinesApi::class,
     )
     override val pagedRelations: Flow<PagingData<RelationListItemModel>> by lazy {
         paramState.filterNot { it.entityId.isEmpty() }

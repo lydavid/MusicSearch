@@ -39,6 +39,6 @@ internal fun ReleasesByAreaScreen(
         snackbarHostState = snackbarHostState,
         lazyPagingItems = releasesLazyPagingItems,
         showMoreInfo = showMoreInfo,
-        onReleaseClick = onReleaseClick
+        onReleaseClick = onReleaseClick,
     )
 }

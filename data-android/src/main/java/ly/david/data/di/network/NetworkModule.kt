@@ -47,7 +47,7 @@ val networkModule = module {
             cache = Cache(
                 directory = File(get<Context>().cacheDir, "ktor_okhttp_cache"),
                 maxSize = 50 * 1024 * 1024,
-            )
+            ),
         ) {
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { exception, _ ->

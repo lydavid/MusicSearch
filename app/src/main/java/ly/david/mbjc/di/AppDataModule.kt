@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val appDataModule = module {
     single {
         AppInfo(
-            applicationId = BuildConfig.APPLICATION_ID
+            applicationId = BuildConfig.APPLICATION_ID,
         )
     }
 }

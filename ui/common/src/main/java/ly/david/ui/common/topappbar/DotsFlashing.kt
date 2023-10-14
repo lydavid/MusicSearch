@@ -42,8 +42,8 @@ fun DotsFlashing(
             .alpha(alpha)
             .background(
                 color = MaterialTheme.colorScheme.onSurface,
-                shape = CircleShape
-            )
+                shape = CircleShape,
+            ),
     )
 
     val infiniteTransition = rememberInfiniteTransition()
@@ -58,8 +58,8 @@ fun DotsFlashing(
                 minAlpha at delay
                 1f at delay + ANIMATION_DELAY_MS
                 minAlpha at delay + ANIMATION_DELAY_MS * 2
-            }
-        )
+            },
+        ),
     )
 
     val alpha1 by animateAlphaWithDelay(0)
@@ -69,7 +69,7 @@ fun DotsFlashing(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = modifier
+        modifier = modifier,
     ) {
         val spaceSize = 4.dp
 

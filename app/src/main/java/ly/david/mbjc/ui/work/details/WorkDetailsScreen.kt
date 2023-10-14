@@ -32,7 +32,7 @@ internal fun WorkDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             work.run {
@@ -77,7 +77,7 @@ internal fun WorkDetailsScreen(
             UrlsSection(
                 urls = work.urls,
                 filterText = filterText,
-                onItemClick = onItemClick
+                onItemClick = onItemClick,
             )
         }
     }
@@ -104,7 +104,7 @@ private fun Preview() {
                             type = "AKM ID",
                             typeId = "a",
                             value = "1234567",
-                        )
+                        ),
                     ),
                     urls = listOf(
                         RelationListItemModel(
@@ -113,9 +113,9 @@ private fun Preview() {
                             linkedEntityId = "2",
                             label = "license",
                             name = "https://genius.com/Shaggy-bonafide-girl-lyrics",
-                        )
-                    )
-                )
+                        ),
+                    ),
+                ),
             )
         }
     }

@@ -86,7 +86,7 @@ internal fun LabelScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             labelId = labelId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -106,7 +106,7 @@ internal fun LabelScaffold(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = onShowMoreInfoInReleaseListItemChange
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
                         )
                     }
                     AddToCollectionMenuItem {
@@ -124,9 +124,9 @@ internal fun LabelScaffold(
                     TabsBar(
                         tabsTitle = LabelTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -146,7 +146,7 @@ internal fun LabelScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (LabelTab.values()[page]) {
                 LabelTab.DETAILS -> {
@@ -154,7 +154,7 @@ internal fun LabelScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = label
+                        scaffoldModel = label,
                     ) {
                         LabelDetailsScreen(
                             label = it,
@@ -182,7 +182,7 @@ internal fun LabelScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         onReleaseClick = onItemClick,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     )
                 }
 

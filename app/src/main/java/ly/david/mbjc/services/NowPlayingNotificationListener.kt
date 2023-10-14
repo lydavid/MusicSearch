@@ -28,7 +28,7 @@ class NowPlayingNotificationListener : NotificationListenerService() {
                 nowPlayingHistoryRepository.upsert(
                     NowPlayingHistory(
                         raw = titleAndArtist,
-                    )
+                    ),
                 )
             }
         }

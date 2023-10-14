@@ -37,25 +37,25 @@ internal fun ProfileCard(
             } else {
                 onLogoutClick()
             }
-        }
+        },
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = if (showLogin) Icons.Default.Login else Icons.Default.Logout,
                 contentDescription = null,
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = 8.dp),
             )
 
             Column {
                 if (showLogin) {
                     Text(
                         text = "Login to MusicBrainz",
-                        style = TextStyles.getCardBodyTextStyle()
+                        style = TextStyles.getCardBodyTextStyle(),
                     )
                     Text(
                         text = "This lets you sync your collections",
@@ -88,7 +88,7 @@ internal fun PreviewProfileCardLoggedOut() {
         Surface {
             ProfileCard(
                 username = "bob",
-                showLogin = false
+                showLogin = false,
             )
         }
     }
@@ -101,7 +101,7 @@ internal fun PreviewProfileCardLoggedIn() {
         Surface {
             ProfileCard(
                 username = "bob",
-                showLogin = false
+                showLogin = false,
             )
         }
     }
@@ -114,7 +114,7 @@ internal fun PreviewProfileCardLoggedInWaitingForUsername() {
         Surface {
             ProfileCard(
                 username = "",
-                showLogin = false
+                showLogin = false,
             )
         }
     }

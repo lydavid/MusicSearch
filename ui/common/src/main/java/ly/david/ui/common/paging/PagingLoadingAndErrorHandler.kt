@@ -84,9 +84,9 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
             SwipeRefreshIndicator(
                 state = state,
                 refreshTriggerDistance = refreshTrigger,
-                contentColor = MaterialTheme.colorScheme.primary
+                contentColor = MaterialTheme.colorScheme.primary,
             )
-        }
+        },
     ) {
         // This doesn't affect "loads" from db/source.
         when {
@@ -118,7 +118,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
             else -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    state = lazyListState
+                    state = lazyListState,
                 ) {
                     items(
                         count = lazyPagingItems.itemCount,
@@ -139,7 +139,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(8.dp),
-                                        horizontalArrangement = Arrangement.Center
+                                        horizontalArrangement = Arrangement.Center,
                                     ) {
                                         RetryButton(onClick = { lazyPagingItems.refresh() })
                                     }
@@ -149,7 +149,7 @@ fun <T : Identifiable> PagingLoadingAndErrorHandler(
                                     Spacer(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .padding(16.dp)
+                                            .padding(16.dp),
                                     )
                                 }
                             }

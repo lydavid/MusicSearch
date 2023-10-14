@@ -131,7 +131,7 @@ internal fun SearchResultsScreen(
                         .fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium,
-                    text = "End of search results."
+                    text = "End of search results.",
                 )
             }
 

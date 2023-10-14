@@ -17,8 +17,8 @@ class CoordinateListItemTest : ScreenshotTest() {
                 context = LocalContext.current,
                 coordinates = CoordinatesUiModel(
                     longitude = -73.98905,
-                    latitude = 40.76688
-                )
+                    latitude = 40.76688,
+                ),
             )
         }
     }

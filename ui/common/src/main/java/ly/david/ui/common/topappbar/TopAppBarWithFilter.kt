@@ -91,7 +91,7 @@ fun TopAppBarWithFilter(
         isFilterMode = isFilterMode,
         onFilterModeChange = { isFilterMode = it },
         additionalActions = additionalActions,
-        additionalBar = additionalBar
+        additionalBar = additionalBar,
     )
 }
 
@@ -124,7 +124,7 @@ internal fun TopAppBarWithFilterInternal(
             visible = isFilterMode,
             modifier = Modifier.zIndex(1f),
             enter = expandVertically(),
-            exit = shrinkVertically()
+            exit = shrinkVertically(),
         ) {
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
@@ -142,7 +142,7 @@ internal fun TopAppBarWithFilterInternal(
                         colors = TextFieldDefaults.textFieldColors(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent
+                            disabledIndicatorColor = Color.Transparent,
                         ),
                         leadingIcon = {
                             IconButton(
@@ -150,7 +150,7 @@ internal fun TopAppBarWithFilterInternal(
                                     onFilterModeChange(false)
                                     onFilterTextChange("")
                                 },
-                                modifier = Modifier.testTag(TopAppBarWithFilterTestTag.FILTER_BACK.name)
+                                modifier = Modifier.testTag(TopAppBarWithFilterTestTag.FILTER_BACK.name),
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.ArrowBack,
@@ -175,12 +175,12 @@ internal fun TopAppBarWithFilterInternal(
                         keyboardActions = KeyboardActions(
                             onSearch = {
                                 focusManager.clearFocus()
-                            }
+                            },
                         ),
                         value = filterText,
                         onValueChange = {
                             onFilterTextChange(it)
-                        }
+                        },
                     )
 
                     // TODO: Filters
@@ -212,7 +212,7 @@ internal fun TopAppBarWithFilterInternal(
             },
             overflowDropdownMenuItems = overflowDropdownMenuItems,
             subtitleDropdownMenuItems = subtitleDropdownMenuItems,
-            additionalBar = additionalBar
+            additionalBar = additionalBar,
         )
     }
 }
@@ -239,7 +239,7 @@ private fun FilterMode() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
             title = "Title",
-            isFilterMode = true
+            isFilterMode = true,
         )
     }
 }
@@ -251,7 +251,7 @@ private fun NoFilter() {
     PreviewTheme {
         TopAppBarWithFilterInternal(
             title = "Title",
-            showFilterIcon = false
+            showFilterIcon = false,
         )
     }
 }
@@ -269,9 +269,9 @@ private fun WithTabs() {
                 TabsBar(
                     tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
                     selectedTabIndex = selectedTabIndex,
-                    onSelectTabIndex = { selectedTabIndex = it }
+                    onSelectTabIndex = { selectedTabIndex = it },
                 )
-            }
+            },
         )
     }
 }

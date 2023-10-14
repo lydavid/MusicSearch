@@ -22,7 +22,7 @@ fun FullScreenErrorWithRetry(
             modifier = Modifier.padding(bottom = 16.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
-            text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again."
+            text = "Couldn't fetch data from Music Brainz.\nCome back later or click below to try again.",
         )
         RetryButton(onClick = onClick)
     }

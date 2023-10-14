@@ -40,7 +40,7 @@ abstract class ScreenshotTest(
             } else {
                 SessionParams.RenderingMode.SHRINK
             },
-            showSystemUi = false
+            showSystemUi = false,
         )
     }
 

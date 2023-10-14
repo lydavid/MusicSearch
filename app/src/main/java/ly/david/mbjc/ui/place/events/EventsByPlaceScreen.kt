@@ -38,6 +38,6 @@ internal fun EventsByPlaceScreen(
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
         modifier = modifier,
-        onEventClick = onEventClick
+        onEventClick = onEventClick,
     )
 }

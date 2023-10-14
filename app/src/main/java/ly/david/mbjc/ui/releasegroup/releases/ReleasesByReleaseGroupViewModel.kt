@@ -23,13 +23,13 @@ internal class ReleasesByReleaseGroupViewModel(
 ) : ReleasesByEntityViewModel(
     browseEntityCountDao = browseEntityCountDao,
     releaseDao = releaseDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseReleasesByEntity(entityId: String, offset: Int): BrowseReleasesResponse {
         return musicBrainzApi.browseReleasesByReleaseGroup(
             releaseGroupId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -56,6 +56,6 @@ internal class ReleasesByReleaseGroupViewModel(
     ): PagingSource<Int, ReleaseListItemModel> =
         releaseReleaseGroupDao.getReleasesByReleaseGroup(
             releaseGroupId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 }

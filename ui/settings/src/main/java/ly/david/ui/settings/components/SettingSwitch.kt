@@ -31,10 +31,10 @@ fun SettingSwitch(
             .toggleable(
                 value = checked,
                 role = Role.Switch,
-                onValueChange = onCheckedChange
+                onValueChange = onCheckedChange,
             )
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = header,
@@ -46,7 +46,7 @@ fun SettingSwitch(
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
-            modifier = Modifier.clearAndSetSemantics {}
+            modifier = Modifier.clearAndSetSemantics {},
         )
     }
 }

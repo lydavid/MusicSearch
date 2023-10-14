@@ -45,7 +45,7 @@ fun SeriesListItem(
                 }
             }
         },
-        modifier = modifier.clickable { onSeriesClick(series) }
+        modifier = modifier.clickable { onSeriesClick(series) },
     )
 }
 

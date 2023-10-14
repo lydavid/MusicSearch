@@ -17,7 +17,7 @@ val musicBrainzAuthModule = module {
     single {
         MusicBrainzOAuthInfo(
             clientId = BuildConfig.MUSICBRAINZ_CLIENT_ID,
-            clientSecret = BuildConfig.MUSICBRAINZ_CLIENT_SECRET
+            clientSecret = BuildConfig.MUSICBRAINZ_CLIENT_SECRET,
         )
     }
 
@@ -30,7 +30,7 @@ val musicBrainzAuthModule = module {
             Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/authorize"),
             Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/token"),
             null,
-            Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/revoke") // Doesn't work cause GET revoke not implemented
+            Uri.parse("$MUSIC_BRAINZ_BASE_URL/oauth2/revoke"), // Doesn't work cause GET revoke not implemented
         )
     }
 
@@ -39,7 +39,7 @@ val musicBrainzAuthModule = module {
             get(),
             get<MusicBrainzOAuthInfo>().clientId,
             ResponseTypeValues.CODE,
-            Uri.parse("${get<AppInfo>().applicationId}://oauth2/redirect")
+            Uri.parse("${get<AppInfo>().applicationId}://oauth2/redirect"),
         )
             .setScope("collection profile")
             .build()

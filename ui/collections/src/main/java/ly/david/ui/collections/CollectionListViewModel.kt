@@ -13,6 +13,7 @@ import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.domain.browse.usecase.GetBrowseEntityCountUseCase
+import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import ly.david.ui.settings.AppPreferences
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 import org.koin.android.annotation.KoinViewModel
@@ -26,6 +27,7 @@ class CollectionListViewModel(
     private val musicBrainzApi: MusicBrainzApi,
     private val musicBrainzAuthStore: MusicBrainzAuthStore,
     private val collectionDao: CollectionDao,
+    private val getAllCollections: GetAllCollections,
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val getBrowseEntityCountUseCase: GetBrowseEntityCountUseCase,
 ) : ViewModel(),
@@ -67,7 +69,7 @@ class CollectionListViewModel(
         val response = musicBrainzApi.browseCollectionsByUser(
             username = entityId,
             offset = nextOffset,
-            include = USER_COLLECTIONS
+            include = USER_COLLECTIONS,
         )
 
         if (response.offset == 0) {
@@ -76,14 +78,14 @@ class CollectionListViewModel(
                     entity_id = entityId,
                     browse_entity = MusicBrainzEntity.COLLECTION,
                     local_count = response.musicBrainzModels.size,
-                    remote_count = response.count
-                )
+                    remote_count = response.count,
+                ),
             )
         } else {
             browseEntityCountDao.incrementLocalCountForEntity(
                 entityId = entityId,
                 browseEntity = MusicBrainzEntity.COLLECTION,
-                additionalOffset = response.musicBrainzModels.size
+                additionalOffset = response.musicBrainzModels.size,
             )
         }
 
@@ -120,6 +122,6 @@ class CollectionListViewModel(
         collectionDao.getAllCollections(
             showLocal = viewState.showLocal,
             showRemote = viewState.showRemote,
-            query = "%${viewState.query}%"
+            query = "%${viewState.query}%",
         )
 }

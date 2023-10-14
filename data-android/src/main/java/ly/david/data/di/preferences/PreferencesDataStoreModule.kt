@@ -17,11 +17,11 @@ val preferencesDataStoreModule = module {
     single {
         PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = { emptyPreferences() }
+                produceNewData = { emptyPreferences() },
             ),
             migrations = listOf(SharedPreferencesMigration(get(), SETTINGS_KEY)),
             scope = CoroutineScope(SupervisorJob() + get<CoroutineDispatchers>().io),
-            produceFile = { get<Context>().preferencesDataStoreFile(SETTINGS_KEY) }
+            produceFile = { get<Context>().preferencesDataStoreFile(SETTINGS_KEY) },
         )
     }
 }

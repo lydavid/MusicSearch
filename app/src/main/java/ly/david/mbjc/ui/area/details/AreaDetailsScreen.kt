@@ -30,7 +30,7 @@ internal fun AreaDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             area.run {
@@ -85,10 +85,10 @@ internal fun PreviewAreaDetailsScreen() {
                     lifeSpan = LifeSpanUiModel(
                         begin = "1918-10-28",
                         end = "1992-12-31",
-                        ended = true
+                        ended = true,
                     ),
-                    countryCodes = listOf("XC")
-                )
+                    countryCodes = listOf("XC"),
+                ),
             )
         }
     }

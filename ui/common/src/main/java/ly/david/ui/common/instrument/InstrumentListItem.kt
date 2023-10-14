@@ -30,7 +30,7 @@ fun InstrumentListItem(
                 instrument.run {
                     Text(
                         text = name,
-                        style = TextStyles.getCardBodyTextStyle()
+                        style = TextStyles.getCardBodyTextStyle(),
                     )
 
                     DisambiguationText(disambiguation = disambiguation)
@@ -67,13 +67,13 @@ internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider
         InstrumentListItemModel(
             id = "2",
             name = "bass recorder",
-            type = "Wind instrument"
+            type = "Wind instrument",
         ),
         InstrumentListItemModel(
             id = "3",
             name = "Portuguese guitar",
             disambiguation = "Portugese plucked lute",
-            type = "String instrument"
+            type = "String instrument",
         ),
         InstrumentListItemModel(
             id = "4",
@@ -81,7 +81,7 @@ internal class InstrumentCardPreviewParameterProvider : PreviewParameterProvider
             disambiguation = "Baroque gut string guitar",
             type = "String instrument",
             description = "Predecessor of the modern classical guitar, it had gut strings and even gut frets. " +
-                "First described in 1555, it surpassed the Renaissance lute's popularity."
+                "First described in 1555, it surpassed the Renaissance lute's popularity.",
         ),
     )
 }

@@ -58,10 +58,10 @@ fun CreateCollectionDialog(
     Dialog(
         onDismissRequest = {
             onDismiss()
-        }
+        },
     ) {
         Surface(
-            shape = RoundedCornerShape(28.dp)
+            shape = RoundedCornerShape(28.dp),
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
@@ -87,7 +87,7 @@ fun CreateCollectionDialog(
                         onNext = {
                             // TODO: handle next focus
                             focusManager.moveFocus(FocusDirection.Down)
-                        }
+                        },
                     ),
                     trailingIcon = {
                         if (name.isEmpty()) return@TextField
@@ -102,7 +102,7 @@ fun CreateCollectionDialog(
                         if (!newText.contains("\n")) {
                             name = newText
                         }
-                    }
+                    },
                 )
 
                 ExposedDropdownMenuBox(
@@ -113,7 +113,7 @@ fun CreateCollectionDialog(
                     selectedOption = selectedEntity,
                     onSelectOption = {
                         selectedEntity = it
-                    }
+                    },
                 )
 
                 Row(
@@ -131,7 +131,7 @@ fun CreateCollectionDialog(
                             onSubmit(name, selectedEntity)
                             onDismiss()
                         },
-                        enabled = name.isNotEmpty()
+                        enabled = name.isNotEmpty(),
                     ) {
                         Text(
                             text = strings.ok,

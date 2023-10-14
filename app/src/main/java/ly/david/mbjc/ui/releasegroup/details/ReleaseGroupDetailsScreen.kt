@@ -27,12 +27,12 @@ internal fun ReleaseGroupDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             LargeImage(
                 url = coverArtUrl,
-                mbid = releaseGroup.id
+                mbid = releaseGroup.id,
             )
         }
 
@@ -48,7 +48,7 @@ internal fun ReleaseGroupDetailsScreen(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }

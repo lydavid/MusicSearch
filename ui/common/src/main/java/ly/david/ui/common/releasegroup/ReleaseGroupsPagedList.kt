@@ -51,7 +51,7 @@ class ReleaseGroupsPagedList : SortablePagedList<ListItemModel> {
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
         browseEntity = { offset ->
             useCase.browseLinkedEntitiesAndStore(entityId, offset)
-        }
+        },
     )
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
@@ -61,7 +61,7 @@ class ReleaseGroupsPagedList : SortablePagedList<ListItemModel> {
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = getRemoteMediator(entityId).takeIf { isRemote },
-                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query, sorted) }
+                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query, sorted) },
                 ).flow.map { pagingData ->
                     pagingData
                         .insertSeparators { rg1: ReleaseGroupListItemModel?, rg2: ReleaseGroupListItemModel? ->
@@ -70,7 +70,7 @@ class ReleaseGroupsPagedList : SortablePagedList<ListItemModel> {
                             ) {
                                 ListSeparator(
                                     id = "${rg1?.id}_${rg2.id}",
-                                    text = rg2.getDisplayTypes()
+                                    text = rg2.getDisplayTypes(),
                                 )
                             } else {
                                 null

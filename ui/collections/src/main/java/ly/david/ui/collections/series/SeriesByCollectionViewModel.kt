@@ -56,7 +56,7 @@ internal class SeriesByCollectionViewModel(
     ): PagingSource<Int, SeriesListItemModel> =
         collectionEntityDao.getSeriesByCollection(
             collectionId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     override fun transformDatabaseToListItemModel(databaseModel: SeriesListItemModel): SeriesListItemModel {

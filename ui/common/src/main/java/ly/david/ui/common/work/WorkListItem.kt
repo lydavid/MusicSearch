@@ -35,19 +35,19 @@ fun WorkListItem(
                     iswcs?.ifNotNullOrEmpty {
                         Text(
                             text = it.joinToString("\n"),
-                            style = TextStyles.getCardBodySubTextStyle()
+                            style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
                     type?.ifNotNullOrEmpty {
                         Text(
                             text = it,
-                            style = TextStyles.getCardBodySubTextStyle()
+                            style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
                     language?.ifNotNullOrEmpty {
                         Text(
                             text = Locale(it).displayLanguage,
-                            style = TextStyles.getCardBodySubTextStyle()
+                            style = TextStyles.getCardBodySubTextStyle(),
                         )
                     }
 
@@ -59,7 +59,7 @@ fun WorkListItem(
                 }
             }
         },
-        modifier = modifier.clickable { onWorkClick(work) }
+        modifier = modifier.clickable { onWorkClick(work) },
     )
 }
 
@@ -74,7 +74,7 @@ private fun Preview() {
                     name = "work name",
                     disambiguation = "that one",
                     type = "Song",
-                )
+                ),
             )
         }
     }

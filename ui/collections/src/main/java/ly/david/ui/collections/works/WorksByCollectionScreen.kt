@@ -48,7 +48,7 @@ internal fun WorksByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: WorkListItemModel? ->
         when (listItemModel) {
             is WorkListItemModel -> {
@@ -63,7 +63,7 @@ internal fun WorksByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

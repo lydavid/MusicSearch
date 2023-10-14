@@ -16,7 +16,7 @@ class LabelListItemTest : ScreenshotTest() {
                 label = LabelListItemModel(
                     id = "1",
                     name = "Music Label",
-                )
+                ),
             )
         }
     }
@@ -31,8 +31,8 @@ class LabelListItemTest : ScreenshotTest() {
                     disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
                     type = "Original Production",
                     labelCode = 10746,
-                    catalogNumber = "CAT-123"
-                )
+                    catalogNumber = "CAT-123",
+                ),
             )
         }
     }

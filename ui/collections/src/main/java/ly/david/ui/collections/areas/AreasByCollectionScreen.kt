@@ -48,7 +48,7 @@ internal fun AreasByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: AreaListItemModel? ->
         when (listItemModel) {
             is AreaListItemModel -> {
@@ -63,7 +63,7 @@ internal fun AreasByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

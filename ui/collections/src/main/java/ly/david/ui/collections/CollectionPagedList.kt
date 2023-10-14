@@ -52,9 +52,15 @@ class CollectionPagedList : ICollectionPagedList {
         query,
         isRemote,
         showLocal,
-        showRemote
+        showRemote,
     ) { entityId, query, isRemote, showLocal, showRemote ->
-        ICollectionPagedList.ViewModelState(entityId, query, isRemote, showLocal, showRemote)
+        ICollectionPagedList.ViewModelState(
+            entityId,
+            query,
+            isRemote,
+            showLocal,
+            showRemote,
+        )
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
@@ -65,18 +71,24 @@ class CollectionPagedList : ICollectionPagedList {
         getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
         browseEntity = { offset ->
-            useCase.browseLinkedEntitiesAndStore(entityId, offset)
-        }
+            useCase.browseLinkedEntitiesAndStore(
+                entityId,
+                offset,
+            )
+        },
     )
 
-    @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
+    @OptIn(
+        ExperimentalPagingApi::class,
+        ExperimentalCoroutinesApi::class,
+    )
     override val pagedEntities: Flow<PagingData<CollectionListItemModel>> by lazy {
         paramState.filterNot { it.entityId.isEmpty() }
             .flatMapLatest { state ->
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = getRemoteMediator(state.entityId).takeIf { state.isRemote },
-                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(state) }
+                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(state) },
                 ).flow
             }
             .distinctUntilChanged()

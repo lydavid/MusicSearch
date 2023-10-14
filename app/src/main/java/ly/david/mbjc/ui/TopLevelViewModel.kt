@@ -90,7 +90,7 @@ internal class TopLevelViewModel(
                     entity = entity,
                     entityCount = 1,
                     isRemote = false,
-                )
+                ),
             )
         }
     }
@@ -105,7 +105,7 @@ internal class TopLevelViewModel(
                 musicBrainzApi.uploadToCollection(
                     collectionId = collectionId,
                     resourceUriPlural = entity.value.resourceUriPlural,
-                    mbids = entityId.value
+                    mbids = entityId.value,
                 )
             } catch (ex: RecoverableNetworkException) {
                 val userFacingError = "Failed to add to ${collection.name}. Login has expired."
@@ -147,7 +147,7 @@ internal class TopLevelViewModel(
                 musicBrainzApi.deleteFromCollection(
                     collectionId = collectionId,
                     resourceUriPlural = collection.entity.resourceUriPlural,
-                    mbids = entityId
+                    mbids = entityId,
                 )
             } catch (ex: RecoverableNetworkException) {
                 val userFacingError = "Failed to delete from remote collection ${collection.name}. Login has expired."
@@ -162,7 +162,7 @@ internal class TopLevelViewModel(
         collectionEntityDao.withTransaction {
             collectionEntityDao.deleteFromCollection(
                 collectionId,
-                entityId
+                entityId,
             )
         }
         return RemoteResult("Deleted $entityName from ${collection.name}.")
@@ -170,19 +170,19 @@ internal class TopLevelViewModel(
 
     fun getLoginContract() = MusicBrainzLoginContract(
         authService,
-        authRequest
+        authRequest,
     )
 
     fun performTokenRequest(authorizationResponse: AuthorizationResponse) {
         authService.performTokenRequest(
             authorizationResponse.createTokenExchangeRequest(),
-            clientAuth
+            clientAuth,
         ) { response, exception ->
             viewModelScope.launch {
                 val authState = AuthState()
                 authState.update(
                     response,
-                    exception
+                    exception,
                 )
                 musicBrainzAuthStore.saveTokens(
                     accessToken = authState.accessToken.orEmpty(),
@@ -208,7 +208,7 @@ internal class TopLevelViewModel(
                 musicBrainzApi.logout(
                     token = refreshToken,
                     clientId = musicBrainzOAuthInfo.clientId,
-                    clientSecret = musicBrainzOAuthInfo.clientSecret
+                    clientSecret = musicBrainzOAuthInfo.clientSecret,
                 )
             } catch (ex: Exception) {
                 // TODO: snackbar
@@ -216,7 +216,7 @@ internal class TopLevelViewModel(
             } finally {
                 musicBrainzAuthStore.saveTokens(
                     "",
-                    ""
+                    "",
                 )
                 musicBrainzAuthStore.setUsername("")
             }

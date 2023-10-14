@@ -17,7 +17,7 @@ class AreaListItemTest : ScreenshotTest() {
                 area = AreaListItemModel(
                     id = "1",
                     name = "Area Name",
-                )
+                ),
             )
         }
     }
@@ -31,8 +31,8 @@ class AreaListItemTest : ScreenshotTest() {
                     name = "Area Name with a very long name",
                     disambiguation = "That one",
                     type = AreaType.COUNTRY,
-                    countryCodes = listOf("GB")
-                )
+                    countryCodes = listOf("GB"),
+                ),
             )
         }
     }

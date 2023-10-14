@@ -25,7 +25,7 @@ class CollectionViewModel(
                     mbid = collectionId,
                     title = collection.name,
                     entity = MusicBrainzEntity.COLLECTION,
-                )
+                ),
             )
             recordedLookup = true
         }

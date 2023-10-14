@@ -82,7 +82,7 @@ internal fun EventScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             eventId = eventId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -110,9 +110,9 @@ internal fun EventScaffold(
                     TabsBar(
                         tabsTitle = EventTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -126,7 +126,7 @@ internal fun EventScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (EventTab.values()[page]) {
                 EventTab.DETAILS -> {
@@ -134,7 +134,7 @@ internal fun EventScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = event
+                        scaffoldModel = event,
                     ) {
                         EventDetailsScreen(
                             event = it,

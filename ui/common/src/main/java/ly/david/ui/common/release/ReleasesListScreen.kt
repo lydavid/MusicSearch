@@ -49,7 +49,7 @@ fun ReleasesListScreen(
             } catch (ex: Exception) {
                 Timber.e(ex)
             }
-        }
+        },
     )
 }
 
@@ -70,7 +70,7 @@ internal fun ReleasesListScreenInternal(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { releaseListItemModel: ReleaseListItemModel? ->
         when (releaseListItemModel) {
             is ReleaseListItemModel -> {
@@ -82,7 +82,7 @@ internal fun ReleasesListScreenInternal(
                             showMoreInfo = showMoreInfo,
                             requestForMissingCoverArtUrl = {
                                 requestForMissingCoverArtUrl(releaseListItemModel.id)
-                            }
+                            },
                         ) {
                             onReleaseClick(MusicBrainzEntity.RELEASE, id, getNameWithDisambiguation())
                         }
@@ -90,7 +90,7 @@ internal fun ReleasesListScreenInternal(
                     disable = onDeleteFromCollection == null,
                     onDelete = {
                         onDeleteFromCollection?.invoke(releaseListItemModel.id, releaseListItemModel.name)
-                    }
+                    },
                 )
             }
 
@@ -108,8 +108,8 @@ internal fun PreviewReleasesListScreen() {
         Surface {
             val items = MutableStateFlow(
                 PagingData.from(
-                    ReleasePreviewParameterProvider().values.toList()
-                )
+                    ReleasePreviewParameterProvider().values.toList(),
+                ),
             )
 
             ReleasesListScreenInternal(lazyPagingItems = items.collectAsLazyPagingItems())

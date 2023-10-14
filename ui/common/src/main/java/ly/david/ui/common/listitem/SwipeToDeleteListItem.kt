@@ -37,7 +37,7 @@ fun SwipeToDeleteListItem(
         SwipeToDeleteListItem(
             dismissContent = content,
             onDelete = onDelete,
-            modifier = modifier
+            modifier = modifier,
         )
     }
 }
@@ -67,7 +67,7 @@ private fun SwipeToDeleteListItem(
             }
         },
         dismissContent = dismissContent,
-        modifier = modifier
+        modifier = modifier,
     )
 
     when {
@@ -85,7 +85,7 @@ private fun SwipeToDeleteBackground(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Red)
+            .background(Color.Red),
     ) {
         Image(
             imageVector = Icons.Default.Delete,
@@ -93,7 +93,7 @@ private fun SwipeToDeleteBackground(
             modifier = Modifier
                 .padding(16.dp)
                 .align(alignment),
-            colorFilter = ColorFilter.tint(Color.White)
+            colorFilter = ColorFilter.tint(Color.White),
         )
     }
 }

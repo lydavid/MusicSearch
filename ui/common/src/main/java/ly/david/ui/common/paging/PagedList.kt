@@ -42,7 +42,7 @@ abstract class PagedList<DM : Any, LI : ListItemModel> : IPagedList<LI> {
         getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
-        browseEntity = { offset -> useCase.browseLinkedEntitiesAndStore(entityId, offset) }
+        browseEntity = { offset -> useCase.browseLinkedEntitiesAndStore(entityId, offset) },
     )
 
     @OptIn(ExperimentalPagingApi::class, ExperimentalCoroutinesApi::class)
@@ -53,7 +53,7 @@ abstract class PagedList<DM : Any, LI : ListItemModel> : IPagedList<LI> {
                 Pager(
                     config = MusicBrainzPagingConfig.pagingConfig,
                     remoteMediator = getRemoteMediator(entityId).takeIf { isRemote },
-                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query) }
+                    pagingSourceFactory = { useCase.getLinkedEntitiesPagingSource(entityId, query) },
                 )
                     .flow
                     .map { pagingData ->

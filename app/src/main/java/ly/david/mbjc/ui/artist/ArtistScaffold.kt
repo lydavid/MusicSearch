@@ -91,7 +91,7 @@ internal fun ArtistScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             artistId = artistId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -114,7 +114,7 @@ internal fun ArtistScaffold(
                             toggleOnText = strings.sort,
                             toggleOffText = strings.unsort,
                             toggled = sortReleaseGroupListItems,
-                            onToggle = onSortReleaseGroupListItemsChange
+                            onToggle = onSortReleaseGroupListItemsChange,
                         )
                     }
                     if (selectedTab == ArtistTab.RELEASES) {
@@ -122,7 +122,7 @@ internal fun ArtistScaffold(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = onShowMoreInfoInReleaseListItemChange
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
                         )
                     }
                     AddToCollectionMenuItem {
@@ -137,9 +137,9 @@ internal fun ArtistScaffold(
                     TabsBar(
                         tabsTitle = ArtistTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -165,7 +165,7 @@ internal fun ArtistScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (ArtistTab.values()[page]) {
                 ArtistTab.DETAILS -> {
@@ -173,7 +173,7 @@ internal fun ArtistScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = artist
+                        scaffoldModel = artist,
                     ) { artist ->
                         ArtistDetailsScreen(
                             artist = artist,
@@ -204,7 +204,7 @@ internal fun ArtistScaffold(
                         lazyPagingItems = releaseGroupsLazyPagingItems,
                         onPagedReleaseGroupsChange = {
                             pagedReleaseGroups = it
-                        }
+                        },
                     )
                 }
 
@@ -221,7 +221,7 @@ internal fun ArtistScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         onReleaseClick = onItemClick,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     )
                 }
 
@@ -246,7 +246,7 @@ internal fun ArtistScaffold(
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection)
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                     )
                 }
             }

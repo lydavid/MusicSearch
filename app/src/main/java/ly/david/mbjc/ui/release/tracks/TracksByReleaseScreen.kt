@@ -69,14 +69,14 @@ private fun TracksByReleaseScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: ListItemModel? ->
         when (listItemModel) {
             is TrackListItemModel -> {
                 TrackListItem(
                     track = listItemModel,
                     modifier = Modifier.animateItemPlacement(),
-                    onRecordingClick = onRecordingClick
+                    onRecordingClick = onRecordingClick,
                 )
             }
 
@@ -122,12 +122,12 @@ internal fun PreviewTracksInReleaseScreen() {
                             title = "Another track name",
                             length = 199000,
                         ),
-                    )
-                )
+                    ),
+                ),
             )
 
             TracksByReleaseScreen(
-                lazyPagingItems = items.collectAsLazyPagingItems()
+                lazyPagingItems = items.collectAsLazyPagingItems(),
             )
         }
     }

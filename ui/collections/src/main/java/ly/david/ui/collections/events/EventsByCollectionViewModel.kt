@@ -29,7 +29,7 @@ internal class EventsByCollectionViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseEventsResponse {
         return musicBrainzApi.browseEventsByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 

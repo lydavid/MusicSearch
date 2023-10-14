@@ -83,7 +83,7 @@ fun ScrollableTopAppBar(
                     title = title,
                     entity = entity,
                     subtitle = subtitle,
-                    subtitleDropdownMenuItems = subtitleDropdownMenuItems
+                    subtitleDropdownMenuItems = subtitleDropdownMenuItems,
                 )
             },
             scrollBehavior = scrollBehavior,
@@ -100,7 +100,7 @@ fun ScrollableTopAppBar(
             actions = {
                 actions()
                 OverflowMenu(overflowDropdownMenuItems = overflowDropdownMenuItems)
-            }
+            },
         )
 
         additionalBar()
@@ -131,12 +131,12 @@ private fun TitleAndSubtitle(
         Column {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.horizontalScroll(rememberScrollState())
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
             ) {
                 if (entity != null) {
                     EntityIcon(
                         entity = entity,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = 8.dp),
                     )
                 }
                 SelectionContainer {
@@ -146,7 +146,7 @@ private fun TitleAndSubtitle(
             if (subtitle.isNotEmpty()) {
                 SubtitleWithOverflow(
                     subtitle = subtitle,
-                    subtitleDropdownMenuItems = subtitleDropdownMenuItems
+                    subtitleDropdownMenuItems = subtitleDropdownMenuItems,
                 )
             }
         }
@@ -176,7 +176,7 @@ private fun SubtitleWithOverflow(
                 Column {
                     subtitleDropdownMenuItems.invoke(scope)
                 }
-            }
+            },
         )
     }
 
@@ -199,7 +199,7 @@ private fun SubtitleWithOverflow(
                 }
                 .semantics {
                     testTag = "TopBarSubtitle"
-                }
+                },
         )
     }
 }
@@ -235,7 +235,7 @@ private fun OverflowMenu(
                 Column {
                     overflowDropdownMenuItems.invoke(scope)
                 }
-            }
+            },
         )
     }
 }
@@ -248,7 +248,7 @@ private fun Default() {
     PreviewTheme {
         ScrollableTopAppBar(
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
-            subtitle = "A subtitle that is also very long that will also go off the screen."
+            subtitle = "A subtitle that is also very long that will also go off the screen.",
         )
     }
 }
@@ -261,7 +261,7 @@ private fun WithIcon() {
         ScrollableTopAppBar(
             entity = MusicBrainzEntity.ARTIST,
             title = "A title that is very long so that it will go off the screen and allow us to scroll.",
-            subtitle = "A subtitle that is also very long that will also go off the screen."
+            subtitle = "A subtitle that is also very long that will also go off the screen.",
         )
     }
 }
@@ -281,9 +281,9 @@ private fun WithTabs() {
                 TabsBar(
                     tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
                     selectedTabIndex = selectedTabIndex,
-                    onSelectTabIndex = { selectedTabIndex = it }
+                    onSelectTabIndex = { selectedTabIndex = it },
                 )
-            }
+            },
         )
     }
 }

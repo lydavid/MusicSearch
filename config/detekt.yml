@@ -13,6 +13,8 @@ formatting:
     active: false
   MaximumLineLength:
     active: false
+  TrailingCommaOnCallSite:
+    active: true
   TrailingCommaOnDeclarationSite:
     active: true
 naming:

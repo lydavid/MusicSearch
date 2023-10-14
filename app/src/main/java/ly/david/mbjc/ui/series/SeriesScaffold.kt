@@ -82,7 +82,7 @@ internal fun SeriesScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             seriesId = seriesId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -112,9 +112,9 @@ internal fun SeriesScaffold(
                     TabsBar(
                         tabsTitle = SeriesTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -128,7 +128,7 @@ internal fun SeriesScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (SeriesTab.values()[page]) {
                 SeriesTab.DETAILS -> {
@@ -136,7 +136,7 @@ internal fun SeriesScaffold(
                         modifier = Modifier.padding(innerPadding),
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = series
+                        scaffoldModel = series,
                     ) {
                         SeriesDetailsScreen(
                             series = it,

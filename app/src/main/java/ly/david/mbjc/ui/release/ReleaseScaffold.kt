@@ -91,7 +91,7 @@ internal fun ReleaseScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             releaseId = releaseId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -119,7 +119,7 @@ internal fun ReleaseScaffold(
                             onClick = {
                                 closeMenu()
                                 onItemClick(MusicBrainzEntity.ARTIST, artistCredit.artistId, null)
-                            }
+                            },
                         )
                     }
                     release?.releaseGroup?.let { releaseGroup ->
@@ -129,7 +129,7 @@ internal fun ReleaseScaffold(
                             onClick = {
                                 closeMenu()
                                 onItemClick(MusicBrainzEntity.RELEASE_GROUP, releaseGroup.id, null)
-                            }
+                            },
                         )
                     }
                 },
@@ -145,9 +145,9 @@ internal fun ReleaseScaffold(
                     TabsBar(
                         tabsTitle = ReleaseTab.values().map { it.tab.getTitle(strings) },
                         selectedTabIndex = selectedTab.ordinal,
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
@@ -176,7 +176,7 @@ internal fun ReleaseScaffold(
                         // TODO: [low] if you spam click this it won't work
                         //  but you can always change tabs or come back to reload
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = release
+                        scaffoldModel = release,
                     ) {
                         // TODO: test refreshing this screen
                         //  want to see if deleting labels by release will cascade delete its junction table
@@ -208,7 +208,7 @@ internal fun ReleaseScaffold(
                         onPagedTracksFlowChange = { pagedTracksFlow = it },
                         onRecordingClick = { id, title ->
                             onItemClick(MusicBrainzEntity.RECORDING, id, title)
-                        }
+                        },
                     )
                 }
 

@@ -43,17 +43,17 @@ fun ClickableItem(
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
                 end.linkTo(icon.start)
-            }
+            },
         ) {
             Text(
                 text = title,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
 
             subtitle?.let {
                 Text(
                     text = subtitle,
-                    style = TextStyles.getCardBodySubTextStyle()
+                    style = TextStyles.getCardBodySubTextStyle(),
                 )
             }
         }
@@ -63,7 +63,7 @@ fun ClickableItem(
                 end.linkTo(parent.end)
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-            }
+            },
         ) {
             endIcon?.let {
                 Icon(

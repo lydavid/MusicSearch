@@ -31,7 +31,7 @@ fun CollectionListItem(
         headlineContent = {
             Text(
                 text = collection.name,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         modifier = modifier.clickable { onClick(collection) },
@@ -40,7 +40,7 @@ fun CollectionListItem(
             //  problem seems to appear when list is of certain length (eg. 4 items) regardless of this
             Text(
                 text = collection.description,
-                style = TextStyles.getCardBodyTextStyle()
+                style = TextStyles.getCardBodyTextStyle(),
             )
         },
         leadingContent = {
@@ -48,7 +48,7 @@ fun CollectionListItem(
 
             EntityIcon(
                 entity = collection.entity,
-                modifier = Modifier.size(SMALL_IMAGE_SIZE.dp)
+                modifier = Modifier.size(SMALL_IMAGE_SIZE.dp),
             )
         },
         trailingContent = {
@@ -57,7 +57,7 @@ fun CollectionListItem(
                     Icon(
                         modifier = Modifier.padding(end = 4.dp),
                         imageVector = Icons.Outlined.Cloud,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
                 // TODO: count isn't accurate right now
@@ -66,7 +66,7 @@ fun CollectionListItem(
 //                    style = TextStyles.getCardBodyTextStyle()
 //                )
             }
-        }
+        },
     )
 }
 
@@ -85,9 +85,9 @@ private fun Preview() {
                     entityCount = 9999,
                     entityIds = listOf(
                         "1b1e4b65-9b1a-48cd-8e3a-b4824f15bf0c",
-                        "b437fbda-9c32-4078-afa2-1afb98ff0d74"
-                    )
-                )
+                        "b437fbda-9c32-4078-afa2-1afb98ff0d74",
+                    ),
+                ),
             )
         }
     }

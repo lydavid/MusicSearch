@@ -38,7 +38,7 @@ internal fun PlaceDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             place.run {
@@ -83,7 +83,7 @@ internal fun PlaceDetailsScreen(
                             showType = false,
                             onAreaClick = {
                                 onItemClick(MusicBrainzEntity.AREA, id, areaName)
-                            }
+                            },
                         )
                     }
                 }
@@ -95,14 +95,14 @@ internal fun PlaceDetailsScreen(
                     CoordinateListItem(
                         context = context,
                         coordinates = it,
-                        label = label
+                        label = label,
                     )
                 }
 
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -125,14 +125,14 @@ private fun Preview() {
                     lifeSpan = LifeSpanUiModel(
                         begin = "2022-01-01",
                         end = "2022-12-10",
-                        ended = true
+                        ended = true,
                     ),
                     area = AreaListItemModel(
                         id = "a1",
                         "Area",
-                        "that one"
-                    )
-                )
+                        "that one",
+                    ),
+                ),
             )
         }
     }

@@ -23,28 +23,28 @@ fun LifeSpanText(
 ) {
     lifeSpan?.run {
         Column(
-            modifier = modifier
+            modifier = modifier,
         ) {
             val beginDate = begin
             if (beginDate == end && beginDate != null) {
                 TextWithHeading(
                     heading = heading,
                     text = beginDate,
-                    filterText = filterText
+                    filterText = filterText,
                 )
             } else {
                 begin?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = beginHeading,
                         text = it,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
                 end?.ifNotNullOrEmpty {
                     TextWithHeading(
                         heading = endHeading,
                         text = it,
-                        filterText = filterText
+                        filterText = filterText,
                     )
                 }
             }
@@ -56,23 +56,23 @@ internal class LifeSpanPreviewParameterProvider : PreviewParameterProvider<LifeS
     override val values: Sequence<LifeSpanUiModel> = sequenceOf(
         LifeSpanUiModel(
             begin = "2022-12-15",
-            end = "2022-12-16"
+            end = "2022-12-16",
         ),
         LifeSpanUiModel(
             begin = "2022-12-15",
-            end = "2022-12-15"
+            end = "2022-12-15",
         ),
         LifeSpanUiModel(
             begin = "2022-12-15",
-            end = null
+            end = null,
         ),
         LifeSpanUiModel(
             begin = null,
-            end = "2022-12-15"
+            end = "2022-12-15",
         ),
         LifeSpanUiModel(
             begin = null,
-            end = null
+            end = null,
         ),
     )
 }

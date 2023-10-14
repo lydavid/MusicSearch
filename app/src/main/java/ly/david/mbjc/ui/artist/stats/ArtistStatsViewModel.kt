@@ -39,7 +39,7 @@ internal class ArtistStatsViewModel(
         combine(
             getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RELEASE_GROUP),
             artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId),
-            artistReleaseGroupDao.getCountOfEachAlbumType(entityId)
+            artistReleaseGroupDao.getCountOfEachAlbumType(entityId),
         ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->
             ReleaseGroupStats(
                 totalRemote = browseReleaseGroupCount?.remoteCount,

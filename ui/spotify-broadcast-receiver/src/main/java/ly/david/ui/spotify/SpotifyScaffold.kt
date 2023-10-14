@@ -34,7 +34,7 @@ fun SpotifyScaffold(
         metadata = metadata,
         modifier = modifier,
         onBack = onBack,
-        searchMusicBrainz = searchMusicBrainz
+        searchMusicBrainz = searchMusicBrainz,
     )
 }
 
@@ -80,7 +80,7 @@ internal fun PreviewSpotifyScaffold() {
                 artistName = "Artist",
                 albumName = "Album",
                 trackName = "Track",
-            )
+            ),
         )
     }
 }

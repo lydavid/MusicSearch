@@ -23,6 +23,6 @@ fun OverflowMenuScope.CopyToClipboardMenuItem(
             clipboardManager.setText(AnnotatedString(entityId))
             closeMenu()
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

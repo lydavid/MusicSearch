@@ -26,7 +26,7 @@ class TopAppBarWithFilterTest : ScreenshotTest() {
         snapshot {
             TopAppBarWithFilterInternal(
                 title = "Title",
-                isFilterMode = true
+                isFilterMode = true,
             )
         }
     }
@@ -36,7 +36,7 @@ class TopAppBarWithFilterTest : ScreenshotTest() {
         snapshot {
             TopAppBarWithFilterInternal(
                 title = "Title",
-                showFilterIcon = false
+                showFilterIcon = false,
             )
         }
     }
@@ -52,9 +52,9 @@ class TopAppBarWithFilterTest : ScreenshotTest() {
                     TabsBar(
                         tabsTitle = listOf("Tab 1", "Tab 2", "Tab 3"),
                         selectedTabIndex = selectedTabIndex,
-                        onSelectTabIndex = { selectedTabIndex = it }
+                        onSelectTabIndex = { selectedTabIndex = it },
                     )
-                }
+                },
             )
         }
     }

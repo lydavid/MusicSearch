@@ -51,7 +51,7 @@ fun RecordingListItem(
                         modifier = Modifier
                             .padding(top = 4.dp)
                             .fillMaxWidth(),
-                        style = TextStyles.getCardBodySubTextStyle()
+                        style = TextStyles.getCardBodySubTextStyle(),
                     )
                 }
             }
@@ -67,10 +67,10 @@ fun RecordingListItem(
 
                 Text(
                     text = recording.length.toDisplayTime(),
-                    style = TextStyles.getCardBodySubTextStyle()
+                    style = TextStyles.getCardBodySubTextStyle(),
                 )
             }
-        }
+        },
     )
 }
 
@@ -88,8 +88,8 @@ internal class RecordingPreviewParameterProvider : PreviewParameterProvider<Reco
             disambiguation = "that one",
             length = 25300000,
             video = false,
-            formattedArtistCredits = "Some artist feat. Other artist"
-        )
+            formattedArtistCredits = "Some artist feat. Other artist",
+        ),
     )
 }
 

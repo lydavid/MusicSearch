@@ -33,7 +33,7 @@ fun PlaceListItem(
                 place.run {
                     Text(
                         text = name,
-                        style = TextStyles.getCardBodyTextStyle()
+                        style = TextStyles.getCardBodyTextStyle(),
                     )
 
                     DisambiguationText(disambiguation = disambiguation)
@@ -73,7 +73,7 @@ fun PlaceListItem(
                 }
             }
         },
-        modifier = modifier.clickable { onPlaceClick(place) }
+        modifier = modifier.clickable { onPlaceClick(place) },
     )
 }
 
@@ -82,7 +82,7 @@ internal class PlacePreviewParameterProvider : PreviewParameterProvider<PlaceLis
         PlaceListItemModel(
             id = "2",
             name = "Place Name",
-            address = "123 Fake St"
+            address = "123 Fake St",
         ),
         PlaceListItemModel(
             id = "ed121457-87f6-4df9-a24b-d3f1bab1fdad",
@@ -90,14 +90,14 @@ internal class PlacePreviewParameterProvider : PreviewParameterProvider<PlaceLis
             disambiguation = "NYC, closed 2007",
             type = "Studio",
             address = "460 W. 54th St., at 10th Avenue, Manhatten, NY",
-            lifeSpan = LifeSpanUiModel(begin = "1993", end = "2007-08", ended = true)
+            lifeSpan = LifeSpanUiModel(begin = "1993", end = "2007-08", ended = true),
         ),
         PlaceListItemModel(
             id = "4d43b9d8-162d-4ac5-8068-dfb009722484",
             name = "日本武道館",
             type = "Indoor arena",
             address = "〒102-8321 東京都千代田区北の丸公園2-3",
-            lifeSpan = LifeSpanUiModel(begin = "1964-10-03")
+            lifeSpan = LifeSpanUiModel(begin = "1964-10-03"),
         ),
     )
 }

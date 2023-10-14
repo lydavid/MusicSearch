@@ -24,7 +24,7 @@ fun RetryButton(
 
     Button(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Icon(Icons.Default.Refresh, "")
         Text(

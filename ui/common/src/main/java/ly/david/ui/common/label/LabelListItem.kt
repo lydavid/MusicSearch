@@ -35,7 +35,7 @@ fun LabelListItem(
             Column {
                 Text(
                     text = label.getNameWithDisambiguation(),
-                    style = TextStyles.getCardBodyTextStyle()
+                    style = TextStyles.getCardBodyTextStyle(),
                 )
 
                 label.type?.ifNotNullOrEmpty {
@@ -83,19 +83,19 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
             id = "2",
             name = "Sony Records",
             disambiguation = "1991 - 2001 group/division of Sony Music Entertainment (Japan) - " +
-                "used to organize imprints; not a release label"
+                "used to organize imprints; not a release label",
         ),
         LabelListItemModel(
             id = "3",
             name = "Sony Classical",
-            type = "Imprint"
+            type = "Imprint",
         ),
         LabelListItemModel(
             id = "4",
             name = "Sony Music",
             disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
             type = "Original Production",
-            labelCode = 10746
+            labelCode = 10746,
         ),
         LabelListItemModel(
             id = "5",
@@ -103,7 +103,7 @@ internal class LabelCardPreviewParameterProvider : PreviewParameterProvider<Labe
             disambiguation = "global brand, excluding JP, owned by Sony Music Entertainment",
             type = "Original Production",
             labelCode = 10746,
-            catalogNumber = "CAT-123"
+            catalogNumber = "CAT-123",
         ),
     )
 }

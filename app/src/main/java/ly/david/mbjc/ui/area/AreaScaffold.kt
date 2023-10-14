@@ -92,7 +92,7 @@ internal fun AreaScaffold(
     LaunchedEffect(key1 = selectedTab, key2 = forceRefresh) {
         viewModel.loadDataForTab(
             areaId = areaId,
-            selectedTab = selectedTab
+            selectedTab = selectedTab,
         )
     }
 
@@ -113,7 +113,7 @@ internal fun AreaScaffold(
                             toggleOnText = strings.showMoreInfo,
                             toggleOffText = strings.showLessInfo,
                             toggled = showMoreInfoInReleaseListItem,
-                            onToggle = onShowMoreInfoInReleaseListItemChange
+                            onToggle = onShowMoreInfoInReleaseListItemChange,
                         )
                     }
                     AddToCollectionMenuItem {
@@ -131,9 +131,9 @@ internal fun AreaScaffold(
                     TabsBar(
                         tabsTitle = areaTabs.map { it.tab.getTitle(strings) },
                         selectedTabIndex = areaTabs.indexOf(selectedTab),
-                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } }
+                        onSelectTabIndex = { scope.launch { pagerState.animateScrollToPage(it) } },
                     )
-                }
+                },
             )
         },
     ) { innerPadding ->
@@ -158,14 +158,14 @@ internal fun AreaScaffold(
                 .collectAsLazyPagingItems()
 
         HorizontalPager(
-            state = pagerState
+            state = pagerState,
         ) { page ->
             when (areaTabs[page]) {
                 AreaTab.DETAILS -> {
                     DetailsWithErrorHandling(
                         showError = showError,
                         onRetryClick = { forceRefresh = true },
-                        scaffoldModel = area
+                        scaffoldModel = area,
                     ) {
                         AreaDetailsScreen(
                             area = it,
@@ -207,7 +207,7 @@ internal fun AreaScaffold(
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
                         onReleaseClick = onItemClick,
-                        onPagedReleasesFlowChange = { pagedReleasesFlow = it }
+                        onPagedReleasesFlowChange = { pagedReleasesFlow = it },
                     )
                 }
 
@@ -223,7 +223,7 @@ internal fun AreaScaffold(
                         snackbarHostState = snackbarHostState,
                         placesLazyPagingItems = placesLazyPagingItems,
                         onPagedPlacesFlowChange = { pagedPlacesFlow = it },
-                        onPlaceClick = onItemClick
+                        onPlaceClick = onItemClick,
                     )
                 }
 
@@ -234,7 +234,7 @@ internal fun AreaScaffold(
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()
-                            .nestedScroll(scrollBehavior.nestedScrollConnection)
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
                     )
                 }
             }

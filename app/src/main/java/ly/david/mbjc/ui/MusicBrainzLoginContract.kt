@@ -27,7 +27,7 @@ class MusicBrainzLoginContract(
         val exception = AuthorizationException.fromIntent(intent)
         return Result(
             response = response,
-            exception = exception
+            exception = exception,
         )
     }
 }

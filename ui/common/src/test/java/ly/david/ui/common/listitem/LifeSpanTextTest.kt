@@ -15,7 +15,7 @@ class LifeSpanTextTest : ScreenshotTest() {
             LifeSpanText(
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
-                    end = "2022-12-16"
+                    end = "2022-12-16",
                 ),
                 heading = "Date",
                 beginHeading = "Start Date",
@@ -30,7 +30,7 @@ class LifeSpanTextTest : ScreenshotTest() {
             LifeSpanText(
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
-                    end = "2022-12-15"
+                    end = "2022-12-15",
                 ),
                 heading = "Date",
                 beginHeading = "Start Date",
@@ -45,7 +45,7 @@ class LifeSpanTextTest : ScreenshotTest() {
             LifeSpanText(
                 lifeSpan = LifeSpanUiModel(
                     begin = "2022-12-15",
-                    end = null
+                    end = null,
                 ),
                 heading = "Date",
                 beginHeading = "Start Date",
@@ -60,7 +60,7 @@ class LifeSpanTextTest : ScreenshotTest() {
             LifeSpanText(
                 lifeSpan = LifeSpanUiModel(
                     begin = null,
-                    end = "2022-12-15"
+                    end = "2022-12-15",
                 ),
                 heading = "Date",
                 beginHeading = "Start Date",

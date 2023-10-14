@@ -23,7 +23,7 @@ internal class RecordingsByWorkViewModel(
 ) : BrowseEntitiesByEntityViewModel<RecordingListItemModel, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     browseEntityCountDao = browseEntityCountDao,
-    pagedList = pagedList
+    pagedList = pagedList,
 ) {
 
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseRecordingsResponse {

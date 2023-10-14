@@ -18,8 +18,8 @@ class ArtistListItemTest : ScreenshotTest() {
                     id = "1",
                     name = "artist name",
                     sortName = "sort name should not be seen",
-                    countryCode = "CA"
-                )
+                    countryCode = "CA",
+                ),
             )
         }
     }
@@ -37,9 +37,9 @@ class ArtistListItemTest : ScreenshotTest() {
                     countryCode = "XW",
                     lifeSpan = LifeSpanUiModel(
                         begin = "2020-12-31",
-                        end = "2022-01-01"
-                    )
-                )
+                        end = "2022-01-01",
+                    ),
+                ),
             )
         }
     }

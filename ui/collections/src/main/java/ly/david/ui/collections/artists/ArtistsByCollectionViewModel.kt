@@ -29,7 +29,7 @@ internal class ArtistsByCollectionViewModel(
     override suspend fun browseEntitiesByEntity(entityId: String, offset: Int): BrowseArtistsResponse {
         return musicBrainzApi.browseArtistsByCollection(
             collectionId = entityId,
-            offset = offset
+            offset = offset,
         )
     }
 
@@ -54,7 +54,7 @@ internal class ArtistsByCollectionViewModel(
     ): PagingSource<Int, ArtistListItemModel> =
         collectionEntityDao.getArtistsByCollection(
             collectionId = entityId,
-            query = "%$query%"
+            query = "%$query%",
         )
 
     override fun transformDatabaseToListItemModel(databaseModel: ArtistListItemModel): ArtistListItemModel {

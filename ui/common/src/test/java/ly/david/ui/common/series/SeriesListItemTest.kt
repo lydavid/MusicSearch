@@ -16,7 +16,7 @@ class SeriesListItemTest : ScreenshotTest() {
                 series = SeriesListItemModel(
                     id = "1",
                     name = "series name",
-                )
+                ),
             )
         }
     }
@@ -30,7 +30,7 @@ class SeriesListItemTest : ScreenshotTest() {
                     name = "series name",
                     disambiguation = "that one",
                     type = "Tour",
-                )
+                ),
             )
         }
     }

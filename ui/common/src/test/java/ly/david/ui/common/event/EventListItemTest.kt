@@ -19,7 +19,7 @@ class EventListItemTest : ScreenshotTest() {
                     name = "event name",
                     disambiguation = "that one",
                     type = "Concert",
-                )
+                ),
             )
         }
     }
@@ -37,9 +37,9 @@ class EventListItemTest : ScreenshotTest() {
                     lifeSpan = LifeSpanUiModel(
                         begin = "1998-01-22",
                         end = "1998-01-22",
-                        ended = true
-                    )
-                )
+                        ended = true,
+                    ),
+                ),
             )
         }
     }

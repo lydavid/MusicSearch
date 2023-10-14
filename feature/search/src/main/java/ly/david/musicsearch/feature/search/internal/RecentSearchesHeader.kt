@@ -27,12 +27,12 @@ internal fun RecentSearchesHeader(
 
     Row(
         modifier = Modifier.padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = strings.recentSearches,
             style = TextStyles.getHeaderTextStyle(),
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
         )
 
         Spacer(modifier = Modifier.weight(1f))

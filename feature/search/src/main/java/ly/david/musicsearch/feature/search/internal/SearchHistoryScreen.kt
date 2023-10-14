@@ -36,7 +36,7 @@ internal fun SearchHistoryScreen(
             confirmText = strings.yes,
             dismissText = strings.no,
             onDismiss = { showDeleteConfirmationDialog = false },
-            onConfirmClick = { onDeleteAllHistory() }
+            onConfirmClick = { onDeleteAllHistory() },
         )
     }
 

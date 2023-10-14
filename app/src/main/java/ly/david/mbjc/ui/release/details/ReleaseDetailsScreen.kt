@@ -44,12 +44,12 @@ internal fun ReleaseDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             LargeImage(
                 url = coverArtUrl,
-                mbid = release.id
+                mbid = release.id,
             )
 
             release.run {
@@ -167,7 +167,7 @@ internal fun ReleaseDetailsScreen(
                             label = label,
                             onLabelClick = {
                                 onItemClick(MusicBrainzEntity.LABEL, id, name)
-                            }
+                            },
                         )
                     }
 
@@ -182,14 +182,14 @@ internal fun ReleaseDetailsScreen(
                             showType = false,
                             onAreaClick = {
                                 onItemClick(MusicBrainzEntity.AREA, id, name)
-                            }
+                            },
                         )
                     }
 
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -215,7 +215,7 @@ private fun Preview() {
                     quality = "normal",
                     textRepresentation = TextRepresentationUiModel(
                         script = "Latn",
-                        language = "eng"
+                        language = "eng",
                     ),
                     formattedFormats = "2xCD + Blu-ray",
                     formattedTracks = "15 + 8 + 24",
@@ -225,32 +225,32 @@ private fun Preview() {
                             name = "Canada",
                             type = COUNTRY,
                             countryCodes = listOf("CA"),
-                            date = "2022-11-29"
+                            date = "2022-11-29",
                         ),
                         AreaListItemModel(
                             id = "a2",
                             name = WORLDWIDE,
                             countryCodes = listOf("XW"),
-                            date = "2022-11-30"
-                        )
+                            date = "2022-11-30",
+                        ),
                     ),
                     labels = listOf(
                         LabelListItemModel(
                             id = "l1",
                             name = "Label 1",
                             type = "Imprint",
-                            catalogNumber = "ASDF-1010"
+                            catalogNumber = "ASDF-1010",
                         ),
                         LabelListItemModel(
                             id = "l1",
                             name = "Label 1",
-                            catalogNumber = "ASDF-1011"
-                        )
+                            catalogNumber = "ASDF-1011",
+                        ),
                     ),
                     releaseLength = 8000,
-                    hasNullLength = true
+                    hasNullLength = true,
                 ),
-                coverArtUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9"
+                coverArtUrl = "https://i.scdn.co/image/ab6761610000f1786761852cd2852fceb64e8cd9",
             )
         }
     }

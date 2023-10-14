@@ -37,6 +37,6 @@ internal fun PlacesByAreaScreen(
         lazyListState = placesLazyListState,
         lazyPagingItems = placesLazyPagingItems,
         modifier = modifier,
-        onPlaceClick = onPlaceClick
+        onPlaceClick = onPlaceClick,
     )
 }

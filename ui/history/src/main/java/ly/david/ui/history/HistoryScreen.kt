@@ -33,7 +33,7 @@ internal fun HistoryScreen(
                     lookupHistory = listItemModel,
                     modifier = Modifier.animateItemPlacement(),
                     onItemClick = onItemClick,
-                    onDeleteItem = onDeleteItem
+                    onDeleteItem = onDeleteItem,
                 )
             }
 

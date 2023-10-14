@@ -55,7 +55,7 @@ internal fun SettingsScreen(
                 username = username,
                 showLogin = showLogin,
                 onLoginClick = onLoginClick,
-                onLogoutClick = onLogoutClick
+                onLogoutClick = onLogoutClick,
             )
 
             SettingWithDialogChoices(
@@ -70,20 +70,20 @@ internal fun SettingsScreen(
                 SettingSwitch(
                     header = "Use Material You",
                     checked = useMaterialYou,
-                    onCheckedChange = onUseMaterialYouChange
+                    onCheckedChange = onUseMaterialYouChange,
                 )
             }
 
             SettingSwitch(
                 header = "Show more info in release list items",
                 checked = showMoreInfoInReleaseListItem,
-                onCheckedChange = onShowMoreInfoInReleaseListItemChange
+                onCheckedChange = onShowMoreInfoInReleaseListItemChange,
             )
 
             SettingSwitch(
                 header = "Sort release groups by type",
                 checked = sortReleaseGroupListItems,
-                onCheckedChange = onSortReleaseGroupListItemsChange
+                onCheckedChange = onSortReleaseGroupListItemsChange,
             )
 
             ListSeparatorHeader(text = strings.experimentalSearch)

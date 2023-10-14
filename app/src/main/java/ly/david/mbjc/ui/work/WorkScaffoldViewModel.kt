@@ -63,7 +63,7 @@ internal class WorkScaffoldViewModel(
                                 mbid = workId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

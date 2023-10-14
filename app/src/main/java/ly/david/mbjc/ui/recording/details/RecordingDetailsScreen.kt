@@ -30,7 +30,7 @@ internal fun RecordingDetailsScreen(
 
     LazyColumn(
         modifier = modifier,
-        state = lazyListState
+        state = lazyListState,
     ) {
         item {
             recording.run {
@@ -60,7 +60,7 @@ internal fun RecordingDetailsScreen(
                 UrlsSection(
                     urls = urls,
                     filterText = filterText,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
             }
         }
@@ -79,9 +79,9 @@ private fun Preview() {
                     name = "プライド革命",
                     length = 235000,
                     isrcs = listOf(
-                        "JPX401500068"
-                    )
-                )
+                        "JPX401500068",
+                    ),
+                ),
             )
         }
     }

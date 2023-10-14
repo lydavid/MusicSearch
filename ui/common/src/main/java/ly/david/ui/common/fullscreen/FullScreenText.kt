@@ -18,7 +18,7 @@ fun FullScreenText(
         Text(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
-            text = text
+            text = text,
         )
     }
 }

@@ -19,7 +19,7 @@ fun <T> DetailsWithErrorHandling(
         showError -> {
             FullScreenErrorWithRetry(
                 modifier = modifier,
-                onClick = onRetryClick
+                onClick = onRetryClick,
             )
         }
         scaffoldModel == null -> {

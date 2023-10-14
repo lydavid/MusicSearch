@@ -25,7 +25,7 @@ fun DisambiguationText(
             text = "($it)",
             modifier = modifier.padding(top = 4.dp),
             color = getSubTextColor(),
-            style = TextStyles.getCardBodyTextStyle()
+            style = TextStyles.getCardBodyTextStyle(),
         )
     }
 }

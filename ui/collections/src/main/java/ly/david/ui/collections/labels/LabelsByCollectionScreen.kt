@@ -48,7 +48,7 @@ internal fun LabelsByCollectionScreen(
         modifier = modifier,
         lazyListState = lazyListState,
         lazyPagingItems = lazyPagingItems,
-        snackbarHostState = snackbarHostState
+        snackbarHostState = snackbarHostState,
     ) { listItemModel: LabelListItemModel? ->
         when (listItemModel) {
             is LabelListItemModel -> {
@@ -63,7 +63,7 @@ internal fun LabelsByCollectionScreen(
                     },
                     onDelete = {
                         onDeleteFromCollection(listItemModel.id, listItemModel.name)
-                    }
+                    },
                 )
             }
 

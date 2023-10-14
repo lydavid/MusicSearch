@@ -16,10 +16,10 @@ class MultipleChoiceDialogTest : ScreenshotTest(isFullScreen = true) {
                 choices = listOf(
                     "Light",
                     "Dark",
-                    "System"
+                    "System",
                 ),
                 selectedChoiceIndex = 0,
-                onSelectChoiceIndex = {}
+                onSelectChoiceIndex = {},
             )
         }
     }

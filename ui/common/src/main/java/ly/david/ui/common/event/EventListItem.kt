@@ -33,7 +33,7 @@ fun EventListItem(
                 event.run {
                     Text(
                         text = name,
-                        style = TextStyles.getCardBodyTextStyle()
+                        style = TextStyles.getCardBodyTextStyle(),
                     )
 
                     DisambiguationText(disambiguation = disambiguation)
@@ -79,8 +79,8 @@ internal class EventPreviewParameterProvider : PreviewParameterProvider<EventLis
             lifeSpan = LifeSpanUiModel(
                 begin = "1998-01-22",
                 end = "1998-01-22",
-                ended = true
-            )
+                ended = true,
+            ),
         ),
     )
 }

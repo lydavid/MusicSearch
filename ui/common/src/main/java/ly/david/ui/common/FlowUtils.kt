@@ -14,6 +14,6 @@ fun <T> rememberFlowWithLifecycleStarted(
 ): Flow<T> = remember(flow, lifecycleOwner) {
     flow.flowWithLifecycle(
         lifecycle = lifecycleOwner,
-        minActiveState = Lifecycle.State.STARTED
+        minActiveState = Lifecycle.State.STARTED,
     )
 }

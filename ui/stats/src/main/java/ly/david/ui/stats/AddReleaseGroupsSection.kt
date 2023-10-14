@@ -47,7 +47,7 @@ internal fun LazyListScope.addReleaseGroupsSection(
         ) {
             Text(
                 style = TextStyles.getCardBodySubTextStyle(),
-                text = "${it.getDisplayTypes()}: ${it.count}"
+                text = "${it.getDisplayTypes()}: ${it.count}",
             )
 
             if (releaseGroupTypeCounts.isNotEmpty()) {
@@ -57,7 +57,7 @@ internal fun LazyListScope.addReleaseGroupsSection(
                         .fillMaxWidth(),
                     progress = it.count / releaseGroupTypeCounts.sumOf { it.count }.toFloat(),
                     color = MaterialTheme.colorScheme.primary,
-                    trackColor = Color.Transparent
+                    trackColor = Color.Transparent,
                 )
             }
         }
@@ -81,9 +81,9 @@ private fun Preview() {
                         ReleaseGroupTypeCount(
                             primaryType = "Album",
                             secondaryTypes = listOf("Compilation", "Demo"),
-                            count = 1
+                            count = 1,
                         ),
-                    )
+                    ),
                 )
             }
         }

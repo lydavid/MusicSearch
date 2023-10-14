@@ -50,8 +50,8 @@ internal fun SpotifyBroadcastReceiver(
                                 albumName = albumName,
                                 trackName = trackName,
                                 trackLengthInSec = trackLengthInSec,
-                                timeSentInMs = timeSentInMs
-                            )
+                                timeSentInMs = timeSentInMs,
+                            ),
                         )
                     }
 

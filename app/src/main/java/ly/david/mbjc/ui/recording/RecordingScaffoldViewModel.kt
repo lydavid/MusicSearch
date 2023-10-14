@@ -66,7 +66,7 @@ internal class RecordingScaffoldViewModel(
                                 mbid = recordingId,
                                 title = title.value,
                                 entity = entity,
-                            )
+                            ),
                         )
                         recordedLookup = true
                     }

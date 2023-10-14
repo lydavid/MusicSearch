@@ -82,7 +82,7 @@ fun AreaListItem(
                     )
                 }
             }
-        }
+        },
     )
 }
 
@@ -103,14 +103,14 @@ internal class AreaListItemPreviewParameterProvider : PreviewParameterProvider<A
             name = "Area Name with a very long name",
             disambiguation = "That one",
             type = COUNTRY,
-            countryCodes = listOf("GB")
+            countryCodes = listOf("GB"),
         ),
         AreaListItemModel(
             id = "4",
             name = "Area Name with a very long name",
             type = WORLDWIDE,
-            countryCodes = listOf("XW")
-        )
+            countryCodes = listOf("XW"),
+        ),
     )
 }
 
@@ -140,7 +140,7 @@ internal fun PreviewReleaseEvent() {
                     date = "2022-10-29",
                     type = "Country",
                 ),
-                showType = false
+                showType = false,
             )
         }
     }

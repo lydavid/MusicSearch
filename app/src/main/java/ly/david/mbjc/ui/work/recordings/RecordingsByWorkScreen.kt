@@ -37,6 +37,6 @@ internal fun RecordingsByWorkScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         lazyPagingItems = recordingsLazyPagingItems,
-        onRecordingClick = onRecordingClick
+        onRecordingClick = onRecordingClick,
     )
 }
