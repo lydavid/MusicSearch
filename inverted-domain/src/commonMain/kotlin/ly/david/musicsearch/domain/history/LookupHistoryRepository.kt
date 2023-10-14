@@ -2,6 +2,7 @@ package ly.david.musicsearch.domain.history
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import ly.david.musicsearch.data.core.history.HistorySortOption
 import ly.david.musicsearch.data.core.history.LookupHistory
 import ly.david.musicsearch.data.core.listitem.ListItemModel
 

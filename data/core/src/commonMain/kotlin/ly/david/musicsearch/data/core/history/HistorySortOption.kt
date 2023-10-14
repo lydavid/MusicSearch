@@ -1,4 +1,4 @@
-package ly.david.musicsearch.domain.history
+package ly.david.musicsearch.data.core.history
 
 enum class HistorySortOption {
     ALPHABETICALLY,

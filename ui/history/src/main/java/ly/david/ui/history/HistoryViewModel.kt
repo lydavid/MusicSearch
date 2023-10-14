@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import ly.david.musicsearch.domain.history.usecase.GetPagedHistory
-import ly.david.musicsearch.domain.history.HistorySortOption
+import ly.david.musicsearch.core.preferences.AppPreferences
+import ly.david.musicsearch.data.core.history.HistorySortOption
 import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.ui.settings.AppPreferences
+import ly.david.musicsearch.domain.history.usecase.GetPagedHistory
 
 class HistoryViewModel(
     private val appPreferences: AppPreferences,
