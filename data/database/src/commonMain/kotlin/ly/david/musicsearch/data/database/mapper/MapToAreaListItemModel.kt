@@ -9,7 +9,6 @@ internal fun mapToAreaListItemModel(
     sortName: String,
     disambiguation: String?,
     type: String?,
-    type_id: String?,
     begin: String?,
     end: String?,
     ended: Boolean?,

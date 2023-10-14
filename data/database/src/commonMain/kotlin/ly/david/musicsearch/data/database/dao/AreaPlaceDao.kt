@@ -33,7 +33,7 @@ class AreaPlaceDao(
     }
 
     fun getAreaByPlace(placeId: String): AreaListItemModel? =
-        transacter.getAreaByPlace(
+        transacter.getAreasByPlace(
             placeId,
             mapper = ::mapToAreaListItemModel,
         ).executeAsOneOrNull()

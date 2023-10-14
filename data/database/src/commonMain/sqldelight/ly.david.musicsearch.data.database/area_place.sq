@@ -9,8 +9,17 @@ insert:
 INSERT OR IGNORE INTO area_place
 VALUES ?;
 
-getAreaByPlace:
-SELECT a.* FROM area a
+getAreasByPlace:
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.begin,
+  a.end,
+  a.ended
+FROM area a
 INNER JOIN area_place ap ON a.id = ap.area_id
 WHERE ap.place_id = :placeId
 LIMIT 1;
@@ -41,7 +50,17 @@ SELECT IFNULL(
 ) AS count;
 
 getPlacesByArea:
-SELECT p.*
+SELECT
+  p.id,
+  p.name,
+  p.disambiguation,
+  p.address,
+  p.type,
+  p.longitude,
+  p.latitude,
+  p.begin,
+  p.end,
+  p.ended
 FROM place p
 INNER JOIN area_place ap ON p.id = ap.place_id
 INNER JOIN area a ON a.id = ap.area_id

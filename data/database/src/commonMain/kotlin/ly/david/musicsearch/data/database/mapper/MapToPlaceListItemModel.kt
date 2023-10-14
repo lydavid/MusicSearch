@@ -10,7 +10,6 @@ fun mapToPlaceListItemModel(
     disambiguation: String?,
     address: String,
     type: String?,
-    type_id: String?,
     longitude: Double?,
     latitude: Double?,
     begin: String?,
