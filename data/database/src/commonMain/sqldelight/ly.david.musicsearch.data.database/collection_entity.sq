@@ -98,7 +98,17 @@ SELECT IFNULL(
 ) AS count;
 
 getArtistsByCollection:
-SELECT a.*
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.gender,
+  a.country_code,
+  a.begin,
+  a.end,
+  a.ended
 FROM artist a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id

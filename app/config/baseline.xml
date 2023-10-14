@@ -15,6 +15,7 @@
     <ID>ComposableParamOrder:WorkDetailsScreen.kt$WorkDetailsScreen</ID>
     <ID>ComposableParamOrder:WorkStatsScreen.kt$WorkGroupStatsScreen</ID>
     <ID>MaxLineLength:InstrumentDetailsScreen.kt$description</ID>
+    <ID>MaxLineLength:PlacesByAreaViewModel.kt$PlacesByAreaViewModel$)</ID>
     <ID>MaxLineLength:RecordingsByWorkViewModel.kt$RecordingsByWorkViewModel$)</ID>
     <ID>ModifierWithoutDefault:ReleaseGroupsByArtistScreen.kt$modifier</ID>
     <ID>TooGenericExceptionCaught:TopLevelViewModel.kt$TopLevelViewModel$ex: Exception</ID>
