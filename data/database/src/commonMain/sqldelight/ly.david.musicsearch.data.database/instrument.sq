@@ -12,4 +12,10 @@ INSERT OR IGNORE INTO instrument
 VALUES ?;
 
 getInstrument:
-SELECT * FROM instrument WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  description,
+  type
+FROM instrument WHERE id = ?;

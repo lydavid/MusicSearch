@@ -1,0 +1,56 @@
+package ly.david.musicsearch.data.repository
+
+import ly.david.data.musicbrainz.PlaceMusicBrainzModel
+import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.place.PlaceScaffoldModel
+import ly.david.musicsearch.data.database.dao.AreaDao
+import ly.david.musicsearch.data.database.dao.AreaPlaceDao
+import ly.david.musicsearch.data.database.dao.PlaceDao
+import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.domain.place.PlaceRepository
+import ly.david.musicsearch.domain.relation.RelationRepository
+
+class PlaceRepositoryImpl(
+    private val musicBrainzApi: MusicBrainzApi,
+    private val placeDao: PlaceDao,
+    private val areaPlaceDao: AreaPlaceDao,
+    private val areaDao: AreaDao,
+    private val relationRepository: RelationRepository,
+) : PlaceRepository {
+
+    override suspend fun lookupPlace(placeId: String): PlaceScaffoldModel {
+        val place = placeDao.getPlaceForDetails(placeId)
+        val area = areaPlaceDao.getAreaByPlace(placeId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(placeId)
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(placeId)
+        if (place != null && hasUrlsBeenSavedForEntity) {
+            return place.copy(
+                area = area,
+                urls = urlRelations,
+            )
+        }
+
+        val placeMusicBrainzModel = musicBrainzApi.lookupPlace(placeId)
+        cache(placeMusicBrainzModel)
+        return lookupPlace(placeId)
+    }
+
+    private fun cache(place: PlaceMusicBrainzModel) {
+        placeDao.withTransaction {
+            placeDao.insert(place)
+            place.area?.let { areaMusicBrainzModel ->
+                areaDao.insert(areaMusicBrainzModel)
+                areaPlaceDao.insert(
+                    areaId = areaMusicBrainzModel.id,
+                    placeId = place.id,
+                )
+            }
+
+            val relationWithOrderList = place.relations.toRelationWithOrderList(place.id)
+            relationRepository.insertAllUrlRelations(
+                entityId = place.id,
+                relationWithOrderList = relationWithOrderList,
+            )
+        }
+    }
+}

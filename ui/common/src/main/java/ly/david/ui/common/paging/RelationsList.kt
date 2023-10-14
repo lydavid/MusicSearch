@@ -14,10 +14,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.domain.RelationsListRepository
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.musicsearch.domain.relation.RelationRepository
+import ly.david.musicsearch.domain.relation.usecase.LookupRelationsAndStore
 import org.koin.core.annotation.Factory
 
 /**
@@ -54,6 +55,7 @@ interface IRelationsList {
 @Factory
 class RelationsList(
     private val relationRepository: RelationRepository,
+    private val lookupRelationsAndStore: LookupRelationsAndStore,
 ) : IRelationsList {
 
     data class State(
@@ -68,7 +70,7 @@ class RelationsList(
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var relationsListRepository: RelationsListRepository
+    lateinit var entity: MusicBrainzEntity
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)
     override val pagedRelations: Flow<PagingData<RelationListItemModel>> by lazy {
@@ -114,11 +116,7 @@ class RelationsList(
     private suspend fun lookupRelationsAndStore(entityId: String, forceRefresh: Boolean) {
         if (!forceRefresh) return
 
-        val relations = relationsListRepository.lookupRelationsFromNetwork(entityId)
-        relationRepository.insertAllRelationsExcludingUrls(
-            entityId = entityId,
-            relationMusicBrainzModels = relations,
-        )
+        lookupRelationsAndStore(entity, entityId)
     }
 
     private fun deleteLocalRelations(entityId: String) {

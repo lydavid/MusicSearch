@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Event
+import ly.david.musicsearch.data.core.event.Event
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 
 data class EventListItemModel(

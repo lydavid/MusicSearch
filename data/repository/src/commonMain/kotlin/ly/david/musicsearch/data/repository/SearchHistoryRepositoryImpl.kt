@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.core.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.data.core.listitem.toSearchHistoryListItemModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
-import ly.david.musicsearch.data.repository.paging.CommonPagingConfig
+import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.domain.search.history.SearchHistoryRepository
 
 class SearchHistoryRepositoryImpl(

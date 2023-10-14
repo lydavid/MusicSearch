@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.domain.event.EventScaffoldModel
+import ly.david.musicsearch.data.core.event.EventScaffoldModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.LifeSpanText
 import ly.david.ui.common.listitem.ListSeparatorHeader

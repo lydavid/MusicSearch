@@ -1,18 +1,16 @@
 package ly.david.ui.collections.artists
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseArtistsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.ArtistListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
-import ly.david.musicsearch.data.core.listitem.ArtistListItemModel
-import ly.david.musicsearch.domain.listitem.toArtistListItemModel
 import ly.david.ui.common.artist.ArtistsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import lydavidmusicsearchdatadatabase.Artist
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class ArtistsByCollectionViewModel(
     private val artistDao: ArtistDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: ArtistsPagedList,
-) : BrowseEntitiesByEntityViewModel<Artist, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
+) : BrowseEntitiesByEntityViewModel<ArtistListItemModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
     byEntity = MusicBrainzEntity.ARTIST,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -53,13 +51,13 @@ internal class ArtistsByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Artist> =
+    ): PagingSource<Int, ArtistListItemModel> =
         collectionEntityDao.getArtistsByCollection(
             collectionId = entityId,
             query = "%$query%"
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Artist): ArtistListItemModel {
-        return databaseModel.toArtistListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: ArtistListItemModel): ArtistListItemModel {
+        return databaseModel
     }
 }

@@ -7,10 +7,10 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
+import ly.david.musicsearch.data.core.listitem.RelationWithOrder
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
-import lydavidmusicsearchdatadatabase.Relation
 
 class RelationDao(
     database: Database,
@@ -18,11 +18,23 @@ class RelationDao(
 ) {
     private val transacter = database.relationQueries
 
-    fun insert(relation: Relation) {
-        transacter.insertEntity(relation)
+    private fun insert(relation: RelationWithOrder) {
+        relation.run {
+            transacter.insert(
+                entity_id = id,
+                linked_entity_id = linkedEntityId,
+                linked_entity = linkedEntity,
+                order = order,
+                label = label,
+                name = name,
+                disambiguation = disambiguation,
+                attributes = attributes,
+                additional_info = additionalInfo,
+            )
+        }
     }
 
-    fun insertAll(relations: List<Relation>?) {
+    fun insertAll(relations: List<RelationWithOrder>?) {
         transacter.transaction {
             relations?.forEach { relation ->
                 insert(relation)
@@ -61,24 +73,23 @@ class RelationDao(
     }
 
     private fun toRelationListItemModel(
-        entity_id: String,
-        linked_entity_id: String,
-        linked_entity: MusicBrainzEntity,
+        linkedEntityId: String,
+        linkedEntity: MusicBrainzEntity,
         order: Int,
         label: String,
         name: String,
         disambiguation: String?,
         attributes: String?,
-        additional_info: String?,
+        additionalInfo: String?,
     ) = RelationListItemModel(
-        id = "${linked_entity_id}_$order",
-        linkedEntityId = linked_entity_id,
-        linkedEntity = linked_entity,
+        id = "${linkedEntityId}_$order",
+        linkedEntityId = linkedEntityId,
+        linkedEntity = linkedEntity,
         label = label,
         name = name,
         disambiguation = disambiguation,
         attributes = attributes,
-        additionalInfo = additional_info
+        additionalInfo = additionalInfo
     )
 
     fun deleteRelationshipsExcludingUrlsByEntity(

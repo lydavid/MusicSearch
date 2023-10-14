@@ -2,6 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>ComplexCondition:ReleaseRepositoryImpl.kt$ReleaseRepositoryImpl$releaseForDetails != null &amp;&amp; releaseGroup != null &amp;&amp; artistCredits.isNotEmpty() &amp;&amp; hasUrlsBeenSavedForEntity</ID>
+    <ID>LongMethod:RelationRepositoryImpl.kt$RelationRepositoryImpl$private suspend fun lookupEntityWithRelations( entity: MusicBrainzEntity, entityId: String, ): List&lt;RelationMusicBrainzModel&gt;?</ID>
     <ID>LongMethod:SearchMusicBrainzPagingSource.kt$SearchMusicBrainzPagingSource$private suspend fun getQueryResults( searchApi: SearchApi, entity: MusicBrainzEntity, queryString: String, currentOffset: Int, limit: Int, ): QueryResults</ID>
   </CurrentIssues>
 </SmellBaseline>

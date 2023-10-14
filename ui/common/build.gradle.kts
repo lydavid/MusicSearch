@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.data.database) // TODO: remove dependency
     implementation(projects.domain)
+    implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.core)
     implementation(projects.ui.image)

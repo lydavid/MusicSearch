@@ -1,6 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.EventMusicBrainzModel
+import ly.david.musicsearch.data.core.LifeSpanUiModel
+import ly.david.musicsearch.data.core.event.EventScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Event
 
@@ -36,7 +38,34 @@ class EventDao(
         }
     }
 
-    fun getEvent(eventId: String): Event? {
-        return transacter.getEvent(eventId).executeAsOneOrNull()
+    fun getEventForDetails(eventId: String): EventScaffoldModel? {
+        return transacter.getEvent(
+            eventId,
+            mapper = ::toEventScaffoldModel,
+        ).executeAsOneOrNull()
     }
+
+    private fun toEventScaffoldModel(
+        id: String,
+        name: String,
+        disambiguation: String?,
+        type: String?,
+        time: String?,
+        cancelled: Boolean?,
+        begin: String?,
+        end: String?,
+        ended: Boolean?,
+    ) = EventScaffoldModel(
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        time = time,
+        cancelled = cancelled,
+        lifeSpan = LifeSpanUiModel(
+            begin = begin,
+            end = end,
+            ended = ended,
+        ),
+    )
 }

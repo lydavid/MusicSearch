@@ -2,11 +2,11 @@ package ly.david.ui.common.paging
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.MusicBrainzModel
 import ly.david.data.musicbrainz.api.Browsable
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class BrowseEntitiesByEntityViewModel<
@@ -38,6 +38,7 @@ abstract class BrowseEntitiesByEntityViewModel<
         val response = browseEntitiesByEntity(entityId, nextOffset)
 
         if (response.offset == 0) {
+            // TODO: usecase
             browseEntityCountDao.insert(
                 browseEntityCount = Browse_entity_count(
                     entity_id = entityId,

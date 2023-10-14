@@ -5,14 +5,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.data.coverart.ReleaseGroupImageRepository
 import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.history.LookupHistory
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.data.coverart.ReleaseGroupImageRepository
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -40,7 +40,7 @@ internal class ReleaseGroupScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.relationsListRepository = repository
+        relationsList.entity = entity
     }
 
     fun loadDataForTab(

@@ -52,7 +52,15 @@ SELECT IFNULL(
 ) AS count;
 
 getAreasByCollection:
-SELECT a.*
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.begin,
+  a.end,
+  a.ended
 FROM area a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -90,7 +98,17 @@ SELECT IFNULL(
 ) AS count;
 
 getArtistsByCollection:
-SELECT a.*
+SELECT
+  a.id,
+  a.name,
+  a.sort_name,
+  a.disambiguation,
+  a.type,
+  a.gender,
+  a.country_code,
+  a.begin,
+  a.end,
+  a.ended
 FROM artist a
 INNER JOIN collection_entity ce ON a.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -127,7 +145,16 @@ SELECT IFNULL(
 ) AS count;
 
 getEventsByCollection:
-SELECT e.*
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended
 FROM event e
 INNER JOIN collection_entity ce ON e.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -162,7 +189,12 @@ SELECT IFNULL(
 ) AS count;
 
 getInstrumentsByCollection:
-SELECT i.*
+SELECT
+  i.id,
+  i.name,
+  i.disambiguation,
+  i.description,
+  i.type
 FROM instrument i
 INNER JOIN collection_entity ce ON i.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -197,7 +229,12 @@ SELECT IFNULL(
 ) AS count;
 
 getLabelsByCollection:
-SELECT l.*
+SELECT
+  l.id,
+  l.name,
+  l.disambiguation,
+  l.type,
+  l.label_code
 FROM label l
 INNER JOIN collection_entity ce ON l.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -232,7 +269,17 @@ SELECT IFNULL(
 ) AS count;
 
 getPlacesByCollection:
-SELECT p.*
+SELECT
+  p.id,
+  p.name,
+  p.disambiguation,
+  p.address,
+  p.type,
+  p.longitude,
+  p.latitude,
+  p.begin,
+  p.end,
+  p.ended
 FROM place p
 INNER JOIN collection_entity ce ON p.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -423,7 +470,11 @@ SELECT IFNULL(
 ) AS count;
 
 getSeriesByCollection:
-SELECT s.*
+SELECT
+  s.id,
+  s.name,
+  s.disambiguation,
+  s.type
 FROM series s
 INNER JOIN collection_entity ce ON s.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
@@ -458,7 +509,13 @@ SELECT IFNULL(
 ) AS count;
 
 getWorksByCollection:
-SELECT w.*
+SELECT
+  w.id,
+  w.name,
+  w.disambiguation,
+  w.type,
+  w.language,
+  w.iswcs
 FROM work w
 INNER JOIN collection_entity ce ON w.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id

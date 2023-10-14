@@ -12,7 +12,7 @@ import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
-import ly.david.musicsearch.domain.work.WorkScaffoldModel
+import ly.david.musicsearch.data.core.work.WorkScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading

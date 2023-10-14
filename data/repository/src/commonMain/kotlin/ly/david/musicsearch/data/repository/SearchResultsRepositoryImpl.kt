@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.core.listitem.EndOfList
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.repository.paging.CommonPagingConfig
-import ly.david.musicsearch.data.repository.paging.SearchMusicBrainzPagingSource
-import ly.david.musicsearch.data.repository.paging.insertFooterItemForNonEmpty
+import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
+import ly.david.musicsearch.data.repository.internal.paging.SearchMusicBrainzPagingSource
+import ly.david.musicsearch.data.repository.internal.paging.insertFooterItemForNonEmpty
 import ly.david.musicsearch.domain.search.results.SearchResultsRepository
 
 class SearchResultsRepositoryImpl(

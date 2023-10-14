@@ -37,7 +37,13 @@ SELECT IFNULL(
 ) AS count;
 
 getAllCollections:
-SELECT * FROM collection
+SELECT
+  id,
+  is_remote,
+  name,
+  entity,
+  entity_count
+FROM collection
 WHERE id IN
   (SELECT id FROM collection
   WHERE is_remote = 0 AND :showLocal
@@ -59,7 +65,12 @@ DELETE FROM collection
 WHERE is_remote;
 
 getCollection:
-SELECT *
+SELECT
+  id,
+  is_remote,
+  name,
+  entity,
+  entity_count
 FROM collection
 WHERE id = :id;
 

@@ -2,30 +2,22 @@ package ly.david.ui.nowplaying
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.insertSeparators
-import androidx.paging.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.common.getDateFormatted
-import ly.david.musicsearch.data.core.history.NowPlayingHistory
 import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.ListSeparator
-import ly.david.musicsearch.data.core.listitem.NowPlayingHistoryListItemModel
-import ly.david.musicsearch.data.core.listitem.toNowPlayingHistoryListItemModel
-import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
-import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
+import ly.david.musicsearch.domain.nowplaying.usecase.DeleteNowPlayingHistory
+import ly.david.musicsearch.domain.nowplaying.usecase.GetNowPlayingHistory
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 internal class NowPlayingViewModel(
-    private val nowPlayingHistoryRepository: NowPlayingHistoryRepository,
+    private val getNowPlayingHistory: GetNowPlayingHistory,
+    private val deleteNowPlayingHistory: DeleteNowPlayingHistory,
 ) : ViewModel() {
 
     private val query = MutableStateFlow("")
@@ -37,39 +29,14 @@ internal class NowPlayingViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val nowPlayingHistory: Flow<PagingData<ListItemModel>> =
         query.flatMapLatest { query ->
-            Pager(
-                config = MusicBrainzPagingConfig.pagingConfig,
-                pagingSourceFactory = {
-                    nowPlayingHistoryRepository.getAllNowPlayingHistory(
-                        query = "%$query%",
-                    )
-                }
-            ).flow.map { pagingData ->
-                pagingData
-                    .map(NowPlayingHistory::toNowPlayingHistoryListItemModel)
-                    .insertSeparators(generator = ::generator)
-            }
+            getNowPlayingHistory(
+                query = "%$query%",
+            )
         }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
 
-    private fun generator(
-        before: NowPlayingHistoryListItemModel?,
-        after: NowPlayingHistoryListItemModel?,
-    ): ListSeparator? {
-        val beforeDate = before?.lastPlayed?.getDateFormatted()
-        val afterDate = after?.lastPlayed?.getDateFormatted()
-        return if (beforeDate != afterDate && afterDate != null) {
-            ListSeparator(
-                id = afterDate,
-                text = afterDate,
-            )
-        } else {
-            null
-        }
-    }
-
     fun delete(id: String) {
-        nowPlayingHistoryRepository.delete(raw = id)
+        deleteNowPlayingHistory(id)
     }
 }

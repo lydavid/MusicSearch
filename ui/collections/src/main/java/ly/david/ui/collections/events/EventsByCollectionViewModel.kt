@@ -1,18 +1,16 @@
 package ly.david.ui.collections.events
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.EventListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
-import ly.david.musicsearch.domain.listitem.toEventListItemModel
 import ly.david.ui.common.event.EventsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import lydavidmusicsearchdatadatabase.Event
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class EventsByCollectionViewModel(
     private val eventDao: EventDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: EventsPagedList,
-) : BrowseEntitiesByEntityViewModel<Event, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
+) : BrowseEntitiesByEntityViewModel<EventListItemModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -53,13 +51,13 @@ internal class EventsByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Event> =
+    ): PagingSource<Int, EventListItemModel> =
         collectionEntityDao.getEventsByCollection(
             collectionId = entityId,
             query = "%$query%",
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Event): EventListItemModel {
-        return databaseModel.toEventListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: EventListItemModel): EventListItemModel {
+        return databaseModel
     }
 }

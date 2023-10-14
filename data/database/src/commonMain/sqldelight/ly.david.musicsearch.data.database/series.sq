@@ -11,4 +11,9 @@ INSERT OR IGNORE INTO series
 VALUES ?;
 
 getSeries:
-SELECT * FROM series WHERE id = ?;
+SELECT
+  id,
+  name,
+  disambiguation,
+  type
+FROM series WHERE id = ?;

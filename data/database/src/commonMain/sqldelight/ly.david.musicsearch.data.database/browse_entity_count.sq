@@ -32,7 +32,10 @@ INSERT OR IGNORE INTO browse_entity_count
 VALUES ?;
 
 getBrowseEntityCount:
-SELECT *
+SELECT
+  browse_entity,
+  local_count,
+  remote_count
 FROM browse_entity_count
 WHERE entity_id = :entityId AND browse_entity = :browseEntity;
 

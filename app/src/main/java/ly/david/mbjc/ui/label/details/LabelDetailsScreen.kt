@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import ly.david.musicsearch.data.core.common.ifNotNull
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.label.LabelScaffoldModel
+import ly.david.musicsearch.data.core.label.LabelScaffoldModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.text.TextWithHeading

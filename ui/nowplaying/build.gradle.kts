@@ -12,7 +12,7 @@ android {
 
 dependencies {
     implementation(projects.data)
-    implementation(projects.domain)
+    implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.common)
     implementation(projects.ui.core)

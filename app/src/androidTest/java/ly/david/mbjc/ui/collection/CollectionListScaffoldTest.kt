@@ -13,21 +13,21 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUri
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
+import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.network.resourceUri
 import ly.david.musicsearch.data.database.dao.CollectionDao
-import ly.david.ui.collections.CollectionListScaffold
 import ly.david.musicsearch.strings.AppStrings
+import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag
 import ly.david.ui.core.theme.PreviewTheme
-import lydavidmusicsearchdatadatabase.Collection
 import org.junit.Before
 import org.junit.Test
 import org.koin.test.inject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Tests [CollectionListScaffold]-specific features.
@@ -112,27 +112,23 @@ internal class CollectionListScaffoldTest : MainActivityTest() {
 
         val name1 = "should find me"
         collectionDao.insertLocal(
-            Collection(
+            CollectionListItemModel(
                 id = "1",
                 name = name1,
                 entity = MusicBrainzEntity.AREA,
-                is_remote = false,
-                type = null,
-                type_id = null,
-                entity_count = 0,
+                isRemote = false,
+                entityCount = 0,
             )
         )
 
         val name2 = "but not me"
         collectionDao.insertLocal(
-            Collection(
+            CollectionListItemModel(
                 id = "2",
                 name = name2,
                 entity = MusicBrainzEntity.RECORDING,
-                is_remote = false,
-                type = null,
-                type_id = null,
-                entity_count = 0,
+                isRemote = false,
+                entityCount = 0,
             )
         )
 

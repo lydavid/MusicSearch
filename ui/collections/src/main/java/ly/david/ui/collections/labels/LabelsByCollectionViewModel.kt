@@ -1,18 +1,16 @@
 package ly.david.ui.collections.labels
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.LabelMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseLabelsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.LabelListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.LabelDao
-import ly.david.musicsearch.data.core.listitem.LabelListItemModel
-import ly.david.musicsearch.domain.listitem.toLabelListItemModel
 import ly.david.ui.common.label.LabelsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import lydavidmusicsearchdatadatabase.Label
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class LabelsByCollectionViewModel(
     private val labelDao: LabelDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: LabelsPagedList,
-) : BrowseEntitiesByEntityViewModel<Label, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
+) : BrowseEntitiesByEntityViewModel<LabelListItemModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -53,13 +51,13 @@ internal class LabelsByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Label> =
+    ): PagingSource<Int, LabelListItemModel> =
         collectionEntityDao.getLabelsByCollection(
             collectionId = entityId,
             query = "%$query%",
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Label): LabelListItemModel {
-        return databaseModel.toLabelListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: LabelListItemModel): LabelListItemModel {
+        return databaseModel
     }
 }
