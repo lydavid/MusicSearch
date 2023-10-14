@@ -8,10 +8,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
+import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import lydavidmusicsearchdatadatabase.Area_place
-import lydavidmusicsearchdatadatabase.Place
 
 class AreaPlaceDao(
     database: Database,
@@ -68,7 +69,7 @@ class AreaPlaceDao(
     fun getPlacesByArea(
         areaId: String,
         query: String,
-    ): PagingSource<Int, Place> = QueryPagingSource(
+    ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfPlacesByArea(
             areaId = areaId,
             query = query,
@@ -81,6 +82,7 @@ class AreaPlaceDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToPlaceListItemModel,
         )
     }
     // endregion

@@ -4,12 +4,14 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
+import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
@@ -18,7 +20,6 @@ import lydavidmusicsearchdatadatabase.Collection_entity
 import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Instrument
 import lydavidmusicsearchdatadatabase.Label
-import lydavidmusicsearchdatadatabase.Place
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.Work
 
@@ -166,11 +167,10 @@ class CollectionEntityDao(
         )
     }
 
-    // TODO: list item
     fun getPlacesByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, Place> = QueryPagingSource(
+    ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfPlacesByCollection(
             collectionId = collectionId,
             query = query,
@@ -183,6 +183,7 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToPlaceListItemModel,
         )
     }
 

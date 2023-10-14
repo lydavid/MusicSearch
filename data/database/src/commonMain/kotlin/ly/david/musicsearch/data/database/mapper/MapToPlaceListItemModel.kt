@@ -1,11 +1,22 @@
-package ly.david.musicsearch.domain.listitem
+package ly.david.musicsearch.data.database.mapper
 
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.core.place.CoordinatesUiModel
-import lydavidmusicsearchdatadatabase.Place
 
-fun Place.toPlaceListItemModel() = PlaceListItemModel(
+fun mapToPlaceListItemModel(
+    id: String,
+    name: String,
+    disambiguation: String?,
+    address: String,
+    type: String?,
+    type_id: String?,
+    longitude: Double?,
+    latitude: Double?,
+    begin: String?,
+    end: String?,
+    ended: Boolean?,
+) = PlaceListItemModel(
     id = id,
     name = name,
     disambiguation = disambiguation,

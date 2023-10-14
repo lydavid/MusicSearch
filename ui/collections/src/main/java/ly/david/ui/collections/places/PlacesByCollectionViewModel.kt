@@ -1,18 +1,16 @@
 package ly.david.ui.collections.places
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowsePlacesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
-import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
-import ly.david.musicsearch.domain.listitem.toPlaceListItemModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.place.PlacesPagedList
-import lydavidmusicsearchdatadatabase.Place
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class PlacesByCollectionViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val placeDao: PlaceDao,
     pagedList: PlacesPagedList,
-) : BrowseEntitiesByEntityViewModel<Place, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
+) : BrowseEntitiesByEntityViewModel<PlaceListItemModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzEntity.PLACE,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -53,13 +51,13 @@ internal class PlacesByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Place> =
+    ): PagingSource<Int, PlaceListItemModel> =
         collectionEntityDao.getPlacesByCollection(
             collectionId = entityId,
             query = "%$query%",
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Place): PlaceListItemModel {
-        return databaseModel.toPlaceListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: PlaceListItemModel): PlaceListItemModel {
+        return databaseModel
     }
 }
