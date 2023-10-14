@@ -7,10 +7,10 @@ import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.data.core.instrument.InstrumentScaffoldModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.instrument.InstrumentRepository
-import ly.david.musicsearch.domain.instrument.InstrumentScaffoldModel
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -35,7 +35,7 @@ internal class InstrumentScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.relationsListRepository = repository
+        relationsList.entity = entity
     }
 
     fun loadDataForTab(

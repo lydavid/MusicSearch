@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
-import ly.david.musicsearch.domain.RelationsListRepository
 import ly.david.musicsearch.domain.paging.LookupEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.musicsearch.domain.relation.RelationRepository
@@ -72,10 +70,6 @@ class RelationsList(
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-
-    // TODO: we need a way to pass in different ways to call the lookup api
-    //  could we just do that in repository based on entity type?
-    lateinit var relationsListRepository: RelationsListRepository
     lateinit var entity: MusicBrainzEntity
 
     @OptIn(ExperimentalCoroutinesApi::class, ExperimentalPagingApi::class)

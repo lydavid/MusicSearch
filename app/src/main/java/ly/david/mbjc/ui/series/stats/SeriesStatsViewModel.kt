@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.mapLatest
-import ly.david.musicsearch.domain.relation.GetCountOfEachRelationshipTypeUseCase
+import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.ui.stats.Stats
 import org.koin.android.annotation.KoinViewModel
 

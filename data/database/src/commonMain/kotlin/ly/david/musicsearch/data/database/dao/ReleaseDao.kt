@@ -1,8 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.core.release.FormatTrackCount
-import ly.david.musicsearch.data.core.release.ReleaseForDetails
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.core.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.data.core.release.FormatTrackCount
+import ly.david.musicsearch.data.core.release.ReleaseScaffoldModel
+import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release
 
@@ -57,13 +59,13 @@ class ReleaseDao(
         transacter.deleteRelease(releaseId)
     }
 
-    fun getReleaseForDetails(releaseId: String): ReleaseForDetails? =
+    fun getReleaseForDetails(releaseId: String): ReleaseScaffoldModel? =
         transacter.getReleaseForDetails(
             releaseId = releaseId,
-            mapper = ::mapToReleaseForDetails,
+            mapper = ::toReleaseScaffoldModel,
         ).executeAsOneOrNull()
 
-    private fun mapToReleaseForDetails(
+    private fun toReleaseScaffoldModel(
         id: String,
         name: String,
         disambiguation: String,
@@ -82,22 +84,26 @@ class ReleaseDao(
         imageUrl: String?,
         releaseLength: Double?,
         hasNullLength: Boolean,
-    ) = ReleaseForDetails(
+    ) = ReleaseScaffoldModel(
         id = id,
         name = name,
         disambiguation = disambiguation,
         date = date,
         barcode = barcode,
-        asin = asin,
-        quality = quality,
-        countryCode = countryCode,
         status = status,
         statusId = statusId,
+        countryCode = countryCode,
         packaging = packaging,
         packagingId = packagingId,
-        script = script,
-        language = language,
-        coverArtCount = coverArtCount,
+        asin = asin,
+        quality = quality,
+        coverArtArchive = CoverArtArchiveUiModel(
+            count = coverArtCount,
+        ),
+        textRepresentation = TextRepresentationUiModel(
+            script = script,
+            language = language,
+        ),
         imageUrl = imageUrl,
         releaseLength = releaseLength?.toInt(),
         hasNullLength = hasNullLength,

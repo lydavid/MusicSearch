@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
-import ly.david.musicsearch.domain.releasegroup.ReleaseGroupScaffoldModel
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading

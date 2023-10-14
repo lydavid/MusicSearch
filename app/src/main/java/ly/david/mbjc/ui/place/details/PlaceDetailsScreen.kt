@@ -14,8 +14,8 @@ import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
-import ly.david.musicsearch.domain.place.CoordinatesUiModel
-import ly.david.musicsearch.domain.place.PlaceScaffoldModel
+import ly.david.musicsearch.data.core.place.CoordinatesUiModel
+import ly.david.musicsearch.data.core.place.PlaceScaffoldModel
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.place.CoordinateListItem

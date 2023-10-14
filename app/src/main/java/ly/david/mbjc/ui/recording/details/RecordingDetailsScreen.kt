@@ -10,7 +10,7 @@ import ly.david.musicsearch.data.core.common.ifNotNull
 import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
 import ly.david.musicsearch.data.core.common.toDisplayTime
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.recordng.RecordingScaffoldModel
+import ly.david.musicsearch.data.core.recording.RecordingScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading

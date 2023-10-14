@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForDetails
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForRelease
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupForRelease
+import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release_group
 
@@ -41,7 +41,7 @@ class ReleaseGroupDao(
         }
     }
 
-    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupForDetails? =
+    fun getReleaseGroupForDetails(releaseGroupId: String): ReleaseGroupScaffoldModel? =
         transacter.getReleaseGroupForDetails(
             releaseGroupId = releaseGroupId,
             mapper = ::mapToReleaseGroupForDetails,
@@ -55,11 +55,11 @@ class ReleaseGroupDao(
         primaryType: String?,
         secondaryTypes: List<String>?,
         thumbnailUrl: String?,
-    ) = ReleaseGroupForDetails(
+    ) = ReleaseGroupScaffoldModel(
         id = id,
         name = name,
-        disambiguation = disambiguation,
         firstReleaseDate = firstReleaseDate,
+        disambiguation = disambiguation,
         primaryType = primaryType,
         secondaryTypes = secondaryTypes,
         imageUrl = thumbnailUrl,

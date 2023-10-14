@@ -2,6 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
+import ly.david.musicsearch.data.core.work.WorkScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Work
 import lydavidmusicsearchdatadatabase.WorkQueries
@@ -35,7 +36,27 @@ class WorkDao(
         }
     }
 
-    fun getWork(workId: String): Work? {
-        return transacter.getWork(workId).executeAsOneOrNull()
+    fun getWork(workId: String): WorkScaffoldModel? {
+        return transacter.getWork(
+            workId,
+            mapper = ::toWorkScaffoldModel,
+        ).executeAsOneOrNull()
     }
+
+    private fun toWorkScaffoldModel(
+        id: String,
+        name: String,
+        disambiguation: String?,
+        type: String?,
+        type_id: String?,
+        language: String?,
+        iswcs: List<String>?,
+    ) = WorkScaffoldModel(
+        id = id,
+        name = name,
+        disambiguation = disambiguation,
+        type = type,
+        language = language,
+        iswcs = iswcs,
+    )
 }

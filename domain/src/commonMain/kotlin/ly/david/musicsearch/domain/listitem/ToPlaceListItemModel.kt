@@ -2,7 +2,7 @@ package ly.david.musicsearch.domain.listitem
 
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
-import ly.david.musicsearch.domain.place.CoordinatesUiModel
+import ly.david.musicsearch.data.core.place.CoordinatesUiModel
 import lydavidmusicsearchdatadatabase.Place
 
 fun Place.toPlaceListItemModel() = PlaceListItemModel(

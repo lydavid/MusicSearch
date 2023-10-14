@@ -1,0 +1,50 @@
+package ly.david.musicsearch.data.repository
+
+import ly.david.data.musicbrainz.RecordingMusicBrainzModel
+import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.recording.RecordingScaffoldModel
+import ly.david.musicsearch.data.database.dao.ArtistCreditDao
+import ly.david.musicsearch.data.database.dao.RecordingDao
+import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
+import ly.david.musicsearch.domain.recording.RecordingRepository
+import ly.david.musicsearch.domain.relation.RelationRepository
+
+class RecordingRepositoryImpl(
+    private val musicBrainzApi: MusicBrainzApi,
+    private val recordingDao: RecordingDao,
+    private val artistCreditDao: ArtistCreditDao,
+    private val relationRepository: RelationRepository,
+) : RecordingRepository {
+
+    override suspend fun lookupRecording(recordingId: String): RecordingScaffoldModel {
+        val recording = recordingDao.getRecording(recordingId)
+        val artistCreditNames = artistCreditDao.getArtistCreditNamesForEntity(recordingId)
+        val urlRelations = relationRepository.getEntityUrlRelationships(recordingId)
+        val hasUrlsBeenSavedForEntity = relationRepository.hasUrlsBeenSavedFor(recordingId)
+        if (recording != null &&
+            artistCreditNames.isNotEmpty() &&
+            hasUrlsBeenSavedForEntity
+        ) {
+            return recording.copy(
+                artistCredits = artistCreditNames.map { it.toArtistCreditUiModel() },
+                urls = urlRelations,
+            )
+        }
+
+        val recordingMusicBrainzModel = musicBrainzApi.lookupRecording(recordingId)
+        cache(recordingMusicBrainzModel)
+        return lookupRecording(recordingId)
+    }
+
+    private fun cache(recording: RecordingMusicBrainzModel) {
+        recordingDao.withTransaction {
+            recordingDao.insert(recording)
+
+            val relationWithOrderList = recording.relations.toRelationWithOrderList(recording.id)
+            relationRepository.insertAllUrlRelations(
+                entityId = recording.id,
+                relationWithOrderList = relationWithOrderList,
+            )
+        }
+    }
+}

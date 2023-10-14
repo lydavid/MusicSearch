@@ -9,9 +9,9 @@ import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.musicsearch.data.core.getNameWithDisambiguation
 import ly.david.musicsearch.data.core.history.LookupHistory
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.recording.RecordingScaffoldModel
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
-import ly.david.musicsearch.domain.recordng.RecordingRepository
-import ly.david.musicsearch.domain.recordng.RecordingScaffoldModel
+import ly.david.musicsearch.domain.recording.RecordingRepository
 import ly.david.ui.common.MusicBrainzEntityViewModel
 import ly.david.ui.common.paging.IRelationsList
 import ly.david.ui.common.paging.RelationsList
@@ -37,7 +37,7 @@ internal class RecordingScaffoldViewModel(
 
     init {
         relationsList.scope = viewModelScope
-        relationsList.relationsListRepository = repository
+        relationsList.entity = entity
     }
 
     fun loadDataForTab(

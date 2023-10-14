@@ -3,6 +3,7 @@ package ly.david.musicsearch.data.repository
 import app.cash.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
@@ -12,6 +13,7 @@ import ly.david.musicsearch.data.core.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao
+import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList
 import ly.david.musicsearch.domain.relation.RelationRepository
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType
 
@@ -48,7 +50,8 @@ class RelationRepositoryImpl(
 //            entityId = entityId,
 //            relationMusicBrainzModels = relationWithOrderList,
 //        )
-        val relationWithOrderList = lookupEntityWithRelations(entity, entityId)
+        val relationMusicBrainzModels = lookupEntityWithRelations(entity, entityId)
+        val relationWithOrderList = relationMusicBrainzModels.toRelationWithOrderList(entityId)
         insertRelations(entityId, relationWithOrderList)
         entityHasRelationsDao.markEntityHasRelationsStored(entityId)
     }
@@ -63,8 +66,8 @@ class RelationRepositoryImpl(
     private suspend fun lookupEntityWithRelations(
         entity: MusicBrainzEntity,
         entityId: String,
-    ): List<RelationWithOrder> {
-        when (entity) {
+    ): List<RelationMusicBrainzModel>? {
+        return when (entity) {
             MusicBrainzEntity.AREA -> {
                 musicBrainzApi.lookupArea(
                     areaId = entityId,
@@ -78,16 +81,61 @@ class RelationRepositoryImpl(
                 ).relations
             }
             MusicBrainzEntity.COLLECTION -> TODO()
-            MusicBrainzEntity.EVENT -> TODO()
+            MusicBrainzEntity.EVENT -> {
+                musicBrainzApi.lookupEvent(
+                    eventId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
             MusicBrainzEntity.GENRE -> TODO()
-            MusicBrainzEntity.INSTRUMENT -> TODO()
-            MusicBrainzEntity.LABEL -> TODO()
-            MusicBrainzEntity.PLACE -> TODO()
-            MusicBrainzEntity.RECORDING -> TODO()
-            MusicBrainzEntity.RELEASE -> TODO()
-            MusicBrainzEntity.RELEASE_GROUP -> TODO()
-            MusicBrainzEntity.SERIES -> TODO()
-            MusicBrainzEntity.WORK -> TODO()
+            MusicBrainzEntity.INSTRUMENT -> {
+                musicBrainzApi.lookupInstrument(
+                    instrumentId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.LABEL -> {
+                musicBrainzApi.lookupLabel(
+                    labelId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.PLACE -> {
+                musicBrainzApi.lookupPlace(
+                    placeId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_EVENTS_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.RECORDING -> {
+                musicBrainzApi.lookupRecording(
+                    recordingId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.RELEASE -> {
+                musicBrainzApi.lookupRelease(
+                    releaseId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.RELEASE_GROUP -> {
+                musicBrainzApi.lookupReleaseGroup(
+                    releaseGroupId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.SERIES -> {
+                musicBrainzApi.lookupSeries(
+                    seriesId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
+            MusicBrainzEntity.WORK -> {
+                musicBrainzApi.lookupWork(
+                    workId = entityId,
+                    include = LookupApi.INC_ALL_RELATIONS_EXCEPT_URLS,
+                ).relations
+            }
             MusicBrainzEntity.URL -> TODO()
         }
     }
