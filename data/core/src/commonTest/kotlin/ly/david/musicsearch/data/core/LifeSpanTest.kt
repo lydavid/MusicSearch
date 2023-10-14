@@ -1,7 +1,5 @@
-package ly.david.musicsearch.domain.common
+package ly.david.musicsearch.data.core
 
-import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.getLifeSpanForDisplay
 import org.junit.Assert
 import org.junit.Test
 

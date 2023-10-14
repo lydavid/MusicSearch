@@ -16,7 +16,7 @@ import ly.david.data.test.queenArtistCredit
 import ly.david.data.test.underPressure
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest
-import ly.david.musicsearch.domain.recordng.RecordingRepository
+import ly.david.musicsearch.domain.recording.RecordingRepository
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test
