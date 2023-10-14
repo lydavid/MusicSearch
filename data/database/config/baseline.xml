@@ -2,9 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): Relation?</ID>
-    <ID>LongMethod:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): Relation?</ID>
-    <ID>ReturnCount:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): Relation?</ID>
+    <ID>CyclomaticComplexMethod:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): RelationWithOrder?</ID>
+    <ID>LongMethod:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): RelationWithOrder?</ID>
+    <ID>ReturnCount:ToRelationDatabaseModel.kt$fun RelationMusicBrainzModel.toRelationDatabaseModel( entityId: String, order: Int, ): RelationWithOrder?</ID>
     <ID>SwallowedException:ArtistCreditDao.kt$ArtistCreditDao$ex: Exception</ID>
     <ID>SwallowedException:CollectionEntityDao.kt$CollectionEntityDao$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ArtistCreditDao.kt$ArtistCreditDao$ex: Exception</ID>
