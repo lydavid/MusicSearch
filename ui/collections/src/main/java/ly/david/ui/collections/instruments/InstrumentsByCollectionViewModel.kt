@@ -1,18 +1,16 @@
 package ly.david.ui.collections.instruments
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseInstrumentsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.InstrumentListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.InstrumentDao
-import ly.david.musicsearch.data.core.listitem.InstrumentListItemModel
-import ly.david.musicsearch.domain.listitem.toInstrumentListItemModel
 import ly.david.ui.common.instrument.InstrumentsPagedList
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
-import lydavidmusicsearchdatadatabase.Instrument
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class InstrumentsByCollectionViewModel(
     private val instrumentDao: InstrumentDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: InstrumentsPagedList,
-) : BrowseEntitiesByEntityViewModel<Instrument, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
+) : BrowseEntitiesByEntityViewModel<InstrumentListItemModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
     byEntity = MusicBrainzEntity.INSTRUMENT,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -53,13 +51,13 @@ internal class InstrumentsByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Instrument> =
+    ): PagingSource<Int, InstrumentListItemModel> =
         collectionEntityDao.getInstrumentsByCollection(
             collectionId = entityId,
             query = "%$query%"
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Instrument): InstrumentListItemModel {
-        return databaseModel.toInstrumentListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: InstrumentListItemModel): InstrumentListItemModel {
+        return databaseModel
     }
 }

@@ -1,18 +1,16 @@
 package ly.david.ui.collections.series
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.SeriesListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.SeriesDao
-import ly.david.musicsearch.data.core.listitem.SeriesListItemModel
-import ly.david.musicsearch.domain.listitem.toSeriesListItemModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.series.SeriesPagedList
-import lydavidmusicsearchdatadatabase.Series
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class SeriesByCollectionViewModel(
     private val seriesDao: SeriesDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: SeriesPagedList,
-) : BrowseEntitiesByEntityViewModel<Series, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
+) : BrowseEntitiesByEntityViewModel<SeriesListItemModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
     byEntity = MusicBrainzEntity.SERIES,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -55,13 +53,13 @@ internal class SeriesByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Series> =
+    ): PagingSource<Int, SeriesListItemModel> =
         collectionEntityDao.getSeriesByCollection(
             collectionId = entityId,
             query = "%$query%"
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Series): SeriesListItemModel {
-        return databaseModel.toSeriesListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: SeriesListItemModel): SeriesListItemModel {
+        return databaseModel
     }
 }

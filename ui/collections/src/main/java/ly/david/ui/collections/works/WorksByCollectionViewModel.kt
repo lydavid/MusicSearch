@@ -1,18 +1,16 @@
 package ly.david.ui.collections.works
 
 import androidx.paging.PagingSource
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseWorksResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.core.listitem.WorkListItemModel
+import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.WorkDao
-import ly.david.musicsearch.data.core.listitem.WorkListItemModel
-import ly.david.musicsearch.domain.listitem.toWorkListItemModel
 import ly.david.ui.common.paging.BrowseEntitiesByEntityViewModel
 import ly.david.ui.common.work.WorksPagedList
-import lydavidmusicsearchdatadatabase.Work
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -22,7 +20,7 @@ internal class WorksByCollectionViewModel(
     private val workDao: WorkDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: WorksPagedList,
-) : BrowseEntitiesByEntityViewModel<Work, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
+) : BrowseEntitiesByEntityViewModel<WorkListItemModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
     byEntity = MusicBrainzEntity.WORK,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList
@@ -55,13 +53,13 @@ internal class WorksByCollectionViewModel(
     override fun getLinkedEntitiesPagingSource(
         entityId: String,
         query: String,
-    ): PagingSource<Int, Work> =
+    ): PagingSource<Int, WorkListItemModel> =
         collectionEntityDao.getWorksByCollection(
             collectionId = entityId,
             query = "%$query%",
         )
 
-    override fun transformDatabaseToListItemModel(databaseModel: Work): WorkListItemModel {
-        return databaseModel.toWorkListItemModel()
+    override fun transformDatabaseToListItemModel(databaseModel: WorkListItemModel): WorkListItemModel {
+        return databaseModel
     }
 }

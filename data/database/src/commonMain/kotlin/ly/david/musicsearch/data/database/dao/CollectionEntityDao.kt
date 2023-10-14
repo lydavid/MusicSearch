@@ -6,24 +6,28 @@ import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.musicsearch.data.core.listitem.ArtistListItemModel
 import ly.david.musicsearch.data.core.listitem.EventListItemModel
+import ly.david.musicsearch.data.core.listitem.InstrumentListItemModel
+import ly.david.musicsearch.data.core.listitem.LabelListItemModel
 import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.data.core.listitem.SeriesListItemModel
+import ly.david.musicsearch.data.core.listitem.WorkListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToInstrumentListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToLabelListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToSeriesListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToWorkListItemModel
 import lydavidmusicsearchdatadatabase.Collection_entity
-import lydavidmusicsearchdatadatabase.Instrument
-import lydavidmusicsearchdatadatabase.Label
-import lydavidmusicsearchdatadatabase.Series
-import lydavidmusicsearchdatadatabase.Work
 
 class CollectionEntityDao(
     database: Database,
@@ -133,11 +137,10 @@ class CollectionEntityDao(
         )
     }
 
-    // TODO:
     fun getInstrumentsByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, Instrument> = QueryPagingSource(
+    ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfInstrumentsByCollection(
             collectionId = collectionId,
             query = query,
@@ -150,14 +153,14 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToInstrumentListItemModel,
         )
     }
 
-    // TODO:
     fun getLabelsByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, Label> = QueryPagingSource(
+    ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfLabelsByCollection(
             collectionId = collectionId,
             query = query,
@@ -170,6 +173,7 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToLabelListItemModel,
         )
     }
 
@@ -255,11 +259,10 @@ class CollectionEntityDao(
         )
     }
 
-    // TODO:
     fun getSeriesByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, Series> = QueryPagingSource(
+    ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfSeriesByCollection(
             collectionId = collectionId,
             query = query,
@@ -272,14 +275,14 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToSeriesListItemModel,
         )
     }
 
-    // TODO:
     fun getWorksByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, Work> = QueryPagingSource(
+    ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfWorksByCollection(
             collectionId = collectionId,
             query = query,
@@ -292,6 +295,7 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToWorkListItemModel,
         )
     }
 }

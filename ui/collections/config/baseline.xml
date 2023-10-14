@@ -2,9 +2,13 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>MaxLineLength:ArtistsByCollectionViewModel.kt$ArtistsByCollectionViewModel$)</ID>
+    <ID>MaxLineLength:EventsByCollectionViewModel.kt$EventsByCollectionViewModel$)</ID>
     <ID>MaxLineLength:InstrumentsByCollectionViewModel.kt$InstrumentsByCollectionViewModel$)</ID>
+    <ID>MaxLineLength:LabelsByCollectionViewModel.kt$LabelsByCollectionViewModel$)</ID>
     <ID>MaxLineLength:PlacesByCollectionViewModel.kt$PlacesByCollectionViewModel$)</ID>
     <ID>MaxLineLength:RecordingsByCollectionViewModel.kt$RecordingsByCollectionViewModel$)</ID>
+    <ID>MaxLineLength:SeriesByCollectionViewModel.kt$SeriesByCollectionViewModel$)</ID>
     <ID>ModifierMissing:CollectionBottomSheet.kt$CollectionBottomSheet</ID>
     <ID>ModifierMissing:CreateCollectionDialog.kt$CreateCollectionDialog</ID>
   </CurrentIssues>
