@@ -32,7 +32,16 @@ SELECT IFNULL(
 ) AS count;
 
 getEventsByPlace:
-SELECT e.*
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended
 FROM event e
 INNER JOIN event_place ep ON e.id = ep.event_id
 INNER JOIN place p ON p.id = ep.place_id

@@ -7,8 +7,9 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.data.core.listitem.EventListItemModel
 import ly.david.musicsearch.data.database.Database
-import lydavidmusicsearchdatadatabase.Event
+import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import lydavidmusicsearchdatadatabase.Event_place
 
 class EventPlaceDao(
@@ -58,7 +59,7 @@ class EventPlaceDao(
     fun getEventsByPlace(
         placeId: String,
         query: String,
-    ): PagingSource<Int, Event> = QueryPagingSource(
+    ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfEventsByPlace(
             placeId = placeId,
             query = query,
@@ -71,6 +72,7 @@ class EventPlaceDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToEventListItemModel,
         )
     }
 }

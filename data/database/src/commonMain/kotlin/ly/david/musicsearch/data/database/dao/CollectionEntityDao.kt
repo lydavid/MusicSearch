@@ -5,6 +5,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.musicsearch.data.core.listitem.ArtistListItemModel
+import ly.david.musicsearch.data.core.listitem.EventListItemModel
 import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
 import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
 import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
@@ -13,12 +14,12 @@ import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.mapper.mapToAreaListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToArtistListItemModel
+import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToPlaceListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToRecordingListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseGroupListItemModel
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Collection_entity
-import lydavidmusicsearchdatadatabase.Event
 import lydavidmusicsearchdatadatabase.Instrument
 import lydavidmusicsearchdatadatabase.Label
 import lydavidmusicsearchdatadatabase.Series
@@ -112,11 +113,10 @@ class CollectionEntityDao(
         )
     }
 
-    // TODO:
     fun getEventsByCollection(
         collectionId: String,
         query: String,
-    ): PagingSource<Int, Event> = QueryPagingSource(
+    ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfEventsByCollection(
             collectionId = collectionId,
             query = query,
@@ -129,6 +129,7 @@ class CollectionEntityDao(
             query = query,
             limit = limit,
             offset = offset,
+            mapper = ::mapToEventListItemModel,
         )
     }
 

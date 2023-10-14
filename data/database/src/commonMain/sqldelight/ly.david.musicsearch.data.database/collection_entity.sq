@@ -145,7 +145,16 @@ SELECT IFNULL(
 ) AS count;
 
 getEventsByCollection:
-SELECT e.*
+SELECT
+  e.id,
+  e.name,
+  e.disambiguation,
+  e.type,
+  e.time,
+  e.cancelled,
+  e.begin,
+  e.end,
+  e.ended
 FROM event e
 INNER JOIN collection_entity ce ON e.id = ce.entity_id
 INNER JOIN collection c ON c.id = ce.id
