@@ -39,7 +39,6 @@ include(
     ":core:preferences",
     ":data-android",
     ":data",
-    ":data:core",
     ":data:common:network",
     ":data:coverart",
     ":data:database",
