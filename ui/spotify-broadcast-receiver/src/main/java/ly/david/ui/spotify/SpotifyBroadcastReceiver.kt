@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 
 private object BroadcastTypes {
     private const val SPOTIFY_PACKAGE = "com.spotify.music"
@@ -31,18 +32,27 @@ internal fun SpotifyBroadcastReceiver(
         }
 
         val broadcast = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
+            override fun onReceive(
+                context: Context,
+                intent: Intent,
+            ) {
                 // This is sent with all broadcasts, regardless of type. The value is taken from
                 // System.currentTimeMillis(), which you can compare to in order to determine how
                 // old the event is.
-                val timeSentInMs = intent.getLongExtra("timeSent", 0L)
+                val timeSentInMs = intent.getLongExtra(
+                    "timeSent",
+                    0L,
+                )
                 when (intent.action) {
                     BroadcastTypes.METADATA_CHANGED -> {
                         val trackId = intent.getStringExtra("id")
                         val artistName = intent.getStringExtra("artist")
                         val albumName = intent.getStringExtra("album")
                         val trackName = intent.getStringExtra("track")
-                        val trackLengthInSec = intent.getIntExtra("length", 0)
+                        val trackLengthInSec = intent.getIntExtra(
+                            "length",
+                            0,
+                        )
                         onMetadataChange(
                             SpotifyMetadata(
                                 trackId = trackId,
@@ -66,7 +76,12 @@ internal fun SpotifyBroadcastReceiver(
             }
         }
 
-        context.registerReceiver(broadcast, intentFilter)
+        ContextCompat.registerReceiver(
+            context,
+            broadcast,
+            intentFilter,
+            ContextCompat.RECEIVER_EXPORTED,
+        )
 
         // When the effect leaves the Composition, remove the callback
         onDispose {

@@ -14,13 +14,14 @@ dependencies {
     implementation(projects.ui.core)
     implementation(projects.ui.common)
     implementation(projects.strings)
-    testImplementation(projects.ui.test.screenshot)
-
+    implementation(libs.androidx.core)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.preview)
+
     debugImplementation(libs.compose.ui.tooling)
 
+    testImplementation(projects.ui.test.screenshot)
     testImplementation(libs.test.parameter.injector)
 }
