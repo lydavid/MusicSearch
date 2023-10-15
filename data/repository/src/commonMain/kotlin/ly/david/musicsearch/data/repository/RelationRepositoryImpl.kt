@@ -9,7 +9,7 @@ import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.data.core.listitem.RelationWithOrder
+import ly.david.musicsearch.data.core.relation.RelationWithOrder
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao

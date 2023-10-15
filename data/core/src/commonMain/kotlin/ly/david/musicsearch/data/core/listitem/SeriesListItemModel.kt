@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Series
+import ly.david.musicsearch.data.core.series.Series
 
 data class SeriesListItemModel(
     override val id: String,

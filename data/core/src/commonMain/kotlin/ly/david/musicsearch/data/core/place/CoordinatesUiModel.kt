@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.place
 
-import ly.david.musicsearch.data.core.Coordinates
 import kotlin.math.abs
 
 data class CoordinatesUiModel(

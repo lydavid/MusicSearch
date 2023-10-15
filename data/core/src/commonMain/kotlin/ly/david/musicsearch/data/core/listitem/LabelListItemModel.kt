@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Label
+import ly.david.musicsearch.data.core.label.Label
 import ly.david.musicsearch.data.core.label.LabelWithCatalog
 
 data class LabelListItemModel(

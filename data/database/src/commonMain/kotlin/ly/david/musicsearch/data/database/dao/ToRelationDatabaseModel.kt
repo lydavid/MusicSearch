@@ -7,7 +7,7 @@ import ly.david.musicsearch.data.core.artist.getDisplayNames
 import ly.david.musicsearch.data.core.common.emptyToNull
 import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.data.core.getLifeSpanForDisplay
-import ly.david.musicsearch.data.core.listitem.RelationWithOrder
+import ly.david.musicsearch.data.core.relation.RelationWithOrder
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Relation
 import java.net.URLDecoder

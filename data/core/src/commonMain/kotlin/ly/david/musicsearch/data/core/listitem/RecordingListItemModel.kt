@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Recording
+import ly.david.musicsearch.data.core.recording.Recording
 
 data class RecordingListItemModel(
     override val id: String,

@@ -3,7 +3,7 @@ package ly.david.musicsearch.domain.relation
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.data.core.listitem.RelationWithOrder
+import ly.david.musicsearch.data.core.relation.RelationWithOrder
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.core.relation.RelationTypeCount
 

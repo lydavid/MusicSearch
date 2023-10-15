@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.work
 
 interface WorkAttribute {
     val type: String

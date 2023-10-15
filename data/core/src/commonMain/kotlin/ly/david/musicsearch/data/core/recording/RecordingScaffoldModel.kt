@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.recording
 
-import ly.david.musicsearch.data.core.Recording
 import ly.david.musicsearch.data.core.artist.ArtistCreditUiModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 

@@ -1,7 +1,7 @@
 package ly.david.data.musicbrainz
 
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.data.core.CoverArtArchive
+import ly.david.musicsearch.data.core.release.CoverArtArchive
 
 @Serializable
 data class CoverArtArchiveMusicBrainzModel(

@@ -1,4 +1,6 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.series
+
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 interface Series : NameWithDisambiguation {
     val id: String

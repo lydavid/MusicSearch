@@ -1,4 +1,6 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.recording
+
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 /**
  * Defines common properties between domain, network and persistence model.

@@ -1,4 +1,7 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.place
+
+import ly.david.musicsearch.data.core.LifeSpan
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 interface Place : NameWithDisambiguation {
     val id: String

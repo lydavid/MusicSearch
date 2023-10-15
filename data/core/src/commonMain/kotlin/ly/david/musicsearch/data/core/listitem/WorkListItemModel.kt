@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Work
+import ly.david.musicsearch.data.core.work.Work
 import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
 
 // TODO: map "qaa" to Artificial (Other), and rest from 3 letter code to full language name

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.internal
 
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.musicsearch.data.core.listitem.RelationWithOrder
+import ly.david.musicsearch.data.core.relation.RelationWithOrder
 import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
 
 internal fun List<RelationMusicBrainzModel>?.toRelationWithOrderList(

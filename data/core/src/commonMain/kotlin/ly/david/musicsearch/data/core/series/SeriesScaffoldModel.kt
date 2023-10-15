@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.series
 
-import ly.david.musicsearch.data.core.Series
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 
 data class SeriesScaffoldModel(

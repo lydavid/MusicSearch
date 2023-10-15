@@ -1,5 +1,6 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.relation
 
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 
 interface Relation : NameWithDisambiguation {

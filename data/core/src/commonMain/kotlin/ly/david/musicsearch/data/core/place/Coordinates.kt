@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.place
 
 interface Coordinates {
     val longitude: Double?

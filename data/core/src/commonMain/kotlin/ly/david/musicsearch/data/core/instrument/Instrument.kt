@@ -1,4 +1,6 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.instrument
+
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 interface Instrument : NameWithDisambiguation {
     val id: String

@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.instrument
 
-import ly.david.musicsearch.data.core.Instrument
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 
 data class InstrumentScaffoldModel(

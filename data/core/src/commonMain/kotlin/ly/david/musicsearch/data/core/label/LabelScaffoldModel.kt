@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.label
 
-import ly.david.musicsearch.data.core.Label
 import ly.david.musicsearch.data.core.LifeSpanUiModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 

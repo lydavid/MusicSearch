@@ -2,7 +2,7 @@ package ly.david.data.musicbrainz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.data.core.Track
+import ly.david.musicsearch.data.core.release.Track
 
 /**
  * A [Track] in [MediumMusicBrainzModel].

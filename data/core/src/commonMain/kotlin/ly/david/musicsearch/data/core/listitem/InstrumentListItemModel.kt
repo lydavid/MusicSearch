@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Instrument
+import ly.david.musicsearch.data.core.instrument.Instrument
 
 data class InstrumentListItemModel(
     override val id: String,

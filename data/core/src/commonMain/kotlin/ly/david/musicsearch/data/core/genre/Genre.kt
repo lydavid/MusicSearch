@@ -1,4 +1,6 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.genre
+
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 interface Genre : NameWithDisambiguation {
     val id: String

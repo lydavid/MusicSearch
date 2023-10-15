@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Relation
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.data.core.relation.Relation
 
 /**
  * @param id For reordering animation in a lazy list.
@@ -19,16 +19,4 @@ data class RelationListItemModel(
     override val attributes: String? = null,
     override val additionalInfo: String? = null,
     override val linkedEntity: MusicBrainzEntity,
-) : ListItemModel(), Relation
-
-data class RelationWithOrder(
-    override val id: String,
-    override val linkedEntityId: String,
-    override val label: String,
-    override val name: String,
-    override val disambiguation: String? = null,
-    override val attributes: String? = null,
-    override val additionalInfo: String? = null,
-    override val linkedEntity: MusicBrainzEntity,
-    val order: Int,
 ) : ListItemModel(), Relation

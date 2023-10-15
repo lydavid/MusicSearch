@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Coordinates
 import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.Place
+import ly.david.musicsearch.data.core.place.Coordinates
+import ly.david.musicsearch.data.core.place.Place
 
 data class PlaceListItemModel(
     override val id: String,

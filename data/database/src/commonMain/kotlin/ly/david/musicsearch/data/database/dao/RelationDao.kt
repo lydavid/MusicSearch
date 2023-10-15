@@ -7,7 +7,7 @@ import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.data.core.listitem.RelationWithOrder
+import ly.david.musicsearch.data.core.relation.RelationWithOrder
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.CountOfEachRelationshipType

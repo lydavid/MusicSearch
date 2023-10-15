@@ -1,7 +1,6 @@
 package ly.david.musicsearch.data.core.place
 
 import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.Place
 import ly.david.musicsearch.data.core.listitem.AreaListItemModel
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 

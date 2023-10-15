@@ -1,4 +1,6 @@
-package ly.david.musicsearch.data.core
+package ly.david.musicsearch.data.core.work
+
+import ly.david.musicsearch.data.core.NameWithDisambiguation
 
 interface Work : NameWithDisambiguation {
     val id: String

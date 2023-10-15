@@ -1,6 +1,5 @@
 package ly.david.musicsearch.data.core.work
 
-import ly.david.musicsearch.data.core.Work
 import ly.david.musicsearch.data.core.listitem.RelationListItemModel
 
 data class WorkScaffoldModel(

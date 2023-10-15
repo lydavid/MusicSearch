@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.core.listitem
 
-import ly.david.musicsearch.data.core.Track
+import ly.david.musicsearch.data.core.release.Track
 
 data class TrackListItemModel(
     override val id: String,
