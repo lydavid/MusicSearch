@@ -10,7 +10,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.data)
+    implementation(projects.data.core)
     implementation(projects.ui.common)
     implementation(projects.ui.core)
     implementation(projects.strings)

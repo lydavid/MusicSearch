@@ -11,7 +11,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.data)
+    implementation(projects.data.core)
     implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.common)

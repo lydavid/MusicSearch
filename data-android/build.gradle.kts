@@ -31,12 +31,12 @@ android {
             buildConfigField(
                 type = "String",
                 name = "SPOTIFY_CLIENT_ID",
-                value = "\"$spotifyClientId\""
+                value = "\"$spotifyClientId\"",
             )
             buildConfigField(
                 type = "String",
                 name = "SPOTIFY_CLIENT_SECRET",
-                value = "\"$spotifyClientSecret\""
+                value = "\"$spotifyClientSecret\"",
             )
 
             var musicBrainzClientId = project.properties["MUSICBRAINZ_CLIENT_ID"] as String?
@@ -60,12 +60,12 @@ android {
             buildConfigField(
                 type = "String",
                 name = "MUSICBRAINZ_CLIENT_ID",
-                value = "\"$musicBrainzClientId\""
+                value = "\"$musicBrainzClientId\"",
             )
             buildConfigField(
                 type = "String",
                 name = "MUSICBRAINZ_CLIENT_SECRET",
-                value = "\"$musicBrainzClientSecret\""
+                value = "\"$musicBrainzClientSecret\"",
             )
         }
         debug {
