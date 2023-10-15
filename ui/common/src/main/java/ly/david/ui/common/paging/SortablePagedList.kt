@@ -1,7 +1,7 @@
 package ly.david.ui.common.paging
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListItemModel
 
 interface SortablePagedList<LI : ListItemModel> : IPagedList<LI> {
     data class ViewModelState(

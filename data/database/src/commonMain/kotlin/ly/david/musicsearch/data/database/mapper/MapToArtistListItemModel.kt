@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.listitem.ArtistListItemModel
+import ly.david.musicsearch.core.models.LifeSpanUiModel
+import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 
 fun mapToArtistListItemModel(
     id: String,

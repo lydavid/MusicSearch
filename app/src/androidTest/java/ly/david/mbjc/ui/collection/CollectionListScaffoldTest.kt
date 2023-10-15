@@ -16,9 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.test.runTest
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUri
+import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.collections.CollectionListScaffold

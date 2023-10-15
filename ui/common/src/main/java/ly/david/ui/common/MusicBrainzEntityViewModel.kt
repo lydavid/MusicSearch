@@ -1,7 +1,7 @@
 package ly.david.ui.common
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 /**
  * Contract with generic properties that each MusicBrainz scaffold ViewModel should implement.

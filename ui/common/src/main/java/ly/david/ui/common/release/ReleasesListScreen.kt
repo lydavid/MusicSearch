@@ -12,9 +12,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.MutableStateFlow
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 import ly.david.ui.core.preview.DefaultPreviews
@@ -84,7 +84,7 @@ internal fun ReleasesListScreenInternal(
                                 requestForMissingCoverArtUrl(releaseListItemModel.id)
                             },
                         ) {
-                            onReleaseClick(MusicBrainzEntity.RELEASE, id, getNameWithDisambiguation())
+                            onReleaseClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RELEASE, id, getNameWithDisambiguation())
                         }
                     },
                     disable = onDeleteFromCollection == null,

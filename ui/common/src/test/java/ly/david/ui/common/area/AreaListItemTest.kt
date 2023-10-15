@@ -1,8 +1,8 @@
 package ly.david.ui.common.area
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.data.core.area.AreaType
-import ly.david.musicsearch.data.core.listitem.AreaListItemModel
+import ly.david.musicsearch.core.models.area.AreaType
+import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

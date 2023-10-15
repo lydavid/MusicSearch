@@ -1,6 +1,6 @@
 package ly.david.mbjc.ui.artist.releasegroups
 
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi

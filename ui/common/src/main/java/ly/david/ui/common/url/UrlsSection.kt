@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.RelationListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.relation.RelationListItem
 import ly.david.ui.core.preview.DefaultPreviews

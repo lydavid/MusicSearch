@@ -2,8 +2,8 @@ package ly.david.data.musicbrainz
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.data.core.NameWithDisambiguation
-import ly.david.musicsearch.data.core.release.Release
+import ly.david.musicsearch.core.models.NameWithDisambiguation
+import ly.david.musicsearch.core.models.release.Release
 
 @Serializable
 data class ReleaseMusicBrainzModel(

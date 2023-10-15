@@ -11,9 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.data.core.common.getTimeFormatted
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.LookupHistoryListItemModel
+import ly.david.musicsearch.core.models.common.getTimeFormatted
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.getDisplayText
 import ly.david.ui.common.getIcon

@@ -1,19 +1,19 @@
 package ly.david.musicsearch.domain
 
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.RESOURCE_AREA
-import ly.david.musicsearch.data.core.network.RESOURCE_ARTIST
-import ly.david.musicsearch.data.core.network.RESOURCE_EVENT
-import ly.david.musicsearch.data.core.network.RESOURCE_GENRE
-import ly.david.musicsearch.data.core.network.RESOURCE_INSTRUMENT
-import ly.david.musicsearch.data.core.network.RESOURCE_LABEL
-import ly.david.musicsearch.data.core.network.RESOURCE_PLACE
-import ly.david.musicsearch.data.core.network.RESOURCE_RECORDING
-import ly.david.musicsearch.data.core.network.RESOURCE_RELEASE
-import ly.david.musicsearch.data.core.network.RESOURCE_RELEASE_GROUP
-import ly.david.musicsearch.data.core.network.RESOURCE_SERIES
-import ly.david.musicsearch.data.core.network.RESOURCE_URL
-import ly.david.musicsearch.data.core.network.RESOURCE_WORK
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.RESOURCE_AREA
+import ly.david.musicsearch.core.models.network.RESOURCE_ARTIST
+import ly.david.musicsearch.core.models.network.RESOURCE_EVENT
+import ly.david.musicsearch.core.models.network.RESOURCE_GENRE
+import ly.david.musicsearch.core.models.network.RESOURCE_INSTRUMENT
+import ly.david.musicsearch.core.models.network.RESOURCE_LABEL
+import ly.david.musicsearch.core.models.network.RESOURCE_PLACE
+import ly.david.musicsearch.core.models.network.RESOURCE_RECORDING
+import ly.david.musicsearch.core.models.network.RESOURCE_RELEASE
+import ly.david.musicsearch.core.models.network.RESOURCE_RELEASE_GROUP
+import ly.david.musicsearch.core.models.network.RESOURCE_SERIES
+import ly.david.musicsearch.core.models.network.RESOURCE_URL
+import ly.david.musicsearch.core.models.network.RESOURCE_WORK
 
 private const val TOP_LEVEL_LOOKUP = "lookup"
 private const val TOP_LEVEL_HISTORY = "history"

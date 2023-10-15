@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.data.core.history.HistorySortOption
+import ly.david.musicsearch.core.models.history.HistorySortOption
 
 private const val THEME_KEY = "theme"
 private val THEME_PREFERENCE = stringPreferencesKey(THEME_KEY)

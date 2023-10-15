@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import kotlinx.collections.immutable.toImmutableList
 import ly.david.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.core.recording.RecordingScaffoldModel
+import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Recording
 

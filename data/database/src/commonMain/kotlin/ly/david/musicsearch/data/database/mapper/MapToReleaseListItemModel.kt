@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
-import ly.david.musicsearch.data.core.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
 
 // Although SQLDelight generates models for us, their types are based on the function names.
 internal fun mapToReleaseListItemModel(

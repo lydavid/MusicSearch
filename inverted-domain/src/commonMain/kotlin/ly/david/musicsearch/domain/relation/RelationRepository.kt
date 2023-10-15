@@ -2,10 +2,10 @@ package ly.david.musicsearch.domain.relation
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.data.core.relation.RelationWithOrder
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.relation.RelationTypeCount
+import ly.david.musicsearch.core.models.listitem.RelationListItemModel
+import ly.david.musicsearch.core.models.relation.RelationWithOrder
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.relation.RelationTypeCount
 
 interface RelationRepository {
     fun hasUrlsBeenSavedFor(entityId: String): Boolean

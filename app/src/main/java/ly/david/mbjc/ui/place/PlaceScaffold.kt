@@ -30,11 +30,11 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.ui.place.details.PlaceDetailsScreen
 import ly.david.mbjc.ui.place.events.EventsByPlaceScreen
 import ly.david.mbjc.ui.place.stats.PlaceStatsScreen
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen

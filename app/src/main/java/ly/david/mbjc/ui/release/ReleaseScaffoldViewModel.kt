@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.coverart.ReleaseImageRepository
-import ly.david.musicsearch.data.core.artist.getDisplayNames
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
-import ly.david.musicsearch.data.core.history.LookupHistory
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.artist.getDisplayNames
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 import ly.david.musicsearch.domain.history.usecase.IncrementLookupHistory
 import ly.david.musicsearch.domain.release.ReleaseRepository
 import ly.david.ui.common.MusicBrainzEntityViewModel

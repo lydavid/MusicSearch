@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.domain.release.usecase.GetTracksByRelease
 import org.koin.android.annotation.KoinViewModel
 

@@ -8,8 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import coil.Coil
 import coil.ImageLoaderFactory
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUri
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold

@@ -2,7 +2,7 @@ package ly.david.data.test
 
 import ly.david.data.musicbrainz.Direction
 import ly.david.data.musicbrainz.LabelInfo
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseEventMusicBrainzModel
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel

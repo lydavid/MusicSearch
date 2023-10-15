@@ -15,9 +15,9 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUri
-import ly.david.musicsearch.data.core.network.searchableEntities
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
+import ly.david.musicsearch.core.models.network.searchableEntities
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold

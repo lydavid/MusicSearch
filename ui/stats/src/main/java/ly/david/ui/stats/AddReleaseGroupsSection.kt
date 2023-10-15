@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupTypeCount
-import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
+import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.core.preview.DefaultPreviews

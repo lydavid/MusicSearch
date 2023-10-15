@@ -4,8 +4,8 @@ import androidx.paging.PagingSource
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseEventsResponse
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.EventPlaceDao

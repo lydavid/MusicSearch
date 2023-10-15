@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.listitem.SeriesListItemModel
+import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
 
 fun mapToSeriesListItemModel(
     id: String,

@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import ly.david.data.common.showMap
-import ly.david.musicsearch.data.core.place.CoordinatesUiModel
-import ly.david.musicsearch.data.core.place.formatForDisplay
+import ly.david.musicsearch.core.models.place.CoordinatesUiModel
+import ly.david.musicsearch.core.models.place.formatForDisplay
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

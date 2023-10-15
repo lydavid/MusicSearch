@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
 import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase

@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.map
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.api.LookupApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.data.core.relation.RelationWithOrder
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.relation.RelationTypeCount
+import ly.david.musicsearch.core.models.listitem.RelationListItemModel
+import ly.david.musicsearch.core.models.relation.RelationWithOrder
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.relation.RelationTypeCount
 import ly.david.musicsearch.data.database.dao.EntityHasRelationsDao
 import ly.david.musicsearch.data.database.dao.EntityHasUrlsDao
 import ly.david.musicsearch.data.database.dao.RelationDao

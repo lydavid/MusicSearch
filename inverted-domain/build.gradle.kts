@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.core.models)
                 implementation(projects.data.core)
 
                 implementation(compose.runtime)

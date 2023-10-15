@@ -2,8 +2,8 @@ package ly.david.musicsearch.domain.release
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
 
 interface ReleaseRepository {
     suspend fun lookupRelease(releaseId: String): ReleaseScaffoldModel

@@ -25,7 +25,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.ui.event.details.EventDetailsScreen
 import ly.david.mbjc.ui.event.stats.EventStatsScreen
 import ly.david.musicsearch.strings.LocalStrings

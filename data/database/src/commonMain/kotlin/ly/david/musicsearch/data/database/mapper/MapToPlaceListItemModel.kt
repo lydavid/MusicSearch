@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
-import ly.david.musicsearch.data.core.place.CoordinatesUiModel
+import ly.david.musicsearch.core.models.LifeSpanUiModel
+import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
+import ly.david.musicsearch.core.models.place.CoordinatesUiModel
 
 fun mapToPlaceListItemModel(
     id: String,

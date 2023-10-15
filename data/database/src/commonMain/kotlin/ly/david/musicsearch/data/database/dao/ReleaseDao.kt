@@ -1,10 +1,10 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.core.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.data.core.release.FormatTrackCount
-import ly.david.musicsearch.data.core.release.ReleaseScaffoldModel
-import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
+import ly.david.musicsearch.core.models.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.core.models.release.FormatTrackCount
+import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Release
 

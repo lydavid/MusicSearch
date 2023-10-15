@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
-import ly.david.musicsearch.data.core.artist.ArtistCreditUiModel
-import ly.david.musicsearch.data.core.artist.getDisplayNames
+import ly.david.musicsearch.core.models.artist.ArtistCreditUiModel
+import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import lydavidmusicsearchdatadatabase.Artist_credit_entity

@@ -16,7 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold

@@ -1,7 +1,7 @@
 package ly.david.data.test
 
 import ly.david.data.musicbrainz.CollectionMusicBrainzModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.api.BrowseCollectionsResponse
 
 val fakeAreaCollection = CollectionMusicBrainzModel(

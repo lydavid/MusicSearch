@@ -22,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.dialog.SimpleAlertDialog
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import ly.david.musicsearch.strings.LocalStrings

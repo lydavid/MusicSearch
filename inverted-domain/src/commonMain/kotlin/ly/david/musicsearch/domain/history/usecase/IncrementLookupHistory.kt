@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.history.usecase
 
-import ly.david.musicsearch.data.core.history.LookupHistory
+import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import org.koin.core.annotation.Single
 

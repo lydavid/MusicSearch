@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.core.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Instrument
 

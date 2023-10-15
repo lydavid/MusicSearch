@@ -8,7 +8,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.feature.search.internal.SearchScreen
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.ScrollableTopAppBar

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.domain.nowplaying.usecase.DeleteNowPlayingHistory
 import ly.david.musicsearch.domain.nowplaying.usecase.GetNowPlayingHistory
 import org.koin.android.annotation.KoinViewModel

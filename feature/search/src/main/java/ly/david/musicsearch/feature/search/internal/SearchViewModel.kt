@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.search.history.usecase.DeleteSearchHistory
 import ly.david.musicsearch.domain.search.history.usecase.GetSearchHistory
 import ly.david.musicsearch.domain.search.history.usecase.RecordSearchHistory

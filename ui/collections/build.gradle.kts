@@ -11,6 +11,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.models)
     implementation(projects.core.preferences)
     implementation(projects.data.core)
     implementation(projects.data.database) // TODO: remove dep

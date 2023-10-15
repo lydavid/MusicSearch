@@ -4,7 +4,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
 import ly.david.musicsearch.strings.AppStrings

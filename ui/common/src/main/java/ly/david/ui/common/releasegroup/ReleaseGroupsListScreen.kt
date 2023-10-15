@@ -7,11 +7,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.ListSeparator
-import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListSeparator
+import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
@@ -52,7 +52,7 @@ fun ReleaseGroupsListScreen(
                                 }
                             },
                         ) {
-                            onReleaseGroupClick(MusicBrainzEntity.RELEASE_GROUP, id, getNameWithDisambiguation())
+                            onReleaseGroupClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RELEASE_GROUP, id, getNameWithDisambiguation())
                         }
                     },
                     disable = onDeleteFromCollection == null,

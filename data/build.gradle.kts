@@ -4,6 +4,7 @@ plugins {
 
 // TODO: is this module needed? All it does is expose its submodules
 dependencies {
+    api(projects.core.models)
     api(projects.data.core)
     api(projects.data.common.network)
     api(projects.data.coverart)

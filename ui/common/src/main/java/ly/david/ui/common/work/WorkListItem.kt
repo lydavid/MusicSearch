@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import java.util.Locale
-import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.data.core.listitem.WorkListItemModel
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

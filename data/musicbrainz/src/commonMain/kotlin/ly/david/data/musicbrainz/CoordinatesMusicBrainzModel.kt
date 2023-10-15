@@ -1,7 +1,7 @@
 package ly.david.data.musicbrainz
 
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.data.core.place.Coordinates
+import ly.david.musicsearch.core.models.place.Coordinates
 
 @Serializable
 data class CoordinatesMusicBrainzModel(

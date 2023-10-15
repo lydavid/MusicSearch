@@ -2,7 +2,7 @@ package ly.david.musicsearch.domain.release.usecase
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.domain.release.ReleaseRepository
 import org.koin.core.annotation.Single
 

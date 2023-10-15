@@ -1,6 +1,6 @@
 package ly.david.musicsearch.domain.search.results.usecase
 
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.search.results.SearchResultsRepository
 import org.koin.core.annotation.Single
 

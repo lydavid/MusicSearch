@@ -1,7 +1,7 @@
 package ly.david.data.musicbrainz
 
-import ly.david.musicsearch.data.core.Identifiable
-import ly.david.musicsearch.data.core.NameWithDisambiguation
+import ly.david.musicsearch.core.models.Identifiable
+import ly.david.musicsearch.core.models.NameWithDisambiguation
 
 /**
  * Data that comes from MusicBrainz.

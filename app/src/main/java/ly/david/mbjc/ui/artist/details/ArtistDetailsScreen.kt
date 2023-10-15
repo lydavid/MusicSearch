@@ -9,10 +9,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.artist.ArtistScaffoldModel
-import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.LifeSpanUiModel
+import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.musicsearch.ui.image.LargeImage
 import ly.david.ui.common.listitem.LifeSpanText

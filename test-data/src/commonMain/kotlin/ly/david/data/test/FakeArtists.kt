@@ -1,6 +1,6 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.data.musicbrainz.ArtistCreditMusicBrainzModel
 import ly.david.data.musicbrainz.ArtistMusicBrainzModel
 import ly.david.data.musicbrainz.Direction

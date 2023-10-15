@@ -1,6 +1,6 @@
 package ly.david.data.musicbrainz
 
-import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 
 /**
  * Some [RelationMusicBrainzModel.attributes] such as "strings" does not have

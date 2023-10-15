@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.mapper
 
-import ly.david.musicsearch.data.core.listitem.InstrumentListItemModel
+import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
 
 fun mapToInstrumentListItemModel(
     id: String,

@@ -33,7 +33,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.EntityIcon
 import ly.david.ui.core.preview.DefaultPreviews

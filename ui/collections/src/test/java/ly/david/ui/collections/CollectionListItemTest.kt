@@ -2,8 +2,8 @@ package ly.david.ui.collections
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

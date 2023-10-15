@@ -1,7 +1,7 @@
 package ly.david.ui.common.release
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.data.core.listitem.TrackListItemModel
+import ly.david.musicsearch.core.models.listitem.TrackListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -11,9 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.instrument.InstrumentScaffoldModel
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.instrument.InstrumentScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading

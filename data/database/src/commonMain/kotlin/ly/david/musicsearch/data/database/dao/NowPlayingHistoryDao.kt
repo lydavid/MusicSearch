@@ -2,8 +2,8 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.musicsearch.data.core.CoroutineDispatchers
-import ly.david.musicsearch.data.core.history.NowPlayingHistory
+import ly.david.musicsearch.core.models.CoroutineDispatchers
+import ly.david.musicsearch.core.models.history.NowPlayingHistory
 import ly.david.musicsearch.data.database.Database
 
 class NowPlayingHistoryDao(

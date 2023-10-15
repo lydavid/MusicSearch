@@ -2,9 +2,9 @@ package ly.david.musicsearch.domain.history
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.core.history.HistorySortOption
-import ly.david.musicsearch.data.core.history.LookupHistory
-import ly.david.musicsearch.data.core.listitem.ListItemModel
+import ly.david.musicsearch.core.models.history.HistorySortOption
+import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.listitem.ListItemModel
 
 interface LookupHistoryRepository {
     fun upsert(lookupHistory: LookupHistory)

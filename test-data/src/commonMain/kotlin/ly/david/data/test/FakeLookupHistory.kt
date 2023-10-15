@@ -1,7 +1,7 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.core.history.LookupHistory
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.history.LookupHistory
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 val lookupHistory = LookupHistory(
     title = "欠けた心象、世のよすが",

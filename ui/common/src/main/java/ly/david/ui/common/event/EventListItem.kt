@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import ly.david.musicsearch.data.core.common.ifNotNull
-import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.data.core.getLifeSpanForDisplay
-import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
+import ly.david.musicsearch.core.models.common.ifNotNull
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.getLifeSpanForDisplay
+import ly.david.musicsearch.core.models.LifeSpanUiModel
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.ui.common.listitem.DisambiguationText
 import ly.david.ui.core.preview.DefaultPreviews
 import ly.david.ui.core.theme.PreviewTheme

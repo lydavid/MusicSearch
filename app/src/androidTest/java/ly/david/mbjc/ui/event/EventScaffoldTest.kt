@@ -4,7 +4,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.data.musicbrainz.EventMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.mbjc.MainActivityTest

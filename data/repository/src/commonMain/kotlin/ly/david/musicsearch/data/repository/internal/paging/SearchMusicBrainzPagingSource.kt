@@ -25,25 +25,25 @@ import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.DELAY_PAGED_API_CALLS_MS
 import ly.david.data.musicbrainz.api.STARTING_OFFSET
 import ly.david.data.musicbrainz.api.SearchApi
-import ly.david.musicsearch.data.core.LifeSpanUiModel
-import ly.david.musicsearch.data.core.artist.getDisplayNames
-import ly.david.musicsearch.data.core.listitem.AreaListItemModel
-import ly.david.musicsearch.data.core.listitem.ArtistListItemModel
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
-import ly.david.musicsearch.data.core.listitem.GenreListItemModel
-import ly.david.musicsearch.data.core.listitem.InstrumentListItemModel
-import ly.david.musicsearch.data.core.listitem.LabelListItemModel
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
-import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
-import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
-import ly.david.musicsearch.data.core.listitem.SeriesListItemModel
-import ly.david.musicsearch.data.core.listitem.WorkListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.release.CoverArtArchiveUiModel
-import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
-import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
+import ly.david.musicsearch.core.models.LifeSpanUiModel
+import ly.david.musicsearch.core.models.artist.getDisplayNames
+import ly.david.musicsearch.core.models.listitem.AreaListItemModel
+import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
+import ly.david.musicsearch.core.models.listitem.GenreListItemModel
+import ly.david.musicsearch.core.models.listitem.InstrumentListItemModel
+import ly.david.musicsearch.core.models.listitem.LabelListItemModel
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
+import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
+import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
+import ly.david.musicsearch.core.models.listitem.WorkListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.release.CoverArtArchiveUiModel
+import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
+import ly.david.musicsearch.core.models.work.WorkAttributeUiModel
 
 /**
  * This is not a [RemoteMediator] compared to [BrowseEntityRemoteMediator] and [LookupEntityRemoteMediator].

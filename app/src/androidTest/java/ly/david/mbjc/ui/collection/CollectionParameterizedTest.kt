@@ -19,9 +19,9 @@ import ly.david.data.test.toFakeMusicBrainzModel
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
 import ly.david.mbjc.ui.navigation.goToEntityScreen
-import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.collectableEntities
+import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.collectableEntities
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.collections.CollectionListScaffold

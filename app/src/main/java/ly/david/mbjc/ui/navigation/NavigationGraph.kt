@@ -10,10 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUri
-import ly.david.musicsearch.data.core.network.toMusicBrainzEntity
 import ly.david.mbjc.DEEP_LINK_SCHEMA
 import ly.david.mbjc.ui.area.AreaScaffold
 import ly.david.mbjc.ui.artist.ArtistScaffold
@@ -27,6 +23,10 @@ import ly.david.mbjc.ui.release.ReleaseScaffold
 import ly.david.mbjc.ui.releasegroup.ReleaseGroupScaffold
 import ly.david.mbjc.ui.series.SeriesScaffold
 import ly.david.mbjc.ui.work.WorkScaffold
+import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
+import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
 import ly.david.musicsearch.domain.Destination
 import ly.david.musicsearch.domain.toLookupDestination
 import ly.david.musicsearch.feature.search.SearchScaffold

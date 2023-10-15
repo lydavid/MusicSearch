@@ -6,8 +6,8 @@ import app.cash.sqldelight.coroutines.mapToOne
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.CoroutineDispatchers
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
+import ly.david.musicsearch.core.models.CoroutineDispatchers
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToEventListItemModel
 import lydavidmusicsearchdatadatabase.Event_place

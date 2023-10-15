@@ -9,18 +9,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import java.util.Locale
-import ly.david.musicsearch.data.core.area.AreaType.COUNTRY
-import ly.david.musicsearch.data.core.area.AreaType.WORLDWIDE
-import ly.david.musicsearch.data.core.common.UNKNOWN_TIME
-import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.data.core.common.toDisplayTime
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
-import ly.david.musicsearch.data.core.listitem.AreaListItemModel
-import ly.david.musicsearch.data.core.listitem.LabelListItemModel
-import ly.david.musicsearch.data.core.release.ReleaseScaffoldModel
-import ly.david.musicsearch.data.core.release.TextRepresentationUiModel
+import ly.david.musicsearch.core.models.area.AreaType.COUNTRY
+import ly.david.musicsearch.core.models.area.AreaType.WORLDWIDE
+import ly.david.musicsearch.core.models.common.UNKNOWN_TIME
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.common.toDisplayTime
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
+import ly.david.musicsearch.core.models.listitem.AreaListItemModel
+import ly.david.musicsearch.core.models.listitem.LabelListItemModel
+import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel
+import ly.david.musicsearch.core.models.release.TextRepresentationUiModel
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.label.LabelListItem
 import ly.david.ui.common.listitem.ListSeparatorHeader
@@ -166,7 +166,7 @@ internal fun ReleaseDetailsScreen(
                         LabelListItem(
                             label = label,
                             onLabelClick = {
-                                onItemClick(MusicBrainzEntity.LABEL, id, name)
+                                onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.LABEL, id, name)
                             },
                         )
                     }
@@ -181,7 +181,7 @@ internal fun ReleaseDetailsScreen(
                             area = area,
                             showType = false,
                             onAreaClick = {
-                                onItemClick(MusicBrainzEntity.AREA, id, name)
+                                onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.AREA, id, name)
                             },
                         )
                     }

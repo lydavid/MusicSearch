@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.ui.common.release.ReleasesListScreen
 import org.koin.androidx.compose.koinViewModel
 

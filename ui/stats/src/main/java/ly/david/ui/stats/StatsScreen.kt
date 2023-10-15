@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.relation.RelationTypeCount
-import ly.david.musicsearch.data.core.releasegroup.ReleaseGroupTypeCount
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.relation.RelationTypeCount
+import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.topappbar.Tab
 import ly.david.ui.core.preview.DefaultPreviews

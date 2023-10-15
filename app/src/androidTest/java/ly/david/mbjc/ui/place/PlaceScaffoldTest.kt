@@ -4,13 +4,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.test.fakeEvent
 import ly.david.data.test.fakePlaceWithAllData
 import ly.david.mbjc.MainActivityTest
 import ly.david.musicsearch.domain.place.PlaceRepository
-import ly.david.musicsearch.data.core.place.formatForDisplay
+import ly.david.musicsearch.core.models.place.formatForDisplay
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme
 import org.junit.Test

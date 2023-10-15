@@ -29,13 +29,13 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.mbjc.ui.area.details.AreaDetailsScreen
 import ly.david.mbjc.ui.area.places.PlacesByAreaScreen
 import ly.david.mbjc.ui.area.releases.ReleasesByAreaScreen
 import ly.david.mbjc.ui.area.stats.AreaStatsScreen
-import ly.david.musicsearch.data.core.listitem.PlaceListItemModel
-import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.listitem.PlaceListItemModel
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.fullscreen.DetailsWithErrorHandling
 import ly.david.ui.common.relation.RelationsScreen

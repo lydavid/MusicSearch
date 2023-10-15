@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ly.david.data.musicbrainz.LabelInfo
 import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.core.CoroutineDispatchers
-import ly.david.musicsearch.data.core.label.LabelWithCatalog
-import ly.david.musicsearch.data.core.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.CoroutineDispatchers
+import ly.david.musicsearch.core.models.label.LabelWithCatalog
+import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.data.database.Database
 import ly.david.musicsearch.data.database.mapper.mapToReleaseListItemModel
 import lydavidmusicsearchdatadatabase.Release_label

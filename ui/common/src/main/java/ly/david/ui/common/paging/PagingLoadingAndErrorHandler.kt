@@ -24,8 +24,8 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import ly.david.musicsearch.data.core.Identifiable
-import ly.david.musicsearch.data.core.listitem.Header
+import ly.david.musicsearch.core.models.Identifiable
+import ly.david.musicsearch.core.models.listitem.Header
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.button.RetryButton
 import ly.david.ui.common.fullscreen.FullScreenErrorWithRetry

@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository
 
 import ly.david.data.musicbrainz.PlaceMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.data.core.place.PlaceScaffoldModel
+import ly.david.musicsearch.core.models.place.PlaceScaffoldModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.PlaceDao

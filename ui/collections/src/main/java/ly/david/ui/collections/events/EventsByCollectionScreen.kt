@@ -8,9 +8,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.EventListItemModel
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.ui.common.event.EventListItem
 import ly.david.ui.common.listitem.SwipeToDeleteListItem
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler

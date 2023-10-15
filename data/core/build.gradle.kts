@@ -15,6 +15,7 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation(projects.core.models)
                 implementation(libs.junit)
                 implementation(libs.mockk)
             }

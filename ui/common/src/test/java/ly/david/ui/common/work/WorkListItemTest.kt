@@ -1,7 +1,7 @@
 package ly.david.ui.common.work
 
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import ly.david.musicsearch.data.core.listitem.WorkListItemModel
+import ly.david.musicsearch.core.models.listitem.WorkListItemModel
 import ly.david.ui.test.screenshot.ScreenshotTest
 import org.junit.Test
 import org.junit.runner.RunWith

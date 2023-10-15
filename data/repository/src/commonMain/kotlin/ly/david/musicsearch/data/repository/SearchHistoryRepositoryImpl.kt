@@ -5,11 +5,11 @@ import androidx.paging.PagingData
 import androidx.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.history.SearchHistory
-import ly.david.musicsearch.data.core.listitem.Header
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.SearchHistoryListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.history.SearchHistory
+import ly.david.musicsearch.core.models.listitem.Header
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.SearchHistoryListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.SearchHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.domain.search.history.SearchHistoryRepository

@@ -2,7 +2,7 @@ package ly.david.data.di.coroutines
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.musicsearch.data.core.CoroutineDispatchers
+import ly.david.musicsearch.core.models.CoroutineDispatchers
 import org.koin.dsl.module
 
 val coroutinesScopesModule = module {

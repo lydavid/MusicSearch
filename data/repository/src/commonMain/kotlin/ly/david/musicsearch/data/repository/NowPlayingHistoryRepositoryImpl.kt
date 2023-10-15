@@ -4,11 +4,11 @@ import androidx.paging.Pager
 import androidx.paging.insertSeparators
 import androidx.paging.map
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.common.getDateFormatted
-import ly.david.musicsearch.data.core.history.NowPlayingHistory
-import ly.david.musicsearch.data.core.listitem.ListSeparator
-import ly.david.musicsearch.data.core.listitem.NowPlayingHistoryListItemModel
-import ly.david.musicsearch.data.core.listitem.toNowPlayingHistoryListItemModel
+import ly.david.musicsearch.core.models.common.getDateFormatted
+import ly.david.musicsearch.core.models.history.NowPlayingHistory
+import ly.david.musicsearch.core.models.listitem.ListSeparator
+import ly.david.musicsearch.core.models.listitem.NowPlayingHistoryListItemModel
+import ly.david.musicsearch.core.models.listitem.toNowPlayingHistoryListItemModel
 import ly.david.musicsearch.data.database.dao.NowPlayingHistoryDao
 import ly.david.musicsearch.data.repository.internal.paging.CommonPagingConfig
 import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository

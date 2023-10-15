@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.adapter
 
 import app.cash.sqldelight.ColumnAdapter
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUri
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUri
 
 internal object MusicBrainzEntityStringColumnAdapter : ColumnAdapter<MusicBrainzEntity, String> {
     override fun decode(databaseValue: String): MusicBrainzEntity =

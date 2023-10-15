@@ -3,12 +3,12 @@ package ly.david.musicsearch.data.database.dao
 import ly.david.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.data.musicbrainz.getFormattedAttributesForDisplay
 import ly.david.data.musicbrainz.getHeader
-import ly.david.musicsearch.data.core.artist.getDisplayNames
-import ly.david.musicsearch.data.core.common.emptyToNull
-import ly.david.musicsearch.data.core.common.transformThisIfNotNullOrEmpty
-import ly.david.musicsearch.data.core.getLifeSpanForDisplay
-import ly.david.musicsearch.data.core.relation.RelationWithOrder
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.artist.getDisplayNames
+import ly.david.musicsearch.core.models.common.emptyToNull
+import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
+import ly.david.musicsearch.core.models.getLifeSpanForDisplay
+import ly.david.musicsearch.core.models.relation.RelationWithOrder
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import lydavidmusicsearchdatadatabase.Relation
 import java.net.URLDecoder
 

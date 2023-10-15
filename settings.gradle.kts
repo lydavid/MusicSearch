@@ -35,6 +35,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(
     ":app",
     ":desktop:app",
+    ":core:models",
     ":core:preferences",
     ":data-android",
     ":data",

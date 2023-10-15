@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.database.dao
 
 import ly.david.data.musicbrainz.SeriesMusicBrainzModel
-import ly.david.musicsearch.data.core.series.SeriesScaffoldModel
+import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Series
 import lydavidmusicsearchdatadatabase.SeriesQueries

@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.repository
 
 import ly.david.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi
-import ly.david.musicsearch.data.core.area.AreaScaffoldModel
+import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList

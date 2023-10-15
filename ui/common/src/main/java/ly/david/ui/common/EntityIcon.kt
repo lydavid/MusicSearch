@@ -3,7 +3,7 @@ package ly.david.ui.common
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 /**
  * An appropriate icon for a given [entity].

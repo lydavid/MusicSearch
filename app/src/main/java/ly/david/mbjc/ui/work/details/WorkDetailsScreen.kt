@@ -8,11 +8,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import java.util.Locale
-import ly.david.musicsearch.data.core.common.ifNotNullOrEmpty
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.RelationListItemModel
-import ly.david.musicsearch.data.core.work.WorkAttributeUiModel
-import ly.david.musicsearch.data.core.work.WorkScaffoldModel
+import ly.david.musicsearch.core.models.common.ifNotNullOrEmpty
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.RelationListItemModel
+import ly.david.musicsearch.core.models.work.WorkAttributeUiModel
+import ly.david.musicsearch.core.models.work.WorkScaffoldModel
 import ly.david.ui.common.listitem.ListSeparatorHeader
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.text.TextWithHeading

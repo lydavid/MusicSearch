@@ -14,9 +14,9 @@ import ly.david.data.common.network.RecoverableNetworkException
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
 import ly.david.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.network.resourceUriPlural
+import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.network.resourceUriPlural
 import ly.david.musicsearch.data.database.INSERTION_FAILED_DUE_TO_CONFLICT
 import ly.david.musicsearch.data.database.dao.CollectionDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao

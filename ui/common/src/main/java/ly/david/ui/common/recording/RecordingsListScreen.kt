@@ -7,9 +7,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import ly.david.musicsearch.data.core.getNameWithDisambiguation
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity
-import ly.david.musicsearch.data.core.listitem.RecordingListItemModel
+import ly.david.musicsearch.core.models.getNameWithDisambiguation
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -33,7 +33,7 @@ fun RecordingsListScreen(
                     recording = recordingListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onRecordingClick(MusicBrainzEntity.RECORDING, id, getNameWithDisambiguation())
+                    onRecordingClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RECORDING, id, getNameWithDisambiguation())
                 }
             }
             else -> {

@@ -14,10 +14,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.core.listitem.ListItemModel
-import ly.david.musicsearch.data.core.listitem.ListSeparator
-import ly.david.musicsearch.data.core.listitem.ReleaseGroupListItemModel
-import ly.david.musicsearch.data.core.releasegroup.getDisplayTypes
+import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.listitem.ListSeparator
+import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
+import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.domain.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.common.paging.BrowseSortableEntityUseCase

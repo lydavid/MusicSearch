@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
-import ly.david.musicsearch.data.core.listitem.CollectionListItemModel
+import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.domain.paging.BrowseEntityRemoteMediator
 import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
 import ly.david.ui.common.paging.IPagedList
