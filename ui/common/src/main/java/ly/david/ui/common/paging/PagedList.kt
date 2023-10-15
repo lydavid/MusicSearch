@@ -43,18 +43,6 @@ abstract class PagedList<LI : ListItemModel> : IPagedList<LI> {
     lateinit var scope: CoroutineScope
     lateinit var useCase: BrowseEntityUseCase<LI>
 
-    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<LI>(
-        getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
-        getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
-        deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
-        browseEntity = { offset ->
-            useCase.browseLinkedEntitiesAndStore(
-                entityId,
-                offset,
-            )
-        },
-    )
-
     @OptIn(
         ExperimentalPagingApi::class,
         ExperimentalCoroutinesApi::class,
@@ -77,4 +65,16 @@ abstract class PagedList<LI : ListItemModel> : IPagedList<LI> {
             .distinctUntilChanged()
             .cachedIn(scope)
     }
+
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<LI>(
+        getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
+        getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
+        deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
+        browseEntity = { offset ->
+            useCase.browseLinkedEntitiesAndStore(
+                entityId,
+                offset,
+            )
+        },
+    )
 }

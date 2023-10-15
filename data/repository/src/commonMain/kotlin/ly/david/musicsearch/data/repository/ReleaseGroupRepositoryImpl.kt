@@ -34,8 +34,8 @@ class ReleaseGroupRepositoryImpl(
     private val artistCreditDao: ArtistCreditDao,
     private val relationRepository: RelationRepository,
     private val browseEntityCountDao: BrowseEntityCountDao,
-    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val collectionEntityDao: CollectionEntityDao,
+    private val artistReleaseGroupDao: ArtistReleaseGroupDao,
 ) : ReleaseGroupRepository {
 
     override suspend fun lookupReleaseGroup(releaseGroupId: String): ReleaseGroupScaffoldModel {
@@ -130,53 +130,17 @@ class ReleaseGroupRepositoryImpl(
         },
     )
 
-    private suspend fun browseReleaseGroupsByEntity(
-        entityId: String,
-        entity: MusicBrainzEntity,
-        offset: Int,
-    ): BrowseReleaseGroupsResponse {
-        return when (entity) {
-            MusicBrainzEntity.ARTIST -> {
-                musicBrainzApi.browseReleaseGroupsByArtist(
-                    artistId = entityId,
-                    offset = offset,
-                )
-            }
+    private fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
+        browseEntityCountDao.getBrowseEntityCount(
+            entityId = entityId,
+            browseEntity = MusicBrainzEntity.RELEASE_GROUP,
+        )?.remoteCount
 
-            MusicBrainzEntity.COLLECTION -> {
-                musicBrainzApi.browseReleaseGroupsByCollection(
-                    collectionId = entityId,
-                    offset = offset,
-                )
-            }
-
-            else -> error("Release groups by $entity not supported.")
-        }
-    }
-
-    private fun insertAllLinkingModels(
-        entityId: String,
-        entity: MusicBrainzEntity,
-        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
-    ) {
-        when (entity) {
-            MusicBrainzEntity.ARTIST -> {
-                artistReleaseGroupDao.insertAll(
-                    artistId = entityId,
-                    releaseGroupIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
-                )
-            }
-
-            MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.insertAll(
-                    collectionId = entityId,
-                    entityIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
-                )
-            }
-
-            else -> {}
-        }
-    }
+    private fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int =
+        browseEntityCountDao.getBrowseEntityCount(
+            entityId = entityId,
+            browseEntity = MusicBrainzEntity.RELEASE_GROUP,
+        )?.localCount ?: 0
 
     private fun deleteLinkedEntitiesByEntity(
         entityId: String,
@@ -273,15 +237,51 @@ class ReleaseGroupRepositoryImpl(
         return releaseGroupMusicBrainzModels.size
     }
 
-    private fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseEntityCount(
-            entityId,
-            MusicBrainzEntity.RELEASE_GROUP,
-        )?.remoteCount
+    private suspend fun browseReleaseGroupsByEntity(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        offset: Int,
+    ): BrowseReleaseGroupsResponse {
+        return when (entity) {
+            MusicBrainzEntity.ARTIST -> {
+                musicBrainzApi.browseReleaseGroupsByArtist(
+                    artistId = entityId,
+                    offset = offset,
+                )
+            }
 
-    private fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int =
-        browseEntityCountDao.getBrowseEntityCount(
-            entityId,
-            MusicBrainzEntity.RELEASE_GROUP,
-        )?.localCount ?: 0
+            MusicBrainzEntity.COLLECTION -> {
+                musicBrainzApi.browseReleaseGroupsByCollection(
+                    collectionId = entityId,
+                    offset = offset,
+                )
+            }
+
+            else -> error("Release groups by $entity not supported.")
+        }
+    }
+
+    private fun insertAllLinkingModels(
+        entityId: String,
+        entity: MusicBrainzEntity,
+        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
+    ) {
+        when (entity) {
+            MusicBrainzEntity.ARTIST -> {
+                artistReleaseGroupDao.insertAll(
+                    artistId = entityId,
+                    releaseGroupIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
+                )
+            }
+
+            MusicBrainzEntity.COLLECTION -> {
+                collectionEntityDao.insertAll(
+                    collectionId = entityId,
+                    entityIds = releaseGroupMusicBrainzModels.map { releaseGroup -> releaseGroup.id },
+                )
+            }
+
+            else -> {}
+        }
+    }
 }
