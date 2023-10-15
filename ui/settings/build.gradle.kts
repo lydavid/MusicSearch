@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(projects.core.preferences)
+    implementation(projects.data.core)
     implementation(projects.data.musicbrainz) // TODO: remove after extracting MusicBrainzAuthStore
     implementation(projects.domain) // TODO: remove after extracting destination
     implementation(projects.invertedDomain)
