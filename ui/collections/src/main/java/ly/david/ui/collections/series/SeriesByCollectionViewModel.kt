@@ -20,7 +20,7 @@ internal class SeriesByCollectionViewModel(
     private val seriesDao: SeriesDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: SeriesPagedList,
-) : BrowseEntitiesByEntityViewModel<SeriesListItemModel, SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
+) : BrowseEntitiesByEntityViewModel<SeriesListItemModel, SeriesMusicBrainzModel, BrowseSeriesResponse>(
     byEntity = MusicBrainzEntity.SERIES,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -58,8 +58,4 @@ internal class SeriesByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: SeriesListItemModel): SeriesListItemModel {
-        return databaseModel
-    }
 }

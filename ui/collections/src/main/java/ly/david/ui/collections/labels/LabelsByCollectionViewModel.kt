@@ -20,7 +20,7 @@ internal class LabelsByCollectionViewModel(
     private val labelDao: LabelDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: LabelsPagedList,
-) : BrowseEntitiesByEntityViewModel<LabelListItemModel, LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
+) : BrowseEntitiesByEntityViewModel<LabelListItemModel, LabelMusicBrainzModel, BrowseLabelsResponse>(
     byEntity = MusicBrainzEntity.LABEL,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -56,8 +56,4 @@ internal class LabelsByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: LabelListItemModel): LabelListItemModel {
-        return databaseModel
-    }
 }

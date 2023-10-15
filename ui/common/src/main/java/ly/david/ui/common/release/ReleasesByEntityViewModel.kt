@@ -18,7 +18,7 @@ abstract class ReleasesByEntityViewModel(
     private val pagedList: ReleasesPagedList,
 ) : ViewModel(),
     IPagedList<ReleaseListItemModel> by pagedList,
-    BrowseEntityUseCase<ReleaseListItemModel, ReleaseListItemModel> {
+    BrowseEntityUseCase<ReleaseListItemModel> {
 
     init {
         pagedList.scope = viewModelScope
@@ -64,8 +64,4 @@ abstract class ReleasesByEntityViewModel(
 
     override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String) =
         browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE)?.localCount ?: 0
-
-    override fun transformDatabaseToListItemModel(databaseModel: ReleaseListItemModel): ReleaseListItemModel {
-        return databaseModel
-    }
 }

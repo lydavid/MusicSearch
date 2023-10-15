@@ -20,7 +20,7 @@ internal class WorksByCollectionViewModel(
     private val workDao: WorkDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: WorksPagedList,
-) : BrowseEntitiesByEntityViewModel<WorkListItemModel, WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
+) : BrowseEntitiesByEntityViewModel<WorkListItemModel, WorkMusicBrainzModel, BrowseWorksResponse>(
     byEntity = MusicBrainzEntity.WORK,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -58,8 +58,4 @@ internal class WorksByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: WorkListItemModel): WorkListItemModel {
-        return databaseModel
-    }
 }

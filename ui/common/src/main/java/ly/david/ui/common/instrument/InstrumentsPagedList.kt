@@ -5,4 +5,4 @@ import ly.david.ui.common.paging.PagedList
 import org.koin.core.annotation.Factory
 
 @Factory
-class InstrumentsPagedList : PagedList<InstrumentListItemModel, InstrumentListItemModel>()
+class InstrumentsPagedList : PagedList<InstrumentListItemModel>()

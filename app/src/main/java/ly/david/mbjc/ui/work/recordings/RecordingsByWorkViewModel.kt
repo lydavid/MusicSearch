@@ -20,7 +20,7 @@ internal class RecordingsByWorkViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val recordingDao: RecordingDao,
     pagedList: RecordingsPagedList,
-) : BrowseEntitiesByEntityViewModel<RecordingListItemModel, RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
+) : BrowseEntitiesByEntityViewModel<RecordingListItemModel, RecordingMusicBrainzModel, BrowseRecordingsResponse>(
     byEntity = MusicBrainzEntity.RECORDING,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -61,8 +61,4 @@ internal class RecordingsByWorkViewModel(
             workId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: RecordingListItemModel): RecordingListItemModel {
-        return databaseModel
-    }
 }

@@ -5,7 +5,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
-import androidx.paging.map
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +25,7 @@ import ly.david.musicsearch.domain.paging.MusicBrainzPagingConfig
  * Meant to be implemented by a ViewModel through delegation.
  * The ViewModel should should assign [scope] and [useCase] in its init block.
  */
-abstract class PagedList<DM : Any, LI : ListItemModel> : IPagedList<LI> {
+abstract class PagedList<LI : ListItemModel> : IPagedList<LI> {
 
     override val entityId: MutableStateFlow<String> = MutableStateFlow("")
     override val query: MutableStateFlow<String> = MutableStateFlow("")
@@ -36,9 +35,9 @@ abstract class PagedList<DM : Any, LI : ListItemModel> : IPagedList<LI> {
     }.distinctUntilChanged()
 
     lateinit var scope: CoroutineScope
-    lateinit var useCase: BrowseEntityUseCase<DM, LI>
+    lateinit var useCase: BrowseEntityUseCase<LI>
 
-    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<DM>(
+    private fun getRemoteMediator(entityId: String) = BrowseEntityRemoteMediator<LI>(
         getRemoteEntityCount = { useCase.getRemoteLinkedEntitiesCountByEntity(entityId) },
         getLocalEntityCount = { useCase.getLocalLinkedEntitiesCountByEntity(entityId) },
         deleteLocalEntity = { useCase.deleteLinkedEntitiesByEntity(entityId) },
@@ -57,9 +56,7 @@ abstract class PagedList<DM : Any, LI : ListItemModel> : IPagedList<LI> {
                 )
                     .flow
                     .map { pagingData ->
-                        pagingData.map {
-                            useCase.transformDatabaseToListItemModel(it)
-                        }.filter {
+                        pagingData.filter {
                             useCase.postFilter(it)
                         }
                     }

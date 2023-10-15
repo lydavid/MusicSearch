@@ -5,4 +5,4 @@ import ly.david.ui.common.paging.PagedList
 import org.koin.core.annotation.Factory
 
 @Factory
-class ArtistsPagedList : PagedList<ArtistListItemModel, ArtistListItemModel>()
+class ArtistsPagedList : PagedList<ArtistListItemModel>()

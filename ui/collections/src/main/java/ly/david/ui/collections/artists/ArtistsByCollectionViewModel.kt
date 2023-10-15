@@ -20,7 +20,7 @@ internal class ArtistsByCollectionViewModel(
     private val artistDao: ArtistDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: ArtistsPagedList,
-) : BrowseEntitiesByEntityViewModel<ArtistListItemModel, ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
+) : BrowseEntitiesByEntityViewModel<ArtistListItemModel, ArtistMusicBrainzModel, BrowseArtistsResponse>(
     byEntity = MusicBrainzEntity.ARTIST,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -56,8 +56,4 @@ internal class ArtistsByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: ArtistListItemModel): ArtistListItemModel {
-        return databaseModel
-    }
 }

@@ -20,7 +20,7 @@ internal class PlacesByAreaViewModel(
     private val browseEntityCountDao: BrowseEntityCountDao,
     private val placeDao: PlaceDao,
     pagedList: PlacesPagedList,
-) : BrowseEntitiesByEntityViewModel<PlaceListItemModel, PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
+) : BrowseEntitiesByEntityViewModel<PlaceListItemModel, PlaceMusicBrainzModel, BrowsePlacesResponse>(
     byEntity = MusicBrainzEntity.PLACE,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -56,8 +56,4 @@ internal class PlacesByAreaViewModel(
             areaId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: PlaceListItemModel): PlaceListItemModel {
-        return databaseModel
-    }
 }

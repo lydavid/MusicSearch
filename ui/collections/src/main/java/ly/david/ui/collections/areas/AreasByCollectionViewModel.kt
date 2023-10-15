@@ -20,7 +20,7 @@ internal class AreasByCollectionViewModel(
     private val areaDao: AreaDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: AreasPagedList,
-) : BrowseEntitiesByEntityViewModel<AreaListItemModel, AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
+) : BrowseEntitiesByEntityViewModel<AreaListItemModel, AreaMusicBrainzModel, BrowseAreasResponse>(
     byEntity = MusicBrainzEntity.AREA,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -56,9 +56,4 @@ internal class AreasByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    // TODO: remove transformDatabaseToListItemModel
-    override fun transformDatabaseToListItemModel(databaseModel: AreaListItemModel): AreaListItemModel {
-        return databaseModel
-    }
 }

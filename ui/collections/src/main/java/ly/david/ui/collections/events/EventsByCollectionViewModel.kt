@@ -20,7 +20,7 @@ internal class EventsByCollectionViewModel(
     private val eventDao: EventDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: EventsPagedList,
-) : BrowseEntitiesByEntityViewModel<EventListItemModel, EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
+) : BrowseEntitiesByEntityViewModel<EventListItemModel, EventMusicBrainzModel, BrowseEventsResponse>(
     byEntity = MusicBrainzEntity.EVENT,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -56,8 +56,4 @@ internal class EventsByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: EventListItemModel): EventListItemModel {
-        return databaseModel
-    }
 }

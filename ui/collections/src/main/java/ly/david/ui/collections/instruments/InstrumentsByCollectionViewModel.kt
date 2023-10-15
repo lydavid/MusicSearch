@@ -20,7 +20,7 @@ internal class InstrumentsByCollectionViewModel(
     private val instrumentDao: InstrumentDao,
     private val browseEntityCountDao: BrowseEntityCountDao,
     pagedList: InstrumentsPagedList,
-) : BrowseEntitiesByEntityViewModel<InstrumentListItemModel, InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
+) : BrowseEntitiesByEntityViewModel<InstrumentListItemModel, InstrumentMusicBrainzModel, BrowseInstrumentsResponse>(
     byEntity = MusicBrainzEntity.INSTRUMENT,
     browseEntityCountDao = browseEntityCountDao,
     pagedList = pagedList,
@@ -56,8 +56,4 @@ internal class InstrumentsByCollectionViewModel(
             collectionId = entityId,
             query = "%$query%",
         )
-
-    override fun transformDatabaseToListItemModel(databaseModel: InstrumentListItemModel): InstrumentListItemModel {
-        return databaseModel
-    }
 }
