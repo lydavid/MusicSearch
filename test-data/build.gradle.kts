@@ -8,7 +8,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.data.core)
                 implementation(projects.data.common.network)
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.coverart)

@@ -2,8 +2,6 @@ package ly.david.musicsearch.core.models.releasegroup
 
 import io.mockk.every
 import io.mockk.mockk
-import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypes
-import ly.david.musicsearch.core.models.releasegroup.getDisplayTypes
 import ly.david.musicsearch.core.models.network.NO_TYPE
 import org.junit.Assert.assertEquals
 import org.junit.Test

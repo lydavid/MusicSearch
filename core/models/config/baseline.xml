@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>MagicNumber:IntExt.kt$10</ID>
+    <ID>MagicNumber:StringExt.kt$0x1F1E6</ID>
+    <ID>MagicNumber:StringExt.kt$0x41</ID>
+    <ID>ReturnCount:StringExt.kt$fun String.toFlagEmoji(): String</ID>
+  </CurrentIssues>
+</SmellBaseline>

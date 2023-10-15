@@ -9,7 +9,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.data.core)
                 implementation(projects.data.common.network)
                 implementation(projects.data.coverart)
                 implementation(projects.data.database)

@@ -2,8 +2,6 @@ package ly.david.musicsearch.core.models
 
 import io.mockk.every
 import io.mockk.mockk
-import ly.david.musicsearch.core.models.NameWithDisambiguation
-import ly.david.musicsearch.core.models.getNameWithDisambiguation
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

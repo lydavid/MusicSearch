@@ -13,7 +13,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.data.core)
                 implementation(projects.ui.core)
                 implementation(compose.foundation)
                 implementation(compose.material3)

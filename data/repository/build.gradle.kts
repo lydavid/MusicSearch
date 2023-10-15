@@ -12,7 +12,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.data.core)
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.common.network)

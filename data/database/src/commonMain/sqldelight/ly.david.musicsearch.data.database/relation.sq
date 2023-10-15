@@ -1,5 +1,5 @@
 import kotlin.Int;
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity;
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity;
 
 CREATE TABLE IF NOT EXISTS relation (
   `entity_id` TEXT NOT NULL,

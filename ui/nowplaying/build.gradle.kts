@@ -12,7 +12,6 @@ android {
 
 dependencies {
     implementation(projects.core.models)
-    implementation(projects.data.core)
     implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.common)

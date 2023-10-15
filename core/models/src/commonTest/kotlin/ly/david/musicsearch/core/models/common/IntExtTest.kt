@@ -1,6 +1,5 @@
 package ly.david.musicsearch.core.models.common
 
-import ly.david.musicsearch.core.models.common.toDisplayTime
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

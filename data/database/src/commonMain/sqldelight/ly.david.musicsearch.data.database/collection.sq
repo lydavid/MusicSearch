@@ -1,6 +1,6 @@
 import kotlin.Boolean;
 import kotlin.Int;
-import ly.david.musicsearch.data.core.network.MusicBrainzEntity;
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity;
 
 CREATE TABLE IF NOT EXISTS collection (
   id TEXT PRIMARY KEY NOT NULL,

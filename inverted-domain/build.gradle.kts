@@ -9,7 +9,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.data.core)
 
                 implementation(compose.runtime)
                 implementation(libs.koin.annotations)
