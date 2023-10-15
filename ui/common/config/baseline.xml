@@ -2,8 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComplexCondition:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$sorted &amp;&amp; rg2 != null &amp;&amp; (rg1?.primaryType != rg2.primaryType || rg1?.secondaryTypes != rg2.secondaryTypes)</ID>
-    <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsPagedList.kt$ReleaseGroupsPagedList$(entityId, query, isRemote, sorted)</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsByEntityViewModel.kt$ReleaseGroupsByEntityViewModel$(entityId, query, isRemote, sorted)</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>

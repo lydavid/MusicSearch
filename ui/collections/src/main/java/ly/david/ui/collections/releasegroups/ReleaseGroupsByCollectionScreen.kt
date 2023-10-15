@@ -7,8 +7,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.ListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.releasegroup.ReleaseGroupsListScreen
 import ly.david.ui.common.rememberFlowWithLifecycleStarted
 import org.koin.androidx.compose.koinViewModel

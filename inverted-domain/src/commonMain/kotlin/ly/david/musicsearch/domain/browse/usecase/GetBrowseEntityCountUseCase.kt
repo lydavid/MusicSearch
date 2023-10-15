@@ -5,6 +5,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
 import org.koin.core.annotation.Single
 
+// TODO: if we exclusively use this in repository, then remove
 /**
  * Prefer to use [GetBrowseEntityCountFlowUseCase].
  */

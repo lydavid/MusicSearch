@@ -2,67 +2,59 @@ package ly.david.ui.common.releasegroup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.core.models.listitem.ListItemModel
-import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
-import ly.david.musicsearch.data.database.dao.ReleaseGroupDao
-import ly.david.ui.common.paging.BrowseSortableEntityUseCase
+import ly.david.musicsearch.domain.releasegroup.usecase.GetReleaseGroupsByEntity
 import ly.david.ui.common.paging.SortablePagedList
-import lydavidmusicsearchdatadatabase.Browse_entity_count
 
 abstract class ReleaseGroupsByEntityViewModel(
-    private val browseEntityCountDao: BrowseEntityCountDao,
-    private val releaseGroupDao: ReleaseGroupDao,
-    private val releaseGroupsPagedList: ReleaseGroupsPagedList,
+    private val entity: MusicBrainzEntity,
+    private val getReleaseGroupsByEntity: GetReleaseGroupsByEntity,
 ) : ViewModel(),
-    SortablePagedList<ListItemModel> by releaseGroupsPagedList,
-    BrowseSortableEntityUseCase<ReleaseGroupListItemModel> {
+    SortablePagedList<ListItemModel> {
 
-    init {
-        releaseGroupsPagedList.scope = viewModelScope
-        this.also { releaseGroupsPagedList.useCase = it }
-    }
+    override val entityId: MutableStateFlow<String> = MutableStateFlow("")
+    override val query: MutableStateFlow<String> = MutableStateFlow("")
+    override val isRemote: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    override val sorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val paramState = combine(
+        entityId,
+        query,
+        isRemote,
+        sorted,
+    ) { entityId, query, isRemote, sorted ->
+        SortablePagedList.ViewModelState(
+            entityId,
+            query,
+            isRemote,
+            sorted,
+        )
+    }.distinctUntilChanged()
 
-    abstract suspend fun browseReleaseGroupsByEntity(entityId: String, offset: Int): BrowseReleaseGroupsResponse
-
-    abstract suspend fun insertAllLinkingModels(
-        entityId: String,
-        releaseGroupMusicBrainzModels: List<ReleaseGroupMusicBrainzModel>,
+    @OptIn(
+        ExperimentalCoroutinesApi::class,
     )
-
-    override suspend fun browseLinkedEntitiesAndStore(entityId: String, nextOffset: Int): Int {
-        val response = browseReleaseGroupsByEntity(entityId, nextOffset)
-
-        if (response.offset == 0) {
-            browseEntityCountDao.insert(
-                browseEntityCount = Browse_entity_count(
-                    entity_id = entityId,
-                    browse_entity = MusicBrainzEntity.RELEASE_GROUP,
-                    local_count = response.musicBrainzModels.size,
-                    remote_count = response.count,
-                ),
-            )
-        } else {
-            browseEntityCountDao.incrementLocalCountForEntity(
-                entityId = entityId,
-                browseEntity = MusicBrainzEntity.RELEASE_GROUP,
-                additionalOffset = response.musicBrainzModels.size,
-            )
-        }
-
-        val releaseGroupMusicBrainzModels = response.musicBrainzModels
-        releaseGroupDao.insertAll(releaseGroupMusicBrainzModels)
-        insertAllLinkingModels(entityId, releaseGroupMusicBrainzModels)
-
-        return releaseGroupMusicBrainzModels.size
+    override val pagedEntities: Flow<PagingData<ListItemModel>> by lazy {
+        paramState.filterNot { it.entityId.isEmpty() }
+            .flatMapLatest { (entityId, query, isRemote, sorted) ->
+                getReleaseGroupsByEntity(
+                    entityId = entityId,
+                    entity = entity,
+                    query = query,
+                    isRemote = isRemote,
+                    sorted = sorted,
+                )
+            }
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
     }
-
-    override suspend fun getRemoteLinkedEntitiesCountByEntity(entityId: String): Int? =
-        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.remoteCount
-
-    override suspend fun getLocalLinkedEntitiesCountByEntity(entityId: String): Int =
-        browseEntityCountDao.getBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP)?.localCount ?: 0
 }
