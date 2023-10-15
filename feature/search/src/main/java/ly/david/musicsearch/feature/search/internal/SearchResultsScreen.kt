@@ -13,7 +13,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.listitem.ArtistListItemModel
 import ly.david.musicsearch.core.models.listitem.EndOfList
@@ -27,6 +26,7 @@ import ly.david.musicsearch.core.models.listitem.ReleaseGroupListItemModel
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.listitem.SeriesListItemModel
 import ly.david.musicsearch.core.models.listitem.WorkListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.area.AreaListItem
 import ly.david.ui.common.artist.ArtistListItem
@@ -59,38 +59,58 @@ internal fun SearchResultsScreen(
         when (listItemModel) {
             is ArtistListItemModel -> {
                 ArtistListItem(artist = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.ARTIST, id, null)
+                    onItemClick(MusicBrainzEntity.ARTIST, id, null)
                 }
             }
 
             is ReleaseGroupListItemModel -> {
                 // TODO: should see album type rather than year
                 ReleaseGroupListItem(releaseGroup = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RELEASE_GROUP, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.RELEASE_GROUP,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is ReleaseListItemModel -> {
                 ReleaseListItem(release = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RELEASE, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.RELEASE,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is RecordingListItemModel -> {
                 RecordingListItem(recording = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RECORDING, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.RECORDING,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is WorkListItemModel -> {
                 WorkListItem(work = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.WORK, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.WORK,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is AreaListItemModel -> {
                 AreaListItem(area = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.AREA, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.AREA,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
@@ -102,25 +122,41 @@ internal fun SearchResultsScreen(
 
             is InstrumentListItemModel -> {
                 InstrumentListItem(instrument = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.INSTRUMENT, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.INSTRUMENT,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is LabelListItemModel -> {
                 LabelListItem(label = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.LABEL, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.LABEL,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is EventListItemModel -> {
                 EventListItem(event = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.EVENT, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.EVENT,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 
             is SeriesListItemModel -> {
                 SeriesListItem(series = listItemModel) {
-                    onItemClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.SERIES, id, getNameWithDisambiguation())
+                    onItemClick(
+                        MusicBrainzEntity.SERIES,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
 

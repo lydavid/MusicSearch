@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.listitem.RecordingListItemModel
+import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.ui.common.paging.PagingLoadingAndErrorHandler
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -33,7 +33,11 @@ fun RecordingsListScreen(
                     recording = recordingListItemModel,
                     modifier = Modifier.animateItemPlacement(),
                 ) {
-                    onRecordingClick(ly.david.musicsearch.core.models.network.MusicBrainzEntity.RECORDING, id, getNameWithDisambiguation())
+                    onRecordingClick(
+                        MusicBrainzEntity.RECORDING,
+                        id,
+                        getNameWithDisambiguation(),
+                    )
                 }
             }
             else -> {
