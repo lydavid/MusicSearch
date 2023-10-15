@@ -12,7 +12,4 @@ interface StoreEntityUseCase {
 
 interface BrowseEntityUseCase<LI : ListItemModel> : StoreEntityUseCase {
     fun getLinkedEntitiesPagingSource(entityId: String, query: String): PagingSource<Int, LI>
-    fun postFilter(listItemModel: LI): Boolean {
-        return true
-    }
 }

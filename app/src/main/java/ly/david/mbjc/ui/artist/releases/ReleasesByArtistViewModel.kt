@@ -58,9 +58,4 @@ internal class ReleasesByArtistViewModel(
             artistId = entityId,
             query = "%$query%",
         )
-
-    // TODO: ideal for selecting labels. though where would those labels be shown?
-    override fun postFilter(listItemModel: ReleaseListItemModel): Boolean {
-        return true
-    }
 }
