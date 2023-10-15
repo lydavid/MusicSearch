@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.runTest
 import ly.david.data.test.lookupHistory
 import ly.david.mbjc.MainActivityTest
 import ly.david.mbjc.ui.TopLevelScaffold
-import ly.david.musicsearch.domain.Destination
+import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.domain.history.LookupHistoryRepository
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.core.theme.PreviewTheme

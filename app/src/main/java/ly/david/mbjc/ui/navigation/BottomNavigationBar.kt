@@ -11,7 +11,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import ly.david.musicsearch.domain.Destination
+import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
 

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.domain
+package ly.david.musicsearch.core.models.navigation
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -40,7 +40,7 @@ internal class RoutesTest {
     fun `get top-level destination of non-top-level route with destination`() {
         assertEquals(
             Destination.LOOKUP,
-            "${Destination.LOOKUP_RELEASE_GROUP.route}/123".getTopLevelRoute().getTopLevelDestination()
+            "${Destination.LOOKUP_RELEASE_GROUP.route}/123".getTopLevelRoute().getTopLevelDestination(),
         )
     }
 }

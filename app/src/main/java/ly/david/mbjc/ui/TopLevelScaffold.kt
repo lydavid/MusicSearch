@@ -29,9 +29,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.launch
 import ly.david.mbjc.ui.navigation.BottomNavigationBar
 import ly.david.mbjc.ui.navigation.NavigationGraph
-import ly.david.musicsearch.domain.Destination
-import ly.david.musicsearch.domain.getTopLevelDestination
-import ly.david.musicsearch.domain.getTopLevelRoute
+import ly.david.musicsearch.core.models.navigation.Destination
+import ly.david.musicsearch.core.models.navigation.getTopLevelDestination
+import ly.david.musicsearch.core.models.navigation.getTopLevelRoute
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.ui.collections.CollectionBottomSheet

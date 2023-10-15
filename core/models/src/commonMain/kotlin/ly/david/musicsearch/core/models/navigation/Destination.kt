@@ -1,4 +1,4 @@
-package ly.david.musicsearch.domain
+package ly.david.musicsearch.core.models.navigation
 
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.RESOURCE_AREA

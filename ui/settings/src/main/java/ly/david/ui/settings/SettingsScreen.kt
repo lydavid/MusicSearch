@@ -8,7 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ly.david.musicsearch.core.preferences.AppPreferences
-import ly.david.musicsearch.domain.Destination
+import ly.david.musicsearch.core.models.navigation.Destination
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.musicsearch.strings.LocalStrings
 import ly.david.ui.common.component.ClickableItem

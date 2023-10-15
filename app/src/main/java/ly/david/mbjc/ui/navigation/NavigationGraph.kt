@@ -27,8 +27,8 @@ import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.network.resourceUri
 import ly.david.musicsearch.core.models.network.toMusicBrainzEntity
-import ly.david.musicsearch.domain.Destination
-import ly.david.musicsearch.domain.toLookupDestination
+import ly.david.musicsearch.core.models.navigation.Destination
+import ly.david.musicsearch.core.models.navigation.toLookupDestination
 import ly.david.musicsearch.feature.search.SearchScaffold
 import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
