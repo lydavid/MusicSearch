@@ -4,6 +4,7 @@ import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import ly.david.musicsearch.data.core.CoroutineDispatchers
 import ly.david.musicsearch.data.core.history.SearchHistory
+import ly.david.musicsearch.data.core.listitem.SearchHistoryListItemModel
 import ly.david.musicsearch.data.core.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.Database
 
@@ -25,7 +26,7 @@ class SearchHistoryDao(
 
     fun getAllSearchHistory(
         entity: MusicBrainzEntity,
-    ): PagingSource<Int, SearchHistory> = QueryPagingSource(
+    ): PagingSource<Int, SearchHistoryListItemModel> = QueryPagingSource(
         countQuery = transacter.getAllSearchHistoryCount(
             entity = entity,
         ),
@@ -36,11 +37,11 @@ class SearchHistoryDao(
             entity = entity,
             limit = limit,
             offset = offset,
-            mapper = { entity, query, lastAccessed ->
-                SearchHistory(
-                    entity = entity,
+            mapper = { entity, query ->
+                SearchHistoryListItemModel(
+                    id = "${query}_$entity",
                     query = query,
-                    lastAccessed = lastAccessed,
+                    entity = entity,
                 )
             },
         )

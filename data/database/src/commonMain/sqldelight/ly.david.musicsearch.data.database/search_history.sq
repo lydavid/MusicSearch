@@ -28,7 +28,9 @@ FROM search_history
 WHERE entity = :entity;
 
 getAllSearchHistory:
-SELECT *
+SELECT
+  entity,
+  query
 FROM search_history
 WHERE entity = :entity
 ORDER BY last_accessed DESC
