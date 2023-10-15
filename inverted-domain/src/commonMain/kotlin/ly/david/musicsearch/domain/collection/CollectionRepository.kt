@@ -7,6 +7,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 
 interface CollectionRepository {
     fun observeAllCollections(
+        username: String,
         showLocal: Boolean,
         showRemote: Boolean,
         query: String,
