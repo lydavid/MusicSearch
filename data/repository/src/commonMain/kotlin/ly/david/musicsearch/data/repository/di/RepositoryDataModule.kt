@@ -12,12 +12,14 @@ import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
-import ly.david.musicsearch.data.repository.ReleaseGroupRepositoryImpl
-import ly.david.musicsearch.data.repository.ReleaseRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.SeriesRepositoryImpl
 import ly.david.musicsearch.data.repository.WorkRepositoryImpl
+import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
+import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
+import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupsByEntityRepositoryImpl
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
@@ -31,7 +33,9 @@ import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.musicsearch.domain.recording.RecordingRepository
 import ly.david.musicsearch.domain.relation.RelationRepository
 import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
 import ly.david.musicsearch.domain.releasegroup.ReleaseGroupRepository
+import ly.david.musicsearch.domain.releasegroup.ReleaseGroupsByEntityRepository
 import ly.david.musicsearch.domain.search.history.SearchHistoryRepository
 import ly.david.musicsearch.domain.search.results.SearchResultsRepository
 import ly.david.musicsearch.domain.series.SeriesRepository
@@ -54,7 +58,9 @@ val repositoryDataModule = module {
     singleOf(::RecordingRepositoryImpl) bind RecordingRepository::class
     singleOf(::RelationRepositoryImpl) bind RelationRepository::class
     singleOf(::ReleaseRepositoryImpl) bind ReleaseRepository::class
+    singleOf(::ReleasesByEntityRepositoryImpl) bind ReleasesByEntityRepository::class
     singleOf(::ReleaseGroupRepositoryImpl) bind ReleaseGroupRepository::class
+    singleOf(::ReleaseGroupsByEntityRepositoryImpl) bind ReleaseGroupsByEntityRepository::class
     singleOf(::SearchResultsRepositoryImpl) bind SearchResultsRepository::class
     singleOf(::SearchHistoryRepositoryImpl) bind SearchHistoryRepository::class
     singleOf(::SeriesRepositoryImpl) bind SeriesRepository::class

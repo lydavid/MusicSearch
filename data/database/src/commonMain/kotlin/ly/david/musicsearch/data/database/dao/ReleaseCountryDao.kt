@@ -103,14 +103,14 @@ class ReleaseCountryDao(
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByCountry(
             areaId = areaId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByCountry(
             areaId = areaId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToReleaseListItemModel,

@@ -1,22 +1,21 @@
 package ly.david.musicsearch.domain.release.usecase
 
+import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.release.ReleaseRepository
+import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
 import org.koin.core.annotation.Single
 
 @Single
 class GetReleasesByEntity(
-    private val releaseRepository: ReleaseRepository,
+    private val releasesByEntityRepository: ReleasesByEntityRepository,
 ) {
     operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity,
-        query: String,
-        isRemote: Boolean,
-    ) = releaseRepository.observeReleasesByEntity(
+        listFilters: ListFilters,
+    ) = releasesByEntityRepository.observeReleasesByEntity(
         entityId = entityId,
         entity = entity,
-        query = query,
-        isRemote = isRemote,
+        listFilters = listFilters,
     )
 }

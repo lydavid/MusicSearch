@@ -66,14 +66,14 @@ class RecordingReleaseDao(
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByRecording(
             recordingId = recordingId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByRecording(
             recordingId = recordingId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToReleaseListItemModel,

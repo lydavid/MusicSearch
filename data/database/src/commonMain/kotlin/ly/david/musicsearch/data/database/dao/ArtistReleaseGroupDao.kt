@@ -80,14 +80,14 @@ class ArtistReleaseGroupDao(
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleaseGroupsByArtist(
             artistId = artistId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleaseGroupsByArtist(
             artistId = artistId,
-            query = query,
+            query = "%$query%",
             sorted = sorted,
             limit = limit,
             offset = offset,

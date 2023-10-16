@@ -113,14 +113,14 @@ class ReleaseLabelDao(
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByLabel(
             labelId = labelId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByLabel(
             labelId = labelId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToReleaseListItemModel,

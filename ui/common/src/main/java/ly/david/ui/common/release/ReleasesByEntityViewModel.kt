@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapLatest
+import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.release.usecase.GetReleasesByEntity
@@ -45,8 +46,10 @@ abstract class ReleasesByEntityViewModel(
                 getReleasesByEntity(
                     entityId = entityId,
                     entity = entity,
-                    query = query,
-                    isRemote = isRemote,
+                    listFilters = ListFilters(
+                        query = query,
+                        isRemote = isRemote,
+                    ),
                 )
             }
             .distinctUntilChanged()

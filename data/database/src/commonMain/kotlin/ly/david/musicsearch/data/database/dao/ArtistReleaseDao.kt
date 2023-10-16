@@ -66,14 +66,14 @@ class ArtistReleaseDao(
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByArtist(
             artistId = artistId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByArtist(
             artistId = artistId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToReleaseListItemModel,

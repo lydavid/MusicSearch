@@ -514,10 +514,10 @@ interface BrowseApiImpl : BrowseApi {
 /**
  * Generic response fields from a Browse request.
  */
-interface Browsable<MM : MusicBrainzModel> {
+interface Browsable<MB : MusicBrainzModel> {
     val count: Int
     val offset: Int
-    val musicBrainzModels: List<MM>
+    val musicBrainzModels: List<MB>
 }
 
 @Serializable

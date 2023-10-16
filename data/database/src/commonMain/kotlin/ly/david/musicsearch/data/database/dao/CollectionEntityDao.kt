@@ -223,14 +223,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, ReleaseListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleasesByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleasesByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToReleaseListItemModel,
@@ -244,14 +244,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, ReleaseGroupListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfReleaseGroupsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getReleaseGroupsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             sorted = sorted,
             limit = limit,
             offset = offset,
