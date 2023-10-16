@@ -258,68 +258,39 @@ class ReleaseRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
-        when (entity) {
-            MusicBrainzEntity.AREA -> {
-                releaseCountryDao.withTransaction {
+        browseEntityCountDao.withTransaction {
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(
+                entityId = entityId,
+                browseEntity = MusicBrainzEntity.RELEASE,
+            )
+
+            when (entity) {
+                MusicBrainzEntity.AREA -> {
                     releaseCountryDao.deleteReleasesByCountry(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId = entityId,
-                        browseEntity = MusicBrainzEntity.RELEASE,
-                    )
                 }
-            }
 
-            MusicBrainzEntity.ARTIST -> {
-                artistReleaseDao.withTransaction {
+                MusicBrainzEntity.ARTIST -> {
                     artistReleaseDao.deleteReleasesByArtist(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE,
-                    )
                 }
-            }
 
-            MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.withTransaction {
+                MusicBrainzEntity.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE,
-                    )
                 }
-            }
 
-            MusicBrainzEntity.LABEL -> {
-                releaseLabelDao.withTransaction {
+                MusicBrainzEntity.LABEL -> {
                     releaseLabelDao.deleteReleasesByLabel(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE,
-                    )
                 }
-            }
 
-            MusicBrainzEntity.RECORDING -> {
-                recordingReleaseDao.withTransaction {
+                MusicBrainzEntity.RECORDING -> {
                     recordingReleaseDao.deleteReleasesByRecording(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE,
-                    )
                 }
-            }
 
-            MusicBrainzEntity.RELEASE_GROUP -> {
-                releaseReleaseGroupDao.withTransaction {
+                MusicBrainzEntity.RELEASE_GROUP -> {
                     releaseReleaseGroupDao.deleteReleasesByReleaseGroup(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE,
-                    )
                 }
-            }
 
-            else -> {}
+                else -> {}
+            }
         }
     }
 

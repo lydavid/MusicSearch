@@ -146,28 +146,23 @@ class ReleaseGroupRepositoryImpl(
         entityId: String,
         entity: MusicBrainzEntity,
     ) {
-        when (entity) {
-            MusicBrainzEntity.ARTIST -> {
-                artistReleaseGroupDao.withTransaction {
+        browseEntityCountDao.withTransaction {
+            browseEntityCountDao.deleteBrowseEntityCountByEntity(
+                entityId = entityId,
+                browseEntity = MusicBrainzEntity.RELEASE_GROUP,
+            )
+
+            when (entity) {
+                MusicBrainzEntity.ARTIST -> {
                     artistReleaseGroupDao.deleteReleaseGroupsByArtist(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE_GROUP,
-                    )
                 }
-            }
 
-            MusicBrainzEntity.COLLECTION -> {
-                collectionEntityDao.withTransaction {
+                MusicBrainzEntity.COLLECTION -> {
                     collectionEntityDao.deleteAllFromCollection(entityId)
-                    browseEntityCountDao.deleteBrowseEntityCountByEntity(
-                        entityId,
-                        MusicBrainzEntity.RELEASE_GROUP,
-                    )
                 }
-            }
 
-            else -> {}
+                else -> {}
+            }
         }
     }
 
