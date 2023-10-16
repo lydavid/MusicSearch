@@ -83,14 +83,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, AreaListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfAreasByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getAreasByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToAreaListItemModel,
@@ -103,14 +103,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, ArtistListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfArtistsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getArtistsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToArtistListItemModel,
@@ -123,14 +123,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfEventsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getEventsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToEventListItemModel,
@@ -143,14 +143,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, InstrumentListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfInstrumentsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getInstrumentsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToInstrumentListItemModel,
@@ -163,14 +163,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, LabelListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfLabelsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getLabelsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToLabelListItemModel,
@@ -183,14 +183,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfPlacesByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getPlacesByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToPlaceListItemModel,
@@ -203,14 +203,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, RecordingListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfRecordingsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getRecordingsByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToRecordingListItemModel,
@@ -265,14 +265,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, SeriesListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfSeriesByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getSeriesByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToSeriesListItemModel,
@@ -285,14 +285,14 @@ class CollectionEntityDao(
     ): PagingSource<Int, WorkListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfWorksByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getWorksByCollection(
             collectionId = collectionId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToWorkListItemModel,

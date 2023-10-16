@@ -54,6 +54,6 @@ internal class EventsByCollectionViewModel(
     ): PagingSource<Int, EventListItemModel> =
         collectionEntityDao.getEventsByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

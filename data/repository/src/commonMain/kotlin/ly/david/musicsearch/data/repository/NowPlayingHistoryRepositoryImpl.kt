@@ -25,7 +25,7 @@ class NowPlayingHistoryRepositoryImpl(
             config = CommonPagingConfig.pagingConfig,
             pagingSourceFactory = {
                 nowPlayingHistoryDao.getAllNowPlayingHistory(
-                    query = "%$query%",
+                    query = query,
                 )
             },
         ).flow.map { pagingData ->

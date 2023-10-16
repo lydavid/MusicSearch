@@ -54,6 +54,6 @@ internal class AreasByCollectionViewModel(
     ): PagingSource<Int, AreaListItemModel> =
         collectionEntityDao.getAreasByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

@@ -62,14 +62,14 @@ class EventPlaceDao(
     ): PagingSource<Int, EventListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfEventsByPlace(
             placeId = placeId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getEventsByPlace(
             placeId = placeId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToEventListItemModel,

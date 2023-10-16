@@ -54,6 +54,6 @@ internal class LabelsByCollectionViewModel(
     ): PagingSource<Int, LabelListItemModel> =
         collectionEntityDao.getLabelsByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

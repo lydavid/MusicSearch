@@ -54,6 +54,6 @@ internal class ArtistsByCollectionViewModel(
     ): PagingSource<Int, ArtistListItemModel> =
         collectionEntityDao.getArtistsByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

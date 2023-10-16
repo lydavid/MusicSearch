@@ -55,6 +55,6 @@ internal class EventsByPlaceViewModel(
     ): PagingSource<Int, EventListItemModel> =
         eventPlaceDao.getEventsByPlace(
             placeId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

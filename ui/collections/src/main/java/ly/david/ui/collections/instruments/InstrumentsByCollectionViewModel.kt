@@ -54,6 +54,6 @@ internal class InstrumentsByCollectionViewModel(
     ): PagingSource<Int, InstrumentListItemModel> =
         collectionEntityDao.getInstrumentsByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

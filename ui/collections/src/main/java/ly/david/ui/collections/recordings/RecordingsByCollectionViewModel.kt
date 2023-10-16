@@ -59,6 +59,6 @@ internal class RecordingsByCollectionViewModel(
     ): PagingSource<Int, RecordingListItemModel> =
         collectionEntityDao.getRecordingsByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

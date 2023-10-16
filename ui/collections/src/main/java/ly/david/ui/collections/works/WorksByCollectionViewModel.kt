@@ -56,6 +56,6 @@ internal class WorksByCollectionViewModel(
     ): PagingSource<Int, WorkListItemModel> =
         collectionEntityDao.getWorksByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

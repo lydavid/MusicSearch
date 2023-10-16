@@ -72,14 +72,14 @@ class AreaPlaceDao(
     ): PagingSource<Int, PlaceListItemModel> = QueryPagingSource(
         countQuery = transacter.getNumberOfPlacesByArea(
             areaId = areaId,
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getPlacesByArea(
             areaId = areaId,
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = ::mapToPlaceListItemModel,

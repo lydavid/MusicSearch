@@ -25,13 +25,13 @@ class NowPlayingHistoryDao(
         query: String,
     ): PagingSource<Int, NowPlayingHistory> = QueryPagingSource(
         countQuery = transacter.getAllNowPlayingHistoryCount(
-            query = query,
+            query = "%$query%",
         ),
         transacter = transacter,
         context = coroutineDispatchers.io,
     ) { limit, offset ->
         transacter.getAllNowPlayingHistory(
-            query = query,
+            query = "%$query%",
             limit = limit,
             offset = offset,
             mapper = { raw, lastPlayed ->

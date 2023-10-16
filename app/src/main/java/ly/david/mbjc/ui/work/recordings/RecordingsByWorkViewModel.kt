@@ -59,6 +59,6 @@ internal class RecordingsByWorkViewModel(
     ): PagingSource<Int, RecordingListItemModel> =
         recordingWorkDao.getRecordingsByWork(
             workId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

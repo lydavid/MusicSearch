@@ -54,6 +54,6 @@ internal class PlacesByAreaViewModel(
     ): PagingSource<Int, PlaceListItemModel> =
         areaPlaceDao.getPlacesByArea(
             areaId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

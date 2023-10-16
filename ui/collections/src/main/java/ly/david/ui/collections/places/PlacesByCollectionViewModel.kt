@@ -54,6 +54,6 @@ internal class PlacesByCollectionViewModel(
     ): PagingSource<Int, PlaceListItemModel> =
         collectionEntityDao.getPlacesByCollection(
             collectionId = entityId,
-            query = "%$query%",
+            query = query,
         )
 }

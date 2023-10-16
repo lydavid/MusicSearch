@@ -30,7 +30,7 @@ internal class NowPlayingViewModel(
     val nowPlayingHistory: Flow<PagingData<ListItemModel>> =
         query.flatMapLatest { query ->
             getNowPlayingHistory(
-                query = "%$query%",
+                query = query,
             )
         }
             .distinctUntilChanged()
