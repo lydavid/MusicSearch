@@ -15,36 +15,41 @@ import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.base.GetEntitiesByEntity
-import ly.david.ui.common.paging.SortablePagedList
 
 abstract class EntitiesByEntityViewModel<LI : ListItemModel>(
     private val entity: MusicBrainzEntity,
     private val getEntitiesByEntity: GetEntitiesByEntity<LI>,
-) : ViewModel(),
-    SortablePagedList<LI> {
+) : ViewModel() {
 
-    override val entityId: MutableStateFlow<String> = MutableStateFlow("")
-    override val query: MutableStateFlow<String> = MutableStateFlow("")
-    override val isRemote: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    override val sorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    data class ViewModelState(
+        val entityId: String = "",
+        val query: String = "",
+        val isRemote: Boolean = true,
+        val sorted: Boolean = false,
+    )
+
+    private val entityId: MutableStateFlow<String> = MutableStateFlow("")
+    private val query: MutableStateFlow<String> = MutableStateFlow("")
+    private val isRemote: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val sorted: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val paramState = combine(
         entityId,
         query,
         isRemote,
         sorted,
     ) { entityId, query, isRemote, sorted ->
-        SortablePagedList.ViewModelState(
-            entityId,
-            query,
-            isRemote,
-            sorted,
+        ViewModelState(
+            entityId = entityId,
+            query = query,
+            isRemote = isRemote,
+            sorted = sorted,
         )
     }.distinctUntilChanged()
 
     @OptIn(
         ExperimentalCoroutinesApi::class,
     )
-    override val pagedEntities: Flow<PagingData<LI>> by lazy {
+    val pagedEntities: Flow<PagingData<LI>> by lazy {
         paramState.filterNot { it.entityId.isEmpty() }
             .flatMapLatest { (entityId, query, isRemote, sorted) ->
                 getEntitiesByEntity(
@@ -59,5 +64,21 @@ abstract class EntitiesByEntityViewModel<LI : ListItemModel>(
             }
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
+    }
+
+    fun updateSorted(sorted: Boolean) {
+        this.sorted.value = sorted
+    }
+
+    fun loadPagedEntities(entityId: String) {
+        this.entityId.value = entityId
+    }
+
+    fun updateQuery(query: String) {
+        this.query.value = query
+    }
+
+    fun setRemote(isRemote: Boolean) {
+        this.isRemote.value = isRemote
     }
 }
