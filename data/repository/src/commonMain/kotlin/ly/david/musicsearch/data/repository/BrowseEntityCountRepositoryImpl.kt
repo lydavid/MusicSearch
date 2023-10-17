@@ -9,7 +9,7 @@ import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
 class BrowseEntityCountRepositoryImpl(
     private val browseEntityCountDao: BrowseEntityCountDao,
 ) : BrowseEntityCountRepository {
-    override fun getBrowseEntityCountFlow(entityId: String, entity: MusicBrainzEntity): Flow<BrowseEntityCount?> =
+    override fun observeBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): Flow<BrowseEntityCount?> =
         browseEntityCountDao.getBrowseEntityCountFlow(entityId, entity)
 
     override fun getBrowseEntityCount(entityId: String, entity: MusicBrainzEntity): BrowseEntityCount? =

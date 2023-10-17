@@ -7,11 +7,11 @@ import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
 import org.koin.core.annotation.Single
 
 @Single
-class GetBrowseEntityCountFlowUseCase(
+class ObserveBrowseEntityCount(
     private val browseEntityCountRepository: BrowseEntityCountRepository,
 ) {
     operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity,
-    ): Flow<BrowseEntityCount?> = browseEntityCountRepository.getBrowseEntityCountFlow(entityId, entity)
+    ): Flow<BrowseEntityCount?> = browseEntityCountRepository.observeBrowseEntityCount(entityId, entity)
 }

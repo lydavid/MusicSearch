@@ -9,7 +9,7 @@ import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupTypeCount
 import ly.david.musicsearch.data.database.dao.ArtistReleaseDao
 import ly.david.musicsearch.data.database.dao.ArtistReleaseGroupDao
-import ly.david.musicsearch.domain.browse.usecase.GetBrowseEntityCountFlowUseCase
+import ly.david.musicsearch.domain.browse.usecase.ObserveBrowseEntityCount
 import ly.david.musicsearch.domain.relation.usecase.GetCountOfEachRelationshipTypeUseCase
 import ly.david.ui.stats.ReleaseGroupStats
 import ly.david.ui.stats.ReleaseStats
@@ -19,14 +19,14 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 internal class ArtistStatsViewModel(
     private val getCountOfEachRelationshipTypeUseCase: GetCountOfEachRelationshipTypeUseCase,
-    private val getBrowseEntityCountFlowUseCase: GetBrowseEntityCountFlowUseCase,
+    private val observeBrowseEntityCount: ObserveBrowseEntityCount,
     private val artistReleaseGroupDao: ArtistReleaseGroupDao,
     private val artistReleaseDao: ArtistReleaseDao,
 ) : ViewModel() {
 
     private fun releaseStats(entityId: String): Flow<ReleaseStats> =
         combine(
-            getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RELEASE),
+            observeBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE),
             artistReleaseDao.getNumberOfReleasesByArtist(entityId),
         ) { browseReleaseCount, localReleases ->
             ReleaseStats(
@@ -37,7 +37,7 @@ internal class ArtistStatsViewModel(
 
     private fun releaseGroupStats(entityId: String): Flow<ReleaseGroupStats> =
         combine(
-            getBrowseEntityCountFlowUseCase(entityId, MusicBrainzEntity.RELEASE_GROUP),
+            observeBrowseEntityCount(entityId, MusicBrainzEntity.RELEASE_GROUP),
             artistReleaseGroupDao.getNumberOfReleaseGroupsByArtist(entityId),
             artistReleaseGroupDao.getCountOfEachAlbumType(entityId),
         ) { browseReleaseGroupCount, localReleaseGroups, releaseGroupTypeCount ->

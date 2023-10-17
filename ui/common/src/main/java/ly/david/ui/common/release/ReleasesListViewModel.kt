@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import ly.david.data.coverart.ReleaseImageRepository
 import org.koin.android.annotation.KoinViewModel
 
+// TODO: should not reference data
 @KoinViewModel
 class ReleasesListViewModel(
     private val releaseImageRepository: ReleaseImageRepository,
