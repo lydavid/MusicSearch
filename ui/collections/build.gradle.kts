@@ -13,7 +13,6 @@ android {
 dependencies {
     implementation(projects.core.models)
     implementation(projects.core.preferences)
-    implementation(projects.data.database) // TODO: remove dep
     implementation(projects.data.musicbrainz) // TODO: remove dep
     implementation(projects.invertedDomain)
     implementation(projects.strings)
