@@ -1,27 +1,28 @@
 package ly.david.musicsearch.data.repository.di
 
-import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
-import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
 import ly.david.musicsearch.data.repository.BrowseEntityCountRepositoryImpl
 import ly.david.musicsearch.data.repository.CollectionRepositoryImpl
-import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
-import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
-import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
 import ly.david.musicsearch.data.repository.LookupHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.NowPlayingHistoryRepositoryImpl
-import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
-import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
 import ly.david.musicsearch.data.repository.RelationRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
-import ly.david.musicsearch.data.repository.series.SeriesRepositoryImpl
-import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
+import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
+import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
+import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventsByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
+import ly.david.musicsearch.data.repository.label.LabelRepositoryImpl
+import ly.david.musicsearch.data.repository.place.PlaceRepositoryImpl
 import ly.david.musicsearch.data.repository.place.PlacesByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.recording.RecordingRepositoryImpl
+import ly.david.musicsearch.data.repository.recording.RecordingsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleaseRepositoryImpl
 import ly.david.musicsearch.data.repository.release.ReleasesByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupRepositoryImpl
 import ly.david.musicsearch.data.repository.releasegroup.ReleaseGroupsByEntityRepositoryImpl
+import ly.david.musicsearch.data.repository.series.SeriesRepositoryImpl
+import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
 import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
@@ -35,6 +36,7 @@ import ly.david.musicsearch.domain.nowplaying.NowPlayingHistoryRepository
 import ly.david.musicsearch.domain.place.PlaceRepository
 import ly.david.musicsearch.domain.place.PlacesByEntityRepository
 import ly.david.musicsearch.domain.recording.RecordingRepository
+import ly.david.musicsearch.domain.recording.RecordingsByEntityRepository
 import ly.david.musicsearch.domain.relation.RelationRepository
 import ly.david.musicsearch.domain.release.ReleaseRepository
 import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
@@ -62,6 +64,7 @@ val repositoryDataModule = module {
     singleOf(::PlaceRepositoryImpl) bind PlaceRepository::class
     singleOf(::PlacesByEntityRepositoryImpl) bind PlacesByEntityRepository::class
     singleOf(::RecordingRepositoryImpl) bind RecordingRepository::class
+    singleOf(::RecordingsByEntityRepositoryImpl) bind RecordingsByEntityRepository::class
     singleOf(::RelationRepositoryImpl) bind RelationRepository::class
     singleOf(::ReleaseRepositoryImpl) bind ReleaseRepository::class
     singleOf(::ReleasesByEntityRepositoryImpl) bind ReleasesByEntityRepository::class
