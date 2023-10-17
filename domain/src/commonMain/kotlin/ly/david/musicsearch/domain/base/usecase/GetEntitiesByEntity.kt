@@ -1,4 +1,4 @@
-package ly.david.musicsearch.domain.base
+package ly.david.musicsearch.domain.base.usecase
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow

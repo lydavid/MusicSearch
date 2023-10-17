@@ -3,7 +3,7 @@ package ly.david.musicsearch.domain.release.usecase
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.base.GetEntitiesByEntity
+import ly.david.musicsearch.domain.base.usecase.GetEntitiesByEntity
 import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
 import org.koin.core.annotation.Single
 

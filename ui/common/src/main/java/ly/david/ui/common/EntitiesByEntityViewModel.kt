@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.ListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.domain.base.GetEntitiesByEntity
+import ly.david.musicsearch.domain.base.usecase.GetEntitiesByEntity
 
 abstract class EntitiesByEntityViewModel<LI : ListItemModel>(
     private val entity: MusicBrainzEntity,
