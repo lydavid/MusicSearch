@@ -1,21 +1,21 @@
-package ly.david.musicsearch.domain.release.usecase
+package ly.david.musicsearch.domain.event.usecase
 
 import ly.david.musicsearch.core.models.ListFilters
-import ly.david.musicsearch.core.models.listitem.ReleaseListItemModel
+import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.domain.base.GetEntitiesByEntity
-import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
+import ly.david.musicsearch.domain.event.EventsByEntityRepository
 import org.koin.core.annotation.Single
 
 @Single
-class GetReleasesByEntity(
-    private val releasesByEntityRepository: ReleasesByEntityRepository,
-) : GetEntitiesByEntity<ReleaseListItemModel> {
+class GetEventsByEntity(
+    private val eventsByEntityRepository: EventsByEntityRepository,
+) : GetEntitiesByEntity<EventListItemModel> {
     override operator fun invoke(
         entityId: String,
         entity: MusicBrainzEntity,
         listFilters: ListFilters,
-    ) = releasesByEntityRepository.observeReleasesByEntity(
+    ) = eventsByEntityRepository.observeEventsByEntity(
         entityId = entityId,
         entity = entity,
         listFilters = listFilters,
