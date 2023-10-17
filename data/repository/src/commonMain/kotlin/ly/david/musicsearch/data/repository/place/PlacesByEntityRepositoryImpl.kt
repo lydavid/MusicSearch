@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.dao.AreaPlaceDao
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.PlaceDao
-import ly.david.musicsearch.data.repository.BrowseEntitiesByEntity
+import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.place.PlacesByEntityRepository
 
 class PlacesByEntityRepositoryImpl(

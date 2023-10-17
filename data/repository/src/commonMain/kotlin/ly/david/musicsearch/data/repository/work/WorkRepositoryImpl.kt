@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository
+package ly.david.musicsearch.data.repository.work
 
 import ly.david.data.musicbrainz.WorkMusicBrainzModel
 import ly.david.data.musicbrainz.api.MusicBrainzApi

@@ -13,7 +13,7 @@ import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao
 import ly.david.musicsearch.data.database.dao.CollectionEntityDao
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.database.dao.EventPlaceDao
-import ly.david.musicsearch.data.repository.BrowseEntitiesByEntity
+import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.event.EventsByEntityRepository
 
 class EventsByEntityRepositoryImpl(

@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.repository
+package ly.david.musicsearch.data.repository.base
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager

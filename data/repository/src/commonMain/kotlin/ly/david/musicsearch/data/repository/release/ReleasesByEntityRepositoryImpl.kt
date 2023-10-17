@@ -17,7 +17,7 @@ import ly.david.musicsearch.data.database.dao.ReleaseCountryDao
 import ly.david.musicsearch.data.database.dao.ReleaseDao
 import ly.david.musicsearch.data.database.dao.ReleaseLabelDao
 import ly.david.musicsearch.data.database.dao.ReleaseReleaseGroupDao
-import ly.david.musicsearch.data.repository.BrowseEntitiesByEntity
+import ly.david.musicsearch.data.repository.base.BrowseEntitiesByEntity
 import ly.david.musicsearch.domain.release.ReleasesByEntityRepository
 
 class ReleasesByEntityRepositoryImpl(
