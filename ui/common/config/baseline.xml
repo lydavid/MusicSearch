@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>DestructuringDeclarationWithTooManyEntries:ReleaseGroupsByEntityViewModel.kt$ReleaseGroupsByEntityViewModel$(entityId, query, isRemote, sorted)</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:EntitiesByEntityViewModel.kt$EntitiesByEntityViewModel$(entityId, query, isRemote, sorted)</ID>
     <ID>MagicNumber:DotsFlashing.kt$4</ID>
     <ID>TooGenericExceptionCaught:ReleaseGroupsListScreen.kt$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:ReleasesListScreen.kt$ex: Exception</ID>
