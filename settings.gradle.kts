@@ -45,7 +45,6 @@ include(
     ":data:musicbrainz",
     ":data:repository",
     ":data:spotify",
-    ":domain",
     ":inverted-domain",
     ":feature:search",
     ":strings",

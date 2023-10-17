@@ -15,7 +15,6 @@ dependencies {
     implementation(projects.core.preferences)
     implementation(projects.data.database) // TODO: remove dep
     implementation(projects.data.musicbrainz) // TODO: remove dep
-    implementation(projects.domain)
     implementation(projects.invertedDomain)
     implementation(projects.strings)
     implementation(projects.ui.common)
