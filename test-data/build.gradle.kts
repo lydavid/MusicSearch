@@ -12,7 +12,7 @@ kotlin {
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.coverart)
                 implementation(projects.data.spotify)
-                implementation(projects.invertedDomain)
+                implementation(projects.domain)
                 implementation(libs.koin.core)
             }
         }

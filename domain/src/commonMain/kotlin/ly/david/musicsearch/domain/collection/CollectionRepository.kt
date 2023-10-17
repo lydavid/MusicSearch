@@ -13,4 +13,6 @@ interface CollectionRepository {
         query: String,
         entity: MusicBrainzEntity?,
     ): Flow<PagingData<CollectionListItemModel>>
+
+    fun getCollection(entityId: String): CollectionListItemModel
 }

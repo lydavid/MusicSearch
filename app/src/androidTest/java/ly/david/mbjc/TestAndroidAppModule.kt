@@ -17,7 +17,7 @@ import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
-import ly.david.musicsearch.domain.InvertedDomainModule
+import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.collections.CollectionUiModule
@@ -50,7 +50,7 @@ val testAndroidAppModule = module {
         AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,
-        InvertedDomainModule().module,
+        DomainModule().module,
         historyUiModule,
         NowPlayingUiModule().module,
         SettingsUiModule().module,

@@ -15,7 +15,7 @@ kotlin {
                 implementation(projects.data.database)
                 implementation(projects.data.musicbrainz)
                 implementation(projects.data.common.network)
-                implementation(projects.invertedDomain)
+                implementation(projects.domain)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)
                 implementation(libs.paging.common)

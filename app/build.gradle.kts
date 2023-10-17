@@ -77,7 +77,7 @@ dependencies {
     implementation(projects.dataAndroid)
     implementation(projects.data.database)
     implementation(projects.data.repository)
-    implementation(projects.invertedDomain)
+    implementation(projects.domain)
     implementation(projects.feature.search)
     implementation(projects.strings)
     implementation(projects.ui.common)

@@ -109,4 +109,6 @@ class CollectionRepositoryImpl(
             collectionDao.deleteMusicBrainzCollections()
         }
     }
+
+    override fun getCollection(entityId: String): CollectionListItemModel = collectionDao.getCollection(entityId)
 }
