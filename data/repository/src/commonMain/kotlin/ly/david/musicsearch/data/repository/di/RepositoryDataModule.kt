@@ -9,6 +9,7 @@ import ly.david.musicsearch.data.repository.SearchHistoryRepositoryImpl
 import ly.david.musicsearch.data.repository.SearchResultsRepositoryImpl
 import ly.david.musicsearch.data.repository.area.AreaRepositoryImpl
 import ly.david.musicsearch.data.repository.artist.ArtistRepositoryImpl
+import ly.david.musicsearch.data.repository.artist.ArtistsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventRepositoryImpl
 import ly.david.musicsearch.data.repository.event.EventsByEntityRepositoryImpl
 import ly.david.musicsearch.data.repository.instrument.InstrumentRepositoryImpl
@@ -25,6 +26,7 @@ import ly.david.musicsearch.data.repository.series.SeriesRepositoryImpl
 import ly.david.musicsearch.data.repository.work.WorkRepositoryImpl
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.domain.artist.ArtistRepository
+import ly.david.musicsearch.domain.artist.ArtistsByEntityRepository
 import ly.david.musicsearch.domain.browse.BrowseEntityCountRepository
 import ly.david.musicsearch.domain.collection.CollectionRepository
 import ly.david.musicsearch.domain.event.EventRepository
@@ -53,6 +55,7 @@ import org.koin.dsl.module
 val repositoryDataModule = module {
     singleOf(::AreaRepositoryImpl) bind AreaRepository::class
     singleOf(::ArtistRepositoryImpl) bind ArtistRepository::class
+    singleOf(::ArtistsByEntityRepositoryImpl) bind ArtistsByEntityRepository::class
     singleOf(::BrowseEntityCountRepositoryImpl) bind BrowseEntityCountRepository::class
     singleOf(::CollectionRepositoryImpl) bind CollectionRepository::class
     singleOf(::EventRepositoryImpl) bind EventRepository::class
