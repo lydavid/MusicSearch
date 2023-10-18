@@ -1,10 +1,10 @@
-package ly.david.data.di.logging
+package ly.david.musicsearch.core.logging
 
-import ly.david.musicsearch.core.models.logging.Logger
+import org.koin.core.module.Module
 import org.koin.dsl.module
 import timber.log.Timber
 
-val loggingModule = module {
+actual val loggingModule: Module = module {
     single<Logger> {
         object : Logger {
             override fun d(text: String) {

@@ -18,6 +18,8 @@ import ly.david.musicsearch.core.preferences.AppPreferences
 import ly.david.musicsearch.domain.collection.usecase.GetAllCollections
 import org.koin.android.annotation.KoinViewModel
 
+// TODO: remove ref to MusicBrainzAuthStore
+//  logic should go through usecase
 @KoinViewModel
 class CollectionListViewModel(
     val appPreferences: AppPreferences,

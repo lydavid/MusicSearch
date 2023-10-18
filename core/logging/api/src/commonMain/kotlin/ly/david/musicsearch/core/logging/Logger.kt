@@ -1,4 +1,4 @@
-package ly.david.musicsearch.core.models.logging
+package ly.david.musicsearch.core.logging
 
 interface Logger {
     fun d(text: String)

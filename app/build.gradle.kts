@@ -73,6 +73,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.logging.implementation)
     implementation(projects.core.preferences)
     implementation(projects.dataAndroid)
     implementation(projects.data.database)

@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.core.logging.api)
                 implementation(projects.core.models)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)

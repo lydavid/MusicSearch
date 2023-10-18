@@ -4,13 +4,13 @@ import ly.david.data.coverart.CoverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutineDispatchersModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
-import ly.david.data.di.logging.loggingModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.network.networkModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.data.spotify.di.spotifyApiModule
 import ly.david.mbjc.di.appDataModule
+import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
 import ly.david.musicsearch.data.database.databaseDaoModule
