@@ -61,7 +61,7 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", versi
 desugarjdklibs = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.3" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version = "0.3.0" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.3.1" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "32.4.0" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
