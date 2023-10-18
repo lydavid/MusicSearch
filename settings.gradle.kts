@@ -33,7 +33,7 @@ rootProject.name = "MusicSearch"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
-    ":app",
+    ":android:app",
     ":desktop:app",
     ":core:logging:api",
     ":core:logging:implementation",
