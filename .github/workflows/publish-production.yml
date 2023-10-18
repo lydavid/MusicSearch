@@ -67,7 +67,7 @@ jobs:
 
       - name: Convert base64 to files
         run: |
-          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> app/google-services.json
+          echo "${{ secrets.GOOGLE_SERVICES_JSON_BASE64 }}" | base64 -d >> android/app/google-services.json
           echo "${{ secrets.RELEASE_KEYSTORE_JKS_BASE64 }}" | base64 -d >> release-keystore.jks
         shell: bash
 
@@ -88,8 +88,8 @@ jobs:
           serviceAccountJson: ${{ steps.auth.outputs.credentials_file_path }}
           packageName: io.github.lydavid.musicsearch
           track: production
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          mappingFile: app/build/outputs/mapping/release/mapping.txt
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          mappingFile: android/app/build/outputs/mapping/release/mapping.txt
 
       - name: Commit version code bump
         uses: stefanzweifel/git-auto-commit-action@v5.0.0
