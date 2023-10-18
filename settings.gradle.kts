@@ -34,6 +34,8 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
     ":android:app",
+    ":android:feature:nowplaying",
+    ":android:feature:spotify-broadcast-receiver",
     ":desktop:app",
     ":core:logging:api",
     ":core:logging:implementation",
@@ -56,10 +58,8 @@ include(
     ":ui:core",
     ":ui:history",
     ":ui:image",
-    ":ui:nowplaying",
     ":ui:test:image",
     ":ui:test:screenshot",
     ":ui:settings",
-    ":ui:spotify-broadcast-receiver",
     ":ui:stats",
 )

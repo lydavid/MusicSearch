@@ -73,6 +73,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.android.feature.nowplaying)
+    implementation(projects.android.feature.spotifyBroadcastReceiver)
     implementation(projects.core.logging.implementation)
     implementation(projects.core.preferences)
     implementation(projects.dataAndroid)
@@ -86,9 +88,7 @@ dependencies {
     implementation(projects.ui.collections)
     implementation(projects.ui.history)
     implementation(projects.ui.image)
-    implementation(projects.ui.nowplaying)
     implementation(projects.ui.settings)
-    implementation(projects.ui.spotifyBroadcastReceiver)
     implementation(projects.ui.stats)
     implementation(libs.accompanist.pager)
     implementation(libs.androidx.activity.compose)

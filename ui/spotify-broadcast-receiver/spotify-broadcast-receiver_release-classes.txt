@@ -1,9 +1,0 @@
-stable class SpotifyMetadata {
-  stable val trackId: String?
-  stable val artistName: String?
-  stable val albumName: String?
-  stable val trackName: String?
-  stable val trackLengthInSec: Int?
-  stable val timeSentInMs: Long?
-  <runtime stability> = Stable
-}
