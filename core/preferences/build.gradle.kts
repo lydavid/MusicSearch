@@ -9,6 +9,6 @@ android {
 
 dependencies {
     implementation(projects.core.models)
-    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.android)
     implementation(libs.koin.core)
 }

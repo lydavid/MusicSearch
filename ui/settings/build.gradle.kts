@@ -36,7 +36,6 @@ dependencies {
     implementation(projects.ui.core)
     implementation(libs.aboutlibraries.compose)
     implementation(libs.aboutlibraries.core)
-    implementation(libs.androidx.datastore.preferences)
     implementation(libs.appauth)
     implementation(libs.compose.foundation)
     implementation(libs.compose.material.icons.extended)

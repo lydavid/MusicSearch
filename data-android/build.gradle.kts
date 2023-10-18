@@ -89,7 +89,7 @@ dependencies {
     api(projects.data)
     testImplementation(projects.testData)
 
-    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.android)
     implementation(libs.androidx.paging.runtime)
 
     implementation(libs.appauth)

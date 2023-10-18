@@ -10,8 +10,10 @@ kotlin {
             dependencies {
                 implementation(projects.core.logging.api)
                 implementation(projects.core.models)
+                implementation(libs.androidx.datastore.preferences.core)
                 implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(project.dependencies.platform(libs.ktor.bom))
                 implementation(libs.ktor.client.auth)
                 implementation(libs.ktor.client.core)

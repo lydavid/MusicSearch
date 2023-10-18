@@ -9,6 +9,7 @@ compose-material = "1.5.4"
 compose-material3 = "1.1.2"
 compose-multiplatform = "1.5.3"
 compose-ui = "1.5.4"
+datastore = "1.0.0" # TODO: 1.1.0-alpha05 available but repository has jar rather than aar
 detekt = "1.23.1"
 hilt = "2.48"
 hilt-navigation = "1.0.0"
@@ -38,7 +39,8 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version = "2.2.0" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.0.1" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
-androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
+androidx-datastore-preferences-android = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+androidx-datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.6.2" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.4" }
 androidx-paging-common = { group = "androidx.paging", name = "paging-common-ktx", version.ref = "paging" }
@@ -73,6 +75,7 @@ koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref =
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.6" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version = "0.4.1" }
 ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }

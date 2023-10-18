@@ -21,11 +21,6 @@ plugins {
 }
 
 subprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     tasks.withType<KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")

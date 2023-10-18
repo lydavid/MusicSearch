@@ -92,7 +92,6 @@ dependencies {
     implementation(projects.ui.stats)
     implementation(libs.accompanist.pager)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.paging.compose)
