@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "ly.david.ui.nowplaying"
+    namespace = "ly.david.musicsearch.android.feature.nowplaying"
 }
 
 dependencies {

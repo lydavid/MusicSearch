@@ -34,10 +34,10 @@ import ly.david.ui.collections.CollectionListScaffold
 import ly.david.ui.collections.CollectionScaffold
 import ly.david.ui.history.DeleteHistoryDelegate
 import ly.david.ui.history.HistoryScaffold
-import ly.david.ui.nowplaying.NowPlayingHistoryScaffold
+import ly.david.musicsearch.android.feature.nowplaying.NowPlayingHistoryScaffold
 import ly.david.ui.settings.SettingsScaffold
 import ly.david.ui.settings.licenses.LicensesScaffold
-import ly.david.ui.spotify.SpotifyScaffold
+import ly.david.musicsearch.android.feature.spotify.SpotifyScaffold
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets

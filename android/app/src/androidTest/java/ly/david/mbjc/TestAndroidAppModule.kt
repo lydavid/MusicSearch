@@ -23,7 +23,7 @@ import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
 import ly.david.ui.history.di.historyUiModule
-import ly.david.ui.nowplaying.NowPlayingUiModule
+import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.ui.settings.SettingsUiModule
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
