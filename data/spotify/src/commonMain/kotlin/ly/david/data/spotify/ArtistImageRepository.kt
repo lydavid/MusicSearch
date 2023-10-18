@@ -1,17 +1,15 @@
-package ly.david.data.spotify.di
+package ly.david.data.spotify
 
 import io.ktor.client.plugins.ClientRequestException
-import ly.david.musicsearch.core.models.image.ImageUrlDao
-import ly.david.musicsearch.core.logging.Logger
 import ly.david.data.spotify.api.SpotifyApi
 import ly.david.data.spotify.api.getLargeImageUrl
 import ly.david.data.spotify.api.getThumbnailImageUrl
-import org.koin.core.annotation.Single
+import ly.david.musicsearch.core.models.image.ImageUrlDao
+import ly.david.musicsearch.core.logging.Logger
 
 /**
  * Logic to retrieve release cover art path.
  */
-@Single
 class ArtistImageRepository(
     private val spotifyApi: SpotifyApi,
     private val imageUrlDao: ImageUrlDao,

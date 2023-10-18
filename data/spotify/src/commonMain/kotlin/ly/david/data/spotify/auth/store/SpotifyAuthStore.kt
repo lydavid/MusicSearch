@@ -1,4 +1,4 @@
-package ly.david.data.spotify.api.auth
+package ly.david.data.spotify.auth.store
 
 interface SpotifyAuthStore {
     suspend fun saveAccessToken(accessToken: String)

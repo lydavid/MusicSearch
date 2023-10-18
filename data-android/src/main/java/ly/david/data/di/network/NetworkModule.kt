@@ -11,7 +11,6 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import java.io.File
 import ly.david.data.BuildConfig
 import ly.david.data.common.network.ApiHttpClient
 import ly.david.data.common.network.RecoverableNetworkException
@@ -22,6 +21,7 @@ import ly.david.data.spotify.api.SpotifyApi
 import okhttp3.Cache
 import org.koin.dsl.module
 import timber.log.Timber
+import java.io.File
 
 private suspend fun handleRecoverableException(exception: Throwable) {
     when (exception) {

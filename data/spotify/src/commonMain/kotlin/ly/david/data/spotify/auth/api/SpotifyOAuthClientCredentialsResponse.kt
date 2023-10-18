@@ -1,4 +1,4 @@
-package ly.david.data.spotify.api.auth
+package ly.david.data.spotify.auth.api
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

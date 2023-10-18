@@ -7,8 +7,8 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
-import ly.david.data.spotify.api.auth.SpotifyAuthStore
-import ly.david.data.spotify.api.auth.SpotifyOAuthApi
+import ly.david.data.spotify.auth.api.SpotifyOAuthApi
+import ly.david.data.spotify.auth.store.SpotifyAuthStore
 
 private const val BASE_URL = "https://api.spotify.com/v1/"
 private const val ARTISTS = "${BASE_URL}artists"

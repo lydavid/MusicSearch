@@ -5,7 +5,6 @@ import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
-import ly.david.data.spotify.di.SpotifyDataModule
 import ly.david.data.test.di.testNetworkModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
@@ -46,7 +45,6 @@ val testAndroidAppModule = module {
         repositoryDataModule,
         CoverArtDataModule().module,
         MusicBrainzDataModule().module,
-        SpotifyDataModule().module,
         AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,

@@ -1,11 +1,10 @@
-package ly.david.data.spotify.di
+package ly.david.data.spotify.auth.store
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
-import ly.david.data.spotify.api.auth.SpotifyAuthStore
 
 private val accessTokenPreference = stringPreferencesKey("SPOTIFY_ACCESS_TOKEN_KEY")
 
