@@ -1,7 +1,6 @@
 plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -11,7 +10,6 @@ kotlin {
                 implementation(projects.core.logging.api)
                 implementation(projects.core.models)
                 implementation(libs.androidx.datastore.preferences.core)
-                implementation(libs.koin.annotations)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project.dependencies.platform(libs.ktor.bom))
@@ -27,8 +25,4 @@ kotlin {
             }
         }
     }
-}
-
-dependencies {
-    add("kspJvm", libs.koin.ksp.compiler)
 }

@@ -1,6 +1,6 @@
 package ly.david.mbjc
 
-import ly.david.data.coverart.CoverArtDataModule
+import ly.david.data.coverart.di.coverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
@@ -11,6 +11,7 @@ import ly.david.mbjc.di.testCoroutineDispatchersModule
 import ly.david.mbjc.di.testDatabaseDriverModule
 import ly.david.mbjc.di.testImageModule
 import ly.david.mbjc.di.testPreferencesDataStoreModule
+import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.data.database.databaseDaoModule
@@ -22,7 +23,6 @@ import ly.david.musicsearch.strings.di.stringsModule
 import ly.david.ui.collections.CollectionUiModule
 import ly.david.ui.common.CommonUiModule
 import ly.david.ui.history.di.historyUiModule
-import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.ui.settings.SettingsUiModule
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
@@ -43,7 +43,7 @@ val testAndroidAppModule = module {
         loggingModule,
         musicBrainzAuthModule,
         repositoryDataModule,
-        CoverArtDataModule().module,
+        coverArtDataModule,
         MusicBrainzDataModule().module,
         AuthStoreModule().module,
         CollectionUiModule().module,

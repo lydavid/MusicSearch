@@ -73,12 +73,6 @@ val networkModule = module {
     }
 
     single {
-        CoverArtArchiveApi.create(
-            httpClient = get(),
-        )
-    }
-
-    single {
         MusicBrainzOAuthApi.create(
             httpClient = get(),
         )
