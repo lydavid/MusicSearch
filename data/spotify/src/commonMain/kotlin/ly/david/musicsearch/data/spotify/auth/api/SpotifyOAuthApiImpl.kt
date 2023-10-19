@@ -1,4 +1,4 @@
-package ly.david.data.spotify.auth.api
+package ly.david.musicsearch.data.spotify.auth.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

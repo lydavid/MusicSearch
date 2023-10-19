@@ -14,10 +14,9 @@ import io.ktor.http.HttpStatusCode
 import ly.david.data.BuildConfig
 import ly.david.data.common.network.ApiHttpClient
 import ly.david.data.common.network.RecoverableNetworkException
-import ly.david.data.coverart.api.CoverArtArchiveApi
 import ly.david.data.musicbrainz.api.MusicBrainzApi
 import ly.david.data.musicbrainz.api.MusicBrainzOAuthApi
-import ly.david.data.spotify.api.SpotifyApi
+import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import okhttp3.Cache
 import org.koin.dsl.module
 import timber.log.Timber

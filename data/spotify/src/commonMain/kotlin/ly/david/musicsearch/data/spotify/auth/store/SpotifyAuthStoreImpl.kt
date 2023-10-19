@@ -1,4 +1,4 @@
-package ly.david.data.spotify.auth.store
+package ly.david.musicsearch.data.spotify.auth.store
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

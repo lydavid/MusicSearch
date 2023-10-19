@@ -1,4 +1,4 @@
-package ly.david.data.spotify.api
+package ly.david.musicsearch.data.spotify.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -7,8 +7,8 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.request.get
 import io.ktor.http.appendPathSegments
-import ly.david.data.spotify.auth.api.SpotifyOAuthApi
-import ly.david.data.spotify.auth.store.SpotifyAuthStore
+import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthApi
+import ly.david.musicsearch.data.spotify.auth.store.SpotifyAuthStore
 
 private const val BASE_URL = "https://api.spotify.com/v1/"
 private const val ARTISTS = "${BASE_URL}artists"

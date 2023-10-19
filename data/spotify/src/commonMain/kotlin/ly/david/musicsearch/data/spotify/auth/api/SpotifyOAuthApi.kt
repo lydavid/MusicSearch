@@ -1,4 +1,4 @@
-package ly.david.data.spotify.auth.api
+package ly.david.musicsearch.data.spotify.auth.api
 
 private const val CLIENT_CREDENTIALS = "client_credentials"
 
