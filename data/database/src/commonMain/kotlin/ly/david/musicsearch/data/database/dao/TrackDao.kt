@@ -2,7 +2,7 @@ package ly.david.musicsearch.data.database.dao
 
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
-import ly.david.data.musicbrainz.TrackMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.TrackMusicBrainzModel
 import ly.david.musicsearch.core.models.CoroutineDispatchers
 import ly.david.musicsearch.core.models.listitem.TrackListItemModel
 import ly.david.musicsearch.data.database.Database

@@ -10,7 +10,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.models)
-                implementation(projects.data.common.network)
                 implementation(projects.data.musicbrainz)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.collections.immutable)

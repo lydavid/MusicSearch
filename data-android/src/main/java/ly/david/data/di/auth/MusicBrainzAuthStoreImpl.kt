@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import ly.david.data.musicbrainz.auth.MusicBrainzAuthStore
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzAuthStore
 import org.koin.core.annotation.Single
 import kotlin.time.Duration.Companion.hours
 

@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.data.musicbrainz.MediumMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.MediumMusicBrainzModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Medium
 

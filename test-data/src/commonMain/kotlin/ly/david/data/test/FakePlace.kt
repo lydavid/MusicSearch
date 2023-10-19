@@ -1,13 +1,13 @@
 package ly.david.data.test
 
-import ly.david.data.musicbrainz.CoordinatesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.CoordinatesMusicBrainzModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.Direction
-import ly.david.data.musicbrainz.LifeSpanMusicBrainzModel
-import ly.david.data.musicbrainz.PlaceMusicBrainzModel
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowsePlacesResponse
-import ly.david.data.musicbrainz.api.SearchPlacesResponse
+import ly.david.musicsearch.data.musicbrainz.Direction
+import ly.david.musicsearch.data.musicbrainz.LifeSpanMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowsePlacesResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchPlacesResponse
 
 val fakePlace = PlaceMusicBrainzModel(
     id = "place1",

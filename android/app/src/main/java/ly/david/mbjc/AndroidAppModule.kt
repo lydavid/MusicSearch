@@ -6,7 +6,7 @@ import ly.david.data.di.coroutines.coroutineDispatchersModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.network.networkModule
-import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule

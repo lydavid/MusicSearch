@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.data.musicbrainz.Direction
-import ly.david.data.musicbrainz.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.Direction
+import ly.david.musicsearch.data.musicbrainz.EventMusicBrainzModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseEventsResponse
-import ly.david.data.musicbrainz.api.SearchEventsResponse
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchEventsResponse
 
 val fakeEvent = EventMusicBrainzModel(
     id = "event1",

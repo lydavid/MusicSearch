@@ -13,7 +13,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import kotlinx.coroutines.test.runTest
-import ly.david.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.test.canada
 import ly.david.data.test.fakePlace
 import ly.david.data.test.ontario

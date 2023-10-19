@@ -4,8 +4,8 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.musicbrainz.api.CollectionApi
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.CollectionApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.listitem.CollectionListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.database.dao.BrowseEntityCountDao

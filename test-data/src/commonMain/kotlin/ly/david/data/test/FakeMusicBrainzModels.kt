@@ -1,7 +1,7 @@
 package ly.david.data.test
 
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.MusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.MusicBrainzModel
 
 fun MusicBrainzEntity.toFakeMusicBrainzModel(): MusicBrainzModel =
     when (this) {

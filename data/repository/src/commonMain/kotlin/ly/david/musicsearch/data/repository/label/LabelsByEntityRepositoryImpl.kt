@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.repository.label
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseLabelsResponse
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseLabelsResponse
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.LabelListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity

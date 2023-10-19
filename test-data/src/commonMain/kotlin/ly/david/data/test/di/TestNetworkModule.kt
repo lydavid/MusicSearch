@@ -1,7 +1,7 @@
 package ly.david.data.test.di
 
 import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.data.spotify.api.SpotifyApi
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthApi
 import ly.david.musicsearch.data.spotify.auth.api.SpotifyOAuthClientCredentialsResponse

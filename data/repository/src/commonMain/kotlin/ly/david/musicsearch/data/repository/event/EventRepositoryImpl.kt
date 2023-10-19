@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.event
 
-import ly.david.data.musicbrainz.EventMusicBrainzModel
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.event.EventScaffoldModel
 import ly.david.musicsearch.data.database.dao.EventDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList

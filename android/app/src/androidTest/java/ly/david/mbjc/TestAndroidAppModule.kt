@@ -4,7 +4,7 @@ import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
-import ly.david.data.musicbrainz.auth.MusicBrainzDataModule
+import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.test.di.testNetworkModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule

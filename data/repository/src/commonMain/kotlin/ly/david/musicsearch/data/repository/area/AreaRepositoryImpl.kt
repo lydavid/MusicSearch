@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.area
 
-import ly.david.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.area.AreaScaffoldModel
 import ly.david.musicsearch.data.database.dao.AreaDao
 import ly.david.musicsearch.data.database.dao.CountryCodeDao

@@ -1,12 +1,12 @@
 package ly.david.data.test
 
-import ly.david.data.musicbrainz.Direction
+import ly.david.musicsearch.data.musicbrainz.Direction
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.WorkAttributeMusicBrainzModel
-import ly.david.data.musicbrainz.WorkMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseWorksResponse
-import ly.david.data.musicbrainz.api.SearchWorksResponse
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.WorkAttributeMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseWorksResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchWorksResponse
 
 val fakeWorkAttribute = WorkAttributeMusicBrainzModel(
     type = "SUISA ID",

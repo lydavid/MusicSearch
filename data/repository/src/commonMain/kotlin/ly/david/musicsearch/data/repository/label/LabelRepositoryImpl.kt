@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.label
 
-import ly.david.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.label.LabelScaffoldModel
 import ly.david.musicsearch.data.database.dao.LabelDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList

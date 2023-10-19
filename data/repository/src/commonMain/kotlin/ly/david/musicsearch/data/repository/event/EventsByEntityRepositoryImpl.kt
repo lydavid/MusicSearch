@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.repository.event
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.musicbrainz.EventMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseEventsResponse
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseEventsResponse
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.EventListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity

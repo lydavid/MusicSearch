@@ -5,9 +5,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.api.LookupApi
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.LookupApi
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.listitem.RelationListItemModel
 import ly.david.musicsearch.core.models.relation.RelationWithOrder
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity

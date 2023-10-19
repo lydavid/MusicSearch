@@ -3,9 +3,9 @@ package ly.david.musicsearch.data.repository.area
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseAreasResponse
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseAreasResponse
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.ListFilters
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity

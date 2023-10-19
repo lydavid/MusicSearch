@@ -1,13 +1,13 @@
 package ly.david.data.test
 
-import ly.david.data.musicbrainz.Direction
-import ly.david.data.musicbrainz.LabelInfo
+import ly.david.musicsearch.data.musicbrainz.Direction
+import ly.david.musicsearch.data.musicbrainz.LabelInfo
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.ReleaseEventMusicBrainzModel
-import ly.david.data.musicbrainz.ReleaseMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseReleasesResponse
-import ly.david.data.musicbrainz.api.SearchReleasesResponse
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.ReleaseEventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 
 val underPressureRemastered = ReleaseMusicBrainzModel(
     id = "eac6d0cd-1ed0-4e17-b5b0-d3cfc40547b2",

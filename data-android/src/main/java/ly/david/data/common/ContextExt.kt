@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import ly.david.musicsearch.core.models.place.Coordinates
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.api.MUSIC_BRAINZ_BASE_URL
+import ly.david.musicsearch.data.musicbrainz.api.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.core.models.network.resourceUri
 
 /**

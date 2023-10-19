@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.internal
 
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
 import ly.david.musicsearch.core.models.relation.RelationWithOrder
 import ly.david.musicsearch.data.database.dao.toRelationDatabaseModel
 

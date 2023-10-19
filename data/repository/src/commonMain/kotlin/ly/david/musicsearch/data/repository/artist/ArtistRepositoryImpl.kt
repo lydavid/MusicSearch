@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.artist
 
-import ly.david.data.musicbrainz.ArtistMusicBrainzModel
-import ly.david.data.musicbrainz.api.MusicBrainzApi
+import ly.david.musicsearch.data.musicbrainz.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.artist.ArtistScaffoldModel
 import ly.david.musicsearch.data.database.dao.ArtistDao
 import ly.david.musicsearch.data.repository.internal.toRelationWithOrderList

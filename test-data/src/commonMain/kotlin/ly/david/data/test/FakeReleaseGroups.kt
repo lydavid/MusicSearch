@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.data.musicbrainz.Direction
+import ly.david.musicsearch.data.musicbrainz.Direction
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.data.musicbrainz.ReleaseGroupMusicBrainzModel
-import ly.david.data.musicbrainz.api.BrowseReleaseGroupsResponse
-import ly.david.data.musicbrainz.api.SearchReleaseGroupsResponse
+import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.api.BrowseReleaseGroupsResponse
+import ly.david.musicsearch.data.musicbrainz.api.SearchReleaseGroupsResponse
 
 val hotSpaceReleaseGroup = ReleaseGroupMusicBrainzModel(
     id = "3918b90b-340e-3779-9d7e-ba1593653498",
