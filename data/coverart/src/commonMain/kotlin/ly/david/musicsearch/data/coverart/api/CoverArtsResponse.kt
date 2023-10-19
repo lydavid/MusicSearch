@@ -1,4 +1,4 @@
-package ly.david.data.coverart.api
+package ly.david.musicsearch.data.coverart.api
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

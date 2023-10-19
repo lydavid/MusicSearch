@@ -1,8 +1,8 @@
 package ly.david.data.test.api
 
-import ly.david.data.coverart.api.CoverArtArchiveApi
-import ly.david.data.coverart.api.CoverArtUrls
-import ly.david.data.coverart.api.CoverArtsResponse
+import ly.david.musicsearch.data.coverart.api.CoverArtArchiveApi
+import ly.david.musicsearch.data.coverart.api.CoverArtUrls
+import ly.david.musicsearch.data.coverart.api.CoverArtsResponse
 
 class FakeCoverArtArchiveApi : CoverArtArchiveApi {
     override suspend fun getReleaseCoverArts(releaseId: String): CoverArtsResponse {

@@ -1,6 +1,4 @@
-package ly.david.data.coverart.api
-
-import io.ktor.client.HttpClient
+package ly.david.musicsearch.data.coverart.api
 
 interface CoverArtArchiveApi {
     /**
@@ -16,14 +14,4 @@ interface CoverArtArchiveApi {
      * The image loading library will generally handle that next call.
      */
     suspend fun getReleaseGroupCoverArts(releaseGroupId: String): CoverArtsResponse
-
-    companion object {
-        fun create(
-            httpClient: HttpClient,
-        ): CoverArtArchiveApi {
-            return CoverArtArchiveApiImpl(
-                client = httpClient,
-            )
-        }
-    }
 }

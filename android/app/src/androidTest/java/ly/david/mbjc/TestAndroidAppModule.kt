@@ -1,6 +1,6 @@
 package ly.david.mbjc
 
-import ly.david.data.coverart.di.coverArtDataModule
+import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule

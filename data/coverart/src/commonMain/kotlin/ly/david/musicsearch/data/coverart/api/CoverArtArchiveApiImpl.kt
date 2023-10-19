@@ -1,4 +1,4 @@
-package ly.david.data.coverart.api
+package ly.david.musicsearch.data.coverart.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
