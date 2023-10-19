@@ -1,9 +1,9 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.Direction
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseSeriesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchSeriesResponse
 

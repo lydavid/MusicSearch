@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.common
 
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.LifeSpan

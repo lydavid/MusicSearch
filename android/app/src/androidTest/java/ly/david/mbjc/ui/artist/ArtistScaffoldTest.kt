@@ -18,7 +18,7 @@ import coil.ImageLoaderFactory
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.data.musicbrainz.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.data.test.bandAid
 import ly.david.data.test.carlosAlomar
 import ly.david.data.test.davidBowie

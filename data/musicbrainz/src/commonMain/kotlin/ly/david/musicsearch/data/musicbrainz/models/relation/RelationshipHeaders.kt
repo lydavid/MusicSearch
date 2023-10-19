@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.relation
 
 // TODO: Deal with attributes: if an attribute exists, then use appropriate {half:half-}{step} in label?
 //  maybe something to consider down the road

@@ -1,11 +1,11 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.Direction
-import ly.david.musicsearch.data.musicbrainz.LabelInfo
+import ly.david.musicsearch.data.musicbrainz.models.relation.Direction
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelInfo
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
-import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ReleaseEventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseEventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseReleasesResponse
 import ly.david.musicsearch.data.musicbrainz.api.SearchReleasesResponse
 

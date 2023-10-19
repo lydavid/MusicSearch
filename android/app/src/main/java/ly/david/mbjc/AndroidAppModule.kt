@@ -1,22 +1,23 @@
 package ly.david.mbjc
 
-import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutineDispatchersModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.network.networkModule
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzDataModule
-import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
+import ly.david.musicsearch.data.coverart.di.coverArtApiModule
+import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
+import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
+import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.musicsearch.ui.image.di.imageModule
@@ -44,7 +45,8 @@ val androidAppModule = module {
         repositoryDataModule,
         DomainModule().module,
         coverArtDataModule,
-        MusicBrainzDataModule().module,
+        coverArtApiModule,
+        musicBrainzDataModule,
         AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,

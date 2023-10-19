@@ -1,8 +1,8 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.getFormattedAttributesForDisplay
-import ly.david.musicsearch.data.musicbrainz.getHeader
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
+import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.common.emptyToNull
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty

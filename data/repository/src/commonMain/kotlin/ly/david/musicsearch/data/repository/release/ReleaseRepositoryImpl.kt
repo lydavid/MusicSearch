@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.insertSeparators
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.area.AreaType
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty

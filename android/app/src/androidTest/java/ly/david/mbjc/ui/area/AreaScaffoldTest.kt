@@ -13,13 +13,13 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.musicbrainz.AreaMusicBrainzModel
 import ly.david.data.test.canada
 import ly.david.data.test.fakePlace
 import ly.david.data.test.ontario
 import ly.david.data.test.toronto
 import ly.david.data.test.underPressure
 import ly.david.mbjc.MainActivityTest
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.domain.area.AreaRepository
 import ly.david.musicsearch.strings.AppStrings
 import ly.david.ui.common.topappbar.TopAppBarWithFilterTestTag

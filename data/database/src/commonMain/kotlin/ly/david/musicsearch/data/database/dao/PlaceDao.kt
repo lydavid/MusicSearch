@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.place.CoordinatesUiModel
 import ly.david.musicsearch.core.models.place.PlaceScaffoldModel

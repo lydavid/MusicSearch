@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.relation
 
 import ly.david.musicsearch.core.models.common.transformThisIfNotNullOrEmpty
 

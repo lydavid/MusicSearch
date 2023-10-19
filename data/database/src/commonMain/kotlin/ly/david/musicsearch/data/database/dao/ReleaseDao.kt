@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
 import ly.david.musicsearch.core.models.release.CoverArtArchiveUiModel
 import ly.david.musicsearch.core.models.release.FormatTrackCount
 import ly.david.musicsearch.core.models.release.ReleaseScaffoldModel

@@ -2,7 +2,7 @@ package ly.david.data.di.musicbrainz
 
 import android.net.Uri
 import ly.david.data.BuildConfig
-import ly.david.musicsearch.data.musicbrainz.api.MUSIC_BRAINZ_BASE_URL
+import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
 import ly.david.musicsearch.core.models.AppInfo
 import net.openid.appauth.AuthorizationRequest

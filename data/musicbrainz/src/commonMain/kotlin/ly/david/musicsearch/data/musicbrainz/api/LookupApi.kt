@@ -5,18 +5,18 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
-import ly.david.musicsearch.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.GenreMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.SeriesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 
 private const val AREA_REL = "area-rels"
 private const val ARTIST_REL = "artist-rels"

@@ -1,7 +1,7 @@
 package ly.david.musicsearch.data.repository.internal.paging
 
 import app.cash.paging.PagingConfig
-import ly.david.musicsearch.data.musicbrainz.api.SEARCH_BROWSE_LIMIT
+import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
 
 internal object CommonPagingConfig {
 

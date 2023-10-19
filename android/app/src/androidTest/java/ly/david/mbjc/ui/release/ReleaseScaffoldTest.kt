@@ -18,8 +18,8 @@ import coil.Coil
 import coil.ImageLoaderFactory
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.getHeader
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.getHeader
 import ly.david.data.test.davidBowieArtistCredit
 import ly.david.data.test.elektraMusicGroup
 import ly.david.data.test.fakeReleaseEvent

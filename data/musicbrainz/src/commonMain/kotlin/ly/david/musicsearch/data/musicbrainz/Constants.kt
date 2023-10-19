@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz.api
+package ly.david.musicsearch.data.musicbrainz
 
 /**
  * MusicBrainz base url for API and web.

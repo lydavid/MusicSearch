@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
 import ly.david.musicsearch.core.models.artist.ArtistCreditUiModel
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.data.database.Database

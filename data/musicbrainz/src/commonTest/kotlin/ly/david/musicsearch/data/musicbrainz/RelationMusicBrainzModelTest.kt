@@ -2,9 +2,9 @@ package ly.david.musicsearch.data.musicbrainz
 
 import io.mockk.every
 import io.mockk.mockk
-import ly.david.musicsearch.data.musicbrainz.AttributeValue
-import ly.david.musicsearch.data.musicbrainz.RelationMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.getFormattedAttributesForDisplay
+import ly.david.musicsearch.data.musicbrainz.models.relation.AttributeValue
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.getFormattedAttributesForDisplay
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

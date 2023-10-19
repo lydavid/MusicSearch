@@ -1,7 +1,7 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.MediumMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.TrackMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.TrackMusicBrainzModel
 
 val underPressureTrack = TrackMusicBrainzModel(
     id = "ae3a221e-b7db-3234-b9c7-a3de487389ef",

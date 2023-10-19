@@ -7,7 +7,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithText
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.data.musicbrainz.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 import ly.david.data.test.fakeWorkWithAllData
 import ly.david.data.test.underPressureRecording
 import ly.david.mbjc.MainActivityTest

@@ -7,19 +7,20 @@ import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ly.david.musicsearch.data.musicbrainz.AreaMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ArtistMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.CollectionMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.EventMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.InstrumentMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.LabelMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.MusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.PlaceMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.RecordingMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ReleaseGroupMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.ReleaseMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.SeriesMusicBrainzModel
-import ly.david.musicsearch.data.musicbrainz.WorkMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.SEARCH_BROWSE_LIMIT
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.MusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 
 internal const val ARTIST_CREDITS = "artist-credits"
 internal const val LABELS = "labels"

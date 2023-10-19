@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.database.dao
 
-import ly.david.musicsearch.data.musicbrainz.WorkAttributeMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkAttributeMusicBrainzModel
 import ly.david.musicsearch.core.models.work.WorkAttributeUiModel
 import ly.david.musicsearch.data.database.Database
 import lydavidmusicsearchdatadatabase.Work_attribute

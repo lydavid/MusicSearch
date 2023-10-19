@@ -11,7 +11,10 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val coverArtDataModule = module {
-    singleOf(::CoverArtArchiveApiImpl) bind CoverArtArchiveApi::class
     singleOf(::ReleaseImageRepositoryImpl) bind ReleaseImageRepository::class
     singleOf(::ReleaseGroupImageRepositoryImpl) bind ReleaseGroupImageRepository::class
+}
+
+val coverArtApiModule = module {
+    singleOf(::CoverArtArchiveApiImpl) bind CoverArtArchiveApi::class
 }

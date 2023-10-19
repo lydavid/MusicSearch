@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.recording
 
-import ly.david.musicsearch.data.musicbrainz.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.recording.RecordingScaffoldModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao

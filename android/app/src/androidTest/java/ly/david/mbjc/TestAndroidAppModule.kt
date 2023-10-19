@@ -1,10 +1,8 @@
 package ly.david.mbjc
 
-import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.data.di.auth.AuthStoreModule
 import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
-import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzDataModule
 import ly.david.data.test.di.testNetworkModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.mbjc.di.testCoroutineDispatchersModule
@@ -14,8 +12,10 @@ import ly.david.mbjc.di.testPreferencesDataStoreModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
 import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
+import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
+import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
@@ -44,7 +44,8 @@ val testAndroidAppModule = module {
         musicBrainzAuthModule,
         repositoryDataModule,
         coverArtDataModule,
-        MusicBrainzDataModule().module,
+//        coverArtApiModule,
+        musicBrainzDataModule,
         AuthStoreModule().module,
         CollectionUiModule().module,
         CommonUiModule().module,

@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.repository.recording
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import kotlinx.coroutines.flow.Flow
-import ly.david.musicsearch.data.musicbrainz.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.BrowseRecordingsResponse
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.ListFilters

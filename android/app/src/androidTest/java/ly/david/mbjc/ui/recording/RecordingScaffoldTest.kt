@@ -9,7 +9,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import kotlinx.coroutines.test.runTest
-import ly.david.musicsearch.data.musicbrainz.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 import ly.david.data.test.davidBowie
 import ly.david.data.test.davidBowieArtistCredit
 import ly.david.data.test.queenArtistCredit

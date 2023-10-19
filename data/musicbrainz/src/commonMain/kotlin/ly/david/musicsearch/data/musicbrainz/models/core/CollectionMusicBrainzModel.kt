@@ -1,4 +1,4 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

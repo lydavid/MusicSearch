@@ -1,8 +1,10 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.release.Track
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
 
 /**
  * A [Track] in [MediumMusicBrainzModel].

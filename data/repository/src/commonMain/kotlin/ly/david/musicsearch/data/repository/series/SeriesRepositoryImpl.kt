@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.series
 
-import ly.david.musicsearch.data.musicbrainz.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.series.SeriesScaffoldModel
 import ly.david.musicsearch.data.database.dao.SeriesDao

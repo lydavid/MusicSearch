@@ -1,8 +1,11 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ly.david.musicsearch.core.models.place.Coordinates
 import ly.david.musicsearch.core.models.place.Place
+import ly.david.musicsearch.data.musicbrainz.models.common.LifeSpanMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
 data class PlaceMusicBrainzModel(
@@ -18,3 +21,9 @@ data class PlaceMusicBrainzModel(
     @SerialName("area") val area: AreaMusicBrainzModel? = null,
     @SerialName("relations") val relations: List<RelationMusicBrainzModel>? = null,
 ) : MusicBrainzModel(), Place
+
+@Serializable
+data class CoordinatesMusicBrainzModel(
+    override val longitude: Double? = null,
+    override val latitude: Double? = null,
+) : Coordinates

@@ -5,7 +5,7 @@ import androidx.compose.ui.test.hasNoClickAction
 import androidx.compose.ui.test.hasText
 import kotlinx.coroutines.test.runTest
 import ly.david.musicsearch.core.models.getNameWithDisambiguation
-import ly.david.musicsearch.data.musicbrainz.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
 import ly.david.data.test.fakeInstrument
 import ly.david.data.test.fakeSeries
 import ly.david.mbjc.MainActivityTest

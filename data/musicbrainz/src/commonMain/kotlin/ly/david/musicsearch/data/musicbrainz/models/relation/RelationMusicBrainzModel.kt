@@ -1,9 +1,22 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.relation
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.LifeSpan
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
+import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.GenreMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.InstrumentMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.LabelMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.PlaceMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.RecordingMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.SeriesMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.UrlMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.WorkMusicBrainzModel
 
 @Serializable
 data class RelationMusicBrainzModel(

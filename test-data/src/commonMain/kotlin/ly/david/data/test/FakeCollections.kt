@@ -1,6 +1,6 @@
 package ly.david.data.test
 
-import ly.david.musicsearch.data.musicbrainz.CollectionMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.CollectionMusicBrainzModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity
 import ly.david.musicsearch.data.musicbrainz.api.BrowseCollectionsResponse
 

@@ -1,9 +1,14 @@
-package ly.david.musicsearch.data.musicbrainz
+package ly.david.musicsearch.data.musicbrainz.models.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ly.david.musicsearch.core.models.NameWithDisambiguation
+import ly.david.musicsearch.core.models.release.CoverArtArchive
 import ly.david.musicsearch.core.models.release.Release
+import ly.david.musicsearch.core.models.release.TextRepresentation
+import ly.david.musicsearch.data.musicbrainz.models.MediumMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.common.ArtistCreditMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.relation.RelationMusicBrainzModel
 
 @Serializable
 data class ReleaseMusicBrainzModel(
@@ -42,6 +47,21 @@ data class ReleaseMusicBrainzModel(
 ) : MusicBrainzModel(), Release
 
 @Serializable
+data class CoverArtArchiveMusicBrainzModel(
+    //    @SerialName("darkened") val darkened: Boolean = false,
+//    @SerialName("artwork") val artwork: Boolean = false,
+//    @SerialName("back") val back: Boolean = false,
+//    @SerialName("front") val front: Boolean = false,
+    override val count: Int = 0,
+) : CoverArtArchive
+
+@Serializable
+data class TextRepresentationMusicBrainzModel(
+    override val script: String? = null,
+    override val language: String? = null,
+) : TextRepresentation
+
+@Serializable
 data class ReleaseEventMusicBrainzModel(
     @SerialName("area") val area: AreaMusicBrainzModel? = null,
     @SerialName("date") val date: String? = null,
@@ -51,3 +71,9 @@ data class ReleaseEventMusicBrainzModel(
     @SerialName("name") override val name: String? = null,
     @SerialName("disambiguation") override val disambiguation: String? = null,
 ) : NameWithDisambiguation
+
+@Serializable
+data class LabelInfo(
+    @SerialName("catalog-number") val catalogNumber: String? = null,
+    @SerialName("label") val label: LabelMusicBrainzModel? = null,
+)

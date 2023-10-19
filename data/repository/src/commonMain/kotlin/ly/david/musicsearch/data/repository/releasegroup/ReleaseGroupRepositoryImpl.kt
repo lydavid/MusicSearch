@@ -1,6 +1,6 @@
 package ly.david.musicsearch.data.repository.releasegroup
 
-import ly.david.musicsearch.data.musicbrainz.ReleaseGroupMusicBrainzModel
+import ly.david.musicsearch.data.musicbrainz.models.core.ReleaseGroupMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzApi
 import ly.david.musicsearch.core.models.releasegroup.ReleaseGroupScaffoldModel
 import ly.david.musicsearch.data.database.dao.ArtistCreditDao

@@ -3,9 +3,7 @@ package ly.david.musicsearch.data.musicbrainz.auth
 import kotlinx.datetime.Clock
 import ly.david.musicsearch.data.musicbrainz.api.MusicBrainzOAuthApi
 import ly.david.musicsearch.data.musicbrainz.api.REFRESH_TOKEN
-import org.koin.core.annotation.Single
 
-@Single
 class MusicBrainzAuthRepository(
     private val musicBrainzOAuthInfo: MusicBrainzOAuthInfo,
     private val musicBrainzOAuthApi: MusicBrainzOAuthApi,
