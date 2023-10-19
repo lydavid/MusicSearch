@@ -1,12 +1,12 @@
 package ly.david.mbjc
 
 import ly.david.data.di.auth.AuthStoreModule
-import ly.david.data.di.coroutines.coroutineDispatchersModule
-import ly.david.data.di.coroutines.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.di.network.networkModule
 import ly.david.mbjc.di.appDataModule
 import ly.david.musicsearch.android.feature.nowplaying.NowPlayingUiModule
+import ly.david.musicsearch.core.coroutines.di.coroutineDispatchersModule
+import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
 import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule

@@ -3,7 +3,7 @@ package ly.david.musicsearch.data.database.dao
 import app.cash.paging.PagingSource
 import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.datetime.Instant
-import ly.david.musicsearch.core.models.CoroutineDispatchers
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import ly.david.musicsearch.core.models.history.LookupHistory
 import ly.david.musicsearch.core.models.listitem.LookupHistoryListItemModel
 import ly.david.musicsearch.core.models.network.MusicBrainzEntity

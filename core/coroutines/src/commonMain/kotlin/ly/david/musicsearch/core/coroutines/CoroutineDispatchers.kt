@@ -1,4 +1,4 @@
-package ly.david.musicsearch.core.models
+package ly.david.musicsearch.core.coroutines
 
 import kotlin.coroutines.CoroutineContext
 

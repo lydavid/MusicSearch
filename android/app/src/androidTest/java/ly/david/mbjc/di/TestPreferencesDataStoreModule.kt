@@ -9,7 +9,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import java.util.Random
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import ly.david.musicsearch.core.models.CoroutineDispatchers
+import ly.david.musicsearch.core.coroutines.CoroutineDispatchers
 import org.koin.dsl.module
 
 private const val TEST_SETTINGS_KEY = "test_settings"

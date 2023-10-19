@@ -75,6 +75,7 @@ android {
 dependencies {
     implementation(projects.android.feature.nowplaying)
     implementation(projects.android.feature.spotify)
+    implementation(projects.core.coroutines)
     implementation(projects.core.logging.implementation)
     implementation(projects.core.preferences)
     implementation(projects.dataAndroid)

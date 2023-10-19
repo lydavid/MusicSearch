@@ -1,7 +1,7 @@
 package ly.david.mbjc
 
 import ly.david.data.di.auth.AuthStoreModule
-import ly.david.data.di.coroutines.coroutinesScopesModule
+import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
 import ly.david.data.di.musicbrainz.musicBrainzAuthModule
 import ly.david.data.test.di.testNetworkModule
 import ly.david.mbjc.di.appDataModule

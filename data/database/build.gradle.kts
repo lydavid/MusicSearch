@@ -9,6 +9,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(projects.core.coroutines)
                 implementation(projects.core.models)
                 implementation(projects.data.musicbrainz)
                 implementation(libs.koin.core)
