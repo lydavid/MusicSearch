@@ -1,6 +1,5 @@
 plugins {
     id("ly.david.musicsearch.kotlin.multiplatform")
-    alias(libs.plugins.ksp)
 }
 
 kotlin {

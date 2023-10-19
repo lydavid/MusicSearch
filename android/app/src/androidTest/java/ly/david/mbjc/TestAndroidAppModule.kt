@@ -17,6 +17,7 @@ import ly.david.musicsearch.data.database.databaseDaoModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
+import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
 import ly.david.musicsearch.strings.di.stringsModule
@@ -27,6 +28,11 @@ import ly.david.ui.settings.SettingsUiModule
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
 
+// TODO: reorganize this and androidAppModule
+/**
+ * This should mirror [androidAppModule] with the exception of test modules to fake
+ * things like network/database.
+ */
 val testAndroidAppModule = module {
     includes(
         stringsModule,
@@ -37,6 +43,7 @@ val testAndroidAppModule = module {
         testImageModule,
         testDatabaseDriverModule,
         searchFeatureModule,
+        spotifyDataModule,
         ViewModelsModule().module,
         appDataModule,
         coroutinesScopesModule,
@@ -44,7 +51,6 @@ val testAndroidAppModule = module {
         musicBrainzAuthModule,
         repositoryDataModule,
         coverArtDataModule,
-//        coverArtApiModule,
         musicBrainzDataModule,
         AuthStoreModule().module,
         CollectionUiModule().module,

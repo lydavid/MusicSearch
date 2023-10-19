@@ -17,6 +17,7 @@ import ly.david.musicsearch.data.database.databaseDriverModule
 import ly.david.musicsearch.data.database.databaseModule
 import ly.david.musicsearch.data.musicbrainz.di.musicBrainzDataModule
 import ly.david.musicsearch.data.repository.di.repositoryDataModule
+import ly.david.musicsearch.data.spotify.di.spotifyApiModule
 import ly.david.musicsearch.data.spotify.di.spotifyDataModule
 import ly.david.musicsearch.domain.DomainModule
 import ly.david.musicsearch.feature.search.di.searchFeatureModule
@@ -38,6 +39,7 @@ val androidAppModule = module {
         musicBrainzAuthModule,
         networkModule,
         spotifyDataModule,
+        spotifyApiModule,
         preferencesDataStoreModule,
         appPreferencesModule,
         imageModule,
