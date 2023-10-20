@@ -10,6 +10,7 @@ import ly.david.musicsearch.core.coroutines.di.coroutinesScopesModule
 import ly.david.musicsearch.core.logging.loggingModule
 import ly.david.musicsearch.core.preferences.di.appPreferencesModule
 import ly.david.musicsearch.core.preferences.di.preferencesDataStoreModule
+import ly.david.musicsearch.data.common.network.di.HttpClientModule
 import ly.david.musicsearch.data.coverart.di.coverArtApiModule
 import ly.david.musicsearch.data.coverart.di.coverArtDataModule
 import ly.david.musicsearch.data.database.databaseDaoModule
@@ -39,6 +40,7 @@ val androidAppModule = module {
         loggingModule,
         musicBrainzAuthModule,
         networkModule,
+        HttpClientModule,
         spotifyDataModule,
         spotifyApiModule,
         preferencesDataStoreModule,

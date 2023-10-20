@@ -4,7 +4,7 @@ import app.cash.paging.PagingSource
 import app.cash.paging.PagingState
 import app.cash.paging.RemoteMediator
 import kotlinx.coroutines.delay
-import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.core.models.LifeSpanUiModel
 import ly.david.musicsearch.core.models.artist.getDisplayNames
 import ly.david.musicsearch.core.models.listitem.AreaListItemModel

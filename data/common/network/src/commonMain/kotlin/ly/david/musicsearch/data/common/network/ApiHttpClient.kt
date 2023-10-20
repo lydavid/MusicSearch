@@ -1,26 +1,19 @@
-package ly.david.data.common.network
+package ly.david.musicsearch.data.common.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import okhttp3.Cache
 
 object ApiHttpClient {
     fun configAndCreate(
-        cache: Cache,
+        engine: HttpClientEngine,
         block: HttpClientConfig<*>.() -> Unit,
     ): HttpClient {
-        return HttpClient(OkHttp) {
+        return HttpClient(engine) {
             expectSuccess = true
-
-            engine {
-                config {
-                    cache(cache)
-                }
-            }
 
             install(ContentNegotiation) {
                 json(

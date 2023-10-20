@@ -2,9 +2,9 @@ package ly.david.data.di.musicbrainz
 
 import android.net.Uri
 import ly.david.data.BuildConfig
+import ly.david.musicsearch.core.models.AppInfo
 import ly.david.musicsearch.data.musicbrainz.MUSIC_BRAINZ_BASE_URL
 import ly.david.musicsearch.data.musicbrainz.auth.MusicBrainzOAuthInfo
-import ly.david.musicsearch.core.models.AppInfo
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
@@ -17,6 +17,7 @@ val musicBrainzAuthModule = module {
     single {
         // TODO: should not use BuildConfig for these values
         //  cause we'll need them for non-Android too
+        //  try https://github.com/gmazzo/gradle-buildconfig-plugin
         MusicBrainzOAuthInfo(
             clientId = BuildConfig.MUSICBRAINZ_CLIENT_ID,
             clientSecret = BuildConfig.MUSICBRAINZ_CLIENT_SECRET,

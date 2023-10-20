@@ -1,6 +1,6 @@
 package ly.david.data.test.api
 
-import ly.david.data.common.network.RecoverableNetworkException
+import ly.david.musicsearch.data.common.network.RecoverableNetworkException
 import ly.david.musicsearch.data.musicbrainz.models.core.AreaMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.ArtistMusicBrainzModel
 import ly.david.musicsearch.data.musicbrainz.models.core.EventMusicBrainzModel
